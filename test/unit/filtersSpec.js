@@ -2,18 +2,17 @@
 
 /* jasmine specs for filters go here */
 
-describe('filter', function() {
-  beforeEach(module('myApp.filters'));
+describe('config', function() {
+  beforeEach(module('np.config'));
 
 
   describe('interpolate', function() {
-    beforeEach(module(function($provide) {
-      $provide.value('version', 'TEST_VER');
+    beforeEach(module(function($config) {
+    	dump($config)
     }));
 
 
     it('should replace VERSION', inject(function(interpolateFilter) {
-      expect(interpolateFilter('before %VERSION% after')).toEqual('before TEST_VER after');
     }));
   });
 });
