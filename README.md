@@ -7,56 +7,35 @@ to change in ways that are not backwards compatible***
 
 Main Client Features:
 * Search
+* Basket
 
 ## Backends
 [solr](https://solr)
+
+## Installation
+>npm install
+>sudo npm install -g karma
 
 ## Usage
 >node app
 
 
-# 1) proteins and proteinsgold
-# update the remote solr indexes for entries, publications and terms
-#
-LOCAL_SOLR=$HOME/application/solr-4.3.0/example
-SOLR_INDEX="npentries1 npentries1gold npcvs1 nppublications1"
-for index in $SOLR_INDEX; do
-	rsync -Lavz --delete $LOCAL_SOLR/solr/$index/ np_integration@uat-web1:/mnt/npdata/protosearch/solr/solr/$index/
-done
+## Testing
+>karma start test/config.js
 
-# 3) restore local solr index files
-#
-LOCAL_SOLR=$HOME/application/solr-4.3.0/example
-SOLR_INDEX="npentries1 npentries1gold npcvs1 nppublications1"
-for index in $SOLR_INDEX; do
-	rsync -avz --delete np_integration@uat-web1:/mnt/npdata/protosearch/solr/solr/$index/data $LOCAL_SOLR/solr/$index/data 
-done
 
-# 4) install angularjs and nodejs
-#
-LOCAL_ANGULAR=/Users/evaleto/workspaces/workspace-ndu/nextmodel/brunch
-cd $LOCAL_ANGULAR
-npm install
-# before preparing the protosearch we must rebase the web site
-# in index.html
+## Deploying
+  before deploying html we must rebase the web app
+  in index.html
     <base href="/" />
-# should be
+  should be
     <base href="/protosearch/" />
 
-./node_modules/.bin/brunch -m build
-node app
-open http://localhost:3000
+>./node_modules/.bin/brunch -m build
+>rsync -auv build/* np_integration@uat-web1:/home/np_integration/np-drupal/protosearch/
 
 
-# 4) update angularjs
-#
-LOCAL_ANGULAR=/Users/evaleto/workspaces/workspace-ndu/nextmodel/brunch
-cd $LOCAL_ANGULAR
-./node_modules/.bin/brunch -m build
-rsync -auv build/* np_integration@uat-web1:/home/np_integration/np-drupal/protosearch/
 
-
-#
-# start/kill solr
-java -Dprotosearch.solr -Xmx512m -jar start.jar &
-pkill -f protosearch.solr
+## start/kill solr
+>java -Dprotosearch.solr -Xmx512m -jar start.jar &
+>pkill -f protosearch.solr
