@@ -1,0 +1,12 @@
+      <!-- RESULT HEADERS -->
+      <div class="row" >
+        <ul>
+          <li ng-repeat="doc in Search.result.docs"  ng-cloak>
+            <span class="green bold">{{Search.result.ontology[doc.filters.toLowerCase()] }}</span> <b>{{doc.ac}}</b> {{doc.name}} - <span>{{doc.description}}</span><br/><span class="gray small"> {{doc.synonyms}}  </span>
+            <ul ng-show="doc.properties" class="unstyled well well-small"  style="margin-right:20px">
+              <li ng-repeat="p in doc.properties.split('|')">{{p}}</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+

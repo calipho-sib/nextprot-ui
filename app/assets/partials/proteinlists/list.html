@@ -1,0 +1,64 @@
+<div ng-controller="ListCtrl" class="container">
+	<div class="row">
+		<div class="span3" ng-include="'partials/proteinlists/lists-sidebar.html'"></div>
+		<div class="span9">
+			<h3>My Entry Lists</h3>
+
+			<div class="row">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th ng-show="showCombine"></th>
+							<th># Entries</th>
+							<th>Name</th>
+							<th>Description</th>
+							<td></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="list in lists">
+							<td ng-show="showCombine"><input type="checkbox"></td>
+							<td>{{list.accessions.length}}</td>
+							<td><a href="/proteinlists/view/{{Tools.convertToSlug(list.name)}}" ng-click="ProteinListService.setSelectedList(list)">{{list.name}}</a></td>
+							<td>{{list.description}}</td>
+							<td style="width:100px; height:25px">
+								<div fade-on-hover=".table">
+									<button class="btn btn-mini" ng-click="lists.splice($index)">
+										<i class="icon-remove"></i>
+									</button>
+									<button class="btn btn-mini" bs-modal="'partials/proteinlists/list-modal.html'" ng-click="launchModal($index, 'edit')"><i class="icon-edit"></i></button>
+									<div class="btn-group">
+										<button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+											<i class="icon-download"></i>
+											<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li><a href="#">Accession numbers list (.txt)</a></li>
+											<li><a href="#">Proteins list (.xls)</a></li>
+											<li><a href="#">Protein isoforms list (.xls)</a></li>
+											<li><a href="#">Sequences (FASTA)</a></li>
+											<li><a href="#">Sequences (PEFF - enriched FASTA)</a></li>
+											<li><a href="#">Protein entries (XML)</a></li>
+										</ul>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+			<form class="form-inline">
+				<select class="span3" ng-model="combination.first" ng-options="i.name for i in options.first"></select>
+				
+				<select class="span2" ng-model="combination.op" ng-options="i for i in operators"></select>
+				<button class="btn" ng-show="combination.op == 'NOT IN' && combination.first != null && combination.second != null" ng-click="switchCombine()"><i class="icon-resize-horizontal"></i></button>
+				<select class="span3" ng-model="combination.second" ng-options="i.name for i in options.second"></select>
+				
+				<button class="btn btn-primary" ng-disabled="combination.first == null; combination.second == null" bs-modal="'partials/proteinlists/list-modal.html'" ng-click="launchModal(0, 'create')">Create</button>
+			</form>
+			
+		</div>
+	</div>	
+	
+</div>

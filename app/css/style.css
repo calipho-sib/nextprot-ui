@@ -1,0 +1,120 @@
+.blue{
+	color:blue;
+}
+
+.green{
+	color:green;
+}
+
+.gray{
+	color:#aaa;
+}
+.small{
+	font-size:80%;
+}
+
+
+
+
+.solrparams{
+    background-color: #FAFAFA;
+    background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
+    background-repeat: repeat-x;
+}
+.resultparams{
+    background-color: #FEFEFE;
+    background-repeat: repeat-x;
+    border-top: 1px solid #D4D4D4;
+    margin-bottom: 60px;
+    position: relative;
+	
+}
+.resultparams .navbar-inner{  
+    border-bottom: 1px solid #D4D4D4;
+    box-shadow: inherit; 
+    background-image:inherit;
+    background-color:#fff;
+}
+
+
+.resultparams .affix .container{
+  padding-left: 0px!important;
+}
+
+
+.affix {
+    position: fixed!important; 
+    top: 40px; 
+    left: 0px;
+    right:0px;    
+    z-index:100;
+}
+
+.affix-top{
+    z-index:100;  
+}
+
+
+.resultfilters {
+  margin-top:10px;
+  padding-left:24%;
+  width:230px;
+}
+
+.resultfilters.affix {
+    padding-left:0;
+    left:2.0%;
+    z-index:99;
+}
+
+.nav .pagination {
+    margin: 7px 0 0!important;
+}
+
+.active{
+    padding-left: 9px;
+    padding-right: 9px;
+    border-bottom:1px solid #ddd;
+    color:black;
+}
+
+.bold{
+	font-weight:bold;
+}
+
+[class*="span"] .nomargin {
+	margin:0px;
+}
+
+.error{
+	position:fixed;
+	top:56px;
+  margin-left:auto;
+  margin-right:auto;
+  width:50%;
+  left:20%;
+  right:20%;
+  font-weight: bold;
+  z-index: 2000;
+}
+
+.no-quality-search-width{
+	width:500px!important;
+}
+.quality-search-width{
+  width:405px!important;
+}
+
+.icon-loading{
+  background-image: url(../img/spinner.gif);
+  background-repeat:no-repeat;	
+  padding: 3px 7px 0;
+}
+
+.ajax-start{
+	
+}
+
+.ajax-end{
+  
+}

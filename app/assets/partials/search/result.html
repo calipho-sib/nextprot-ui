@@ -1,0 +1,94 @@
+<div ng-controller="ResultCtrl">
+    <div class=" resultparams"   style="position:relative">
+      <!-- RESULT HEADERS -->
+		<div style="position: absolute;" np-affix="120" data-offset-bottom="250" class="navbar navbar-fixed-top">
+		  <div class="navbar-inner">
+		  	<!-- AFFIX fix : width: 980px; padding: 0 30px; -->
+		    <div style="width: 940px; padding: 0 30px;" class="container">
+		      	
+
+		    	<!-- DISPLAY RESULT INFO -->
+				<ul class="nav">
+					<li class="navbar-text">Show {{Search.result.docs.length}} on {{Search.result.num}} {{Search.params.entity}}   ({{Search.result.time}} ms) </li>
+				</ul>
+
+		    	<!-- DISPLAY FILTERS SORT/EXPORT -->
+				<ul class="nav pull-right">
+				  <!-- DEBUG -->
+				  <li class="pagination pagination-small">
+					<ul>
+					<li class="disabled"><a href="#">&laquo;</a></li>
+					<li ng-repeat="page in Search.result.pages" ng-class="" ><a ng-click="params({page:page})" href="">{{page}}</a></li>
+					<li ng-show="Search.result.more"><a href="#">...</a></li>
+					<li><a href="#">&raquo;</a></li>
+					</ul>
+				  </li>				  
+				  <li class="divider-vertical"></li>
+				  <li><a href="" bs-modal="'partials/search/solr.html'">Debug</a></li>					
+				  <li class="divider-vertical"></li>
+				  <!-- SORTING -->
+				  <li class="dropdown">
+				    <a data-toggle="dropdown" class="dropdown-toggle" href="">Sort<sub ng-show="Search.params.sort"> {{Search.params.sort}}</sub> <b class="caret"></b></a>
+				    <ul class="dropdown-menu">
+				      <li><a href="" ng-click="params({sort:'gene'})">Gene name</a></li>
+				      <li><a href="" ng-click="params({sort:'protein'})">Protein name</a></li>
+				      <li><a href="" ng-click="params({sort:'family'})">Protein family name</a></li>
+				      <li><a href="" ng-click="params({sort:'ac'})">ACs</a></li>
+				      <li><a href="" ng-click="params({sort:'aa'})">Protein length</a></li>
+				      <li><a href="" ng-click="params({sort:null});">The ranking score</a></li>
+				    </ul>
+				  </li>
+				  <!-- EXPORT -->
+				  <li class="divider-vertical"></li>
+				  <li class="dropdown">
+				    <a data-toggle="dropdown" class="dropdown-toggle" href="">Export  <b class="caret"></b></a>
+				    <ul class="dropdown-menu">
+				      <li><a href="#">XML</a></li>
+				      <li class="divider"></li>
+				      <li><a href="#">API JSON </a></li>
+				      <li><a href="#">API XML </a></li>
+				    </ul>
+				  </li>
+				  <li class="divider-vertical"></li>
+				  <li class="dropdown">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="">
+						<i class="icon-shopping-cart"></i><span class="badge">{{Cart.cartSize()}}</span><b class="caret"/></a>
+					<ul class="dropdown-menu">
+						<li><a href="" ng-click="emptyCart()">Empty cart</a></li>
+<!-- 						<li><a href="" ng-click="saveCart()">Save cart as list</a></li> -->
+						<li><a href="" bs-modal="'partials/lists/list-modal.html'" ng-click="launchModal($index, 'create')">Save cart as list</a></li>
+						<li><a href="" ng-click="showSelected()">Show only selected</a></li>
+					</ul>
+
+				  </li>
+
+
+				</ul>		      
+		    </div>
+		  </div>
+		</div>          
+    </div>
+    <div class="row">
+	    <div class="span3" >
+	      <!--RESULT SIDEBAR-->
+	      	<div class=" well-small  resultfilters" style="width:230px;" np-affix="160">
+				<ul class="nav nav-list " >
+			      <li class="divider"></li>
+				  <li class="nav-header">Filters</li>
+				  <li class="">For {{Search.result.display}} with:</li>
+			      <li class="solrp " ng-repeat="filter in Search.result.filters | orderBy:'name'">
+			        <a ng-show="filter.count" ng-class="active(filter.name,'filter')"  ng-click="toggle({filter:filter.name})">{{Search.result.ontology[filter.name]}} 
+			          <span class=" "> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&&'icon-remove'"></i>
+			        </a>
+				  </li>
+				  <li class="divider"></li>
+				  <input id="filters" class=""  type="hidden" ng-model="Search.params.filter"   autocomplete="off" >
+				</ul>
+			</div>
+	    </div>
+	    <div class="span9">
+	      <!-- RESULT CONTENT -->
+	      <div class=""  ng-include="getTemplateByEntity()"></div>
+	    </div>
+	  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  	<h3>{{modal.options[modal.type].title}} List</h3>
+</div>
+<div class="modal-body">
+	<form class="form-horizontal">
+		<div class="control-group">
+			<label class="control-label" for="inputName">Name: </label>
+			<div class="controls">
+				<input id="inputName" type="text" placeholder="Name..." ng-model="selected.name">
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="control-label" for="inputDescription">
+				<label>Description: </label>
+			</div>
+			<div class="controls">
+				<input id="inputDescription" type="text" placeholder="Description..." ng-model="selected.description">
+			</div>
+		</div>		
+		
+	</form>
+</div>
+<div class="modal-footer">
+	<button class="btn" ng-click="modalDissmiss(dismiss())">Close</button>
+	<button class="btn btn-primary" ng-click="saveModal(dismiss(), 'action')" ng-disabled="!selected.name">Save changes</button>
+</div>

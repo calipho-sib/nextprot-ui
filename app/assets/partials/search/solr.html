@@ -1,0 +1,27 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	<h3>Search parametters for entity {{Search.result.display}}</h3>
+</div>
+<div class="modal-body">
+<!-- DISPLAY SOLR PARAMS HERE -->
+   <div class="row-fluid "  >
+    <h4>Single term boost</h4>
+    <textarea  rows="7"  class="span11" ng-model="Search.qf"></textarea>
+
+    <h4>Phrase boost</h4>
+    <textarea  rows="7"  class="span11" ng-model="Search.pf"></textarea> 
+
+      
+    <h4>All params</h4>
+      <ol class="span12 ">
+        <li class="solrp " ng-repeat="(k,v) in Search.result.params"><span class="small blue">{{k}}</span>:<span class="small green">{{v }}</span></li>
+      </ol>
+    </div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn" ng-click="hide()">Close</button>
+    <button type="input" class="btn btn-primary" ng-click="Search.boostBias()">Bias</button>      
+    <button type="input" class="btn " ng-click="Search.boostReset()">Reset</button>      
+    <button type="input" class="btn " ng-click="reload();hide()">Apply</button>      
+	<!-- <button class="btn btn-primary" disabled ng-click="modal.saved=true;hide()">Save changes</button> -->
+</div>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"  ng-app="np" >
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport"     content="width=device-width, initial-scale=1.0">
+    <meta name="description"  content="neXtProt">
+    <meta name="author"       content="Olivier Evalet">
+    <meta name="fragment"     content="!" />    
+    <base href="/" />
+    <title ng-bind-template="{{title}}"></title>
+
+    <!--[if lte IE 7]>
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js"></script>
+    <![endif]-->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!--  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:600' rel='stylesheet' type='text/css'>--> 
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    
+  </head>
+
+  <body class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90" ng-controller="MainCtrl">
+ <!-- Navbar
+    ================================================== -->
+ <div class="navbar navbar-fixed-top">
+   <div class="navbar-inner">
+     <div class="container">
+       <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+       </a>
+       <a class="brand" href="">neXtProt</a>
+       <div class="nav-collapse collapse" id="main-menu">
+        <ul class="nav" id="main-menu-left">
+          <li><a href="">Home</a></li>
+          <!-- RECENT -->
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Recent activities <b class="caret"></b></a>
+            <ul class="dropdown-menu" id="swatch-menu">
+              <li><a href="#">Default</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Default</a></li>
+            </ul>
+          </li>
+          <!-- FAVORITE -->
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">My favorite <b class="caret"></b></a>
+            <ul class="dropdown-menu" id="swatch-menu">
+              <li><a href="#">Default</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Default</a></li>
+            </ul>
+          </li>
+          <!-- LABEL -->
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">My labels <b class="caret"></b></a>
+            <ul class="dropdown-menu" id="swatch-menu">
+              <li><a href="#">Default</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Default</a></li>
+            </ul>
+          </li>
+          <!-- DOWNLOAD -->
+          <li><a href="#">Downloads</a></li>
+          
+          <li><a href="/proteinlists">Lists & Tools</a>
+
+
+        </ul>
+        <ul class="nav pull-right" id="main-menu-right">
+          <li><a href="#">Login</a></li>
+          <li><a href="#">Or Sign up Now!</a></li>
+        </ul>
+       </div>
+     </div>
+   </div>
+ </div>
+
+ <div ng-cloak ng-show="Search.result.error" class=" error">
+   <div class="alert alert-error">{{Search.result.error}}</div>
+ </div>
+
+
+  <!-- Masthead
+  ================================================== -->
+  <div   ng-include="'partials/search/bar.html'"></div>
+
+  
+  
+  <div class="row">
+    <div class="row-fluid" ng-view>
+    </div>
+  </div>
+
+  <div ng-include="'partials/footer.html'"></div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+    <script src="js/vendor.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+      window.brunch = window.brunch || {};
+      window.brunch['auto-reload'] = {
+        enabled: true
+      };
+    </script>
+    
+  </body>    
+</html>
+
