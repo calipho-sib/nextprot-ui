@@ -1,0 +1,317 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"solr",
+				"solrParams"
+			],
+			[
+				"padding",
+				"padding-left"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/evaleto/workspaces/workspace-ndu/nextmodel/brunch/config.coffee",
+		"/Users/evaleto/workspaces/workspace-nextprot-web/com.genebio.nextprot.plugin.entry/sublime",
+		"/Users/evaleto/workspaces/workspace-nextprot-web/bioeditor/target/bioeditor-0.1.0/META-INF/MANIFEST.MF",
+		"/Users/evaleto/Downloads/lmsvm_sib_beta6/lmsvm/META-INF/MANIFEST.MF",
+		"/Users/evaleto/Downloads/lmsvm_sib_beta6/lmsvm/META-INF/BIONEXT.SF",
+		"/Users/evaleto/application/mongo-aggregate-1.js",
+		"/Users/evaleto/Downloads/uniprot.rdf",
+		"/Users/evaleto/Downloads/uniprot.n3",
+		"/Users/evaleto/Downloads/rp_wzqFa.csv-1.part",
+		"/Users/evaleto/application/jetty-8.1.7/contexts-available/resources.xml",
+		"/Users/evaleto/application/jetty-8.1.7/contexts/bigdata.xml",
+		"/Users/evaleto/application/jetty-8.1.7/etc/jetty.xml",
+		"/Users/evaleto/application/jetty-8.1.7/etc/jetty-contexts.xml",
+		"/Users/evaleto/application/jetty-8.1.7/etc/jetty-webapps.xml",
+		"/Users/evaleto/application/jetty-8.1.7/etc/webdefault.xml",
+		"/Users/evaleto/application/d2rq-0.8.1/nextprot-rdf-publication-mapping.ttl",
+		"/Volumes/dev-dbint/home/oper/www-smw2/includes/libs/JavaScriptMinifier.php",
+		"/Volumes/dev-dbint/home/oper/www-smw2/extensions/Chosen/Chosen_body.jq.php",
+		"/Volumes/dev-dbint/home/oper/www-smw2/extensions/HeaderTabs/HeaderTabs.php",
+		"/Volumes/dev-dbint/home/oper/www-smw2/extensions/Chosen/resources/jquery.chosen/chosen.jquery.bindings.js",
+		"/Volumes/dev-dbint/home/oper/www-smw2/extensions/Chosen/resources/jquery.chosen/chosen.jquery.js",
+		"/Volumes/dev-dbint/home/oper/www-smw2/includes/resourceloader/ResourceLoader.php",
+		"/Volumes/dev-dbint/home/oper/www-smw2/extensions/Chosen/Chosen.php",
+		"/Users/evaleto/Downloads/harvesthq-chosen-5808c97/example.jquery.html",
+		"/Volumes/dev-dbint/home/oper/www-smw2/extensions/Chosen/resources/jquery.chosen/chosen.css",
+		"/Volumes/dev-dbint/home/oper/www-smw2/extensions/SemanticFormsInputs/SFI_Settings.php",
+		"/Volumes/dev-dbint/home/oper/www-smw2/extensions/HeaderTabs/HeaderTabs_body.jq.php",
+		"/Volumes/dev-dbint/home/oper/www-smw2/resources/Resources.php",
+		"/Volumes/dev-dbint/home/oper/www-smw2/includes/resourceloader/ResourceLoaderModule.php",
+		"/Volumes/dev-dbint/home/oper/www-smw2/includes/libs/README",
+		"/Volumes/dev-dbint/home/oper/www-smw2/includes/resourceloader/ResourceLoaderUserOptionsModule.php",
+		"/Volumes/dev-dbint/home/oper/www-smw2/extensions/semantic-bundle/SemanticBundleSettings.php"
+	],
+	"find":
+	{
+		"height": 33.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"sort",
+			"dimensions",
+			"debounce",
+			"conso",
+			"defaultSolrHl",
+			"&nbsp;",
+			"\"",
+			"INSR",
+			"NX_.*",
+			"2B",
+			"(",
+			"%28",
+			"\\",
+			"__KEYWORDS__",
+			"O95819",
+			"095819",
+			"\"",
+			"&",
+			"&rdfs;",
+			"&",
+			"&foaf;",
+			"&skos;",
+			"owl;",
+			"&owl;",
+			"&rdf;",
+			"&xsd;",
+			"&core;",
+			"http://rdftest:2020/nextprot/meta/",
+			"			\"\n\"\n				",
+			"\"",
+			"			\"\n\"\n				",
+			"\n			\"\n\"\n				",
+			"\"",
+			"annot",
+			"evi",
+			"evide",
+			"vocabu",
+			"anno",
+			"chro",
+			"np:",
+			"mapTo",
+			"d2rq:propertyDefinitionLabel",
+			"discriminator",
+			"cv_annotation_discriminator",
+			"np:desc",
+			"np:unique",
+			"create",
+			"auto",
+			"creat",
+			"date",
+			"iden",
+			"ource/nextprot/annotations#cv_name",
+			"vo",
+			"nextprot/annotations",
+			"cv_status_id",
+			"protein",
+			"sequenc",
+			"valid",
+			"\"",
+			"mapping_annotations",
+			"				",
+			"</option>",
+			"<option[^>]*>",
+			"map:Proteins",
+			"nextprot_sequence_identifiers",
+			"isoform",
+			"</option>",
+			"<option[^>]*>",
+			"d2rq:join",
+			"nnotation_discriminator",
+			"cv_term_cat",
+			"cv_terms_cat",
+			"patte",
+			"nextprot_identifier_resou",
+			"nextorit_identifier_resou",
+			"topic",
+			"refersToClassMap",
+			"nextprot/sequence_identifiers",
+			"nextprot.nextprot_annotations.cv_annotation_",
+			"datasource_id",
+			"t_cv_qualifier",
+			"_cv_annotation",
+			"_cv_annotations",
+			"_cv_annotation_type_id",
+			"cv_annotation_type_id",
+			"_cv_terms",
+			"_cvterms",
+			"_annotations",
+			"xrefs_cv_database_id__ref ",
+			"_resources",
+			"_db_xrefs",
+			"nextprot_identifier_resource_assoc",
+			"quence_identifiers.id",
+			"quence_identifiers_identifier_id",
+			"sequence_identifiers_cv_type_id",
+			"lications_resource_id",
+			"map:nextprot_publications_cv_journal_id",
+			"rot_publications_cv_journal_id",
+			"cv_journals",
+			"publications.cv_journal_id",
+			"nextprot_cv_identifier_types",
+			"nextprot_cv_publication_types",
+			"nextprot_cv_resource_assoc_types",
+			"sequence_identifiers",
+			"map:nextprot_identifier_resource_assoc",
+			"_cv_type_id_",
+			"_cv_type_id_r",
+			"_cv_type_id",
+			"cv_type_id",
+			"cv_type",
+			"_type",
+			"identifier_resource",
+			"cv_resource_types",
+			"cv_journals",
+			"cv_quality_qualifiers",
+			"cv_status",
+			"_resources",
+			"resources",
+			"db_xrefs",
+			"cv_datasource",
+			"cv_datasources",
+			"join",
+			"map:",
+			"nextprot_publications",
+			"publications",
+			"sequence_identifiers",
+			"remove-evidence",
+			"map:"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"",
+			"insulin",
+			"",
+			"INSR",
+			"",
+			"rdfs:",
+			"foaf:",
+			"skos:",
+			"owl:",
+			"owl;",
+			"rdf:",
+			"xsd:",
+			"core:",
+			"",
+			"Proteins",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 370.0,
+	"status_bar_visible": true
+}
