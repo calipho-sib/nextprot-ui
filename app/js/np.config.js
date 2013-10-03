@@ -135,7 +135,7 @@ function ($http) {
  //
  // solr configuration
  var defaultSolr = {
-   SOLR_SERVER: 'http://localhost:port/solr/:core/:action',
+   SOLR_SERVER: 'http://uat-web1:port/solr/:core/:action',
    SOLR_PORT:':8985',
    
    

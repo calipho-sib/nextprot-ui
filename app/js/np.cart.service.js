@@ -1,6 +1,6 @@
 'use strict';
 
-var CartService = angular.module('np.cart.service', []);
+var CartService = angular.module('np.cart', []);
 
 CartService.factory('Cart', [
 	'$resource', 

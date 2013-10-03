@@ -1,6 +1,10 @@
 // Karma configuration
 // Generated on Mon Sep 30 2013 12:13:38 GMT+0200 (CEST)
 
+//
+// Jasmin API
+// http://pivotal.github.io/jasmine/
+
 module.exports = function(config) {
   config.set({
 

@@ -2,9 +2,12 @@
 
 //
 //Define the search module (np.search)  for controllers, services and models
-var SearchModule=angular.module('np.search', ['np.search.ui','np.search.service']);
-var CartModule = angular.module('np.cart', ['np.cart.service']);
-var ListModule = angular.module('np.lists', ['np.proteinlist.service']);
+var SearchModule=angular.module('np.search', [
+		'np.search.ui',
+		'np.search.service',
+		'np.cart',
+		'np.proteinlist.service'
+]);
 
 //
 //define all routes for user Search

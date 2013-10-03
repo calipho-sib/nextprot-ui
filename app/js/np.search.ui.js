@@ -3,9 +3,9 @@
 
 var SearchUI=angular.module('np.search.ui', []);
 
-SearchUI.directive('version', ['version', function(version) {
+SearchUI.directive('version', ['config', function(config) {
     return function(scope, elm, attrs) {
-      elm.text(version);
+      elm.text(config.version);
     };
   }]);
 
