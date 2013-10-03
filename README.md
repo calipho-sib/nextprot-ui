@@ -13,15 +13,15 @@ Main Client Features:
 [solr](https://solr)
 
 ## Installation
->npm install
->sudo npm install -g karma
+  >sudo npm install -g karma
+  >npm install
 
 ## Usage
->node app
+  >node app
 
 
 ## Testing
->karma start test/config.js
+  >karma start test/config.js
 
 
 ## Deploying
@@ -31,11 +31,11 @@ Main Client Features:
   should be
     <base href="/protosearch/" />
 
->./node_modules/.bin/brunch -m build
->rsync -auv build/* np_integration@uat-web1:/home/np_integration/np-drupal/protosearch/
+  >./node_modules/.bin/brunch -m build
+  >rsync -auv build/* np_integration@uat-web1:/home/np_integration/np-drupal/protosearch/
 
 
 
 ## start/kill solr
->java -Dprotosearch.solr -Xmx512m -jar start.jar &
->pkill -f protosearch.solr
+  >java -Dprotosearch.solr -Xmx512m -jar start.jar &
+  >pkill -f protosearch.solr

@@ -28,17 +28,12 @@
     "clean-css-brunch": ">= 1.0 < 1.5",
 
     "express": "3.x.x",
-    "email-templates": "0.0.5",
-    "ejs": "*",
-    "marked": "0.2.x",
-    "nodemailer": "0.3.x"
+    "ejs": "*"
   },
   "devDependencies": {
     "karma": ">= 0.10",
+    "karma-junit-reporter":"0.*",
     "karma-story-reporter":"0.*",
-    "mocha": "*",
-    "should": ">= 0.0.1",
-    "supertest": ">= 0.3.0",
     "coffee-script": ">= 1.3.3"
   }
 }
