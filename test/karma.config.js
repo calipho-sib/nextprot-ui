@@ -15,13 +15,13 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'vendor/scripts/jquery-1.10.2.js',
+      'vendor/scripts/underscore-min.js',
       'vendor/scripts/bootstrap.min.js',
       'vendor/scripts/angular.js',
       'vendor/scripts/*.js',
       'app/js/*.js',
       'test/lib/angular/angular-mocks.js',
-      'test/lib/angular/angular-scenario.js',
-      'test/**/*Spec.js'
+      'test/**/*.test.js'
     ],
 
 
@@ -33,7 +33,7 @@ module.exports = function(config) {
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-    reporters: ['progress'],
+    reporters: ['progress','growl'],
 
 
     // web server port

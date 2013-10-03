@@ -24,7 +24,7 @@ function ($routeProvider, $locationProvider, $httpProvider) {
 }
 ]);
 
-SearchModule.controller('MainCtrl',[
+SearchModule.controller('SearchCtrl',[
    '$resource',
    '$scope',
    '$rootScope',
@@ -207,7 +207,3 @@ SearchModule.filter('split', function() {
 
 
 
-/**
- * define the version
- */
-SearchModule.value('version', '0.1');
