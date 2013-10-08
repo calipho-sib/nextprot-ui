@@ -21,7 +21,13 @@ Main Client Features:
 
 
 ## Testing
-  >karma start test/config.js
+Unit testing
+  >npm run-script unit
+Integration testing must start the application
+  >node app&
+  >npm run-script integration
+Or use can directly work with karma
+  >karma start test/karma.unit.js
 
 
 ## Deploying
