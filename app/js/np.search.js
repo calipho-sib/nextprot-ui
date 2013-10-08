@@ -14,17 +14,16 @@ var SearchModule=angular.module('np.search', [
 SearchModule.config([
 	'$routeProvider',
 	'$locationProvider',
-'$httpProvider',
+	'$httpProvider',
 
 function ($routeProvider, $locationProvider, $httpProvider) {
-
- // List of routes of the application
- $routeProvider
-	.when('/search', {templateUrl: 'partials/search/result.html'})
-	.when('/search/:query', {templateUrl: 'partials/search/result.html'})
-	.when('/:entity/search', {templateUrl: 'partials/search/result.html'})
-	.when('/:entity/search/:query', {templateUrl: 'partials/search/result.html'});
-}
+	 // List of routes of the application
+	 $routeProvider
+		.when('/search', {templateUrl: 'partials/search/result.html'})
+		.when('/search/:query', {templateUrl: 'partials/search/result.html'})
+		.when('/:entity/search', {templateUrl: 'partials/search/result.html'})
+		.when('/:entity/search/:query', {templateUrl: 'partials/search/result.html'});
+	}
 ]);
 
 SearchModule.controller('SearchCtrl',[
@@ -35,7 +34,7 @@ SearchModule.controller('SearchCtrl',[
    '$routeParams',
    '$route',
    'Search', 
-   function($resource, $scope, $rootScope, $location,$routeParams, $route, Search){
+function($resource, $scope, $rootScope, $location,$routeParams, $route, Search){
 	 //
 	 // scope from template
 	 $scope.Search=Search;

@@ -7,11 +7,11 @@
         <!--                        -->
 	      <div class="btn-group pull-right">
 	      
-	        <a class="btn dropdown-toggle" data-toggle="dropdown" href="">
+	        <a class="btn dropdown-toggle" data-toggle="dropdown" href="" id="search-entity">
             {{Search.params.entity}}&nbsp;
 	          <span class="caret"></span>
 	        </a>
-	        <ul class="dropdown-menu">
+	        <ul id="search-entity-dropdown" class="dropdown-menu">
 	          <!-- dropdown menu links -->
 	          <li><a  ng-click="entity({entity:'proteins'})">Proteins</a></li>
 	          <li><a  ng-click="entity({entity:'publications'})">Publications</a></li>
@@ -26,11 +26,11 @@
 	        <!--  QUALITY SELECTION     -->
           <!--                        -->
 	        <div class="btn-group">
-		        <button class="btn dropdown-toggle btn" type="button" ng-cloak data-toggle="dropdown" ng-show="Search.config.widgets.gold">
+		        <button class="btn dropdown-toggle btn" type="button" ng-cloak data-toggle="dropdown" ng-show="Search.config.widgets.gold" id="search-quality">
 		          {{Search.config.widgets.qualityLabel[Search.params.quality]}}
 		          <span class="caret"></span>
 		        </button>
-		        <ul class="dropdown-menu" ng-show="Search.config.widgets.gold">
+		        <ul id="search-quality-dropdown" class="dropdown-menu" ng-show="Search.config.widgets.gold">
 		            <li><a ng-click="quality('gold')" >Gold only</a></li>
 		            <li><a ng-click="quality('gold-and-silver')" >Include silver</a></li>
 		        </ul>
@@ -40,7 +40,7 @@
           <!--                        -->
           <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
           <!--                        -->
-	        <input id="facet" class=" "  type="text" ng-model="Search.params.query"  
+	        <input id="search-query" class=" "  type="text" ng-model="Search.params.query"  
 	               ng-class="{'quality-search-width':Search.config.widgets.gold,'no-quality-search-width':!Search.config.widgets.gold}" 
 	               autocomplete="off" t-autocomplete="">
 
@@ -48,13 +48,13 @@
           <!--                        -->
           <!--  CLEAN BUTTON          -->
           <!--                        -->
-	        <button class="btn" type="button" ng-click="clean({})" ng-disabled="!Search.params.query || !Search.params.query.length"><i class="icon-remove ajax-end"></i><i class="ajax-start icon-loading"></i></button>
+	        <button id="search-clear"  class="btn" type="button" ng-click="clean({})" ng-disabled="!Search.params.query || !Search.params.query.length"><i class="icon-remove ajax-end"></i><i class="ajax-start icon-loading"></i></button>
 
 
           <!--                        -->
           <!--  SEARCH BUTTON         -->
           <!--                        -->
-	        <button class="btn" type="submit"  ng-disabled="!Search.params.query || !Search.params.query.length"><i class="icon-search" ></i>&nbsp;Search</button>
+	        <button id="search-button" class="btn" type="submit"  ng-disabled="!Search.params.query || !Search.params.query.length"><i class="icon-search" ></i>&nbsp;Search</button>
 	      </div>
 	      <div class="span10 nomargin">	       
 	        <span ng-show="Search.result.spellcheck.collations.length"><b>Did you mean:</b> 

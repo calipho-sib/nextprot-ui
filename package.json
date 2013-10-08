@@ -12,7 +12,8 @@
   },
   "scripts": {
     "start": "node app",
-    "test": "node_modules/.bin/karma start test/karma.config.js  --reporters story "
+    "unit": "node_modules/.bin/karma start test/karma.unit.js  --reporters story ",
+    "integration": "node_modules/.bin/karma start test/karma.integration.js  --reporters story "
   },
   "dependencies": {
     "brunch": ">= 1.4 < 1.5",
@@ -27,13 +28,15 @@
     "uglify-js-brunch": ">= 1.0 < 1.5",
     "clean-css-brunch": ">= 1.0 < 1.5",
 
+    
     "express": "3.x.x",
     "ejs": "*"
   },
+  
   "devDependencies": {
-    "karma": ">= 0.10",
+    "karma": "~0.10",
     "karma-junit-reporter":"0.*",
     "karma-story-reporter":"0.*",
-    "coffee-script": ">= 1.3.3"
-  }
+    "karma-ng-scenario": "~0.1"
+  }  
 }
