@@ -5,7 +5,7 @@
       		<li class="divider-vertical"/>
       		<li><a href="" ng-click="unselectAll()">Unselect All</a></li>
       	</ul>
-        <ul ng-cloak>
+        <ul ng-cloak id="search-results">
           <li ng-repeat="doc in Search.result.docs" >
           	<input type="checkbox" name="docs[]" value="{{doc.id}}" ng-model="selectedResults[doc.id]" id="{{doc.id}}">
             <a href="http://www.nextprot.org/entry/{{doc.id}}">{{doc.recommended_name}} ({{doc.recommended_gene_names[0]}}) [{{doc.id}}]</a> 
