@@ -43,14 +43,13 @@ Or use can directly work with karma
 
 
 ## start/kill solr
-  >java -Dprotosearch.solr -Xmx512m -jar start.jar &
+  >java -Dprotosearch.solr -Xmx512m -jar -Djetty.port=8985 start.jar &
   >pkill -f protosearch.solr
 
 
 ## update the remote solr indexes for entries, publications and terms
-
-LOCAL_SOLR=$HOME/application/solr-4.4.0/example
-SOLR_INDEX="npentries1 npentries1gold npcvs1 nppublications1"
-for index in $SOLR_INDEX; do
-  rsync -Lavz --delete $LOCAL_SOLR/solr/$index/ np_integration@uat-web1:/mnt/npdata/protosearch/solr/solr/$index/
-done  
+  LOCAL_SOLR=$HOME/application/solr-4.4.0/example
+  SOLR_INDEX="npentries1 npentries1gold npcvs1 nppublications1"
+  for index in $SOLR_INDEX; do
+    rsync -Lavz --delete $LOCAL_SOLR/solr/$index/ npteam@crick:/work/devtools/solr-4.5.0/example/solr/$index/
+  done  
