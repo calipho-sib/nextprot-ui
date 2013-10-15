@@ -1,6 +1,10 @@
 'use strict';
 var SearchService=angular.module('np.search.service',[]);
 
+
+// Search API
+// http://crick:8080/nextprot-api/search/entry.json?query=insulin&rows=20&page=2&sort=id&order=asc
+
 /**
  * define service that made the search
  */
