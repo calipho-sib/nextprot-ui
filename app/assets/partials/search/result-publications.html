@@ -1,6 +1,6 @@
       <!-- RESULT HEADERS -->
       <div class="row" >
-        <ul>
+        <ul ng-cloak id="search-results">
           <li ng-repeat="doc in Search.result.docs"  ng-cloak>
             <span class="green small">{{doc.pub_type}}</span> <a href="https://www.nextprot.org/db/publication/{{doc.pub_ac}}"> {{doc.pub_title}} ({{doc.pub_date}})</a><br/>
             <span class="green small">journal: <b>{{doc.pub_journal}}</b> - filters: <b>{{doc.filters}}</b> </span><br>
