@@ -42,6 +42,7 @@ SearchService.factory('Search',[
 	      wt: "json",
 	      rows:20,
 	      indent: true,
+	      sortMissingLast:"true",
 	      action:'select'
 	}		
 	
@@ -282,6 +283,7 @@ SearchService.factory('Search',[
 		//
 		// select the sort setting
 		solrParams.sort=(me.params.sort)?solr.sort[me.params.sort]:solr.sort.default;
+		console.log("sort",solrParams.sort);
 
 		var query=this.params.query.split(/[\s,]+/).join(' +');
 		solrParams.q='+'+query;
@@ -305,7 +307,7 @@ SearchService.factory('Search',[
 		if (solrParams.hl)
 			solrParams["hl.fl"]=solr.hi.join(',');
 
-		$solr.search(solrParams,function(docs){
+		$solr.search(solrParams).$promise.then(function(docs){
 			me.result.params=solrParams;
 			me.result.display=me.params.entity;
 			me.result.core=solr.name;
@@ -344,6 +346,9 @@ SearchService.factory('Search',[
 			me.result.spellcheck=me.parseSpellcheck(docs.spellcheck);
 			console.log('docs: ', docs);			
 			if(cb)cb(me.result,solrParams)
+		},function(error){
+			//if (error.status)
+			me.result.error="Ooops, request failed";
 		})	
 	}
 

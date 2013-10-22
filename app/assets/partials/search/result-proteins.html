@@ -9,10 +9,22 @@
           <li ng-repeat="doc in Search.result.docs" >
           	<input type="checkbox" name="docs[]" value="{{doc.id}}" ng-model="selectedResults[doc.id]" id="{{doc.id}}">
             <a href="http://www.nextprot.org/entry/{{doc.id}}">{{doc.recommended_name}} ({{doc.recommended_gene_names[0]}}) [{{doc.id}}]</a> 
-            <span><a class="btn btn-mini" toggle="#line-{{$index}}"  ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i> Details</a> </span>
-
-            <div class="gray ">
-              Chromosomal location: {{doc.gene_band[0]}}, {{doc.filters}}
+            <span><a class="btn btn-mini hide" toggle="#line-{{$index}}"  ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i> Details</a> </span>
+            <div class="small">
+              {{doc.function_desc[0]}} <span ng-hide="doc.function_desc"> No functional information for this protein. </span>&nbsp;
+            </div>
+            <div class="gray small">
+              Chromosomal location: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/exons">{{doc.chr_loc}}</a> 
+              Isoforms: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.isoform_num}}</a> 
+              PTMs: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/">{{doc.ptm_num}}</a> 
+              Sequence length: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/">{{doc.aa_length}}</a> 
+              Variants: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/">{{doc.var_num}}</a> 
+              Disease: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/">{{doc.disease_bool}}</a> 
+              Expression: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/">{{doc.expression_num}}</a> 
+              Mutagenesis: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/">{{doc.mutagenesis_num}}</a> 
+              Proteomics: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/">{{doc.proteomic_bool}}</a> 
+              Structure: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/">{{doc.structure_bool}}</a> 
+              Proteins existence: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/">{{doc.protein_existence}}</a>
             </div>
             <!-- STD FIELDS -->
             <!-- id, recommended_name, recommended_gene_names, gene_band, filters, 

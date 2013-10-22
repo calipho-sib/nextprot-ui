@@ -52,7 +52,9 @@ function ($http) {
 	var proteins={
 			name:"npentries1",
 			fl:["id","recommended_ac","recommended_name","uniprot_name","recommended_gene_names","gene_band","score",
-			    "cv_names",  "clone_name", "ensembl", "microarray_probe", "interactions", "family_names", "alternative_acs", "filters"],
+			    "cv_names",  "clone_name", "ensembl", "microarray_probe", "interactions", "family_names", "alternative_acs", 
+			    "aa_length", "function_desc", "chr_loc", "isoform_num", "ptm_num", "var_num", "disease_bool", "proteomic_bool", "structure_bool", "mutagenesis_num", "expression_num",
+			    "filters"],
 			//
 			// single term boost bias
 			qf:["recommended_name^32","uniprot_name^16","alternative_names^16",
@@ -83,11 +85,11 @@ function ($http) {
 	    		"interactions", "annotations"
 	    	],	    	
 		    sort:{
-		    	gene:'recommended_gene_names asc',
-		    	protein:'recommended_name asc',
-		    	family:'family_names asc',
+		    	gene:'recommended_gene_names_s asc',
+		    	protein:'recommended_name_s asc',
+		    	family:'family_names_s asc',
 		    	ac:'id asc',
-		    	aa:'',
+		    	aa:'aa_length asc',
 		    	default:'score desc'
 		    },
 			filters:"filters",
@@ -135,7 +137,7 @@ function ($http) {
  //
  // solr configuration
  var defaultSolr = {
-   SOLR_SERVER: 'http://uat-web1:port/solr/:core/:action',
+   SOLR_SERVER: 'http://localhost:port/solr/:core/:action',
    SOLR_PORT:':8985',
    
    

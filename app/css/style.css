@@ -10,7 +10,7 @@
 	color:#aaa;
 }
 .small{
-	font-size:80%;
+	font-size:90%;
 }
 
 
@@ -88,7 +88,7 @@
 
 .error{
 	position:fixed;
-	top:56px;
+	top:46px;
   margin-left:auto;
   margin-right:auto;
   width:50%;

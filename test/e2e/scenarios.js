@@ -66,6 +66,20 @@ describe('nextprot:', function() {
       expect(element('div.error').text()).toContain('pouet');
     });
 
+    it("testing paging, kinane receptor => 2 pages of 20 items",function({
+      browser().navigateTo('/proteins/search/kinane receptor');
+      expect(element('.resultparams .pagination li').count()).toBe(5);
+      expect(element('.resultparams .pagination li.disabled').count()).toBe(1);
+      expect(element('.resultparams .pagination li.ng-scope').count()).toBe(2);
+    }))
+
+    it("testing paging, kinase receptor => 2 pages of 20 items",function({
+      browser().navigateTo('/proteins/search/kinase receptor');
+      expect(element('.resultparams .pagination li').count()).toBe(8);
+      expect(element('.resultparams .pagination li.disabled').count()).toBe(1);
+      expect(element('.resultparams .pagination li.ng-scope').count()).toBe(5);
+    }))
+
   });
 
 

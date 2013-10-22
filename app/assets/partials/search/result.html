@@ -77,7 +77,7 @@
 				  <li class="nav-header">Filters</li>
 				  <li class="">For {{Search.result.display}} with:</li>
 			      <li class="solrp " ng-repeat="filter in Search.result.filters | orderBy:'name'">
-			        <a ng-show="filter.count" ng-class="active(filter.name,'filter')"  ng-click="toggle({filter:filter.name})">{{Search.result.ontology[filter.name]}} 
+			        <a ng-show="filter.count" ng-class="active(filter.name,'filter')"  ng-click="toggle({filter:filter.name})" href="">{{Search.result.ontology[filter.name]}} 
 			          <span class=" "> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&&'icon-remove'"></i>
 			        </a>
 				  </li>
