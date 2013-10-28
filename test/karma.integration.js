@@ -26,7 +26,6 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/lib/angular-scenario.js',
       'test/e2e/**/*.js'
     ],
 
@@ -36,6 +35,10 @@ module.exports = function(config) {
       
     ],
 
+    plugins: [
+        'karma-ng-scenario',
+        'karma-chrome-launcher'
+    ],
 
     // test results reporter to use
     // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
