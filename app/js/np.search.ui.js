@@ -3,6 +3,23 @@
 
 var SearchUI=angular.module('np.search.ui', []);
 
+
+SearchUI.filter('has', function() {
+	return function(input, filter) {
+		if (!input || !filter||!input.length ||!filter.length)
+			return 'no';
+		return (input.indexOf(filter)>-1)?'yes':'no';
+	}
+});
+
+SearchUI.filter('limit', function() {
+	return function(input, max) {
+		if(!input)return;
+		if(!max)max=200;
+		return (input.substring(0,max)+' ...');
+	}
+});
+
 SearchUI.directive('version', ['config', function(config) {
     return function(scope, elm, attrs) {
       elm.text(config.version);

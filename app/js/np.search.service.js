@@ -1,5 +1,5 @@
 'use strict';
-var SearchService=angular.module('np.search.service',[]);
+var SearchService=angular.module('np.search.service',['np.search.ui']);
 
 
 // Search API

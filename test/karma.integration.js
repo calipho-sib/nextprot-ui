@@ -37,6 +37,7 @@ module.exports = function(config) {
 
     plugins: [
         'karma-ng-scenario',
+        'karma-story-reporter',
         'karma-chrome-launcher'
     ],
 

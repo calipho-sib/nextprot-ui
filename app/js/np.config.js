@@ -14,32 +14,32 @@ function ($http) {
 			name:"nppublications1",
 			//
 			// display fields
-			fl:["pub_id","pub_ac","pub_date","pub_title","pub_abstract","pub_type",
-	            "pub_journal","pub_source","pub_authors","pub_has_evidence",
-	            "pub_is_largescale","pub_is_computed","filters"
+			fl:["id","ac","date","title","abstract","type",
+	            "journal","source","authors","has_evidence",
+	            "is_largescale","is_computed","filters"
 	        ],
 			//
 			// single term boost bias
-	        qf:["pub_ac^16","pub_date^16","pub_title^16","pub_abstract^16","pub_type^16",
-		            "pub_journal^8","pub_source^8","pub_authors^8","pub_has_evidence^8",
-		            "pub_is_largescale^4","pub_is_computed^4"
+	        qf:["ac^16","date^16","title^16","abstract^16","type^16",
+		            "journal^8","source^8","authors^8","has_evidence^8",
+		            "is_largescale^4","is_computed^4"
 		    ],
 			//
 			// phrase boost bias
-	        pf:["pub_ac^160","pub_date^160","pub_title^160","pub_abstract^160","pub_type^160",
-		            "pub_journal^80","pub_source^80","pub_authors^80","pub_has_evidence^80",
-		            "pub_is_largescale^40","pub_is_computed^40"
+	        pf:["ac^160","date^160","title^160","abstract^160","type^160",
+		            "journal^80","source^80","authors^80","has_evidence^80",
+		            "is_largescale^40","is_computed^40"
 		    ],
 			//
 			// neutral boost bias
-	        fn:["pub_ac^1","pub_date^1","pub_title^1","pub_abstract^1","pub_type^1",
-		            "pub_journal^1","pub_source^1","pub_authors^1","pub_has_evidence^1",
-		            "pub_is_largescale^1","pub_is_computed^1"
+	        fn:["ac^1","date^1","title^1","abstract^1","type^1",
+		            "journal^1","source^1","authors^1","has_evidence^1",
+		            "is_largescale^1","is_computed^1"
 		    ],
-		    hi:["pub_date","pub_title","pub_type", "pub_journal","pub_source","pub_authors"
+		    hi:["date","title","type", "journal","source","authors"
 		    ],
 		    sort:{
-		    	default:'pub_date desc,pub_volume desc, pub_first_page desc, pub_title asc'
+		    	default:'date desc,volume desc, first_page desc, title_s asc'
 		    },
 			filters:"filters",
 	    	widgets:{
@@ -52,9 +52,8 @@ function ($http) {
 	var proteins={
 			name:"npentries1",
 			fl:["id","recommended_ac","recommended_name","uniprot_name","recommended_gene_names","gene_band","score",
-			    "cv_names",  "clone_name", "ensembl", "microarray_probe", "interactions", "family_names", "alternative_acs", 
-			    "aa_length", "function_desc", "chr_loc", "isoform_num", "ptm_num", "var_num", "disease_bool", "proteomic_bool", "structure_bool", "mutagenesis_num", "expression_num",
-			    "filters"],
+			    "aa_length", "function_desc", "chr_loc", "isoform_num", "ptm_num", "var_num", "mutagenesis_num", "expression_num",
+			    "filters", "protein_existence"],
 			//
 			// single term boost bias
 			qf:["recommended_name^32","uniprot_name^16","alternative_names^16",
@@ -78,12 +77,7 @@ function ($http) {
 			    "cv_names",  "clone_name", "ensembl", "microarray_probe", "interactions", "family_names", "alternative_acs", "filters",
 			    "cv_ancestors", "peptide", "antibody", "cv_synonyms", "annotations", "publications", "xrefs"
 	    	],
-	     	hi_full:["id", "recommended_ac", "recommended_name", "uniprot_name", "alternative_names",  "alternative_acs", 
-	    		"recommended_gene_names", "alternative_gene_names",
-	    		"family_names", "cv_names", "cv_synonyms", "cv_ancestors", "xrefs", 
-	    		"publications", "clone_name", "ensembl", "gene_band","microarray_probe", "peptide", "antibody",
-	    		"interactions", "annotations"
-	    	],	    	
+   	
 		    sort:{
 		    	gene:'recommended_gene_names_s asc',
 		    	protein:'recommended_name_s asc',
@@ -137,7 +131,7 @@ function ($http) {
  //
  // solr configuration
  var defaultSolr = {
-   SOLR_SERVER: 'http://localhost:port/solr/:core/:action',
+   SOLR_SERVER: 'http://crick.isb-sib.ch:port/solr/:core/:action',
    SOLR_PORT:':8985',
    
    
@@ -192,7 +186,7 @@ function ($http) {
 
    
    //
-   // to sort by year => pub_date%YEAR = mod(ms(pub_date),ms(YEAR)) =mod(ms(pub_date),3.16e+10)
+   // to sort by year => date%YEAR = mod(ms(date),ms(YEAR)) =mod(ms(date),3.16e+10)
    core:{
 	   		'proteinsgold':proteinsgold,
 			'proteins':proteins,

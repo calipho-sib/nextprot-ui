@@ -151,10 +151,10 @@ describe('nextprot:', function() {
 
   });
   describe("FT2 By default, if a user enters multiple words, the full text search tool will use the AND operator",function(){
-    it('search multiple words [amos btk jak2] should result 0 doc', function() {
+    it('search multiple words [cornichon btk] should result 0 doc', function() {
       //
       // on terms
-      browser().navigateTo('/proteins/search/amos btk jak2');
+      browser().navigateTo('/proteins/search/cornichon btk');
       expect(element('#search-entity').text()).toContain('proteins');
       expect(element('#search-results>li').count()).toBe(0);
 
