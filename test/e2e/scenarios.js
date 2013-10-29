@@ -8,7 +8,7 @@ describe('nextprot:', function() {
   angular.scenario.matcher('toArrayContain', function(expected) {
     var result=true;
     angular.forEach(this.actual, function(e){
-      if(e.indexOf(expected)==-1){
+      if(e.toLowerCase().indexOf(expected.toLowerCase())==-1){
         result=false;
         return false;
       }
@@ -204,9 +204,9 @@ describe('nextprot:', function() {
     it('search with year 1968', function() {
       //
       // on terms
-      browser().navigateTo('/publications/search/1968');
+      browser().navigateTo('/publications/search/date:"1981-04-30T22:00:00Z"');
       expect(element('#search-entity').text()).toContain('publications');
-      expect(element('#search-results>li a.ng-binding').text()).toContain('1968');
+      expect(element('#search-results>li a.ng-binding').text()).toContain('1981');
     });    
 
   });

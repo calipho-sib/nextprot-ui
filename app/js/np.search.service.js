@@ -256,15 +256,15 @@ SearchService.factory('Search',[
 		me.result.docs = [];
 		
 		//
-		// check if boost must be updated
-		if (this.params.entity!==params.entity){
+		// check if boost must be updated		
+		if (this.params.entity!==params.entity ){
 			this.updateBoost(params, function(err){
 				me.result.error=err;
 				return cb(me.result);
 			})		
 			if (me.result.error)return;
 		}
-		
+
 		if (params){
 			angular.extend(this.params,  defaultUrl, params)
 		}
@@ -283,7 +283,6 @@ SearchService.factory('Search',[
 		//
 		// select the sort setting
 		solrParams.sort=(me.params.sort)?solr.sort[me.params.sort]:solr.sort.default;
-		console.log("sort",solrParams.sort);
 
 		var query=this.params.query.split(/[\s,]+/).join(' +');
 		solrParams.q='+'+query;
@@ -292,14 +291,15 @@ SearchService.factory('Search',[
 		if (this.params.filter)solrParams.q+=" AND filters:"+this.params.filter
 
 		
-		solrParams.qf=this.qf.toLowerCase().replace(/[\r\n]/g,' ') + " text";
-		solrParams.pf=this.pf.toLowerCase().replace(/[\r\n]/g,' ')+ " text^20";
 		
 		//
-		// facets on filters
+		// facets on filters ! remove pf
 		if (solr.filters){
 			angular.extend(solrParams, defaultSolrFacet);
 		}
+		solrParams.qf=this.qf.toLowerCase().replace(/[\r\n]/g,' ') + " text";
+		solrParams.pf=this.pf.toLowerCase().replace(/[\r\n]/g,' ')+ " text^20";
+
 		//
 		// select return fields (less details)
 		//solrParams.fl=solr.fl.join(',')
