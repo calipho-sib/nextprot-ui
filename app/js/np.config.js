@@ -83,7 +83,7 @@ function ($http) {
 		    	protein:'recommended_name_s asc',
 		    	family:'family_names_s asc',
 		    	ac:'id asc',
-		    	aa:'aa_length asc',
+		    	length:'aa_length asc',
 		    	default:'score desc'
 		    },
 			filters:"filters",
@@ -131,8 +131,9 @@ function ($http) {
  //
  // solr configuration
  var defaultSolr = {
-   SOLR_SERVER: 'http://crick.isb-sib.ch:port/solr/:core/:action',
-   SOLR_PORT:':8985',
+   SOLR_SERVER:'http://mac-096.isb-sib.ch:port/nextprot-api/:action/:entity',
+   SOLR_PORT:':8080',
+
    
    
    ontology:{
@@ -192,6 +193,20 @@ function ($http) {
 			'proteins':proteins,
 			'publications':pub,
 			'terms':cvs
+   },
+
+   entityMapping:{
+		proteins:'entry.json',
+		publications:'publications.json',
+		terms:'terms.json',
+		'entry.json':'proteins',
+		'publications.json':'publications',
+		'terms.json':'terms'
+   },
+
+   paginate:{
+   		steps:4,
+   		rows:50
    }
 
  };

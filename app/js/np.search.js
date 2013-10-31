@@ -55,6 +55,7 @@ function($resource, $scope, $rootScope, $location,$routeParams, $route, Search){
 	 
 	 
 	 $scope.entity=function(params){
+		 $location.search('start',null)
 		$location.search('filter',null)
 		$location.search('quality',null)
 		$location.search('sort',null)
@@ -62,6 +63,7 @@ function($resource, $scope, $rootScope, $location,$routeParams, $route, Search){
 	 }
 	 
 	 $scope.clean=function(){
+		 $location.search('start',null)
 		 $location.search('filter',null)
 		 $location.search('quality',null)
 		 $location.search('sort',null)
@@ -69,6 +71,7 @@ function($resource, $scope, $rootScope, $location,$routeParams, $route, Search){
 	 }
 
 	 $scope.toggle=function(params){
+		$location.search('start',null)
 	    angular.forEach(params, function(v, k) {
 	    	var t=($location.search()[k] && $location.search()[k]===v)? null:v;
 	    	$location.search(k,t)
@@ -90,15 +93,15 @@ function($resource, $scope, $rootScope, $location,$routeParams, $route, Search){
 	 }
 
 	 $scope.moredetails=function(index){
- 		 Search.solrDetails(index, $routeParams, function(docs, solrParams){
-		 });
+
 		 
 	 } 
 	 
 	 $scope.go=function(){
+		console.log($routeParams)
 		 var url=$location.url();
 		 $location.search('filter',null)
-		 $location.path('/'+Search.params.entity+'/search/'+Search.params.query.trim());
+		 $location.path('/'+Search.config.entityMapping[Search.params.entity]+'/search/'+Search.params.query.trim());
 		 
 		 //
 		 // url has not changed => FIRE event
@@ -109,6 +112,7 @@ function($resource, $scope, $rootScope, $location,$routeParams, $route, Search){
 	 
 	 $scope.reload=function(){
 		// restart search with last params
+		console.log($routeParams)
 		Search.solrDocs($routeParams, function(docs, solrParams){
 		});
 	 }
@@ -136,6 +140,7 @@ SearchModule.controller('ResultCtrl', [
 		$scope.showCart = true;
 		$scope.modal = {};
 		
+		console.log($routeParams)
 		// update solr search
 		Search.solrDocs($routeParams, function(docs, solrParams){
 		});
@@ -143,14 +148,16 @@ SearchModule.controller('ResultCtrl', [
 		
 		$scope.getTemplateByEntity=function(){
 			 switch (Search.params.entity) {
-		        case "publications":
+		        case "publications.json":
 		            return 'partials/search/result-publications.html';
-		        case "terms":
+		        case "terms.json":
 		            return 'partials/search/result-terms.html';
 		        default:
 		            return 'partials/search/result-proteins.html';
 		    }			
 		}
+
+
 
 		$scope.affix=function(selector){
 			$(selector).affix()

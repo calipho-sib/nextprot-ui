@@ -9,7 +9,7 @@
 
 		    	<!-- DISPLAY RESULT INFO -->
 				<ul class="nav">
-					<li class="navbar-text">Show {{Search.result.docs.length}} on {{Search.result.num}} {{Search.params.entity}}   ({{Search.result.time}} ms) </li>
+					<li class="navbar-text">Show {{Search.result.docs.length}} on {{Search.result.num}} {{Search.result.display}}   ({{Search.result.time}} ms) </li>
 				</ul>
 
 		    	<!-- DISPLAY FILTERS SORT/EXPORT -->
@@ -17,10 +17,10 @@
 				  <!-- DEBUG -->
 				  <li class="pagination pagination-small">
 					<ul>
-					<li class="disabled"><a href="#">&laquo;</a></li>
-					<li ng-repeat="page in Search.result.pages" ng-class="" ><a ng-click="params({page:page})" href="">{{page}}</a></li>
-					<li ng-show="Search.result.more"><a href="#">...</a></li>
-					<li><a href="#">&raquo;</a></li>
+					<li ng-class="{disabled:!Search.result.pagination.prev}"><a href="" ng-click="params({start:Search.result.pagination.prev.rows})">&laquo;</a></li>
+					<li ng-repeat="page in Search.result.pages" ng-class="{disabled:page.current}" ><a  href="" ng-click="params({start:page.rows})">{{page.offset}}</a></li>
+					<li ng-show="Search.result.pagination.more"><a href="" ng-click="params({start:Search.result.pagination.more.rows})">... {{Search.result.pagination.more.offset}}</a></li>
+					<li ng-class="{disabled:!Search.result.pagination.next}"><a href="" ng-click="params({start:Search.result.pagination.next.rows})">&raquo;</a></li>
 					</ul>
 				  </li>				  
 				  <li class="divider-vertical"></li>
@@ -34,7 +34,7 @@
 				      <li><a href="" ng-click="params({sort:'protein'})">Protein name</a></li>
 				      <li><a href="" ng-click="params({sort:'family'})">Protein family name</a></li>
 				      <li><a href="" ng-click="params({sort:'ac'})">ACs</a></li>
-				      <li><a href="" ng-click="params({sort:'aa'})">Protein length</a></li>
+				      <li><a href="" ng-click="params({sort:'length'})">Protein length</a></li>
 				      <li><a href="" ng-click="params({sort:null});">The ranking score</a></li>
 				    </ul>
 				  </li>

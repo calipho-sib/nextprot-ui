@@ -1,3 +1,4 @@
+  
   <div  ng-cloak class="row" style="margin-top:90px;">
     <div class="row-fluid">
       <form ng-submit="go()" validate>
@@ -8,7 +9,7 @@
 	      <div class="btn-group pull-right">
 	      
 	        <a class="btn dropdown-toggle" data-toggle="dropdown" href="" id="search-entity">
-            {{Search.params.entity}}&nbsp;
+            {{Search.config.entityMapping[Search.params.entity]}}&nbsp;
 	          <span class="caret"></span>
 	        </a>
 	        <ul id="search-entity-dropdown" class="dropdown-menu">
@@ -18,19 +19,19 @@
 	          <li><a  ng-click="entity({entity:'terms'})">Terms</a></li>
 	        </ul>
 	      </div>        
-        <!--                        -->
+      <!--                        -->
       </div>
       <div class="span9">
-	      <div class=" input-append span8" ng-class="{'input-prepend':Search.config.widgets.gold}">
+	      <div class=" input-append span8" ng-class="{'input-prepend':Search.config.solr.widgets.gold}">
 	        <!--                        -->
 	        <!--  QUALITY SELECTION     -->
           <!--                        -->
 	        <div class="btn-group">
-		        <button class="btn dropdown-toggle btn" type="button" ng-cloak data-toggle="dropdown" ng-show="Search.config.widgets.gold" id="search-quality">
-		          {{Search.config.widgets.qualityLabel[Search.params.quality]}}
+		        <button class="btn dropdown-toggle btn" type="button" ng-cloak data-toggle="dropdown" ng-show="Search.config.solr.widgets.gold" id="search-quality">
+		          {{Search.config.solr.widgets.qualityLabel[Search.params.quality]}}
 		          <span class="caret"></span>
 		        </button>
-		        <ul id="search-quality-dropdown" class="dropdown-menu" ng-show="Search.config.widgets.gold">
+		        <ul id="search-quality-dropdown" class="dropdown-menu" ng-show="Search.config.solr.widgets.gold">
 		            <li><a ng-click="quality('gold')" >Gold only</a></li>
 		            <li><a ng-click="quality('gold-and-silver')" >Include silver</a></li>
 		        </ul>
@@ -41,7 +42,7 @@
           <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
           <!--                        -->
 	        <input id="search-query" class=" "  type="text" ng-model="Search.params.query"  
-	               ng-class="{'quality-search-width':Search.config.widgets.gold,'no-quality-search-width':!Search.config.widgets.gold}" 
+	               ng-class="{'quality-search-width':Search.config.solr.widgets.gold,'no-quality-search-width':!Search.config.solr.widgets.gold}" 
 	               autocomplete="off" t-autocomplete="">
 
 
