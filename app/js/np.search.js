@@ -98,7 +98,6 @@ function($resource, $scope, $rootScope, $location,$routeParams, $route, Search){
 	 } 
 	 
 	 $scope.go=function(){
-		console.log($routeParams)
 		 var url=$location.url();
 		 $location.search('filter',null)
 		 $location.path('/'+Search.config.entityMapping[Search.params.entity]+'/search/'+Search.params.query.trim());
@@ -112,8 +111,7 @@ function($resource, $scope, $rootScope, $location,$routeParams, $route, Search){
 	 
 	 $scope.reload=function(){
 		// restart search with last params
-		console.log($routeParams)
-		Search.solrDocs($routeParams, function(docs, solrParams){
+		Search.docs($routeParams, function(docs){
 		});
 	 }
 	
@@ -140,9 +138,8 @@ SearchModule.controller('ResultCtrl', [
 		$scope.showCart = true;
 		$scope.modal = {};
 		
-		console.log($routeParams)
 		// update solr search
-		Search.solrDocs($routeParams, function(docs, solrParams){
+		Search.docs($routeParams, function(docs){
 		});
 
 		

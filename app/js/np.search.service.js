@@ -27,10 +27,13 @@ SearchService.factory('Search',[
 	};	
 	
 
-	var defaultApi={
+	var searchApi={
 		action:'search'
 	}
 
+	var suggestApi={
+		action:'autocomplete'
+	}
 
 
 	
@@ -89,20 +92,16 @@ SearchService.factory('Search',[
 	}
 	//
 	//
-	// solr search in all documents 
-	Search.prototype.solrSuggest=function(query,cb){
-
-		//
-		// setup query  
-		var solrParams=angular.extend({},defaultSolrSuggest);
-		var solr=config.solr.core[this.params.entity];
-		solrParams.core=solr.name;				
-		solrParams.q=query;		
-		//console.log(query,solrParams)
-		$api.search(solrParams,function(docs){
-			//console.log(solrParams, docs.spellcheck.suggestions.collation, docs)
-				
-			if(cb)cb(docs,solrParams)
+	// suggest is a quick search
+	Search.prototype.suggest=function(query,cb){
+		var params={};
+		angular.extend(params, defaultUrl,suggestApi, {query:query})		
+		$api.search(params,function(result){				
+	    	var items=[];			    	
+			for (var i=0; i<result.autocomplete.length; i=i+2) {
+				items.push(result.autocomplete[i].name)
+			}
+			if(cb)cb(items)
 		})			
 	}
 		
@@ -111,14 +110,14 @@ SearchService.factory('Search',[
 	//
 	//
 	// solr search in all documents 
-	Search.prototype.solrDocs=function(params,cb){
+	Search.prototype.docs=function(params,cb){
 		var me=this;me.result.error="";
 		me.result.docs = [];
-		angular.extend(this.params,  defaultApi, defaultUrl, params)		
+		angular.extend(this.params,  searchApi, defaultUrl, params)		
 		this.params.entity=config.solr.entityMapping[params.entity];
 
 		$api.search(this.params).$promise.then(function(docs){
-			console.log(docs)
+			//console.log("docs",docs)
 			me.result.params=params;
 			me.result.display=config.solr.entityMapping[me.params.entity];
 			me.result.core=docs.index;
@@ -127,6 +126,7 @@ SearchService.factory('Search',[
 			me.result.docs = docs.results;
 			me.result.ontology=config.solr.ontology;
 			me.result.filters=docs.filters
+			me.config.solr=config.solr.core[me.result.display];
 
 			//
 			// prepare pagination
@@ -172,7 +172,6 @@ SearchService.factory('Search',[
 					current:(me.result.pagination.current)===page
 				})
 			}
-			console.log(me.result.pagination)
 
 			//
 			// prepare facet structure
@@ -200,10 +199,10 @@ SearchService.factory('Search',[
 		
 		//
 		// setup query  
-		//var solrParams=angular.extend({},defaultSolr, defaultSolrHl);			
-		var solrParams=angular.extend({}, mySolr);			
+		//var searchParams=angular.extend({},defaultSolr, defaultSolrHl);			
+		var searchParams=angular.extend({}, mySolr);			
 		var solr=config.solr.core[this.params.entity];
-		solrParams.core=solr.name;
+		searchParams.core=solr.name;
 		
 		//
 		// additional criterion hyper boosted to make sure we get this record as the first and only row returned
@@ -228,22 +227,22 @@ SearchService.factory('Search',[
 			
 		
 		console.log('myQ: ', myQ);
-		solrParams.bq = solrParams.q = myQ; //+ "^1000";
-//		solrParams.bq=solrParams.q="id:" + id + "^1000";
+		searchParams.bq = searchParams.q = myQ; //+ "^1000";
+//		searchParams.bq=searchParams.q="id:" + id + "^1000";
 		
-		solrParams.fl=solr.hi.join(',')
-		solrParams["hl.fl"]=solr.hi.join(',');
+		searchParams.fl=solr.hi.join(',')
+		searchParams["hl.fl"]=solr.hi.join(',');
 		//
 		// select return fields (more details)
-		//solrParams.fl=solr.hi.join(',')
-		//solrParams["hl.fl"]=solr.hi.join(',');		
+		//searchParams.fl=solr.hi.join(',')
+		//searchParams["hl.fl"]=solr.hi.join(',');		
 		
 
-		$api.search(solrParams,function(docs){
+		$api.search(searchParams,function(docs){
 //			me.result.docs[index].details = docs.response.docs[0];			
 			me.result.docs = docs.response.docs;
 			console.log('results: ', docs.response.docs);
-			if(cb)cb(docs,solrParams)
+			if(cb)cb(docs,searchParams)
 		})		
 		
 	}

@@ -6,7 +6,6 @@ var App = angular.module('np', [
   'ngRoute',
   '$strap.directives',
   'np.config',
-  'np.loading',
   'np.search',
   'np.cart',
   'np.proteinlists'
@@ -24,13 +23,13 @@ App.config([
 
 		 //
 		 // install display notification of ajax call
-		 $httpProvider.responseInterceptors.push('npHttpInterceptor');
+		 //$httpProvider.responseInterceptors.push('npHttpInterceptor');
 		 var spinnerFunction = function (data, headers) {
 			angular.element('.ajax-end').hide();
 			angular.element('.ajax-start').show();
 		    return data;
 		 };
-		 $httpProvider.defaults.transformRequest.push(spinnerFunction);
+		 //$httpProvider.defaults.transformRequest.push(spinnerFunction);
 		
 		 
 		 // List of routes of the application

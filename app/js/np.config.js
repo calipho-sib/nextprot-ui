@@ -131,7 +131,7 @@ function ($http) {
  //
  // solr configuration
  var defaultSolr = {
-   SOLR_SERVER:'http://mac-096.isb-sib.ch:port/nextprot-api/:action/:entity',
+   SOLR_SERVER:'http://localhost:port/nextprot-api/:action/:entity',
    SOLR_PORT:':8080',
 
    

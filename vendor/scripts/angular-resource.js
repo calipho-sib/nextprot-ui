@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.2.0rc1
+ * @license AngularJS v1.2.0-rc.3
  * (c) 2010-2012 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -11,6 +11,16 @@ var $resourceMinErr = angular.$$minErr('$resource');
  * @ngdoc overview
  * @name ngResource
  * @description
+ *
+ * # ngResource
+ *
+ * `ngResource` is the name of the optional Angular module that adds support for interacting with
+ * [RESTful](http://en.wikipedia.org/wiki/Representational_State_Transfer) server-side data sources.
+ * `ngResource` provides the {@link ngResource.$resource `$resource`} service.
+ *
+ * {@installModule resource}
+ *
+ * See {@link ngResource.$resource `$resource`} for usage.
  */
 
 /**
@@ -25,23 +35,14 @@ var $resourceMinErr = angular.$$minErr('$resource');
  * The returned resource object has action methods which provide high-level behaviors without
  * the need to interact with the low level {@link ng.$http $http} service.
  *
- * # Installation
- * To use $resource make sure you have included the `angular-resource.js` that comes in Angular
- * package. You can also find this file on Google CDN, bower as well as at
- * {@link http://code.angularjs.org/ code.angularjs.org}.
- *
- * Finally load the module in your application:
- *
- *        angular.module('app', ['ngResource']);
- *
- * and you are ready to get started!
+ * Requires the {@link ngResource `ngResource`} module to be installed.
  *
  * @param {string} url A parametrized URL template with parameters prefixed by `:` as in
  *   `/user/:username`. If you are using a URL with a port number (e.g.
  *   `http://example.com:8080/api`), it will be respected.
  *
  *   If you are using a url with a suffix, just add the suffix, like this:
- *   `$resource('http://example.com/resource.json')` or `$resource('http://example.com/:id.json')
+ *   `$resource('http://example.com/resource.json')` or `$resource('http://example.com/:id.json')`
  *   or even `$resource('http://example.com/resource/:resource_id.:format')`
  *   If the parameter before the suffix is empty, :resource_id in this case, then the `/.` will be
  *   collapsed down to a single `.`.  If you need this sequence to appear and not collapse then you
@@ -93,7 +94,7 @@ var $resourceMinErr = angular.$$minErr('$resource');
  *     caching.
  *   - **`timeout`** – `{number|Promise}` – timeout in milliseconds, or {@link ng.$q promise} that
  *     should abort the request when resolved.
- *   - **`withCredentials`** - `{boolean}` - whether to to set the `withCredentials` flag on the
+ *   - **`withCredentials`** - `{boolean}` - whether to set the `withCredentials` flag on the
  *     XHR object. See {@link https://developer.mozilla.org/en/http_access_control#section_5
  *     requests with credentials} for more information.
  *   - **`responseType`** - `{string}` - see {@link
@@ -351,6 +352,9 @@ angular.module('ngResource', ['ng']).
 
         var urlParams = self.urlParams = {};
         forEach(url.split(/\W/), function(param){
+          if (param === 'hasOwnProperty') {
+            throw $resourceMinErr('badname', "hasOwnProperty is not a valid parameter name.");
+          }
           if (!(new RegExp("^\\d+$").test(param)) && param && (new RegExp("(^|[^\\\\]):" + param + "(\\W|$)").test(url))) {
               urlParams[param] = true;
           }
@@ -470,7 +474,7 @@ angular.module('ngResource', ['ng']).
             }
           });
 
-          httpConfig.data = data;
+          if (hasBody) httpConfig.data = data;
           route.setUrlParams(httpConfig, extend({}, extractParams(data, action.params || {}), params), action.url);
 
           var promise = $http(httpConfig).then(function(response) {
@@ -496,8 +500,6 @@ angular.module('ngResource', ['ng']).
 
             value.$resolved = true;
 
-            (success||noop)(value, response.headers);
-
             response.resource = value;
 
             return response;
@@ -507,8 +509,15 @@ angular.module('ngResource', ['ng']).
             (error||noop)(response);
 
             return $q.reject(response);
-          }).then(responseInterceptor, responseErrorInterceptor);
+          });
 
+          promise = promise.then(
+              function(response) {
+                var value = responseInterceptor(response);
+                (success||noop)(value, response.headers);
+                return value;
+              },
+              responseErrorInterceptor);
 
           if (!isInstanceCall) {
             // we are creating instance / collection

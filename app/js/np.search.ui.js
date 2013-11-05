@@ -36,26 +36,22 @@ SearchUI.directive('toggle', [function () {
 	  };
 	}]);
 
-SearchUI.directive('btAutocomplete', ['Search',function (Search) {
+
+//
+// autocomplete with customized bootstrap typeahead
+// https://github.com/twbs/bootstrap/blob/v2.3.2/js/bootstrap-typeahead.js
+SearchUI.directive('bsAutocomplete', ['Search','$timeout',function (Search, $timeout) {
 	  var items=[];
 
+
 	  
-	  return function (scope, elm, attrs) {
-		  function extractor(query) {
-			    var result = /([^ ]+)$/.exec(query);
-			    if(result && result[1])
-			        return result[1].trim();
-			    return '';
-		  }		  
-		  elm.typeahead({
-			 	minLength: 3,
+	  return function (scope, element, attrs) {
+	  	  var lstQuery=""
+		  element.typeahead({
+			 	minLength: 2,
 			    source: function (query, process) {
-					Search.solrSuggest(query, function(docs, solrParams){
-//						var facets=docs.facet_counts.facet_fields.text;
-//						items=[];for (var i=0; i<facets.length; i=i+2) {
-//							items.push(facets[i])
-//						}
-//						return process(items)
+					Search.suggest(query, function(items){
+						return process(items)
 					});
 				},
 				matcher:function (item) {
@@ -65,14 +61,45 @@ SearchUI.directive('btAutocomplete', ['Search',function (Search) {
 					Search.params.query=this.$element.val().replace(/[^ ]*$/,'')+item+' '
 					return Search.params.query;
 			    },
-			    highlighter: function (item) {
-			        var query = extractor(this.query).replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
-			        return item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
-			          return '<strong>' + match + '</strong>'
-			        })
-			   }			    
+        		highlighter: function (item) {
+
+        		  // this.query: insulin rec
+        		  // items: receptor, recurrent, receptors, recruitment, receptormediated
+        		  // query: insulin\ rec
+        		  // result:  insulin <b>rec</b><gray>eptormediated</gray>
+        		  var words =this.query.split(' ');
+        		  var complete=item.split(words[words.length-1]);
+			      var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
+        		  var replaced=this.query.replace(new RegExp("(.*)("+words[words.length-1]+")([^ ]*)",'ig'),function(m, p1, p2,p3){
+        		  	var hi=(complete.length)?complete[complete.length-1]:'';
+        		  	return "<span class='gray2'>"+p1+"</span><strong>"+p2+"</strong><span class='gray2'>"+hi+p3+"</span>"
+        		  })
+
+			      //var s=item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+			      //  return '<strong>' + match + '</strong>'
+			      //})
+        		  //console.log(r1, "(.*)("+words[words.length-1]+")([^ ]*)")
+
+			      return replaced;
+		        } 			    	    
 							    	
 		 });  
+	      // Bootstrap override
+	      var typeahead = element.data('typeahead');
+	      // Fixes #2043: allows minLength of zero to enable show all for typeahead
+	      typeahead.lookup = function(ev) {
+	        var items, words;
+	        this.query = this.$element.val() || '';
+	        words= this.query.split(' ');
+
+	        if (this.query.length < this.options.minLength) {
+	          return this.shown ? this.hide() : this;
+	        }
+	        items = $.isFunction(this.source) ? this.source(this.query, $.proxy(this.process, this)) : this.source;
+	        return items ? this.process(items) : this;
+	      };
+
+
 	  };
 	}]);
 

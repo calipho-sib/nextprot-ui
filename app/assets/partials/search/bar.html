@@ -1,5 +1,5 @@
   
-  <div  ng-cloak class="row" style="margin-top:90px;">
+  <div  ng-cloak class="row search-row" style="margin-top:90px;">
     <div class="row-fluid">
       <form ng-submit="go()" validate>
       <div class="span3">
@@ -21,7 +21,7 @@
 	      </div>        
       <!--                        -->
       </div>
-      <div class="span9">
+      <div class="span9 search-bar">
 	      <div class=" input-append span8" ng-class="{'input-prepend':Search.config.solr.widgets.gold}">
 	        <!--                        -->
 	        <!--  QUALITY SELECTION     -->
@@ -43,13 +43,13 @@
           <!--                        -->
 	        <input id="search-query" class=" "  type="text" ng-model="Search.params.query"  
 	               ng-class="{'quality-search-width':Search.config.solr.widgets.gold,'no-quality-search-width':!Search.config.solr.widgets.gold}" 
-	               autocomplete="off" t-autocomplete="">
+	               autocomplete="off"  bs-autocomplete="Search.suggest">
 
 
           <!--                        -->
           <!--  CLEAN BUTTON          -->
           <!--                        -->
-	        <button id="search-clear"  class="btn" type="button" ng-click="clean({})" ng-disabled="!Search.params.query || !Search.params.query.length"><i class="icon-remove ajax-end"></i><i class="ajax-start icon-loading"></i></button>
+	        <button id="search-clear"  class="btn" type="button" ng-click="clean({})" ng-disabled="!Search.params.query || !Search.params.query.length"><i class="icon-remove ajax-end"></i></button>
 
 
           <!--                        -->

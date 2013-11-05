@@ -9,6 +9,11 @@
 .gray{
 	color:#888;
 }
+
+
+.gray2{
+  color:#666;
+}
 .small{
 	font-size:93%;
 }
@@ -71,12 +76,27 @@
     margin: 7px 0 0!important;
 }
 
-.active{
+.search-bar .dropdown-menu{
+  min-width: 400px;
+}
+
+.search-bar .dropdown-menu .active > a, .dropdown-menu .active > a:hover {
+    background-color: #ccc;
+    background-image: linear-gradient(to bottom, #eee, #ddd);
+    background-repeat: repeat-x;
+    color: black;
+    outline: 0 none;
+    text-decoration: none;
+}
+
+.resultfilters .active{
     padding-left: 9px;
     padding-right: 9px;
     border-bottom:1px solid #ddd;
     color:black;
 }
+
+
 
 .bold{
 	font-weight:bold;

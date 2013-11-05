@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.2.0rc1
+ * @license AngularJS v1.2.0-rc.3
  * (c) 2010-2012 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -16,6 +16,8 @@
 
 function setupModuleLoader(window) {
 
+  var $injectorMinErr = angular.$$minErr('$injector');
+
   function ensure(obj, name, factory) {
     return obj[name] || (obj[name] = factory());
   }
@@ -29,9 +31,12 @@ function setupModuleLoader(window) {
      * @name angular.module
      * @description
      *
-     * The `angular.module` is a global place for creating and registering Angular modules. All
-     * modules (angular core or 3rd party) that should be available to an application must be
+     * The `angular.module` is a global place for creating, registering and retrieving Angular modules.
+     * All modules (angular core or 3rd party) that should be available to an application must be
      * registered using this mechanism.
+     *
+     * When passed two or more arguments, a new module is created.  If passed only one argument, an
+     * existing module (the name passed as the first argument to `module`) is retrieved.
      *
      *
      * # Module
@@ -71,12 +76,13 @@ function setupModuleLoader(window) {
      * @returns {module} new module with the {@link angular.Module} api.
      */
     return function module(name, requires, configFn) {
+      assertNotHasOwnProperty(name, 'module');
       if (requires && modules.hasOwnProperty(name)) {
         modules[name] = null;
       }
       return ensure(modules, name, function() {
         if (!requires) {
-          throw minErr('$injector')('nomod', "Module '{0}' is not available! You either misspelled the module name " +
+          throw $injectorMinErr('nomod', "Module '{0}' is not available! You either misspelled the module name " +
               "or forgot to load it. If registering a module ensure that you specify the dependencies as the second " +
               "argument.", name);
         }
@@ -179,7 +185,7 @@ function setupModuleLoader(window) {
            * @param {Function} animationFactory Factory function for creating new instance of an animation.
            * @description
            *
-           * **NOTE**: animations are take effect only if the **ngAnimate** module is loaded.
+           * **NOTE**: animations take effect only if the **ngAnimate** module is loaded.
            *
            *
            * Defines an animation hook that can be later used with {@link ngAnimate.$animate $animate} service and
@@ -219,7 +225,8 @@ function setupModuleLoader(window) {
            * @ngdoc method
            * @name angular.Module#controller
            * @methodOf angular.Module
-           * @param {string} name Controller name.
+           * @param {string|Object} name Controller name, or an object map of controllers where the
+           *    keys are the names and the values are the constructors.
            * @param {Function} constructor Controller constructor function.
            * @description
            * See {@link ng.$controllerProvider#register $controllerProvider.register()}.
@@ -230,7 +237,8 @@ function setupModuleLoader(window) {
            * @ngdoc method
            * @name angular.Module#directive
            * @methodOf angular.Module
-           * @param {string} name directive name
+           * @param {string|Object} name Directive name, or an object map of directives where the
+           *    keys are the names and the values are the factories.
            * @param {Function} directiveFactory Factory function for creating new instance of
            * directives.
            * @description

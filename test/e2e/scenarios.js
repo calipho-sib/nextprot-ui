@@ -211,7 +211,11 @@ describe('nextprot:', function() {
 
   });
   describe("FT6 There is no need of autocompletion in full text search",function(){
-
+    it('highlight rec in  "kin receptor"',function(){
+//      item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
+//              return '<strong>' + match + '</strong>'
+//            })
+    })
   });
   describe("FT7 Search suggestions (displayed à la 'google' when someone starts typing);",function(){
 
