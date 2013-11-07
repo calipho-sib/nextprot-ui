@@ -72,7 +72,7 @@ SearchUI.directive('bsAutocomplete', ['Search','$timeout',function (Search, $tim
 			      var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
         		  var replaced=this.query.replace(new RegExp("(.*)("+words[words.length-1]+")([^ ]*)",'ig'),function(m, p1, p2,p3){
         		  	var hi=(complete.length)?complete[complete.length-1]:'';
-        		  	return "<span class='gray2'>"+p1+"</span><strong>"+p2+"</strong><span class='gray2'>"+hi+p3+"</span>"
+        		  	return "<span class='gray'>"+p1+"</span><span class='gray'>"+p2+"</span><strong class='gray2'>"+hi+p3+"</strong>"
         		  })
 
 			      //var s=item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {

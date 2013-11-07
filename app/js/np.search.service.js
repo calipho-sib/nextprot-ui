@@ -65,31 +65,7 @@ SearchService.factory('Search',[
 
 	
 
-	
-	Search.prototype.parseSpellcheck=function(spellcheck){
-	    var result = {};result.collations=[];result.suggestions=[];
-	    if (spellcheck && spellcheck.suggestions) {
-	      var suggestions = spellcheck.suggestions;
 
-	      for (var word in suggestions) {
-	    	
-	    	//
-	    	// parsing collation
-	    	if (Array.isArray(suggestions[word]) && suggestions[word][0]==="collationQuery"){
-	    		result.collations.push({collationQuery:suggestions[word][1], hits:suggestions[word][3]});
-	    		continue;
-	    	}
-	    	//
-	    	// parsing suggestion
-	    	if (!Array.isArray(suggestions[word]) && (typeof suggestions[word] == "object")){
-	    		result.suggestions.push(suggestions[word].suggestion);
-	    	}
-	    	
-	      }
-	    }
-	    result.collations=_.sortBy(result.collations, function(c){ return -c.hits; });
-	    return result;
-	}
 	//
 	//
 	// suggest is a quick search
@@ -127,6 +103,10 @@ SearchService.factory('Search',[
 			me.result.ontology=config.solr.ontology;
 			me.result.filters=docs.filters
 			me.config.solr=config.solr.core[me.result.display];
+
+			//
+			// prepare spellcheck stucture
+			me.result.spellcheck=docs.spellcheck;/
 
 			//
 			// prepare pagination
@@ -182,9 +162,6 @@ SearchService.factory('Search',[
 //				}				
 //			}
 
-			//
-			// prepare spellcheck stucture
-//			me.result.spellcheck=me.parseSpellcheck(docs.spellcheck);
 			if(cb)cb(me.result)
 		},function(error){
 			//if (error.status)
