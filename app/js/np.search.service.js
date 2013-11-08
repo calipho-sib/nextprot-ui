@@ -106,7 +106,7 @@ SearchService.factory('Search',[
 
 			//
 			// prepare spellcheck stucture
-			me.result.spellcheck=docs.spellcheck;/
+			me.result.spellcheck=docs.spellcheck;
 
 			//
 			// prepare pagination
