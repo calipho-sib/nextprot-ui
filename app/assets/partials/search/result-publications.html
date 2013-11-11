@@ -1,12 +1,13 @@
       <!-- RESULT HEADERS -->
       <div class="row" >
-        <ul ng-cloak id="search-results">
+        <ul ng-cloak id="search-results" class="span8">
           <li ng-repeat="doc in Search.result.docs"  ng-cloak>
-            <span class="green small">{{doc.type}}</span> <a href="https://www.nextprot.org/db/publication/{{doc.ac}}"> {{doc.title}} ({{doc.date}})</a><br/>
-            <span class="green small">journal: <b>{{doc.journal}}</b> - filters: <b>{{doc.filters}}</b> </span><br>
-            <span class="gray small">{{doc.authors}}</span>
-            <span><a class="btn btn-mini" toggle="#line-{{$index}}" ><i class="icon-plus"></i> Abstract</a> </span>
-            <div  id="line-{{$index}}" class="hide  "  ng-cloak style="margin-right:20px">
+            <a href="https://www.nextprot.org/db/publication/{{doc.ac}}"> {{doc.title}} ({{doc.date}})</a><br/>
+            <span class="gray small"><span ng-repeat="author in doc.authors"><a href="/publications/search/{{author|trim}}">{{author}}</a>, </span></span><br/>
+            <span class=" small">{{doc.journal}} <b>{{doc.volume}}</b>, {{doc.first_page}}-{{doc.last_page}}({{doc.year}})
+                [<span ng-repeat="ac in doc.acs"><a href="getPublicationUrl(ac)">{{ac}}</a></span>] </span> <br/>
+            <span><a class="btn btn-mini" toggle="#line-{{$index}}" > Show Abstract</a> </span>
+            <div  id="line-{{$index}}" class="hide small "  ng-cloak style="margin-right:20px">{{doc.abstract}}</div>
             
           </li>
         </ul>

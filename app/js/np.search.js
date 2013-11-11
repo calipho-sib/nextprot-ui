@@ -145,7 +145,7 @@ SearchModule.controller('ResultCtrl', [
 		
 		$scope.getTemplateByEntity=function(){
 			 switch (Search.params.entity) {
-		        case "publications.json":
+		        case "publication.json":
 		            return 'partials/search/result-publications.html';
 		        case "terms.json":
 		            return 'partials/search/result-terms.html';

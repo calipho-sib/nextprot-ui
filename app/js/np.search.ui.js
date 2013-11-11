@@ -12,6 +12,13 @@ SearchUI.filter('has', function() {
 	}
 });
 
+SearchUI.filter('trim', function() {
+	return function(input) {
+		if (!input ||!input.length )
+			return '';
+		return (input.trim());
+	}
+});
 SearchUI.filter('limit', function() {
 	return function(input, max) {
 		if(!input)return;

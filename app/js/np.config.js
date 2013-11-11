@@ -197,10 +197,10 @@ function ($http) {
 
    entityMapping:{
 		proteins:'entry.json',
-		publications:'publications.json',
+		publications:'publication.json',
 		terms:'terms.json',
 		'entry.json':'proteins',
-		'publications.json':'publications',
+		'publication.json':'publications',
 		'terms.json':'terms'
    },
 
