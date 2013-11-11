@@ -134,6 +134,7 @@ function ($http) {
    SOLR_SERVER:'http://crick.isb-sib.ch:port/nextprot-api/:action/:entity',
    SOLR_PORT:':8080',
 
+   base:"/",
    
    
    ontology:{

@@ -33,7 +33,13 @@ SearchUI.directive('version', ['config', function(config) {
     };
   }]);
 
-
+SearchUI.directive('appBase', ['config', function(config) {
+    return function(scope, elm, attrs) {
+      if (attrs['appBase'])
+      	return elm.attr(attrs['base'], "config.base")
+      elm.text(config.base);
+    };
+  }]);
 
 SearchUI.directive('toggle', [function () {
 	  return function (scope, elm, attrs) {

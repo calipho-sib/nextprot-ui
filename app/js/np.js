@@ -4,6 +4,7 @@
 var App = angular.module('np', [
   'ngResource',  
   'ngRoute',
+  'ngAnimate',
   '$strap.directives',
   'np.config',
   'np.search',

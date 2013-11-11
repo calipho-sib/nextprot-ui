@@ -162,9 +162,10 @@ SearchService.factory('Search',[
 			console.log(me.result.display,me.params.entity)
 			if(me.result.display==="publications"){
 				me.result.docs.forEach(function(doc){
-					doc.acs=doc.ac.split('|');
-					doc.year=new Date(doc.date.replace("CET","")).getFullYear()
-					doc.authors=doc.authors.split('|');
+					doc.acs=doc.ac.split(' | ');
+					doc.year=new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi,"")).getFullYear()
+					doc.authors=doc.authors.split(' | ');
+					console.log(new Date(doc.date.replace("CET","")),doc.date)
 				})
 			}
 

@@ -125,16 +125,21 @@
   width:405px!important;
 }
 
-.icon-loading{
-  background-image: url(../img/spinner.gif);
-  background-repeat:no-repeat;	
-  padding: 3px 7px 0;
+ul#search-results li{
+  padding-bottom: 20px;
 }
 
-.ajax-start{
-	
+ul#search-results .result-authors{
+  font-size: 93%;
+}
+ul#search-results .result-authors a{
+  color:#6A90D9;
 }
 
-.ajax-end{
-  
+ul#search-results .result-abstract{
+    font-size: 90%;
+    margin-right: 60px;
+    padding-top: 5px;
+    text-align: justify;
+    text-rendering: optimizelegibility;
 }

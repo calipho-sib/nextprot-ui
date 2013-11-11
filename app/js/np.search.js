@@ -34,10 +34,12 @@ SearchModule.controller('SearchCtrl',[
    '$routeParams',
    '$route',
    'Search', 
-function($resource, $scope, $rootScope, $location,$routeParams, $route, Search){
+   'config', 
+function($resource, $scope, $rootScope, $location,$routeParams, $route, Search, config){
 	 //
 	 // scope from template
 	 $scope.Search=Search;
+	 $scope.config=config;
 	 
 
 	 //
@@ -154,6 +156,9 @@ SearchModule.controller('ResultCtrl', [
 		    }			
 		}
 
+		$scope.getPublicationUrl=function(ac){
+			return "http://google.com/search?q="+ac
+		}
 
 
 		$scope.affix=function(selector){
