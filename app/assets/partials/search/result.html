@@ -65,7 +65,6 @@
 			          <span class=" "> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&&'icon-remove'"></i>
 			        </a>
 				  </li>
-				  <li class="divider"></li>
 				  <input id="filters" class=""  type="hidden" ng-model="Search.params.filter"   autocomplete="off" >
 				</ul>
 			</div>
@@ -74,7 +73,7 @@
 	      <!-- RESULT CONTENT -->
 	      <div class=""  ng-include="getResultTemplateByEntity()"></div>
 		  <!-- PAGINATE -->
-		  <div class="result pagination pagination-small">
+		  <div class="result pagination pagination-small" ng-show="Search.result.pages.length>1">
 			<ul>
 				<li ng-class="{disabled:!Search.result.pagination.prev}"><a href="" ng-click="params({start:Search.result.pagination.prev.rows})">&laquo;</a></li>
 				<li ng-repeat="page in Search.result.pages" ng-class="{disabled:page.current}" ><a  href="" ng-click="params({start:page.rows})">{{page.offset}}</a></li>

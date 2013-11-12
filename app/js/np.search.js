@@ -33,9 +33,10 @@ SearchModule.controller('SearchCtrl',[
    '$location',
    '$routeParams',
    '$route',
+   '$timeout',
    'Search', 
    'config', 
-function($resource, $scope, $rootScope, $location,$routeParams, $route, Search, config){
+function($resource, $scope, $rootScope, $location,$routeParams, $route, $timeout, Search, config){
 	 //
 	 // scope from template
 	 $scope.Search=Search;
@@ -100,6 +101,7 @@ function($resource, $scope, $rootScope, $location,$routeParams, $route, Search, 
 	 } 
 	 
 	 $scope.go=function(){
+
 		 var url=$location.url();
 		 $location.search('filter',null)
 		 $location.path('/'+Search.config.entityMapping[Search.params.entity]+'/search/'+Search.params.query.trim());
@@ -149,7 +151,7 @@ SearchModule.controller('ResultCtrl', [
 			 switch (Search.params.entity) {
 		        case "publication.json":
 		            return 'partials/search/result-publications.html';
-		        case "terms.json":
+		        case "term.json":
 		            return 'partials/search/result-terms.html';
 		        default:
 		            return 'partials/search/result-proteins.html';
@@ -160,7 +162,7 @@ SearchModule.controller('ResultCtrl', [
 			 switch (Search.params.entity) {
 		        case "publication.json":
 		            return 'partials/search/sort-publications.html';
-		        case "terms.json":
+		        case "term.json":
 		            return 'partials/search/sort-terms.html';
 		        default:
 		            return 'partials/search/sort-proteins.html';

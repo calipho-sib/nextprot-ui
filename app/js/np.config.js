@@ -8,125 +8,6 @@ angular.module('np.config', []).factory('config', [
 '$http',
 function ($http) {
 	
-	//
-	// solr config for publication
-	var pub={
-			name:"nppublications1",
-			//
-			// display fields
-			fl:["id","ac","date","title","abstract","type",
-	            "journal","source","authors","has_evidence",
-	            "is_largescale","is_computed","filters"
-	        ],
-			//
-			// single term boost bias
-	        qf:["ac^16","date^16","title^16","abstract^16","type^16",
-		            "journal^8","source^8","authors^8","has_evidence^8",
-		            "is_largescale^4","is_computed^4"
-		    ],
-			//
-			// phrase boost bias
-	        pf:["ac^160","date^160","title^160","abstract^160","type^160",
-		            "journal^80","source^80","authors^80","has_evidence^80",
-		            "is_largescale^40","is_computed^40"
-		    ],
-			//
-			// neutral boost bias
-	        fn:["ac^1","date^1","title^1","abstract^1","type^1",
-		            "journal^1","source^1","authors^1","has_evidence^1",
-		            "is_largescale^1","is_computed^1"
-		    ],
-		    hi:["date","title","type", "journal","source","authors"
-		    ],
-		    sort:{
-		    	default:'date desc,volume desc, first_page desc, title_s asc'
-		    },
-			filters:"filters",
-	    	widgets:{
-		    	gold:false	    		
-	    	}
-	}
-	
-	//
-	// solr config for proteins
-	var proteins={
-			name:"npentries1",
-			fl:["id","recommended_ac","recommended_name","uniprot_name","recommended_gene_names","gene_band","score",
-			    "aa_length", "function_desc", "chr_loc", "isoform_num", "ptm_num", "var_num", "mutagenesis_num", "expression_num",
-			    "filters", "protein_existence"],
-			//
-			// single term boost bias
-			qf:["recommended_name^32","uniprot_name^16","alternative_names^16",
-			     "recommended_ac^8","alternative_acs^8","recommended_gene_names^32","alternative_gene_names^8", 
-			     "family_names^4","cv_names^4","cv_synonyms^4","cv_ancestors^2", "peptide^2", "antibody^2"
-			],
-			//
-			// phrase boost bias
-			pf:["recommended_name^320","uniprot_name^160","alternative_names^160",
-			     "recommended_ac^80","alternative_acs^80","recommended_gene_names^320","alternative_gene_names^80", 
-			     "family_names^40","cv_names^40","cv_synonyms^40","cv_ancestors^20", "peptide^20", "antibody^20"
-			],
-
-			//
-			// neutral boost bias
-			fn:["recommended_name^1","uniprot_name^1","alternative_names^1",
-			    "recommended_ac^1","alternative_acs^1","recommended_gene_names^1","alternative_gene_names^1", 
-			    "family_names^1","cv_name^1","cv_synonyms^1","cv_ancestors^1"
-	     	],
-	     	hi:["id","recommended_ac","recommended_name","uniprot_name","recommended_gene_names","gene_band","score",
-			    "cv_names",  "clone_name", "ensembl", "microarray_probe", "interactions", "family_names", "alternative_acs", "filters",
-			    "cv_ancestors", "peptide", "antibody", "cv_synonyms", "annotations", "publications", "xrefs"
-	    	],
-   	
-		    sort:{
-		    	gene:'recommended_gene_names_s asc',
-		    	protein:'recommended_name_s asc',
-		    	family:'family_names_s asc',
-		    	ac:'id asc',
-		    	length:'aa_length asc',
-		    	default:'score desc'
-		    },
-			filters:"filters",
-	    	widgets:{
-		    	gold:true,	    		
-	    	    qualityLabel:{
-	    		  'gold':'Gold only',
-	    		  'gold-and-silver':'Include silver'
-	    		}
-		    }
-	
-	}
-	
-	//
-	// solr config for proteins
-	var proteinsgold=angular.extend({},proteins,{name:'npentries1gold'})
-	
-	//
-	// solr config for cvs
-	var cvs={
-			name:"npcvs1",
-			fl:["ac","name","synonyms","description","filters","properties"],
-			//
-			// single term boost bias
-			qf:["name^32","synonyms^32","description^16"],
-			//
-			// phrase boost bias
-			pf:["name^320","synonyms^320","description^160"],
-
-			//
-			// neutral boost bias
-			fn:["name^1","description^1"],
-	     	hi:["ac", "name", "description", "filters","properties"],
-		    sort:{
-		    	default:''		    	
-		    },
-			filters:"filters",
-	    	widgets:{
-		    	gold:false	    		
-	    	}
-			
-	}	
-
 	
  //
  // solr configuration
@@ -186,23 +67,32 @@ function ($http) {
    },
    
 
-   
-   //
-   // to sort by year => date%YEAR = mod(ms(date),ms(YEAR)) =mod(ms(date),3.16e+10)
-   core:{
-	   		'proteinsgold':proteinsgold,
-			'proteins':proteins,
-			'publications':pub,
-			'terms':cvs
-   },
+
+	widgets:{
+		proteins:{
+			gold:true,
+			qualityLabel:{
+			  'gold':'Gold only',
+			  'gold-and-silver':'Include silver'
+			}
+
+		},
+		publications:{
+			gold:false
+		},
+		terms:{
+			gold:false
+		}
+	},
+
 
    entityMapping:{
 		proteins:'entry.json',
 		publications:'publication.json',
-		terms:'terms.json',
+		terms:'term.json',
 		'entry.json':'proteins',
 		'publication.json':'publications',
-		'terms.json':'terms'
+		'term.json':'terms'
    },
 
    paginate:{

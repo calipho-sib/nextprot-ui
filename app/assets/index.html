@@ -6,8 +6,8 @@
     <meta name="description"  content="neXtProt">
     <meta name="author"       content="Olivier Evalet">
     <meta name="fragment"     content="!" />    
-    <!-- <base href="/protosearch/" />  -->
-    <base href="/" /> 
+    <base href="/protosearch/" /> 
+    <!-- <base href="/" />  -->
 
     <title ng-bind-template="{{title}}"></title>
 
@@ -25,10 +25,10 @@
     
   </head>
 
-  <body class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90" ng-controller="SearchCtrl">
+  <body class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90" ng-controller="SearchCtrl" np-background="#main" >
  <!-- Navbar
     ================================================== -->
- <div class="navbar navbar-fixed-top">
+ <div class="navbar navbar-fixed-top" >
    <div class="navbar-inner">
      <div class="container">
        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -39,7 +39,7 @@
        <a class="brand" href="">neXtProt</a>
        <div class="nav-collapse collapse" id="main-menu">
         <ul class="nav" id="main-menu-left">
-          <li><a href="">Home</a></li>
+          <li><a href="/">Home</a></li>
           <!-- RECENT -->
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Recent activities <b class="caret"></b></a>
@@ -83,8 +83,8 @@
    </div>
  </div>
 
- <div ng-cloak ng-show="Search.result.error" class=" error">
-   <div class="alert alert-error">{{Search.result.error}}</div>
+ <div ng-cloak ng-show="message" class=" error">
+   <div class="np-alert alert alert-error">{{Search.result.error}} {{message}}</div>
  </div>
 
 
@@ -95,7 +95,7 @@
   
   
   <div class="row">
-    <div class="row-fluid" ng-view>
+    <div id="main" class="row-fluid" ng-view >
     </div>
   </div>
 
