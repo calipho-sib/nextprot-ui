@@ -23,7 +23,7 @@
 							<td>{{list.description}}</td>
 							<td style="width:100px; height:25px">
 								<div fade-on-hover=".table">
-									<button class="btn btn-mini" ng-click="lists.splice($index)">
+									<button class="btn btn-mini" ng-click="delete($index)">
 										<i class="icon-remove"></i>
 									</button>
 									<button class="btn btn-mini" bs-modal="'partials/proteinlists/list-modal.html'" ng-click="launchModal($index, 'edit')"><i class="icon-edit"></i></button>

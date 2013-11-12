@@ -10,17 +10,23 @@ ProteinListService.factory('ProteinListService', [
    'Tools',
    function($resource, $http, config, Tools) {
 	   
-//	   $http.defaults.useXDomain = true;
-//	   delete $http.defaults.headers.common["X-Requested-With"]
+	   //$http.defaults.useXDomain = true;
+		//delete $http.defaults.headers.common["X-Requested-With"]
 	   
 	   var lists;
 	   var selectedList;
 	   
 	   var $api_list = $resource('http://localhost:8080/nextprot-api/user/:username/protein-list.json', {username: '@username'}, {
 		   get: { method: 'GET', isArray: false },
-	   	  create: { method: 'POST' }
-	   	
+	   	  create: { method: 'POST' },
+	   	  update: { method: 'PUT'}
 	   });
+
+	   var $pi_list = $resource('http://localhost:8080/nextprot-api/user/:username/protein-list/:id.json', {username: '@username', id: '@id'}, {
+		   delete: { method: 'DELETE'},
+		   update: { method: 'POST'}
+	   });
+
 	   
 	   var ProteinListService = function() {};
 	   
@@ -31,13 +37,26 @@ ProteinListService.factory('ProteinListService', [
 		   });
 	   };
 	   
-	   ProteinListService.prototype.createList = function(attrs, cb) {
-		   $api_list.create({ username: 'mario'}, { name: attrs.list.name, description: attrs.list.description, accessions: attrs.list.accessions },
-				   function(data) {
-			   			if(cb)cb(data);
-		   			});
+	   ProteinListService.prototype.createList = function(username, list, cb) {
+		   $api_list.create({ username: username }, list, function(data) {
+				if(cb)cb(data);
+			});
 	   };
 	   
+		ProteinListService.prototype.updateList = function(username, list, cb) {
+			console.log("updating", username, list);
+			// { listId: list.id, listName: list.name, description: list.description}
+			$pi_list.update({ username: username, id: list.id }, list, function(data) {
+				console.log('edit: ', data);
+			});
+		};
+
+		ProteinListService.prototype.deleteList = function(username, listId, cb) {
+			$pi_list.delete({username: username, id: listId}, function(data) {
+				console.log('deleted: ', data);
+			});
+		}
+
 	   ProteinListService.prototype.setSelectedList = function(list) {
 		   selectedList = list;
 	   }
@@ -45,7 +64,6 @@ ProteinListService.factory('ProteinListService', [
 	   ProteinListService.prototype.getSelectedList = function(list) {
 		   return selectedList;
 	   }
-	   
 	   
 	   var service =  new ProteinListService();
 	   return service;

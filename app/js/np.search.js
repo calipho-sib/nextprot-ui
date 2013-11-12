@@ -211,14 +211,9 @@ SearchModule.controller('ResultCtrl', [
 		}
 		
 		$scope.saveModal = function(dismiss) {
-//			var attrs = { name: $scope.selected.name, description: $scope.selected.description, accessions: _.keys($scope.selectedResults)};
-//			
-//			angular.extend(attrs, { username: 'mario'});
-			var newList = { name: $scope.selected.name, description: $scope.selected.description, accessions: _.keys($scope.selectedResults)};
+			var proteinList = { name: $scope.selected.name, description: $scope.selected.description, accessions: _.keys($scope.selectedResults), ownerId: 1};
 			
-			var attrs = { username: 'mario', list: newList};
-//			
-			ProteinListService.createList(attrs, function(data) { });
+			ProteinListService.createList('mario', proteinList, function(data) { });
 		}
 	}
 ]);
