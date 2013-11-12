@@ -1,22 +1,24 @@
 'use strict'
 
-var ProteinListModule = angular.module('np.proteinlists', ['np.proteinlist.service', 
-                                                           	'np.proteinlist.ui', 
-                                                           	'np.proteinlist.upload', 
-                                                           	'np.proteinlist.upload.ui']);
+var ProteinListModule = angular.module('np.proteinlists', [
+	'np.proteinlist.service', 
+    'np.proteinlist.ui', 
+    'np.proteinlist.upload', 
+    'np.proteinlist.upload.ui'
+]);
 
 
 ProteinListModule.config([
-                          '$routeProvider',
-                          '$locationProvider',
-                          '$httpProvider',
-                          function($routeProvider, $locationProvider, $httpProvider) {
-                        	  $routeProvider
-                        	  	.when('/proteinlists', { templateUrl: 'partials/proteinlists/list.html'})
-                        	  	.when('/proteinlists/view/:name', { templateUrl: 'partials/proteinlists/view.html'})
-                        	  	.when('/proteinlists/create', { templateUrl: 'partials/proteinlists/create.html'})
-                          }
-	]);
+	'$routeProvider',
+    '$locationProvider',
+    '$httpProvider',
+    function($routeProvider, $locationProvider, $httpProvider) {
+    	$routeProvider
+        	.when('/proteinlists', { templateUrl: 'partials/proteinlists/list.html'})
+            .when('/proteinlists/view/:name', { templateUrl: 'partials/proteinlists/view.html'})
+            .when('/proteinlists/create', { templateUrl: 'partials/proteinlists/create.html'})
+    }
+]);
 
 
 ProteinListModule.controller('ListCtrl', [
@@ -42,8 +44,8 @@ ProteinListModule.controller('ListCtrl', [
 		
 		
 		ProteinListService.getByUsername('mario', function(data) {
+			console.log('data: ', data);
 			$scope.lists = data['proteinLists'];
-			console.log('lists: ', $scope.lists);
 			$scope.initCombination();
 		});
 		
@@ -84,16 +86,18 @@ ProteinListModule.controller('ListCtrl', [
 		};
 
 		$scope.saveModal = function(dismiss) {
-			console.log('save');
-			if($scope.modal.type == 'edit')
+			if($scope.modal.type == 'edit') {
 				angular.extend($scope.lists[$scope.selected.index], $scope.selected);
-			else if($scope.modal.type == 'create') {
+
+				ProteinListService.updateList('mario', $scope.selected);
+				console.log('edit: ', $scope.selected);
+				
+			} else if($scope.modal.type == 'create') {
 				
 				var newList = { name: $scope.selected.name, description: $scope.selected.description, accessions: $scope.selected.accessions}
 				
 				if($scope.combination.op == 'OR') {
 					newList.accessions = _.union($scope.combination.first.accessions, $scope.combination.second.accessions);
-					console.log('newList: ', newList);
 				}
 				else if($scope.combination.op == 'AND') {
 					newList.accessions = _.intersection($scope.combination.first.accessions, $scope.combination.second.accessions);
@@ -103,12 +107,18 @@ ProteinListModule.controller('ListCtrl', [
 				var attrs = { username: 'mario', list: newList};
 				//var attrs = { username: 'mario', list: newList};
 				
-				ProteinListService.createList(attrs, function(data) {
+				ProteinListService.createList('mario', newList, function(data) {
 					console.log('created: ', data);
 					$scope.lists.push(newList);
 				});
 			}
 		};
+
+		$scope.delete = function(index) {
+			var deletedList = $scope.lists[index];
+			$scope.lists.splice(index, 1);
+			ProteinListService.deleteList('mario', deletedList.id);
+		}
 	}
 ]);	
 	
@@ -124,23 +134,33 @@ ProteinListModule.controller('ListViewCtrl', [
 	'Tools',
 	function($resource, $scope, $rootScope, $location, $routeParams, $route, ProteinListService, Search, Tools) {
 		var listName = $routeParams.name;
+
 		var list = ProteinListService.getSelectedList();
-		
+
 		// coming directly through the URL
 		if(!list) {
 			// no lists in the Service
 			if(!ProteinListService.lists) {
 				ProteinListService.getByUsername('mario', function(data) {
 					list = _.find(data.proteinLists, function(l) { return listName == Tools.convertToSlug(l.name) });
-					Search.searchById(list.accessions, function(docs, solrParams) {});
+
+
+					Search.docs({ entity: 'proteins', configuration: 'id', query: buildQuery(list.accessions)}, function(docs) { 
+						console.log('found: ', docs)
+					});
 				});
 			}
-		} else Search.searchById(list.accessions, function(docs, solrParams) {});
+		} else Search.docs({ entity: 'proteins', configuration: 'id', query: buildQuery(list.accessions)}, function(data) {
+			console.log('search: ', data);
+		});
 
-		
 	}
 ]);
-                                          
+
+function buildQuery(accessions) {
+	return "id:" + (accessions.length > 1 ? "(" + accessions.join(" ") + ")" : accessions[0]);
+}
+
 ProteinListModule.controller('ListCreateCtrl', [
 	'$resource',
 	'$scope',
@@ -181,11 +201,16 @@ ProteinListModule.controller('ListCreateCtrl', [
 	    	
 	    	if($scope.inputAccessions.length > 0) {
 	    		var accessions = $scope.inputAccessions.split("\n");
+
+	    		console.log("accs: ", accessions);
+
+	    		var list = { name: $scope.listName, accessions: accessions};
 	    		
-	    		ProteinListService.createList({ username: 'mario', name: listName, accessions: accessions }, function(data) {console.log('list created!')} );	
+	    		//ProteinListService.createList({ username: 'mario', name: listName, accessions: accessions }, function(data) {console.log('list created!')} );	
+	    		ProteinListService.createList('mario', list, function(data) { });
 	    	} else {
 	    		for(var i=0; i<selectedFiles.length; i++)
-	    			UploadListService.send('his-list', selectedFiles[i]);
+	    			UploadListService.send($scope.listName, selectedFiles[i]);
 	    	}
 	    }
 	}
