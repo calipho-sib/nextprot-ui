@@ -49,6 +49,21 @@ SearchUI.directive('toggle', [function () {
 	  };
 	}]);
 
+SearchUI.directive('npAnimate', ['Search', '$location' ,function (Search, $location) {
+	  return function (scope, elm, attrs) {
+	  	var target=attrs.npAnimate;
+	  	scope.$watch(function(){return $location.path()}, function(newValue, oldValue) {
+	  		if (newValue!=='/'){
+		  		elm.addClass("animate");
+		  	}else{
+		  		elm.removeClass("animate");
+		  	}		
+
+	  	});
+	  };
+	}]);
+
+
 SearchUI.directive('npEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {

@@ -18,8 +18,31 @@
 	font-size:93%;
 }
 
+.np-alert{
+    border-radius: 0 0 6px 6px !important;
+    min-width: 30%;
+    position: fixed;
+    top: 0;
+}
 
+.search-row{
+  margin-top:20%;
+  margin-bottom:20%;
+}
 
+.search-row.animate{
+  margin-top:90px;
+  margin-bottom:inherit;
+  transition: .2s linear all;
+  -webkit-transition: .2s linear all;
+  -moz-transition: .2s linear all;
+  -o-transition: .2s linear all;  
+}
+.search-row .home{
+  position: absolute;
+  margin-top: -120px;
+  left:40%; 
+}
 
 .solrparams{
     background-color: #FAFAFA;

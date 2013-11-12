@@ -1,5 +1,5 @@
   
-  <div  ng-cloak class="row search-row" style="margin-top:90px;">
+  <div  ng-cloak class="row search-row"  np-animate="#main">
     <div class="row-fluid">
       <form ng-submit="go()" validate>
       <div class="span3">
@@ -22,16 +22,17 @@
       <!--                        -->
       </div>
       <div class="span9 search-bar">
-	      <div class=" input-append span8" ng-class="{'input-prepend':Search.config.solr.widgets.gold}">
+      	  <img src="http://www.nextprot.org/db/images/blueflat/np.png"  class="home"/>
+	      <div class=" input-append span8" ng-class="{'input-prepend':Search.config.widgets[Search.result.display].gold}">
 	        <!--                        -->
 	        <!--  QUALITY SELECTION     -->
           <!--                        -->
 	        <div class="btn-group">
-		        <button class="btn dropdown-toggle btn" type="button" ng-cloak data-toggle="dropdown" ng-show="Search.config.solr.widgets.gold" id="search-quality">
-		          {{Search.config.solr.widgets.qualityLabel[Search.params.quality]}}
+		        <button class="btn dropdown-toggle btn" type="button" ng-cloak data-toggle="dropdown" ng-show="Search.config.widgets[Search.result.display].gold" id="search-quality">
+		          {{Search.config.widgets[Search.result.display].qualityLabel[Search.params.quality]}}
 		          <span class="caret"></span>
 		        </button>
-		        <ul id="search-quality-dropdown" class="dropdown-menu" ng-show="Search.config.solr.widgets.gold">
+		        <ul id="search-quality-dropdown" class="dropdown-menu" ng-show="Search.config.widgets[Search.result.display].gold">
 		            <li><a ng-click="quality('gold')" >Gold only</a></li>
 		            <li><a ng-click="quality('gold-and-silver')" >Include silver</a></li>
 		        </ul>
@@ -42,8 +43,8 @@
           <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
           <!--                        -->
 	        <input id="search-query" class=" "  type="text" ng-model="Search.params.query"  
-	               ng-class="{'quality-search-width':Search.config.solr.widgets.gold,'no-quality-search-width':!Search.config.solr.widgets.gold}" 
-	               autocomplete="off"  bs-autocomplete="Search.suggest" >
+	               ng-class="{'quality-search-width':Search.config.widgets[Search.result.display].gold,'no-quality-search-width':!Search.config.widgets[Search.result.display].gold}" 
+	               autocomplete="off"  bs-autocomplete="Search.suggest" autofocus>
 
 
           <!--                        -->
@@ -59,7 +60,7 @@
 	      </div>
 	      <div class="span10 nomargin">	       
 	        <span ng-show="Search.result.spellcheck.collations.length" id="search-didyoumean"><b>Did you mean:</b> 
-	          <a href="{{Search.params.entity}}/search/{{Search.result.spellcheck.collations[0].collationQuery}}">{{Search.result.spellcheck.collations[0].collationQuery}}</a>
+	          <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[0].collationQuery}}">{{Search.result.spellcheck.collations[0].collationQuery}}</a>
 	          <span ng-show="Search.result.spellcheck.collations[1]">, 
 	            <a href="{{Search.params.entity}}/search/{{Search.result.spellcheck.collations[1].collationQuery}}">{{Search.result.spellcheck.collations[1].collationQuery}}</a>
 	          </span>

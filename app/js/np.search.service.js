@@ -45,7 +45,6 @@ SearchService.factory('Search',[
 		//
 		// default config
 		this.config=config.solr;
-		this.config.solr=config.solr.core[defaultUrl.entity];
 		
 		//
 		// app search service params
@@ -137,7 +136,6 @@ SearchService.factory('Search',[
 		angular.extend(this.params,  searchApi, defaultUrl, params)		
 		this.params.entity=config.solr.entityMapping[params.entity];
 
-		console.log(this.params, params)
 		$api.search(this.params).$promise.then(function(docs){
 			//console.log("docs",docs)
 			me.result.params=params;
@@ -148,7 +146,6 @@ SearchService.factory('Search',[
 			me.result.docs = docs.results;
 			me.result.ontology=config.solr.ontology;
 			me.result.filters=docs.filters
-			me.config.solr=config.solr.core[me.result.display];
 
 			//
 			// prepare spellcheck stucture
