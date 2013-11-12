@@ -134,6 +134,7 @@ function ($http) {
    SOLR_SERVER:'http://crick.isb-sib.ch:port/nextprot-api/:action/:entity',
    SOLR_PORT:':8080',
 
+   base:"/",
    
    
    ontology:{
@@ -197,10 +198,10 @@ function ($http) {
 
    entityMapping:{
 		proteins:'entry.json',
-		publications:'publications.json',
+		publications:'publication.json',
 		terms:'terms.json',
 		'entry.json':'proteins',
-		'publications.json':'publications',
+		'publication.json':'publications',
 		'terms.json':'terms'
    },
 

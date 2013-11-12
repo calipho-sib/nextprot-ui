@@ -23,7 +23,8 @@ SearchService.factory('Search',[
 			filter:'',
 			entity:'entry.json',
 			quality:'gold',
-			query:''
+			query:'',
+			sort:''
 	};	
 	
 
@@ -63,6 +64,50 @@ SearchService.factory('Search',[
 	}
 	
 
+	Search.prototype.paginate=function(params, docs){
+			this.result.num=docs.found;
+			this.result.pagination={};
+			this.result.pagination.current=parseInt((params.start?params.start:0)/config.solr.paginate.rows);
+
+			// back button
+			if (params.start>0 && (this.result.pagination.current)>0){
+				var offset=this.result.pagination.current;
+				this.result.pagination.prev={
+					offset:offset-1, 
+					rows:(offset-1)*config.solr.paginate.rows
+				};
+			}
+			// next button 
+			if (  docs.results.length===config.solr.paginate.rows){
+				this.result.pagination.next={
+					offset:this.result.pagination.current+1, 
+					rows:(this.result.pagination.current+1)*config.solr.paginate.rows
+				};
+
+			}
+
+			// more button
+			if (  (docs.found/config.solr.paginate.rows)>config.solr.paginate.steps){
+				this.result.pagination.more={
+					offset:parseInt(this.result.num/config.solr.paginate.rows), 
+					rows:parseInt(this.result.num/config.solr.paginate.rows)*config.solr.paginate.rows
+				};
+			}
+
+			
+			this.result.offset=docs.start;
+			this.result.pages=[];
+			for (var page=0;page<(this.result.num/config.solr.paginate.rows);page++){
+				if (page>config.solr.paginate.steps){
+					break;		
+				}
+				this.result.pages.push({
+					offset:page+1,
+					rows:page*config.solr.paginate.rows, 
+					current:(this.result.pagination.current)===page
+				})
+			}		
+	}
 	
 
 
@@ -71,7 +116,7 @@ SearchService.factory('Search',[
 	// suggest is a quick search
 	Search.prototype.suggest=function(query,cb){
 		var params={};
-		angular.extend(params, defaultUrl,suggestApi, {query:query})		
+		angular.extend(params, defaultUrl,suggestApi, {query:query, entity:this.params.entity})		
 		$api.search(params,function(result){				
 	    	var items=[];			    	
 			for (var i=0; i<result.autocomplete.length; i=i+2) {
@@ -92,6 +137,7 @@ SearchService.factory('Search',[
 		angular.extend(this.params,  searchApi, defaultUrl, params)		
 		this.params.entity=config.solr.entityMapping[params.entity];
 
+		console.log(this.params, params)
 		$api.search(this.params).$promise.then(function(docs){
 			//console.log("docs",docs)
 			me.result.params=params;
@@ -110,57 +156,19 @@ SearchService.factory('Search',[
 
 			//
 			// prepare pagination
-			me.result.num=docs.found;
-			me.result.pagination={};
-			me.result.pagination.current=parseInt((params.start?params.start:0)/config.solr.paginate.rows);
+			me.paginate(params, docs)
 
-			// back button
-			if (params.start>0 && (me.result.pagination.current)>0){
-				var offset=me.result.pagination.current;
-				me.result.pagination.prev={
-					offset:offset-1, 
-					rows:(offset-1)*config.solr.paginate.rows
-				};
-			}
-			// next button 
-			if (  docs.results.length===config.solr.paginate.rows){
-				me.result.pagination.next={
-					offset:me.result.pagination.current+1, 
-					rows:(me.result.pagination.current+1)*config.solr.paginate.rows
-				};
 
-			}
-
-			// more button
-			if (  (docs.found/config.solr.paginate.rows)>config.solr.paginate.steps){
-				me.result.pagination.more={
-					offset:parseInt(me.result.num/config.solr.paginate.rows), 
-					rows:parseInt(me.result.num/config.solr.paginate.rows)*config.solr.paginate.rows
-				};
-			}
-
-			
-			me.result.offset=docs.start;
-			me.result.pages=[];
-			for (var page=0;page<(me.result.num/config.solr.paginate.rows);page++){
-				if (page>config.solr.paginate.steps){
-					break;		
-				}
-				me.result.pages.push({
-					offset:page+1,
-					rows:page*config.solr.paginate.rows, 
-					current:(me.result.pagination.current)===page
+			//
+			// special cases: ac on publications
+			if(me.result.display==="publications"){
+				me.result.docs.forEach(function(doc){
+					doc.acs=doc.ac.split(' | ');
+					doc.year=new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi,"")).getFullYear()
+					doc.authors=doc.authors.split(' | ');
 				})
 			}
 
-			//
-			// prepare facet structure
-//			if(docs.facet_counts&&docs.facet_counts.facet_fields.filters){
-//				var filters=docs.facet_counts.facet_fields.filters;
-//				for(var i=0;i<filters.length;i+=2){
-//					me.result.filters.push({name:filters[i],count:filters[i+1]});
-//				}				
-//			}
 
 			if(cb)cb(me.result)
 		},function(error){

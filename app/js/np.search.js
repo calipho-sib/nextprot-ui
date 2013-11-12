@@ -34,10 +34,12 @@ SearchModule.controller('SearchCtrl',[
    '$routeParams',
    '$route',
    'Search', 
-function($resource, $scope, $rootScope, $location,$routeParams, $route, Search){
+   'config', 
+function($resource, $scope, $rootScope, $location,$routeParams, $route, Search, config){
 	 //
 	 // scope from template
 	 $scope.Search=Search;
+	 $scope.config=config;
 	 
 
 	 //
@@ -143,9 +145,9 @@ SearchModule.controller('ResultCtrl', [
 		});
 
 		
-		$scope.getTemplateByEntity=function(){
+		$scope.getResultTemplateByEntity=function(){
 			 switch (Search.params.entity) {
-		        case "publications.json":
+		        case "publication.json":
 		            return 'partials/search/result-publications.html';
 		        case "terms.json":
 		            return 'partials/search/result-terms.html';
@@ -154,6 +156,20 @@ SearchModule.controller('ResultCtrl', [
 		    }			
 		}
 
+		$scope.getSortTemplateByEntity=function(){
+			 switch (Search.params.entity) {
+		        case "publication.json":
+		            return 'partials/search/sort-publications.html';
+		        case "terms.json":
+		            return 'partials/search/sort-terms.html';
+		        default:
+		            return 'partials/search/sort-proteins.html';
+		    }						
+		}
+
+		$scope.getPublicationUrl=function(ac){
+			return "http://google.com/search?q="+ac
+		}
 
 
 		$scope.affix=function(selector){

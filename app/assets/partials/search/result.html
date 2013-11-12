@@ -4,64 +4,49 @@
 		<div style="position: absolute;" np-affix="120" data-offset-bottom="250" class="navbar navbar-fixed-top">
 		  <div class="navbar-inner">
 		  	<!-- AFFIX fix : width: 980px; padding: 0 30px; -->
-		    <div style="width: 940px; padding: 0 30px;" class="container">
+		    <div style="width: 60%;" class="container">
 		      	
 
 		    	<!-- DISPLAY RESULT INFO -->
 				<ul class="nav">
 					<li class="navbar-text">Show {{Search.result.docs.length}} on {{Search.result.num}} {{Search.result.display}}   ({{Search.result.time}} ms) </li>
+					<li>
+						<input id="search-query-affix" class=" hide fadein"  type="text" ng-model="Search.params.query"  	               		
+	               		autocomplete="off"  bs-autocomplete="Search.suggest" style="opacity: 0;margin-left: 10%;" np-enter="go()">
+					</li>
 				</ul>
 
 		    	<!-- DISPLAY FILTERS SORT/EXPORT -->
 				<ul class="nav pull-right">
-				  <!-- DEBUG -->
-				  <li class="pagination pagination-small">
-					<ul>
-					<li ng-class="{disabled:!Search.result.pagination.prev}"><a href="" ng-click="params({start:Search.result.pagination.prev.rows})">&laquo;</a></li>
-					<li ng-repeat="page in Search.result.pages" ng-class="{disabled:page.current}" ><a  href="" ng-click="params({start:page.rows})">{{page.offset}}</a></li>
-					<li ng-show="Search.result.pagination.more"><a href="" ng-click="params({start:Search.result.pagination.more.rows})">... {{Search.result.pagination.more.offset}}</a></li>
-					<li ng-class="{disabled:!Search.result.pagination.next}"><a href="" ng-click="params({start:Search.result.pagination.next.rows})">&raquo;</a></li>
-					</ul>
-				  </li>				  
 				  <li class="divider-vertical"></li>
-				  <li><a href="" bs-modal="'partials/search/solr.html'">Debug</a></li>					
-				  <li class="divider-vertical"></li>
+
 				  <!-- SORTING -->
-				  <li class="dropdown">
-				    <a data-toggle="dropdown" class="dropdown-toggle" href="">Sort<sub ng-show="Search.params.sort"> {{Search.params.sort}}</sub> <b class="caret"></b></a>
-				    <ul class="dropdown-menu">
-				      <li><a href="" ng-click="params({sort:'gene'})">Gene name</a></li>
-				      <li><a href="" ng-click="params({sort:'protein'})">Protein name</a></li>
-				      <li><a href="" ng-click="params({sort:'family'})">Protein family name</a></li>
-				      <li><a href="" ng-click="params({sort:'ac'})">ACs</a></li>
-				      <li><a href="" ng-click="params({sort:'length'})">Protein length</a></li>
-				      <li><a href="" ng-click="params({sort:null});">The ranking score</a></li>
-				    </ul>
-				  </li>
+		  	      <li class="dropdown"  ng-include="getSortTemplateByEntity()"></li>
+					
 				  <!-- EXPORT -->
+				  <!--
 				  <li class="divider-vertical"></li>
 				  <li class="dropdown">
-				    <a data-toggle="dropdown" class="dropdown-toggle" href="">Export  <b class="caret"></b></a>
-				    <ul class="dropdown-menu">
-				      <li><a href="#">XML</a></li>
-				      <li class="divider"></li>
-				      <li><a href="#">API JSON </a></li>
-				      <li><a href="#">API XML </a></li>
-				    </ul>
+					  <a data-toggle="dropdown" class="dropdown-toggle" href="">Export  <b class="caret"></b></a>
+					  <ul class="dropdown-menu">
+						  <li><a href="#">XML</a></li>
+						  <li class="divider"></li>
+						  <li><a href="#">API JSON </a></li>
+						  <li><a href="#">API XML </a></li>
+					  </ul>
 				  </li>
+				  -->
 				  <li class="divider-vertical"></li>
 				  <li class="dropdown">
-					<a data-toggle="dropdown" class="dropdown-toggle" href="">
-						<i class="icon-shopping-cart"></i><span class="badge">{{Cart.cartSize()}}</span><b class="caret"/></a>
+				    <a data-toggle="dropdown" class="dropdown-toggle" href="">
+						<i class="icon-shopping-cart"></i><span class="badge">{{Cart.cartSize()}}</span><b class="caret"/>
+				    </a>
 					<ul class="dropdown-menu">
 						<li><a href="" ng-click="emptyCart()">Empty cart</a></li>
-<!-- 						<li><a href="" ng-click="saveCart()">Save cart as list</a></li> -->
 						<li><a href="" bs-modal="'partials/proteinlists/list-modal.html'" ng-click="launchModal($index, 'create')">Save cart as list</a></li>
 						<li><a href="" ng-click="showSelected()">Show only selected</a></li>
-					</ul>
-
+				    </ul>
 				  </li>
-
 
 				</ul>		      
 		    </div>
@@ -73,7 +58,6 @@
 	      <!--RESULT SIDEBAR-->
 	      	<div class=" well-small  resultfilters" style="width:230px;" np-affix="160">
 				<ul class="nav nav-list " >
-			      <li class="divider"></li>
 				  <li class="nav-header">Filters</li>
 				  <li class="">For {{Search.result.display}} with:</li>
 			      <li class="solrp " ng-repeat="filter in Search.result.filters | orderBy:'name'">
@@ -88,7 +72,17 @@
 	    </div>
 	    <div class="span9">
 	      <!-- RESULT CONTENT -->
-	      <div class=""  ng-include="getTemplateByEntity()"></div>
+	      <div class=""  ng-include="getResultTemplateByEntity()"></div>
+		  <!-- PAGINATE -->
+		  <div class="result pagination pagination-small">
+			<ul>
+				<li ng-class="{disabled:!Search.result.pagination.prev}"><a href="" ng-click="params({start:Search.result.pagination.prev.rows})">&laquo;</a></li>
+				<li ng-repeat="page in Search.result.pages" ng-class="{disabled:page.current}" ><a  href="" ng-click="params({start:page.rows})">{{page.offset}}</a></li>
+				<li ng-show="Search.result.pagination.more"><a href="" ng-click="params({start:Search.result.pagination.more.rows})">... {{Search.result.pagination.more.offset}}</a></li>
+				<li ng-class="{disabled:!Search.result.pagination.next}"><a href="" ng-click="params({start:Search.result.pagination.next.rows})">&raquo;</a></li>
+			</ul>
+		  </div>				  
+
 	    </div>
 	  </div>
 </div>

@@ -12,6 +12,13 @@ SearchUI.filter('has', function() {
 	}
 });
 
+SearchUI.filter('trim', function() {
+	return function(input) {
+		if (!input ||!input.length )
+			return '';
+		return (input.trim());
+	}
+});
 SearchUI.filter('limit', function() {
 	return function(input, max) {
 		if(!input)return;
@@ -26,7 +33,13 @@ SearchUI.directive('version', ['config', function(config) {
     };
   }]);
 
-
+SearchUI.directive('appBase', ['config', function(config) {
+    return function(scope, elm, attrs) {
+      if (attrs['appBase'])
+      	return elm.attr(attrs['base'], "config.base")
+      elm.text(config.base);
+    };
+  }]);
 
 SearchUI.directive('toggle', [function () {
 	  return function (scope, elm, attrs) {
@@ -36,6 +49,19 @@ SearchUI.directive('toggle', [function () {
 	  };
 	}]);
 
+SearchUI.directive('npEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.npEnter);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});
 
 //
 // autocomplete with customized bootstrap typeahead

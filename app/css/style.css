@@ -46,6 +46,18 @@
   padding-left: 0px!important;
 }
 
+.resultparams .affix input {
+  display:block!important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  margin: 5px;
+  transition: .2s linear all;
+  -webkit-transition: .2s linear all;
+  -moz-transition: .2s linear all;
+  -o-transition: .2s linear all;  
+  opacity: 1!important;
+
+}
 
 .affix {
     position: fixed!important; 
@@ -60,6 +72,7 @@
 }
 
 
+
 .resultfilters {
   margin-top:10px;
   padding-left:24%;
@@ -68,12 +81,24 @@
 
 .resultfilters.affix {
     padding-left:0;
-    left:2.0%;
+    left:1.0%;
     z-index:99;
+    margin-top: 40px;
 }
+
+.resultfilters .active{
+  background-color: aliceblue;
+  width: 80%;
+  border-radius: 5px;
+}
+
 
 .nav .pagination {
     margin: 7px 0 0!important;
+}
+
+.result.pagination {
+    margin: 20px 20%!important;
 }
 
 .search-bar .dropdown-menu{
@@ -89,12 +114,6 @@
     text-decoration: none;
 }
 
-.resultfilters .active{
-    padding-left: 9px;
-    padding-right: 9px;
-    border-bottom:1px solid #ddd;
-    color:black;
-}
 
 
 
@@ -125,16 +144,21 @@
   width:405px!important;
 }
 
-.icon-loading{
-  background-image: url(../img/spinner.gif);
-  background-repeat:no-repeat;	
-  padding: 3px 7px 0;
+ul#search-results li{
+  padding-bottom: 20px;
 }
 
-.ajax-start{
-	
+ul#search-results .result-authors{
+  font-size: 93%;
+}
+ul#search-results .result-authors a{
+  color:#6A90D9;
 }
 
-.ajax-end{
-  
+ul#search-results .result-abstract{
+    font-size: 90%;
+    margin-right: 60px;
+    padding-top: 5px;
+    text-align: justify;
+    text-rendering: optimizelegibility;
 }
