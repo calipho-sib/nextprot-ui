@@ -23,7 +23,8 @@ SearchService.factory('Search',[
 			filter:'',
 			entity:'entry.json',
 			quality:'gold',
-			query:''
+			query:'',
+			sort:''
 	};	
 	
 
@@ -115,7 +116,7 @@ SearchService.factory('Search',[
 	// suggest is a quick search
 	Search.prototype.suggest=function(query,cb){
 		var params={};
-		angular.extend(params, defaultUrl,suggestApi, {query:query})		
+		angular.extend(params, defaultUrl,suggestApi, {query:query, entity:this.params.entity})		
 		$api.search(params,function(result){				
 	    	var items=[];			    	
 			for (var i=0; i<result.autocomplete.length; i=i+2) {
@@ -136,6 +137,7 @@ SearchService.factory('Search',[
 		angular.extend(this.params,  searchApi, defaultUrl, params)		
 		this.params.entity=config.solr.entityMapping[params.entity];
 
+		console.log(this.params, params)
 		$api.search(this.params).$promise.then(function(docs){
 			//console.log("docs",docs)
 			me.result.params=params;
@@ -159,13 +161,11 @@ SearchService.factory('Search',[
 
 			//
 			// special cases: ac on publications
-			console.log(me.result.display,me.params.entity)
 			if(me.result.display==="publications"){
 				me.result.docs.forEach(function(doc){
 					doc.acs=doc.ac.split(' | ');
 					doc.year=new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi,"")).getFullYear()
 					doc.authors=doc.authors.split(' | ');
-					console.log(new Date(doc.date.replace("CET","")),doc.date)
 				})
 			}
 
