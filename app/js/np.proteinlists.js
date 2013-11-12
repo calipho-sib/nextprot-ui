@@ -4,7 +4,8 @@ var ProteinListModule = angular.module('np.proteinlists', [
 	'np.proteinlist.service', 
     'np.proteinlist.ui', 
     'np.proteinlist.upload', 
-    'np.proteinlist.upload.ui'
+    'np.proteinlist.upload.ui',
+    'np.flash'
 ]);
 
 
@@ -168,7 +169,8 @@ ProteinListModule.controller('ListCreateCtrl', [
 	'$routeParams',
 	'ProteinListService',
 	'UploadListService',
-	function($resource, $scope, $rootScope, $routeParams, ProteinListService, UploadListService) {
+	'Flash',
+	function($resource, $scope, $rootScope, $routeParams, ProteinListService, UploadListService, Flash) {
 		
 		$scope.inputAccessions = "";
 		$scope.listName = "";
@@ -213,6 +215,7 @@ ProteinListModule.controller('ListCreateCtrl', [
 	    			UploadListService.send($scope.listName, selectedFiles[i]);
 	    	}
 	    }
+	    //Flash.showInfo("list created");
 	}
 	
 	
