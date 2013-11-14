@@ -169,8 +169,8 @@ ProteinListModule.controller('ListCreateCtrl', [
 	'$routeParams',
 	'ProteinListService',
 	'UploadListService',
-	'Flash',
-	function($resource, $scope, $rootScope, $routeParams, ProteinListService, UploadListService, Flash) {
+	'flash',
+	function($resource, $scope, $rootScope, $routeParams, ProteinListService, UploadListService, flash) {
 		
 		$scope.inputAccessions = "";
 		$scope.listName = "";
@@ -213,9 +213,11 @@ ProteinListModule.controller('ListCreateCtrl', [
 	    	} else {
 	    		for(var i=0; i<selectedFiles.length; i++)
 	    			UploadListService.send($scope.listName, selectedFiles[i]);
+
+	    		flash("alert-info", "List "+$scope.listName+" created");
 	    	}
 	    }
-	    //Flash.showInfo("list created");
+	 
 	}
 	
 	
