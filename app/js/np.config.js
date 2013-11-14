@@ -11,7 +11,7 @@ function ($http) {
 	
  //
  // solr configuration
- var defaultSolr = {
+ var defaultApi = {
    SOLR_SERVER:'http://crick.isb-sib.ch:port/nextprot-api/:action/:entity',
    SOLR_PORT:':8080',
 
@@ -104,7 +104,7 @@ function ($http) {
  //
  // global application configuration
  var defaultConfig = {
-	solr:defaultSolr
+	solr:defaultApi
  }
  
 
