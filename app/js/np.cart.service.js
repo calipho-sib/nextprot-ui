@@ -14,23 +14,33 @@ CartService.factory('Cart', [
 		
 	};
 	
-	Cart.prototype.change = function(selection) {
-		cartElements = [];
+	// Cart.prototype.change = function(selection) {
+		// cartElements = [];
 		
-		for(var prop in selection) {
-			if(selection[prop])
-				cartElements.push(prop);
+		// for(var prop in selection) {
+		// 	if(selection[prop])
+		// 		cartElements.push(prop);
+		// }
+	// }
+
+	Cart.prototype.change = function(docId) {
+		if(_.contains(cartElements, docId)) {
+			cartElements = _.without(cartElements, docId);
+		} else {
+			cartElements.push(docId);
 		}
 	}
-	
+
 	Cart.prototype.addToCart = function(selection) {
-		console.log('add to cart: ', selection);
-		
 		for(var prop in selection) {
 			if(selection[prop] && !_.contains(cartElements, prop))
 				cartElements.push(prop);
 		}
 		
+	}
+
+	Cart.prototype.add = function(docId) {
+		cartElements.push(docId);
 	}
 	
 	Cart.prototype.emptyCart = function() {
@@ -43,6 +53,10 @@ CartService.factory('Cart', [
 	
 	Cart.prototype.cartSize = function() {
 		return cartElements.length;
+	}
+
+	Cart.prototype.getElements = function() {
+		return cartElements;
 	}
 	
 	var cart = new Cart();
