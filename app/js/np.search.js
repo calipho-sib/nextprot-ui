@@ -188,20 +188,24 @@ SearchModule.controller('ResultCtrl', [
 		}
 		
 		$scope.$watch('selectedResults', function() { 
-			Cart.change($scope.selectedResults);
+			
+			// Cart.change($scope.selectedResults);
 		}, true);
 		
 		
 		$scope.selectAll = function() {
-			$scope.unselectAll();
-			
+			//$scope.unselectAll();
+			Cart.emptyCart();
+
 			for(var i=0; i<Search.result.docs.length; i++) {
-				$scope.selectedResults[Search.result.docs[i].id] = true;
+			// 	$scope.selectedResults[Search.result.docs[i].id] = true;
+				Cart.add(Search.result.docs[i].id);
 			}
 		}
 		
 		$scope.unselectAll = function() {
-			$scope.selectedResults = {};
+			//$scope.selectedResults = {};
+			Cart.emptyCart();
 		}
 	
 		
@@ -211,7 +215,8 @@ SearchModule.controller('ResultCtrl', [
 		}
 		
 		$scope.saveModal = function(dismiss) {
-			var proteinList = { name: $scope.selected.name, description: $scope.selected.description, accessions: _.keys($scope.selectedResults), ownerId: 1};
+			// var proteinList = { name: $scope.selected.name, description: $scope.selected.description, accessions: _.keys($scope.selectedResults), ownerId: 1};
+			var proteinList = { name: $scope.selected.name, description: $scope.selected.description, accessions: Cart.getElements(), ownerId: 1};
 			
 			ProteinListService.createList('mario', proteinList, function(data) { });
 		}
