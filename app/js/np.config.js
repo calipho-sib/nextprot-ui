@@ -12,10 +12,11 @@ function ($http) {
  //
  // solr configuration
  var defaultApi = {
-   SOLR_SERVER:'http://crick.isb-sib.ch:port/nextprot-api/:action/:entity',
-   SOLR_PORT:':8080',
+   SOLR_SERVER:'http://uat-web1:port/nextprot-api/:action/:entity',
+   SOLR_PORT:':8282',
 
-   base:"/",
+   //base:"/",
+   base:"/protosearch/",
    
    
    ontology:{

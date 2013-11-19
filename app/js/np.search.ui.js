@@ -33,13 +33,7 @@ SearchUI.directive('version', ['config', function(config) {
     };
   }]);
 
-SearchUI.directive('appBase', ['config', function(config) {
-    return function(scope, elm, attrs) {
-      if (attrs['appBase'])
-      	return elm.attr(attrs['base'], "config.base")
-      elm.text(config.base);
-    };
-  }]);
+
 
 SearchUI.directive('toggle', [function () {
 	  return function (scope, elm, attrs) {
@@ -49,11 +43,11 @@ SearchUI.directive('toggle', [function () {
 	  };
 	}]);
 
-SearchUI.directive('npAnimate', ['Search', '$location' ,function (Search, $location) {
+SearchUI.directive('npAnimate', ['config', 'Search', '$location' ,function (config, Search, $location) {
 	  return function (scope, elm, attrs) {
 	  	var target=attrs.npAnimate;
 	  	scope.$watch(function(){return $location.path()}, function(newValue, oldValue) {
-	  		if (newValue!=='/'){
+	  		if (newValue!=="/"){
 		  		elm.addClass("animate");
 		  	}else{
 		  		elm.removeClass("animate");

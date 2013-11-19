@@ -8,7 +8,7 @@
 		      	
 
 		    	<!-- DISPLAY RESULT INFO -->
-				<ul class="nav">
+				<ul class="nav" style="margin-left:-100px">
 					<li class="navbar-text">Show {{Search.result.docs.length}} on {{Search.result.num}} {{Search.result.display}}   ({{Search.result.time}} ms) </li>
 					<li>
 						<input id="search-query-affix" class=" hide fadein"  type="text" ng-model="Search.params.query"  	               		
@@ -18,7 +18,18 @@
 
 		    	<!-- DISPLAY FILTERS SORT/EXPORT -->
 				<ul class="nav pull-right">
+				  <li ng-show="Search.result.pages.length>1">
+				  	<label>Page
+				    <input type="number" min="1" class="span3" ng-model="Search.result.pagination.manual"  ng-value="Search.result.pagination.manual" np-enter="params({start:(Search.result.pagination.manual-1)*Search.result.rows})"/></label>
+				  </li>
+
 				  <li class="divider-vertical"></li>
+				  <li ng-class="{active:Search.session.summary==='true'}">
+				    <a href="" ng-click="cookies({summary:true});" id="search-summary">Summary</a>
+				  </li>
+				  <li ng-class="{active:Search.session.summary!=='true'}">
+				    <a href="" ng-click="cookies({summary:false});" id="search-details">Details</a>
+				  </li>
 
 				  <!-- SORTING -->
 		  	      <li class="dropdown"  ng-include="getSortTemplateByEntity()"></li>

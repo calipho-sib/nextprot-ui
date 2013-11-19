@@ -1,15 +1,12 @@
       <!-- RESULT HEADERS -->
       <div class="row" >
-        <ul ng-cloak id="search-results">
+        <ul ng-cloak id="search-results" class="_unstyled">
           <li ng-repeat="doc in Search.result.docs"  ng-cloak>
             <div><a href="http://www.nextprot.org/db/term/{{doc.ac}}">{{doc.name}} [{{doc.ac}}]</a> </div> 
             <div class="gray small">{{Search.result.ontology[doc.filters.toLowerCase()] }}</div>
-            <div class="small">{{doc.description}}</div>
+            <div class="small" ng-hide="Search.session.summary">{{doc.description}}</div>
 
-            <ul ng-show="doc.properties" class="unstyled well well-small hide"  style="margin-right:20px">
-              <span class="gray small"> {{doc.synonyms}}  </span>
-              <li ng-repeat="p in doc.properties.split('|')">{{p}}</li>
-            </ul>
+
           </li>
         </ul>
       </div>

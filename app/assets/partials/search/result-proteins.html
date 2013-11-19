@@ -12,10 +12,10 @@
 
             <a href="http://www.nextprot.org/entry/{{doc.id}}">{{doc.recommended_name}} ({{doc.recommended_gene_names}}) [{{doc.id}}]</a> 
             <span><a class="btn btn-mini hide" toggle="#line-{{$index}}"  ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i> Details</a> </span>
-            <div class="small">
+            <div class="small" ng-hide="Search.session.summary">
               {{doc.function_desc|limit:300}} <span ng-hide="doc.function_desc"> No functional information for this protein. </span>&nbsp;
             </div>
-            <div class="gray small">
+            <div class="gray small" ng-hide="Search.session.summary">
               Chromosomal location: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/exons">{{doc.chr_loc}}</a> 
               Isoforms: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.isoform_num}}</a> 
               PTMs: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.ptm_num}}</a> 
@@ -28,37 +28,7 @@
               Structure: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/structure">{{doc.filters|has:'filterstructure'}}</a> 
               Proteins existence: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/function">{{doc.protein_existence}}</a>              
             </div>
-            <!-- STD FIELDS -->
-            <!-- id, recommended_name, recommended_gene_names, gene_band, filters, 
-                 alternative_names, alternative_gene_names, alternative_acs, family_names, interactions, microarray_probe, ensembl, cv_names -->
 
-            <!-- MORE FIELDS -->
-            <!-- cv_ancestors, peptide, antibody, cv_synonyms, annotations, publications, xrefs-->
-            <div  id="line-{{$index}}" class="hide  "  ng-cloak style="margin-right:20px">
-              <ul class="unstyled well well-small">
-                <li ng-show="doc.alternative_names"><b class="green">alternative_names</b> {{doc.alternative_names}}</li>
-                <li ng-show="doc.alternative_gene_names"><b class="green">alternative_gene_names</b> {{doc.alternative_gene_names}}</li>
-                <li ng-show="doc.alternative_acs"><b class="green">alternative_acs</b> {{doc.alternative_acs}}</li>
-                <li ng-show="doc.family_names"><b class="green">family_names</b> {{doc.family_names}}</li>
-                <li ng-show="doc.interactions"><b class="green">interactions</b> {{doc.interactions}} </li>
-                <li><b class="green">microarray_probe</b> {{doc.microarray_probe}}</li>
-                <li><b class="green">ensembl</b> {{doc.ensembl}}</li>
-                <li><b class="green">cv_names</b> {{doc.cv_names}}</li>                
-                <li>
-                  <a class="btn btn-mini btn-primary" ng-click="moredetails($index)"><i class="icon-plus"></i> More details</a>
-                  <ul ng-show="Search.result.docs[$index].details">
-                    <li ng-show="Search.result.docs[$index].details.peptide"><b class="green">peptide</b> {{Search.result.docs[$index].details.peptide}}</li>
-                    <li ng-show="Search.result.docs[$index].details.antibody"><b class="green">antibody</b> {{Search.result.docs[$index].details.antibody}}</li>
-                    <li ng-show="Search.result.docs[$index].details.cv_ancestors"><b class="green">cv_ancestors</b> {{Search.result.docs[$index].details.cv_ancestors}}</li>
-                    <li ng-show="Search.result.docs[$index].details.cv_synonyms"><b class="green">cv_synonyms</b> {{Search.result.docs[$index].details.cv_synonyms}}</li>
-                    <li ng-show="Search.result.docs[$index].details.annotations"><b class="green">annotations</b> {{Search.result.docs[$index].details.annotations}}</li>
-                    <li ng-show="Search.result.docs[$index].details.publications"><b class="green">publications</b> {{Search.result.docs[$index].details.publications}}</li>
-                    <li ng-show="Search.result.docs[$index].details.xrefs"><b class="green">xRefs</b> {{Search.result.docs[$index].details.xrefs}}</li>                 
-                  </ul>
-                </li>
-                
-              </ul>
-            </div>
           </li>
         </ul>
       </div>

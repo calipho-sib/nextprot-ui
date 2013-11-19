@@ -16,13 +16,13 @@ ProteinListService.factory('ProteinListService', [
 	   var lists;
 	   var selectedList;
 	   
-	   var $api_list = $resource('http://localhost:8080/nextprot-api/user/:username/protein-list.json', {username: '@username'}, {
+	   var $api_list = $resource('http://uat-web1:8282/nextprot-api/user/:username/protein-list.json', {username: '@username'}, {
 		   get: { method: 'GET', isArray: false },
 	   	  create: { method: 'POST' },
 	   	  update: { method: 'PUT'}
 	   });
 
-	   var $pi_list = $resource('http://localhost:8080/nextprot-api/user/:username/protein-list/:id.json', {username: '@username', id: '@id'}, {
+	   var $pi_list = $resource('http://uat-web1:8282/nextprot-api/user/:username/protein-list/:id.json', {username: '@username', id: '@id'}, {
 		   delete: { method: 'DELETE'},
 		   update: { method: 'POST'}
 	   });

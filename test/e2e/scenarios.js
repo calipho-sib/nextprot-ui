@@ -25,7 +25,7 @@ describe('nextprot:', function() {
       browser().navigateTo('/');
 
       expect(element('#search-entity').text()).toContain('proteins');
-      expect(element('#search-quality').text()).toContain('Gold only');
+      //expect(element('#search-quality').text()).toContain('Gold only');
       expect(element('#search-clear[disabled=disabled]').count()).toBe(1);
       expect(element('#search-button[disabled=disabled]').count()).toBe(1);
     });
@@ -40,6 +40,29 @@ describe('nextprot:', function() {
 
     });
 
+    it('on publication search clear , app state must be good', function() {
+      browser().navigateTo('/publications/search/insulin');
+
+      // clear search
+      element('#search-clear').click();
+
+      // check
+      expect(browser().location().url()).toBe("/publications/search");
+      expect(element('#search-entity').text()).toContain('publications');
+    });
+
+
+    it('on entry search clear , app state must be good', function() {
+      browser().navigateTo('/proteins/search/insulin');
+
+      // clear search
+      element('#search-clear').click();
+
+      // check
+      expect(browser().location().url()).toBe("/proteins/search");
+      expect(element('#search-entity').text()).toContain('proteins');
+    });
+
     it('when changing entity from publications to proteins, ui must be consistant', function() {
       browser().navigateTo('/publications/search/insulin');
       expect(element('#search-entity').text()).toContain('publications');
@@ -51,6 +74,25 @@ describe('nextprot:', function() {
       expect(element('#search-quality').text()).toContain('Gold only');
     });
 
+    it('when changing detailled view to summary, ui must be consistant X-entity', function() {
+      browser().navigateTo('/proteins/search/insulin');
+
+      expect(element("#search-results>li>div:visible").count()).toBeGreaterThan(1);
+
+      //
+      //change to summary
+      element('#search-summary').click();
+      expect(element("#search-results>li>div:visible").count()).toBe(0);
+      browser().navigateTo('/publications/search/insulin');
+      expect(element("#search-results>li .result-authors:visible").count()).toBe(0);
+
+      //
+      //change to details
+      element('#search-details').click();
+      expect(element("#search-results li .result-authors").count()).toBeGreaterThan(1);
+
+    });
+
     it('testing incorrect url search path', function() {
       browser().navigateTo('/pouet/search/insulin');
       expect(element('div.error').text()).toContain('pouet');
@@ -60,9 +102,6 @@ describe('nextprot:', function() {
       browser().navigateTo('/publications/search/insulin?quality=gold-and-silver');
       expect(element('div.error').text()).toContain('gold-and-silver');
     });
-
- 
-
   });
 
 

@@ -42,6 +42,14 @@ function($resource, $scope, $rootScope, $location,$routeParams, $route, $timeout
 	 $scope.Search=Search;
 	 $scope.config=config;
 	 
+	 $scope.cookies=function(session){
+	 	Search.cookies(session)
+	 	$timeout(function(){
+	 		// must be called 2times??
+	 		Search.cookies(session)
+	 	},0)
+	 	
+	 }
 
 	 //
 	 // interact with the search bar
@@ -70,7 +78,7 @@ function($resource, $scope, $rootScope, $location,$routeParams, $route, $timeout
 		 $location.search('filter',null)
 		 $location.search('quality',null)
 		 $location.search('sort',null)
-		 $location.path('/'+Search.params.entity+'/search');
+		 $location.path('/'+Search.config.entityMapping[Search.params.entity]+'/search');
 	 }
 
 	 $scope.toggle=function(params){
@@ -98,7 +106,7 @@ function($resource, $scope, $rootScope, $location,$routeParams, $route, $timeout
 	 $scope.moredetails=function(index){
 
 		 
-	 } 
+	 } 	 
 	 
 	 $scope.go=function(){
 
