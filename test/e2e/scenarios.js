@@ -93,6 +93,18 @@ describe('nextprot:', function() {
 
     });
 
+    it('pagination should not be visible when items<50', function() {
+      browser().navigateTo('/proteins/search/cornichon');
+      expect(element('div.resultparams label input:visible').count()).toBe(0);
+      expect(element('div.result.pagination:visible').count()).toBe(0);
+    });
+
+    it('pagination should be visible when items>50', function() {
+      browser().navigateTo('/proteins/search/insulin');
+      expect(element('div.resultparams label input:visible').count()).toBe(1);
+      expect(element('div.result.pagination:visible').count()).toBe(1);
+    });
+
     it('testing incorrect url search path', function() {
       browser().navigateTo('/pouet/search/insulin');
       expect(element('div.error').text()).toContain('pouet');
