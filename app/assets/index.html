@@ -6,8 +6,8 @@
     <meta name="description"  content="neXtProt">
     <meta name="author"       content="Olivier Evalet">
     <meta name="fragment"     content="!" />    
-    <base href="/protosearch/" /> 
-    <!-- <base href="/" />  -->
+    <!-- <base href="/protosearch/" />  -->
+    <base href="/" /> 
 
     <title ng-bind-template="{{title}}"></title>
 
@@ -39,8 +39,8 @@
        <a class="brand" href="">neXtProt</a>
        <div class="nav-collapse collapse" id="main-menu">
         <ul class="nav" id="main-menu-left">
-          <li><a href="/">Home</a></li>
-          <!-- RECENT -->
+          <li><a ng-href="/protosearch/" ng-click="Search.params.query=''">Home</a></li>
+          <!-- RECENT 
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Recent activities <b class="caret"></b></a>
             <ul class="dropdown-menu" id="swatch-menu">
@@ -48,7 +48,7 @@
               <li class="divider"></li>
               <li><a href="#">Default</a></li>
             </ul>
-          </li>
+          </li> -->
           <!-- FAVORITE -->
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">My favorite <b class="caret"></b></a>
@@ -70,7 +70,7 @@
           <!-- DOWNLOAD -->
           <li><a href="#">Downloads</a></li>
           
-          <li><a href="/proteinlists">Lists & Tools</a>
+          <li><a href="/protosearch/proteinlists">Lists & Tools</a>
 
 
         </ul>

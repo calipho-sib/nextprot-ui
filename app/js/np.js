@@ -5,6 +5,7 @@ var App = angular.module('np', [
   'ngResource',  
   'ngRoute',
   'ngAnimate',
+  'ngCookies',
   '$strap.directives',
   'np.config',
   'np.search',
@@ -22,15 +23,6 @@ App.config([
 	
 	function ($routeProvider, $locationProvider, $httpProvider) {
 
-		 //
-		 // install display notification of ajax call
-		 //$httpProvider.responseInterceptors.push('npHttpInterceptor');
-		 var spinnerFunction = function (data, headers) {
-			angular.element('.ajax-end').hide();
-			angular.element('.ajax-start').show();
-		    return data;
-		 };
-		 //$httpProvider.defaults.transformRequest.push(spinnerFunction);
 		
 		 
 		 // List of routes of the application
@@ -67,25 +59,14 @@ App.factory('Tools', [
                       }
 ]);
 
+App.directive('npBase', ['config', function(config) {
+    return function(scope, elm, attrs) {
+      if (attrs['npBase'])
+      	return elm.attr(attrs['npBase'], config.solr.base)
+      elm.attr('href',config.solr.base);
+    };
+  }]);
 
-//
-// define loading service
-angular.module('np.loading',[]).factory('npHttpInterceptor', function ($q, $window) {
-  return function (promise) {
-    return promise.then(function (response) {
-	  angular.element('.ajax-end').show();
-      angular.element('.ajax-start').hide();
-      return response;
-    }, 
-    function (response) {
-  	  angular.element('.ajax-end').show();
-      angular.element('.ajax-start').hide();
-      return $q.reject(response);
-    });
-  };
-});
-
-//Bootstrap (= launch) application
+//Bootstrap (= launch) application ==> ng-app='np'
 angular.element(document).ready(function () {
-	//angular.bootstrap(document, ['np']);
 });

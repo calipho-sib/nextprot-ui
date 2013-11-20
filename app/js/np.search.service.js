@@ -10,8 +10,10 @@ var SearchService=angular.module('np.search.service',['np.search.ui']);
 SearchService.factory('Search',[
   '$resource',
   '$http',
+  '$cookies',
+  '$cookieStore',
   'config',
-  function($resource, $http, config){
+  function($resource, $http, $cookies, $cookieStore, config){
 	//
 	// this is the url root
 	var $api=$resource(config.solr.SOLR_SERVER,
@@ -40,7 +42,9 @@ SearchService.factory('Search',[
 	
 	var Search=function(data){
 		//
-		// init solr params with default Core
+		// init session
+		this.session={}
+		angular.extend(this.session, $cookies)
 
 		//
 		// default config
@@ -58,6 +62,14 @@ SearchService.factory('Search',[
 		
 	};
 
+	Search.prototype.cookies=function (session){
+		angular.extend(this.session,session, $cookies)
+		Object.keys(session).forEach(function(k){
+			if(session[k]!==undefined)$cookieStore.put(k,session[k])
+		})
+		return true;
+	}
+
 	Search.prototype.clear=function(){
 		angular.copy( defaultUrl,this.params)
 	}
@@ -67,6 +79,7 @@ SearchService.factory('Search',[
 			this.result.num=docs.found;
 			this.result.pagination={};
 			this.result.pagination.current=parseInt((params.start?params.start:0)/config.solr.paginate.rows);
+			this.result.pagination.manual=this.result.pagination.current+1;
 
 			// back button
 			if (params.start>0 && (this.result.pagination.current)>0){
@@ -137,9 +150,10 @@ SearchService.factory('Search',[
 		angular.extend(this.params,  searchApi, defaultUrl, params)		
 		this.params.entity=config.solr.entityMapping[params.entity];
 
+
 		//$api.search(this.params).$promise.then(function(docs){
 		$api.search(this.params, params.query).$promise.then(function(docs) {
-			//console.log("docs",docs)
+			me.result.rows=docs.rows;
 			me.result.params=params;
 			me.result.display=config.solr.entityMapping[me.params.entity];
 			me.result.core=docs.index;

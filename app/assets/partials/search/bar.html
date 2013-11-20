@@ -58,11 +58,11 @@
           <!--                        -->
 	        <button id="search-button" class="btn" type="submit"  ng-disabled="!Search.params.query || !Search.params.query.length"><i class="icon-search" ></i>&nbsp;Search</button>
 	      </div>
-	      <div class="span10 nomargin">	       
-	        <span ng-show="Search.result.spellcheck.collations.length" id="search-didyoumean"><b>Did you mean:</b> 
-	          <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[0].collationQuery}}">{{Search.result.spellcheck.collations[0].collationQuery}}</a>
+	      <div class="span10 ">	       
+	        <span ng-show="Search.result.spellcheck.collations.length" id="search-didyoumean"><b class="gray">&nbsp;Did you mean:</b> 
+	          <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[0].query}}">{{Search.result.spellcheck.collations[0].query}}</a>
 	          <span ng-show="Search.result.spellcheck.collations[1]">, 
-	            <a href="{{Search.params.entity}}/search/{{Search.result.spellcheck.collations[1].collationQuery}}">{{Search.result.spellcheck.collations[1].collationQuery}}</a>
+	            <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[1].query}}">{{Search.result.spellcheck.collations[1].query}}</a>
 	          </span>
 	        </span>&nbsp;
 	      </div>
