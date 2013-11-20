@@ -61,6 +61,30 @@ describe('SearchCtrl', function(){
 		});
     });
 
+    it('map path proteins/search/insulin?order=asc on Search.params', function() {
+    	inject(function($route, $location, $rootScope, $controller) {
+    		scope = $rootScope.$new();
+    		expect($route.current).toBeUndefined();
+    		$location.url('/proteins/search/insulin?order=asc');
+    		$rootScope.$digest();
+    		$controller('ResultCtrl', { $scope: scope, $routeParams: $route.current.params });
+
+    		expect(scope.Search.params.order).toBe('asc');
+    	});
+    });
+
+    it('map path proteins/search/insulin?rows=100 on Search.params', function() {
+    	inject(function($route, $location, $rootScope, $controller) {
+    		scope = $rootScope.$new();
+    		expect($route.current).toBeUndefined();
+    		$location.url('/proteins/search/insulin?rows=100');
+    		$rootScope.$digest();
+    		$controller('ResultCtrl', { $scope: scope, $routeParams: $route.current.params });
+
+    		expect(scope.Search.params.rows).toBe('100');
+    	});
+    });
+
     it('fire button GO with publications/search/insulin?sort=gene ', function(){
 		inject(function($route, $location, $rootScope, $controller) {
 	        scope = $rootScope.$new();	        

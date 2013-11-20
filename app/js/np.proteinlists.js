@@ -45,7 +45,6 @@ ProteinListModule.controller('ListCtrl', [
 		
 		
 		ProteinListService.getByUsername('mario', function(data) {
-			console.log('data: ', data);
 			$scope.lists = data['proteinLists'];
 			$scope.initCombination();
 		});
@@ -90,7 +89,7 @@ ProteinListModule.controller('ListCtrl', [
 			if($scope.modal.type == 'edit') {
 				angular.extend($scope.lists[$scope.selected.index], $scope.selected);
 
-				ProteinListService.updateList('mario', $scope.selected);
+				ProteinListService.updateList('mario', _.omit($scope.selected, 'index'));
 				console.log('edit: ', $scope.selected);
 				
 			} else if($scope.modal.type == 'create') {
@@ -106,7 +105,6 @@ ProteinListModule.controller('ListCtrl', [
 					
 //				angular.extend(attrs, { username: 'mario', });
 				var attrs = { username: 'mario', list: newList};
-				//var attrs = { username: 'mario', list: newList};
 				
 				ProteinListService.createList('mario', newList, function(data) {
 					console.log('created: ', data);
@@ -116,10 +114,14 @@ ProteinListModule.controller('ListCtrl', [
 		};
 
 		$scope.delete = function(index) {
-			var deletedList = $scope.lists[index];
+			ProteinListService.deleteList('mario', $scope.lists[index].id);
 			$scope.lists.splice(index, 1);
-			ProteinListService.deleteList('mario', deletedList.id);
+
+			$scope.options = $scope.lists;
+			$scope.options = $scope.lists;
 		}
+
+		$scope.buildQuery = buildQuery;
 	}
 ]);	
 	
@@ -155,6 +157,9 @@ ProteinListModule.controller('ListViewCtrl', [
 			console.log('search: ', data);
 		});
 
+		// $scope.buildQuery = function(accessions) {
+		// 	return "id:" + (accessions.length > 1 ? "(" + accessions.join(" ") + ")" : accessions[0]);
+		// };
 	}
 ]);
 
@@ -203,18 +208,25 @@ ProteinListModule.controller('ListCreateCtrl', [
 	    	
 	    	if($scope.inputAccessions.length > 0) {
 	    		var accessions = $scope.inputAccessions.split("\n");
-
-	    		console.log("accs: ", accessions);
-
 	    		var list = { name: $scope.listName, accessions: accessions};
 	    		
 	    		//ProteinListService.createList({ username: 'mario', name: listName, accessions: accessions }, function(data) {console.log('list created!')} );	
-	    		ProteinListService.createList('mario', list, function(data) { });
+	    		ProteinListService.createList('mario', list, function(data) { 
+	    			flash("alert-info", "List "+$scope.listName+" created");
+	    		});
 	    	} else {
-	    		for(var i=0; i<selectedFiles.length; i++)
-	    			UploadListService.send($scope.listName, selectedFiles[i]);
 
-	    		flash("alert-info", "List "+$scope.listName+" created");
+	    		ProteinListService.createList('mario', { name: $scope.listName, description: $scope.listDescription, accessions: []}, function(data) {
+	    			console.log('created list: ', data)
+	    			for(var i=0; i<selectedFiles.length; i++)
+	    			UploadListService.send(data.proteinList.id, selectedFiles[i], function(cb) {
+	    				flash("alert-info", "List "+$scope.listName+" created");
+	    			});
+	    		});
+
+	    		
+
+	    		
 	    	}
 	    }
 	 

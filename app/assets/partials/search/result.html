@@ -18,6 +18,12 @@
 
 		    	<!-- DISPLAY FILTERS SORT/EXPORT -->
 				<ul class="nav pull-right">
+					<li class="divider-vertical"></li>
+					<li class="dropdown" ng-include="getRowsTemplate()"></li>
+
+					<li class="divider-vertical"></li>
+					<li class="dropdown" ng-include="getOrderTemplate()"></li>
+
 				  <li class="divider-vertical"></li>
 
 				  <!-- SORTING -->

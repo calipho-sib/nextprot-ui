@@ -24,7 +24,7 @@ ProteinListService.factory('ProteinListService', [
 
 	   var $pi_list = $resource('http://localhost:8080/nextprot-api/user/:username/protein-list/:id.json', {username: '@username', id: '@id'}, {
 		   delete: { method: 'DELETE'},
-		   update: { method: 'POST'}
+		   update: { method: 'PUT'}
 	   });
 
 	   
@@ -44,8 +44,6 @@ ProteinListService.factory('ProteinListService', [
 	   };
 	   
 		ProteinListService.prototype.updateList = function(username, list, cb) {
-			console.log("updating", username, list);
-			// { listId: list.id, listName: list.name, description: list.description}
 			$pi_list.update({ username: username, id: list.id }, list, function(data) {
 				console.log('edit: ', data);
 			});

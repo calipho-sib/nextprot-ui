@@ -14,7 +14,7 @@ UploadListService.factory('UploadListService', [
 	   
 	   var UploadListService = function() {}
 	   
-	   UploadListService.prototype.send = function(listName, file) {
+	   UploadListService.prototype.send = function(listId, file) {
 		   var data = new FormData(),
            xhr = new XMLHttpRequest();
 
@@ -31,7 +31,7 @@ UploadListService.factory('UploadListService', [
 	
 	       // Send to server, where we can then access it with $_FILES['file].
 	       data.append('file', file, file.name);
-	       xhr.open('POST', 'http://localhost:8080/nextprot-api/protein-list/upload?name='+listName);
+	       xhr.open('POST', 'http://localhost:8080/nextprot-api/protein-list/upload?id='+listId);
 	       xhr.send(data);
 	   }
 	   

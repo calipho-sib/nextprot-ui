@@ -41,15 +41,17 @@
 		        </span>
 			</div>
 			
-			<form class="form-inline">
-				<input type="text" placeholder="List Name..." ng-model="listName">
-				<button type="button" class="btn btn-primary" ng-click="createList(listName)">Create</button>
+			<form class="form">
+				<input type="text" placeholder="Name..." ng-model="listName">
+				<input type="text" placeholder="Description..." ng-model="listDescription">
+				<button type="button" class="btn btn-primary" ng-click="createList(listName, listDescription)">Create</button>
 			</form>
 			
 			<div>
 	    		<span ng-show="!files.length">No files selected</span>
+	    		<span ng-show="files.length"><b>Uploading: </b></span>
 	    		<ul>
-	        		<li ng-repeat="file in files">{{file}}</li>
+	        		<li ng-repeat="file in files">{{file.name}}</li>
 	    		</ul>
 			</div>
 	

@@ -158,6 +158,10 @@ SearchModule.controller('ResultCtrl', [
 		    }			
 		}
 
+		$scope.getRowsTemplate = function () {
+			return 'partials/search/rows.html';
+		}
+
 		$scope.getSortTemplateByEntity=function(){
 			 switch (Search.params.entity) {
 		        case "publication.json":
@@ -167,6 +171,10 @@ SearchModule.controller('ResultCtrl', [
 		        default:
 		            return 'partials/search/sort-proteins.html';
 		    }						
+		}
+
+		$scope.getOrderTemplate = function() {
+			return 'partials/search/order.html'
 		}
 
 		$scope.getPublicationUrl=function(ac){
@@ -194,13 +202,13 @@ SearchModule.controller('ResultCtrl', [
 		
 		
 		$scope.selectAll = function() {
-			//$scope.unselectAll();
 			Cart.emptyCart();
 
-			for(var i=0; i<Search.result.docs.length; i++) {
-			// 	$scope.selectedResults[Search.result.docs[i].id] = true;
-				Cart.add(Search.result.docs[i].id);
-			}
+			console.log('docs: ', Search.result.num);
+
+			// for(var i=0; i<Search.result.docs.length; i++) {
+			// 	Cart.add(Search.result.docs[i].id);
+			// }
 		}
 		
 		$scope.unselectAll = function() {

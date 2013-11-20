@@ -9,18 +9,19 @@
 					<thead>
 						<tr>
 							<th ng-show="showCombine"></th>
-							<th># Entries</th>
 							<th>Name</th>
 							<th>Description</th>
+							<th># Entries</th>
 							<td></td>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat="list in lists">
 							<td ng-show="showCombine"><input type="checkbox"></td>
-							<td>{{list.accessions.length}}</td>
-							<td><a href="/proteinlists/view/{{Tools.convertToSlug(list.name)}}" ng-click="ProteinListService.setSelectedList(list)">{{list.name}}</a></td>
+							<td><a href="/proteins/search/{{buildQuery(list.accessions)}}">{{list.name}}</a></td>
+							<!-- <td><a href="/proteinlists/view/{{Tools.convertToSlug(list.name)}}" ng-click="ProteinListService.setSelectedList(list)">{{list.name}}</a></td> -->
 							<td>{{list.description}}</td>
+							<td>{{list.accessions.length}}</td>
 							<td style="width:100px; height:25px">
 								<div fade-on-hover=".table">
 									<button class="btn btn-mini" ng-click="delete($index)">

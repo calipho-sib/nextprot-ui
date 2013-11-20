@@ -15,8 +15,8 @@ SearchService.factory('Search',[
 	//
 	// this is the url root
 	var $api=$resource(config.solr.SOLR_SERVER,
-        	{action:':action',entity:':entity',port:config.solr.SOLR_PORT},{
-        		search:{method:'GET'}
+        	{ action:'@action',entity:'@entity', port:config.solr.SOLR_PORT },{
+        		search:{method:'POST'}
         	});
 		
 	var defaultUrl={
@@ -116,7 +116,8 @@ SearchService.factory('Search',[
 	Search.prototype.suggest=function(query,cb){
 		var params={};
 		angular.extend(params, defaultUrl,suggestApi, {query:query, entity:this.params.entity})		
-		$api.search(params,function(result){				
+
+		$api.search(params, params.query, function(result){				
 	    	var items=[];			    	
 			for (var i=0; i<result.autocomplete.length; i=i+2) {
 				items.push(result.autocomplete[i].name)
@@ -136,7 +137,8 @@ SearchService.factory('Search',[
 		angular.extend(this.params,  searchApi, defaultUrl, params)		
 		this.params.entity=config.solr.entityMapping[params.entity];
 
-		$api.search(this.params).$promise.then(function(docs){
+		//$api.search(this.params).$promise.then(function(docs){
+		$api.search(this.params, params.query).$promise.then(function(docs) {
 			//console.log("docs",docs)
 			me.result.params=params;
 			me.result.display=config.solr.entityMapping[me.params.entity];
