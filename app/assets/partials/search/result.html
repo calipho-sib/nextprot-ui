@@ -19,25 +19,36 @@
 		    	<!-- DISPLAY FILTERS SORT/EXPORT -->
 				<ul class="nav pull-right">
 
+
 					<li class="divider-vertical"></li>
+					<li ng-show="Search.result.pages.length"><input type="number" min="1" class="span3" ng-model="Search.result.pagination.manual" np-enter="params({start:(Search.result.pagination.manual-1)*Search.result.rows})"/> / {{ (Search.result.num / Search.result.rows) | number:0}}</li>
+
+				  	<!-- <li class="divider-vertical"></li>
+				  	<li ng-show="Search.result.pages.length>1">
+				  		<label>Page
+				    	<input type="number" min="1" class="span3" ng-model="Search.result.pagination.manual"  ng-value="Search.result.pagination.manual" np-enter="params({start:(Search.result.pagination.manual-1)*Search.result.rows})"/></label>
+				  	</li> -->
+
+				  <li class="divider-vertical"></li>
+				  <li ng-class="{active:Search.session.summary==='true'}">
+				    <a href="" ng-click="cookies({summary:true});" id="search-summary">Sum</a>
+				  </li>
+				  <li ng-class="{active:Search.session.summary!=='true'}">
+				    <a href="" ng-click="cookies({summary:false});" id="search-details">Det</a>
+				  </li>
+
+					<!-- <li><a href="" >Summary</a></li> -->
+						<!-- <ul class="inline">
+							<li><a href="" >Summary</a></li>
+							<li><a href="" >Details</a></li>
+						</ul> -->
+					<!-- <li><a href="" >Details</a></li> -->
+
+				  	<li class="divider-vertical"></li>
 					<li class="dropdown" ng-include="getRowsTemplate()"></li>
 
 					<li class="divider-vertical"></li>
 					<li class="dropdown" ng-include="getOrderTemplate()"></li>
-
-				  	<li class="divider-vertical"></li>
-				  	<li ng-show="Search.result.pages.length>1">
-				  		<label>Page
-				    	<input type="number" min="1" class="span3" ng-model="Search.result.pagination.manual"  ng-value="Search.result.pagination.manual" np-enter="params({start:(Search.result.pagination.manual-1)*Search.result.rows})"/></label>
-				  	</li>
-
-				  <li class="divider-vertical"></li>
-				  <li ng-class="{active:Search.session.summary==='true'}">
-				    <a href="" ng-click="cookies({summary:true});" id="search-summary">Summary</a>
-				  </li>
-				  <li ng-class="{active:Search.session.summary!=='true'}">
-				    <a href="" ng-click="cookies({summary:false});" id="search-details">Details</a>
-				  </li>
 
 				  <!-- SORTING -->
 		  	      <li class="dropdown"  ng-include="getSortTemplateByEntity()"></li>
