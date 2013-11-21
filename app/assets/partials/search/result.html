@@ -21,7 +21,7 @@
 
 
 					<li class="divider-vertical"></li>
-					<li ng-show="Search.result.pages.length"><input type="number" min="1" class="span3" ng-model="Search.result.pagination.manual" np-enter="params({start:(Search.result.pagination.manual-1)*Search.result.rows})"/> / {{ (Search.result.num / Search.result.rows) | number:0}}</li>
+					<li id="pageInput" ng-show="Search.result.pages.length > 1"><input type="number" min="1" class="span3" ng-model="Search.result.pagination.manual" np-enter="params({start:(Search.result.pagination.manual-1)*Search.result.rows})"/> / {{ (Search.result.num / Search.result.rows) | number:0}}</li>
 
 				  	<!-- <li class="divider-vertical"></li>
 				  	<li ng-show="Search.result.pages.length>1">

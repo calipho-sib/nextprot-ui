@@ -101,7 +101,7 @@ describe('nextprot:', function() {
 
     it('pagination should be visible when items>50', function() {
       browser().navigateTo('/proteins/search/insulin');
-      expect(element('div.resultparams label input:visible').count()).toBe(1);
+      expect(element('div.resultparams #pageInput input:visible').count()).toBe(1);
       expect(element('div.result.pagination:visible').count()).toBe(1);
     });
 
