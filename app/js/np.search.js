@@ -166,10 +166,6 @@ SearchModule.controller('ResultCtrl', [
 		    }			
 		}
 
-		$scope.getRowsTemplate = function () {
-			return 'partials/search/rows.html';
-		}
-
 		$scope.getSortTemplateByEntity=function(){
 			 switch (Search.params.entity) {
 		        case "publication.json":
@@ -181,9 +177,6 @@ SearchModule.controller('ResultCtrl', [
 		    }						
 		}
 
-		$scope.getOrderTemplate = function() {
-			return 'partials/search/order.html'
-		}
 
 		$scope.getPublicationUrl=function(ac){
 			return "http://google.com/search?q="+ac

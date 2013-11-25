@@ -4,25 +4,53 @@
 		<div style="position: absolute;" np-affix="120" data-offset-bottom="250" class="navbar navbar-fixed-top">
 		  <div class="navbar-inner">
 		  	<!-- AFFIX fix : width: 980px; padding: 0 30px; -->
-		    <div style="width: 60%;" class="container">
-		      	
-
+		  	<div class="span3">
 		    	<!-- DISPLAY RESULT INFO -->
-				<ul class="nav" style="margin-left:-100px">
-					<li class="navbar-text">Show {{Search.result.docs.length}} on {{Search.result.num}} {{Search.result.display}}   ({{Search.result.time}} ms) </li>
-					<li>
-						<input id="search-query-affix" class=" hide fadein"  type="text" ng-model="Search.params.query"  	               		
-	               		autocomplete="off"  bs-autocomplete="Search.suggest" style="opacity: 0;margin-left: 10%;" np-enter="go()">
-					</li>
+				<ul class="nav nav-list resultfilters" style="">
+
+
+					<li class="dropdown">
+						<a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{Search.result.docs.length}}</b> on {{Search.result.num}} {{Search.result.display}} <b class="caret"/>
+						</a>
+						<ul class="dropdown-menu" >
+							<li><a ng-class="{bold:Search.params.rows=='50'||!Search.params.rows}" href="" ng-click="params({rows:50})">50 rows</a></li>
+							<li><a ng-class="{bold:Search.params.rows=='100'}" href="" ng-click="params({rows:100})">100 rows</a></li>
+							<li><a ng-class="{bold:Search.params.rows=='150'}" href="" ng-click="params({rows:150})">150 rows</a></li>
+							<li><a ng-class="{bold:Search.params.rows=='200'}" href="" ng-click="params({rows:200})">200 rows</a></li>
+
+<!-- 							<li ng-repeat="page in Search.result.pages" ng-class="{disabled:page.current}" ><a  href="" ng-click="params({start:page.rows})">{{page.offset}}</a></li>
+							<li ng-show="Search.result.pagination.more"><a href="" ng-click="params({start:Search.result.pagination.more.rows})">... {{Search.result.pagination.more.offset}}</a></li>
+							<li class="divider"></li>
+							<li id="pageInput" ng-show="Search.result.pages.length > 1"><input type="number" min="1" class="span3" ng-model="Search.result.pagination.manual" np-enter="params({start:(Search.result.pagination.manual-1)*Search.result.rows})" style="border: 0px none; width: 50px;"/><sub>/ {{ (Search.result.num / Search.result.rows) | number:0}}</sub></li>
+ -->
+						</ul>
+					</li>					
 				</ul>
 
-		    	<!-- DISPLAY FILTERS SORT/EXPORT -->
-				<ul class="nav pull-right">
 
+		  	</div>
+		    <div class="span7" style="margin-left:0px">
+		      	
+
+
+		    	<!-- DISPLAY FILTERS SORT/EXPORT -->
+		    	<ul class="nav">
+
+
+					<li id="pageInput" ng-show="Search.result.pages.length > 1" >
+						<input type="number" min="1" class="bold black" ng-model="Search.result.pagination.manual" np-enter="params({start:(Search.result.pagination.manual-1)*Search.result.rows})" style="border: 0px none; width: 50px;"/><sub>/{{ (Search.result.num / Search.result.rows) | number:0}}</sub>
+					</li>
 
 					<li class="divider-vertical"></li>
-					<li id="pageInput" ng-show="Search.result.pages.length > 1"><input type="number" min="1" class="span3" ng-model="Search.result.pagination.manual" np-enter="params({start:(Search.result.pagination.manual-1)*Search.result.rows})"/> / {{ (Search.result.num / Search.result.rows) | number:0}}</li>
+					<li id="search-query-affix" class="  fadein black" style="opacity: 0">
+						<input  type="text" placeholder="Search"
+							ng-model="Search.params.query" autocomplete="off"  bs-autocomplete="Search.suggest" 
+							style="border: 0px none; width: 120px;color:black;margin-bottom:0" np-enter="go()">
+						<span class="label-gg" ><i class="icon-search"/></span>
+					</li>
 
+		    	</ul>
+				<ul class="nav pull-right">
 				  	<!-- <li class="divider-vertical"></li>
 				  	<li ng-show="Search.result.pages.length>1">
 				  		<label>Page
@@ -30,29 +58,17 @@
 				  	</li> -->
 
 				  <li class="divider-vertical"></li>
-				  <li ng-class="{active:Search.session.summary==='true'}">
-				    <a href="" ng-click="cookies({summary:true});" id="search-summary">Sum</a>
+				  <li ng-class="{active:Search.session.summary==='true'}" >
+				    <a href="" ng-click="cookies({summary:true});" id="search-summary" class="small">Summary</a>
 				  </li>
 				  <li ng-class="{active:Search.session.summary!=='true'}">
-				    <a href="" ng-click="cookies({summary:false});" id="search-details">Det</a>
+				    <a href="" ng-click="cookies({summary:false});" id="search-details" class="small">Details</a>
 				  </li>
 
-					<!-- <li><a href="" >Summary</a></li> -->
-						<!-- <ul class="inline">
-							<li><a href="" >Summary</a></li>
-							<li><a href="" >Details</a></li>
-						</ul> -->
-					<!-- <li><a href="" >Details</a></li> -->
-
-				  	<li class="divider-vertical"></li>
-					<li class="dropdown" ng-include="getRowsTemplate()"></li>
-
-					<li class="divider-vertical"></li>
-					<li class="dropdown" ng-include="getOrderTemplate()"></li>
 
 				  <!-- SORTING -->
-		  	      <li class="dropdown"  ng-include="getSortTemplateByEntity()"></li>
-					
+				  <li class="dropdown" ng-include="getSortTemplateByEntity()" ></li>
+		
 				  <!-- EXPORT -->
 				  <!--
 				  <li class="divider-vertical"></li>
@@ -83,10 +99,10 @@
 		  </div>
 		</div>          
     </div>
-    <div class="row">
+    <div >
 	    <div class="span3" >
 	      <!--RESULT SIDEBAR-->
-	      	<div class=" well-small  resultfilters" style="width:230px;" np-affix="160">
+	      	<div class="  resultfilters" style="width:230px;" np-affix="160">
 				<ul class="nav nav-list " >
 				  <li class="nav-header">Filters</li>
 				  <li class="">For {{Search.result.display}} with:</li>
