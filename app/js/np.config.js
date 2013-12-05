@@ -12,7 +12,7 @@ function ($http) {
  //
  // solr configuration
  var defaultApi = {
-   SOLR_SERVER:'http://circk.isb-sib.ch:port/nextprot-api/:action/:entity',
+   SOLR_SERVER:'http://localhost:port/nextprot-api/:action/:entity',
    SOLR_PORT:':8282',
 
    //base:"/",

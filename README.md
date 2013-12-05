@@ -1,6 +1,6 @@
-# Nextprot SOLR
+# Nextprot UI
 
-***CAUTION: Nextprot solr is in the very early stages of development. Things are likely
+***CAUTION: Nextprot ui is in the very early stages of development. Things are likely
 to change in ways that are not backwards compatible***
 
 [AngularJS](http://angularjs.org) + [Brunch](http://brunch.io) + [Bootstrap](http://twitter.github.com/bootstrap/)
@@ -31,13 +31,13 @@ Or use can directly work with karma
 
 
 ## Deploying
-  before deploying html we must rebase the web app
+  before deploying html, and depending the target, we must rebase the app
   in index.html
     <base href="/" />
   should be
     <base href="/protosearch/" />
 
-  >./node_modules/.bin/brunch -m build
+  >./node_modules/.bin/brunch build -m
   >rsync -auv build/* np_integration@uat-web1:/home/np_integration/np-drupal/protosearch/
 
 
@@ -47,9 +47,9 @@ Or use can directly work with karma
   >pkill -f protosearch.solr
 
 
-## update the remote solr indexes for entries, publications and terms
-  LOCAL_SOLR=$HOME/application/solr-4.4.0/example
+## update your local solr indexes for entries, publications and terms
+  LOCAL_SOLR=$HOME/application/solr-4.4.0/example/solr
   SOLR_INDEX="npentries1 npentries1gold npcvs1 nppublications1"
   for index in $SOLR_INDEX; do
-    rsync -Lavz --delete $LOCAL_SOLR/solr/$index/ npteam@crick:/work/devtools/solr-4.5.0/example/solr/$index/
+    rsync -Lavz --delete npteam@crick:/work/devtools/solr-4.5.0/example/solr/$index/ $LOCAL_SOLR/$index/ 
   done  
