@@ -10,7 +10,8 @@ Main Client Features:
 * Basket
 
 ## Backends
-[solr](https://solr)
+nextprot-api from git (npteam@miniwatt:/work/repos/nextprot-api.git)
+
 
 ## Installation
   >sudo npm install -g karma
@@ -31,11 +32,15 @@ Or use can directly work with karma
 
 
 ## Deploying
-  before deploying html, and depending the target, we must rebase the app
+  before deploying html, check the application base and the api location
   in index.html
     <base href="/" />
   should be
     <base href="/protosearch/" />
+
+  in app/js/np.config.js the SOLR_SERVER variable should be correct (note this variable will be refactored to API_SERVER)
+
+ 
 
   >./node_modules/.bin/brunch build -m
   >rsync -auv build/* np_integration@uat-web1:/home/np_integration/np-drupal/protosearch/
