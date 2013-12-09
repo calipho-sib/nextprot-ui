@@ -16,7 +16,8 @@ ProteinListModule.config([
     function($routeProvider, $locationProvider, $httpProvider) {
     	$routeProvider
         	.when('/proteinlists', { templateUrl: 'partials/proteinlists/list.html'})
-            .when('/proteinlists/view/:name', { templateUrl: 'partials/proteinlists/view.html'})
+            // .when('/proteinlists/view/:name', { templateUrl: 'partials/proteinlists/view.html'})
+            .when('/proteinlists/view/:list', { templateUrl: 'partials/search/result.html'})
             .when('/proteinlists/create', { templateUrl: 'partials/proteinlists/create.html'})
     }
 ]);
@@ -93,8 +94,7 @@ ProteinListModule.controller('ListCtrl', [
 				console.log('edit: ', $scope.selected);
 				
 			} else if($scope.modal.type == 'create') {
-				
-				var newList = { name: $scope.selected.name, description: $scope.selected.description, accessions: $scope.selected.accessions}
+				var newList = { name: $scope.selected.name, description: $scope.selected.description, accessions: $scope.selected.accessions};
 				
 				if($scope.combination.op == 'OR') {
 					newList.accessions = _.union($scope.combination.first.accessions, $scope.combination.second.accessions);
@@ -138,28 +138,30 @@ ProteinListModule.controller('ListViewCtrl', [
 	function($resource, $scope, $rootScope, $location, $routeParams, $route, ProteinListService, Search, Tools) {
 		var listName = $routeParams.name;
 
+
 		var list = ProteinListService.getSelectedList();
 
-		// coming directly through the URL
-		if(!list) {
-			// no lists in the Service
-			if(!ProteinListService.lists) {
-				ProteinListService.getByUsername('mario', function(data) {
-					list = _.find(data.proteinLists, function(l) { return listName == Tools.convertToSlug(l.name) });
 
 
-					Search.docs({ entity: 'proteins', configuration: 'id', query: buildQuery(list.accessions)}, function(docs) { 
-						console.log('found: ', docs)
-					});
-				});
-			}
-		} else Search.docs({ entity: 'proteins', configuration: 'id', query: buildQuery(list.accessions)}, function(data) {
-			console.log('search: ', data);
-		});
 
-		// $scope.buildQuery = function(accessions) {
-		// 	return "id:" + (accessions.length > 1 ? "(" + accessions.join(" ") + ")" : accessions[0]);
-		// };
+
+		// // coming directly through the URL
+		// if(!list) {
+		// 	// no lists in the Service
+		// 	if(!ProteinListService.lists) {
+		// 		ProteinListService.getByUsername('mario', function(data) {
+		// 			list = _.find(data.proteinLists, function(l) { return listName == Tools.convertToSlug(l.name) });
+
+
+		// 			Search.docs({ entity: 'proteins', configuration: 'id', query: buildQuery(list.accessions)}, function(docs) { 
+		// 				console.log('found: ', docs)
+		// 			});
+		// 		});
+		// 	}
+		// } else Search.docs({ entity: 'proteins', configuration: 'id', query: buildQuery(list.accessions)}, function(data) {
+		// 	console.log('search: ', data);
+		// });
+
 	}
 ]);
 
@@ -174,7 +176,7 @@ ProteinListModule.controller('ListCreateCtrl', [
 	'$routeParams',
 	'ProteinListService',
 	'UploadListService',
-	'flash',
+	'flash',	
 	function($resource, $scope, $rootScope, $routeParams, ProteinListService, UploadListService, flash) {
 		
 		$scope.inputAccessions = "";
@@ -207,6 +209,7 @@ ProteinListModule.controller('ListCreateCtrl', [
 	    $scope.createList = function(listName) {
 	    	
 	    	if($scope.inputAccessions.length > 0) {
+
 	    		var accessions = $scope.inputAccessions.split("\n");
 	    		var list = { name: $scope.listName, accessions: accessions};
 	    		
