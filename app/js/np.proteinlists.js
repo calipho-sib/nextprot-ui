@@ -46,7 +46,9 @@ ProteinListModule.controller('ListCtrl', [
 		
 		
 		ProteinListService.getByUsername('mario', function(data) {
-			$scope.lists = data['proteinLists'];
+			console.log('data: ', data['lists']);
+			$scope.lists = data.lists;
+			//$scope.lists = data['proteinLists'];
 			$scope.initCombination();
 		});
 		

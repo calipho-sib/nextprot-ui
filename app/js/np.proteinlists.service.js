@@ -15,19 +15,22 @@ ProteinListService.factory('ProteinListService', [
 	   
 	   var lists;
 	   var selectedList;
-	   
-	   var $api_list = $resource('http://localhost:8080/nextprot-api/user/:username/protein-list.json', {username: '@username'}, {
+	   var baseUrl = config.solr.BASE_URL+config.solr.SOLR_PORT;
+
+	   console.log('base url: ', baseUrl);
+
+	   var $api_list = $resource(baseUrl+'/nextprot-api/user/:username/protein-list.json', {username: '@username'}, {
 		   get: { method: 'GET', isArray: false },
 	   	  create: { method: 'POST' },
 	   	  update: { method: 'PUT'}
 	   });
 
-	   var $pi_list = $resource('http://localhost:8080/nextprot-api/user/:username/protein-list/:id.json', {username: '@username', id: '@id'}, {
+	   var $pi_list = $resource(baseUrl+'/nextprot-api/user/:username/protein-list/:id.json', {username: '@username', id: '@id'}, {
 		   delete: { method: 'DELETE'},
 		   update: { method: 'PUT'}
 	   });
 
-	   var $p = $resource('http://localhost:8080/nextprot-api/user/:username/protein-list/:list.json', {username: '@username', name: '@name'}, {
+	   var $p = $resource(baseUrl+'/nextprot-api/user/:username/protein-list/:list.json', {username: '@username', name: '@name'}, {
 	   		get: { method: 'GET' }
 	   });
 
@@ -35,7 +38,7 @@ ProteinListService.factory('ProteinListService', [
 	 //   		get: { method: 'GET'}
 		// });
 
-		var $list_results = $resource('http://localhost:8080/nextprot-api/user/:username/protein-list/:list/:action.json', { 
+		var $list_results = $resource(baseUrl+'/nextprot-api/user/:username/protein-list/:list/:action.json', { 
 			username: '@username', list: '@list', action: '@action'
 		}, {
 			get: { method: 'GET'}
