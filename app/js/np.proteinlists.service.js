@@ -55,6 +55,7 @@ ProteinListService.factory('ProteinListService', [
 	   };
 	   
 	   ProteinListService.prototype.createList = function(username, list, cb) {
+	   		console.log('create list > ', list);
 		   $api_list.create({ username: username }, list, function(data) {
 				if(cb)cb(data);
 			});
@@ -98,6 +99,20 @@ ProteinListService.factory('ProteinListService', [
 			$list_results.get(params, function(results) {
 				if(cb)cb(results);
 			});
+	   	}
+
+	   	ProteinListService.prototype.combine = function(username, list, l1, l2, op, cb) {
+	   		$list_results.get({ 
+	   			action: 'combine',
+	   			username: username, 
+	   			name: list.name, 
+	   			description: list.description,
+	   			first: l1,
+	   			second: l2, 
+	   			op: op 
+	   		}, function(data) {
+	   			if(cb) cb(data);
+	   		});
 	   	}
 	   
 	   var service =  new ProteinListService();
