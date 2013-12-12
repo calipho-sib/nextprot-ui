@@ -40,7 +40,7 @@ ProteinListModule.controller('ListCtrl', [
 		$scope.combineDisabled = true;
 		$scope.selected = {};
 		$scope.modal = { options: { edit: { title: 'Edit' }, create: { title: 'Create'} } };
-		$scope.operators = ["AND", "OR", "NOT IN"];
+		$scope.operators = ["AND", "OR", "NOT_IN"];
 		$scope.combination = { first: null, op: $scope.operators[0], second: null};
 		$scope.options = { first: $scope.lists, second: $scope.lists }
 		
@@ -48,6 +48,8 @@ ProteinListModule.controller('ListCtrl', [
 		ProteinListService.getByUsername('mario', function(data) {
 			console.log('data: ', data['lists']);
 			$scope.lists = data.lists;
+
+			console.log('lists >> ', $scope.lists);
 			//$scope.lists = data['proteinLists'];
 			$scope.initCombination();
 		});
@@ -89,30 +91,62 @@ ProteinListModule.controller('ListCtrl', [
 		};
 
 		$scope.saveModal = function(dismiss) {
+			
 			if($scope.modal.type == 'edit') {
 				angular.extend($scope.lists[$scope.selected.index], $scope.selected);
 
-				ProteinListService.updateList('mario', _.omit($scope.selected, 'index'));
-				console.log('edit: ', $scope.selected);
-				
+				var list = { 
+					id: $scope.selected.id, 
+					name: $scope.selected.name, 
+					description: $scope.selected.description 
+				};
+
+				ProteinListService.updateList('mario', list);
 			} else if($scope.modal.type == 'create') {
-				var newList = { name: $scope.selected.name, description: $scope.selected.description, accessions: $scope.selected.accessions};
-				
-				if($scope.combination.op == 'OR') {
-					newList.accessions = _.union($scope.combination.first.accessions, $scope.combination.second.accessions);
-				}
-				else if($scope.combination.op == 'AND') {
-					newList.accessions = _.intersection($scope.combination.first.accessions, $scope.combination.second.accessions);
-				}
-					
-//				angular.extend(attrs, { username: 'mario', });
-				var attrs = { username: 'mario', list: newList};
-				
-				ProteinListService.createList('mario', newList, function(data) {
-					console.log('created: ', data);
-					$scope.lists.push(newList);
-				});
+				var newList = { name: $scope.selected.name, description: $scope.selected.description };
+
+				ProteinListService.combine(
+					'mario', 
+					newList, 
+					$scope.combination.first.name, 
+					$scope.combination.second.name,
+					$scope.combination.op,
+					function(data) {
+						$scope.lists.push({ 
+							name: data.name, 
+							description: data.description, 
+							accessions: data.accessions.length 
+						});
+					});
+
 			}
+
+// 			if($scope.modal.type == 'edit') {
+// 				angular.extend($scope.lists[$scope.selected.index], $scope.selected);
+
+// 				ProteinListService.updateList('mario', _.omit($scope.selected, 'index'));
+// 				console.log('edit: ', $scope.selected);
+				
+// 			} else if($scope.modal.type == 'create') {
+// 				var newList = { name: $scope.selected.name, description: $scope.selected.description, accessions: $scope.selected.accessions};
+				
+// 				if($scope.combination.op == 'OR') {
+
+// 					console.log('OR: ', $scope.combination.first.accessions, $scope.combination.second.accessions);
+// 					newList.accessions = _.union($scope.combination.first.accessions, $scope.combination.second.accessions);
+// 				}
+// 				else if($scope.combination.op == 'AND') {
+// 					newList.accessions = _.intersection($scope.combination.first.accessions, $scope.combination.second.accessions);
+// 				}
+					
+// //				angular.extend(attrs, { username: 'mario', });
+// 				var attrs = { username: 'mario', list: newList};
+				
+// 				ProteinListService.createList('mario', newList, function(data) {
+// 					console.log('created: ', data);
+// 					$scope.lists.push(newList);
+// 				});
+// 			}
 		};
 
 		$scope.delete = function(index) {
