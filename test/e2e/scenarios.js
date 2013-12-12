@@ -31,7 +31,7 @@ describe('nextprot:', function() {
     });
 
     it('when searching, clear and search buttons must be enabled', function() {
-      browser().navigateTo('/publications/search/insulin');
+      browser().navigateTo('/publications/search?query=insulin');
 
       expect(element('#search-entity').text()).toContain('publications');
       expect(element('#search-clear[disabled=disabled]').count()).toBe(0);
@@ -41,7 +41,7 @@ describe('nextprot:', function() {
     });
 
     it('on publication search clear , app state must be good', function() {
-      browser().navigateTo('/publications/search/insulin');
+      browser().navigateTo('/publications/search?query=insulin');
 
       // clear search
       element('#search-clear').click();
@@ -53,7 +53,7 @@ describe('nextprot:', function() {
 
 
     it('on entry search clear , app state must be good', function() {
-      browser().navigateTo('/proteins/search/insulin');
+      browser().navigateTo('/proteins/search?query=insulin');
 
       // clear search
       element('#search-clear').click();
@@ -64,7 +64,7 @@ describe('nextprot:', function() {
     });
 
     it('when changing entity from publications to proteins, ui must be consistant', function() {
-      browser().navigateTo('/publications/search/insulin');
+      browser().navigateTo('/publications/search?query=insulin');
       expect(element('#search-entity').text()).toContain('publications');
 
       //
@@ -75,7 +75,7 @@ describe('nextprot:', function() {
     });
 
     it('when changing detailled view to summary, ui must be consistant X-entity', function() {
-      browser().navigateTo('/proteins/search/insulin');
+      browser().navigateTo('/proteins/search?query=insulin');
 
       expect(element("#search-results>li>div:visible").count()).toBeGreaterThan(1);
 
@@ -83,7 +83,7 @@ describe('nextprot:', function() {
       //change to summary
       element('#search-summary').click();
       expect(element("#search-results>li>div:visible").count()).toBe(0);
-      browser().navigateTo('/publications/search/insulin');
+      browser().navigateTo('/publications/search?query=insulin');
       expect(element("#search-results>li .result-authors:visible").count()).toBe(0);
 
       //
@@ -94,24 +94,24 @@ describe('nextprot:', function() {
     });
 
     it('pagination should not be visible when items<50', function() {
-      browser().navigateTo('/proteins/search/cornichon');
+      browser().navigateTo('/proteins/search?query=cornichon');
       expect(element('div.resultparams label input:visible').count()).toBe(0);
       expect(element('div.result.pagination:visible').count()).toBe(0);
     });
 
     it('pagination should be visible when items>50', function() {
-      browser().navigateTo('/proteins/search/insulin');
+      browser().navigateTo('/proteins/search?query=insulin');
       expect(element('div.resultparams #pageInput input:visible').count()).toBe(1);
       expect(element('div.result.pagination:visible').count()).toBe(1);
     });
 
     it('testing incorrect url search path', function() {
-      browser().navigateTo('/pouet/search/insulin');
+      browser().navigateTo('/pouet/search?query=insulin');
       expect(element('div.error').text()).toContain('pouet');
     });
 
     it('testing incorrect url filters : gold-and-silver', function() {
-      browser().navigateTo('/publications/search/insulin?quality=gold-and-silver');
+      browser().navigateTo('/publications/search?query=insulin&quality=gold-and-silver');
       expect(element('div.error').text()).toContain('gold-and-silver');
     });
   });
@@ -121,30 +121,30 @@ describe('nextprot:', function() {
     it('search quality Gold/Silver is only available for proteins', function() {
       //
       // on proteins
-      browser().navigateTo('/proteins/search/insulin');
+      browser().navigateTo('/proteins/search?query=insulin');
       expect(element('#search-quality.ng-hide').count()).toBe(0);
 
 
       //
       // on publications
-      browser().navigateTo('/publications/search/insulin');
+      browser().navigateTo('/publications/search?query=insulin');
       expect(element('#search-quality.ng-hide').count()).toBe(1);
 
       //
       // on terms
-      browser().navigateTo('/terms/search/insulin');
+      browser().navigateTo('/terms/search?query=insulin');
       expect(element('#search-quality.ng-hide').count()).toBe(1);
 
     });
 
     it('when changing quality from "Gold only" to "Gold and Silver" ui must be consistant', function() {
-      browser().navigateTo('/proteins/search/insulin');
+      browser().navigateTo('/proteins/search?query=insulin');
 
       //
       //change quality
       element('#search-quality-dropdown>li>a:eq(1)').click();
       expect(element('#search-quality').text()).toContain('Include silver');
-      expect(browser().location().url()).toBe("/proteins/search/insulin?quality=gold-and-silver");
+      expect(browser().location().url()).toBe("/proteins/search?query=insulin&quality=gold-and-silver");
     });
 
 
@@ -157,7 +157,7 @@ describe('nextprot:', function() {
 
   describe("GS6 searching for Insul*: should retrieve Insulin, Insulinemia, etc.",function(){
     it('searching insul* should result more than 19 rows  (in fact 20)', function() {
-      browser().navigateTo('/proteins/search/insul*');
+      browser().navigateTo('/proteins/search?query=insul*');
       expect(element('#search-results>li').count()).toBeGreaterThan(19);
     });
   });
@@ -167,7 +167,7 @@ describe('nextprot:', function() {
     // checking with uniprot 
     // http://www.uniprot.org/uniprot/?query=%22protein+kinase%22+AND+organism%3A%22Human+[9606]%22&sort=score
     it("Searching for 'protein kinase' should return titles with 'protein kinase'",function(){
-      browser().navigateTo('/proteins/search/protein kinase');
+      browser().navigateTo('/proteins/search?query=protein kinase');
       expect(repeater('#search-results>li a.ng-binding').column('doc.recommended_name')).toArrayContain('protein kinase')
     });
   });
@@ -176,7 +176,7 @@ describe('nextprot:', function() {
     it('search on sections proteins', function() {
       //
       // on proteins
-      browser().navigateTo('/proteins/search/insulin');
+      browser().navigateTo('/proteins/search?query=insulin');
       expect(element('#search-entity').text()).toContain('proteins');
       expect(element('#search-results>li').count()).toBeGreaterThan(19);
     });
@@ -184,7 +184,7 @@ describe('nextprot:', function() {
     it('search on sections publications', function() {
       //
       // on publications
-      browser().navigateTo('/publications/search/insulin');
+      browser().navigateTo('/publications/search?query=insulin');
       expect(element('#search-entity').text()).toContain('publications');
       expect(element('#search-results>li').count()).toBeGreaterThan(19);
 
@@ -194,7 +194,7 @@ describe('nextprot:', function() {
 
       //
       // on terms
-      browser().navigateTo('/terms/search/insulin');
+      browser().navigateTo('/terms/search?query=insulin');
       expect(element('#search-entity').text()).toContain('terms');
       expect(element('#search-results>li').count()).toBeGreaterThan(19);
 
@@ -205,7 +205,7 @@ describe('nextprot:', function() {
     it('search multiple words [cornichon btk] should result 0 doc', function() {
       //
       // on terms
-      browser().navigateTo('/proteins/search/cornichon btk');
+      browser().navigateTo('/proteins/search?query=cornichon btk');
       expect(element('#search-entity').text()).toContain('proteins');
       expect(element('#search-results>li').count()).toBe(0);
 
@@ -222,7 +222,7 @@ describe('nextprot:', function() {
     it('search with authors Antonarakis AND Trochet', function() {
       //
       // on terms
-      browser().navigateTo('/publications/search/antonarakis%20trochet');
+      browser().navigateTo('/publications/search?query=antonarakis%20trochet');
       expect(element('#search-entity').text()).toContain('publications');
       expect(element('#search-results>li').count()).toBe(1);
     });
@@ -230,7 +230,7 @@ describe('nextprot:', function() {
     it('search with journal title "Epistatic interactions with a common hypomorphic"', function() {
       //
       // on terms
-      browser().navigateTo('/publications/search/Epistatic interactions with a common hypomorphic');
+      browser().navigateTo('/publications/search?query=Epistatic interactions with a common hypomorphic');
       expect(element('#search-entity').text()).toContain('publications');
       expect(element('#search-results>li').count()).toBe(1);
     });
@@ -238,7 +238,7 @@ describe('nextprot:', function() {
     it('search with journal name "Human mutation"', function() {
       //
       // on terms
-      browser().navigateTo('/publications/search/Human mutation');
+      browser().navigateTo('/publications/search?query=Human mutation');
       expect(element('#search-entity').text()).toContain('publications');
       expect(element('#search-results>li').count()).toBeGreaterThan(10);
     });
@@ -246,7 +246,7 @@ describe('nextprot:', function() {
     it('search with pubmedid 8276809', function() {
       //
       // on terms
-      browser().navigateTo('/publications/search/8276809');
+      browser().navigateTo('/publications/search?query=8276809');
       expect(element('#search-entity').text()).toContain('publications');
       expect(element('#search-results>li').count()).toBe(1);
       expect(element('#search-results>li a.ng-binding').text()).toContain('Direct activation of the phosphatidylinositol');
@@ -255,7 +255,7 @@ describe('nextprot:', function() {
     it('search with year 1968', function() {
       //
       // on terms
-      browser().navigateTo('/publications/search/date:"1981-04-30T22:00:00Z"');
+      browser().navigateTo('/publications/search?query=date:"1981-04-30T22:00:00Z"');
       expect(element('#search-entity').text()).toContain('publications');
       expect(element('#search-results>li a.ng-binding').text()).toContain('1981');
     });    
@@ -275,7 +275,7 @@ describe('nextprot:', function() {
     it('search for "kinaze rezeptor" should result 0 doc and suggest "kinase recpetor"', function() {
       //
       // on terms
-      browser().navigateTo('/proteins/search/kinaze rezeptor');
+      browser().navigateTo('/proteins/search?query=kinaze rezeptor');
       expect(element('#search-entity').text()).toContain('proteins');
       expect(element('#search-didyoumean').text()).toContain('kinase receptor');      
       expect(element('#search-results>li').count()).toBe(0);

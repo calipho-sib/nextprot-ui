@@ -36,7 +36,7 @@ SearchModule.controller('SearchCtrl',[
    '$timeout',
    'Search', 
    'config', 
-function($resource, $scope, $rootScope, $location,$routeParams, $route, $timeout, Search, config){
+	function($resource, $scope, $rootScope, $location,$routeParams, $route, $timeout, Search, config) {
 	 //
 	 // scope from template
 	 $scope.Search=Search;
@@ -47,8 +47,7 @@ function($resource, $scope, $rootScope, $location,$routeParams, $route, $timeout
 	 	$timeout(function(){
 	 		// must be called 2times??
 	 		Search.cookies(session)
-	 	},0)
-	 	
+	 	}, 0)
 	 }
 
 	 //
@@ -74,7 +73,9 @@ function($resource, $scope, $rootScope, $location,$routeParams, $route, $timeout
 	 }
 	 
 	 $scope.clean=function(){
+		 $location.search('rows',null)
 		 $location.search('start',null)
+		 $location.search('query',null)
 		 $location.search('filter',null)
 		 $location.search('quality',null)
 		 $location.search('sort',null)
@@ -103,16 +104,15 @@ function($resource, $scope, $rootScope, $location,$routeParams, $route, $timeout
 		 $scope.go();
 	 }
 
-	 $scope.moredetails=function(index){
+	 $scope.moredetails=function(index) {
 
-		 
 	 } 	 
 	 
 	 $scope.go=function(){
 
 		 var url=$location.url();
 		 $location.search('filter',null)
-		 $location.path('/'+Search.config.entityMapping[Search.params.entity]+'/search/'+Search.params.query.trim());
+		 $location.path('/'+Search.config.entityMapping[Search.params.entity]+'/search/').search('query',Search.params.query.trim());
 		 
 		 //
 		 // url has not changed => FIRE event
@@ -147,14 +147,59 @@ SearchModule.controller('ResultCtrl', [
 		$scope.Search=Search;		
 		$scope.Cart = Cart;
 		$scope.selectedResults = {};
+		$scope.allSelected = false;
 		$scope.showCart = true;
 		$scope.modal = {};
 		
-		// update solr search
-		Search.docs($routeParams, function(docs){
+
+
+		Search.docs($routeParams, function(results){
+			$scope.selectedResults = [];
+
+			_.map(results.docs, function(doc) { 
+				if(Cart.inCart(doc.id)) {
+					var key = doc.id;
+					$scope.selectedResults[key] = true;
+				} 
+			});
 		});
 
-		
+		// init
+		/**
+		if($routeParams["list"]) {
+			ProteinListService.getList('mario', $routeParams.list, function(list) {
+
+				var params = { username: 'mario', action: 'results' };
+
+				angular.extend(params, $routeParams);
+
+				ProteinListService.getListResults(params, function(docs) {
+					Search.setResults(docs);
+				});
+
+			});
+
+			
+		} else {
+				// update solr search
+			Search.docs($routeParams, function(results){
+				$scope.selectedResults = [];
+
+				_.map(results.docs, function(doc) { 
+					if(Cart.inCart(doc.id)) {
+						var key = doc.id;
+						$scope.selectedResults[key] = true;
+					} 
+				});
+			});
+		}
+		*/
+
+
+		function buildQuery(accessions) {
+			return "id:" + (accessions.length > 1 ? "(" + accessions.join(" ") + ")" : accessions[0]);
+		}
+
 		$scope.getResultTemplateByEntity=function(){
 			 switch (Search.params.entity) {
 		        case "publication.json":
@@ -167,8 +212,8 @@ SearchModule.controller('ResultCtrl', [
 		}
 
 		$scope.getSortTemplateByEntity=function(){
-			 switch (Search.params.entity) {
-		        case "publication.json":
+			switch (Search.params.entity) {
+		    	case "publication.json":
 		            return 'partials/search/sort-publications.html';
 		        case "term.json":
 		            return 'partials/search/sort-terms.html';
@@ -196,25 +241,52 @@ SearchModule.controller('ResultCtrl', [
 			Cart.emptyCart();
 		}
 		
-		$scope.$watch('selectedResults', function() { 
-			
-			// Cart.change($scope.selectedResults);
-		}, true);
+		$scope.selectDoc = function(docId) {
+			Cart.change(docId);
+		}
+
+		// $scope.$watch('selectedResults', function() { 
+		// 	console.log('selected: ', $scope.selectedResults);
+		// 	// Cart.change($scope.selectedResults);
+		// 	Cart.change(doc.id);
+		// }, true);
 		
 		
 		$scope.selectAll = function() {
 			Cart.emptyCart();
 
-			console.log('docs: ', Search.result.num);
+			console.log('params: ', $routeParams);
 
-			// for(var i=0; i<Search.result.docs.length; i++) {
-			// 	Cart.add(Search.result.docs[i].id);
-			// }
+			var params = $routeParams;
+
+			if(_.has(params, 'list')) {
+				console.log('LIST!');
+
+				ProteinListService.getListIds('mario', params.list, function(result) {
+					console.log('result: ', result);
+					setInCart(result.ids);
+
+				});
+
+			} else {
+				console.log('NOT LIST!');
+				Search.getIds({ entity: 'entry', query: params.query }, function(docs) {
+					setInCart(docs.ids);
+				});
+			}
+
 		}
 		
+		function setInCart(ids) {
+			_.map(ids, function(id) { 
+				$scope.selectedResults[id] = true;  
+				Cart.add(id);
+			});	
+		}
+
 		$scope.unselectAll = function() {
-			//$scope.selectedResults = {};
 			Cart.emptyCart();
+			$scope.selectedResults = {};
 		}
 	
 		
@@ -224,9 +296,13 @@ SearchModule.controller('ResultCtrl', [
 		}
 		
 		$scope.saveModal = function(dismiss) {
-			// var proteinList = { name: $scope.selected.name, description: $scope.selected.description, accessions: _.keys($scope.selectedResults), ownerId: 1};
-			var proteinList = { name: $scope.selected.name, description: $scope.selected.description, accessions: Cart.getElements(), ownerId: 1};
-			
+			var proteinList = { 
+				name: $scope.selected.name, 
+				description: $scope.selected.description, 
+				accessions: _.keys(Cart.getElements()), 
+				ownerId: 1
+			};
+
 			ProteinListService.createList('mario', proteinList, function(data) { });
 		}
 	}

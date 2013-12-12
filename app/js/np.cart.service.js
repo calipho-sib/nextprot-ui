@@ -2,17 +2,18 @@
 
 var CartService = angular.module('np.cart', []);
 
-CartService.factory('Cart', [
-	'$resource', 
-	'$http', 
-	'config', 
-	function($resource, $http, config) {
+CartService.factory('Cart', ['$resource', '$http', 'config', function($resource, $http, config) {
 
-	var cartElements = [];
+	// var cartElements = [];
+	// var cartSize = 0;
+
+	//var selectedElements = [];
+	var selectedElements = {};
+	var selectedQueryParams;
+	// var cartSize = 0;
+
 	
-	var Cart = function() {
-		
-	};
+	var Cart = function() { };
 	
 	// Cart.prototype.change = function(selection) {
 		// cartElements = [];
@@ -24,41 +25,56 @@ CartService.factory('Cart', [
 	// }
 
 	Cart.prototype.change = function(docId) {
-		if(_.contains(cartElements, docId)) {
-			cartElements = _.without(cartElements, docId);
+		if(_.has(selectedElements, docId)) {
+			// selectedElements = _.without(selectedElements, docId);						
+			selectedElements = _.omit(selectedElements, docId);
 		} else {
-			cartElements.push(docId);
+			selectedElements[docId] = true;
+			console.log('added: ', selectedElements);
+			//selectedElements.push(docId);
 		}
+		// cartSize = _.keys(selectedElements).length;
+		// console.log('cartSize: ', cartSize);
+		//cartSize = selectedElements.length;
 	}
 
-	Cart.prototype.addToCart = function(selection) {
-		for(var prop in selection) {
-			if(selection[prop] && !_.contains(cartElements, prop))
-				cartElements.push(prop);
-		}
-		
-	}
 
 	Cart.prototype.add = function(docId) {
-		cartElements.push(docId);
+		if(! _.has(selectedElements, docId))
+			selectedElements[docId] = true;		
+
+		// cartSize = selectedElements.length;
 	}
-	
+
 	Cart.prototype.emptyCart = function() {
-		cartElements = [];
+		selectedElements = {};
 	}
 	
 	Cart.prototype.saveCart = function() {
 		console.log('save cart');
 	}
 	
-	Cart.prototype.cartSize = function() {
-		return cartElements.length;
+	Cart.prototype.getCartSize = function() {
+		// return cartSize;
+		return _.keys(selectedElements).length;
+	}
+
+	Cart.prototype.setCartSize = function(size) {
+		cartSize = size;
 	}
 
 	Cart.prototype.getElements = function() {
-		return cartElements;
+		return selectedElements;
+	}
+
+	Cart.prototype.inCart = function(docId) {
+		return _.has(selectedElements, docId);
 	}
 	
+	Cart.prototype.setSelectedQueryParams = function(params) {
+		this.selectedQueryParams = params;
+	}
+
 	var cart = new Cart();
 	return cart;
 }]);

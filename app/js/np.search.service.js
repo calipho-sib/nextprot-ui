@@ -16,10 +16,13 @@ SearchService.factory('Search',[
   function($resource, $http, $cookies, $cookieStore, config){
 	//
 	// this is the url root
-	var $api=$resource(config.solr.SOLR_SERVER,
-        	{ action:'@action',entity:'@entity', port:config.solr.SOLR_PORT },{
-        		search:{method:'POST'}
-        	});
+	var $api = $resource(config.solr.SOLR_SERVER, { action:'@action',entity:'@entity', port:config.solr.SOLR_PORT },{
+		search:{method:'POST'}
+	});
+
+	var $searchById = $resource(config.solr.SOLR_SERVER, { action: 'search-ids', entity: '@entity', port: config.solr.SOLR_PORT}, { 
+		get: { method: 'POST'}
+	});
 		
 	var defaultUrl={
 			filter:'',
@@ -150,9 +153,13 @@ SearchService.factory('Search',[
 		angular.extend(this.params,  searchApi, defaultUrl, params)		
 		this.params.entity=config.solr.entityMapping[params.entity];
 
+		// make a copy to avoid post issue 
+		var post=angular.copy(this.params);
+//		console.log(post,this.params.query)
+		delete post.action
+		delete post.entity
 
-		//$api.search(this.params).$promise.then(function(docs){
-		$api.search(this.params, params.query).$promise.then(function(docs) {
+		$api.search({action:this.params.action, entity:this.params.entity}, post).$promise.then(function(docs) {
 			me.result.rows=docs.rows;
 			me.result.params=params;
 			me.result.display=config.solr.entityMapping[me.params.entity];
@@ -190,62 +197,24 @@ SearchService.factory('Search',[
 		})	
 	}
 
-	Search.prototype.searchById = function(ids, cb) {
-		var me=this;
-		me.result.docs = [];
-//		angular.extend(this.params,  defaultUrl, params)
-		
-		//
-		// setup query  
-		//var searchParams=angular.extend({},defaultSolr, defaultSolrHl);			
-		var searchParams=angular.extend({}, mySolr);			
-		var solr=config.solr.core[this.params.entity];
-		searchParams.core=solr.name;
-		
-		//
-		// additional criterion hyper boosted to make sure we get this record as the first and only row returned
-		
-		var myQ;
-		/*
-		if(ids.length > 1) {
-			var myQ = "id:("; // user JOIN!
-			
-			myQ += ids.join(" ");
-			myQ += ")";
-			*/
-			
-		if(ids.length > 1)
-			myQ = "id:(" + ids.join(" ") + ")";
-		else myQ = "id:"+ids[0];
-			
-//			for(var i =0; i< ids.length; i++)
-//				myQ = myQ.concat(ids[i]+" ");
-//			myQ = myQ.concat(")");
-		//} else myQ = "id:"+ids[0];
-			
-		
-		console.log('myQ: ', myQ);
-		searchParams.bq = searchParams.q = myQ; //+ "^1000";
-//		searchParams.bq=searchParams.q="id:" + id + "^1000";
-		
-		searchParams.fl=solr.hi.join(',')
-		searchParams["hl.fl"]=solr.hi.join(',');
-		//
-		// select return fields (more details)
-		//searchParams.fl=solr.hi.join(',')
-		//searchParams["hl.fl"]=solr.hi.join(',');		
-		
+	Search.prototype.getIds = function(params, cb) {
+		$searchById.get(params).$promise.then(function(docs) {
+			if(cb)cb(docs);
+		});
+	};
 
-		$api.search(searchParams,function(docs){
-//			me.result.docs[index].details = docs.response.docs[0];			
-			me.result.docs = docs.response.docs;
-			console.log('results: ', docs.response.docs);
-			if(cb)cb(docs,searchParams)
-		})		
-		
+	Search.prototype.setResults = function(docs) {
+		var me = this;
+		me.result.rows=docs.rows;
+		//me.result.params=params;
+		me.result.display=config.solr.entityMapping[me.params.entity];
+		me.result.core=docs.index;
+		me.result.time=docs.elapsedTime;
+		me.result.score=docs.maxScore;
+		me.result.docs = docs.results;
+		me.result.ontology=config.solr.ontology;
+		me.result.filters=docs.filters
 	}
-	
-
 	
 	var search=new Search();
 	return search;

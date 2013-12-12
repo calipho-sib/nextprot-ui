@@ -8,11 +8,14 @@ angular.module('np.config', []).factory('config', [
 '$http',
 function ($http) {
 	
+ var BASE_URL= 'http://localhost';
+ // var BASE_URL= 'http://uat-web1.isb-sib.ch';
 	
  //
  // solr configuration
  var defaultApi = {
-   SOLR_SERVER:'http://localhost:port/nextprot-api/:action/:entity',
+   BASE_URL:BASE_URL,
+   SOLR_SERVER:BASE_URL+':port/nextprot-api/:action/:entity',
    SOLR_PORT:':8282',
 
    //base:"/",

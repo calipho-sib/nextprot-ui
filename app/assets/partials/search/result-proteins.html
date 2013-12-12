@@ -8,7 +8,9 @@
         <ul ng-cloak id="search-results" class="span8">
           <li ng-repeat="doc in Search.result.docs" >
           	<input type="checkbox" name="docs[]" value="{{doc.id}}" 
-              ng-click="Cart.change(doc.id)" ng-model="selectedResults[doc.id]" id="{{doc.id}}">
+               ng-click="selectDoc(doc.id)" ng-model="selectedResults[doc.id]" id="{{doc.id}}">
+
+               <!-- ng-click="Cart.change(doc.id)" -->
 
             <a href="http://www.nextprot.org/entry/{{doc.id}}">{{doc.recommended_name}} ({{doc.recommended_gene_names}}) [{{doc.id}}]</a> 
             <span><a class="btn btn-mini hide" toggle="#line-{{$index}}"  ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i> Details</a> </span>
