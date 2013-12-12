@@ -164,37 +164,6 @@ SearchModule.controller('ResultCtrl', [
 			});
 		});
 
-		// init
-		/**
-		if($routeParams["list"]) {
-			ProteinListService.getList('mario', $routeParams.list, function(list) {
-
-				var params = { username: 'mario', action: 'results' };
-
-				angular.extend(params, $routeParams);
-
-				ProteinListService.getListResults(params, function(docs) {
-					Search.setResults(docs);
-				});
-
-			});
-
-			
-		} else {
-				// update solr search
-			Search.docs($routeParams, function(results){
-				$scope.selectedResults = [];
-
-				_.map(results.docs, function(doc) { 
-					if(Cart.inCart(doc.id)) {
-						var key = doc.id;
-						$scope.selectedResults[key] = true;
-					} 
-				});
-			});
-		}
-		*/
-
 
 		function buildQuery(accessions) {
 			return "id:" + (accessions.length > 1 ? "(" + accessions.join(" ") + ")" : accessions[0]);
@@ -255,22 +224,16 @@ SearchModule.controller('ResultCtrl', [
 		$scope.selectAll = function() {
 			Cart.emptyCart();
 
-			console.log('params: ', $routeParams);
 
-			var params = $routeParams;
 
-			if(_.has(params, 'list')) {
-				console.log('LIST!');
-
-				ProteinListService.getListIds('mario', params.list, function(result) {
-					console.log('result: ', result);
-					setInCart(result.ids);
-
+			if($routeParams.list) {
+				ProteinListService.getListIds('mario', $routeParams.list, function(result) {
+					console.log('selectall ', result.ids);
+					setInCart(result.ids);					
 				});
 
 			} else {
-				console.log('NOT LIST!');
-				Search.getIds({ entity: 'entry', query: params.query }, function(docs) {
+				Search.getIds({ entity: 'entry.json', query: $routeParams.query }, function(docs) {
 					setInCart(docs.ids);
 				});
 			}

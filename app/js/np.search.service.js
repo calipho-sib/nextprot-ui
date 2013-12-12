@@ -20,9 +20,7 @@ SearchService.factory('Search',[
 		search:{method:'POST'}
 	});
 
-	var $searchById = $resource(config.solr.SOLR_SERVER, { action: 'search-ids', entity: '@entity', port: config.solr.SOLR_PORT}, { 
-		get: { method: 'POST'}
-	});
+
 		
 	var defaultUrl={
 			filter:'',
@@ -155,7 +153,6 @@ SearchService.factory('Search',[
 
 		// make a copy to avoid post issue 
 		var post=angular.copy(this.params);
-//		console.log(post,this.params.query)
 		delete post.action
 		delete post.entity
 
@@ -198,24 +195,18 @@ SearchService.factory('Search',[
 	}
 
 	Search.prototype.getIds = function(params, cb) {
-		$searchById.get(params).$promise.then(function(docs) {
+
+		// make a copy to avoid post issue 
+		var post=angular.copy(params);
+		delete post.action
+		delete post.entity
+
+		$api.search({action:'search-ids', entity:params.entity}, post).$promise.then(function(docs) {
 			if(cb)cb(docs);
 		});
 	};
 
-	Search.prototype.setResults = function(docs) {
-		var me = this;
-		me.result.rows=docs.rows;
-		//me.result.params=params;
-		me.result.display=config.solr.entityMapping[me.params.entity];
-		me.result.core=docs.index;
-		me.result.time=docs.elapsedTime;
-		me.result.score=docs.maxScore;
-		me.result.docs = docs.results;
-		me.result.ontology=config.solr.ontology;
-		me.result.filters=docs.filters
-	}
-	
+
 	var search=new Search();
 	return search;
 }]);
