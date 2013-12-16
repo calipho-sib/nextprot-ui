@@ -73,6 +73,7 @@ SearchModule.controller('SearchCtrl',[
 	 }
 	 
 	 $scope.clean=function(){
+	 	 $locaiton.search('list', null)
 		 $location.search('rows',null)
 		 $location.search('start',null)
 		 $location.search('query',null)
@@ -112,6 +113,7 @@ SearchModule.controller('SearchCtrl',[
 
 		 var url=$location.url();
 		 $location.search('filter',null)
+		 $location.search('list',null)
 		 $location.path('/'+Search.config.entityMapping[Search.params.entity]+'/search/').search('query',Search.params.query.trim());
 		 
 		 //
@@ -152,6 +154,8 @@ SearchModule.controller('ResultCtrl', [
 		$scope.modal = {};
 		
 
+		//if($routeParams.list) delete $routeParams.list;
+		console.log('search: ', $routeParams);
 
 		Search.docs($routeParams, function(results){
 			$scope.selectedResults = [];

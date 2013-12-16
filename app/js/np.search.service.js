@@ -148,6 +148,7 @@ SearchService.factory('Search',[
 	Search.prototype.docs=function(params,cb){
 		var me=this;me.result.error="";
 		me.result.docs = [];
+		delete this.params.list;
 		angular.extend(this.params,  searchApi, defaultUrl, params)		
 		this.params.entity=config.solr.entityMapping[params.entity];
 
