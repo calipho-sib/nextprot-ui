@@ -57,7 +57,7 @@
 				<button class="btn" ng-show="combination.op == 'NOT IN' && combination.first != null && combination.second != null" ng-click="switchCombine()"><i class="icon-resize-horizontal"></i></button>
 				<select class="span3" ng-model="combination.second" ng-options="i.name for i in options.second"></select>
 				
-				<button class="btn btn-primary" ng-disabled="combination.first == null; combination.second == null" bs-modal="'partials/proteinlists/list-modal.html'" ng-click="launchModal(0, 'create')">Create</button>
+				<button class="btn btn-primary" ng-disabled="combination.first == null; combination.second == null" bs-modal="'partials/proteinlists/list-modal.html'" backdrop="false" ng-click="launchModal(0, 'create')">Create</button>
 			</form>
 			
 		</div>
