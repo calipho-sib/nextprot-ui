@@ -35,6 +35,9 @@
 }
 
 
+.modal-backdrop {
+    background-color: #FFFFFF;
+}
 
 .search-row.animate{
   margin-top:90px;
