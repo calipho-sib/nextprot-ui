@@ -19,7 +19,7 @@
 						<tr ng-repeat="list in lists">
 							<td ng-show="showCombine"><input type="checkbox"></td>
 							<!-- <td><a href="/proteins/search?query={{buildQuery(list.accessions)}}">{{list.name}}</a></td> -->
-							<td><a href="/proteins/search?list={{list.name}}">{{list.name}}</a></td>
+							<td><a href="/protosearch/proteins/search?list={{list.name}}">{{list.name}}</a></td>
 							<!-- <td><a href="/proteinlists/view/{{Tools.convertToSlug(list.name)}}" ng-click="ProteinListService.setSelectedList(list)">{{list.name}}</a></td> -->
 							<td>{{list.description}}</td>
 							<td>{{list.accessions}}</td>
