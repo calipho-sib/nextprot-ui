@@ -16,6 +16,15 @@ describe('nextprot:', function() {
     return result;
   });
 
+  angular.scenario.matcher('toArraySorted', function(expected) {
+    function equals(a,b) { return !(a<b || b<a); }
+    var result=true;
+    // console.log(this.actual)
+    var sorted=this.actual.slice(0).sort(expected);
+    result=equals(this.actual, sorted)
+    return result;
+  });
+
   beforeEach(function() {
     browser().navigateTo('/');
   });
@@ -285,19 +294,33 @@ describe('nextprot:', function() {
 
 
   describe("DR4 In a first round we would like to be able to sort on the following",function(){
-    xit('sort on Gene name', function() {
+    it('sort on Gene name', function() {
+      //expect(repeater('#search-results>li').column('a.ng-binding')).toContain('protein kinase')
+      
+      browser().navigateTo('/proteins/search?query=cornichon&sort=gene')
+      expect(repeater('#search-results>li a.ng-binding').column('doc.recommended_gene_names')).toArraySorted()
+
     });
-    xit('sort on Protein name', function() {
+    it('sort on Protein name', function() {
+      browser().navigateTo('/proteins/search?query=cornichon&sort=protein')
+      expect(repeater('#search-results>li a.ng-binding').column('doc.recommended_name')).toArraySorted()
     });
     xit('sort on Protein family name', function() {
+      browser().navigateTo('/proteins/search?query=cornichon&sort=family')
+      expect(repeater('#search-results>li a.ng-binding').column('doc.family_names')).toArraySorted()
     });
-    xit('sort on ACs', function() {
+    it('sort on ACs', function() {
+      browser().navigateTo('/proteins/search?query=cornichon&sort=ac')
+      expect(repeater('#search-results>li a.ng-binding').column('doc.id')).toArraySorted()
     });
-    xit('sort on Protein length', function() {
+    it('sort on Protein length', function() {
+      browser().navigateTo('/proteins/search?query=cornichon&sort=length')
+      expect(repeater('#search-results>li a.ng-binding').column('doc.aa_length')).toArraySorted()
     });
     xit('sort on The ranking score', function() {
     });
   });
+
 
 
 });

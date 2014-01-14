@@ -52,7 +52,9 @@ SearchModule.controller('SearchCtrl',[
 
 	 //
 	 // interact with the search bar
-	 $scope.params=function(params){
+	 $scope.params=function(params, form){
+	 	if (form&&!form.$valid)
+	 		return;
 	    angular.forEach(params, function(v, k) {
 	      $location.search(k, v);
 	    });
