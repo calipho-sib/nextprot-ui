@@ -152,8 +152,7 @@ SearchModule.controller('ResultCtrl', [
 		$scope.allSelected = false;
 		$scope.showCart = true;
 		$scope.modal = {};
-		$scope.start = $routeParams.start;
-		$scope.rows = $routeParams.rows;
+
 		
 
 		//if($routeParams.list) delete $routeParams.list;
@@ -168,6 +167,9 @@ SearchModule.controller('ResultCtrl', [
 					$scope.selectedResults[key] = true;
 				} 
 			});
+
+			$scope.start = Search.result.offset;
+			$scope.rows = Search.result.rows;
 		});
 
 

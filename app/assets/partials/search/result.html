@@ -37,7 +37,9 @@
 
 
 					<li id="pageInput" ng-show="Search.result.pages.length > 1" style="margin:5px">
-						<input type="number" min="1" max="{{ (Search.result.num / Search.result.rows) | number:0}}" class="bold black" ng-model="Search.result.pagination.manual" np-enter="params({start:(Search.result.pagination.manual-1)*Search.result.rows})" style="border: 0px none; width: 40px;color:black;margin-bottom:0;text-align:right"/> / {{ (Search.result.num / Search.result.rows) | number:0}} page(s)
+						<form>
+							<input type="number" min="1" max="{{ (Search.result.num / Search.result.rows) | number:0}}" class="bold black" ng-model="Search.result.pagination.manual" np-enter="params({start:(Search.result.pagination.manual-1)*Search.result.rows})" style="border: 0px none; width: 40px;color:black;margin-bottom:0;text-align:right"/> / {{ (Search.result.num / Search.result.rows) | number:0}} page(s)
+						</form>
 					</li>
 
 					<li class="divider-vertical"></li>
