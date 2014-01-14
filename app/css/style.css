@@ -1,3 +1,17 @@
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+a.inactive {
+   pointer-events: none;
+   cursor: default;
+   color:black;
+}
+
 .blue{
 	color:blue;
 }
@@ -148,8 +162,6 @@
     outline: 0 none;
     text-decoration: none;
 }
-
-
 
 
 

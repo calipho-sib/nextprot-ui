@@ -1,7 +1,7 @@
 <a data-toggle="dropdown" tabindex="-1"  href="">Sort<sub ng-show="Search.params.sort"> {{Search.params.sort}} {{Search.params.order}}</sub> <b class="caret" /> </a>
 <ul class="dropdown-menu">
-  <li><a href="" ng-click="params({order:'asc'})" ng-class="{bold:Search.params.order!=='desc'}">Asc order</a></li>
-  <li><a href="" ng-click="params({order:'desc'})" ng-class="{bold:Search.params.order=='desc'}">Desc order</a></li>
+  <li><a href="" ng-click="params({order:'asc'})" ng-class="{bold:Search.params.order!=='desc'}">Ascending order</a></li>
+  <li><a href="" ng-click="params({order:'desc'})" ng-class="{bold:Search.params.order=='desc'}">Descending order</a></li>
   <li class="divider"></li>
   <li><a href="" ng-click="params({sort:'gene'})">Gene name</a></li>
   <li><a href="" ng-click="params({sort:'protein'})">Protein name</a></li>

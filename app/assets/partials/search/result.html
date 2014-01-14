@@ -58,12 +58,15 @@
 				  	</li> -->
 
 				  <li class="divider-vertical"></li>
-				  <li ng-class="{active:Search.session.summary==='true'}" >
-				    <a href="" ng-click="cookies({summary:true});" id="search-summary" class="small">Summary</a>
+				  <li>
+				  	<div style="padding:7px">				  		
+				  		<a  href="" ng-click="cookies({summary:true});" id="search-summary" 
+				  			class="small" ng-class="{inactive:Search.session.summary==='true'}" >Summary</a>&nbsp;<b>|</b>&nbsp;
+				  		<a  href="" ng-click="cookies({summary:false});" id="search-details" 
+				  			class="small" ng-class="{inactive:Search.session.summary!=='true'}">Details</a>
+				  	</div>
 				  </li>
-				  <li ng-class="{active:Search.session.summary!=='true'}">
-				    <a href="" ng-click="cookies({summary:false});" id="search-details" class="small">Details</a>
-				  </li>
+				  <li class="divider-vertical"></li>
 
 
 				  <!-- SORTING -->
