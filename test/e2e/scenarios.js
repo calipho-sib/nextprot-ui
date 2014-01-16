@@ -304,6 +304,7 @@ describe('nextprot:', function() {
     it('sort on Protein name', function() {
       browser().navigateTo('/proteins/search?query=cornichon&sort=protein')
       expect(repeater('#search-results>li a.ng-binding').column('doc.recommended_name')).toArraySorted()
+      cons
     });
     xit('sort on Protein family name', function() {
       browser().navigateTo('/proteins/search?query=cornichon&sort=family')
