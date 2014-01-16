@@ -56,7 +56,7 @@ CartService.factory('Cart', ['$resource', '$http', 'config', function($resource,
 	
 	Cart.prototype.getCartSize = function() {
 		// return cartSize;
-		return _.keys(selectedElements).length;
+		return this.getAccessions().length;
 	}
 
 	Cart.prototype.setCartSize = function(size) {
@@ -65,6 +65,10 @@ CartService.factory('Cart', ['$resource', '$http', 'config', function($resource,
 
 	Cart.prototype.getElements = function() {
 		return selectedElements;
+	}
+
+	Cart.prototype.getAccessions = function() {
+		return _.keys(selectedElements);
 	}
 
 	Cart.prototype.inCart = function(docId) {

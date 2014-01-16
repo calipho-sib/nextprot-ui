@@ -92,9 +92,11 @@
 						<i class="icon-shopping-cart"></i><span class="badge">{{Cart.getCartSize()}}</span><b class="caret"/>
 				    </a>
 					<ul class="dropdown-menu">
-						<li><a href="" ng-click="emptyCart()">Empty cart</a></li>
-						<li><a href="" bs-modal="'partials/proteinlists/list-modal.html'" ng-click="launchModal($index, 'create')">Save cart as list</a></li>
-						<li><a href="" ng-click="showSelected()">Show only selected</a></li>
+						<li><a href="" ng-click="emptyCart()">Empty Cart</a></li>
+						<li><a href="" bs-modal="'partials/proteinlists/list-modal.html'" ng-click="launchModal($index, 'create')">Save Cart as List</a></li>
+						<!-- <li><a href="" ng-click="viewCart()">View Cart</a></li> -->
+						<li><a href="/proteins/search?cart=true">View Cart</a></li>
+
 				    </ul>
 				  </li>
 

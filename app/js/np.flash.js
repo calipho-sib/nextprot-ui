@@ -35,7 +35,7 @@ var flash = angular.module('np.flash', [])
   	var flash = function(level, text) {
   		emit(messages = asArrayOfMessages(level, text));
 
-    	$timeout(function() { console.log('clear'); messages = []; emit();}, 2000);
+    	$timeout(function() { messages = []; emit();}, 3000);
   	};
 
   	['alert-danger', 'alert-warning', 'alert-info', 'alert-success'].forEach(function (level) {
@@ -50,11 +50,9 @@ var flash = angular.module('np.flash', [])
   var directive = { restrict: 'EA', replace: true };
 
   directive.template = '<ul class="unstyled" style="margin-top: 40px">' +
-  							'<li ng-repeat="m in messages"><div class="alert {{m.level}}" >{{m.text}}</div></li>'+
+  							'<li ng-repeat="m in messages"><div class="alert {{m.level}}">{{m.text}}</div></li>'+
   						'</ul>';
 
-
-    // directive.template = '<div class="alert alert-warning">{{messages[0].text}}</div>';
 
   directive.controller = ['$scope', '$rootScope', function($scope, $rootScope) {
     $rootScope.$on('flash:message', function(_, messages, done) {
