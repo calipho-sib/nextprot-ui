@@ -76,7 +76,7 @@ SearchModule.controller('SearchCtrl',[
 	 }
 	 
 	 $scope.clean=function(){
-	 	 $locaiton.search('list', null)
+	 	 $location.search('list', null)
 		 $location.search('rows',null)
 		 $location.search('start',null)
 		 $location.search('query',null)
