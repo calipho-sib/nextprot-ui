@@ -17,7 +17,7 @@ SearchService.factory('Search',[
 	//
 	// this is the url root
 	var $api = $resource(config.solr.SOLR_SERVER, { action:'@action',entity:'@entity', port:config.solr.SOLR_PORT },{
-		search:{method:'POST'}
+		search: { method:'POST'}
 	});
 
 
@@ -148,7 +148,10 @@ SearchService.factory('Search',[
 	Search.prototype.docs=function(params,cb){
 		var me=this;me.result.error="";
 		me.result.docs = [];
+		
 		delete this.params.list;
+		delete this.params.accs;
+
 		angular.extend(this.params,  searchApi, defaultUrl, params)		
 		this.params.entity=config.solr.entityMapping[params.entity];
 
