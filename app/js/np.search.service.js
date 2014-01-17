@@ -86,7 +86,9 @@ SearchService.factory('Search',[
 			// current page in input (user)
 			this.result.pagination.manual = this.result.pagination.current + 1;
 
-			this.result.pagination.numPages = parseInt(this.calcPages(this.result.num, config.solr.paginate.rows));
+			this.result.pagination.numPages = parseInt(this.calcPages(this.result.num, params.rows ? parseInt(params.rows) : 50));
+			//console.log('pages: ', this.result.num, params.rows ? params.rows : 50, this.result.pagination.numPages, this.calcPages(this.result.num, params.rows ? params.rows : 50));
+
 
 
 
@@ -132,6 +134,7 @@ SearchService.factory('Search',[
 	
 
 	Search.prototype.calcPages = function(numDocs, pageSize) {
+		console.log(numDocs, pageSize, ( numDocs + pageSize - 1) / pageSize);
 		return ( numDocs + pageSize - 1) / pageSize;
 	}
 
