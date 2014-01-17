@@ -79,49 +79,61 @@ SearchService.factory('Search',[
 	Search.prototype.paginate=function(params, docs){
 			this.result.num=docs.found;
 			this.result.pagination={};
-			this.result.pagination.current=parseInt((params.start?params.start:0)/config.solr.paginate.rows);
-			this.result.pagination.manual=this.result.pagination.current+1;
+
+			// current page in the bottom
+			this.result.pagination.current = parseInt((params.start ? params.start : 0) / config.solr.paginate.rows);
+
+			// current page in input (user)
+			this.result.pagination.manual = this.result.pagination.current + 1;
+
+			this.result.pagination.numPages = parseInt(this.calcPages(this.result.num, config.solr.paginate.rows));
+
+
 
 			// back button
-			if (params.start>0 && (this.result.pagination.current)>0){
+			if (params.start > 0 && (this.result.pagination.current) > 0){
 				var offset=this.result.pagination.current;
-				this.result.pagination.prev={
-					offset:offset-1, 
-					rows:(offset-1)*config.solr.paginate.rows
+				this.result.pagination.prev = {
+					offset: offset - 1, 
+					rows:(offset - 1) * config.solr.paginate.rows
 				};
 			}
 			// next button 
-			if (  docs.results.length===config.solr.paginate.rows){
-				this.result.pagination.next={
-					offset:this.result.pagination.current+1, 
-					rows:(this.result.pagination.current+1)*config.solr.paginate.rows
+			if (docs.results.length === config.solr.paginate.rows){
+				this.result.pagination.next = {
+					offset:this.result.pagination.current + 1, 
+					rows:(this.result.pagination.current + 1) * config.solr.paginate.rows
 				};
-
 			}
 
 			// more button
-			if (  (docs.found/config.solr.paginate.rows)>config.solr.paginate.steps){
-				this.result.pagination.more={
-					offset:parseInt(this.result.num/config.solr.paginate.rows), 
-					rows:parseInt(this.result.num/config.solr.paginate.rows)*config.solr.paginate.rows
+			if (  (docs.found/config.solr.paginate.rows) > config.solr.paginate.steps){
+				this.result.pagination.more = {
+					offset: this.result.pagination.numPages, //parseInt(this.result.num/config.solr.paginate.rows), 
+					rows: parseInt(this.result.num/config.solr.paginate.rows) * config.solr.paginate.rows
 				};
 			}
 
 			
-			this.result.offset=docs.start;
-			this.result.pages=[];
-			for (var page=0;page<(this.result.num/config.solr.paginate.rows);page++){
-				if (page>config.solr.paginate.steps){
+			this.result.offset = docs.start;
+			this.result.pages = [];
+			for (var page = 0; page < (this.result.num / config.solr.paginate.rows); page++){
+				if (page > config.solr.paginate.steps){
 					break;		
 				}
 				this.result.pages.push({
-					offset:page+1,
-					rows:page*config.solr.paginate.rows, 
-					current:(this.result.pagination.current)===page
+					offset: page + 1,
+					rows: page * config.solr.paginate.rows, 
+					current: (this.result.pagination.current) === page
 				})
 			}		
+
 	}
 	
+
+	Search.prototype.calcPages = function(numDocs, pageSize) {
+		return ( numDocs + pageSize - 1) / pageSize;
+	}
 
 
 	//

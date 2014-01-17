@@ -38,7 +38,7 @@
 
 					<li id="pageInput" ng-show="Search.result.pages.length > 1" style="margin:5px">
 						<form name="paging" ng-submit="params({start:(Search.result.pagination.manual-1)*Search.result.rows},paging)" class="nomargin">
-							<input type="number" min="1" max="{{ (Search.result.num / Search.result.rows) | number:0}}" class="bold black" ng-model="Search.result.pagination.manual"  style="border: 0px none; width: 40px;color:black;margin-bottom:0;text-align:right"/> / {{ (Search.result.num / Search.result.rows) | number:0}} page(s)
+							<input type="number" min="1" max="{{ Search.result.pagination.numPages | number:0}}" class="bold black" ng-model="Search.result.pagination.manual"  style="border: 0px none; width: 40px;color:black;margin-bottom:0;text-align:right"/> / {{ Search.result.pagination.numPages | number:0}} page(s)
 						</form>
 					</li>
 
@@ -95,7 +95,7 @@
 						<li><a href="" ng-click="emptyCart()">Empty Cart</a></li>
 						<li><a href="" bs-modal="'partials/proteinlists/list-modal.html'" ng-click="launchModal($index, 'create')">Save Cart as List</a></li>
 						<!-- <li><a href="" ng-click="viewCart()">View Cart</a></li> -->
-						<li><a href="/protosearch/proteins/search?cart=true">View Cart</a></li>
+						<li><a href="/proteins/search?cart=true">View Cart</a></li>
 
 				    </ul>
 				  </li>
