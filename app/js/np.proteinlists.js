@@ -250,9 +250,10 @@ ProteinListModule.controller('ListCreateCtrl', [
 	    		});
 	    	} else {
 
-	    		ProteinListService.createList('mario', { name: $scope.listName, description: $scope.listDescription, accessions: []}, function(data) {
+	    		ProteinListService.createList('mario', { name: $scope.listName, description: $scope.listDescription, accessions: []}, function(newList) {
+
 	    			for(var i=0; i<selectedFiles.length; i++)
-	    			UploadListService.send(data.proteinList.id, selectedFiles[i], function(cb) {
+	    			UploadListService.send(newList.id, selectedFiles[i], function(cb) {
 						if(data.error) flash('alert-warning', data.error);
 						else flash('alert-info', "List "+$scope.listName+" created.");
 	    			});

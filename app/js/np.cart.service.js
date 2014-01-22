@@ -15,35 +15,22 @@ CartService.factory('Cart', ['$resource', '$http', 'config', function($resource,
 	
 	var Cart = function() { };
 	
-	// Cart.prototype.change = function(selection) {
-		// cartElements = [];
-		
-		// for(var prop in selection) {
-		// 	if(selection[prop])
-		// 		cartElements.push(prop);
-		// }
-	// }
-
 	Cart.prototype.change = function(docId) {
 		if(_.has(selectedElements, docId)) {
 			// selectedElements = _.without(selectedElements, docId);						
 			selectedElements = _.omit(selectedElements, docId);
+			console.log('removed: ', selectedElements);
 		} else {
 			selectedElements[docId] = true;
 			console.log('added: ', selectedElements);
 			//selectedElements.push(docId);
 		}
-		// cartSize = _.keys(selectedElements).length;
-		// console.log('cartSize: ', cartSize);
-		//cartSize = selectedElements.length;
 	}
 
 
 	Cart.prototype.add = function(docId) {
 		if(! _.has(selectedElements, docId))
 			selectedElements[docId] = true;		
-
-		// cartSize = selectedElements.length;
 	}
 
 	Cart.prototype.emptyCart = function() {
@@ -55,7 +42,6 @@ CartService.factory('Cart', ['$resource', '$http', 'config', function($resource,
 	}
 	
 	Cart.prototype.getCartSize = function() {
-		// return cartSize;
 		return this.getAccessions().length;
 	}
 

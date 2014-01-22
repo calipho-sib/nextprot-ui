@@ -7,6 +7,7 @@ UploadListService.factory('UploadListService', [
    '$http',
    '$rootScope',
    function(config, $http, $rootScope) {
+   		var baseUrl = config.solr.BASE_URL+config.solr.SOLR_PORT;
 	   var _files = [];
 	   
 	   $http.defaults.useXDomain = true;
@@ -31,7 +32,7 @@ UploadListService.factory('UploadListService', [
 	
 	       // Send to server, where we can then access it with $_FILES['file].
 	       data.append('file', file, file.name);
-	       xhr.open('POST', 'http://localhost:8080/nextprot-api/protein-list/upload?id='+listId);
+	       xhr.open('POST', baseUrl+'/nextprot-api/protein-list/upload?id='+listId);
 	       xhr.send(data);
 	   }
 	   
