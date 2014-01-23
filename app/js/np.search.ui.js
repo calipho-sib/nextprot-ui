@@ -94,6 +94,7 @@ SearchUI.directive('bsAutocomplete', ['Search','$timeout',function (Search, $tim
 				},
 				updater:function(item){
 					Search.params.query=this.$element.val().replace(/[^ ]*$/,'')+item+' '
+					scope.$emit('bs.autocomplete.update', {element: Search.params.query});
 					return Search.params.query;
 			    },
         		highlighter: function (item) {

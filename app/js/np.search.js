@@ -72,6 +72,7 @@ SearchModule.controller('SearchCtrl',[
 		$location.search('filter',null)
 		$location.search('quality',null)
 		$location.search('sort',null)
+		$location.search('order',null)
 		$location.path('/'+params.entity+'/search'+((Search.params.query)?'/'+Search.params.query:''));
 	 }
 	 
@@ -79,11 +80,14 @@ SearchModule.controller('SearchCtrl',[
 	 	 $location.search('list', null)
 		 $location.search('rows',null)
 		 $location.search('start',null)
+		 $location.search('order',null)
+		 $location.search('cart',null)
 		 $location.search('query',null)
 		 $location.search('filter',null)
 		 $location.search('quality',null)
 		 $location.search('sort',null)
 		 $location.path('/'+Search.config.entityMapping[Search.params.entity]+'/search');
+		 console.log(Search.params)
 	 }
 
 	 $scope.toggle=function(params){
@@ -113,11 +117,12 @@ SearchModule.controller('SearchCtrl',[
 	 } 	 
 	 
 	 $scope.go=function(){
-
 		 var url=$location.url();
 		 $location.search('filter',null);
 		 $location.search('list',null);
 		 $location.search('cart',null);
+		 $location.search('rows', null);
+		 $location.search('start', null);
 		 $location.path('/'+Search.config.entityMapping[Search.params.entity]+'/search').search('query',Search.params.query.trim());
 		
 		 //
@@ -130,10 +135,13 @@ SearchModule.controller('SearchCtrl',[
 	 $scope.reload=function(){
 		// restart search with last params
 		Search.docs($routeParams, function(docs){
-			console.log("reload search!");
 		});
 	 }
 	
+	$scope.$on('bs.autocomplete.update',function(event, arg){
+		$scope.go();
+		$scope.$apply()
+	});
    }
 ]);
 
@@ -160,32 +168,31 @@ SearchModule.controller('ResultCtrl', [
 		$scope.modal = {};
 
 		
-
-		//if($routeParams.list) delete $routeParams.list;
-		// console.log('search: ', $routeParams);
-
 		var params = $routeParams;
+		search(params);
 
 		if($routeParams.cart) {
-
 			delete params.cart;
 			params.accs = Cart.getAccessions();
 		}
 
+		
 
-		Search.docs(params, function(results){
-			$scope.selectedResults = [];
+		function search(params) {
+			Search.docs(params, function(results) {
+				$scope.selectedResults = [];
 
-			_.map(results.docs, function(doc) { 
-				if(Cart.inCart(doc.id)) {
-					var key = doc.id;
-					$scope.selectedResults[key] = true;
-				} 
+				_.map(results.docs, function(doc) { 
+					if(Cart.inCart(doc.id)) {
+						var key = doc.id;
+						$scope.selectedResults[key] = true;
+					} 
+				});
+
+				$scope.start = Search.result.offset >= Search.result.num ? 0 : Search.result.offset;
+				$scope.rows = Search.result.rows;
 			});
-
-			$scope.start = Search.result.offset >= Search.result.num ? 0 : Search.result.offset;
-			$scope.rows = Search.result.rows;
-		});
+		}
 
 
 		function buildQuery(accessions) {
@@ -224,17 +231,14 @@ SearchModule.controller('ResultCtrl', [
 			$(selector).affix()
 		}
 		
-		$scope.saveCart = function() {
-			Cart.saveCart();
-		}
-		
 		$scope.emptyCart = function() {
 			$scope.unselectAll();
 			Cart.emptyCart();
 		}
 
 		$scope.viewCart = function() {
-			console.log('View cart!');
+			//console.log('View cart!');
+			search()
 		}
 		
 		$scope.selectDoc = function(docId) {
@@ -273,7 +277,7 @@ SearchModule.controller('ResultCtrl', [
 		}
 
 		$scope.unselectAll = function() {
-			Cart.emptyCart();
+			//Cart.emptyCart();
 			$scope.selectedResults = {};
 		}
 	

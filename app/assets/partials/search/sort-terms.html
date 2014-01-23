@@ -1,9 +1,9 @@
-<a data-toggle="dropdown" class="dropdown-toggle" href="">Sort<sub ng-show="Search.params.sort"> {{Search.params.sort}}</sub> <b class="caret"></b></a>
+<a data-toggle="dropdown" class="dropdown-toggle" href="">Sort<sub ng-show="Search.params.sort||Search.params.order"> {{Search.params.sort}} <i class="{{Search.config.widgets.sort[Search.params.order]}}"></i></sub> <b class="caret"></b></a>
 <ul class="dropdown-menu">
-  <li><a href="" ng-click="params({order:'asc'})" ng-class="{bold:Search.params.order!=='desc'}">Ascending order</a></li>
+  <li><a href="" ng-click="params({order:'asc'})" ng-class="{bold:Search.params.order=='asc'}">Ascending order</a></li>
   <li><a href="" ng-click="params({order:'desc'})" ng-class="{bold:Search.params.order=='desc'}">Descending order</a></li>
   <li class="divider"></li>
-  <li><a href="" ng-click="params({sort:'name'});">Name</a></li>
-  <li><a href="" ng-click="params({sort:null});">The ranking score</a></li>
+  <li><a href="" ng-click="params({sort:'name',order:null});">Name</a></li>
+  <li><a href="" ng-click="params({sort:null,order:null});">The ranking score</a></li>
 </ul>
 
