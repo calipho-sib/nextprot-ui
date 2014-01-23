@@ -8,8 +8,8 @@ angular.module('np.config', []).factory('config', [
 '$http',
 function ($http) {
 	
- var BASE_URL= 'http://localhost';
- // var BASE_URL= 'http://uat-web1.isb-sib.ch';
+ // var BASE_URL= 'http://localhost';
+ var BASE_URL= 'http://uat-web1.isb-sib.ch';
 	
  //
  // solr configuration
