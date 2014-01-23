@@ -123,14 +123,8 @@
 	    </div>
 	    <div class="span9">
 	      <!-- RESULT CONTENT -->
-	      <div ng-switch on="Search.result.docs.length">
-	      	<div ng-switch-when="0">
-	      		<b>No search results were found.</b>
-	      	</div>
-	      	<div ng-switch-default>
-	      		<div class=""  ng-include="getResultTemplateByEntity()"></div>
-	      	</div>
-	      </div>
+	  	  <b ng-show="!Search.result.docs.length">{{Search.result.message}}</b>
+	  	  <div ng-include="getResultTemplateByEntity()"></div>
 	      
 		  <!-- PAGINATE -->
 		  <div class="result pagination pagination-small" ng-show="Search.result.pages.length>1">
