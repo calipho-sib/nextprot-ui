@@ -72,6 +72,7 @@ SearchModule.controller('SearchCtrl',[
 		$location.search('filter',null)
 		$location.search('quality',null)
 		$location.search('sort',null)
+		$location.search('order',null)
 		$location.path('/'+params.entity+'/search'+((Search.params.query)?'/'+Search.params.query:''));
 	 }
 	 
@@ -79,11 +80,14 @@ SearchModule.controller('SearchCtrl',[
 	 	 $location.search('list', null)
 		 $location.search('rows',null)
 		 $location.search('start',null)
+		 $location.search('order',null)
+		 $location.search('cart',null)
 		 $location.search('query',null)
 		 $location.search('filter',null)
 		 $location.search('quality',null)
 		 $location.search('sort',null)
 		 $location.path('/'+Search.config.entityMapping[Search.params.entity]+'/search');
+		 console.log(Search.params)
 	 }
 
 	 $scope.toggle=function(params){
@@ -113,14 +117,12 @@ SearchModule.controller('SearchCtrl',[
 	 } 	 
 	 
 	 $scope.go=function(){
-
 		 var url=$location.url();
 		 $location.search('filter',null);
 		 $location.search('list',null);
 		 $location.search('cart',null);
 		 $location.search('rows', null);
 		 $location.search('start', null);
-
 		 $location.path('/'+Search.config.entityMapping[Search.params.entity]+'/search').search('query',Search.params.query.trim());
 		
 		 //
@@ -133,10 +135,13 @@ SearchModule.controller('SearchCtrl',[
 	 $scope.reload=function(){
 		// restart search with last params
 		Search.docs($routeParams, function(docs){
-			console.log("reload search! > ", $routeParams);
 		});
 	 }
 	
+	$scope.$on('bs.autocomplete.update',function(event, arg){
+		$scope.go();
+		$scope.$apply()
+	});
    }
 ]);
 

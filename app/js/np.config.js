@@ -73,6 +73,11 @@ function ($http) {
 
 
 	widgets:{
+		sort:{
+			asc:"icon-sort-by-attributes",
+			desc:"icon-sort-by-attributes-alt",
+			"":""
+		},
 		proteins:{
 			gold:true,
 			qualityLabel:{

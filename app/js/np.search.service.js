@@ -27,7 +27,8 @@ SearchService.factory('Search',[
 			entity:'entry.json',
 			quality:'gold',
 			query:'',
-			sort:''
+			sort:'',
+			order:''
 	};	
 	
 
@@ -134,7 +135,6 @@ SearchService.factory('Search',[
 	
 
 	Search.prototype.calcPages = function(numDocs, pageSize) {
-		console.log(numDocs, pageSize, ( numDocs + pageSize - 1) / pageSize);
 		return ( numDocs + pageSize - 1) / pageSize;
 	}
 
@@ -175,6 +175,9 @@ SearchService.factory('Search',[
 		delete post.action
 		delete post.entity
 
+		// display search status status 
+		me.result.message="Loading content...";
+
 		$api.search({action:this.params.action, entity:this.params.entity}, post).$promise.then(function(docs) {
 			me.result.rows=docs.rows;
 			me.result.params=params;
@@ -185,6 +188,8 @@ SearchService.factory('Search',[
 			me.result.docs = docs.results;
 			me.result.ontology=config.solr.ontology;
 			me.result.filters=docs.filters
+
+			me.result.message=(docs.rows.length>0)?"":"No search results were found.";
 
 			//
 			// prepare spellcheck stucture

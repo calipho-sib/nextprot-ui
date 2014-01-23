@@ -1,13 +1,13 @@
-<a data-toggle="dropdown" tabindex="-1"  href="">Sort<sub ng-show="Search.params.sort"> {{Search.params.sort}} {{Search.params.order}}</sub> <b class="caret" /> </a>
+<a data-toggle="dropdown" tabindex="-1"  href="">Sort<sub ng-show="Search.params.sort||Search.params.order"> {{Search.params.sort}} <i class="{{Search.config.widgets.sort[Search.params.order]}}"></i></sub> <b class="caret" /> </a>
 <ul class="dropdown-menu">
-  <li><a href="" ng-click="params({order:'asc'})" ng-class="{bold:Search.params.order!=='desc'}">Ascending order</a></li>
+  <li><a href="" ng-click="params({order:'asc'})" ng-class="{bold:Search.params.order=='asc'}">Ascending order</a></li>
   <li><a href="" ng-click="params({order:'desc'})" ng-class="{bold:Search.params.order=='desc'}">Descending order</a></li>
   <li class="divider"></li>
-  <li><a href="" ng-click="params({sort:'gene'})">Gene name</a></li>
-  <li><a href="" ng-click="params({sort:'protein'})">Protein name</a></li>
-  <li><a href="" ng-click="params({sort:'family'})">Protein family name</a></li>
-  <li><a href="" ng-click="params({sort:'chromosome'})">Chromosome</a></li>
-  <li><a href="" ng-click="params({sort:'ac'})">ACs</a></li>
-  <li><a href="" ng-click="params({sort:'length'})">Protein length</a></li>
-  <li><a href="" ng-click="params({sort:null});">The ranking score</a></li>
+  <li><a href="" ng-click="params({sort:'gene',order:null})">Gene name</a></li>
+  <li><a href="" ng-click="params({sort:'protein',order:null})">Protein name</a></li>
+  <li><a href="" ng-click="params({sort:'family',order:null})">Protein family name</a></li>
+  <li><a href="" ng-click="params({sort:'chromosome',order:null})">Chromosome</a></li>
+  <li><a href="" ng-click="params({sort:'ac',order:null})">ACs</a></li>
+  <li><a href="" ng-click="params({sort:'length',order:null})">Protein length</a></li>
+  <li><a href="" ng-click="params({sort:null,order:null});">The ranking score</a></li>
 </ul>
