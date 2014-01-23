@@ -27,7 +27,8 @@ SearchService.factory('Search',[
 			entity:'entry.json',
 			quality:'gold',
 			query:'',
-			sort:''
+			sort:'',
+			order:''
 	};	
 	
 

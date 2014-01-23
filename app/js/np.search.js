@@ -87,6 +87,7 @@ SearchModule.controller('SearchCtrl',[
 		 $location.search('quality',null)
 		 $location.search('sort',null)
 		 $location.path('/'+Search.config.entityMapping[Search.params.entity]+'/search');
+		 console.log(Search.params)
 	 }
 
 	 $scope.toggle=function(params){
