@@ -1,4 +1,4 @@
-<a data-toggle="dropdown" tabindex="-1"  href="">Sort<sub ng-show="Search.params.sort"> {{Search.params.sort}} <i class="{{Search.config.widgets.sort[Search.params.order]}}"></i></sub> <b class="caret" /> </a>
+<a data-toggle="dropdown" tabindex="-1"  href="">Sort<sub ng-show="Search.params.sort||Search.params.order"> {{Search.params.sort}} <i class="{{Search.config.widgets.sort[Search.params.order]}}"></i></sub> <b class="caret" /> </a>
 <ul class="dropdown-menu">
   <li><a href="" ng-click="params({order:'asc'})" ng-class="{bold:Search.params.order=='asc'}">Ascending order</a></li>
   <li><a href="" ng-click="params({order:'desc'})" ng-class="{bold:Search.params.order=='desc'}">Descending order</a></li>
