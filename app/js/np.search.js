@@ -169,14 +169,15 @@ SearchModule.controller('ResultCtrl', [
 
 		
 		var params = $routeParams;
-		search(params);
-
+		
 		if($routeParams.cart) {
 			delete params.cart;
 			params.accs = Cart.getAccessions();
+
+			console.log('cart: ', params.accs, 'params: ', params);
 		}
 
-		
+		search(params);
 
 		function search(params) {
 			Search.docs(params, function(results) {

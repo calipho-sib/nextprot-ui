@@ -8,23 +8,29 @@ CartService.factory('Cart', ['$resource', '$http', 'config', function($resource,
 	// var cartSize = 0;
 
 	//var selectedElements = [];
-	var selectedElements = {};
+	var selectedElements;
 	var selectedQueryParams;
-	// var cartSize = 0;
 
 	
-	var Cart = function() { };
+	var Cart = function() { 
+		selectedElements = sessionStorage.cart ? this.getLocal() : {};
+	};
 	
 	Cart.prototype.change = function(docId) {
-		if(_.has(selectedElements, docId)) {
-			// selectedElements = _.without(selectedElements, docId);						
+		if(_.has(selectedElements, docId)) 
 			selectedElements = _.omit(selectedElements, docId);
-			console.log('removed: ', selectedElements);
-		} else {
-			selectedElements[docId] = true;
-			console.log('added: ', selectedElements);
-			//selectedElements.push(docId);
-		}
+		else selectedElements[docId] = true;
+
+		this.saveLocal(selectedElements);
+	}
+
+
+	Cart.prototype.saveLocal = function(selectedElements) {
+		sessionStorage.cart = angular.toJson(selectedElements);
+	}
+
+	Cart.prototype.getLocal = function() {
+		return angular.fromJson(sessionStorage.cart);
 	}
 
 
