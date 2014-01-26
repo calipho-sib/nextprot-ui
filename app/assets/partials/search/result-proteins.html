@@ -15,12 +15,14 @@
             <a href="http://www.nextprot.org/entry/{{doc.id}}">{{doc.recommended_name}} <span ng-show="doc.ec_name">[{{doc.ec_name}}]</span> ({{doc.recommended_gene_names}}) [{{doc.id}}]</a> 
             <span><a class="btn btn-mini hide" toggle="#line-{{$index}}"  ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i> Details</a> </span>
             <div class="small" ng-hide="Search.session.summary">
-              {{doc.function_desc[0]|limit:300}} <span ng-hide="doc.function_desc"> No functional information for this protein. </span>&nbsp;
+             <!--   <span ng-bind-html="doc.ec_name">{{doc.ec_name}}</span> -->
+              {{doc.function_desc[0]|limit:300}} 
+                <span ng-hide="doc.function_desc"> No functional information for this protein. </span>&nbsp;
             </div>
             <div class="gray small" ng-hide="Search.session.summary">
               Chromosomal location: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/exons">{{doc.chr_loc}}</a> 
               Isoforms: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.isoform_num}}</a> 
-              PTMs: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.ptm_num}}</a> 
+              PTMs: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.ptm_num > 0 ? doc.ptm_num : '0'}}</a> 
               Sequence length: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.aa_length}}</a> 
               Variants: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.var_num}}</a> <br/>
               Disease: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/medical">{{doc.filters|has:'filterdisease'}}</a> 

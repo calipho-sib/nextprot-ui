@@ -2,6 +2,7 @@
 
 //Declare application level module which depends on additional filters and services (most of them are custom)
 var App = angular.module('np', [
+  'ngSanitize',
   'ngResource',  
   'ngRoute',
   'ngAnimate',
