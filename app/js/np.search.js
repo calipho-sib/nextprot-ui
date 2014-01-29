@@ -169,18 +169,28 @@ SearchModule.controller('ResultCtrl', [
 		$scope.pamtest = "<strong>this is &apos;html&apos;</strong>";
 
 		
-		var params = $routeParams;
-		
-		if($routeParams.cart) {
-			delete params.cart;
-			params.accs = Cart.getAccessions();
 
-			console.log('cart: ', params.accs, 'params: ', params);
-		}
 
+		var params = {};
+
+		checkParams();
 		search(params);
 
+
+		
+
+		function checkParams() {
+			params = $routeParams;
+			if($routeParams.cart) {
+				delete params.cart;
+				params.accs = Cart.getAccessions();
+			}
+
+			params.start = (! $routeParams.start) ? 0 : $routeParams.start;
+		}
+
 		function search(params) {
+			console.log('params: ', params);
 			Search.docs(params, function(results) {
 				$scope.selectedResults = [];
 
@@ -190,9 +200,9 @@ SearchModule.controller('ResultCtrl', [
 						$scope.selectedResults[key] = true;
 					} 
 				});
-
 				$scope.start = Search.result.offset >= Search.result.num ? 0 : Search.result.offset;
 				$scope.rows = Search.result.rows;
+
 			});
 		}
 
