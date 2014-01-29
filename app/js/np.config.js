@@ -51,12 +51,12 @@ function ($http) {
 	   "uniprotkeywords":"UniProt keywords",
 	   "uniprotmetal":"UniProt metal",
 	   "uniprotpathways":"UniPathways",
-	   "uniprotposttranslationalmodifications":"UniProt posttranslational modifications",
-	   "uniprotsubcellularlocation":"UniProt region structure",
-	   "uniprotsubcellularorientation":"Uniprot subcellular location",
+	   "uniprotposttranslationalmodifications":"UniProt post-translational modification",
+	   "uniprotsubcellularlocation":"UniProt subcellular location",
+	   "uniprotsubcellularorientation":"Uniprot subcellular orientation",
 	   "uniprotsubcellulartopology":"UniProt subcellular topology",
 	   "uniprottopology":"UniProt topology",
-	   
+
 	   /* Publication filters */
 	   "curated":"Cited for annotation",
 	   "largescale":"Large scale data",

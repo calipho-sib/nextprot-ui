@@ -166,6 +166,7 @@ SearchModule.controller('ResultCtrl', [
 		$scope.allSelected = false;
 		$scope.showCart = true;
 		$scope.modal = {};
+		$scope.pamtest = "<strong>this is &apos;html&apos;</strong>";
 
 		
 		var params = $routeParams;
