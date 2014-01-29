@@ -254,15 +254,23 @@ SearchModule.controller('ResultCtrl', [
 		
 		
 		$scope.selectAll = function() {
-			Cart.emptyCart();
+			//Cart.emptyCart();
 
+
+			console.log("route: ", $routeParams);
 			if($routeParams.list) {
+				console.log('select all list!');
 				ProteinListService.getListIds('mario', $routeParams.list, function(result) {
 					console.log('selectall ', result.ids);
 					setInCart(result.ids);					
 				});
+			} else if($routeParams.cart) {
+				console.log('select all cart!');
+				var accs = Cart.getLocal();
+				setInCart(accs);
 
 			} else {
+				console.log('select all !');
 				Search.getIds({ entity: 'entry.json', query: $routeParams.query }, function(docs) {
 					setInCart(docs.ids);
 				});
@@ -278,7 +286,6 @@ SearchModule.controller('ResultCtrl', [
 		}
 
 		$scope.unselectAll = function() {
-			//Cart.emptyCart();
 			$scope.selectedResults = {};
 		}
 	
