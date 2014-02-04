@@ -38,9 +38,6 @@ ProteinListService.factory('ProteinListService', [
 	   		fix: { method: 'PUT' },
 	   });
 
-		// var $list_results = $resource('http://localhost:8080/nextprot-api/user/:username/protein-list/:list/results.json', {username: '@username', name: '@name'}, {
-	 //   		get: { method: 'GET'}
-		// });
 
 		var $list_results = $resource(baseUrl+'/nextprot-api/user/:username/protein-list/:list/:action.json', { 
 			username: '@username', list: '@list', action: '@action'

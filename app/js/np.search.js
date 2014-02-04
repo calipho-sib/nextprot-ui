@@ -195,7 +195,6 @@ SearchModule.controller('ResultCtrl', [
 
 		$scope.change = function(docId) {
 			var found = Cart.change(docId);
-			console.log('found: ', found);
 
 			if($routeParams.list) {
 				var list = {};
@@ -213,8 +212,6 @@ SearchModule.controller('ResultCtrl', [
 
 
 		$scope.selectAll = function() {
-			console.log('select all! > ', Search.result.params);
-
 
 			if($routeParams.list) {
 				ProteinListService.getListIds('mario', $routeParams.list, function(result) {
@@ -222,14 +219,8 @@ SearchModule.controller('ResultCtrl', [
 					setAsSelected(result.ids);
 				});
 			} else if($routeParams.cart) {
-				// console.log('cart selected all: ', Search.params.accs);
-
-				// Search.docs(Search.params, function(results) {
-				// 	Cart.setCart(docs.ids);
-				// 	setAsSelected(result.ids);
-				// });
+				// removed for now
 			} else {
-
 				Search.getIds(
 				{ 
 					entity: 'entry.json', 
@@ -240,8 +231,6 @@ SearchModule.controller('ResultCtrl', [
 					setAsSelected(docs.ids);
 				});		
 			}
-
-			
 		}
 
 		function setAsSelected(ids) {
@@ -260,8 +249,7 @@ SearchModule.controller('ResultCtrl', [
 					setAsSelected(result.id);
 				});
 			} else if($routeParams.cart) {
-				// Cart.emptyCart();
-				// $scope.selectedResults = [];
+				// removed for now
 			} else {
 				Search.getIds(
 				{ 
@@ -273,9 +261,6 @@ SearchModule.controller('ResultCtrl', [
 					$scope.selectedResults = [];
 				});			
 			}
-
-			
-			
 		}
 
 

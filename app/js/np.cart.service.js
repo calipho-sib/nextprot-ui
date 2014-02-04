@@ -10,7 +10,6 @@ CartService.factory('Cart', ['$resource', '$http', 'config', '$routeParams', 'Pr
 
 	var Cart = function() {
 		elements = sessionStorage.cart ? this.getCartFromStorage().elements : [];
-//		console.log('json: ', this.getCartFromStorage(), 'elements: ', elements);
 	}
 
 	// entry changes status ( selected => unselected ; unselected => selected; )
