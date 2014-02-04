@@ -208,6 +208,7 @@ SearchModule.controller('ResultCtrl', [
 
 		$scope.emptyCart = function() {
 			Cart.emptyCart();
+			if(! $routeParams.list) $scope.selectedResults = [];
 		}
 
 

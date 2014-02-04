@@ -15,7 +15,7 @@ UploadListService.factory('UploadListService', [
 	   
 	   var UploadListService = function() {}
 	   
-	   UploadListService.prototype.send = function(listId, file) {
+	   UploadListService.prototype.send = function(listId, file, cb) {
 		   var data = new FormData(),
            xhr = new XMLHttpRequest();
 
@@ -28,12 +28,14 @@ UploadListService.factory('UploadListService', [
 	       // When the request has failed.
 	       xhr.onerror = function (e) {
 	           $rootScope.$emit('upload:error', e);
+	           if(cb) cb({error: e});
 	       };
 	
 	       // Send to server, where we can then access it with $_FILES['file].
 	       data.append('file', file, file.name);
 	       xhr.open('POST', baseUrl+'/nextprot-api/protein-list/upload?id='+listId);
 	       xhr.send(data);
+	       if(cb) cb({});
 	   }
 	   
 	   return new UploadListService();

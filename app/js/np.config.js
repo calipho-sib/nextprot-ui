@@ -74,8 +74,10 @@ function ($http) {
 
 	widgets:{
 		sort:{
-			asc:"icon-sort-by-attributes",
-			desc:"icon-sort-by-attributes-alt",
+			//asc:"icon-sort-by-attributes",
+			asc:"icon-arrow-up",
+			desc:"icon-arrow-down",
+			// desc:"icon-sort-by-attributes-alt",
 			"":""
 		},
 		proteins:{
