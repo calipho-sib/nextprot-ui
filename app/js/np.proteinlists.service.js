@@ -34,6 +34,10 @@ ProteinListService.factory('ProteinListService', [
 	   		get: { method: 'GET' }
 	   });
 
+	   var $elements_api = $resource(baseUrl+'/nextprot-api/user/:username/protein-list/:list/:action.json', {username: '@username', list: '@name'}, {
+	   		fix: { method: 'PUT' },
+	   });
+
 		// var $list_results = $resource('http://localhost:8080/nextprot-api/user/:username/protein-list/:list/results.json', {username: '@username', name: '@name'}, {
 	 //   		get: { method: 'GET'}
 		// });
@@ -86,7 +90,6 @@ ProteinListService.factory('ProteinListService', [
 	   ProteinListService.prototype.getListIds = function(username, list, cb) {
 	   		var params = { username: username, list: list, action: 'ids'};
 	   		$list_results.get(params, function(result) {
-	   			console.log('what: ', result);
 	   			if(cb) cb(result);
 	   		});
 	   }
@@ -114,7 +117,26 @@ ProteinListService.factory('ProteinListService', [
 	   			if(cb) cb(data);
 	   		});
 	   	}
+
+	   	ProteinListService.prototype.addElements = function(username, listName, accs, cb) {
+	   		$elements_api.fix( {
+	   			action: 'add',
+	   			username: username,
+	   			list: listName,
+	   		}, JSON.stringify(accs), function(data) {
+	   			if(cb) cb(data);
+	   		});
+	   	}
 	   
+		ProteinListService.prototype.removeElements = function(username, listName, accs, cb) {
+	   		$elements_api.fix( {
+	   			action: 'remove',
+	   			username: username,
+	   			list: listName
+	   		}, JSON.stringify(accs), function(data) {
+	   			if(cb) cb(data);
+	   		});
+	   	}
 	   var service =  new ProteinListService();
 	   return service;
 	   

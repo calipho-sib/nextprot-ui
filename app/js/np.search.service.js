@@ -221,11 +221,11 @@ SearchService.factory('Search',[
 	Search.prototype.getIds = function(params, cb) {
 
 		// make a copy to avoid post issue 
-		var post=angular.copy(params);
+		var post = angular.copy(params);
 		delete post.action
 		delete post.entity
 
-		$api.search({action:'search-ids', entity:params.entity}, post).$promise.then(function(docs) {
+		$api.search({ action:'search-ids', entity:params.entity, quality: params.quality }, post).$promise.then(function(docs) {
 			if(cb)cb(docs);
 		});
 	};

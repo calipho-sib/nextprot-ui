@@ -204,10 +204,11 @@ ProteinListModule.controller('ListCreateCtrl', [
 	'$scope',
 	'$rootScope',
 	'$routeParams',
+	'$location',
 	'ProteinListService',
 	'UploadListService',
 	'flash',	
-	function($resource, $scope, $rootScope, $routeParams, ProteinListService, UploadListService, flash) {
+	function($resource, $scope, $rootScope, $routeParams, $location, ProteinListService, UploadListService, flash) {
 		
 		$scope.inputAccessions = "";
 		$scope.listName = "";
@@ -239,28 +240,29 @@ ProteinListModule.controller('ListCreateCtrl', [
 	    $scope.createList = function(listName) {
 	    	
 	    	if($scope.inputAccessions.length > 0) {
-
 	    		var accessions = $scope.inputAccessions.split("\n");
 	    		var list = { name: $scope.listName, accessions: accessions};
 	    		
 	    		//ProteinListService.createList({ username: 'mario', name: listName, accessions: accessions }, function(data) {console.log('list created!')} );	
 	    		ProteinListService.createList('mario', list, function(data) { 
 					if(data.error) flash('alert-warning', data.error);
-					else flash('alert-info', "List "+list.name+" created.");
+					else {
+						flash('alert-info', "List "+list.name+" created.");
+						$location.path('/proteinlists');
+					}
 	    		});
 	    	} else {
-
 	    		ProteinListService.createList('mario', { name: $scope.listName, description: $scope.listDescription, accessions: []}, function(newList) {
 
 	    			for(var i=0; i<selectedFiles.length; i++)
-	    			UploadListService.send(newList.id, selectedFiles[i], function(cb) {
+	    			UploadListService.send(newList.id, selectedFiles[i], function(data) {
 						if(data.error) flash('alert-warning', data.error);
-						else flash('alert-info', "List "+$scope.listName+" created.");
+						else {
+							flash('alert-info', "List "+$scope.listName+" created.");
+							$location.path('/proteinlists');
+						}
 	    			});
 	    		});
-
-	    		
-
 	    		
 	    	}
 	    }

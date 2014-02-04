@@ -7,8 +7,10 @@
       	</ul>
         <ul ng-cloak id="search-results" class="span8">
           <li ng-repeat="doc in Search.result.docs" >
-          	<input type="checkbox" name="docs[]" value="{{doc.id}}" 
-               ng-click="selectDoc(doc.id)" ng-model="selectedResults[doc.id]" id="{{doc.id}}">
+          	<!-- <input type="checkbox" name="docs[]" value="{{doc.id}}" 
+               ng-click="selectDoc(doc.id)" ng-model="selectedResults[doc.id]" id="{{doc.id}}"> -->
+            <input type="checkbox" name="docs[]" value="{{doc.id}}" 
+               ng-click="change(doc.id)" ng-model="selectedResults[doc.id]" id="{{doc.id}}">
 
                <!-- ng-click="Cart.change(doc.id)" -->
 

@@ -1,76 +1,77 @@
 'use strict';
 
-var CartService = angular.module('np.cart', []);
+var CartService = angular.module('np.cart', ['np.proteinlist.service']);
 
-CartService.factory('Cart', ['$resource', '$http', 'config', function($resource, $http, config) {
+CartService.factory('Cart', ['$resource', '$http', 'config', '$routeParams', 'ProteinListService', 
+	function($resource, $http, config, $routeParams, ProteinListService) {
 
-	// var cartElements = [];
-	// var cartSize = 0;
+	var elements;
 
-	//var selectedElements = [];
-	var selectedElements;
-	var selectedQueryParams;
 
-	
-	var Cart = function() { 
-		selectedElements = sessionStorage.cart ? this.getLocal() : {};
-	};
-	
+	var Cart = function() {
+		elements = sessionStorage.cart ? this.getCartFromStorage().elements : [];
+//		console.log('json: ', this.getCartFromStorage(), 'elements: ', elements);
+	}
+
+	// entry changes status ( selected => unselected ; unselected => selected; )
 	Cart.prototype.change = function(docId) {
-		if(_.has(selectedElements, docId)) 
-			selectedElements = _.omit(selectedElements, docId);
-		else selectedElements[docId] = true;
+		var found = _.indexOf(elements, docId);
 
-		this.saveLocal(selectedElements);
+		// it was found so remove
+		if(found != -1) {
+			elements = _.without(elements, docId);
+		} else {	// not found so add
+			elements.push(docId);
+		}
+
+		this.saveCartToStorage();
+
+		return found;
 	}
 
-
-	Cart.prototype.saveLocal = function(selectedElements) {
-		sessionStorage.cart = angular.toJson(selectedElements);
-	}
-
-	Cart.prototype.getLocal = function() {
+	Cart.prototype.getCartFromStorage = function() {
 		return angular.fromJson(sessionStorage.cart);
 	}
 
+	Cart.prototype.saveCartToStorage = function() {
+		sessionStorage.cart = angular.toJson({ elements: elements});
+	}
 
-	Cart.prototype.add = function(docId) {
-		if(! _.has(selectedElements, docId))
-			selectedElements[docId] = true;		
+	Cart.prototype.setCart = function(docIds) {
+		elements = _.union(elements, docIds);
+		this.saveCartToStorage();
+	}
+
+	Cart.prototype.removeFromCart = function(docIds) {
+		elements = _.difference(elements, docIds);
+		this.saveCartToStorage();
+	}
+
+	Cart.prototype.getCartSize = function() {
+		return elements.length;
 	}
 
 	Cart.prototype.emptyCart = function() {
-		selectedElements = {};
-	}
-	
-	Cart.prototype.saveCart = function() {
-		console.log('save cart');
-	}
-	
-	Cart.prototype.getCartSize = function() {
-		return this.getAccessions().length;
-	}
-
-	Cart.prototype.setCartSize = function(size) {
-		cartSize = size;
+		elements = [];
+		this.saveCartToStorage();
 	}
 
 	Cart.prototype.getElements = function() {
-		return selectedElements;
+		return elements;
 	}
 
-	Cart.prototype.getAccessions = function() {
-		return _.keys(selectedElements);
+	Cart.prototype.inCart = function(id) {
+		return elements.indexOf(id) != -1;
 	}
 
-	Cart.prototype.inCart = function(docId) {
-		return _.has(selectedElements, docId);
+	Cart.prototype.remove = function(id) {
+		if(elements.length == 1)
+			elements = [];
+		else elements = elements.splice(id, 1);
 	}
-	
-	Cart.prototype.setSelectedQueryParams = function(params) {
-		this.selectedQueryParams = params;
-	}
+
 
 	var cart = new Cart();
 	return cart;
 }]);
+
