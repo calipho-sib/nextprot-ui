@@ -44,12 +44,17 @@ ProteinListModule.controller('ListCtrl', [
 		$scope.combination = { first: null, op: $scope.operators[0], second: null};
 		$scope.options = { first: $scope.lists, second: $scope.lists }
 		
+
+		init();
+
+		function init() {
+			ProteinListService.getByUsername('mario', function(data) {
+				$scope.lists = data.lists;
+				$scope.initCombination();
+			});	
+		}
 		
-		ProteinListService.getByUsername('mario', function(data) {
-			$scope.lists = data.lists;
-			//$scope.lists = data['proteinLists'];
-			$scope.initCombination();
-		});
+		
 		
 		
 		$scope.initCombination = function() {
@@ -109,11 +114,7 @@ ProteinListModule.controller('ListCtrl', [
 					$scope.combination.second.name,
 					$scope.combination.op,
 					function(data) {
-						$scope.lists.push({ 
-							name: data.name, 
-							description: data.description, 
-							accessions: data.accessions.length 
-						});
+						init();
 					});
 
 			}
@@ -125,8 +126,9 @@ ProteinListModule.controller('ListCtrl', [
 
 			$scope.options = $scope.lists;
 			$scope.options = $scope.lists;
+			$scope.initCombination();
 		}
-
+		
 		$scope.buildQuery = buildQuery;
 	}
 ]);	
