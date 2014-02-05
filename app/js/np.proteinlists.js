@@ -117,33 +117,6 @@ ProteinListModule.controller('ListCtrl', [
 					});
 
 			}
-
-// 			if($scope.modal.type == 'edit') {
-// 				angular.extend($scope.lists[$scope.selected.index], $scope.selected);
-
-// 				ProteinListService.updateList('mario', _.omit($scope.selected, 'index'));
-// 				console.log('edit: ', $scope.selected);
-				
-// 			} else if($scope.modal.type == 'create') {
-// 				var newList = { name: $scope.selected.name, description: $scope.selected.description, accessions: $scope.selected.accessions};
-				
-// 				if($scope.combination.op == 'OR') {
-
-// 					console.log('OR: ', $scope.combination.first.accessions, $scope.combination.second.accessions);
-// 					newList.accessions = _.union($scope.combination.first.accessions, $scope.combination.second.accessions);
-// 				}
-// 				else if($scope.combination.op == 'AND') {
-// 					newList.accessions = _.intersection($scope.combination.first.accessions, $scope.combination.second.accessions);
-// 				}
-					
-// //				angular.extend(attrs, { username: 'mario', });
-// 				var attrs = { username: 'mario', list: newList};
-				
-// 				ProteinListService.createList('mario', newList, function(data) {
-// 					console.log('created: ', data);
-// 					$scope.lists.push(newList);
-// 				});
-// 			}
 		};
 
 		$scope.delete = function(index) {

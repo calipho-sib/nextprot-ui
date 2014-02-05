@@ -68,7 +68,7 @@ SearchModule.controller('SearchCtrl',[
 	 
 	 
 	 $scope.entity=function(params){
-		 $location.search('start',null)
+		$location.search('start',null)
 		$location.search('filter',null)
 		$location.search('quality',null)
 		$location.search('sort',null)
@@ -77,17 +77,16 @@ SearchModule.controller('SearchCtrl',[
 	 }
 	 
 	 $scope.clean=function(){
-	 	 $location.search('list', null)
-		 $location.search('rows',null)
-		 $location.search('start',null)
-		 $location.search('order',null)
-		 $location.search('cart',null)
-		 $location.search('query',null)
-		 $location.search('filter',null)
-		 $location.search('quality',null)
-		 $location.search('sort',null)
-		 $location.path('/'+Search.config.entityMapping[Search.params.entity]+'/search');
-		 console.log(Search.params)
+	 	$location.search('list', null)
+		$location.search('rows',null)
+		$location.search('start',null)
+		$location.search('order',null)
+		$location.search('cart',null)
+		$location.search('query',null)
+		$location.search('filter',null)
+		$location.search('quality',null)
+		$location.search('sort',null)
+		$location.path('/'+Search.config.entityMapping[Search.params.entity]+'/search');
 	 }
 
 	 $scope.toggle=function(params){
@@ -99,12 +98,10 @@ SearchModule.controller('SearchCtrl',[
 	 }
  
 	 $scope.active=function(value, key){
-		 if(key){
-			 return ($location.search()[key]===value)?' active  ':'';
-		 }
-		 
-		 return ($location.path().indexOf(value)>-1)?' active  ':'';
-		 
+		if(key){
+			return ($location.search()[key]===value)?' active  ':'';
+		}
+		return ($location.path().indexOf(value)>-1)?' active  ':'';
 	 }
 	 
 	 $scope.didyoumean=function(index){
@@ -153,11 +150,12 @@ SearchModule.controller('ResultCtrl', [
 	'$route',
 	'$routeParams',
 	'$filter',
+	'$location',
 	'Search',
 	'Cart',
 	'ProteinListService',
 	'flash',
-	function($scope,$route,$routeParams,$filter, Search, Cart, ProteinListService, flash) {
+	function($scope,$route,$routeParams,$filter, $location, Search, Cart, ProteinListService, flash) {
 		$scope.Search=Search;		
 		$scope.Cart = Cart;
 		$scope.selectedResults = {};
@@ -165,15 +163,13 @@ SearchModule.controller('ResultCtrl', [
 
 
 		var params = _.clone($routeParams);
-
-			if($routeParams.cart) {
-				$scope.showCart = false;
-				delete params.cart;
-				params.accs = Cart.getElements();
-			}
+		if($routeParams.cart) {
+			$scope.showCart = false;
+			delete params.cart;
+			params.accs = Cart.getElements();
+		}
 
 		search(params, function(results) {
-
 			if($routeParams.list) {
 				$scope.showCart = false;						
 				_.each(results.docs, function(doc) { $scope.selectedResults[doc.id] = true; });
@@ -183,7 +179,6 @@ SearchModule.controller('ResultCtrl', [
 						$scope.selectedResults[doc.id] = true; 
 				});
 			}
-			
 		});
 
 		function search(params, cb) {
@@ -212,7 +207,6 @@ SearchModule.controller('ResultCtrl', [
 
 
 		$scope.selectAll = function() {
-
 			if($routeParams.list) {
 				ProteinListService.getListIds('mario', $routeParams.list, function(result) {
 					Cart.setCart(result.ids);
@@ -241,8 +235,6 @@ SearchModule.controller('ResultCtrl', [
 		}
 
 		$scope.unselectAll = function() {
-			console.log('unselect all!');	
-
 			if($routeParams.list) {
 				ProteinListService.getListIds('mario', $routeParams.list, function(result) {
 					Cart.removeFromCart(result.ids);
@@ -315,7 +307,10 @@ SearchModule.controller('ResultCtrl', [
 
 			ProteinListService.createList('mario', proteinList, function(data) { 
 				if(data.error) flash('alert-warning', data.error);
-				else flash('alert-info', "List "+proteinList.name+" created.");
+				else {
+					flash('alert-info', "List "+proteinList.name+" created.");
+					$location.path('/proteinlists');
+				}
 			});
 		}
 	}
