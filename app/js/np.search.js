@@ -161,8 +161,8 @@ SearchModule.controller('ResultCtrl', [
 		$scope.selectedResults = {};
 		$scope.showCart = true;
 
-
 		var params = _.clone($routeParams);
+
 		if($routeParams.cart) {
 			$scope.showCart = false;
 			delete params.cart;
@@ -170,6 +170,8 @@ SearchModule.controller('ResultCtrl', [
 		}
 
 		search(params, function(results) {
+			params.start = (! $routeParams.start) ? 0 : $routeParams.start;	
+
 			if($routeParams.list) {
 				$scope.showCart = false;						
 				_.each(results.docs, function(doc) { $scope.selectedResults[doc.id] = true; });
@@ -179,6 +181,9 @@ SearchModule.controller('ResultCtrl', [
 						$scope.selectedResults[doc.id] = true; 
 				});
 			}
+
+			$scope.start = Search.result.offset >= Search.result.num ? 0 : Search.result.offset;
+			$scope.rows = Search.result.rows;
 		});
 
 		function search(params, cb) {
