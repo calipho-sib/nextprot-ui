@@ -34,9 +34,9 @@ App.config([
 		   .when('/about', {title:'about',templateUrl : 'partials/about.html'})
 		
 		   // 404
-		   .when('/404', {title:'404',templateUrl : 'partials/errors/404.html'});
+		   .when('/404', {title:'404',templateUrl : 'partials/errors/404.html'})
 		   // Catch all
-		   //.otherwise({redirectTo : '/404'});
+		   .otherwise({redirectTo : '/404'});
 		
 		 // Without serve side support html5 must be disabled.
 		 $locationProvider.html5Mode(true);
