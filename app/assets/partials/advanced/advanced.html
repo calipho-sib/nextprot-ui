@@ -4,20 +4,11 @@
         <input ng-model="query">
 
         <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown"> filter query repository <span class="caret"></span> </a>
+            <a class="btn dropdown-toggle" data-toggle="dropdown"> Select query repository <span class="caret"></span> </a>
             <ul class="dropdown-menu">
-                <li>
-                    <a href="">NextProt team (tutorial)</a>
-                </li>
-                <li>
-                    <a href="">Community</a>
-                </li>
-                <li>
-                    <a href="">Private</a>
-                </li>
-                <li>
-                    <a href="">...</a>
-                </li>
+                <li><a href="">NextProt team (tutorial)</a></li>
+                <li><a href="">Community</a></li>
+                <li><a href="">Private</a></li>
             </ul>
         </div>
         <div class="btn-group">
@@ -57,8 +48,12 @@
                 </form>
                 <button type="submit" class="btn">Publish (submit to review)</button>
                 <button type="submit" class="btn">Save privatly</button>
-                <button type="submit" class="btn btn-primary">Advanced Search</button>
+                <button type="submit" class="btn btn-primary" ng-click="doAdvanceSearch()">Advanced Search</button>
             </div>
         </div>
+    </div>
+    <div ng-model="result">
+        <h2>Results</h2>
+        {{result}}
     </div>
 </div>

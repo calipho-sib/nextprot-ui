@@ -26,6 +26,8 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     'Tools',
     function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, Search, ProteinListService, Tools) {
         $scope.currentStory;
+        $scope.result;
+
         $scope.setCurrentStory = function(story) {
             $scope.currentStory = story;
         };
@@ -33,7 +35,18 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         $http.get('queries/queries.json').success(function(data) {
             $scope.stories = data;
         });
-    }
 
+    $scope.doAdvanceSearch = function () {
+
+        var api = "http://cactusprime:3030/np/query?query=";
+        var query = encodeURIComponent($scope.currentStory.sparql);
+        var format =  "&output=json";
+        var url = api + query + format;
+
+        $http.get(url).success(function(data) {
+            $scope.result = data;
+        });
+        }
+    }
 ]);
 

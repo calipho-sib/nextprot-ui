@@ -6,10 +6,10 @@
         "description": "you can replace the tansmembrane by any... like homospa"
     },
     {
-        "title": "Query 2",
-        "author": "The Looser NextProt team",
-        "sparql": "dalkaslkfasn",
-        "description": "you can replace"
+        "title": "Select everything 2",
+        "author": "Dani",
+        "sparql": "select * where {\n?a ?p ?s .\n}",
+        "description": "Careful with this!"
     },
     {
         "title": "Query 3",
