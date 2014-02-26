@@ -1,20 +1,20 @@
 [
     {
-        "title": "has transmembrane regions and ...",
+        "title": "Query 1",
         "author": "The NextProt team",
         "sparql": "SELECT ?entry WHERE { \n ?entry  :isoform/:hasTransmembrane ?statement \n} GROUP BY ?entry HAVING(count(?statement)>=2)",
         "description": "you can replace the tansmembrane by any... like homospa"
     },
     {
-        "title": "has transmembrane regions and ...",
-        "author": "The NextProt team",
-        "sparql": "SELECT ?entry WHERE { \n ?entry  :isoform/:hasTransmembrane ?statement \n} GROUP BY ?entry HAVING(count(?statement)>=2)",
-        "description": "you can replace the tansmembrane by any... like homospa"
+        "title": "Query 2",
+        "author": "The Looser NextProt team",
+        "sparql": "dalkaslkfasn",
+        "description": "you can replace"
     },
     {
-    "title": "has transmembrane regions and ...",
-    "author": "The NextProt team",
-    "sparql": "SELECT ?entry WHERE { \n ?entry  :isoform/:hasTransmembrane ?statement \n} GROUP BY ?entry HAVING(count(?statement)>=2)",
-    "description": "you can replace the tansmembrane by any... like homospa"
+        "title": "Query 3",
+        "author": "The Super NextProt team",
+        "sparql": "SELECT ?",
+        "description": "you can do whatever"
     }
 ]

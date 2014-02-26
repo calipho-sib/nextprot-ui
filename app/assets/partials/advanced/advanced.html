@@ -1,43 +1,64 @@
 <div ng-controller="AdvancedCtrl">
     <div class="container">
-
         <h2>Advanced queries</h2>
+        <input ng-model="query">
+
         <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown">
-                Select the query repository
-                <span class="caret"></span>
-            </a>
+            <a class="btn dropdown-toggle" data-toggle="dropdown"> filter query repository <span class="caret"></span> </a>
             <ul class="dropdown-menu">
-                <a ng-click="advancedLists({private:'proteins'})">Tutorial repository</a>
-                <a ng-click="advancedLists({tutorial:'proteins'})">Public repository</a>
-                <a ng-click="advancedLists({public:'proteins'})">Private repository</a>
+                <li>
+                    <a href="">NextProt team (tutorial)</a>
+                </li>
+                <li>
+                    <a href="">Community</a>
+                </li>
+                <li>
+                    <a href="">Private</a>
+                </li>
+                <li>
+                    <a href="">...</a>
+                </li>
             </ul>
         </div>
-        Search: <input ng-model="query">
+        <div class="btn-group">
+            <a class="btn dropdown-toggle" data-toggle="dropdown"> select category <span class="caret"></span> </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="">Function</a>
+                </li>
+                <li>
+                    <a href="">Medical</a>
+                </li>
+                <li>
+                    <a href="">Expression</a>
+                </li>
+                <li>
+                    <a href="">...</a>
+                </li>
+            </ul>
+        </div>
         <div class="row">
-
             <div class="span1"/>
-
             <div class="span5">
-                <div class="story" ng-repeat="story in stories | filter:query" ng-click="setCurrentStory(story)">
-                    <h4>{{story.title}} [{{story.author}}]</h4>
-                </div>
+                    <ul class="nav nav-pills nav-stacked">
+                        <li class="story" ng-repeat="story in stories | filter:query" ng-click="setCurrentStory(story)">
+                            <a ref >{{story.title}}</a>
+                        </li>
+                  </ul>
             </div>
-
             <div class="span6">
                 <form class="form-horizontal">
                     <div class="control-group">
-                        <div class="controls"/>
-                            <textarea class="span12" id="inputDescription" placeholder="SPARQL Query" rows="10" cols="200000"  ng-model="currentStory.sparql"></textarea>
-                            <label class="control-label" for="inputDescription">Description</label>
-                            <div class="controls">
-                                <textarea id="inputDescription" placeholder="Description" rows="3" ng-model="currentStory.description"> </textarea>
-                            </div>
-                        </div>
+                        <div class="controls"></div>
+                        <p class="text-info" ng-model="currentStory.author">{{ currentStory.author }}</p>
+                        <textarea class="span12" id="inputDescription" placeholder="<= Choose a query in the left <="
+                                  rows="10" cols="200000" ng-model="currentStory.sparql"></textarea>
                     </div>
                 </form>
+                <button type="submit" class="btn">Publish (submit to review)</button>
+                <button type="submit" class="btn">Save privatly</button>
+                <button type="submit" class="btn btn-primary">Advanced Search</button>
             </div>
         </div>
     </div>
 </div>
-

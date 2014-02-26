@@ -33,9 +33,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         $http.get('queries/queries.json').success(function(data) {
             $scope.stories = data;
         });
-
     }
-
 
 ]);
 
