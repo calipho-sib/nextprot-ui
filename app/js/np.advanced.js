@@ -34,21 +34,6 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             $scope.stories = data;
         });
 
-        $scope.stories = [
-
-            {title: 'has transmembrane regions and ...', author: 'The NextProt team', sparql:
-                'SELECT ?entry WHERE { \n '+
-                '  ?entry  :isoform/:hasTransmembrane ?statement \n'+
-                    '} GROUP BY ?entry HAVING(count(?statement)>=2) \n',
-                description: ' you can replace the tansmembrane by any... like homospa'
-
-            },
-            {title: 'Story 01', sparql: 'Description pending.'},
-            {title: 'Story 02', sparql: 'Description pending.'},
-            {title: 'Story 03', sparql: 'Description pending.'},
-            {title: 'Story 04', sparql: 'Description pending.'},
-            {title: 'Story 05', sparql: 'Description pending.'}
-        ];
     }
 
 
