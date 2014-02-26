@@ -1,6 +1,6 @@
 'use strict'
 
-var AdvancedSearchModule = angular.module('np.advanced', []);
+var AdvancedSearchModule = angular.module('np.advanced', ['np.advanced.service']);
 
 AdvancedSearchModule.config([
     '$routeProvider',
@@ -22,10 +22,11 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     '$routeParams',
     '$route',
     'Search',
-    'ProteinListService',
+    'AdvancedSearchService',
     'Tools',
-    function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, Search, ProteinListService, Tools) {
+    function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, Search, AdvancedSearchService, Tools) {
         $scope.currentStory;
+        $scope.results;
 
         $scope.setCurrentStory = function(story) {
             $scope.currentStory = story;
@@ -35,17 +36,17 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             $scope.stories = data;
         });
 
+
     $scope.doAdvanceSearch = function () {
 
-        var api = "http://cactusprime:3030/np/query?query=";
-        var query = encodeURIComponent($scope.currentStory.sparql);
-        var format =  "&output=json";
-        var url = api + query + format;
+        AdvancedSearchService.getEntriesBySparqlQuery(
+            $scope.currentStory.sparql,
+            function(data) {
+                $scope.results = data;
+            });
 
-        $http.get(url).success(function(data) {
-            $scope.results = data;
-        });
         }
+
     }
 ]);
 
