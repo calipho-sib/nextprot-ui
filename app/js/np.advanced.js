@@ -24,9 +24,13 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     'ProteinListService',
     'Tools',
     function ($resource, $scope, $rootScope, $location, $routeParams, $route, Search, ProteinListService, Tools) {
+        $scope.currentStory;
+        $scope.setCurrentStory = function(story) {
+            $scope.currentStory = story;
+        };
         $scope.stories = [
 
-            {title: 'Story 00', description: 'Description pending.'},
+            {title: 'SPARQL Union', description: 'SELECT * WHERE { {?union_sparql_union :isoform/:function/:evidence/rdf:type :IEA} UNION {?union_sparql_union :isoform/:function/:evidence/rdf:type :ISS}}'},
             {title: 'Story 01', description: 'Description pending.'},
             {title: 'Story 02', description: 'Description pending.'},
             {title: 'Story 03', description: 'Description pending.'},
@@ -34,6 +38,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             {title: 'Story 05', description: 'Description pending.'}
         ];
     }
+
 
 ]);
 

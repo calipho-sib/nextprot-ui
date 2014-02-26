@@ -1,9 +1,20 @@
 <div ng-controller="AdvancedCtrl">
-    <div class="span4 sidebar-content">
+    <div class="container">
         <h2>Advanced queries</h2>
-        <div class="story" ng-repeat="story in stories">
+        <div class="story" ng-repeat="story in stories" ng-click="setCurrentStory(story)">
             <h4>{{story.title}}</h4>
-            <p>{{story.description}}</p>
+        </div>
+        <div class="container">
+            <form class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label"
+                           for="inputDescription">SPARQL</label>
+                    <div class="controls">
+                        <textarea id="inputDescription" placeholder="Description" rows="10" cols="50"  ng-model="currentStory.description">
+                        </textarea>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
