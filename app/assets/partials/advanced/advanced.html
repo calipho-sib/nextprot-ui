@@ -1,36 +1,37 @@
 <div ng-controller="AdvancedCtrl">
     <div class="container">
         <h2>Advanced queries</h2>
-        <input ng-model="query">
-
-        <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown"> Select query repository <span class="caret"></span> </a>
-            <ul class="dropdown-menu">
-                <li><a href="">NextProt team (tutorial)</a></li>
-                <li><a href="">Community</a></li>
-                <li><a href="">Private</a></li>
-            </ul>
-        </div>
-        <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown"> select category <span class="caret"></span> </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a href="">Function</a>
-                </li>
-                <li>
-                    <a href="">Medical</a>
-                </li>
-                <li>
-                    <a href="">Expression</a>
-                </li>
-                <li>
-                    <a href="">...</a>
-                </li>
-            </ul>
-        </div>
         <div class="row">
-            <div class="span1"/>
-            <div class="span5">
+            <input ng-model="query" placeholder="text filter">
+            <div class="btn-group">
+                <a class="btn dropdown-toggle" data-toggle="dropdown"> Select query repository <span class="caret"></span> </a>
+                <ul class="dropdown-menu">
+                    <li><a href="">NextProt team (tutorial)</a></li>
+                    <li><a href="">Community</a></li>
+                    <li><a href="">Private</a></li>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <a class="btn dropdown-toggle" data-toggle="dropdown"> select category <span class="caret"></span> </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="">Function</a>
+                    </li>
+                    <li>
+                        <a href="">Medical</a>
+                    </li>
+                    <li>
+                        <a href="">Expression</a>
+                    </li>
+                    <li>
+                        <a href="">...</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span6">
                     <ul class="nav nav-pills nav-stacked">
                         <li class="story" ng-repeat="story in stories | filter:query" ng-click="setCurrentStory(story)">
                             <a ref >{{story.title}}</a>
@@ -52,9 +53,11 @@
             </div>
         </div>
     </div>
-    <ul>
-        <li ng-repeat="r in results">
-            <p>{{r}}</p>
-        </li>
-    </ul>
+    <div class="hero-unit">
+        <ul>
+            <li ng-repeat="r in results">
+                <p>{{r}}</p>
+            </li>
+        </ul>
+    </div>
 </div>
