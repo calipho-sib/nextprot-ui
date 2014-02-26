@@ -26,7 +26,6 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     'Tools',
     function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, Search, AdvancedSearchService, Tools) {
         $scope.currentStory;
-        $scope.results;
 
         $scope.setCurrentStory = function(story) {
             $scope.currentStory = story;

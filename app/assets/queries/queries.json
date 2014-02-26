@@ -2,7 +2,7 @@
     {
         "title": "Select everything 2",
         "author": "Dani",
-        "sparql": "select * where {\n?a ?p ?s .\n}",
+        "sparql": "select * where {\n?a ?p ?s .\n} limit 10",
         "description": "Careful with this!"
     },
     {
