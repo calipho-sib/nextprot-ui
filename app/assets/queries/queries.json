@@ -1,15 +1,15 @@
 [
     {
-        "title": "Query 1",
-        "author": "The NextProt team",
-        "sparql": "SELECT ?entry WHERE { \n ?entry  :isoform/:hasTransmembrane ?statement \n} GROUP BY ?entry HAVING(count(?statement)>=2)",
-        "description": "you can replace the tansmembrane by any... like homospa"
-    },
-    {
         "title": "Select everything 2",
         "author": "Dani",
         "sparql": "select * where {\n?a ?p ?s .\n}",
         "description": "Careful with this!"
+    },
+    {
+        "title": "Query 1",
+        "author": "The NextProt team",
+        "sparql": "SELECT ?entry WHERE { \n ?entry  :isoform/:hasTransmembrane ?statement \n} GROUP BY ?entry HAVING(count(?statement)>=2)",
+        "description": "you can replace the tansmembrane by any... like homospa"
     },
     {
         "title": "Query 3",

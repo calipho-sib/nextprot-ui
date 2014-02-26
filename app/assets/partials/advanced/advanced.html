@@ -52,8 +52,9 @@
             </div>
         </div>
     </div>
-    <div ng-model="result">
-        <h2>Results</h2>
-        {{result}}
-    </div>
+    <ul>
+        <li ng-repeat="r in results">
+            <p>{{r}}</p>
+        </li>
+    </ul>
 </div>

@@ -26,7 +26,6 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     'Tools',
     function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, Search, ProteinListService, Tools) {
         $scope.currentStory;
-        $scope.result;
 
         $scope.setCurrentStory = function(story) {
             $scope.currentStory = story;
@@ -44,7 +43,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         var url = api + query + format;
 
         $http.get(url).success(function(data) {
-            $scope.result = data;
+            $scope.results = data;
         });
         }
     }
