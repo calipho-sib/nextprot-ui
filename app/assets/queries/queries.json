@@ -1,20 +1,26 @@
 [
     {
-        "title": "Select everything 2",
+        "title": "Select everything",
         "author": "Dani",
         "sparql": "select * where {\n?a ?p ?s .\n} limit 10",
         "description": "Careful with this!"
     },
     {
-        "title": "Query 1",
+        "title": "Subclass of brain",
         "author": "The NextProt team",
-        "sparql": "SELECT ?entry WHERE { \n ?entry  :isoform/:hasTransmembrane ?statement \n} GROUP BY ?entry HAVING(count(?statement)>=2)",
+        "sparql": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \nPREFIX term:<http://nextprot.org/rdf/terminology/> \n SELECT * where { \n ?a rdfs:subClassOf  term:TS-0095. \n}",
         "description": "you can replace the tansmembrane by any... like homospa"
     },
     {
-        "title": "Query 3",
-        "author": "The Super NextProt team",
-        "sparql": "SELECT ?",
+        "title": "Subclass of brain without * (direct link)",
+        "author": "The NextProt team",
+        "sparql": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \nPREFIX term:<http://nextprot.org/rdf/terminology/> \n SELECT ?a ?o where { \n ?a rdfs:subClassOf term:TS-0095. \n?a rdfs:label ?o.}",
+        "description": "you can do whatever"
+    },
+    {
+        "title": "Subclass of brain with * (do we need reasoner???)",
+        "author": "The NextProt team",
+        "sparql": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \nPREFIX term:<http://nextprot.org/rdf/terminology/> \n SELECT ?a ?o where { \n ?a rdfs:subClassOf*  term:TS-0095. \n?a rdfs:label ?o.}",
         "description": "you can do whatever"
     }
 ]
