@@ -24,10 +24,26 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     'Search',
     'AdvancedSearchService',
     'Tools',
-    function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, Search, AdvancedSearchService, Tools) {
+    'flash',
+    function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, Search, AdvancedSearchService, Tools, flash) {
         $scope.currentStory;
+        $scope.prefix =
+            "PREFIX : <http://nextprot.org/rdf#> . \n" +
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
+            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
+            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
+            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
+            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
+            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
+            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
+            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
+            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
+            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
+            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" ;
 
-        $scope.setCurrentStory = function(story) {
+        $scope.suffix = "limit 10";
+
+            $scope.setCurrentStory = function(story) {
             $scope.currentStory = story;
         };
 
@@ -41,6 +57,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         AdvancedSearchService.getEntriesBySparqlQuery(
             $scope.currentStory.sparql,
             function(data) {
+                if(data.error) flash('alert-warning', data.error);
                 $scope.results = data;
             });
 

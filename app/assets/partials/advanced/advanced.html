@@ -37,16 +37,14 @@
                             <a ref >{{story.title}}</a>
                         </li>
                   </ul>
+                <span class="label label-info">You have got now the super power of the advanced query!</span>
+                <img src="http://static.comicvine.com/uploads/original/11111/111111435/3445290-2485086653-9038-.jpg" width="75px" onclick="alert('Don t touch me!')">
             </div>
             <div class="span6">
-                <form class="form-horizontal">
-                    <div class="control-group">
-                        <div class="controls"></div>
-                        <p class="text-info" ng-model="currentStory.author">{{ currentStory.author }}</p>
-                        <textarea class="span12" id="inputDescription" placeholder="<= Choose a query in the left <="
-                                  rows="10" cols="200000" ng-model="currentStory.sparql"></textarea>
-                    </div>
-                </form>
+                <p class="text-info" ng-model="currentStory.author">{{ currentStory.author }}</p>
+                <textarea class="span12" rows="2" ng-model="prefix"></textarea>
+                <textarea class="span12" id="inputDescription" placeholder="<= Choose a query in the left <=" rows="10" cols="200000" ng-model="currentStory.sparql"></textarea>
+                <textarea class="span12" rows="1" ng-model="suffix"></textarea>
                 <button type="submit" class="btn">Publish (submit to review)</button>
                 <button type="submit" class="btn">Save privately</button>
                 <button type="submit" class="btn btn-primary" ng-click="doAdvanceSearch()">Advanced Search</button>
@@ -54,6 +52,7 @@
         </div>
     </div>
     <div class="hero-unit">
+        <flash:messages></flash:messages>
         <ul>
             <li ng-repeat="r in results">
                 <p>{{r}}</p>

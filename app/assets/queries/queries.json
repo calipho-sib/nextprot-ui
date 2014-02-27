@@ -22,5 +22,17 @@
         "author": "The NextProt team",
         "sparql": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \nPREFIX term:<http://nextprot.org/rdf/terminology/> \n SELECT ?a ?o where { \n ?a rdfs:subClassOf*  term:TS-0095. \n?a rdfs:label ?o.}",
         "description": "you can do whatever"
+    },
+    {
+        "title": "Subclass of brain without * (direct link)",
+        "author": "The NextProt team",
+        "sparql": "SELECT ?a ?o where { \n ?a rdfs:subClassOf term:TS-0095. \n?a rdfs:label ?o.}",
+        "description": "you can do whatever"
+    },
+    {
+        "title": "Subclass of brain with * (do we need reasoner???)",
+        "author": "The NextProt team",
+        "sparql": "SELECT ?a ?o where { \n ?a rdfs:subClassOf*  term:TS-0095. \n?a rdfs:label ?o.}",
+        "description": "you can do whatever"
     }
 ]
