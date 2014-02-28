@@ -1,6 +1,6 @@
 'use strict'
 
-var AdvancedSearchService = angular.module('np.advanced.service', []);
+var AdvancedSearchService = angular.module('np.advanced.search.service', []);
 
 AdvancedSearchService.factory('AdvancedSearchService', [
     '$resource',
@@ -24,6 +24,30 @@ AdvancedSearchService.factory('AdvancedSearchService', [
         };
 
         var service =  new AdvancedSearchService();
+        return service;
+
+    }
+]);
+
+
+
+var AdvancedQueryService = angular.module('np.advanced.query.service', []);
+
+AdvancedQueryService.factory('AdvancedQueryService', [
+    '$http',
+    'config',
+    function($http, config) {
+
+        var AdvancedQueryService = function() {};
+
+        AdvancedQueryService.prototype.getQueryList = function(sparql, listType, cb) {
+            $http.get('http://localhost:8080/nextprot-api/user/dani/advanced-query.json').success(function(data) {
+                  if(cb)cb(data.advancedQueryList);
+          });
+
+        };
+
+        var service =  new AdvancedQueryService();
         return service;
 
     }

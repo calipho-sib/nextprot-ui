@@ -1,6 +1,6 @@
 'use strict'
 
-var AdvancedSearchModule = angular.module('np.advanced', ['np.advanced.service']);
+var AdvancedSearchModule = angular.module('np.advanced', ['np.advanced.search.service', 'np.advanced.query.service']);
 
 AdvancedSearchModule.config([
     '$routeProvider',
@@ -23,23 +23,12 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     '$route',
     'Search',
     'AdvancedSearchService',
+    'AdvancedQueryService',
     'Tools',
     'flash',
-    function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, Search, AdvancedSearchService, Tools, flash) {
+    function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash) {
         $scope.currentStory;
-        $scope.prefix =
-            "PREFIX : <http://nextprot.org/rdf#> . \n" +
-            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" +
-            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
-            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
-            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
-            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
-            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
-            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
-            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
-            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
-            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" +
-            "PREFIX term:<http://nextprot.org/rdf/terminology/> \n" ;
+        $scope.prefix = "PREFIX : <http://nextprot.org/rdf#> . \n" ;
 
         $scope.suffix = "limit 10";
 
@@ -47,12 +36,16 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             $scope.currentStory = story;
         };
 
-        $http.get('queries/queries.json').success(function(data) {
-            $scope.stories = data;
-        });
+
+        AdvancedQueryService.getQueryList(
+            'dani',
+            'public',
+            function (data) {
+                $scope.queries = data;
+            });
 
 
-    $scope.doAdvanceSearch = function () {
+        $scope.doAdvanceSearch = function () {
 
         AdvancedSearchService.getEntriesBySparqlQuery(
             $scope.currentStory.sparql,

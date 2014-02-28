@@ -2,7 +2,7 @@
     <div class="container">
         <h2>Advanced queries</h2>
         <div class="row">
-            <input ng-model="query" placeholder="text filter">
+            <input ng-model="filterQuery" placeholder="text filter">
             <div class="btn-group">
                 <a class="btn dropdown-toggle" data-toggle="dropdown"> Select query repository <span class="caret"></span> </a>
                 <ul class="dropdown-menu">
@@ -33,8 +33,8 @@
         <div class="row">
             <div class="span6">
                     <ul class="nav nav-pills nav-stacked">
-                        <li class="story" ng-repeat="story in stories | filter:query" ng-click="setCurrentStory(story)">
-                            <a ref >{{story.title}}</a>
+                        <li class="story" ng-repeat="query in queries | filter:filterQuery" ng-click="setCurrentStory(story)">
+                            <a ref >{{query.title}}</a>
                         </li>
                   </ul>
                 <span class="label label-info">You have got now the super power of the advanced query!</span>
@@ -52,7 +52,8 @@
         </div>
     </div>
     <div class="hero-unit">
-        <flash:messages></flash:messages>
+
+        <div class="alert alert-error"></div>
         <ul>
             <li ng-repeat="r in results">
                 <p>{{r}}</p>
