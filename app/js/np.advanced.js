@@ -56,6 +56,30 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 
         }
 
+
+        $scope.createAdvancedQuery = function () {
+
+
+            var aq = {
+                "advancedUserQueryId": 1,
+                "title": "yeah I will be on the db",
+                "description": "I can be sent from here",
+                "sparql": "select * ....",
+                "published": "N",
+                "submitted": "N",
+                "username": "dani"
+            };
+
+            AdvancedQueryService.createAdvancedQuery(
+                'dani',
+                aq,
+                function(data) {
+                    alert(data);
+                });
+
+        }
+
+
     }
 ]);
 
