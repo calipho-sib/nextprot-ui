@@ -59,20 +59,20 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 
         $scope.createAdvancedQuery = function () {
 
-
-            var aq = {
-                "advancedUserQueryId": 1,
-                "title": $scope.currentQuery.title,
-                "description": $scope.currentQuery.description,
-                "sparql": $scope.currentQuery.sparql,
-                "published": "N",
-                "submitted": "N",
-                "username": "dani"
-            };
-
             AdvancedQueryService.createAdvancedQuery(
                 'dani',
-                aq,
+                $scope.currentQuery,
+                function(data) {
+                    alert(data);
+                });
+
+        }
+
+        $scope.updateAdvancedQuery = function () {
+
+            AdvancedQueryService.updateAdvancedQuery(
+                'dani',
+                $scope.currentQuery,
                 function(data) {
                     alert(data);
                 });

@@ -42,8 +42,8 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         var $api_adv_query = $resource(baseUrl+'/nextprot-api/user/dani/advanced-user-query.json', {username: '@username'}, {
             get: { method: 'GET', isArray: false },
-            create: { method: 'POST' }
-//            update: { method: 'PUT'}
+            create: { method: 'POST' },
+            update: { method: 'PUT'}
         });
 
         var AdvancedQueryService = function() {};
@@ -57,6 +57,13 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         AdvancedQueryService.prototype.createAdvancedQuery = function(username, aq, cb) {
             console.log('create advanced query > ', aq);
             $api_adv_query.create({ username: username }, aq, function(data) {
+                if(cb)cb(data);
+            });
+        };
+
+        AdvancedQueryService.prototype.updateAdvancedQuery = function(username, aq, cb) {
+            console.log('update advanced query > ', aq);
+            $api_adv_query.update({ username: username }, aq, function(data) {
                 if(cb)cb(data);
             });
         };

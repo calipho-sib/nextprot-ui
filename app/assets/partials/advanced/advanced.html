@@ -41,17 +41,18 @@
                 <img src="http://static.comicvine.com/uploads/original/11111/111111435/3445290-2485086653-9038-.jpg" width="75px" onclick="alert('Don t touch me!')">
             </div>
             <div class="span6">
+                <label>ID</label>
+                 <input ng-model="currentQuery.advancedUserQueryId" disabled="true"></input>
                 <label>Title</label>
                     <input ng-model="currentQuery.title"></input>
                 <label>SPARQL</label>
                     <textarea class="span12" id="inputDescription" placeholder="<= Choose a query in the left <=" rows="10" cols="200000" ng-model="currentQuery.sparql"></textarea>
                 <label>Description</label>
                 <textarea class="span12" id="inputDescription" placeholder="Description goes here...." rows="10" cols="200000" ng-model="currentQuery.description"></textarea>
-                <button type="submit" class="btn btn-success" ng-click="createAdvancedQuery()">Save</button>
+                <button type="submit" class="btn btn-warning" ng-click="createAdvancedQuery()">Create</button>
+                <button type="submit" class="btn btn-success" ng-click="updateAdvancedQuery()">Save</button>
                 <button type="submit" class="btn btn-danger" ng-click="doAdvanceSearch()">Execute</button>
-            </div>
-            <div class="span12">
-                <button type="submit" class="btn btn-info">Publish</button>
+                <button type="submit" class="btn btn-info">Publish (submit to review)</button>
             </div>
         </div>
     </div>
