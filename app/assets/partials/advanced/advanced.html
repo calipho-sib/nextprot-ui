@@ -33,7 +33,7 @@
         <div class="row">
             <div class="span6">
                     <ul class="nav nav-pills nav-stacked">
-                        <li class="story" ng-repeat="query in queries | filter:filterQuery" ng-click="setCurrentStory(story)">
+                        <li class="story" ng-repeat="query in queries | filter:filterQuery" ng-click="setCurrentQuery(query)">
                             <a ref >{{query.title}}</a>
                         </li>
                   </ul>
@@ -41,13 +41,17 @@
                 <img src="http://static.comicvine.com/uploads/original/11111/111111435/3445290-2485086653-9038-.jpg" width="75px" onclick="alert('Don t touch me!')">
             </div>
             <div class="span6">
-                <p class="text-info" ng-model="currentStory.author">{{ currentStory.author }}</p>
-                <textarea class="span12" rows="2" ng-model="prefix"></textarea>
-                <textarea class="span12" id="inputDescription" placeholder="<= Choose a query in the left <=" rows="10" cols="200000" ng-model="currentStory.sparql"></textarea>
-                <textarea class="span12" rows="1" ng-model="suffix"></textarea>
-                <button type="submit" class="btn">Publish (submit to review)</button>
-                <button type="submit" class="btn">Save privately</button>
-                <button type="submit" class="btn btn-primary" ng-click="doAdvanceSearch()">Advanced Search</button>
+                <label>Title</label>
+                    <input ng-model="currentQuery.title"></input>
+                <label>SPARQL</label>
+                    <textarea class="span12" id="inputDescription" placeholder="<= Choose a query in the left <=" rows="10" cols="200000" ng-model="currentQuery.sparql"></textarea>
+                <label>Description</label>
+                <textarea class="span12" id="inputDescription" placeholder="Description goes here...." rows="10" cols="200000" ng-model="currentQuery.description"></textarea>
+                <button type="submit" class="btn btn-success" ng-click="createAdvancedQuery()">Save</button>
+                <button type="submit" class="btn btn-danger" ng-click="doAdvanceSearch()">Execute</button>
+            </div>
+            <div class="span12">
+                <button type="submit" class="btn btn-info">Publish</button>
             </div>
         </div>
     </div>

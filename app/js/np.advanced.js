@@ -27,13 +27,13 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     'Tools',
     'flash',
     function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash) {
-        $scope.currentStory;
+        $scope.currentQuery;
         $scope.prefix = "PREFIX : <http://nextprot.org/rdf#> . \n" ;
 
         $scope.suffix = "limit 10";
 
-            $scope.setCurrentStory = function(story) {
-            $scope.currentStory = story;
+            $scope.setCurrentQuery = function(story) {
+            $scope.currentQuery = story;
         };
 
 
@@ -48,7 +48,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         $scope.doAdvanceSearch = function () {
 
         AdvancedSearchService.getEntriesBySparqlQuery(
-            $scope.currentStory.sparql,
+            $scope.currentQuery.sparql,
             function(data) {
                 if(data.error) flash('alert-warning', data.error);
                 $scope.results = data;
@@ -62,9 +62,9 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 
             var aq = {
                 "advancedUserQueryId": 1,
-                "title": "yeah I will be on the db",
-                "description": "I can be sent from here",
-                "sparql": "select * ....",
+                "title": $scope.currentQuery.title,
+                "description": $scope.currentQuery.description,
+                "sparql": $scope.currentQuery.sparql,
                 "published": "N",
                 "submitted": "N",
                 "username": "dani"
