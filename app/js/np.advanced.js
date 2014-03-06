@@ -29,28 +29,34 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash) {
         $scope.currentQuery;
 
+
+        AdvancedQueryService.getQueryList('dani', 'public',
+            function (data) {
+                alert(data)
+                $scope.queries = data.advancedUserQueryList;
+            });
+
         $scope.setCurrentQuery = function (story) {
             $scope.currentQuery = story;
         };
 
-        AdvancedQueryService.getQueryList('dani', 'public',
-            function (data) {
-                $scope.queries = data;
-            });
 
 
         $scope.doAdvanceSearch = function () {
             AdvancedSearchService.getEntriesBySparqlQuery(
                 $scope.currentQuery.sparql,
                 function (data) {
-                    if (data.error) flash('alert-warning', data.error);
                     $scope.results = data;
                 });
         }
 
 
         $scope.createAdvancedQuery = function () {
-            AdvancedQueryService.createAdvancedQuery('dani', $scope.currentQuery);
+            AdvancedQueryService.createAdvancedQuery('dani', $scope.currentQuery,
+                function () {
+                    $route.reload();
+                }
+            );
         }
 
         $scope.updateAdvancedQuery = function () {
@@ -58,7 +64,11 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
         $scope.deleteAdvancedQuery = function () {
-            AdvancedQueryService.deleteAdvancedQuery('dani', $scope.currentQuery);
+            AdvancedQueryService.deleteAdvancedQuery('dani', $scope.currentQuery,
+                function () {
+                    $route.reload();
+                }
+            );
         }
 
     }

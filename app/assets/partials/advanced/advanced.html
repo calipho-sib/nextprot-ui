@@ -33,14 +33,14 @@
             </div>
             <div class="span6">
                 <button type="submit" class="btn btn-inverse" ng-click="deleteAdvancedQuery()">Delete</button>
-                <button type="submit" class="btn btn-warning" ng-click="createAdvancedQuery()">Create</button>
+                <button type="submit" class="btn btn-warning" ng-click="createAdvancedQuery()">Duplicate</button>
                 <button type="submit" class="btn btn-success" ng-click="updateAdvancedQuery()">Save</button>
                 <button type="submit" class="btn btn-danger" ng-click="doAdvanceSearch()">Execute</button>
                 <button type="submit" class="btn btn-info">Publish (submit to review)</button>
                 <label>ID</label>
                  <input ng-model="currentQuery.advancedUserQueryId" disabled="true"></input>
                 <label>Title</label>
-                    <input ng-model="currentQuery.title"></input>
+                    <input size="800" ng-model="currentQuery.title"></input>
                 <label>SPARQL</label>
                     <textarea class="span12" id="inputDescription" placeholder="<= Choose a query in the left <=" rows="10" cols="200000" ng-model="currentQuery.sparql"></textarea>
                 <label>Description</label>

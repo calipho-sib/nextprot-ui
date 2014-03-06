@@ -46,6 +46,7 @@ var flash = angular.module('np.flash', [])
   	return flash;
 }])
 
+// Mario style (with the template in the js)
 .directive('flashMessages', [function() {
   var directive = { restrict: 'EA', replace: true };
 
@@ -62,4 +63,16 @@ var flash = angular.module('np.flash', [])
   }];
 
   return directive;
-}]);
+}])
+
+
+
+// Olivier style (with the template in the html)
+//.directive('flash', ['$rootScope',function ($rootScope) {
+//    return function (scope, elm, attrs) {
+//        $rootScope.$on('flash:message', function(_, messages, done) {
+//            scope.messages = messages;
+//            done();
+//        });
+//    };
+//}]);

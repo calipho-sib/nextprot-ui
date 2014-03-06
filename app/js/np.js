@@ -8,6 +8,7 @@ var App = angular.module('np', [
   'ngAnimate',
   'ngCookies',
   '$strap.directives',
+  'np.flash',
   'np.config',
   'np.search',
   'np.cart',
@@ -25,7 +26,38 @@ App.config([
 	
 	function ($routeProvider, $locationProvider, $httpProvider) {
 
-		
+
+        var interceptor = ['$rootScope', '$q', 'flash', function (scope, $q, flash) {
+            function success(response) {
+                return response;
+            }
+
+            function error(response) {
+                var status = response.status;
+                console.log("the response: ", response)
+
+                if (status == 0) {
+                    flash('alert-error',"The API is not accessible"); return;
+                }else if (status == 401) {
+                    flash('alert-error',"PROUT"); return;
+                }else if (status == 404) {
+                    flash('alert-error',"URL not found"); return;
+                }else {
+                    flash('alert-error', 'Some error occured' + response);
+                }
+                // otherwise
+                return $q.reject(response);
+
+            }
+
+            return function (promise) {
+                return promise.then(success, error);
+            }
+
+        }];
+        $httpProvider.responseInterceptors.push(interceptor);
+
+
 		 
 		 // List of routes of the application
 		 $routeProvider

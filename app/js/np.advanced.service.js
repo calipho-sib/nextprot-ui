@@ -40,7 +40,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         var baseUrl = config.solr.BASE_URL+config.solr.SOLR_PORT;
 
-        var $api_adv_query = $resource(baseUrl+'/nextprot-api/user/:username/advanced-user-query.json', {username: '@username'}, {
+        var $api_adv_query = $resource(baseUrl+'/nextprot-api/user/:username/advanced-user-query2.json', {username: '@username'}, {
             get: { method: 'GET', isArray: false },
             create: { method: 'POST' }
         });
@@ -54,8 +54,10 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         var AdvancedQueryService = function() {};
 
         AdvancedQueryService.prototype.getQueryList = function(username, listType, cb) {
-            $api_adv_query.get({username : username}, function(data) {
-                  if(cb)cb(data.advancedUserQueryList);
+            return $api_adv_query.get({username : username}, function(data) {
+                  if(cb)cb(data);
+          }, function(error){
+                    console.log(error, error.headers())
           });
         };
 
