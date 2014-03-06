@@ -21,18 +21,18 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     '$location',
     '$routeParams',
     '$route',
+    'flash',
     'Search',
     'AdvancedSearchService',
     'AdvancedQueryService',
     'Tools',
     'flash',
-    function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash) {
+    function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash) {
         $scope.currentQuery;
 
 
         AdvancedQueryService.getQueryList('dani', 'public',
             function (data) {
-                alert(data)
                 $scope.queries = data.advancedUserQueryList;
             });
 
@@ -43,11 +43,16 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 
 
         $scope.doAdvanceSearch = function () {
-            AdvancedSearchService.getEntriesBySparqlQuery(
-                $scope.currentQuery.sparql,
-                function (data) {
-                    $scope.results = data;
-                });
+            if($scope.currentQuery == null) {
+                alert("Choose a query!")
+            }else {
+                AdvancedSearchService.getEntriesBySparqlQuery(
+                    $scope.currentQuery.sparql,
+                    function (data) {
+                        $scope.results = data;
+                    });
+            }
+
         }
 
 
@@ -60,12 +65,17 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
         $scope.updateAdvancedQuery = function () {
-            AdvancedQueryService.updateAdvancedQuery('dani', $scope.currentQuery);
+            AdvancedQueryService.updateAdvancedQuery('dani', $scope.currentQuery,
+                function () {
+                    flash('alert-success', "Updated successful for " + $scope.currentQuery.title); return;
+                }
+            );
         }
 
         $scope.deleteAdvancedQuery = function () {
             AdvancedQueryService.deleteAdvancedQuery('dani', $scope.currentQuery,
                 function () {
+                    flash('alert-warning', "Delete successful for " + $scope.currentQuery.title);
                     $route.reload();
                 }
             );

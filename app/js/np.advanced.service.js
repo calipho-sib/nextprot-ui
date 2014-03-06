@@ -40,7 +40,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         var baseUrl = config.solr.BASE_URL+config.solr.SOLR_PORT;
 
-        var $api_adv_query = $resource(baseUrl+'/nextprot-api/user/:username/advanced-user-query2.json', {username: '@username'}, {
+        var $api_adv_query = $resource(baseUrl+'/nextprot-api/user/:username/advanced-user-query.json', {username: '@username'}, {
             get: { method: 'GET', isArray: false },
             create: { method: 'POST' }
         });
@@ -63,16 +63,26 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         AdvancedQueryService.prototype.createAdvancedQuery = function(username, aq, cb) {
             console.log('create advanced query > ', aq);
-            $api_adv_query.create({ username: username, id : aq.advancedUserQueryId }, aq, function(data) {
-                if(cb)cb(data);
-            });
+            if(aq == null) {
+                alert("Select a query to duplicate");
+            }else {
+                $api_adv_query.create({ username: username, id : aq.advancedUserQueryId }, aq, function(data) {
+                    if(cb)cb(data);
+                });
+            }
         };
 
         AdvancedQueryService.prototype.updateAdvancedQuery = function(username, aq, cb) {
-            console.log('update advanced query > ', aq);
-            $api_adv_query_id.update({ username: username, id : aq.advancedUserQueryId }, aq, function(data) {
-                if(cb)cb(data);
-            });
+            if(aq == null) {
+                alert("Select a query to update");
+            }else {
+
+                console.log('update advanced query > ', aq);
+                $api_adv_query_id.update({ username: username, id : aq.advancedUserQueryId }, aq, function(data) {
+                    if(cb)cb(data);
+                });
+            }
+
         };
 
         AdvancedQueryService.prototype.deleteAdvancedQuery = function(username, aq, cb) {

@@ -1,10 +1,6 @@
 <div ng-controller="AdvancedCtrl">
     <div class="container">
         <h2>Advanced queries</h2>
-        <div class="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Warning!</strong> Best check yo self, you're not looking too good.
-        </div>
         <div class="row">
             <div class="span6">
                 <input ng-model="filterQuery" placeholder="text filter">
@@ -38,18 +34,17 @@
                 <button type="submit" class="btn btn-danger" ng-click="doAdvanceSearch()">Execute</button>
                 <button type="submit" class="btn btn-info">Publish (submit to review)</button>
                 <label>ID</label>
-                 <input ng-model="currentQuery.advancedUserQueryId" disabled="true"></input>
+                 <input class="span1" ng-model="currentQuery.advancedUserQueryId" disabled="true"></input>
                 <label>Title</label>
-                    <input size="800" ng-model="currentQuery.title"></input>
+                    <input class="span12" ng-model="currentQuery.title"></input>
                 <label>SPARQL</label>
                     <textarea class="span12" id="inputDescription" placeholder="<= Choose a query in the left <=" rows="10" cols="200000" ng-model="currentQuery.sparql"></textarea>
                 <label>Description</label>
-                <textarea class="span12" id="inputDescription" placeholder="Description goes here...." rows="10" cols="200000" ng-model="currentQuery.description"></textarea>
+                <textarea class="span12" placeholder="Description goes here...." rows="10" cols="200000" ng-model="currentQuery.description"></textarea>
             </div>
         </div>
     </div>
     <div class="hero-unit">
-       <div class="alert alert-error"></div>
         <ul>
             <li ng-repeat="r in results">
                 <p>{{r}}</p>
