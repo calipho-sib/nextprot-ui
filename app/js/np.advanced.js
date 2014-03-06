@@ -28,57 +28,38 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     'flash',
     function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash) {
         $scope.currentQuery;
-        $scope.prefix = "PREFIX : <http://nextprot.org/rdf#> . \n" ;
 
-        $scope.suffix = "limit 10";
-
-            $scope.setCurrentQuery = function(story) {
+        $scope.setCurrentQuery = function (story) {
             $scope.currentQuery = story;
         };
 
-
-        AdvancedQueryService.getQueryList(
-            'dani',
-            'public',
+        AdvancedQueryService.getQueryList('dani', 'public',
             function (data) {
                 $scope.queries = data;
             });
 
 
         $scope.doAdvanceSearch = function () {
-
-        AdvancedSearchService.getEntriesBySparqlQuery(
-            $scope.currentQuery.sparql,
-            function(data) {
-                if(data.error) flash('alert-warning', data.error);
-                $scope.results = data;
-            });
-
+            AdvancedSearchService.getEntriesBySparqlQuery(
+                $scope.currentQuery.sparql,
+                function (data) {
+                    if (data.error) flash('alert-warning', data.error);
+                    $scope.results = data;
+                });
         }
 
 
         $scope.createAdvancedQuery = function () {
-
-            AdvancedQueryService.createAdvancedQuery(
-                'dani',
-                $scope.currentQuery,
-                function(data) {
-                    alert(data);
-                });
-
+            AdvancedQueryService.createAdvancedQuery('dani', $scope.currentQuery);
         }
 
         $scope.updateAdvancedQuery = function () {
-
-            AdvancedQueryService.updateAdvancedQuery(
-                'dani',
-                $scope.currentQuery,
-                function(data) {
-                    alert(data);
-                });
-
+            AdvancedQueryService.updateAdvancedQuery('dani', $scope.currentQuery);
         }
 
+        $scope.deleteAdvancedQuery = function () {
+            AdvancedQueryService.deleteAdvancedQuery('dani', $scope.currentQuery.advancedUserQueryId);
+        }
 
     }
 ]);

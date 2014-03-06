@@ -1,6 +1,10 @@
 <div ng-controller="AdvancedCtrl">
     <div class="container">
         <h2>Advanced queries</h2>
+        <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Warning!</strong> Best check yo self, you're not looking too good.
+        </div>
         <div class="row">
             <div class="span6">
                 <input ng-model="filterQuery" placeholder="text filter">
@@ -26,10 +30,9 @@
                             <a ref >{{query.title}}</a>
                         </li>
                   </ul>
-                <span class="label label-info">You have got now the super power of the advanced query!</span>
-                <img src="http://static.comicvine.com/uploads/original/11111/111111435/3445290-2485086653-9038-.jpg" width="75px" onclick="alert('Don t touch me!')">
             </div>
             <div class="span6">
+                <button type="submit" class="btn btn-inverse" ng-click="deleteAdvancedQuery()">Delete</button>
                 <button type="submit" class="btn btn-warning" ng-click="createAdvancedQuery()">Create</button>
                 <button type="submit" class="btn btn-success" ng-click="updateAdvancedQuery()">Save</button>
                 <button type="submit" class="btn btn-danger" ng-click="doAdvanceSearch()">Execute</button>
@@ -46,8 +49,7 @@
         </div>
     </div>
     <div class="hero-unit">
-
-        <div class="alert alert-error"></div>
+       <div class="alert alert-error"></div>
         <ul>
             <li ng-repeat="r in results">
                 <p>{{r}}</p>

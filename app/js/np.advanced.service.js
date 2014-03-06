@@ -40,11 +40,16 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         var baseUrl = config.solr.BASE_URL+config.solr.SOLR_PORT;
 
-        var $api_adv_query = $resource(baseUrl+'/nextprot-api/user/dani/advanced-user-query.json', {username: '@username'}, {
+        var $api_adv_query = $resource(baseUrl+'/nextprot-api/user/:username/advanced-user-query.json', {username: '@username'}, {
             get: { method: 'GET', isArray: false },
-            create: { method: 'POST' },
+            create: { method: 'POST' }
+        });
+
+        var $api_adv_query_id = $resource(baseUrl+'/nextprot-api/user/:username/advanced-user-query/:id.json', {username: '@username', id: '@id'}, {
+            delete: { method: 'DELETE'},
             update: { method: 'PUT'}
         });
+
 
         var AdvancedQueryService = function() {};
 
@@ -63,11 +68,19 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         AdvancedQueryService.prototype.updateAdvancedQuery = function(username, aq, cb) {
             console.log('update advanced query > ', aq);
-            $api_adv_query.update({ username: username }, aq, function(data) {
+            $api_adv_query_id.update({ username: username }, aq, function(data) {
                 if(cb)cb(data);
             });
         };
 
+        AdvancedQueryService.prototype.deleteAdvancedQuery = function(username, id, aq, cb) {
+            if(confirm("Are you sure you want to delete the selected query?")){
+                console.log('delete advanced query > ', aq);
+                $api_adv_query_id.delete({ username: username, id : id}, aq, function(data) {
+                    if(cb)cb(data);
+                });
+            }
+        };
 
         var service =  new AdvancedQueryService();
         return service;
