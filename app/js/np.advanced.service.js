@@ -18,7 +18,7 @@ AdvancedSearchService.factory('AdvancedSearchService', [
         var AdvancedSearchService = function() {};
 
         AdvancedSearchService.prototype.getEntriesBySparqlQuery = function(sparql, cb) {
-            $sparql_query.get({sparql: sparql}, function(data) {
+            return $sparql_query.get({sparql: sparql}, function(data) {
                 if(cb)cb(data.results.bindings);
             });
         };

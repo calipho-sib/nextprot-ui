@@ -29,7 +29,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     'flash',
     function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash) {
         $scope.currentQuery;
-
+        $scope.buttonDisabled = false;
 
         AdvancedQueryService.getQueryList('dani', 'public',
             function (data) {
@@ -40,19 +40,22 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             $scope.currentQuery = story;
         };
 
-
-
         $scope.doAdvanceSearch = function () {
             if($scope.currentQuery == null) {
                 alert("Choose a query!")
             }else {
+
+                var start = new Date().getTime();;
+                $scope.buttonDisabled = true;
                 AdvancedSearchService.getEntriesBySparqlQuery(
                     $scope.currentQuery.sparql,
                     function (data) {
+                        var end = new Date().getTime();
                         $scope.results = data;
+                        $scope.buttonDisabled = false;
+                        flash('alert-success', "Query executed successfully in " + (end - start) + " ms"); return;
                     });
             }
-
         }
 
 
@@ -75,7 +78,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         $scope.deleteAdvancedQuery = function () {
             AdvancedQueryService.deleteAdvancedQuery('dani', $scope.currentQuery,
                 function () {
-                    flash('alert-warning', "Delete successful for " + $scope.currentQuery.title);
+                    flash('alert-success', "User query deleted successfully for " + $scope.currentQuery.title);
                     $route.reload();
                 }
             );

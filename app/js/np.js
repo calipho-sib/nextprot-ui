@@ -43,7 +43,7 @@ App.config([
                 }else if (status == 404) {
                     flash('alert-error',"URL not found"); return;
                 }else {
-                    flash('alert-error', 'Some error occured' + response);
+                    flash('alert-error', 'Some error occured' + response.data);
                 }
                 // otherwise
                 return $q.reject(response);

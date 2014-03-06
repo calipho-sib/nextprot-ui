@@ -27,11 +27,11 @@
                         </li>
                   </ul>
             </div>
-            <div class="span6">
+            <div class="span6" ng-init="scope = { isDisabled: false }">
                 <button type="submit" class="btn btn-inverse" ng-click="deleteAdvancedQuery()">Delete</button>
                 <button type="submit" class="btn btn-warning" ng-click="createAdvancedQuery()">Duplicate</button>
                 <button type="submit" class="btn btn-success" ng-click="updateAdvancedQuery()">Save</button>
-                <button type="submit" class="btn btn-danger" ng-click="doAdvanceSearch()">Execute</button>
+                <button ng-disabled="buttonDisabled" type="submit" class="btn btn-danger" ng-click="doAdvanceSearch()">Execute</button>
                 <button type="submit" class="btn btn-info">Publish (submit to review)</button>
                 <label>ID</label>
                  <input class="span1" ng-model="currentQuery.advancedUserQueryId" disabled="true"></input>
