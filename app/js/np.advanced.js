@@ -58,7 +58,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
         $scope.deleteAdvancedQuery = function () {
-            AdvancedQueryService.deleteAdvancedQuery('dani', $scope.currentQuery.advancedUserQueryId);
+            AdvancedQueryService.deleteAdvancedQuery('dani', $scope.currentQuery);
         }
 
     }

@@ -61,22 +61,22 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         AdvancedQueryService.prototype.createAdvancedQuery = function(username, aq, cb) {
             console.log('create advanced query > ', aq);
-            $api_adv_query.create({ username: username }, aq, function(data) {
+            $api_adv_query.create({ username: username, id : aq.advancedUserQueryId }, aq, function(data) {
                 if(cb)cb(data);
             });
         };
 
         AdvancedQueryService.prototype.updateAdvancedQuery = function(username, aq, cb) {
             console.log('update advanced query > ', aq);
-            $api_adv_query_id.update({ username: username }, aq, function(data) {
+            $api_adv_query_id.update({ username: username, id : aq.advancedUserQueryId }, aq, function(data) {
                 if(cb)cb(data);
             });
         };
 
-        AdvancedQueryService.prototype.deleteAdvancedQuery = function(username, id, aq, cb) {
+        AdvancedQueryService.prototype.deleteAdvancedQuery = function(username, aq, cb) {
             if(confirm("Are you sure you want to delete the selected query?")){
                 console.log('delete advanced query > ', aq);
-                $api_adv_query_id.delete({ username: username, id : id}, aq, function(data) {
+                $api_adv_query_id.delete({ username: username, id : aq.advancedUserQueryId}, function(data) {
                     if(cb)cb(data);
                 });
             }
