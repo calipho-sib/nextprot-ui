@@ -2,36 +2,25 @@
     <div class="container">
         <h2>Advanced queries</h2>
         <div class="row">
-            <input ng-model="filterQuery" placeholder="text filter">
-            <div class="btn-group">
-                <a class="btn dropdown-toggle" data-toggle="dropdown"> Select query repository <span class="caret"></span> </a>
-                <ul class="dropdown-menu">
-                    <li><a href="">NextProt team (tutorial)</a></li>
-                    <li><a href="">Community</a></li>
-                    <li><a href="">Private</a></li>
-                </ul>
-            </div>
-            <div class="btn-group">
-                <a class="btn dropdown-toggle" data-toggle="dropdown"> select category <span class="caret"></span> </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="">Function</a>
-                    </li>
-                    <li>
-                        <a href="">Medical</a>
-                    </li>
-                    <li>
-                        <a href="">Expression</a>
-                    </li>
-                    <li>
-                        <a href="">...</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="row">
             <div class="span6">
+                <input ng-model="filterQuery" placeholder="text filter">
+                <div class="btn-group">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown"> Select query repository <span class="caret"></span> </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="">NextProt team (tutorial)</a></li>
+                        <li><a href="">Community</a></li>
+                        <li><a href="">Private</a></li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <a class="btn dropdown-toggle" data-toggle="dropdown"> select category <span class="caret"></span> </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="">Function</a></li>
+                        <li><a href="">Medical</a></li>
+                        <li><a href="">Expression</a></li>
+                        <li><a href="">...</a></li>
+                    </ul>
+                </div>
                     <ul class="nav nav-pills nav-stacked">
                         <li class="story" ng-repeat="query in queries | filter:filterQuery" ng-click="setCurrentQuery(query)">
                             <a ref >{{query.title}}</a>
@@ -41,6 +30,10 @@
                 <img src="http://static.comicvine.com/uploads/original/11111/111111435/3445290-2485086653-9038-.jpg" width="75px" onclick="alert('Don t touch me!')">
             </div>
             <div class="span6">
+                <button type="submit" class="btn btn-warning" ng-click="createAdvancedQuery()">Create</button>
+                <button type="submit" class="btn btn-success" ng-click="updateAdvancedQuery()">Save</button>
+                <button type="submit" class="btn btn-danger" ng-click="doAdvanceSearch()">Execute</button>
+                <button type="submit" class="btn btn-info">Publish (submit to review)</button>
                 <label>ID</label>
                  <input ng-model="currentQuery.advancedUserQueryId" disabled="true"></input>
                 <label>Title</label>
@@ -49,10 +42,6 @@
                     <textarea class="span12" id="inputDescription" placeholder="<= Choose a query in the left <=" rows="10" cols="200000" ng-model="currentQuery.sparql"></textarea>
                 <label>Description</label>
                 <textarea class="span12" id="inputDescription" placeholder="Description goes here...." rows="10" cols="200000" ng-model="currentQuery.description"></textarea>
-                <button type="submit" class="btn btn-warning" ng-click="createAdvancedQuery()">Create</button>
-                <button type="submit" class="btn btn-success" ng-click="updateAdvancedQuery()">Save</button>
-                <button type="submit" class="btn btn-danger" ng-click="doAdvanceSearch()">Execute</button>
-                <button type="submit" class="btn btn-info">Publish (submit to review)</button>
             </div>
         </div>
     </div>
