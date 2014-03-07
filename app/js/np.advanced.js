@@ -36,8 +36,10 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
                 $scope.queries = data.advancedUserQueryList;
             });
 
-        $scope.setCurrentQuery = function (story) {
-            $scope.currentQuery = story;
+        $scope.setCurrentQuery = function (query) {
+            $scope.currentQuery = query;
+            $scope.currentQuery.encodedSparql = encodeURIComponent(query.sparql);
+
         };
 
         $scope.doAdvanceSearch = function () {
