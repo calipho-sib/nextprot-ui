@@ -12,6 +12,7 @@ var App = angular.module('np', [
   'np.config',
   'np.search',
   'np.cart',
+  'np.user',
   'np.proteinlists',
   'np.advanced'
 ]);
