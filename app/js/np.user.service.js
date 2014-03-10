@@ -14,14 +14,14 @@ UserService.factory('UserService', [
 
        var baseUrl = "http://10.2.2.96:8080";
 
-       var $token = $resource(baseUrl+'/nextprot-api/oauth/token', {client_id: '@client_id', client_secret: '@client_secret', grant_type: 'client_credentials'}, {
+       var $token = $resource(baseUrl+'/nextprot-api/oauth/token', {client_id: 'nextprotui', grant_type: 'password', username : '@username', password : '@password'}, {
            get: { method: 'POST' }
        });
 
        var UserService = function() {};
 
-       UserService.prototype.getToken = function(cb) {
-           $token.get({client_id: 'coolapp', client_secret:'123'}, function(data) {
+       UserService.prototype.getToken = function(username, password, cb) {
+           $token.get({username:username, password:password}, function(data) {
                if(cb)cb(data);
            });
        };

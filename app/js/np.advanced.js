@@ -1,6 +1,6 @@
 'use strict'
 
-var AdvancedSearchModule = angular.module('np.advanced', ['np.advanced.search.service', 'np.advanced.query.service']);
+var AdvancedSearchModule = angular.module('np.advanced', ['np.advanced.search.service', 'np.advanced.query.service', 'np.advanced.ui']);
 
 AdvancedSearchModule.config([
     '$routeProvider',
@@ -14,6 +14,7 @@ AdvancedSearchModule.config([
 
 
 AdvancedSearchModule.controller('AdvancedCtrl', [
+    '$window',
     '$resource',
     '$http',
     '$scope',
@@ -27,7 +28,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     'AdvancedQueryService',
     'Tools',
     'flash',
-    function ($resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash) {
+    function ($window, $resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash) {
         $scope.currentQuery;
         $scope.buttonDisabled = false;
 
@@ -38,9 +39,8 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 
         $scope.setCurrentQuery = function (query) {
             $scope.currentQuery = query;
-            $scope.currentQuery.encodedSparql = encodeURIComponent(query.sparql);
-
         };
+
 
         $scope.doAdvanceSearch = function () {
             if($scope.currentQuery == null) {

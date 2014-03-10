@@ -35,7 +35,7 @@
                 <div class="btn-group">
                     <a class="btn dropdown-toggle btn-danger" data-toggle="dropdown">Run<span class="caret"></span> </a>
                     <ul class="dropdown-menu">
-                        <li><a href="proteins/search?sparql={{currentQuery.encodedSparql}}">Jena</a></li>
+                        <li><a href="proteins/search?sparql={{currentQuery.sparql | sparqlEncode}}">Jena</a></li>
                     </ul>
                 </div>
 
