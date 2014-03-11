@@ -15,7 +15,7 @@ UserService.factory('UserService', [
        var baseUrl = config.solr.BASE_URL+config.solr.SOLR_PORT;
 
 
-       var $token = $resource(baseAuthUrl+'/nexrot-auth/oauth/token', {client_id: 'nextprotui', grant_type: 'password', username : '@username', password : '@password'}, {
+       var $token = $resource(baseAuthUrl+'/nextprot-auth/oauth/token', {client_id: 'nextprotui', grant_type: 'password', username : '@username', password : '@password'}, {
            get: { method: 'POST' }
        });
 
