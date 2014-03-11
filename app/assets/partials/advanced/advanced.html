@@ -31,11 +31,11 @@
                 <button type="submit" class="btn btn-inverse" ng-click="deleteAdvancedQuery()">Delete</button>
                 <button type="submit" class="btn btn-warning" ng-click="createAdvancedQuery()">Duplicate</button>
                 <button type="submit" class="btn btn-success" ng-click="updateAdvancedQuery()">Save</button>
-
                 <div class="btn-group">
                     <a class="btn dropdown-toggle btn-danger" data-toggle="dropdown">Run<span class="caret"></span> </a>
                     <ul class="dropdown-menu">
-                        <li><a href="proteins/search?sparql={{currentQuery.sparql | sparqlEncode}}">Jena</a></li>
+                        <li><a href="proteins/search?sparqlTitle={{currentQuery.title}}&sparqlEngine=Jena&sparql={{currentQuery.sparql | sparqlEncode}}">Jena</a></li>
+                        <li><a href="proteins/search?sparqlTitle={{currentQuery.title}}&sparqlEngine=BigData&sparql={{currentQuery.sparql | sparqlEncode}}">BigData</a></li>
                     </ul>
                 </div>
 
