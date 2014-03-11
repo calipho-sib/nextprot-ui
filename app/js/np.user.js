@@ -11,8 +11,8 @@ UserModule.config([
 ]);
 
 
-UserModule.controller('UserCtrl', ['$scope', '$http', 'UserService',
-    function ($scope, $http, UserService) {
+UserModule.controller('UserCtrl', ['$scope', '$location', '$http', 'UserService',
+    function ($scope, $location, $http, UserService) {
 
         $scope.user = UserService;
 
@@ -23,6 +23,7 @@ UserModule.controller('UserCtrl', ['$scope', '$http', 'UserService',
                     alert(error + data);
                 }
                 UserService.getUserProfile();
+                $location.path("/");
             });
 
         };

@@ -11,7 +11,7 @@ UserService.factory('UserService', [
    'Tools',
    function($resource, $http, config, $window, Tools) {
 
-       var baseAuthUrl = "http://10.2.2.96:8081";
+       var baseAuthUrl = "http://localhost:9090";
        var baseUrl = config.solr.BASE_URL+config.solr.SOLR_PORT;
 
 
