@@ -77,10 +77,10 @@
 
         </ul>
         <ul class="nav pull-right" id="main-menu-right-user">
-            <li><a href="#">User</a></li>
+            <li><a href="#">User:{{user.userProfile.username}}</a></li>
         </ul>
-       <ul ng-disabled="userLoggedIn" class="nav pull-right" id="main-menu-right-login">
-           <li><a href="login">{{userProfile.username}}</a></li>
+       <ul ng-disabled="user.userProfile.userLoggedIn" class="nav pull-right" id="main-menu-right-login">
+           <li><a href="login">Login</a></li>
            <li><a href="#">Or Sign up Now!</a></li>
        </ul>
        </div>

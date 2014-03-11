@@ -1,9 +1,9 @@
 <div class="navbar navbar-fixed-top">
     <div ng-controller="UserCtrl">
-        <form ng-submit="submit()">
-            <input ng-model="user.username" type="text" name="user" placeholder="Username"/>
-            <input ng-model="user.password" type="password" name="pass" placeholder="Password"/>
-            <input type="submit" value="Login"/>
+        <form ng-submit="login(username,password)">
+            <input ng-model="username" type="text" name="user" placeholder="Username"/>
+            <input ng-model="password" type="password" name="pass" placeholder="Password"/>
+            <input type="submit" value="Login" ng-disabled="form.$invalid"/>
         </form>
     </div>
 </div>

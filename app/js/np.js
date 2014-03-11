@@ -104,7 +104,7 @@ App.factory('Tools', [
 App.factory('authInterceptor', function ($rootScope, $q, $window) {
     return {
         request: function (config) {
-            console.log(config.url);
+            //TODO can we do this differently?
             if(config.url.indexOf('nextprot-api/user') != -1){
                 config.headers = config.headers || {};
                 if ($window.sessionStorage.token) {
