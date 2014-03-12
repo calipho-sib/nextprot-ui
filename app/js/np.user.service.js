@@ -8,12 +8,19 @@ UserService.factory('UserService', [
     '$http',
     'config',
     '$window',
-    'Tools',
-    function ($resource, $http, config, $window, Tools) {
+    '$rootScope',
+    '$location',
+    function ($resource, $http, config, $window, $rootScope, $location) {
+
+        var history = [];
+
 
         var baseAuthUrl = "http://localhost:9090";
         var baseUrl = config.solr.BASE_URL + config.solr.SOLR_PORT;
 
+        $rootScope.$on('$routeChangeSuccess', function() {
+            history.push($location.$$path);
+        });
 
         var $token = $resource(baseAuthUrl + '/nextprot-auth/oauth/token', {client_id: 'nextprotui', grant_type: 'password', username: '@username', password: '@password'}, {
             get: { method: 'POST' }
@@ -47,6 +54,9 @@ UserService.factory('UserService', [
                 //$cookieStore.put('sessionToken', data.access_token);
                 $window.sessionStorage.token = data.access_token;
                 console.log('got token' + $window.sessionStorage.token);
+                var prevUrl = history.length > 1 ? history.splice(-2)[0] : "/";
+                $location.path(prevUrl);
+
                 if (cb)cb(null, data);
             });
         }
@@ -67,16 +77,13 @@ UserService.factory('UserService', [
             console.log('cleaning token and username');
             delete $window.sessionStorage.token;
             delete $window.sessionStorage.username;
-            this.userProfile = {
-                username: "Guest",
-                role: 'ANONYMOUS',
-                userLoggedIn: false
-            }
+            this.userProfile.role = 'ANONYMOUS';
+            this.userProfile.username = 'Guest';
+            this.userProfile.userLoggedIn = false;
         }
 
         var service = new UserService();
         return service;
-
 
     }
 ]);
