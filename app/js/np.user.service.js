@@ -20,7 +20,7 @@ UserService.factory('UserService', [
        });
 
 
-       var $userProfile = $resource(baseUrl+'/nextprot-api/user/:user_id.json', {user_id: '@user_id'}, {
+       var $userProfile = $resource(baseUrl+'/nextprot-api/user/:username.json', {username: '@username'}, {
            get: { method: 'GET' }
        });
 
@@ -41,14 +41,13 @@ UserService.factory('UserService', [
                //$cookieStore.put('sessionToken', data.access_token);
                $window.sessionStorage.token = data.access_token;
                if(cb)cb(null,data);
-           }).error(function(error,status){
-               if(cb)cb(error,status);
            });
        }
 
-       UserService.prototype.getUserProfile = function(cb) {
+       UserService.prototype.getUserProfile = function(username, cb) {
            var me=this;
-           $userProfile.get({user_id:1}, function(data) {
+           alert(username);
+           $userProfile.get({username:username}, function(data) {
                me.userProfile.role='USER';
                me.userProfile.username=data.username;
                me.userProfile.userLoggedIn=true;

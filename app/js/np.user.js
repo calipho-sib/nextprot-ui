@@ -22,7 +22,7 @@ UserModule.controller('UserCtrl', ['$scope', '$location', '$http', 'UserService'
                 if(err){
                     alert(error + data);
                 }
-                UserService.getUserProfile();
+                UserService.getUserProfile(username);
                 $location.path("/");
             });
 
