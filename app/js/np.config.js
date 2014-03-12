@@ -5,121 +5,120 @@
 //Define the application global configuration
 
 angular.module('np.config', []).factory('config', [
-'$http',
-function ($http) {
-	
- var BASE_URL= 'http://localhost';
- // var BASE_URL= 'http://uat-web1.isb-sib.ch';
-	
- //
- // solr configuration
- var defaultApi = {
-   BASE_URL:BASE_URL,
-   SOLR_SERVER:BASE_URL+':port/nextprot-api/:action/:entity',
-   //SOLR_PORT:':8282',
-   SOLR_PORT:':8080',
+    '$http',
+    function ($http) {
 
-   //base:"/",
-   base:"/protosearch/",
-   
-   
-   ontology:{
-	   /* Ontology filters */
-	   "enzymeclassification":"Enzyme classification",
-	   "evidencecodeontology":"Evidence Code",
-	   "evocanatomicalsystem":"eVOC Anatomical System",
-	   "evoccelltype":"eVOC Cell Type",
-	   "evocdevelopmentstage":"eVOC Development Stage",
-	   "evocpathology":"eVOC Pathology",
-	   "gobiologicalprocess":"GO Biological Process",
-	   "gocellularcomponent":"GO Cellular Component",
-	   "gomolecularfunction":"GO Molecular Function",
-	   "mesh":"MeSH",
-	   "meshanatomy":"MeSH Anatomy",
-	   "mim":"MIM",
-	   "nextprotbiosequenceannotation":"neXtProt biosequence annotation",
-	   "nextprotfamily":"neXtProt family",
-	   "nextprottissues":"neXtProt human anatomy",
-	   "nonstandardaminoacid":"Non-standard amino acid",
-	   "organelle":"Organelle",
-	   "sequenceontology":"Sequence ontology",
-	   "stage":"Stage",
-	   "uniprotcarbohydrate":"UniProt carbohydrate",
-	   "uniprotcellline":"neXtProt cell line",
-	   "uniprotdisease":"UniProt disease",
-	   "uniprotdomain":"UniProt domain",
-	   "uniprotfamily":"UniProt family",
-	   "uniprotkeywords":"UniProt keyword",
-	   "uniprotmetal":"UniProt metal",
-	   "uniprotpathways":"UniPathway",
-	   "uniprotposttranslationalmodifications":"UniProt post-translational modification",
-	   "uniprotsubcellularlocation":"UniProt subcellular location",
-	   "uniprotsubcellularorientation":"Uniprot subcellular orientation",
-	   "uniprotsubcellulartopology":"UniProt subcellular topology",
-	   "uniprottopology":"UniProt topology",
+        var BASE_URL = 'http://localhost';
+        // var BASE_URL= 'http://uat-web1.isb-sib.ch';
 
-	   /* Publication filters */
-	   "curated":"Cited for annotation",
-	   "largescale":"Large scale data",
-	   "computed":"Not cited for annotation",
-		   
-	   /* Entries filters */
-	   "filterexpressionprofile":"Expression profile",
-	   "filterproteomics":"Proteomics",
-	   "filterstructure":"3D structure",
-	   "filtermutagenesis":"Mutagenesis",
-	   "filterdisease":"Disease"
-   },
-   
+        //
+        // solr configuration
+        var defaultApi = {
+            BASE_URL: BASE_URL,
+            SOLR_SERVER: BASE_URL + ':port/nextprot-api/:action/:entity',
+            //SOLR_PORT:':8282',
+            SOLR_PORT: ':8080',
+
+            //base:"/",
+            base: "/protosearch/",
 
 
-	widgets:{
-		sort:{
-			//asc:"icon-sort-by-attributes",
-			asc:"icon-arrow-up",
-			desc:"icon-arrow-down",
-			// desc:"icon-sort-by-attributes-alt",
-			"":""
-		},
-		proteins:{
-			gold:true,
-			qualityLabel:{
-			  'gold':'Gold only',
-			  'gold-and-silver':'Include silver'
-			}
+            ontology: {
+                /* Ontology filters */
+                "enzymeclassification": "Enzyme classification",
+                "evidencecodeontology": "Evidence Code",
+                "evocanatomicalsystem": "eVOC Anatomical System",
+                "evoccelltype": "eVOC Cell Type",
+                "evocdevelopmentstage": "eVOC Development Stage",
+                "evocpathology": "eVOC Pathology",
+                "gobiologicalprocess": "GO Biological Process",
+                "gocellularcomponent": "GO Cellular Component",
+                "gomolecularfunction": "GO Molecular Function",
+                "mesh": "MeSH",
+                "meshanatomy": "MeSH Anatomy",
+                "mim": "MIM",
+                "nextprotbiosequenceannotation": "neXtProt biosequence annotation",
+                "nextprotfamily": "neXtProt family",
+                "nextprottissues": "neXtProt human anatomy",
+                "nonstandardaminoacid": "Non-standard amino acid",
+                "organelle": "Organelle",
+                "sequenceontology": "Sequence ontology",
+                "stage": "Stage",
+                "uniprotcarbohydrate": "UniProt carbohydrate",
+                "uniprotcellline": "neXtProt cell line",
+                "uniprotdisease": "UniProt disease",
+                "uniprotdomain": "UniProt domain",
+                "uniprotfamily": "UniProt family",
+                "uniprotkeywords": "UniProt keyword",
+                "uniprotmetal": "UniProt metal",
+                "uniprotpathways": "UniPathway",
+                "uniprotposttranslationalmodifications": "UniProt post-translational modification",
+                "uniprotsubcellularlocation": "UniProt subcellular location",
+                "uniprotsubcellularorientation": "Uniprot subcellular orientation",
+                "uniprotsubcellulartopology": "UniProt subcellular topology",
+                "uniprottopology": "UniProt topology",
 
-		},
-		publications:{
-			gold:false
-		},
-		terms:{
-			gold:false
-		}
-	},
+                /* Publication filters */
+                "curated": "Cited for annotation",
+                "largescale": "Large scale data",
+                "computed": "Not cited for annotation",
+
+                /* Entries filters */
+                "filterexpressionprofile": "Expression profile",
+                "filterproteomics": "Proteomics",
+                "filterstructure": "3D structure",
+                "filtermutagenesis": "Mutagenesis",
+                "filterdisease": "Disease"
+            },
 
 
-   entityMapping:{
-		proteins:'entry.json',
-		publications:'publication.json',
-		terms:'term.json',
-		'entry.json':'proteins',
-		'publication.json':'publications',
-		'term.json':'terms'
-   },
+            widgets: {
+                sort: {
+                    //asc:"icon-sort-by-attributes",
+                    asc: "icon-arrow-up",
+                    desc: "icon-arrow-down",
+                    // desc:"icon-sort-by-attributes-alt",
+                    "": ""
+                },
+                proteins: {
+                    gold: true,
+                    qualityLabel: {
+                        'gold': 'Gold only',
+                        'gold-and-silver': 'Include silver'
+                    }
 
-   paginate:{
-   		steps:4,
-   		rows:50
-   }
+                },
+                publications: {
+                    gold: false
+                },
+                terms: {
+                    gold: false
+                }
+            },
 
- };
- //
- // global application configuration
- var defaultConfig = {
-	solr:defaultApi
- }
- 
 
- return defaultConfig;
-}
+            entityMapping: {
+                proteins: 'entry.json',
+                publications: 'publication.json',
+                terms: 'term.json',
+                'entry.json': 'proteins',
+                'publication.json': 'publications',
+                'term.json': 'terms'
+            },
+
+            paginate: {
+                steps: 4,
+                rows: 50
+            }
+
+        };
+        //
+        // global application configuration
+        var defaultConfig = {
+            solr: defaultApi
+        }
+
+
+        return defaultConfig;
+    }
 ]);
