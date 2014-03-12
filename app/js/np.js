@@ -106,7 +106,7 @@ App.factory('authInterceptor', function ($rootScope, $q, $window, $location) {
         request: function (config) {
             if(config.url.indexOf('nextprot-api/user') != -1){
                 config.headers = config.headers || {};
-                if ($window.sessionStorage.username == 'Guest') {
+                if ($window.sessionStorage.token) {
                     console.log('adding token ' + $window.sessionStorage.token)
                     config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
                 }else $location.path("login");
