@@ -7,6 +7,7 @@ UserModule.config([
     function ($routeProvider) {
         $routeProvider
             .when('/login', { templateUrl: 'login.html'})
+            .when('/logout', { templateUrl: 'logout.html'})
     }
 ]);
 
@@ -27,6 +28,15 @@ UserModule.controller('UserCtrl', ['$scope', '$location', '$http', 'UserService'
             });
 
         };
+
+
+        $scope.$watch(function() {
+            return $location.path();
+        }, function(a){
+            if(a.indexOf('logout') != -1){
+                UserService.logout();
+            }
+        });
 
     }]
 );
