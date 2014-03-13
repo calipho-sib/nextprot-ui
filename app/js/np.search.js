@@ -164,7 +164,6 @@ SearchModule.controller('ResultCtrl', [
         var params = _.clone($routeParams);
 
         if ($routeParams.sparql) {
-            alert('Will somehow execute' + $routeParams.sparql);
             console.log('routes' + $routeParams.sparql);
         }
 
