@@ -8,19 +8,21 @@ UserModule.config([
         $routeProvider
             .when('/login', { templateUrl: 'login.html'})
             .when('/logout', { templateUrl: 'logout.html'})
+
     }
 ]);
 
 
-UserModule.controller('UserCtrl', ['$scope', '$location', '$http', 'UserService',
-    function ($scope, $location, $http, UserService) {
+UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$http', '$window','$timeout', 'UserService',
+    function ($scope, $rootScope, $routeParams, $location, $http, $window, $timeout, UserService) {
 
+        console.log('route params', $routeParams);
         $scope.user = UserService;
 
-        $scope.login = function (username,password) {
-            UserService.login(username, password, function (err,data) {
+        $scope.login = function (username, password) {
+            UserService.login(username, password, function (err, data) {
                 //alert(data.access_token);
-                if(err){
+                if (err) {
                     alert(error + data);
                 }
                 UserService.getUserProfile(username);
@@ -30,13 +32,15 @@ UserModule.controller('UserCtrl', ['$scope', '$location', '$http', 'UserService'
         };
 
 
-        $scope.$watch(function() {
-            return $location.path();
-        }, function(a){
-            if(a.indexOf('logout') != -1){
-                UserService.logout();
-            }
-        });
+        //
+        // init google plus singin
+        $timeout(function(){
+            var po = document.createElement('script');
+            po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/client:plusone.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        },0)
+
 
     }]
 );

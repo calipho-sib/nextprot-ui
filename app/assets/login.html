@@ -1,10 +1,63 @@
-<div class="navbar navbar-fixed-top">
-    <div ng-controller="UserCtrl">
-        <form ng-submit="login(username,password)">
-            <input ng-model="username" type="text" name="user" placeholder="Username"/>
-            <input ng-model="password" type="password" name="pass" placeholder="Password"/>
-            <input type="submit" value="Login" ng-disabled="form.$invalid"/>
+<!--<div class="navbar navbar-fixed-top">-->
+<!--<div ng-controller="UserCtrl">-->
+<!--<form ng-submit="login(username,password)">-->
+<!--<input ng-model="username" type="text" name="user" placeholder="Username"/>-->
+<!--<input ng-model="password" type="password" name="pass" placeholder="Password"/>-->
+<!--<input type="submit" value="Login" ng-disabled="form.$invalid"/>-->
+<!--<button type="submit" class="btn btn-inverse" ng-click="googleAuth()">Sign in with google</button>-->
+<!--</form>-->
+<!--</div>-->
+<!--</div>-->
+<div ng-controller="UserCtrl" class="modal hide fade" modal-on-load="">
+    <div class="modal-header" >
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Please Log In, or <a href="#">Sign Up</a></h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label" for="inputUsernameEmail">Username or email</label>
+
+                <div class="controls">
+                    <input type="text" class="form-control" id="inputUsernameEmail">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputPassword">Password</label>
+
+                <div class="controls">
+                    <input type="password" class="form-control" id="inputPassword">
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <label class="checkbox"><input type="checkbox"> Remember me </label>
+                    <button type="submit" class="btn btn-primary">Log In</button>
+                </div>
+            </div>
+            <div class="control-group">
+
+                <div class="login-or">
+                    <hr class="hr-or">
+                    <span class="span-or">or</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="signinButton">Google</label>
+
+                <div class="controls">
+           <span id="signinButton">  <span class="g-signin"
+                                           data-callback="signinCallback"
+                                           data-clientid="827637097658-6ju4j4tkm2m5pok8lufqa64g7jge9p56.apps.googleusercontent.com"
+                                           data-cookiepolicy="single_host_origin"
+                                           data-requestvisibleactions="http://schemas.google.com/AddActivity"
+                                           data-scope="https://www.googleapis.com/auth/plus.login">
+            </span> </span>
+                </div>
+
+            </div>
         </form>
     </div>
+    <div class="modal-footer"></div>
 </div>
-

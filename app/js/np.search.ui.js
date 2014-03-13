@@ -58,6 +58,13 @@ SearchUI.directive('npAnimate', ['config', 'Search', '$location' ,function (conf
 	}]);
 
 
+
+SearchUI.directive('modalOnLoad', function () {
+    return function (scope, element, attrs) {
+        element.modal();
+    };
+});
+
 SearchUI.directive('npEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {
