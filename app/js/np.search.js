@@ -36,11 +36,13 @@ SearchModule.controller('SearchCtrl', [
     '$timeout',
     'Search',
     'config',
-    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config) {
+    'UserService',
+    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, UserService) {
         //
         // scope from template
         $scope.Search = Search;
         $scope.config = config;
+        $scope.user = UserService;
 
         $scope.cookies = function (session) {
             Search.cookies(session)

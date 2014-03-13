@@ -34,15 +34,15 @@ UserService.factory('UserService', [
 
         var UserService = function () {
 
-            if ($window.sessionStorage.username) {
-                this.getUserProfile($window.sessionStorage.username);
-            } else {
+//            if ($window.sessionStorage.username) {
+//                this.getUserProfile($window.sessionStorage.username);
+//            } else {
                 this.userProfile = {
                     username: "Guest",
                     role: 'ANONYMOUS',
                     userLoggedIn: false
                 }
-            }
+//            }
         };
 
         UserService.prototype.isAnonymous = function () {
@@ -67,6 +67,7 @@ UserService.factory('UserService', [
                 me.userProfile.role = 'USER';
                 me.userProfile.username = data.username;
                 me.userProfile.userLoggedIn = true;
+                console.log("me" , me);
                 $window.sessionStorage.username = data.username;
 
                 if (cb)cb(data);

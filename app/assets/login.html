@@ -1,42 +1,31 @@
-<!--<div class="navbar navbar-fixed-top">-->
-<!--<div ng-controller="UserCtrl">-->
-<!--<form ng-submit="login(username,password)">-->
-<!--<input ng-model="username" type="text" name="user" placeholder="Username"/>-->
-<!--<input ng-model="password" type="password" name="pass" placeholder="Password"/>-->
-<!--<input type="submit" value="Login" ng-disabled="form.$invalid"/>-->
-<!--<button type="submit" class="btn btn-inverse" ng-click="googleAuth()">Sign in with google</button>-->
-<!--</form>-->
-<!--</div>-->
-<!--</div>-->
 <div ng-controller="UserCtrl" class="modal hide fade" modal-on-load="">
-    <div class="modal-header" >
+    <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
         <h3>Please Log In, or <a href="#">Sign Up</a></h3>
     </div>
     <div class="modal-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" ng-submit="login(username,password)">
             <div class="control-group">
                 <label class="control-label" for="inputUsernameEmail">Username or email</label>
 
                 <div class="controls">
-                    <input type="text" class="form-control" id="inputUsernameEmail">
+                    <input ng-model="username" type="text" class="form-control" id="inputUsernameEmail">
                 </div>
             </div>
             <div class="control-group">
                 <label class="control-label" for="inputPassword">Password</label>
 
                 <div class="controls">
-                    <input type="password" class="form-control" id="inputPassword">
+                    <input ng-model="password" type="password" class="form-control" id="inputPassword">
                 </div>
             </div>
             <div class="control-group">
                 <div class="controls">
                     <label class="checkbox"><input type="checkbox"> Remember me </label>
-                    <button type="submit" class="btn btn-primary">Log In</button>
+                    <button type="submit" class="btn btn-primary"> Log In</button>
                 </div>
             </div>
             <div class="control-group">
-
                 <div class="login-or">
                     <hr class="hr-or">
                     <span class="span-or">or</span>
