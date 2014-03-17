@@ -18,7 +18,7 @@ UserService.factory('UserService', [
         var baseAuthUrl = "http://localhost:9090";
         var baseUrl = config.solr.BASE_URL + config.solr.SOLR_PORT;
 
-        $rootScope.$on('$routeChangeSuccess', function() {
+        $rootScope.$on('$routeChangeSuccess', function () {
             history.push($location.$$path);
         });
 
@@ -34,15 +34,14 @@ UserService.factory('UserService', [
 
         var UserService = function () {
 
-//            if ($window.sessionStorage.username) {
-//                this.getUserProfile($window.sessionStorage.username);
-//            } else {
-                this.userProfile = {
-                    username: "Guest",
-                    role: 'ANONYMOUS',
-                    userLoggedIn: false
-                }
-//            }
+            this.userProfile = {
+                username: "Guest",
+                role: 'ANONYMOUS',
+                userLoggedIn: false
+            }
+            if ($window.sessionStorage.username) {
+                this.getUserProfile($window.sessionStorage.username);
+            }
         };
 
         UserService.prototype.isAnonymous = function () {
@@ -67,7 +66,7 @@ UserService.factory('UserService', [
                 me.userProfile.role = 'USER';
                 me.userProfile.username = data.username;
                 me.userProfile.userLoggedIn = true;
-                console.log("me" , me);
+                console.log("me", me);
                 $window.sessionStorage.username = data.username;
 
                 if (cb)cb(data);
