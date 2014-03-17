@@ -32,7 +32,6 @@ UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$loc
         };
 
 
-        //
         // init google plus singin
         $timeout(function(){
             var po = document.createElement('script');

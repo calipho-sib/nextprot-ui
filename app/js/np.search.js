@@ -52,6 +52,11 @@ SearchModule.controller('SearchCtrl', [
             }, 0)
         }
 
+        $scope.logout = function () {
+            UserService.logout();
+        }
+
+
         //
         // interact with the search bar
         $scope.params = function (params, form) {

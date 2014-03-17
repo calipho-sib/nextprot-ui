@@ -82,14 +82,12 @@
                     <li><a href="/login"  >Login</a></li>
                     <li><a href="#">Or Sign up Now!</a></li>
                 </ul>
-
-                {{user.userProfile.username}}
                 {{user.userProfile}}
                 <div ng-show="user.userProfile.userLoggedIn" class="btn-group pull-right">
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="" id="user-profile-button">{{user.userProfile.username}} &nbsp;<span class="caret"></span></a>
                     <ul id="search-entity-dropdown" class="dropdown-menu">
                         <li><a href="#">Profile</a></li>
-                        <li><a href="logout">Logout</a></li>
+                        <li><a href="#" ng-click="logout()">Logout</a></li>
                     </ul>
                 </div>
             </div>

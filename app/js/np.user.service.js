@@ -34,11 +34,9 @@ UserService.factory('UserService', [
 
         var UserService = function () {
 
-            this.userProfile = {
-                username: "Guest",
-                role: 'ANONYMOUS',
-                userLoggedIn: false
-            }
+            this.userProfile = {};
+            this.setGuestUser();
+
             if ($window.sessionStorage.username) {
                 this.getUserProfile($window.sessionStorage.username);
             }
@@ -74,13 +72,20 @@ UserService.factory('UserService', [
         };
 
         UserService.prototype.logout = function (cb) {
-            console.log('cleaning token and username');
             delete $window.sessionStorage.token;
             delete $window.sessionStorage.username;
+            this.setGuestUser();
+
+        }
+
+        UserService.prototype.setGuestUser = function () {
             this.userProfile.role = 'ANONYMOUS';
             this.userProfile.username = 'Guest';
             this.userProfile.userLoggedIn = false;
+
         }
+
+
 
         var service = new UserService();
         return service;
