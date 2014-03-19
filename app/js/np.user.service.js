@@ -31,6 +31,10 @@ UserService.factory('UserService', [
             get: { method: 'POST' }
         });
 
+        var $userLogout = $resource(baseAuthUrl + '/nextprot-auth/user/logout.json?token=:token', {token: '@token'}, {
+            get: { method: 'POST' }
+        });
+
         var UserService = function () {
 
             this.userProfile = {};
@@ -70,6 +74,10 @@ UserService.factory('UserService', [
         };
 
         UserService.prototype.logout = function (cb) {
+            $userLogout.get({token: $window.sessionStorage.token}, function (data) {
+                if (cb)cb(data);
+            });
+            console.log('deleting session storage')
             delete $window.sessionStorage.token;
             this.setGuestUser();
 
