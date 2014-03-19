@@ -25,7 +25,7 @@ UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$loc
                 if (err) {
                     alert(error + data);
                 }
-                UserService.getUserProfile(username);
+                UserService.getUserProfile();
                 $location.path("/");
             });
 

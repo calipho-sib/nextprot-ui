@@ -27,18 +27,17 @@ UserService.factory('UserService', [
         });
 
 
-        var $userProfile = $resource(baseUrl + '/nextprot-api/user/:username.json', {username: '@username'}, {
-            get: { method: 'GET' }
+        var $userProfile = $resource(baseAuthUrl + '/nextprot-auth/user/profile.json?token=:token', {token: '@token'}, {
+            get: { method: 'POST' }
         });
-
 
         var UserService = function () {
 
             this.userProfile = {};
             this.setGuestUser();
 
-            if ($window.sessionStorage.username) {
-                this.getUserProfile($window.sessionStorage.username);
+            if ($window.sessionStorage.token) {
+                this.getUserProfile();
             }
         };
 
@@ -58,22 +57,20 @@ UserService.factory('UserService', [
             });
         }
 
-        UserService.prototype.getUserProfile = function (username, cb) {
+        UserService.prototype.getUserProfile = function (cb) {
+            console.log('getting user profile')
             var me = this;
-            $userProfile.get({username: username}, function (data) {
+            $userProfile.get({token: $window.sessionStorage.token}, function (data) {
                 me.userProfile.role = 'USER';
                 me.userProfile.username = data.username;
                 me.userProfile.userLoggedIn = true;
                 console.log("me", me);
-                $window.sessionStorage.username = data.username;
-
                 if (cb)cb(data);
             });
         };
 
         UserService.prototype.logout = function (cb) {
             delete $window.sessionStorage.token;
-            delete $window.sessionStorage.username;
             this.setGuestUser();
 
         }
@@ -82,7 +79,6 @@ UserService.factory('UserService', [
             this.userProfile.role = 'ANONYMOUS';
             this.userProfile.username = 'Guest';
             this.userProfile.userLoggedIn = false;
-
         }
 
 
