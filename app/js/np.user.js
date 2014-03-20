@@ -31,6 +31,10 @@ UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$loc
 
         };
 
+        $scope.signup = function () {
+            $window.open('http://localhost:9090/nextprot-auth/user/registration');
+        };
+
 
         // init google plus singin
         $timeout(function(){

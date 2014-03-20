@@ -62,6 +62,8 @@ App.config([
             }];
         $httpProvider.responseInterceptors.push(interceptor);
 
+        //$httpProvider.defaults.useXDomain = true;
+        //$httpProvider.defaults.withCredentials = true;
 
 
 

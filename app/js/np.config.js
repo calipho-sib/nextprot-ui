@@ -9,6 +9,8 @@ angular.module('np.config', []).factory('config', [
     function ($http) {
 
         var BASE_URL = 'http://localhost';
+        var BASE_AUTH_URL = 'http://localhost:9090';
+
         // var BASE_URL= 'http://uat-web1.isb-sib.ch';
 
         //
@@ -18,6 +20,7 @@ angular.module('np.config', []).factory('config', [
             SOLR_SERVER: BASE_URL + ':port/nextprot-api/:action/:entity',
             //SOLR_PORT:':8282',
             SOLR_PORT: ':8080',
+            BASE_AUTH_URL: BASE_AUTH_URL,
 
             //base:"/",
             base: "/protosearch/",

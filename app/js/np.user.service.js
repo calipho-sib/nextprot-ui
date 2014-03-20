@@ -14,9 +14,7 @@ UserService.factory('UserService', [
 
         var history = [];
 
-
-        var baseAuthUrl = "http://localhost:9090";
-        var baseUrl = config.solr.BASE_URL + config.solr.SOLR_PORT;
+        var baseAuthUrl = config.solr.BASE_AUTH_URL;
 
         $rootScope.$on('$routeChangeSuccess', function () {
             history.push($location.$$path);
