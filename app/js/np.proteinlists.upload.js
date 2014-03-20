@@ -7,7 +7,7 @@ UploadListService.factory('UploadListService', [
    '$http',
    '$rootScope',
    function(config, $http, $rootScope) {
-   		var baseUrl = config.solr.BASE_URL+config.solr.SOLR_PORT;
+   		var baseUrl = config.api.BASE_URL+config.api.API_PORT;
 	   var _files = [];
 	   
 	   $http.defaults.useXDomain = true;

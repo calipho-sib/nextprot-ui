@@ -126,8 +126,8 @@ App.config(function ($httpProvider) {
 App.directive('npBase', ['config', function (config) {
     return function (scope, elm, attrs) {
         if (attrs['npBase'])
-            return elm.attr(attrs['npBase'], config.solr.base)
-        elm.attr('href', config.solr.base);
+            return elm.attr(attrs['npBase'], config.api.base)
+        elm.attr('href', config.api.base);
     };
 }]);
 

@@ -15,7 +15,7 @@ ProteinListService.factory('ProteinListService', [
 	   
 	   var lists;
 	   var selectedList;
-	   var baseUrl = config.solr.BASE_URL+config.solr.SOLR_PORT;
+	   var baseUrl = config.api.BASE_URL+config.api.API_PORT;
 
 	   console.log('base url: ', baseUrl);
 

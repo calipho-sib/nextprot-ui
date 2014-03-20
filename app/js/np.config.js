@@ -17,9 +17,9 @@ angular.module('np.config', []).factory('config', [
         // solr configuration
         var defaultApi = {
             BASE_URL: BASE_URL,
-            SOLR_SERVER: BASE_URL + ':port/nextprot-api/:action/:entity',
-            //SOLR_PORT:':8282',
-            SOLR_PORT: ':8080',
+            API_SERVER: BASE_URL + ':port/nextprot-api/:action/:entity',
+            //API_PORT:':8282',
+            API_PORT: ':8080',
             BASE_AUTH_URL: BASE_AUTH_URL,
 
             //base:"/",
@@ -118,7 +118,7 @@ angular.module('np.config', []).factory('config', [
         //
         // global application configuration
         var defaultConfig = {
-            solr: defaultApi
+            api: defaultApi
         }
 
 

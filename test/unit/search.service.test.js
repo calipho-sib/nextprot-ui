@@ -8,12 +8,12 @@ describe('np.config', function(){
 
     // tests start here
     it('test solr port ', angular.mock.inject(function(config) {
-    	expect(config.solr.SOLR_PORT).toBe(":8985");
+    	expect(config.api.API_PORT).toBe(":8985");
     }));
     it('test config structure ', angular.mock.inject(function(config) {
-    	expect(config.solr.core.publications).toBeDefined();;
-    	expect(config.solr.core.proteins).toBeDefined();;
-    	expect(config.solr.core.terms).toBeDefined();;
-    	expect(config.solr.ontology).toBeDefined();;
+    	expect(config.api.core.publications).toBeDefined();;
+    	expect(config.api.core.proteins).toBeDefined();;
+    	expect(config.api.core.terms).toBeDefined();;
+    	expect(config.api.ontology).toBeDefined();;
     }));
 });

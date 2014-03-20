@@ -38,7 +38,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
     'config',
     function($resource, config) {
 
-        var baseUrl = config.solr.BASE_URL+config.solr.SOLR_PORT;
+        var baseUrl = config.api.BASE_URL+config.api.API_PORT;
 
         var $api_adv_query = $resource(baseUrl+'/nextprot-api/user/:username/advanced-user-query.json', {username: '@username'}, {
             get: { method: 'GET', isArray: false },

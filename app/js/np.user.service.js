@@ -14,7 +14,7 @@ UserService.factory('UserService', [
 
         var history = [];
 
-        var baseAuthUrl = config.solr.BASE_AUTH_URL;
+        var baseAuthUrl = config.api.BASE_AUTH_URL;
 
         $rootScope.$on('$routeChangeSuccess', function () {
             history.push($location.$$path);
