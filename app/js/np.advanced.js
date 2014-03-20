@@ -28,7 +28,8 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     'AdvancedQueryService',
     'Tools',
     'flash',
-    function ($window, $resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash) {
+    'UserService',
+    function ($window, $resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash, UserService) {
         $scope.currentQuery;
         $scope.buttonDisabled = false;
 
@@ -62,7 +63,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 
 
         $scope.createAdvancedQuery = function () {
-            AdvancedQueryService.createAdvancedQuery('dani', $scope.currentQuery,
+            AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
                 function () {
                     $route.reload();
                 }
@@ -70,7 +71,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
         $scope.updateAdvancedQuery = function () {
-            AdvancedQueryService.updateAdvancedQuery('dani', $scope.currentQuery,
+            AdvancedQueryService.updateAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
                 function () {
                     flash('alert-success', "Updated successful for " + $scope.currentQuery.title); return;
                 }
@@ -78,7 +79,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
         $scope.deleteAdvancedQuery = function () {
-            AdvancedQueryService.deleteAdvancedQuery('dani', $scope.currentQuery,
+            AdvancedQueryService.deleteAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
                 function () {
                     flash('alert-success', "User query deleted successfully for " + $scope.currentQuery.title);
                     $route.reload();

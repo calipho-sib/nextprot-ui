@@ -23,7 +23,7 @@
                 </div>
                     <ul class="nav nav-pills nav-stacked">
                         <li class="story" ng-repeat="query in queries | filter:filterQuery" ng-click="setCurrentQuery(query)">
-                            <a ref >{{query.title}}</a>
+                            <a ref >[{{query.username}}] {{query.title}}</a>
                         </li>
                   </ul>
             </div>
@@ -42,8 +42,8 @@
 
                 <button ng-disabled="buttonDisabled" type="submit" class="btn btn-danger" ng-click="doAdvanceSearch()">Execute</button>
                 <button type="submit" class="btn btn-info">Publish (submit to review)</button>
-                <label>ID</label>
-                 <input class="span1" ng-model="currentQuery.advancedUserQueryId" disabled="true"></input>
+                <label>ID: {{currentQuery.advancedUserQueryId}}</label>
+                <label>Author: {{currentQuery.username}}</label>
                 <label>Title</label>
                     <input class="span12" ng-model="currentQuery.title"></input>
                 <label>SPARQL</label>

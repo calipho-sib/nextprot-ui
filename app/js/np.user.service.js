@@ -14,22 +14,22 @@ UserService.factory('UserService', [
 
         var history = [];
 
-        var baseAuthUrl = config.api.BASE_AUTH_URL;
+        var baseAuthUrl = config.api.AUTH_SERVER;
 
         $rootScope.$on('$routeChangeSuccess', function () {
             history.push($location.$$path);
         });
 
-        var $token = $resource(baseAuthUrl + '/nextprot-auth/oauth/token', {client_id: 'nextprotui', grant_type: 'password', username: '@username', password: '@password'}, {
+        var $token = $resource(baseAuthUrl + '/oauth/token', {client_id: 'nextprotui', grant_type: 'password', username: '@username', password: '@password'}, {
             get: { method: 'POST' }
         });
 
 
-        var $userProfile = $resource(baseAuthUrl + '/nextprot-auth/user/profile.json?token=:token', {token: '@token'}, {
+        var $userProfile = $resource(baseAuthUrl + '/user/profile.json?token=:token', {token: '@token'}, {
             get: { method: 'POST' }
         });
 
-        var $userLogout = $resource(baseAuthUrl + '/nextprot-auth/user/logout.json?token=:token', {token: '@token'}, {
+        var $userLogout = $resource(baseAuthUrl + '/user/logout.json?token=:token', {token: '@token'}, {
             get: { method: 'POST' }
         });
 
@@ -42,10 +42,6 @@ UserService.factory('UserService', [
                 this.getUserProfile();
             }
         };
-
-        UserService.prototype.isAnonymous = function () {
-            return this.role === 'ANONYMOUS';
-        }
 
         UserService.prototype.login = function (username, password, cb) {
             $token.get({username: username, password: password}, function (data) {
@@ -63,7 +59,7 @@ UserService.factory('UserService', [
             console.log('getting user profile')
             var me = this;
             $userProfile.get({token: $window.sessionStorage.token}, function (data) {
-                me.userProfile.role = 'USER';
+                me.userProfile.authorities = data.authorities;
                 me.userProfile.username = data.username;
                 me.userProfile.userLoggedIn = true;
                 console.log("me", me);
@@ -82,11 +78,10 @@ UserService.factory('UserService', [
         }
 
         UserService.prototype.setGuestUser = function () {
-            this.userProfile.role = 'ANONYMOUS';
+            this.userProfile.authorities = '[]';
             this.userProfile.username = 'Guest';
             this.userProfile.userLoggedIn = false;
         }
-
 
 
         var service = new UserService();

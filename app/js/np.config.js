@@ -18,9 +18,9 @@ angular.module('np.config', []).factory('config', [
         var defaultApi = {
             BASE_URL: BASE_URL,
             API_SERVER: BASE_URL + ':port/nextprot-api/:action/:entity',
-            //API_PORT:':8282',
             API_PORT: ':8080',
             BASE_AUTH_URL: BASE_AUTH_URL,
+            AUTH_SERVER : BASE_AUTH_URL + '/nextprot-auth',
 
             //base:"/",
             base: "/protosearch/",

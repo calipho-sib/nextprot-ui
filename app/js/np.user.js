@@ -13,26 +13,35 @@ UserModule.config([
 ]);
 
 
-UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$http', '$window','$timeout', 'UserService',
-    function ($scope, $rootScope, $routeParams, $location, $http, $window, $timeout, UserService) {
+UserModule.controller('UserCtrl', ['$scope', '$route', '$rootScope', '$routeParams', '$location', '$http', '$window','$timeout', 'config', 'UserService',
+    function ($scope, $rootScope, $route, $routeParams, $location, $http, $window, $timeout, config, UserService) {
+
+        $scope.username = "dani";
+        $scope.password = "123";
+
+        var baseAuthUrl = config.api.AUTH_SERVER;
 
         console.log('route params', $routeParams);
         $scope.user = UserService;
 
         $scope.login = function (username, password) {
             UserService.login(username, password, function (err, data) {
-                //alert(data.access_token);
                 if (err) {
                     alert(error + data);
+                    console.log('error' + err + data);
                 }
                 UserService.getUserProfile();
-                $location.path("/");
+                alert('yooo');
+                $location.path('/advanced');
+                $route.reload();
+                alert('ya');
+
             });
 
         };
 
         $scope.signup = function () {
-            $window.open('http://localhost:9090/nextprot-auth/user/registration');
+            $window.open(baseAuthUrl + '/user/registration', 'registration', 'width=400,height=300');
         };
 
 
@@ -43,7 +52,6 @@ UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$loc
             po.src = 'https://apis.google.com/js/client:plusone.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
         },0)
-
 
     }]
 );
