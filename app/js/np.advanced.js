@@ -33,7 +33,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         $scope.currentQuery;
         $scope.buttonDisabled = false;
 
-        AdvancedQueryService.getQueryList('dani', 'public',
+        AdvancedQueryService.getQueryList(UserService.userProfile.username, 'public',
             function (data) {
                 $scope.queries = data.advancedUserQueryList;
             });
