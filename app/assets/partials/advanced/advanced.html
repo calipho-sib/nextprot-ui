@@ -5,11 +5,13 @@
             <div class="span6">
                 <input ng-model="filterQuery" placeholder="text filter">
                 <div class="btn-group">
-                    <a class="btn dropdown-toggle" data-toggle="dropdown"> Select query repository <span class="caret"></span> </a>
+                    <a class="btn dropdown-toggle" data-toggle="dropdown">
+                        {{repository}}
+                        <span class="caret"></span> </a>
                     <ul class="dropdown-menu">
-                        <li><a href="">NextProt team (tutorial)</a></li>
-                        <li><a href="">Community</a></li>
-                        <li><a href="">Private</a></li>
+                        <li><a href="" ng-click="showNextprotRepository()">{{Search.config.widgets.repositories.nextprotRep}}</a></li>
+                        <li><a href="" ng-click="showPublicRepository()">{{Search.config.widgets.repositories.publicRep}}</a></li>
+                        <li><a href="" ng-click="showPrivateRepository()">{{Search.config.widgets.repositories.privateRep}}</a></li>
                     </ul>
                 </div>
                 <div class="btn-group">
@@ -27,10 +29,10 @@
                         </li>
                   </ul>
             </div>
-            <div class="span6" ng-init="scope = { isDisabled: false }">
-                <button type="submit" class="btn btn-inverse" ng-click="deleteAdvancedQuery()">Delete</button>
+            <div ng-show="isQuerySelected()" class="span6" ng-init="scope = { isDisabled: false }">
+                <button ng-show="hasPrivilegeToEdit()" type="submit" class="btn btn-inverse" ng-click="deleteAdvancedQuery()">Delete</button>
                 <button type="submit" class="btn btn-warning" ng-click="createAdvancedQuery()">Duplicate</button>
-                <button type="submit" class="btn btn-success" ng-click="updateAdvancedQuery()">Save</button>
+                <button ng-show="hasPrivilegeToEdit()" type="submit" class="btn btn-success" ng-click="updateAdvancedQuery()">Save</button>
                 <div class="btn-group">
                     <a class="btn dropdown-toggle btn-danger" data-toggle="dropdown">Run<span class="caret"></span> </a>
                     <ul class="dropdown-menu">
@@ -41,8 +43,8 @@
                 </div>
 
                 <button ng-disabled="buttonDisabled" type="submit" class="btn btn-danger" ng-click="doAdvanceSearch()">Execute</button>
-                <button type="submit" class="btn btn-info">Publish (submit to review)</button>
-                <label>ID: {{currentQuery.advancedUserQueryId}}</label>
+                <button ng-show="hasPrivilegeToEdit()" type="submit" class="btn btn-info">Publish (submit to review)</button>
+                <label ng-show="hasPrivilegeToEdit()">ID: {{currentQuery.advancedUserQueryId}}</label>
                 <label>Author: {{currentQuery.username}}</label>
                 <label>Title</label>
                     <input class="span12" ng-model="currentQuery.title"></input>

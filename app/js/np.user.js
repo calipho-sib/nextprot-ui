@@ -31,10 +31,8 @@ UserModule.controller('UserCtrl', ['$scope', '$route', '$rootScope', '$routePara
                     console.log('error' + err + data);
                 }
                 UserService.getUserProfile();
-                alert('yooo');
                 $location.path('/advanced');
                 $route.reload();
-                alert('ya');
 
             });
 

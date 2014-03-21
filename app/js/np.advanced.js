@@ -31,24 +31,68 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     'UserService',
     function ($window, $resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash, UserService) {
         $scope.currentQuery;
-        $scope.buttonDisabled = false;
+        var reps = Search.config.widgets.repositories;
+        $scope.repository = reps.privateRep;
 
-        AdvancedQueryService.getQueryList(UserService.userProfile.username, 'public',
+
+        AdvancedQueryService.getQueryList(UserService.userProfile.username, $scope.showPublic,
             function (data) {
                 $scope.queries = data.advancedUserQueryList;
+                $scope.currentQuery = null;
+
             });
 
         $scope.setCurrentQuery = function (query) {
             $scope.currentQuery = query;
         };
 
+        $scope.hasPrivilegeToEdit = function () {
+            if ($scope.currentQuery)
+                return ($scope.currentQuery.username == UserService.userProfile.username)
+            return false;
+        };
+
+        $scope.isQuerySelected = function () {
+            return ($scope.currentQuery != null);
+        };
+
+
+        $scope.showPrivateRepository = function () {
+
+            AdvancedQueryService.getQueryList(UserService.userProfile.username, $scope.showPublic,
+                function (data) {
+                    $scope.queries = data.advancedUserQueryList;
+                    $scope.currentQuery = null;
+                    $scope.repository = Search.config.widgets.repositories.privateRep;
+                });
+        };
+
+        $scope.showPublicRepository = function () {
+            AdvancedQueryService.getPublicQueryList(
+                function (data) {
+                    $scope.queries = data.advancedUserQueryList;
+                    $scope.currentQuery = null
+                    $scope.repository = Search.config.widgets.repositories.publicRep;
+
+                });
+        };
+
+        $scope.showNextprotRepository = function () {
+            AdvancedQueryService.getNextprotQueryList(
+                function (data) {
+                    $scope.queries = data.advancedUserQueryList;
+                    $scope.currentQuery = null;
+                    $scope.repository = Search.config.widgets.repositories.nextprotRep;
+                });
+        };
 
         $scope.doAdvanceSearch = function () {
-            if($scope.currentQuery == null) {
+            if ($scope.currentQuery == null) {
                 alert("Choose a query!")
-            }else {
+            } else {
 
-                var start = new Date().getTime();;
+                var start = new Date().getTime();
+                ;
                 $scope.buttonDisabled = true;
                 AdvancedSearchService.getEntriesBySparqlQuery(
                     $scope.currentQuery.sparql,
@@ -56,7 +100,8 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
                         var end = new Date().getTime();
                         $scope.results = data;
                         $scope.buttonDisabled = false;
-                        flash('alert-success', "Query executed successfully in " + (end - start) + " ms"); return;
+                        flash('alert-success', "Query executed successfully in " + (end - start) + " ms");
+                        return;
                     });
             }
         }
@@ -73,7 +118,8 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         $scope.updateAdvancedQuery = function () {
             AdvancedQueryService.updateAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
                 function () {
-                    flash('alert-success', "Updated successful for " + $scope.currentQuery.title); return;
+                    flash('alert-success', "Updated successful for " + $scope.currentQuery.title);
+                    return;
                 }
             );
         }
