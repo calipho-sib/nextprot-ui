@@ -98,7 +98,7 @@ angular.module('np.config', []).factory('config', [
                     gold: false
                 },
                 repositories: {
-                    nextprotRep: "neXtProt repository (tutorial)",
+                    nextprotRep: "neXtProt repository (Tutorial)",
                     privateRep: "Private repository",
                     publicRep: "Public repository (Community)"
                 }

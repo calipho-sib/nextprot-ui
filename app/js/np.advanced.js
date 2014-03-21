@@ -32,14 +32,14 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     function ($window, $resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash, UserService) {
         $scope.currentQuery;
         var reps = Search.config.widgets.repositories;
-        $scope.repository = reps.privateRep;
+        $scope.repository = reps.nextprotRep;
 
 
-        AdvancedQueryService.getQueryList(UserService.userProfile.username, $scope.showPublic,
+        AdvancedQueryService.getNextprotQueryList(
             function (data) {
                 $scope.queries = data.advancedUserQueryList;
                 $scope.currentQuery = null;
-
+                $scope.repository = Search.config.widgets.repositories.nextprotRep;
             });
 
         $scope.setCurrentQuery = function (query) {
@@ -108,6 +108,8 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 
 
         $scope.createAdvancedQuery = function () {
+            var name = $window.prompt("Query title");
+            $scope.currentQuery.title = name;
             AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
                 function () {
                     $route.reload();
@@ -119,6 +121,16 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             AdvancedQueryService.updateAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
                 function () {
                     flash('alert-success', "Updated successful for " + $scope.currentQuery.title);
+                    return;
+                }
+            );
+        }
+
+        $scope.publish = function () {
+            $scope.currentQuery.published = 'Y';
+            AdvancedQueryService.updateAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
+                function () {
+                    flash('alert-success', "Query successfully published to the community " + $scope.currentQuery.title);
                     return;
                 }
             );
