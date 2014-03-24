@@ -109,12 +109,14 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 
         $scope.createAdvancedQuery = function () {
             var name = $window.prompt("Query title");
-            $scope.currentQuery.title = name;
-            AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
-                function () {
-                    $route.reload();
-                }
-            );
+            if(name != null && name != ""){
+                $scope.currentQuery.title = name;
+                AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
+                    function () {
+                        $route.reload();
+                    }
+                );
+            }
         }
 
         $scope.updateAdvancedQuery = function () {
