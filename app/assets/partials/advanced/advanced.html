@@ -44,7 +44,7 @@
 
                 <button ng-disabled="buttonDisabled" type="submit" class="btn btn-danger" ng-click="doAdvanceSearch()">Execute</button>
 
-                <button ng-show="hasPrivilegeToEdit()" type="submit" class="btn btn-info" ng-click="publish()">Publish</button>
+                <button ng-show="hasPrivilegeToEdit()" type="submit" class="btn btn-info" ng-click="changePublishState()">{{getPublishText()}}</button>
                 <label ng-show="hasPrivilegeToEdit()">ID: {{currentQuery.advancedUserQueryId}}</label>
                 <label>Author: {{currentQuery.username}}</label>
                 <label>Title</label>

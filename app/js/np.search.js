@@ -43,6 +43,8 @@ SearchModule.controller('SearchCtrl', [
         $scope.Search = Search;
         $scope.config = config;
         $scope.user = UserService;
+        $scope.enableAdvancedUserQuery = false;
+        $scope.advancedUserQuery = "?entry :isoform/:expression/:in ?s. \n?s rdfs:subClassOf term:TS-1030;rdfs:label ?name.";
 
         $scope.cookies = function (session) {
             Search.cookies(session)
@@ -140,6 +142,10 @@ SearchModule.controller('SearchCtrl', [
             // restart search with last params
             Search.docs($routeParams, function (docs) {
             });
+        }
+
+        $scope.showUserQuery = function () {
+            $scope.enableAdvancedUserQuery = !$scope.enableAdvancedUserQuery;
         }
 
         $scope.$on('bs.autocomplete.update', function (event, arg) {

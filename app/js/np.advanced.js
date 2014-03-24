@@ -34,7 +34,6 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         var reps = Search.config.widgets.repositories;
         $scope.repository = reps.nextprotRep;
 
-
         AdvancedQueryService.getNextprotQueryList(
             function (data) {
                 $scope.queries = data.advancedUserQueryList;
@@ -109,7 +108,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 
         $scope.createAdvancedQuery = function () {
             var name = $window.prompt("Query title");
-            if(name != null && name != ""){
+            if (name != null && name != "") {
                 $scope.currentQuery.title = name;
                 AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
                     function () {
@@ -128,8 +127,21 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             );
         }
 
-        $scope.publish = function () {
-            $scope.currentQuery.published = 'Y';
+        $scope.getPublishText = function () {
+            if ($scope.currentQuery.published == 'N') {
+                return "Publish"
+            } else return "Unpublish";
+
+        }
+
+        $scope.changePublishState = function () {
+
+            if ($scope.currentQuery.published == 'N') {
+                $scope.currentQuery.published = 'Y';
+            } else {
+                $scope.currentQuery.published = 'N';
+            }
+
             AdvancedQueryService.updateAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
                 function () {
                     flash('alert-success', "Query successfully published to the community " + $scope.currentQuery.title);
