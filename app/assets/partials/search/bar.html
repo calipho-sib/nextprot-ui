@@ -1,4 +1,4 @@
-  
+
   <div  ng-cloak class="row search-row"  np-animate="#main">
     <div class="row-fluid">
       <form ng-submit="go()" validate>
@@ -7,7 +7,7 @@
         <!--  ENTITY SELECTION      -->
         <!--                        -->
 	      <div class="btn-group pull-right">
-	      
+
 	        <a class="btn dropdown-toggle" data-toggle="dropdown" href="" id="search-entity">
             {{Search.config.entityMapping[Search.params.entity]}}&nbsp;
 	          <span class="caret"></span>
@@ -18,7 +18,7 @@
 	          <li><a  ng-click="entity({entity:'publications'})">Publications</a></li>
 	          <li><a  ng-click="entity({entity:'terms'})">Terms</a></li>
 	        </ul>
-	      </div>        
+	      </div>
       <!--                        -->
       </div>
       <div class="span9 search-bar">
@@ -39,18 +39,18 @@
 	        </div>
           <!--                        -->
 
+
           <!--                        -->
           <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
           <!--                        -->
-	        <input id="search-query" class=" "  type="text" ng-model="Search.params.query"  
-	               ng-class="{'quality-search-width':Search.config.widgets[Search.result.display].gold,'no-quality-search-width':!Search.config.widgets[Search.result.display].gold}" 
+	        <input id="search-query" class=" "  type="text" ng-model="Search.params.query"
+	               ng-class="{'quality-search-width':Search.config.widgets[Search.result.display].gold,'no-quality-search-width':!Search.config.widgets[Search.result.display].gold}"
 	               autocomplete="off"  bs-autocomplete="Search.suggest" autofocus>
 
-
           <!--                        -->
-          <!--  CLEAN BUTTON          -->
+          <!--  User query button     -->
           <!--                        -->
-	        <button id="search-clear"  class="btn" type="button" ng-click="clean({})" ng-disabled="!Search.params.query || !Search.params.query.length"><i class="icon-remove ajax-end"></i></button>
+            <button id="adv-user-query"  class="btn" type="button" ng-click="showUserQuery({})" ><i class="icon-cog ajax-end"></i></button>
 
 
           <!--                        -->
@@ -58,23 +58,25 @@
           <!--                        -->
 	        <button id="search-button" class="btn" type="submit"  ng-disabled="!Search.params.query || !Search.params.query.length"><i class="icon-search" ></i>&nbsp;Search</button>
 	      </div>
-	      <div class="span10 ">	       
-	        <span ng-show="Search.result.spellcheck.collations.length" id="search-didyoumean"><b class="gray">&nbsp;Did you mean:</b> 
+	      <div class="span8 ">
+	        <span ng-show="Search.result.spellcheck.collations.length" id="search-didyoumean"><b class="gray">&nbsp;Did you mean:</b>
 	          <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[0].query}}">{{Search.result.spellcheck.collations[0].query}}</a>
 	          <span ng-show="Search.result.spellcheck.collations[1]">, 
 	            <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[1].query}}">{{Search.result.spellcheck.collations[1].query}}</a>
 	          </span>
 	        </span>&nbsp;
 	      </div>
-	      
 
+          <!--                      -->
+          <!--  CLEAN BUTTON        -->
+          <!--                      -->
+          <button id="search-clear"  class="btn" type="button" ng-click="clean({})" ng-disabled="!Search.params.query || !Search.params.query.length"><i class="icon-remove ajax-end"></i></button>
 
       </div>
       </form>
-    </div>   
+    </div>
       <div class="row solrparams" >
-
-      </div>             
+      </div>
 
   </div>
   
