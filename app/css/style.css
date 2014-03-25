@@ -5,17 +5,6 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 
-#search-didyoumean.ng-hide-remove{
-    -webkit-animation: fadeInRight 0.5s;
-    animation: fadeInRight 0.5s;
-}
-
-#search-didyoumean.ng-hide-add{
-    -webkit-animation: fadeOutRight 0.5s;
-    animation: fadeOutRight 0.5s;
-}
-
-
 a.inactive {
    pointer-events: none;
    cursor: default;
@@ -173,8 +162,6 @@ a.inactive {
     text-decoration: none;
 }
 
-
-
 [class*="span"] .nomargin {
 	margin:0px;
 }
@@ -219,6 +206,18 @@ ul#search-results .result-abstract{
 
 .sparql-small-box{
     height:100px;
+    width: 500px;
     border:1px solid;
     border-color: lightgray;
 }
+
+#sparql-small-div.ng-hide-add{
+    -webkit-animation: rollOut 0.5s;
+    display:block!important;
+}
+
+#sparql-small-div.ng-hide-remove{
+    -webkit-animation: fadeInDown 0.5s;
+    display:block!important;
+}
+

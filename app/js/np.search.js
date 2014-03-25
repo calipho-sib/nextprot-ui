@@ -44,7 +44,8 @@ SearchModule.controller('SearchCtrl', [
         $scope.config = config;
         $scope.user = UserService;
         $scope.enableAdvancedUserQuery = false;
-        $scope.advancedUserQuery = "?entry :isoform/:expression/:in ?s. \n?s rdfs:subClassOf term:TS-1030;rdfs:label ?name.";
+
+        $scope.advancedUserQuery = "# Example Proteins expressed in liver and involved in transport\n?entry :isoform/:expression/:in/:childOf term:TS-0564;\n:classifiedWith term:KW-0813.";
 
         $scope.cookies = function (session) {
             Search.cookies(session)
