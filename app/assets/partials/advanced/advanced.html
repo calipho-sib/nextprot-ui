@@ -72,7 +72,7 @@
                 <input class="span12" ng-model="currentQuery.title"></input>
 
                 <label>Sparql</label>
-                <div ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}" ng-model="currentQuery.sparql"></div>
+                <div ui-ace="{useWrapMode : false, showGutter: true, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}" ng-model="currentQuery.sparql"></div>
 
                 <label>Description</label>
                 <textarea class="span12" placeholder="Description goes here...." rows="10" cols="200000"
