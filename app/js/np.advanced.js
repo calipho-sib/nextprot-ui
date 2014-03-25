@@ -128,10 +128,11 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
         $scope.getPublishText = function () {
-            if ($scope.currentQuery.published == 'N') {
-                return "Publish"
-            } else return "Unpublish";
-
+            if($scope.currentQuery){
+                if ($scope.currentQuery.published == 'N') {
+                    return "Publish"
+                } else return "Unpublish";
+            }
         }
 
         $scope.changePublishState = function () {
