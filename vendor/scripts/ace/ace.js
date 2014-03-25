@@ -12909,6 +12909,10 @@ var Editor = function(renderer, session) {
     this.setSession(session || new EditSession(""));
     config.resetOptions(this);
     config._signal("editor", this);
+
+    this.setOptions({
+        enableBasicAutocompletion: true
+    });
 };
 
 (function(){

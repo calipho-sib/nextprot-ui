@@ -72,7 +72,7 @@ var sparqlHighlightRules = function() {
 
     var builtinFunctions = (
         "count|min|max|avg|sum|rank|now|coalesce" +
-        "classifiedWith|isoform|expression|entry" 
+        "classifiedWith|childOf|isoform|term|classifiedWith|expression|entry"
     );
 
     var keywordMapper = this.createKeywordMapper({
