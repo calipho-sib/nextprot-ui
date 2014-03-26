@@ -34,13 +34,10 @@
             <tbody>
             <tr ng-repeat="query in queries | filter:filterQuery">
                 <td>{{query.username}}</td>
-                <td><a href="">{{query.title}}</a></td>
+                <td><a href="" ng-click="selectUserQueryFromModal(query.sparql); dismiss();">{{query.title}}</a></td>
             </tr>
             </tbody>
         </table>
 
     </form>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" ng-click="selectQuery(dismiss(), 'action')" ng-disabled="!selected.name">Select</button>
 </div>
