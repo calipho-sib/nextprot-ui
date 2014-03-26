@@ -38,6 +38,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
     'config',
     function ($resource, config) {
 
+
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
         var $nextprot_query_list = $resource(baseUrl + '/nextprot-api/user/advanced-nextprot-query.json', {
@@ -60,6 +61,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
 
         var AdvancedQueryService = function () {
+            this.currentQuery = "# Example Proteins expressed in liver and involved in transport\n?entry :isoform/:expression/:in/:childOf term:TS-0564;\n:classifiedWith term:KW-0813.";
         };
 
         AdvancedQueryService.prototype.getQueryList = function (username, includePublic, cb) {

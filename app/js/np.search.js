@@ -37,7 +37,8 @@ SearchModule.controller('SearchCtrl', [
     'Search',
     'config',
     'UserService',
-    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, UserService) {
+    'AdvancedQueryService',
+    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, UserService, AdvancedQueryService) {
         //
         // scope from template
         $scope.Search = Search;
@@ -45,7 +46,7 @@ SearchModule.controller('SearchCtrl', [
         $scope.user = UserService;
         $scope.enableAdvancedUserQuery = false;
 
-        $scope.advancedUserQuery = "# Example Proteins expressed in liver and involved in transport\n?entry :isoform/:expression/:in/:childOf term:TS-0564;\n:classifiedWith term:KW-0813.";
+        $scope.AdvancedQueryService = AdvancedQueryService;
 
         $scope.cookies = function (session) {
             Search.cookies(session)
@@ -53,6 +54,10 @@ SearchModule.controller('SearchCtrl', [
                 // must be called 2times??
                 Search.cookies(session)
             }, 0)
+        }
+
+        $scope.setAdvancedUserQuery = function (sparql) {
+            $scope.advancedUserQuery = sparql;
         }
 
         $scope.logout = function () {
@@ -321,6 +326,7 @@ SearchModule.controller('ResultCtrl', [
             $scope.selected = {};
             angular.extend($scope.modal, { type: action});
         }
+
 
         $scope.saveModal = function (dismiss) {
             var proteinList = {

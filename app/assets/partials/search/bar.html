@@ -71,7 +71,7 @@
                     &nbsp;
 
                     <div class="sparql-small-box">
-                        <div style="height: inherit;" ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}" ng-model="advancedUserQuery"></div>
+                        <div style="height: inherit;" ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}" ng-model="AdvancedQueryService.currentQuery"></div>
                     </div>
 
 	        <span ng-show="Search.result.spellcheck.collations.length" id="search-didyoumean"><b class="gray">&nbsp;Did you mean:</b>

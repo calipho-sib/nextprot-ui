@@ -164,7 +164,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         // Modal actions
 
         $scope.selectUserQueryFromModal = function (sparql) {
-            Search.advancedUserQuery = sparql;
+            AdvancedQueryService.currentQuery = sparql;
         };
 
 
