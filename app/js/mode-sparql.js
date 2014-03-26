@@ -62,8 +62,7 @@ var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 var sparqlHighlightRules = function() {
 
     var keywords = (
-        "select|insert|update|delete|from|where|and|or|group|by|order|limit|offset|having|as|case|" +
-        "when|else|end|type|left|right|join|on|outer|desc|asc" 
+        "base|prefix|select|ask|construct|describe|where|from|reduced|named|order|limit|offset|filter|optional|graph|by|asc|desc"
     );
 
     var builtinConstants = (
