@@ -33,6 +33,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         $scope.currentQuery;
         var reps = Search.config.widgets.repositories;
         $scope.repository = reps.nextprotRep;
+        $scope.AdvancedQueryService = AdvancedQueryService;
 
         AdvancedQueryService.getNextprotQueryList(
             function (data) {
@@ -159,13 +160,6 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
                 }
             );
         }
-
-
-        // Modal actions
-
-        $scope.selectUserQueryFromModal = function (sparql) {
-            AdvancedQueryService.currentQuery = sparql;
-        };
 
 
     }

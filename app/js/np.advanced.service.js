@@ -61,8 +61,27 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
 
         var AdvancedQueryService = function () {
-            this.currentQuery = "# Example Proteins expressed in liver and involved in transport\n?entry :isoform/:expression/:in/:childOf term:TS-0564;\n:classifiedWith term:KW-0813.";
+            this.currentQuery = {};
+            this.setEmptyQuery();
         };
+
+
+        AdvancedQueryService.prototype.setEmptyQuery = function () {
+            this.currentQuery.advancedUserQueryId = null;
+            this.currentQuery.title = null;
+            this.currentQuery.sparql = null;
+            this.currentQuery.username = null;
+        }
+
+        AdvancedQueryService.prototype.setCurrentQuery = function (query) {
+            this.currentQuery.advancedUserQueryId = query.advancedUserQueryId;
+            this.currentQuery.title = query.title;
+            this.currentQuery.sparql = query.sparql;
+            this.currentQuery.username = query.username;
+            this.currentQuery.description = query.description;
+            this.currentQuery.published = query.published;
+        }
+
 
         AdvancedQueryService.prototype.getQueryList = function (username, includePublic, cb) {
             return $user_query_list.get({username: username}, function (data) {

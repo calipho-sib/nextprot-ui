@@ -34,7 +34,7 @@
             <tbody>
             <tr ng-repeat="query in queries | filter:filterQuery">
                 <td>{{query.username}}</td>
-                <td><a href="" ng-click="selectUserQueryFromModal(query.sparql); dismiss();">{{query.title}}</a></td>
+                <td><a data-toggle="tooltip" title="{{query.description}}" href="" ng-click="AdvancedQueryService.setCurrentQuery(query); dismiss();">{{query.title}}</a></td>
             </tr>
             </tbody>
         </table>

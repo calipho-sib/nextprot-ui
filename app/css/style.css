@@ -205,7 +205,7 @@ ul#search-results .result-abstract{
 }
 
 .sparql-small-box{
-    height:100px;
+    height:200px;
     width: 500px;
     border:1px solid;
     border-color: lightgray;
