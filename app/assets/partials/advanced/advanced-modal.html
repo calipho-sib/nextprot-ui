@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Select from repository</h3>
+</div>
+<div class="modal-body" ng-controller="AdvancedCtrl">
+    <form class="form-horizontal">
+        <input ng-model="filterQuery" placeholder="text filter">
+
+        <div class="btn-group">
+            <a class="btn dropdown-toggle" data-toggle="dropdown">
+                {{repository}}
+                <span class="caret"></span> </a>
+            <ul class="dropdown-menu">
+                <li><a href="" ng-click="showNextprotRepository()">{{Search.config.widgets.repositories.nextprotRep}}</a>
+                </li>
+                <li><a href="" ng-click="showPrivateRepository()">{{Search.config.widgets.repositories.privateRep}}</a>
+                </li>
+                <li><a href="" ng-click="showPublicRepository()">{{Search.config.widgets.repositories.publicRep}}</a>
+                </li>
+            </ul>
+        </div>
+        <ul class="nav nav-pills nav-stacked">
+            <li class="story" ng-repeat="query in queries | filter:filterQuery"
+                ng-click="setCurrentQuery(query)">
+                <a ref>[{{query.username}}] {{query.title}}</a>
+            </li>
+        </ul>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="selectQuery(dismiss(), 'action')" ng-disabled="!selected.name">Select</button>
+</div>

@@ -65,10 +65,12 @@
 
 
                 <div class="span6 relative" id="sparql-small-div" ng-show="!enableAdvancedUserQuery">
-                    <label href="#">Select from list</label>
+
+                    <!-- ng-click="launchModal($index, 'edit')" -->
+                    <button class="btn btn-mini" bs-modal="'partials/advanced/advanced-modal.html'" >Select from repository <i class="icon-list"></i></button>
+                    &nbsp;
 
                     <div class="sparql-small-box">
-                        <!-- &nbsp;-->
                         <div style="height: inherit;" ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}" ng-model="advancedUserQuery"></div>
                     </div>
 
