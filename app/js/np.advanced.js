@@ -30,18 +30,9 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     'flash',
     'UserService',
     function ($window, $resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash, UserService) {
-        $scope.currentQuery;
         $scope.reps = Search.config.widgets.repositories;
         $scope.repository = $scope.reps.nextprotRep;
         $scope.AdvancedQueryService = AdvancedQueryService;
-
-        // Starts with the nextprot
-/*        AdvancedQueryService.getNextprotQueryList(
-            function (data) {
-                $scope.queries = data.advancedUserQueryList;
-                $scope.currentQuery = null;
-                $scope.repository = Search.config.widgets.repositories.nextprotRep;
-            });*/
 
         $scope.setCurrentQuery = function (query) {
             $scope.currentQuery = query;
@@ -109,15 +100,12 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 
 
         $scope.createAdvancedQuery = function () {
-            var name = $window.prompt("Query title");
-            if (name != null && name != "") {
-                $scope.currentQuery.title = name;
-                AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
-                    function () {
-                        $route.reload();
-                    }
-                );
-            }
+            AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username, AdvancedQueryService.currentQuery,
+                function () {
+                    flash('alert-success', AdvancedQueryService.currentQuery.title + ' saved successfully!')
+                    $route.reload();
+                }
+            );
         }
 
         $scope.updateAdvancedQuery = function () {
