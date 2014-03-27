@@ -38,7 +38,8 @@ SearchModule.controller('SearchCtrl', [
     'config',
     'UserService',
     'AdvancedQueryService',
-    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, UserService, AdvancedQueryService) {
+    'flash',
+    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, UserService, AdvancedQueryService, flash) {
         //
         // scope from template
         $scope.Search = Search;
@@ -151,7 +152,12 @@ SearchModule.controller('SearchCtrl', [
         }
 
         $scope.showUserQuery = function () {
-            $scope.enableAdvancedUserQuery = !$scope.enableAdvancedUserQuery;
+            if(UserService.userProfile.userLoggedIn){
+                $scope.enableAdvancedUserQuery = !$scope.enableAdvancedUserQuery;
+            }else {
+                var message = "You must be logged in to use the advanced search feature.";
+                flash('alert-warn', message);
+            }
         }
 
         $scope.$on('bs.autocomplete.update', function (event, arg) {

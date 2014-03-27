@@ -1,8 +1,8 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>Title</h3>
+    <h3>Save user query</h3>
 </div>
-<div class="modal-body" ng-controller="AdvancedCtrl">
+<div class="modal-body">
     <form class="form-horizontal">
         <div class="control-group">
             <label class="control-label" for="inputName">Name: </label>
@@ -10,25 +10,30 @@
                 <input id="inputName" type="text" placeholder="Name..." ng-model="AdvancedQueryService.currentQuery.title" focus>
             </div>
         </div>
+
+        <!-- Description -->
         <div class="control-group">
             <div class="control-label" for="inputDescription">
                 <label>Description: </label>
             </div>
             <div class="controls">
-                <textarea id="inputDescription" type="text" placeholder="Description..." ng-model="AdvancedQueryService.currentQuery.description">
+                <textarea rows="10" id="inputDescription" type="text" placeholder="Description..." ng-model="AdvancedQueryService.currentQuery.description">
                 </textarea>
             </div>
         </div>
 
         <div class="control-group">
-            <div class="control-label" for="inputDescription">
-                <label>Visible to the community: </label>
+            <div class="controls">
+                <label class="checkbox">
+                    <input type="checkbox">Published in the community repository
+                </label>
             </div>
-            <input type="checkbox">
         </div>
+
+
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="saveModal(dismiss(), 'action')" ng-disabled="!selected.name">Save</button>
+    <button class="btn btn-primary" ng-click="saveModal(dismiss(), 'action')">Save</button>
     <button class="btn" ng-click="modalDissmiss(dismiss())">Cancel</button>
 </div>

@@ -31,16 +31,17 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     'UserService',
     function ($window, $resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash, UserService) {
         $scope.currentQuery;
-        var reps = Search.config.widgets.repositories;
-        $scope.repository = reps.nextprotRep;
+        $scope.reps = Search.config.widgets.repositories;
+        $scope.repository = $scope.reps.nextprotRep;
         $scope.AdvancedQueryService = AdvancedQueryService;
 
-        AdvancedQueryService.getNextprotQueryList(
+        // Starts with the nextprot
+/*        AdvancedQueryService.getNextprotQueryList(
             function (data) {
                 $scope.queries = data.advancedUserQueryList;
                 $scope.currentQuery = null;
                 $scope.repository = Search.config.widgets.repositories.nextprotRep;
-            });
+            });*/
 
         $scope.setCurrentQuery = function (query) {
             $scope.currentQuery = query;

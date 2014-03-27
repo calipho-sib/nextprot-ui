@@ -36,7 +36,8 @@ var AdvancedQueryService = angular.module('np.advanced.query.service', []);
 AdvancedQueryService.factory('AdvancedQueryService', [
     '$resource',
     'config',
-    function ($resource, config) {
+    'UserService',
+    function ($resource, config, UserService) {
 
 
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
@@ -77,7 +78,6 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             this.currentQuery.advancedUserQueryId = query.advancedUserQueryId;
             this.currentQuery.title = query.title;
             this.currentQuery.sparql = query.sparql;
-            this.currentQuery.username = query.username;
             this.currentQuery.description = query.description;
             this.currentQuery.published = query.published;
         }

@@ -35,7 +35,8 @@ var flash = angular.module('np.flash', [])
   	var flash = function(level, text) {
   		emit(messages = asArrayOfMessages(level, text));
 
-    	$timeout(function() { messages = []; emit();}, 3000);
+        //to remove the messages after a timeout (now with a close button)
+        //$timeout(function() { messages = []; emit();}, 100000);
   	};
 
   	['alert-danger', 'alert-warning', 'alert-info', 'alert-success'].forEach(function (level) {
@@ -50,12 +51,14 @@ var flash = angular.module('np.flash', [])
 .directive('flashMessages', [function() {
   var directive = { restrict: 'EA', replace: true };
 
-  directive.template = '<ul class="unstyled" style="margin-top: 40px">' +
-  							'<li ng-repeat="m in messages"><div class="alert {{m.level}}">{{m.text}}</div></li>'+
-  						'</ul>';
+        directive.template = '<ul class="unstyled" style="margin-top: 60px; padding-left: 20%; padding-right: 20%;">' +
+            '<li ng-repeat="m in messages">' +
+            '<button type="button" class="close" style="padding-right: 5px" data-dismiss="alert">&times;</button>' +
+            '<div style="border-width: 1px; border-color: lightgray" class="alert {{m.level}}">{{m.text}}</div>' +
+            '</li>' +
+            '</ul>';
 
-
-  directive.controller = ['$scope', '$rootScope', function($scope, $rootScope) {
+        directive.controller = ['$scope', '$rootScope', function($scope, $rootScope) {
     $rootScope.$on('flash:message', function(_, messages, done) {
       $scope.messages = messages;
       done();

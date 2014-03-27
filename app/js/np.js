@@ -104,7 +104,7 @@ App.factory('Tools', [
 ]);
 
 // Authentication interceptors
-App.factory('authInterceptor', function ($rootScope, $q, $window, $location) {
+App.factory('authInterceptor', function ($rootScope, $q, $window, $location, flash) {
     return {
         request: function (config) {
             if(config.url.indexOf('nextprot-api/user') != -1){
@@ -112,7 +112,11 @@ App.factory('authInterceptor', function ($rootScope, $q, $window, $location) {
                 if ($window.sessionStorage.token) {
                     console.log('adding token ' + $window.sessionStorage.token)
                     config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
-                }else $location.path("login");
+                } else {
+                    var message = "You must be logged in to access " + config.url;
+                    flash('alert-warn', message);
+                    $location.path('login');
+                }
             }
             return config;
         }
