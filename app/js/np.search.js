@@ -346,7 +346,6 @@ SearchModule.controller('ResultCtrl', [
                 if (data.error) flash('alert-warning', data.error);
                 else {
                     flash('alert-info', "List " + proteinList.name + " created.");
-                    $location.path('/proteinlists');
                 }
             });
         }
