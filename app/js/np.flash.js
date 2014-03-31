@@ -35,9 +35,12 @@ var flash = angular.module('np.flash', [])
   	var flash = function(level, text) {
   		emit(messages = asArrayOfMessages(level, text));
 
-        //to remove the messages after a timeout (now with a close button)
-        //$timeout(function() { messages = []; emit();}, 100000);
-  	};
+        if(level == 'alert-info' || level == 'alert-success'){
+            //to remove the messages after a timeout
+            $timeout(function() { messages = []; emit();}, 3000);
+        }
+
+   	};
 
   	['alert-danger', 'alert-warning', 'alert-info', 'alert-success'].forEach(function (level) {
 

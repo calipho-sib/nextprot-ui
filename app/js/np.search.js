@@ -62,8 +62,10 @@ SearchModule.controller('SearchCtrl', [
         }
 
         $scope.logout = function () {
-            gapi.auth.signOut();
-            UserService.logout();
+            UserService.logout(function () {
+                    gapi.auth.signOut();
+                    flash('alert-info', "Successfully logged out ");
+            });
         }
 
 
@@ -156,7 +158,7 @@ SearchModule.controller('SearchCtrl', [
             if(UserService.userProfile.userLoggedIn){
                 $scope.enableAdvancedUserQuery = !$scope.enableAdvancedUserQuery;
             }else {
-                var message = "You must be logged in to use the advanced search feature.";
+                var message = "You must be logged in to use the expert mode.";
                 flash('alert-warn', message);
             }
         }
