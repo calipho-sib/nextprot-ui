@@ -62,7 +62,9 @@ SearchModule.controller('SearchCtrl', [
         }
 
         $scope.logout = function () {
-            UserService.logout();
+            UserService.logout(function () {
+                    flash('alert-info', "Successfully logged out ");
+            });
         }
 
 
@@ -155,7 +157,7 @@ SearchModule.controller('SearchCtrl', [
             if(UserService.userProfile.userLoggedIn){
                 $scope.enableAdvancedUserQuery = !$scope.enableAdvancedUserQuery;
             }else {
-                var message = "You must be logged in to use the advanced search feature.";
+                var message = "You must be logged in to use the expert mode.";
                 flash('alert-warn', message);
             }
         }
