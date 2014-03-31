@@ -62,6 +62,7 @@ SearchModule.controller('SearchCtrl', [
         }
 
         $scope.logout = function () {
+            gapi.auth.signOut();
             UserService.logout();
         }
 
