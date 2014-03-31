@@ -13,6 +13,22 @@ angular.module('np.config', []).factory('config', [
 
         // var BASE_URL= 'http://uat-web1.isb-sib.ch';
 
+
+        var google = {
+            rootUrl: 'http://localhost:3000', 
+      
+            credentials: {
+                'clientId': '330067914740-lr5rtkdth97c6qpkluj0rqknfe29ecr8.apps.googleusercontent.com',
+                'apiBase': '/api/',
+                'rootUrl': 'http://localhost:3000',
+                'scopes': 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
+                'requestvisibleactions': 'http://schemas.google.com/AddActivity ' + 'http://schemas.google.com/ReviewActivity',
+                'cookiepolicy': 'single_host_origin',
+          }
+    
+        }
+
+
         //
         // solr configuration
         var defaultApi = {
@@ -123,7 +139,8 @@ angular.module('np.config', []).factory('config', [
         //
         // global application configuration
         var defaultConfig = {
-            api: defaultApi
+            api: defaultApi,
+            google: google
         }
 
 

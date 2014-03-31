@@ -5,6 +5,7 @@ var ProteinListModule = angular.module('np.proteinlists', [
     'np.proteinlist.ui', 
     'np.proteinlist.upload', 
     'np.proteinlist.upload.ui',
+    'np.proteinlist.service',
     'np.flash'
 ]);
 
@@ -32,8 +33,9 @@ ProteinListModule.controller('ListCtrl', [
 	'$route',
 	'Search',
 	'ProteinListService',
+    'UserService',
 	'Tools',
-	function($resource, $scope, $rootScope, $location, $routeParams, $route, Search, ProteinListService, Tools) {
+	function($resource, $scope, $rootScope, $location, $routeParams, $route, Search, ProteinListService, UserService, Tools) {
 		$scope.Tools = Tools;
 		$scope.ProteinListService = ProteinListService; 
 		$scope.showCombine = false;
@@ -48,7 +50,7 @@ ProteinListModule.controller('ListCtrl', [
 		init();
 
 		function init() {
-			ProteinListService.getByUsername('mario', function(data) {
+			ProteinListService.getByUsername(UserService.userProfile.username, function(data) {
 				$scope.lists = data.lists;
 				$scope.initCombination();
 			});	
@@ -103,12 +105,12 @@ ProteinListModule.controller('ListCtrl', [
 					description: $scope.selected.description 
 				};
 
-				ProteinListService.updateList('mario', list);
+				ProteinListService.updateList(UserService.userProfile.username, list);
 			} else if($scope.modal.type == 'create') {
 				var newList = { name: $scope.selected.name, description: $scope.selected.description };
 
 				ProteinListService.combine(
-					'mario', 
+                    UserService.userProfile.username,
 					newList, 
 					$scope.combination.first.name, 
 					$scope.combination.second.name,
@@ -121,7 +123,7 @@ ProteinListModule.controller('ListCtrl', [
 		};
 
 		$scope.delete = function(index) {
-			ProteinListService.deleteList('mario', $scope.lists[index].id);
+			ProteinListService.deleteList(UserService.userProfile.username, $scope.lists[index].id);
 			$scope.lists.splice(index, 1);
 
 			$scope.options = $scope.lists;
@@ -181,9 +183,10 @@ ProteinListModule.controller('ListCreateCtrl', [
 	'$routeParams',
 	'$location',
 	'ProteinListService',
+    'UserService',
 	'UploadListService',
 	'flash',	
-	function($resource, $scope, $rootScope, $routeParams, $location, ProteinListService, UploadListService, flash) {
+	function($resource, $scope, $rootScope, $routeParams, $location, ProteinListService, UserService, UploadListService, flash) {
 		
 		$scope.inputAccessions = "";
 		$scope.listName = "";
@@ -218,8 +221,7 @@ ProteinListModule.controller('ListCreateCtrl', [
 	    		var accessions = $scope.inputAccessions.split("\n");
 	    		var list = { name: $scope.listName, accessions: accessions};
 	    		
-	    		//ProteinListService.createList({ username: 'mario', name: listName, accessions: accessions }, function(data) {console.log('list created!')} );	
-	    		ProteinListService.createList('mario', list, function(data) { 
+	    		ProteinListService.createList(UserService.userProfile.username, list, function(data) {
 					if(data.error) flash('alert-warning', data.error);
 					else {
 						flash('alert-info', "List "+list.name+" created.");
@@ -227,7 +229,9 @@ ProteinListModule.controller('ListCreateCtrl', [
 					}
 	    		});
 	    	} else {
-	    		ProteinListService.createList('mario', { name: $scope.listName, description: $scope.listDescription, accessions: []}, function(newList) {
+	    		ProteinListService.createList(UserService.userProfile.username, {
+                    name: $scope.listName, description: $scope.listDescription, accessions: []
+                }, function(newList) {
 
 	    			for(var i=0; i<selectedFiles.length; i++)
 	    			UploadListService.send(newList.id, selectedFiles[i], function(data) {

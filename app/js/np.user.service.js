@@ -24,6 +24,9 @@ UserService.factory('UserService', [
             get: { method: 'POST' }
         });
 
+        var $googleToken = $resource(baseAuthUrl + '/google/token', {}, {
+            get: { method: 'POST' }
+        });
 
         var $userProfile = $resource(baseAuthUrl + '/user/profile.json?token=:token', {token: '@token'}, {
             get: { method: 'POST' }
@@ -53,6 +56,24 @@ UserService.factory('UserService', [
 
                 if (cb)cb(null, data);
             });
+        }
+
+        UserService.prototype.googleSignin = function(authResult, cb) {
+            $googleToken.get({ 
+                access_token : authResult.access_token, 
+                refresh_token: authResult.refresh_token,
+                code: authResult.code,
+                id_token: authResult.id_token,
+                expires_at: authResult.expires_at, 
+                expires_in: authResult.expires_in
+            }, function(response) {
+                $window.sessionStorage.token = response.access_token;
+                console.log('got token' + $window.sessionStorage.token);
+                var prevUrl = history.length > 1 ? history.splice(-2)[0] : "/";
+                $location.path(prevUrl);
+                if(cb)cb(response);
+            });
+
         }
 
         UserService.prototype.getUserProfile = function (cb) {

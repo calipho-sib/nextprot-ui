@@ -27,26 +27,27 @@
             </div>
             <div class="control-group">
                 <div class="login-or">
+                    <!--<span class="span-or">or</span>-->
                     <hr class="hr-or">
-                    <span class="span-or">or</span>
+                    <!--<span class="span-or">or</span>-->
                 </div>
             </div>
 
+        </form>
             <div class="control-group">
-                <label class="control-label" for="signinButton">Google</label>
 
                 <div class="controls">
-           <span id="signinButton">  <span class="g-signin"
-                                           data-callback="signinCallback"
-                                           data-clientid="827637097658-6ju4j4tkm2m5pok8lufqa64g7jge9p56.apps.googleusercontent.com"
-                                           data-cookiepolicy="single_host_origin"
-                                           data-requestvisibleactions="http://schemas.google.com/AddActivity"
-                                           data-scope="https://www.googleapis.com/auth/plus.login">
-            </span> </span>
+
+                    <span id="signin" ng-show="immediateFailed">
+                        <span id="myGsignin"></span>
+                    </span>
+
                 </div>
 
             </div>
-        </form>
+
     </div>
     <div class="modal-footer"></div>
+
+
 </div>
