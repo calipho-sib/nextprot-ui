@@ -180,8 +180,9 @@ SearchModule.controller('ResultCtrl', [
     'Search',
     'Cart',
     'ProteinListService',
+    'UserService',
     'flash',
-    function ($scope, $route, $routeParams, $filter, $location, Search, Cart, ProteinListService, flash) {
+    function ($scope, $route, $routeParams, $filter, $location, Search, Cart, ProteinListService, UserService, flash) {
         $scope.Search = Search;
         $scope.Cart = Cart;
         $scope.selectedResults = {};
@@ -343,7 +344,7 @@ SearchModule.controller('ResultCtrl', [
                 ownerId: 1
             };
 
-            ProteinListService.createList('mario', proteinList, function (data) {
+            ProteinListService.createList(UserService.userProfile.username, proteinList, function (data) {
                 if (data.error) flash('alert-warning', data.error);
                 else {
                     flash('alert-info', "List " + proteinList.name + " created.");
