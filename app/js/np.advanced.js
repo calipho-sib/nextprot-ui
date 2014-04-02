@@ -33,6 +33,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         $scope.reps = Search.config.widgets.repositories;
         $scope.repository = $scope.reps.nextprotRep;
         $scope.AdvancedQueryService = AdvancedQueryService;
+        $scope.showHelp = false;
 
         AdvancedQueryService.getNextprotQueryList(
             function (data) {
@@ -41,6 +42,10 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
                 $scope.repository = Search.config.widgets.repositories.nextprotRep;
             });
 
+
+        $scope.toogleShowHelp = function () {
+            $scope.showHelp =  !$scope.showHelp;
+        };
 
         $scope.setCurrentQuery = function (query) {
             $scope.currentQuery = query;

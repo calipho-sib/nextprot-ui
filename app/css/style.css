@@ -206,18 +206,22 @@ ul#search-results .result-abstract{
 
 .sparql-small-box{
     height:200px;
-    width: 500px;
+    width: 100%;
     border:1px solid;
     border-color: lightgray;
 }
 
-#sparql-small-div.ng-hide-add{
+.fade-out.ng-hide-add{
     -webkit-animation: fadeOut 0.5s;
     display:block!important;
 }
 
-#sparql-small-div.ng-hide-remove{
+.fade-in.ng-hide-remove{
     -webkit-animation: fadeIn 0.5s;
     display:block!important;
+}
+
+#sparqlTitle{
+    width: 500px;
 }
 
