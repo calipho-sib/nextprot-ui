@@ -67,12 +67,10 @@
                 <div class="span6 relative" id="sparql-small-div" ng-show="enableAdvancedUserQuery">
 
                     <!-- ng-click="launchModal($index, 'edit')" -->
-                    &nbsp;
-
+                    <label data-toggle="tooltip" title="{{AdvancedQueryService.currentQuery.description}}">{{AdvancedQueryService.currentQuery.title}}</label>
                     <div class="sparql-small-box">
                         <div style="height: inherit;" ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}" ng-model="AdvancedQueryService.currentQuery.sparql"></div>
                     </div>
-                    <label data-toggle="tooltip" title="{{AdvancedQueryService.currentQuery.description}}">{{AdvancedQueryService.currentQuery.title}}</label>
                     <button data-toggle="tooltip" data-placement="bottom" title="select from list" class="btn btn-mini" bs-modal="'partials/advanced/advanced-list-modal.html'" ><i class="icon-list"></i></button>
                     <button class="btn btn-mini" bs-modal="'partials/advanced/advanced-save-modal.html'"><i class="icon-save"></i></button>
 
