@@ -2,7 +2,7 @@
     <a href="http://localhost:3000"><img src="http://www.nextprot.org/db/images/blueflat/np.png" class="home"/></a>
     <div class="row-fluid">
         <form ng-submit="go()" validate>
-            <div ng-show="!enableAdvancedUserQuery">
+            <div ng-show="!expertMode">
                 <div class="span3">
                     <!--                        -->
                     <!--  ENTITY SELECTION      -->
@@ -86,10 +86,10 @@
             </div>
             <!--             -->
             <!-- Expert mode -->
-            <div ng-show="enableAdvancedUserQuery">
+            <div ng-show="expertMode">
                 <div class="span2"/>
                 <div class="span5 fade-in fade-out" id="sparql-small-div"
-                     ng-show="enableAdvancedUserQuery">
+                     ng-show="expertMode">
                     <div class="container-fluid">
                         <div class="row-fluid">
                             <div class="span11">
@@ -111,12 +111,11 @@
                                         class="icon-save ajax-end"></i></button>
                                 <button class="btn btn-primary dropdown" type="submit"><i
                                         class="icon-search"></i></button>
-
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="span4 fade-in fade-out" ng-show="showHelp && enableAdvancedUserQuery">
+                <div class="span4 fade-in fade-out" ng-show="showHelp && expertMode">
                     <input ng-model="filterQuery" placeholder="text filter">
 
                     <div class="btn-group">
@@ -132,12 +131,12 @@
                     <div class="row">
                     </div>
 
-
                     <div class="accordion">
                         <div class="accordion-group" ng-repeat="query in queries | filter:filterQuery">
                             <div class="accordion-heading">
-                                <a data-toggle="tooltip" title="{{query.description}}"
-                                   ng-click="AdvancedQueryService.setCurrentQuery(query); dismiss();" href="#">{{query.title}}</a>
+                                <button class="btn btn-mini dropdown" type="button" ng-click="AdvancedQueryService.setCurrentQuery(query);"><i class="icon-paste"></i></button>
+                                <a data-toggle="tooltip" title="{{query.description}}">{{query.title}}
+                                </a>
                             </div>
                             <div class="accordion-body">
                                 <div class="accordion-inner">

@@ -45,7 +45,7 @@ SearchModule.controller('SearchCtrl', [
         $scope.Search = Search;
         $scope.config = config;
         $scope.user = UserService;
-        $scope.enableAdvancedUserQuery = false;
+        $scope.expertMode = false;
 
         $scope.AdvancedQueryService = AdvancedQueryService;
 
@@ -139,7 +139,12 @@ SearchModule.controller('SearchCtrl', [
             $location.search('cart', null);
             $location.search('rows', null);
             $location.search('start', null);
-            $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search').search('query', Search.params.query.trim());
+            if($scope.expertMode){
+                $location.path('/proteins/search?sparqlTitle=ciao&sparqlEngine=Jena&sparql=' + encodeURIComponent(AdvancedQueryService.currentQuery.sparql));
+            }else {
+                //We are in simple mode
+                $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search').search('query', Search.params.query.trim());
+            }
 
             //
             // url has not changed => FIRE event
@@ -156,8 +161,8 @@ SearchModule.controller('SearchCtrl', [
 
         $scope.showUserQuery = function () {
             if(UserService.userProfile.userLoggedIn){
-                $scope.enableAdvancedUserQuery = !$scope.enableAdvancedUserQuery;
-                if($scope.enableAdvancedUserQuery){
+                $scope.expertMode = !$scope.expertMode;
+                if($scope.expertMode){
                     flash('alert-info', 'Switched to expert search.')
                 }else flash('alert-info', 'Switched to simple search.')
 
