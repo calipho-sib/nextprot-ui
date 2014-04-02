@@ -2,42 +2,37 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="false">×</button>
     <h3>Select query from repository</h3>
 </div>
-<div class="modal-body">
-    <form class="form-horizontal" ng-controller="AdvancedCtrl">
-        <input ng-model="filterQuery" placeholder="text filter">
+<div class="modal-body" ng-controller="AdvancedCtrl">
+    <input ng-model="filterQuery" placeholder="text filter">
 
-        <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown">
-                Select a repository
-                <span class="caret"></span> </a>
-            <ul class="dropdown-menu">
-                <li><a href="" ng-click="showNextprotRepository()">{{reps.nextprotRep}}</a></li>
-                <li><a href="" ng-click="showPrivateRepository()">{{reps.privateRep}}</a></li>
-                <li><a href="" ng-click="showPublicRepository()">{{reps.publicRep}}</a></li>
-            </ul>
-        </div>
-        <div class="row">
-        </div>
-
+    <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown">
+            Select a repository
+            <span class="caret"></span> </a>
+        <ul class="dropdown-menu">
+            <li><a href="" ng-click="showNextprotRepository()">{{reps.nextprotRep}}</a></li>
+            <li><a href="" ng-click="showPrivateRepository()">{{reps.privateRep}}</a></li>
+            <li><a href="" ng-click="showPublicRepository()">{{reps.publicRep}}</a></li>
+        </ul>
+    </div>
+    <div class="row">
+    </div>
 
 
-            <div class="accordion" id="accordion2">
-                <div class="accordion-group" ng-repeat="query in queries | filter:filterQuery">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-parent="#accordion2">
-                            {{query.description}}
-                        </a>
+    <div class="accordion" id="accordion2">
+        <div class="accordion-group" ng-repeat="query in queries | filter:filterQuery">
+            <div class="accordion-heading">
+                <a data-toggle="tooltip" title="{{query.description}}"
+                   ng-click="AdvancedQueryService.setCurrentQuery(query); dismiss();" href="#">{{query.title}}</a>
+            </div>
+            <div class="accordion-body">
+                <div class="accordion-inner">
+                    <div style="height: 150px;"
+                         ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}"
+                         ng-model="query.sparql">
                     </div>
-                    <div class="accordion-body">
-                        <div class="accordion-inner">
-                            <div style="height: 200px;" ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}" ng-model="query.sparql">
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-
-                <!--<td>{{query.username}}</td>-->
-                <!--<td><a data-toggle="tooltip" title="{{query.description}}" href="" ng-click="AdvancedQueryService.setCurrentQuery(query); dismiss();">{{query.title}}</a></td>-->
-
-    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
