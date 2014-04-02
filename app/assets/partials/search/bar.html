@@ -23,7 +23,7 @@
             <div class="span9 search-bar">
                 <img src="http://www.nextprot.org/db/images/blueflat/np.png" class="home"/>
 
-                <div class=" input-append span8"
+                <div class=" input-append span8 fade-in fade-out" ng-show="!enableAdvancedUserQuery"
                      ng-class="{'input-prepend':Search.config.widgets[Search.result.display].gold}">
                     <!--                        -->
                     <!--  QUALITY SELECTION     -->
@@ -44,7 +44,7 @@
                     <!--                        -->
                     <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
                     <!--                        -->
-                    <input id="search-query" class=" " ng-show="!enableAdvancedUserQuery" type="text"
+                    <input id="search-query" class=" " type="text"
                            ng-model="Search.params.query"
                            ng-class="{'quality-search-width':Search.config.widgets[Search.result.display].gold,'no-quality-search-width':!Search.config.widgets[Search.result.display].gold}"
                            autocomplete="off" bs-autocomplete="Search.suggest" autofocus>
@@ -54,22 +54,22 @@
                     <!--  Expert mode button    -->
                     <!--                        -->
                     <button id="adv-user-query" class="btn" type="button" ng-click="showUserQuery()"><i
-                            class="icon-screenshot ajax-end"></i></button>
+                            class="icon-caret-down ajax-end"></i></button>
 
                     <!--                        -->
                     <!--  SEARCH BUTTON         -->
                     <!--                        -->
-                    <button id="search-button" class="btn" type="submit"
+                    <button id="search-button" class="btn btn-primary" type="submit"
                             ng-disabled="!Search.params.query || !Search.params.query.length"><i
-                            class="icon-search"></i>&nbsp;Search
+                            class="icon-search"></i>
                     </button>
 
                     <!--                      -->
                     <!--  CLEAN BUTTON        -->
                     <!--                      -->
-                    <button id="search-clear" class="btn" type="button" ng-click="clean({})"
-                            ng-disabled="!Search.params.query || !Search.params.query.length"><i
-                            class="icon-remove ajax-end"></i></button>
+                    <!--<button id="search-clear" class="btn" type="button" ng-click="clean({})"-->
+                            <!--ng-disabled="!Search.params.query || !Search.params.query.length"><i-->
+                            <!--class="icon-remove ajax-end"></i></button>-->
 
                                         <span ng-show="Search.result.spellcheck.collations.length"
                                               id="search-didyoumean"><b class="gray">
@@ -94,10 +94,17 @@
                                 </div>
                             </div>
                             <div class="span1">
-                                <button class="btn btn-mini " type="button" ng-click="toogleShowHelp()"><i
+                                <button class="btn" type="button" ng-click="showUserQuery()" style="margin-bottom: 10px"><i
+                                        class="icon-caret-up ajax-end"></i></button>
+                                <button class="btn " type="button" ng-click="toogleShowHelp()"
+                                        style="margin-bottom: 10px"><i
                                         class="icon-question-sign ajax-end"></i></button>
-                                <button class="btn btn-mini" bs-modal="'partials/advanced/advanced-save-modal.html'"><i
-                                        class="icon-save"></i></button>
+                                <button class="btn" bs-modal="'partials/advanced/advanced-save-modal.html'"
+                                        style="margin-bottom: 10px"><i
+                                        class="icon-save ajax-end"></i></button>
+                                <button class="btn btn-primary dropdown" type="submit"><i
+                                        class="icon-search" ></i></button>
+
                             </div>
                         </div>
                     </div>
