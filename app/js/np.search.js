@@ -157,6 +157,10 @@ SearchModule.controller('SearchCtrl', [
         $scope.showUserQuery = function () {
             if(UserService.userProfile.userLoggedIn){
                 $scope.enableAdvancedUserQuery = !$scope.enableAdvancedUserQuery;
+                if($scope.enableAdvancedUserQuery){
+                    flash('alert-info', 'Switched to expert search.')
+                }else flash('alert-info', 'Switched to simple search.')
+
             }else {
                 var message = "You must be logged in to use the expert mode.";
                 flash('alert-warn', message);

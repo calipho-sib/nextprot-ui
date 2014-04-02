@@ -1,75 +1,76 @@
 <div ng-cloak class="row search-row" np-animate="#main" ng-controller="AdvancedCtrl">
+    <a href="http://localhost:3000"><img src="http://www.nextprot.org/db/images/blueflat/np.png" class="home"/></a>
     <div class="row-fluid">
         <form ng-submit="go()" validate>
-            <div class="span3">
-                <!--                        -->
-                <!--  ENTITY SELECTION      -->
-                <!--                        -->
-                <div class="btn-group pull-right" ng-show="!enableAdvancedUserQuery">
-
-                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="" id="search-entity">
-                        {{Search.config.entityMapping[Search.params.entity]}}&nbsp;
-                        <span class="caret"></span>
-                    </a>
-                    <ul id="search-entity-dropdown" class="dropdown-menu">
-                        <!-- dropdown menu links -->
-                        <li><a ng-click="entity({entity:'proteins'})">Proteins</a></li>
-                        <li><a ng-click="entity({entity:'publications'})">Publications</a></li>
-                        <li><a ng-click="entity({entity:'terms'})">Terms</a></li>
-                    </ul>
-                </div>
-                <!--                        -->
-            </div>
-            <div class="span9 search-bar">
-                <img src="http://www.nextprot.org/db/images/blueflat/np.png" class="home"/>
-
-                <div class=" input-append span8 fade-in fade-out" ng-show="!enableAdvancedUserQuery"
-                     ng-class="{'input-prepend':Search.config.widgets[Search.result.display].gold}">
+            <div ng-show="!enableAdvancedUserQuery">
+                <div class="span3">
                     <!--                        -->
-                    <!--  QUALITY SELECTION     -->
+                    <!--  ENTITY SELECTION      -->
                     <!--                        -->
-                    <div class="btn-group">
-                        <button class="btn dropdown-toggle btn" type="button" ng-cloak data-toggle="dropdown"
-                                ng-show="Search.config.widgets[Search.result.display].gold" id="search-quality">
-                            {{Search.config.widgets[Search.result.display].qualityLabel[Search.params.quality]}}
+                    <div class="btn-group pull-right">
+
+                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="" id="search-entity">
+                            {{Search.config.entityMapping[Search.params.entity]}}&nbsp;
                             <span class="caret"></span>
-                        </button>
-                        <ul id="search-quality-dropdown" class="dropdown-menu"
-                            ng-show="Search.config.widgets[Search.result.display].gold">
-                            <li><a ng-click="quality('gold')">Gold only</a></li>
-                            <li><a ng-click="quality('gold-and-silver')">Include silver</a></li>
+                        </a>
+                        <ul id="search-entity-dropdown" class="dropdown-menu">
+                            <!-- dropdown menu links -->
+                            <li><a ng-click="entity({entity:'proteins'})">Proteins</a></li>
+                            <li><a ng-click="entity({entity:'publications'})">Publications</a></li>
+                            <li><a ng-click="entity({entity:'terms'})">Terms</a></li>
                         </ul>
                     </div>
+                    <!--                        -->
+                </div>
+                <div class="span9 search-bar">
 
-                    <!--                        -->
-                    <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
-                    <!--                        -->
-                    <input id="search-query" class=" " type="text"
-                           ng-model="Search.params.query"
-                           ng-class="{'quality-search-width':Search.config.widgets[Search.result.display].gold,'no-quality-search-width':!Search.config.widgets[Search.result.display].gold}"
-                           autocomplete="off" bs-autocomplete="Search.suggest" autofocus>
+                    <div class=" input-append span8 fade-in fade-out"
+                         ng-class="{'input-prepend':Search.config.widgets[Search.result.display].gold}">
+                        <!--                        -->
+                        <!--  QUALITY SELECTION     -->
+                        <!--                        -->
+                        <div class="btn-group">
+                            <button class="btn dropdown-toggle btn" type="button" ng-cloak data-toggle="dropdown"
+                                    ng-show="Search.config.widgets[Search.result.display].gold" id="search-quality">
+                                {{Search.config.widgets[Search.result.display].qualityLabel[Search.params.quality]}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul id="search-quality-dropdown" class="dropdown-menu"
+                                ng-show="Search.config.widgets[Search.result.display].gold">
+                                <li><a ng-click="quality('gold')">Gold only</a></li>
+                                <li><a ng-click="quality('gold-and-silver')">Include silver</a></li>
+                            </ul>
+                        </div>
+
+                        <!--                        -->
+                        <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
+                        <!--                        -->
+                        <input id="search-query" class=" " type="text"
+                               ng-model="Search.params.query"
+                               ng-class="{'quality-search-width':Search.config.widgets[Search.result.display].gold,'no-quality-search-width':!Search.config.widgets[Search.result.display].gold}"
+                               autocomplete="off" bs-autocomplete="Search.suggest" autofocus>
 
 
-                    <!--                        -->
-                    <!--  Expert mode button    -->
-                    <!--                        -->
-                    <button id="adv-user-query" class="btn" type="button" ng-click="showUserQuery()"><i
-                            class="icon-caret-down ajax-end"></i></button>
+                        <!--                        -->
+                        <!--  Expert mode button    -->
+                        <!--                        -->
+                        <button id="adv-user-query" class="btn" type="button" ng-click="showUserQuery()"><i
+                                class="icon-caret-down ajax-end"></i></button>
 
-                    <!--                        -->
-                    <!--  SEARCH BUTTON         -->
-                    <!--                        -->
-                    <button id="search-button" class="btn btn-primary" type="submit"
-                            ng-disabled="!Search.params.query || !Search.params.query.length"><i
-                            class="icon-search"></i>
-                    </button>
+                        <!--                        -->
+                        <!--  SEARCH BUTTON         -->
+                        <!--                        -->
+                        <button id="search-button" class="btn btn-primary" type="submit"
+                                ng-disabled="!Search.params.query || !Search.params.query.length"><i
+                                class="icon-search"></i>
+                        </button>
 
-                    <!--                      -->
-                    <!--  CLEAN BUTTON        -->
-                    <!--                      -->
-                    <!--<button id="search-clear" class="btn" type="button" ng-click="clean({})"-->
-                            <!--ng-disabled="!Search.params.query || !Search.params.query.length"><i-->
-                            <!--class="icon-remove ajax-end"></i></button>-->
+                        <!--                      -->
+                        <!--  CLEAN BUTTON        -->
+                        <!--                      -->
+                        <!--<button id="search-clear" class="btn" type="button" ng-click="clean({})"-->
+                        <!--ng-disabled="!Search.params.query || !Search.params.query.length"><i-->
+                        <!--class="icon-remove ajax-end"></i></button>-->
 
                                         <span ng-show="Search.result.spellcheck.collations.length"
                                               id="search-didyoumean"><b class="gray">
@@ -80,10 +81,15 @@
                       </span>
                     </span>&nbsp;
 
+                    </div>
                 </div>
-
-
-                <div class="span5 relative fade-in fade-out" id="sparql-small-div" ng-show="enableAdvancedUserQuery">
+            </div>
+            <!--             -->
+            <!-- Expert mode -->
+            <div ng-show="enableAdvancedUserQuery">
+                <div class="span2"/>
+                <div class="span5 fade-in fade-out" id="sparql-small-div"
+                     ng-show="enableAdvancedUserQuery">
                     <div class="container-fluid">
                         <div class="row-fluid">
                             <div class="span11">
@@ -94,7 +100,8 @@
                                 </div>
                             </div>
                             <div class="span1">
-                                <button class="btn" type="button" ng-click="showUserQuery()" style="margin-bottom: 10px"><i
+                                <button class="btn" type="button" ng-click="showUserQuery()"
+                                        style="margin-bottom: 10px"><i
                                         class="icon-caret-up ajax-end"></i></button>
                                 <button class="btn " type="button" ng-click="toogleShowHelp()"
                                         style="margin-bottom: 10px"><i
@@ -103,15 +110,13 @@
                                         style="margin-bottom: 10px"><i
                                         class="icon-save ajax-end"></i></button>
                                 <button class="btn btn-primary dropdown" type="submit"><i
-                                        class="icon-search" ></i></button>
+                                        class="icon-search"></i></button>
 
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-                <div class="span5 fade-in fade-out" ng-show="showHelp && enableAdvancedUserQuery">
+                <div class="span4 fade-in fade-out" ng-show="showHelp && enableAdvancedUserQuery">
                     <input ng-model="filterQuery" placeholder="text filter">
 
                     <div class="btn-group">
@@ -145,6 +150,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="span1"/>
             </div>
         </form>
     </div>

@@ -37,7 +37,7 @@ var flash = angular.module('np.flash', [])
 
         if(level == 'alert-info' || level == 'alert-success'){
             //to remove the messages after a timeout
-            $timeout(function() { messages = []; emit();}, 3000);
+            $timeout(function() { messages = []; emit();}, 2000);
         }
 
    	};
