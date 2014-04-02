@@ -6,7 +6,7 @@
                 <!--                        -->
                 <!--  ENTITY SELECTION      -->
                 <!--                        -->
-                <div class="btn-group pull-right">
+                <div class="btn-group pull-right" ng-show="!enableAdvancedUserQuery">
 
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="" id="search-entity">
                         {{Search.config.entityMapping[Search.params.entity]}}&nbsp;
@@ -43,7 +43,7 @@
                     <!--                        -->
                     <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
                     <!--                        -->
-                    <input id="search-query" class=" "  type="text" ng-model="Search.params.query"
+                    <input id="search-query" class=" " ng-show="!enableAdvancedUserQuery" type="text" ng-model="Search.params.query"
                            ng-class="{'quality-search-width':Search.config.widgets[Search.result.display].gold,'no-quality-search-width':!Search.config.widgets[Search.result.display].gold}"
                            autocomplete="off"  bs-autocomplete="Search.suggest" autofocus>
 
@@ -56,12 +56,14 @@
                     <!--  SEARCH BUTTON         -->
                     <!--                        -->
                     <button id="search-button" class="btn" type="submit"  ng-disabled="!Search.params.query || !Search.params.query.length"><i class="icon-search" ></i>&nbsp;Search</button>
+
+                    <!--                      -->
+                    <!--  CLEAN BUTTON        -->
+                    <!--                      -->
+                    <button id="search-clear"  class="btn" type="button" ng-click="clean({})" ng-disabled="!Search.params.query || !Search.params.query.length"><i class="icon-remove ajax-end"></i></button>
+
                 </div>
 
-                <!--                      -->
-                <!--  CLEAN BUTTON        -->
-                <!--                      -->
-                <button id="search-clear"  class="btn" type="button" ng-click="clean({})" ng-disabled="!Search.params.query || !Search.params.query.length"><i class="icon-remove ajax-end"></i></button>
 
 
                 <div class="span6 relative" id="sparql-small-div" ng-show="enableAdvancedUserQuery">
