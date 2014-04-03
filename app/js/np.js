@@ -43,13 +43,15 @@ App.config([
                         flash('alert-error', "The API is not accessible");
                         return;
                     } else if (status == 401) {
-                        flash('alert-error', "PROUT");
+                        flash('alert-error', "You are not authorized to access the resource. Please login or review your privileges.");
                         return;
                     } else if (status == 404) {
                         flash('alert-error', "URL not found");
                         return;
                     } else {
-                        flash('alert-error', 'Some error occured' + " " + status + " " + response.data);
+                        if(response.data.message){
+                            flash('alert-warn', response.data.message);
+                        }else flash('alert-error', 'Some error occured' + " " + status + " " + response);
                     }
                     // otherwise
                     return $q.reject(response);

@@ -112,7 +112,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
 
-        $scope.createAdvancedQuery = function () {
+        $scope.saveUserQuery = function () {
             AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username, AdvancedQueryService.currentQuery,
                 function () {
                     flash('alert-success', AdvancedQueryService.currentQuery.title + ' saved successfully!')
