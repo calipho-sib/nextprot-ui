@@ -94,10 +94,11 @@
                     <div class="container-fluid">
                         <div class="row-fluid">
                             <div class="span11">
+                                <input type="text" placeholder="title" style="width: 500px" ng-model="currentQuery.title">
                                 <div class="sparql-small-box">
                                     <div style="height: inherit;"
                                          ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}"
-                                         ng-model="currentQuery.sparql">dasasdas</div>
+                                         ng-model="currentQuery.sparql"></div>
                                 </div>
                             </div>
                             <div class="span1">
@@ -139,12 +140,12 @@
                                 <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{currentQuery.advancedUserQueryId}}">
                                     {{query.title}}
                                 </a>
-                                <!--<button class="btn btn-mini dropdown" type="button"-->
-                                        <!--ng-click="AdvancedQueryService.setCurrentQuery(query);"><i class="icon-paste"></i>-->
-                                <!--</button>-->
-                                <!--<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">-->
-                                     <!--&lt;!&ndash;data-toggle="tooltip" title="{{query.description}}">{{query.title}}&ndash;&gt;-->
-                                <!--</a>-->
+                                <button class="btn btn-mini dropdown" type="button"
+                                        ng-click="setCurrentQuery(query);"><i class="icon-paste"></i>
+                                </button>
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                                     <!--data-toggle="tooltip" title="{{query.description}}">{{query.title}}-->
+                                </a>
                             </div>
                             <div id="collapse{{currentQuery.advancedUserQueryId}}" class="accordion-body in collapse" style="height: auto;">
                                 <div class="accordion-inner">

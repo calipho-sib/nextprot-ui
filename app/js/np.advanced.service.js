@@ -88,15 +88,12 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             });
         };
 
-        AdvancedQueryService.prototype.createAdvancedQuery = function (username, aq, cb) {
-            console.log('create advanced query > ', aq);
-            if (aq == null) {
-                alert("Select a query to duplicate");
-            } else {
-                $user_query_list.create({ username: username }, aq, function (data) {
-                    if (cb)cb(data);
-                });
-            }
+        AdvancedQueryService.prototype.createAdvancedQuery = function (username, aq, cb, cbe) {
+            $user_query_list.create({ username: username }, aq, function (data) {
+                if (cb)cb(data);
+            }, function (error) {
+                if (cbe)cbe(error);
+            });
         };
 
         AdvancedQueryService.prototype.updateAdvancedQuery = function (username, aq, cb) {

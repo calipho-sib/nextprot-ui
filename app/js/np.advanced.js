@@ -35,7 +35,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         $scope.showHelp = false;
         $scope.currentQuery = {
             title: null,
-            sparql: 'ddasdas',
+            sparql: null,
             advancedUserQueryId: null,
             username: null
         };
@@ -46,13 +46,18 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
                 $scope.repository = Search.config.widgets.repositories.nextprotRep;
             });
 
+        $scope.setCurrentQuery = function (query) {
+            //The binding is done at the level of the primitive, therefore
+            angular.extend($scope.currentQuery, query);
+            //change the query for the current username and the id null if it does not belong to the user
+            if($scope.currentQuery.username != UserService.userProfile.username){
+                $scope.currentQuery.username = UserService.userProfile.username
+                $scope.currentQuery.advancedUserQueryId = null;
+            }
+        };
 
         $scope.toogleShowHelp = function () {
             $scope.showHelp =  !$scope.showHelp;
-        };
-
-        $scope.hasPrivilegeToEdit = function () {
-            return ($scope.currentQuery.username == UserService.userProfile.username)
         };
 
         $scope.showPrivateRepository = function () {
@@ -103,16 +108,29 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             if($scope.currentQuery.advancedUserQueryId == null){
                 alert('creating a new');
                 AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
-                    function () {
-                        flash('alert-success', $scope.currentQuery + ' saved successfully!')
+                    function (data) {
+                        angular.extend($scope.currentQuery, data);
+                        flash('alert-success', $scope.currentQuery.title + ' query saved successfully!')
                         $route.reload();
+                    },
+                    function (error) {
+                        if(error.status == 409) {
+                            flash('alert-warn', $scope.currentQuery.title + ' already exists, choose a different name.')
+                        }
                     }
                 );
             }else {
+                alert('updating...');
                 AdvancedQueryService.updateAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
-                    function () {
+                    function (data) {
+                        angular.extend($scope.currentQuery, data);
                         flash('alert-success', "Updated successful for " + $scope.currentQuery.title);
                         return;
+                    },
+                    function (error) {
+                        if(error.status == 409) {
+                            flash('alert-warn', $scope.currentQuery.title + ' already exists, choose a different name.')
+                        }
                     }
                 );
             }
