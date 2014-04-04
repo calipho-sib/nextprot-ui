@@ -62,26 +62,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
 
         var AdvancedQueryService = function () {
-            this.currentQuery = {};
-            this.setEmptyQuery();
         };
-
-
-        AdvancedQueryService.prototype.setEmptyQuery = function () {
-            this.currentQuery.advancedUserQueryId = null;
-            this.currentQuery.title = null;
-            this.currentQuery.sparql = null;
-            this.currentQuery.username = null;
-        }
-
-        AdvancedQueryService.prototype.setCurrentQuery = function (query) {
-            this.currentQuery.advancedUserQueryId = query.advancedUserQueryId;
-            this.currentQuery.title = query.title;
-            this.currentQuery.sparql = query.sparql;
-            this.currentQuery.description = query.description;
-            this.currentQuery.published = query.published;
-        }
-
 
         AdvancedQueryService.prototype.getQueryList = function (username, includePublic, cb) {
             return $user_query_list.get({username: username}, function (data) {
@@ -112,7 +93,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             if (aq == null) {
                 alert("Select a query to duplicate");
             } else {
-                $user_query_list.create({ username: username, id: aq.advancedUserQueryId }, aq, function (data) {
+                $user_query_list.create({ username: username }, aq, function (data) {
                     if (cb)cb(data);
                 });
             }

@@ -32,13 +32,17 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     function ($window, $resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash, UserService) {
         $scope.reps = Search.config.widgets.repositories;
         $scope.repository = $scope.reps.nextprotRep;
-        $scope.AdvancedQueryService = AdvancedQueryService;
         $scope.showHelp = false;
+        $scope.currentQuery = {
+            title: null,
+            sparql: 'ddasdas',
+            advancedUserQueryId: null,
+            username: null
+        };
 
         AdvancedQueryService.getNextprotQueryList(
             function (data) {
                 $scope.queries = data.advancedUserQueryList;
-                $scope.currentQuery = null;
                 $scope.repository = Search.config.widgets.repositories.nextprotRep;
             });
 
@@ -47,27 +51,15 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             $scope.showHelp =  !$scope.showHelp;
         };
 
-        $scope.setCurrentQuery = function (query) {
-            $scope.currentQuery = query;
-        };
-
         $scope.hasPrivilegeToEdit = function () {
-            if ($scope.currentQuery)
-                return ($scope.currentQuery.username == UserService.userProfile.username)
-            return false;
+            return ($scope.currentQuery.username == UserService.userProfile.username)
         };
-
-        $scope.isQuerySelected = function () {
-            return ($scope.currentQuery != null);
-        };
-
 
         $scope.showPrivateRepository = function () {
 
             AdvancedQueryService.getQueryList(UserService.userProfile.username, $scope.showPublic,
                 function (data) {
                     $scope.queries = data.advancedUserQueryList;
-                    $scope.currentQuery = null;
                     $scope.repository = Search.config.widgets.repositories.privateRep;
                 });
         };
@@ -76,9 +68,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             AdvancedQueryService.getPublicQueryList(
                 function (data) {
                     $scope.queries = data.advancedUserQueryList;
-                    $scope.currentQuery = null
                     $scope.repository = Search.config.widgets.repositories.publicRep;
-
                 });
         };
 
@@ -86,18 +76,15 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             AdvancedQueryService.getNextprotQueryList(
                 function (data) {
                     $scope.queries = data.advancedUserQueryList;
-                    $scope.currentQuery = null;
                     $scope.repository = Search.config.widgets.repositories.nextprotRep;
                 });
         };
 
         $scope.doAdvanceSearch = function () {
-            if ($scope.currentQuery == null) {
-                alert("Choose a query!")
+            if ($scope.currentQuery.sparql == null) {
+                alert("Sparql can't be empty")
             } else {
-
                 var start = new Date().getTime();
-                ;
                 $scope.buttonDisabled = true;
                 AdvancedSearchService.getEntriesBySparqlQuery(
                     $scope.currentQuery.sparql,
@@ -112,13 +99,23 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
 
-        $scope.saveUserQuery = function () {
-            AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username, AdvancedQueryService.currentQuery,
-                function () {
-                    flash('alert-success', AdvancedQueryService.currentQuery.title + ' saved successfully!')
-                    $route.reload();
-                }
-            );
+        $scope.createOrReplaceUserQuery = function () {
+            if($scope.currentQuery.advancedUserQueryId == null){
+                alert('creating a new');
+                AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
+                    function () {
+                        flash('alert-success', $scope.currentQuery + ' saved successfully!')
+                        $route.reload();
+                    }
+                );
+            }else {
+                AdvancedQueryService.updateAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
+                    function () {
+                        flash('alert-success', "Updated successful for " + $scope.currentQuery.title);
+                        return;
+                    }
+                );
+            }
         }
 
         $scope.updateAdvancedQuery = function () {

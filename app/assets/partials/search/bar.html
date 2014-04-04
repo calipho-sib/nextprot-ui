@@ -87,7 +87,7 @@
             </div>
             <!--             -->
             <!-- Expert mode -->
-            <div ng-show="expertMode">
+            <div ng-show="expertMode" ng-controller="AdvancedCtrl">
                 <div class="span2"/>
                 <div class="span5 fade-in fade-out" id="sparql-small-div"
                      ng-show="expertMode">
@@ -97,7 +97,7 @@
                                 <div class="sparql-small-box">
                                     <div style="height: inherit;"
                                          ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}"
-                                         ng-model="AdvancedQueryService.currentQuery.sparql"></div>
+                                         ng-model="currentQuery.sparql">dasasdas</div>
                                 </div>
                             </div>
                             <div class="span1">
@@ -136,7 +136,7 @@
                     <div class="accordion collapsed" id="accordion2">
                         <div class="accordion-group" ng-repeat="query in queries | filter:filterQuery">
                             <div class="accordion-heading">
-                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{query.advancedUserQueryId}}">
+                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{currentQuery.advancedUserQueryId}}">
                                     {{query.title}}
                                 </a>
                                 <!--<button class="btn btn-mini dropdown" type="button"-->
@@ -146,7 +146,7 @@
                                      <!--&lt;!&ndash;data-toggle="tooltip" title="{{query.description}}">{{query.title}}&ndash;&gt;-->
                                 <!--</a>-->
                             </div>
-                            <div id="collapse{{query.advancedUserQueryId}}" class="accordion-body in collapse" style="height: auto;">
+                            <div id="collapse{{currentQuery.advancedUserQueryId}}" class="accordion-body in collapse" style="height: auto;">
                                 <div class="accordion-inner">
                                         <div style="height: 100px;"
                                              ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}"
