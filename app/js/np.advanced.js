@@ -32,14 +32,8 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     function ($window, $resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash, UserService) {
         $scope.reps = Search.config.widgets.repositories;
         $scope.repository = $scope.reps.nextprotRep;
-        $scope.showHelp = false;
+        $scope.showHelp = true;
         $scope.currentQuery = AdvancedQueryService.currentQuery;
-
-        AdvancedQueryService.getNextprotQueryList(
-            function (data) {
-                $scope.queries = data.advancedUserQueryList;
-                $scope.repository = Search.config.widgets.repositories.nextprotRep;
-            });
 
         $scope.setCurrentQuery = function (query) {
             //The binding is done at the level of the primitive, therefore
@@ -57,28 +51,12 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             $scope.showHelp =  !$scope.showHelp;
         };
 
-        $scope.showPrivateRepository = function () {
+        $scope.showRepository = function (name) {
 
-            AdvancedQueryService.getQueryList(UserService.userProfile.username, $scope.showPublic,
+            AdvancedQueryService.getRepository(UserService.userProfile.username, name,
                 function (data) {
                     $scope.queries = data.advancedUserQueryList;
                     $scope.repository = Search.config.widgets.repositories.privateRep;
-                });
-        };
-
-        $scope.showPublicRepository = function () {
-            AdvancedQueryService.getPublicQueryList(
-                function (data) {
-                    $scope.queries = data.advancedUserQueryList;
-                    $scope.repository = Search.config.widgets.repositories.publicRep;
-                });
-        };
-
-        $scope.showNextprotRepository = function () {
-            AdvancedQueryService.getNextprotQueryList(
-                function (data) {
-                    $scope.queries = data.advancedUserQueryList;
-                    $scope.repository = Search.config.widgets.repositories.nextprotRep;
                 });
         };
 
@@ -166,10 +144,10 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             );
         }
 
-        $scope.deleteAdvancedQuery = function () {
-            AdvancedQueryService.deleteAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
+        $scope.deleteAdvancedQuery = function (query) {
+            AdvancedQueryService.deleteAdvancedQuery(UserService.userProfile.username, query,
                 function () {
-                    flash('alert-success', "User query deleted successfully for " + $scope.currentQuery.title);
+                    flash('alert-success', query.title + " query deleted successfully for ");
                     $route.reload();
                 }
             );

@@ -122,40 +122,40 @@
 
                     <div class="btn-group">
                         <a class="btn dropdown-toggle" data-toggle="dropdown">
-                            Select a repository
+                            {{repository}}
                             <span class="caret"></span> </a>
                         <ul class="dropdown-menu">
-                            <li><a href="" ng-click="showNextprotRepository()">{{reps.nextprotRep}}</a></li>
-                            <li><a href="" ng-click="showPrivateRepository()">{{reps.privateRep}}</a></li>
-                            <li><a href="" ng-click="showPublicRepository()">{{reps.publicRep}}</a></li>
+                            <li><a href="" ng-click="showRepository('nextprot')">{{reps.nextprotRep}}</a></li>
+                            <li><a href="" ng-click="showRepository('private')">{{reps.privateRep}}</a></li>
+                            <li><a href="" ng-click="showRepository('public')">{{reps.publicRep}}</a></li>
                         </ul>
                     </div>
                     <button type="button" class="close" style="padding-right: 5px" ng-click="showHelp=false">×</button>
 
                     <div class="row">
                     </div>
-                    <div class="accordion collapsed" id="accordion2">
-                        <div class="accordion-group" ng-repeat="query in queries | filter:filterQuery">
-                            <div class="accordion-heading">
-                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{currentQuery.advancedUserQueryId}}">
-                                    {{query.title}}
-                                </a>
-                                <button class="btn btn-mini dropdown" type="button"
-                                        ng-click="setCurrentQuery(query);"><i class="icon-paste"></i>
-                                </button>
-                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                                     <!--data-toggle="tooltip" title="{{query.description}}">{{query.title}}-->
-                                </a>
-                            </div>
-                            <div id="collapse{{currentQuery.advancedUserQueryId}}" class="accordion-body in collapse" style="height: auto;">
-                                <div class="accordion-inner">
-                                        <div style="height: 100px;"
-                                             ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}"
-                                             ng-model="query.sparql">
-                                        </div>
-                                </div>
-                            </div>
-                        </div>
+                    <!--<ul class="nav nav-pills nav-stacked">-->
+                        <!--<li class="story" ng-repeat="query in queries | filter:filterQuery"-->
+                            <!--ng-click="setCurrentQuery(query)">-->
+                            <!--<a ref>[{{query.username}}] {{query.title}}</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+
+                    <div class="row">
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr ng-repeat="query in queries | filter:filterQuery">
+                                <td>
+                                <td><a ng-click="setCurrentQuery(query)">{{query.title}}</a></td>
+                                <td style="height:25px">
+                                    <div fade-on-hover=".table">
+                                        <button class="btn btn-mini pull-right" type="button" ng-click="deleteAdvancedQuery(query)"><i class="icon-remove"></i></button>
+                                        <button class="btn btn-mini pull-right" type="button" ng-click="show(query)"><i class="icon-eye-open"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                 </div>
