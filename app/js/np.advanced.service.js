@@ -39,7 +39,6 @@ AdvancedQueryService.factory('AdvancedQueryService', [
     'UserService',
     function ($resource, config, UserService) {
 
-
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
         var $nextprot_query_list = $resource(baseUrl + '/nextprot-api/user/advanced-nextprot-query.json', {
@@ -62,6 +61,12 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
 
         var AdvancedQueryService = function () {
+            this.currentQuery = {
+                title: null,
+                sparql: null,
+                advancedUserQueryId: null,
+                username: null
+            };
         };
 
         AdvancedQueryService.prototype.getQueryList = function (username, includePublic, cb) {

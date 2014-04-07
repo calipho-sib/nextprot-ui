@@ -33,12 +33,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         $scope.reps = Search.config.widgets.repositories;
         $scope.repository = $scope.reps.nextprotRep;
         $scope.showHelp = false;
-        $scope.currentQuery = {
-            title: null,
-            sparql: null,
-            advancedUserQueryId: null,
-            username: null
-        };
+        $scope.currentQuery = AdvancedQueryService.currentQuery;
 
         AdvancedQueryService.getNextprotQueryList(
             function (data) {
@@ -54,6 +49,8 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
                 $scope.currentQuery.username = UserService.userProfile.username
                 $scope.currentQuery.advancedUserQueryId = null;
             }
+
+            console.log('the query is ' + AdvancedQueryService.currentQuery);
         };
 
         $scope.toogleShowHelp = function () {
