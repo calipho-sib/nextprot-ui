@@ -124,23 +124,16 @@
                         <a class="btn dropdown-toggle" data-toggle="dropdown">
                             {{repository}}
                             <span class="caret"></span> </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="" ng-click="showRepository('nextprot')">{{reps.nextprotRep}}</a></li>
-                            <li><a href="" ng-click="showRepository('private')">{{reps.privateRep}}</a></li>
-                            <li><a href="" ng-click="showRepository('public')">{{reps.publicRep}}</a></li>
+                        <ul class="dropdown-menu" >
+                            <li><a href="" ng-click="showRepository(rep)" ng-repeat="rep in reps">{{rep}}</a></li>
                         </ul>
                     </div>
+
+
                     <button type="button" class="close" style="padding-right: 5px" ng-click="showHelp=false">×</button>
 
                     <div class="row">
                     </div>
-                    <!--<ul class="nav nav-pills nav-stacked">-->
-                        <!--<li class="story" ng-repeat="query in queries | filter:filterQuery"-->
-                            <!--ng-click="setCurrentQuery(query)">-->
-                            <!--<a ref>[{{query.username}}] {{query.title}}</a>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-
                     <div class="row">
                         <table class="table table-hover">
                             <tbody>

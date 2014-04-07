@@ -40,6 +40,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
     'Search',
     function ($resource, config, UserService, Search) {
 
+        var reps = Search.config.widgets.repositories;
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
         var $nextprot_query_list = $resource(baseUrl + '/nextprot-api/user/advanced-nextprot-query.json', {
@@ -70,32 +71,21 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             };
         };
 
-        AdvancedQueryService.prototype.getPublicQueryList = function (cb) {
-            return $public_query_list.get(function (data) {
-                if (cb)cb(data);
-            }, function (error) {
-                console.log(error, error.headers())
-            });
-        };
-        AdvancedQueryService.prototype.getNextprotQueryList = function (cb) {
-            return $public_query_list.get(function (data) {
-                if (cb)cb(data);
-            }, function (error) {
-                console.log(error, error.headers())
-            });
-        };
-
-
         AdvancedQueryService.prototype.getRepository = function (username, repository, cb) {
 
-            if (repository == 'nextprot') {
-                service = $nextprot_query_list;
-            } else if (repository == 'public') {
-                service = $public_query_list;
-            } else if (repository == 'private') {
-                service = $user_query_list;
-            } else throw repository + ' repository not found';
 
+            console.log(repository);
+            console.log(reps.nextprotRep);
+            console.log(reps.publicRep);
+            console.log(reps.privateRep);
+
+            if (repository == reps.nextprotRep) {
+                service = $nextprot_query_list;
+            } else if (repository == reps.publicRep) {
+                service = $public_query_list;
+            } else if (repository == reps.privateRep) {
+                service = $user_query_list;
+            } else throw repository + ' repository not found!!!';
 
             var cbOk = function (data) {
                 if (cb)cb(data);
@@ -106,7 +96,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
 
             //Needs the username
-            if (repository == Search.config.widgets.repositories.privateRep) {
+            if (repository == reps.privateRep) {
                 return service.get({username: username}, cbOk, cbFailure);
             } else return service.get(cbOk, cbFailure);
 

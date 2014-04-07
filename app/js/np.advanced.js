@@ -34,6 +34,31 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         $scope.repository = $scope.reps.nextprotRep;
         $scope.showHelp = true;
         $scope.currentQuery = AdvancedQueryService.currentQuery;
+        $scope.User = UserService;
+
+
+        // Looking for the event when the username is changed
+        $scope.$watch(
+            'User.isAnonymous()',
+            function(newValue, oldValue) {
+
+                $scope.queries = null;
+                if($scope.User.isAnonymous()){
+                    AdvancedQueryService.getRepository($scope.User.userProfile.username, $scope.reps.nextprotRep, callbackQueryMapping);
+                    $scope.repository = $scope.reps.nextprotRep;
+                }else {
+                    AdvancedQueryService.getRepository($scope.User.userProfile.username, $scope.reps.publicRep, callbackQueryMapping);
+                    $scope.repository = $scope.reps.privateRep;
+                }
+
+                console.log('user changed to' + newValue + " from " + oldValue + " " + UserService.userProfile.userLoggedIn);
+            }
+        );
+
+
+        var callbackQueryMapping =  function (data) {
+            $scope.queries = data.advancedUserQueryList;
+        };
 
         $scope.setCurrentQuery = function (query) {
             //The binding is done at the level of the primitive, therefore
@@ -52,12 +77,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         };
 
         $scope.showRepository = function (name) {
-
-            AdvancedQueryService.getRepository(UserService.userProfile.username, name,
-                function (data) {
-                    $scope.queries = data.advancedUserQueryList;
-                    $scope.repository = Search.config.widgets.repositories.privateRep;
-                });
+            AdvancedQueryService.getRepository(UserService.userProfile.username, name, callbackQueryMapping);
         };
 
         $scope.doAdvanceSearch = function () {
@@ -152,6 +172,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
                 }
             );
         }
+
 
 
     }

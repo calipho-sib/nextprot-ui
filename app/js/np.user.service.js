@@ -53,7 +53,6 @@ UserService.factory('UserService', [
                 console.log('got token' + $window.sessionStorage.token);
                 var prevUrl = history.length > 1 ? history.splice(-2)[0] : "/";
                 $location.path(prevUrl);
-
                 if (cb)cb(null, data);
             });
         }
@@ -107,6 +106,10 @@ UserService.factory('UserService', [
             this.userProfile.userLoggedIn = false;
         }
 
+
+        UserService.prototype.isAnonymous = function () {
+            return !this.userProfile.userLoggedIn;
+        }
 
         var service = new UserService();
         return service;
