@@ -3,7 +3,7 @@
 
     <div class="row-fluid">
         <form ng-submit="go()" validate>
-            <div ng-show="!expertMode">
+            <div ng-show="!isAdvancedMode()">
                 <div class="span3">
                     <!--                        -->
                     <!--  ENTITY SELECTION      -->
@@ -55,7 +55,7 @@
                         <!--                        -->
                         <!--  Expert mode button    -->
                         <!--                        -->
-                        <button id="adv-user-query" class="btn" type="button" ng-click="showUserQuery()"><i
+                        <button id="adv-user-query" class="btn" type="button" ng-click="mode('advanced')"><i
                                 class="icon-caret-down ajax-end"></i></button>
 
                         <!--                        -->
@@ -85,24 +85,24 @@
                     </div>
                 </div>
             </div>
+            baaaaaa {{Search.params}}
             <!--             -->
             <!-- Expert mode -->
-            <div ng-show="expertMode" ng-controller="AdvancedCtrl">
+            <div ng-show="isAdvancedMode()" ng-controller="AdvancedCtrl">
                 <div class="span2"/>
-                <div class="span5 fade-in fade-out" id="sparql-small-div"
-                     ng-show="expertMode">
+                <div class="span5 fade-in fade-out" id="sparql-small-div">
                     <div class="container-fluid">
                         <div class="row-fluid">
                             <div class="span11">
-                                <input type="text" placeholder="title" style="width: 500px" ng-model="currentQuery.title">
+                                <input type="text" placeholder="title" style="width: 500px" ng-model="Advanced.currentQuery.title">
                                 <div class="sparql-small-box">
                                     <div style="height: inherit;"
                                          ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}"
-                                         ng-model="currentQuery.sparql"></div>
+                                         ng-model="Advanced.currentQuery.sparql"></div>
                                 </div>
                             </div>
                             <div class="span1">
-                                <button class="btn" type="button" ng-click="showUserQuery()"
+                                <button class="btn" type="button" ng-click="mode('simple')"
                                         style="margin-bottom: 10px"><i
                                         class="icon-caret-up ajax-end"></i></button>
                                 <button class="btn " type="button" ng-click="toogleShowHelp()"
@@ -117,15 +117,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="span4 fade-in fade-out" ng-show="showHelp && expertMode">
+                <div class="span4 fade-in fade-out" ng-show="Advanced.showHelp">
                     <input ng-model="filterQuery" placeholder="text filter">
 
                     <div class="btn-group">
                         <a class="btn dropdown-toggle" data-toggle="dropdown">
-                            {{repository}}
+                            {{Advanced.currentRepository}}
                             <span class="caret"></span> </a>
                         <ul class="dropdown-menu" >
-                            <li><a href="" ng-click="showRepository(rep)" ng-repeat="rep in reps">{{rep}}</a></li>
+                            <li><a href="" ng-click="Advanced.getRepository('dani')" ng-repeat="rep in Advanced.repositories">{{rep}}</a></li>
                         </ul>
                     </div>
 
@@ -137,14 +137,14 @@
                     <div class="row">
                         <table class="table table-hover">
                             <tbody>
-                            <tr ng-repeat="query in queries | filter:filterQuery">
+                            <tr ng-repeat="query in Advanced.queries | filter:filterQuery">
                                 <td>
                                 <td><a ng-click="setCurrentQuery(query)">{{query.title}}</a></td>
                                 <td style="height:25px">
-                                    <div fade-on-hover=".table">
-                                        <button class="btn btn-mini pull-right" type="button" ng-click="deleteAdvancedQuery(query)"><i class="icon-remove"></i></button>
-                                        <button class="btn btn-mini pull-right" type="button" ng-click="show(query)"><i class="icon-eye-open"></i></button>
-                                    </div>
+                                    <button class="btn btn-mini pull-right" type="button"
+                                            ng-click="deleteAdvancedQuery(query)"><i class="icon-remove"></i></button>
+                                    <button class="btn btn-mini pull-right" type="button" ng-click="show(query)"><i
+                                            class="icon-eye-open"></i></button>
                                 </td>
                             </tr>
                             </tbody>

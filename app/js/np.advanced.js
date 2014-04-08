@@ -2,16 +2,18 @@
 
 var AdvancedSearchModule = angular.module('np.advanced', ['np.advanced.search.service', 'np.advanced.query.service', 'np.advanced.ui']);
 
-AdvancedSearchModule.config([
-    '$routeProvider',
-    '$locationProvider',
-    '$httpProvider',
-    function ($routeProvider, $locationProvider, $httpProvider) {
-        $routeProvider
-            .when('/advanced', { templateUrl: 'partials/advanced/advanced.html'})
-    }
-]);
-
+// TODO Is the AdvanceSearchModule needed? Can't the advanced controller be in the Search module (no urls are defined...)
+// TODO bug when call from outside mode=advanced (the UI does not update)
+//
+//AdvancedSearchModule.config([
+//    '$routeProvider',
+//    '$locationProvider',
+//    '$httpProvider',
+//    function ($routeProvider, $locationProvider, $httpProvider) {
+//        $routeProvider
+//            .when('/home', {templateUrl: 'partials/welcome.html'})
+//    }
+//]);
 
 AdvancedSearchModule.controller('AdvancedCtrl', [
     '$window',
@@ -30,35 +32,31 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     'flash',
     'UserService',
     function ($window, $resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash, UserService) {
-        $scope.reps = Search.config.widgets.repositories;
-        $scope.repository = $scope.reps.nextprotRep;
-        $scope.showHelp = true;
-        $scope.currentQuery = AdvancedQueryService.currentQuery;
+
+        $scope.Advanced = AdvancedQueryService;
         $scope.User = UserService;
 
 
-        // Looking for the event when the username is changed
-        $scope.$watch(
-            'User.isAnonymous()',
-            function(newValue, oldValue) {
+        //TODO wait for mario fix Looking for the event when the username is changed
+//        $scope.$watch(
+//            'User.isAnonymous()',
+//            function(newValue, oldValue) {
+//
+//                $scope.queries = null;
+//                if($scope.User.isAnonymous()){
+//                    AdvancedQueryService.getRepository($scope.User.userProfile.username, $scope.reps.nextprotRep, function(repository, queries){
+//                        $scope.repository = repository;
+//                        $scope.queries=queries;
+//                    });
+//                }else {
+//                    AdvancedQueryService.getRepository($scope.User.userProfile.username, $scope.reps.publicRep, callbackQueryMapping);
+//                    $scope.repository = $scope.reps.privateRep;
+//                }
+//
+//                console.log('user changed to' + newValue + " from " + oldValue + " " + UserService.userProfile.userLoggedIn);
+//            }
+//        );
 
-                $scope.queries = null;
-                if($scope.User.isAnonymous()){
-                    AdvancedQueryService.getRepository($scope.User.userProfile.username, $scope.reps.nextprotRep, callbackQueryMapping);
-                    $scope.repository = $scope.reps.nextprotRep;
-                }else {
-                    AdvancedQueryService.getRepository($scope.User.userProfile.username, $scope.reps.publicRep, callbackQueryMapping);
-                    $scope.repository = $scope.reps.privateRep;
-                }
-
-                console.log('user changed to' + newValue + " from " + oldValue + " " + UserService.userProfile.userLoggedIn);
-            }
-        );
-
-
-        var callbackQueryMapping =  function (data) {
-            $scope.queries = data.advancedUserQueryList;
-        };
 
         $scope.setCurrentQuery = function (query) {
             //The binding is done at the level of the primitive, therefore
@@ -77,7 +75,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         };
 
         $scope.showRepository = function (name) {
-            AdvancedQueryService.getRepository(UserService.userProfile.username, name, callbackQueryMapping);
+            AdvancedQueryService.getRepository(UserService.userProfile.username);
         };
 
         $scope.doAdvanceSearch = function () {
@@ -140,6 +138,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             );
         }
 
+
         $scope.getPublishText = function () {
             if ($scope.currentQuery) {
                 if ($scope.currentQuery.published == 'N') {
@@ -172,8 +171,6 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
                 }
             );
         }
-
-
 
     }
 ]);

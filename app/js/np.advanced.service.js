@@ -40,7 +40,6 @@ AdvancedQueryService.factory('AdvancedQueryService', [
     'Search',
     function ($resource, config, UserService, Search) {
 
-        var reps = Search.config.widgets.repositories;
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
         var $nextprot_query_list = $resource(baseUrl + '/nextprot-api/user/advanced-nextprot-query.json', {
@@ -63,42 +62,45 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
 
         var AdvancedQueryService = function () {
-            this.currentQuery = {
-                title: null,
-                sparql: null,
-                advancedUserQueryId: null,
-                username: null
-            };
+            this.showHelp = true;
+            this.currentRepository = Search.config.widgets.repositories.nextprotRep;
+            this.repositories = Search.config.widgets.repositories;
+
+            this.currentQuery = {};
+            this.queries = {};
+
         };
 
-        AdvancedQueryService.prototype.getRepository = function (username, repository, cb) {
+        AdvancedQueryService.prototype.getRepository = function (username, cb) {
 
+            var selectedResource = null;
+            var me = this;
 
-            console.log(repository);
-            console.log(reps.nextprotRep);
-            console.log(reps.publicRep);
-            console.log(reps.privateRep);
-
-            if (repository == reps.nextprotRep) {
-                service = $nextprot_query_list;
-            } else if (repository == reps.publicRep) {
-                service = $public_query_list;
-            } else if (repository == reps.privateRep) {
-                service = $user_query_list;
-            } else throw repository + ' repository not found!!!';
+            if (this.currentRepository == this.repositories.nextprotRep) {
+                selectedResource = $nextprot_query_list;
+            } else if (this.currentRepository == this.repositories.publicRep) {
+                selectedResource = $public_query_list;
+            } else if (this.currentRepository == this.repositories.privateRep) {
+                selectedResource = $user_query_list;
+            } else throw this.currentRepository+ ' repository not found!!!';
 
             var cbOk = function (data) {
+                me.queries = data['advancedUserQueryList'];
                 if (cb)cb(data);
             };
+
             var cbFailure = function (error) {
                 console.log(error, error.headers())
             }
 
 
             //Needs the username
-            if (repository == reps.privateRep) {
-                return service.get({username: username}, cbOk, cbFailure);
-            } else return service.get(cbOk, cbFailure);
+            if (this.currentRepository == this.repositories.privateRep) {
+                return selectedResource.get({username: username}, cbOk, cbFailure);
+            } else {
+                alert('here we go!!!!')
+                return selectedResource.get(cbOk, cbFailure);
+            }
 
         };
 
