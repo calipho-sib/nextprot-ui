@@ -29,6 +29,7 @@ SearchService.factory('Search',[
 			query:'',
 			sort:'',
 			order:''
+            mode:'simple' // can be simple or advanced
 	};	
 	
 
