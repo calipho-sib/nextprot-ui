@@ -46,33 +46,51 @@ UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$loc
         };
 
 
-        $scope.renderSignIn = function() {
-            gapi.signin.render('myGsignin', {
-                'callback': $scope.signIn,
-                'clientid': config.google.credentials.clientId,
-                'requestvisibleactions': config.google.credentials.requestvisibleactions,
-                'scope': config.google.credentials.scopes,
-                // Remove the comment below if you have configured
-                // appackagename in services.js
-                //'apppackagename': Conf.apppackagename,
-                'theme': 'dark',
-                'cookiepolicy': config.google.credentials.cookiepolicy,
-                'accesstype': 'offline'
-            });
+        // $scope.renderSignIn = function() {
+            // gapi.signin.render('myGsignin', {
+            //     'callback': $scope.signIn,
+            //     'clientid': config.google.credentials.clientId,
+            //     'requestvisibleactions': config.google.credentials.requestvisibleactions,
+            //     'scope': config.google.credentials.scopes,
+            //     // Remove the comment below if you have configured
+            //     // appackagename in services.js
+            //     //'apppackagename': Conf.apppackagename,
+            //     'theme': 'dark',
+            //     'cookiepolicy': config.google.credentials.cookiepolicy,
+            //     'accesstype': 'offline'
+            // });
+          // }
+
+          $scope.clickSignIn = function() {
+
+            console.log('CLICK!');
+
+            gapi.auth.signIn({
+          		'clientid' : config.google.credentials.clientId,
+          		'cookiepolicy' : 'single_host_origin',
+          		'callback' : $scope.signIn,
+          		'scope' : config.google.credentials.scopes,
+          		'requestvisibleactions' : config.google.credentials.requestvisibleactions
+          		// Additional parameters
+        		});
         }
 
-        $scope.start = function() {
-            $scope.renderSignIn();
-        }
+        // $scope.start = function() {
+        //     $scope.renderSignIn();
+        // }
 
         $scope.signIn = function(authResult) {
+            // $timeout(function() {
             $scope.$apply(function() {
                 $scope.processAuth(authResult);
             });
         }
 
         $scope.processAuth = function(authResult) {
-            $scope.immediateFailed = true;
+
+          console.log('AUTH: ', authResult);
+
+          $scope.immediateFailed = true;
             if ($scope.isSignedIn) {
                 return 0;
             }
@@ -81,7 +99,6 @@ UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$loc
                 // Successfully authorized, create session
 
                 UserService.googleSignin(authResult, function(response) {
-                    console.log('RESPONSE: ', response);
                     $scope.signedIn();
                 });
             } else if (authResult['error']) {
@@ -94,14 +111,19 @@ UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$loc
         }
 
         $scope.signedIn = function() {
-            console.log("SIGNED IN!");
             $scope.isSignedIn = true;
 
             UserService.getUserProfile();
         }
 
-        $scope.start();
+        // $scope.start();
 
+        $scope.clickSignOut = function() {
+    	     console.log('SIGNED OUT!');
+
+    	    gapi.auth.signOut();
+    	     $scope.isSignedIn = false;
+         }
 
 
 

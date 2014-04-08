@@ -20,11 +20,11 @@ UserService.factory('UserService', [
             history.push($location.$$path);
         });
 
-        var $token = $resource(baseAuthUrl + '/oauth/token', {client_id: 'nextprotui', grant_type: 'password', username: '@username', password: '@password'}, {
+        var $token = $resource(baseAuthUrl + '/oauth/token', {client_id: config.nextprot.credentials.clientId, grant_type: 'password', username: '@username', password: '@password'}, {
             get: { method: 'POST' }
         });
 
-        var $googleToken = $resource(baseAuthUrl + '/google/token', {}, {
+        var $googleToken = $resource(baseAuthUrl + '/google/token?client_id=:client_id', { client_id: config.nextprot.credentials.clientId }, {
             get: { method: 'POST' }
         });
 
@@ -58,12 +58,12 @@ UserService.factory('UserService', [
         }
 
         UserService.prototype.googleSignin = function(authResult, cb) {
-            $googleToken.get({ 
-                access_token : authResult.access_token, 
+            $googleToken.get({
+                access_token : authResult.access_token,
                 refresh_token: authResult.refresh_token,
                 code: authResult.code,
                 id_token: authResult.id_token,
-                expires_at: authResult.expires_at, 
+                expires_at: authResult.expires_at,
                 expires_in: authResult.expires_in
             }, function(response) {
                 $window.sessionStorage.token = response.access_token;

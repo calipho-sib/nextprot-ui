@@ -42,6 +42,25 @@
                         <span id="myGsignin"></span>
                     </span>
 
+                    <button class="btn btn-lg btn-danger btn-block" ng-click="clickSignIn()">Sign in with Google</button>
+
+
+                    <button class="btn btn-lg btn-block" ng-click="clickSignOut()" ng-show="isSignedIn">Sign out</button>
+
+
+                    <!--<span id="signinButton">-->
+                        <!--<span-->
+                              <!--class="g-signin"-->
+                              <!--data-callback="googleCallback"-->
+                              <!--data-clientid="CLIENT_ID"-->
+                              <!--data-cookiepolicy="single_host_origin"-->
+                              <!--data-requestvisibleactions="http://schemas.google.com/AddActivity"-->
+                              <!--data-scope="https://www.googleapis.com/auth/plus.login">-->
+                      <!--</span>-->
+                    <!--</span>-->
+
+                    <!--<button type="btn " ng-click="googleSignin()">Google</button>-->
+
                 </div>
 
             </div>
