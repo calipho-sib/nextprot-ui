@@ -23,7 +23,7 @@ angular.module('np.config', []).factory('config', [
                 'rootUrl': 'http://localhost:3000',
                 'scopes': 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
                 'requestvisibleactions': 'http://schemas.google.com/AddActivity ' + 'http://schemas.google.com/ReviewActivity',
-                'cookiepolicy': 'single_host_origin',
+                'cookiepolicy': 'single_host_origin'
           }
     
         }

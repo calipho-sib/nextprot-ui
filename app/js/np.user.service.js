@@ -83,6 +83,7 @@ UserService.factory('UserService', [
                 if(data.authorities && data.username){
                     me.userProfile.authorities = data.authorities;
                     me.userProfile.username = data.username;
+                    me.userProfile.identifier = data.identifier;
                     me.userProfile.userLoggedIn = true;
                 }else {
                     this.logout;
@@ -96,6 +97,7 @@ UserService.factory('UserService', [
             $userLogout.get({token: $window.sessionStorage.token}, function (data) {
                 if (cb)cb(data);
             });
+
             console.log('deleting session storage')
             delete $window.sessionStorage.token;
             this.setGuestUser();
@@ -106,7 +108,6 @@ UserService.factory('UserService', [
             this.userProfile.username = 'Guest';
             this.userProfile.userLoggedIn = false;
         }
-
 
         var service = new UserService();
         return service;
