@@ -32,59 +32,59 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     function ($window, $resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash, UserService) {
         $scope.reps = Search.config.widgets.repositories;
         $scope.repository = $scope.reps.nextprotRep;
-        $scope.AdvancedQueryService = AdvancedQueryService;
+        $scope.showHelp = true;
+        $scope.currentQuery = AdvancedQueryService.currentQuery;
+        $scope.User = UserService;
+
+
+        // Looking for the event when the username is changed
+        $scope.$watch(
+            'User.isAnonymous()',
+            function(newValue, oldValue) {
+
+                $scope.queries = null;
+                if($scope.User.isAnonymous()){
+                    AdvancedQueryService.getRepository($scope.User.userProfile.username, $scope.reps.nextprotRep, callbackQueryMapping);
+                    $scope.repository = $scope.reps.nextprotRep;
+                }else {
+                    AdvancedQueryService.getRepository($scope.User.userProfile.username, $scope.reps.publicRep, callbackQueryMapping);
+                    $scope.repository = $scope.reps.privateRep;
+                }
+
+                console.log('user changed to' + newValue + " from " + oldValue + " " + UserService.userProfile.userLoggedIn);
+            }
+        );
+
+
+        var callbackQueryMapping =  function (data) {
+            $scope.queries = data.advancedUserQueryList;
+        };
 
         $scope.setCurrentQuery = function (query) {
-            $scope.currentQuery = query;
+            //The binding is done at the level of the primitive, therefore
+            angular.extend($scope.currentQuery, query);
+            //change the query for the current username and the id null if it does not belong to the user
+            if($scope.currentQuery.username != UserService.userProfile.username){
+                $scope.currentQuery.username = UserService.userProfile.username
+                $scope.currentQuery.advancedUserQueryId = null;
+            }
+
+            console.log('the query is ' + AdvancedQueryService.currentQuery);
         };
 
-        $scope.hasPrivilegeToEdit = function () {
-            if ($scope.currentQuery)
-                return ($scope.currentQuery.username == UserService.userProfile.username)
-            return false;
+        $scope.toogleShowHelp = function () {
+            $scope.showHelp =  !$scope.showHelp;
         };
 
-        $scope.isQuerySelected = function () {
-            return ($scope.currentQuery != null);
-        };
-
-
-        $scope.showPrivateRepository = function () {
-
-            AdvancedQueryService.getQueryList(UserService.userProfile.username, $scope.showPublic,
-                function (data) {
-                    $scope.queries = data.advancedUserQueryList;
-                    $scope.currentQuery = null;
-                    $scope.repository = Search.config.widgets.repositories.privateRep;
-                });
-        };
-
-        $scope.showPublicRepository = function () {
-            AdvancedQueryService.getPublicQueryList(
-                function (data) {
-                    $scope.queries = data.advancedUserQueryList;
-                    $scope.currentQuery = null
-                    $scope.repository = Search.config.widgets.repositories.publicRep;
-
-                });
-        };
-
-        $scope.showNextprotRepository = function () {
-            AdvancedQueryService.getNextprotQueryList(
-                function (data) {
-                    $scope.queries = data.advancedUserQueryList;
-                    $scope.currentQuery = null;
-                    $scope.repository = Search.config.widgets.repositories.nextprotRep;
-                });
+        $scope.showRepository = function (name) {
+            AdvancedQueryService.getRepository(UserService.userProfile.username, name, callbackQueryMapping);
         };
 
         $scope.doAdvanceSearch = function () {
-            if ($scope.currentQuery == null) {
-                alert("Choose a query!")
+            if ($scope.currentQuery.sparql == null) {
+                alert("Sparql can't be empty")
             } else {
-
                 var start = new Date().getTime();
-                ;
                 $scope.buttonDisabled = true;
                 AdvancedSearchService.getEntriesBySparqlQuery(
                     $scope.currentQuery.sparql,
@@ -99,13 +99,36 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
 
-        $scope.createAdvancedQuery = function () {
-            AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username, AdvancedQueryService.currentQuery,
-                function () {
-                    flash('alert-success', AdvancedQueryService.currentQuery.title + ' saved successfully!')
-                    $route.reload();
-                }
-            );
+        $scope.createOrReplaceUserQuery = function () {
+            if($scope.currentQuery.advancedUserQueryId == null){
+                alert('creating a new');
+                AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
+                    function (data) {
+                        angular.extend($scope.currentQuery, data);
+                        flash('alert-success', $scope.currentQuery.title + ' query saved successfully!')
+                        $route.reload();
+                    },
+                    function (error) {
+                        if(error.status == 409) {
+                            flash('alert-warn', $scope.currentQuery.title + ' already exists, choose a different name.')
+                        }
+                    }
+                );
+            }else {
+                alert('updating...');
+                AdvancedQueryService.updateAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
+                    function (data) {
+                        angular.extend($scope.currentQuery, data);
+                        flash('alert-success', "Updated successful for " + $scope.currentQuery.title);
+                        return;
+                    },
+                    function (error) {
+                        if(error.status == 409) {
+                            flash('alert-warn', $scope.currentQuery.title + ' already exists, choose a different name.')
+                        }
+                    }
+                );
+            }
         }
 
         $scope.updateAdvancedQuery = function () {
@@ -141,14 +164,15 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             );
         }
 
-        $scope.deleteAdvancedQuery = function () {
-            AdvancedQueryService.deleteAdvancedQuery(UserService.userProfile.username, $scope.currentQuery,
+        $scope.deleteAdvancedQuery = function (query) {
+            AdvancedQueryService.deleteAdvancedQuery(UserService.userProfile.username, query,
                 function () {
-                    flash('alert-success', "User query deleted successfully for " + $scope.currentQuery.title);
+                    flash('alert-success', query.title + " query deleted successfully for ");
                     $route.reload();
                 }
             );
         }
+
 
 
     }

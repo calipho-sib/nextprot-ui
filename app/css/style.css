@@ -1,156 +1,154 @@
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
-
 
 a.inactive {
-   pointer-events: none;
-   cursor: default;
-   color:black;
+    pointer-events: none;
+    cursor: default;
+    color: black;
 }
 
-.blue{
-	color:blue;
+.blue {
+    color: blue;
 }
 
-.green{
-	color:green;
+.green {
+    color: green;
 }
 
-.gray{
-	color:#888;
+.gray {
+    color: #888;
 }
 
-
-.gray2{
-  color:#666;
-}
-.small{
-	font-size:93%;
+.gray2 {
+    color: #666;
 }
 
-.bold{
-  font-weight:bold!important;
+.small {
+    font-size: 93%;
 }
 
-.np-alert{
+.bold {
+    font-weight: bold !important;
+}
+
+.np-alert {
     border-radius: 0 0 6px 6px !important;
     min-width: 30%;
     position: fixed;
     top: 0;
 }
 
-.search-row{
-  margin-top:20%;
-  margin-bottom:20%;
+.search-row {
+    margin-top: 20%;
+    margin-bottom: 20%;
 }
-
 
 .modal-backdrop {
     background-color: #FFFFFF;
 }
 
-.search-row.animate{
-  margin-top:90px;
-  margin-bottom:inherit;
-  transition: .2s linear all;
-  -webkit-transition: .2s linear all;
-  -moz-transition: .2s linear all;
-  -o-transition: .2s linear all;  
-}
-.search-row .home{
-  position: absolute;
-  margin-top: -120px;
-  left:40%; 
+.search-row.animate {
+    margin-top: 90px;
+    margin-bottom: inherit;
+    transition: .2s linear all;
+    -webkit-transition: .2s linear all;
+    -moz-transition: .2s linear all;
+    -o-transition: .2s linear all;
 }
 
-.solrparams{
+.search-row .home {
+    position: absolute;
+    margin-top: -120px;
+    left: 40%;
+    z-index: -1;
+}
+
+.solrparams {
     background-color: #FAFAFA;
     background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
     background-repeat: repeat-x;
 }
-.resultparams{
+
+.resultparams {
     background-color: #FEFEFE;
     background-repeat: repeat-x;
     border-top: 1px solid #D4D4D4;
     margin-bottom: 60px;
     position: relative;
-	
+
 }
-.resultparams .navbar-inner{  
+
+.resultparams .navbar-inner {
     border-bottom: 1px solid #D4D4D4;
-    box-shadow: inherit; 
-    background-image:inherit;
-    background-color:#fff;
+    box-shadow: inherit;
+    background-image: inherit;
+    background-color: #fff;
 }
 
-
-.resultparams .affix .container{
-  padding-left: 0px!important;
+.resultparams .affix .container {
+    padding-left: 0px !important;
 }
 
 .resultparams .affix #search-query-affix {
-  display:block!important;
-  display: inline-block !important;
-  vertical-align: middle !important;
-  margin: 5px;
-  transition: .2s linear all;
-  -webkit-transition: .2s linear all;
-  -moz-transition: .2s linear all;
-  -o-transition: .2s linear all;  
-  opacity: 1!important;
+    display: block !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 5px;
+    transition: .2s linear all;
+    -webkit-transition: .2s linear all;
+    -moz-transition: .2s linear all;
+    -o-transition: .2s linear all;
+    opacity: 1 !important;
 
 }
 
-.resultparams .label-gg{
-  color: #808080;
-  right: 10px;
-  position: absolute;
-  top: 25%; 
+.resultparams .label-gg {
+    color: #808080;
+    right: 10px;
+    position: absolute;
+    top: 25%;
 }
 
 .affix {
-    position: fixed!important; 
-    top: 40px; 
+    position: fixed !important;
+    top: 40px;
     left: 0px;
-    right:0px;    
-    z-index:100;
+    right: 0px;
+    z-index: 100;
 }
 
-.affix-top{
-    z-index:100;  
+.affix-top {
+    z-index: 100;
 }
-
-
 
 .resultfilters {
 }
 
 .resultfilters.affix {
-    padding-left:0;
-    z-index:99;
+    padding-left: 0;
+    z-index: 99;
     margin-top: 40px;
 }
 
-.resultfilters .active{
-  background-color: aliceblue;
-  width: 80%;
-  border-radius: 5px;
+.resultfilters .active {
+    background-color: aliceblue;
+    width: 80%;
+    border-radius: 5px;
 }
 
-
 .nav .pagination {
-    margin: 7px 0 0!important;
+    margin: 7px 0 0 !important;
 }
 
 .result.pagination {
-    margin: 20px 20%!important;
+    margin: 20px 20% !important;
 }
 
-.search-bar .dropdown-menu{
-  min-width: 400px;
+.search-bar .dropdown-menu {
+    min-width: 400px;
 }
 
 .search-bar .dropdown-menu .active > a, .dropdown-menu .active > a:hover {
@@ -163,40 +161,42 @@ a.inactive {
 }
 
 [class*="span"] .nomargin {
-	margin:0px;
+    margin: 0px;
 }
 
-.error{
-	position:fixed;
-	top:46px;
-  margin-left:auto;
-  margin-right:auto;
-  width:50%;
-  left:20%;
-  right:20%;
-  font-weight: bold;
-  z-index: 2000;
+.error {
+    position: fixed;
+    top: 46px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    left: 20%;
+    right: 20%;
+    font-weight: bold;
+    z-index: 2000;
 }
 
-.no-quality-search-width{
-	width:500px!important;
-}
-.quality-search-width{
-  width:405px!important;
+.no-quality-search-width {
+    width: 500px !important;
 }
 
-ul#search-results li{
-  padding-bottom: 20px;
+.quality-search-width {
+    width: 405px !important;
 }
 
-ul#search-results .result-authors{
-  font-size: 93%;
-}
-ul#search-results .result-authors a{
-  color:#6A90D9;
+ul#search-results li {
+    padding-bottom: 20px;
 }
 
-ul#search-results .result-abstract{
+ul#search-results .result-authors {
+    font-size: 93%;
+}
+
+ul#search-results .result-authors a {
+    color: #6A90D9;
+}
+
+ul#search-results .result-abstract {
     font-size: 90%;
     margin-right: 60px;
     padding-top: 5px;
@@ -204,20 +204,24 @@ ul#search-results .result-abstract{
     text-rendering: optimizelegibility;
 }
 
-.sparql-small-box{
-    height:200px;
-    width: 500px;
-    border:1px solid;
+.sparql-small-box {
+    height: 200px;
+    width: 100%;
+    border: 1px solid;
     border-color: lightgray;
 }
 
-#sparql-small-div.ng-hide-add{
-    -webkit-animation: rollOut 0.5s;
-    display:block!important;
+.fade-out.ng-hide-add {
+    -webkit-animation: fadeOut 0.5s;
+    display: block !important;
 }
 
-#sparql-small-div.ng-hide-remove{
-    -webkit-animation: fadeInDown 0.5s;
-    display:block!important;
+.fade-in.ng-hide-remove {
+    -webkit-animation: fadeIn 0.5s;
+    display: block !important;
+}
+
+#sparqlTitle {
+    width: 500px;
 }
 

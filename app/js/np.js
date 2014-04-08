@@ -43,13 +43,15 @@ App.config([
                         flash('alert-error', "The API is not accessible");
                         return;
                     } else if (status == 401) {
-                        flash('alert-error', "PROUT");
+                        flash('alert-error', "You are not authorized to access the resource. Please login or review your privileges.");
                         return;
-                    } else if (status == 404) {
+                    }else if (status == 404) {
                         flash('alert-error', "URL not found");
                         return;
                     } else {
-                        flash('alert-error', 'Some error occured' + " " + status + " " + response.data);
+                        if (response.data.message) {
+                            flash('alert-warn', response.data.message);
+                        } else flash('alert-error', 'Some error occured' + " " + status + " " + response);
                     }
                     // otherwise
                     return $q.reject(response);
@@ -65,7 +67,6 @@ App.config([
 
         //$httpProvider.defaults.useXDomain = true;
         //$httpProvider.defaults.withCredentials = true;
-
 
 
         // List of routes of the application
@@ -107,7 +108,7 @@ App.factory('Tools', [
 App.factory('authInterceptor', function ($rootScope, $q, $window, $location, flash) {
     return {
         request: function (config) {
-            if(config.url.indexOf('nextprot-api/user') != -1){
+            if (config.url.indexOf('nextprot-api/user') != -1) {
                 config.headers = config.headers || {};
                 if ($window.sessionStorage.token) {
                     console.log('adding token ' + $window.sessionStorage.token)
@@ -125,7 +126,6 @@ App.factory('authInterceptor', function ($rootScope, $q, $window, $location, fla
 App.config(function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptor');
 });
-
 
 
 App.directive('npBase', ['config', function (config) {

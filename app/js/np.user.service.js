@@ -53,7 +53,6 @@ UserService.factory('UserService', [
                 console.log('got token' + $window.sessionStorage.token);
                 var prevUrl = history.length > 1 ? history.splice(-2)[0] : "/";
                 $location.path(prevUrl);
-
                 if (cb)cb(null, data);
             });
         }
@@ -83,7 +82,6 @@ UserService.factory('UserService', [
                 if(data.authorities && data.username){
                     me.userProfile.authorities = data.authorities;
                     me.userProfile.username = data.username;
-                    me.userProfile.identifier = data.identifier;
                     me.userProfile.userLoggedIn = true;
                 }else {
                     this.logout;
@@ -97,7 +95,6 @@ UserService.factory('UserService', [
             $userLogout.get({token: $window.sessionStorage.token}, function (data) {
                 if (cb)cb(data);
             });
-
             console.log('deleting session storage')
             delete $window.sessionStorage.token;
             this.setGuestUser();
@@ -107,6 +104,11 @@ UserService.factory('UserService', [
             this.userProfile.authorities = '[]';
             this.userProfile.username = 'Guest';
             this.userProfile.userLoggedIn = false;
+        }
+
+
+        UserService.prototype.isAnonymous = function () {
+            return !this.userProfile.userLoggedIn;
         }
 
         var service = new UserService();

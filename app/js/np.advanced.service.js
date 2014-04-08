@@ -37,9 +37,10 @@ AdvancedQueryService.factory('AdvancedQueryService', [
     '$resource',
     'config',
     'UserService',
-    function ($resource, config, UserService) {
+    'Search',
+    function ($resource, config, UserService, Search) {
 
-
+        var reps = Search.config.widgets.repositories;
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
         var $nextprot_query_list = $resource(baseUrl + '/nextprot-api/user/advanced-nextprot-query.json', {
@@ -62,60 +63,51 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
 
         var AdvancedQueryService = function () {
-            this.currentQuery = {};
-            this.setEmptyQuery();
+            this.currentQuery = {
+                title: null,
+                sparql: null,
+                advancedUserQueryId: null,
+                username: null
+            };
         };
 
-
-        AdvancedQueryService.prototype.setEmptyQuery = function () {
-            this.currentQuery.advancedUserQueryId = null;
-            this.currentQuery.title = null;
-            this.currentQuery.sparql = null;
-            this.currentQuery.username = null;
-        }
-
-        AdvancedQueryService.prototype.setCurrentQuery = function (query) {
-            this.currentQuery.advancedUserQueryId = query.advancedUserQueryId;
-            this.currentQuery.title = query.title;
-            this.currentQuery.sparql = query.sparql;
-            this.currentQuery.description = query.description;
-            this.currentQuery.published = query.published;
-        }
+        AdvancedQueryService.prototype.getRepository = function (username, repository, cb) {
 
 
-        AdvancedQueryService.prototype.getQueryList = function (username, includePublic, cb) {
-            return $user_query_list.get({username: username}, function (data) {
+            console.log(repository);
+            console.log(reps.nextprotRep);
+            console.log(reps.publicRep);
+            console.log(reps.privateRep);
+
+            if (repository == reps.nextprotRep) {
+                service = $nextprot_query_list;
+            } else if (repository == reps.publicRep) {
+                service = $public_query_list;
+            } else if (repository == reps.privateRep) {
+                service = $user_query_list;
+            } else throw repository + ' repository not found!!!';
+
+            var cbOk = function (data) {
                 if (cb)cb(data);
-            }, function (error) {
+            };
+            var cbFailure = function (error) {
                 console.log(error, error.headers())
-            });
-        };
-
-        AdvancedQueryService.prototype.getPublicQueryList = function (cb) {
-            return $public_query_list.get(function (data) {
-                if (cb)cb(data);
-            }, function (error) {
-                console.log(error, error.headers())
-            });
-        };
-
-        AdvancedQueryService.prototype.getNextprotQueryList = function (cb) {
-            return $nextprot_query_list.get(function (data) {
-                if (cb)cb(data);
-            }, function (error) {
-                console.log(error, error.headers())
-            });
-        };
-
-        AdvancedQueryService.prototype.createAdvancedQuery = function (username, aq, cb) {
-            console.log('create advanced query > ', aq);
-            if (aq == null) {
-                alert("Select a query to duplicate");
-            } else {
-                $user_query_list.create({ username: username, id: aq.advancedUserQueryId }, aq, function (data) {
-                    if (cb)cb(data);
-                });
             }
+
+
+            //Needs the username
+            if (repository == reps.privateRep) {
+                return service.get({username: username}, cbOk, cbFailure);
+            } else return service.get(cbOk, cbFailure);
+
+        };
+
+        AdvancedQueryService.prototype.createAdvancedQuery = function (username, aq, cb, cbe) {
+            $user_query_list.create({ username: username }, aq, function (data) {
+                if (cb)cb(data);
+            }, function (error) {
+                if (cbe)cbe(error);
+            });
         };
 
         AdvancedQueryService.prototype.updateAdvancedQuery = function (username, aq, cb) {
