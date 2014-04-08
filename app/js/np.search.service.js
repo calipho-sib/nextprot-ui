@@ -28,7 +28,7 @@ SearchService.factory('Search',[
 			quality:'gold',
 			query:'',
 			sort:'',
-			order:''
+			order:'',
             mode:'simple' // can be simple or advanced
 	};	
 	
