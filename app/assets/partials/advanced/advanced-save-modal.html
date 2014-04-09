@@ -7,7 +7,7 @@
         <div class="control-group">
             <label class="control-label" for="inputName">Name: </label>
             <div class="controls">
-                <input id="inputName" type="text" placeholder="Name..." ng-model="Advanced.currentQuery.title" focus>
+                <input id="inputName" type="text" placeholder="Name..." ng-model="Advanced.selectedQuery.title" focus>
             </div>
         </div>
 
@@ -17,10 +17,20 @@
                 <label>Description: </label>
             </div>
             <div class="controls">
-                <textarea rows="10" id="inputDescription" type="text" placeholder="Description..." ng-model="Advanced.currentQuery.description">
+                <textarea rows="2" id="inputDescription" type="text" placeholder="Description..." ng-model="Advanced.selectedQuery.description">
                 </textarea>
             </div>
         </div>
+
+        <!-- Sparql -->
+        <div class="control-group">
+            <div class="sparql-small-box">
+                <div style="height: inherit;"
+                     ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}"
+                     ng-model="Advanced.selectedQuery.sparql"></div>
+            </div>
+        </div>
+
 
         <div class="control-group">
             <div class="controls">

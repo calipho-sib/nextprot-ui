@@ -146,9 +146,9 @@ SearchModule.controller('SearchCtrl', [
             //Advanced mode
             if ($scope.isAdvancedMode()) {
                 $location.path('/proteins/search').
-                    search('sparqlTitle', AdvancedQueryService.currentQuery.title).
+                    search('sparqlTitle', 'whatever title').
                     search('sparqlEngine', 'Jena').
-                    search('sparql', AdvancedQueryService.currentQuery.sparql);
+                    search('sparql', AdvancedQueryService.currentSparql);
             } else {
                 //We are in simple mode
                 $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search').search('query', Search.params.query.trim());

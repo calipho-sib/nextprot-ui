@@ -66,7 +66,8 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             this.currentRepository = Search.config.widgets.repositories.nextprotRep;
             this.repositories = Search.config.widgets.repositories;
 
-            this.currentQuery = {};
+            this.currentSparql = "";
+            this.selectedQuery = {};
             this.queries = {};
 
         };
@@ -105,24 +106,20 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         };
 
-        AdvancedQueryService.prototype.createAdvancedQuery = function (username, aq, cb, cbe) {
-            $user_query_list.create({ username: username }, aq, function (data) {
+        AdvancedQueryService.prototype.createAdvancedQuery = function (username, cb, cbe) {
+            $user_query_list.create({ username: username }, this.selectedQuery, function (data) {
+                angular.extend(this.selectedQuery,data);
                 if (cb)cb(data);
             }, function (error) {
                 if (cbe)cbe(error);
             });
         };
 
-        AdvancedQueryService.prototype.updateAdvancedQuery = function (username, aq, cb) {
-            if (aq == null) {
-                alert("Select a query to update");
-            } else {
-
-                console.log('update advanced query > ', aq);
-                $api_adv_query_id.update({ username: username, id: aq.advancedUserQueryId }, aq, function (data) {
-                    if (cb)cb(data);
-                });
-            }
+        AdvancedQueryService.prototype.updateAdvancedQuery = function (username, cb) {
+            $api_adv_query_id.update({ username: username, id: this.selectedQuery.advancedUserQueryId }, this.selectedQuery, function (data) {
+                angular.extend(this.selectedQuery,data);
+                if (cb)cb(data);
+            });
 
         };
 
@@ -133,6 +130,31 @@ AdvancedQueryService.factory('AdvancedQueryService', [
                     if (cb)cb(data);
                 });
             }
+        };
+
+
+        AdvancedQueryService.prototype.setCurrentQuery = function (query) {
+
+            //The binding is done at the level of the primitive, therefore
+            angular.extend(this.selectedQuery, query);
+            //change the query for the current username and the id null if it does not belong to the user
+            if(this.selectedQuery.username != UserService.userProfile.username){
+                this.selectedQuery.username = UserService.userProfile.username
+                this.selectedQuery.advancedUserQueryId = null;
+            }
+
+        };
+
+        AdvancedQueryService.prototype.clearSelectedQuery = function () {
+            this.currentSparql = "";
+        };
+
+        AdvancedQueryService.prototype.clearCurrentQuery = function () {
+            this.currentSparql = "";
+        };
+
+        AdvancedQueryService.prototype.isNew = function () {
+            return (this.selectedQuery.advancedUserQueryId == null);
         };
 
         var service = new AdvancedQueryService();
