@@ -100,7 +100,6 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             if (this.currentRepository == this.repositories.privateRep) {
                 return selectedResource.get({username: username}, cbOk, cbFailure);
             } else {
-                alert('here we go!!!!')
                 return selectedResource.get(cbOk, cbFailure);
             }
 

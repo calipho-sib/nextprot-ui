@@ -84,74 +84,7 @@
                     </div>
                 </div>
             </div>
-            <!--             -->
-            <!-- Expert mode -->
-            <div ng-show="isAdvancedMode()" ng-controller="AdvancedCtrl">
-                <div class="span2"/>
-                <div class="span5 fade-in fade-out" id="sparql-small-div">
-                    <div class="container-fluid">
-                        <div class="row-fluid">
-                            <div class="span11">
-                                <input type="text" placeholder="title" style="width: 500px" ng-model="Advanced.currentQuery.title">
-                                <div class="sparql-small-box">
-                                    <div style="height: inherit;"
-                                         ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}"
-                                         ng-model="Advanced.currentQuery.sparql"></div>
-                                </div>
-                            </div>
-                            <div class="span1">
-                                <button class="btn" type="button" ng-click="mode('simple')"
-                                        style="margin-bottom: 10px"><i
-                                        class="icon-caret-up ajax-end"></i></button>
-                                <button class="btn " type="button" ng-click="toogleShowHelp()"
-                                        style="margin-bottom: 10px"><i
-                                        class="icon-question-sign ajax-end"></i></button>
-                                <button class="btn" bs-modal="'partials/advanced/advanced-save-modal.html'"
-                                        style="margin-bottom: 10px"><i
-                                        class="icon-save ajax-end"></i></button>
-                                <button class="btn btn-primary dropdown" type="submit"><i
-                                        class="icon-search"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="span4 fade-in fade-out" ng-show="Advanced.showHelp">
-                    <input ng-model="filterQuery" placeholder="text filter">
-
-                    <div class="btn-group">
-                        <a class="btn dropdown-toggle" data-toggle="dropdown">
-                            {{Advanced.currentRepository}}
-                            <span class="caret"></span> </a>
-                        <ul class="dropdown-menu" >
-                            <li><a href="" ng-repeat="rep in Advanced.repositories" ng-click="showRepository(rep)">{{rep}}</a></li>
-                        </ul>
-                    </div>
-
-
-                    <button type="button" class="close" style="padding-right: 5px" ng-click="showHelp=false">×</button>
-
-                    <div class="row">
-                    </div>
-                    <div class="row">
-                        <table class="table table-hover">
-                            <tbody>
-                            <tr ng-repeat="query in Advanced.queries | filter:filterQuery">
-                                <td>
-                                <td><a ng-click="setCurrentQuery(query)">{{query.title}}</a></td>
-                                <td style="height:25px">
-                                    <button class="btn btn-mini pull-right" type="button"
-                                            ng-click="deleteAdvancedQuery(query)"><i class="icon-remove"></i></button>
-                                    <button class="btn btn-mini pull-right" type="button" ng-click="show(query)"><i
-                                            class="icon-eye-open"></i></button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-                <div class="span1"/>
-            </div>
+            <div ng-include src="'partials/advanced/advanced-mode.html'"></div>
         </form>
     </div>
     <div class="row solrparams">
