@@ -40,12 +40,12 @@ SearchModule.controller('SearchCtrl', [
     'AdvancedQueryService',
     'flash',
     function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, UserService, AdvancedQueryService, flash) {
-        //
+
+
         // scope from template
         $scope.Search = Search;
         $scope.config = config;
         $scope.user = UserService;
-        $scope.expertMode = false;
 
         $scope.AdvancedQueryService = AdvancedQueryService;
 
@@ -67,7 +67,6 @@ SearchModule.controller('SearchCtrl', [
                     flash('alert-info', "Successfully logged out ");
             });
         }
-
 
         //
         // interact with the search bar
@@ -132,6 +131,10 @@ SearchModule.controller('SearchCtrl', [
 
         }
 
+        $scope.isAdvancedMode = function () {
+            return Search.params.mode == 'advanced';
+        }
+
         $scope.go = function () {
             var url = $location.url();
             $location.search('filter', null);
@@ -139,12 +142,14 @@ SearchModule.controller('SearchCtrl', [
             $location.search('cart', null);
             $location.search('rows', null);
             $location.search('start', null);
-            if($scope.expertMode){
+
+            //Advanced mode
+            if ($scope.isAdvancedMode()) {
                 $location.path('/proteins/search').
-                    search('sparqlTitle', 'some title').
+                    search('sparqlTitle', AdvancedQueryService.currentQuery.title).
                     search('sparqlEngine', 'Jena').
                     search('sparql', AdvancedQueryService.currentQuery.sparql);
-            }else {
+            } else {
                 //We are in simple mode
                 $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search').search('query', Search.params.query.trim());
             }
@@ -162,7 +167,12 @@ SearchModule.controller('SearchCtrl', [
             });
         }
 
-        $scope.showUserQuery = function () {
+        // can be advanced or simple mode
+        $scope.mode = function (mode) {
+
+            Search.params.mode = mode;
+            $location.search('mode', (mode == 'advanced') ? 'advanced' : null);
+
             if(UserService.userProfile.userLoggedIn){
                 $scope.expertMode = !$scope.expertMode;
                 if($scope.expertMode){

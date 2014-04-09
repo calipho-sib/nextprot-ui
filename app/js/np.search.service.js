@@ -56,8 +56,11 @@ SearchService.factory('Search',[
 		//
 		// app search service params
 		this.params={};
-		
-		//
+
+        //for activating the spinner
+        this.loading=false;
+
+        //
 		// result content
 		this.result={};
 		
@@ -162,9 +165,11 @@ SearchService.factory('Search',[
 	//
 	// solr search in all documents 
 	Search.prototype.docs=function(params,cb){
+
 		var me=this;me.result.error="";
 		me.result.docs = [];
-		
+        me.loading = true;
+
 		delete this.params.list;
 		delete this.params.accs;
 
@@ -211,9 +216,11 @@ SearchService.factory('Search',[
 				})
 			}
 
+            me.loading = false;
 
 			if(cb)cb(me.result)
 		},function(error){
+            me.loading = false;
 			//if (error.status)
 			me.result.error="Ooops, request failed: "+error;
 		})	

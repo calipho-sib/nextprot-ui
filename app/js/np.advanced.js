@@ -58,24 +58,28 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 //        );
 
 
+        AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.nextprotRep);
+
         $scope.setCurrentQuery = function (query) {
+
+            var currentQuery = AdvancedQueryService.currentQuery;
+
             //The binding is done at the level of the primitive, therefore
-            angular.extend($scope.currentQuery, query);
+            angular.extend(currentQuery, query);
             //change the query for the current username and the id null if it does not belong to the user
-            if($scope.currentQuery.username != UserService.userProfile.username){
-                $scope.currentQuery.username = UserService.userProfile.username
-                $scope.currentQuery.advancedUserQueryId = null;
+            if(currentQuery.username != UserService.userProfile.username){
+                currentQuery.username = UserService.userProfile.username
+                currentQuery.advancedUserQueryId = null;
             }
 
-            console.log('the query is ' + AdvancedQueryService.currentQuery);
         };
 
         $scope.toogleShowHelp = function () {
             $scope.showHelp =  !$scope.showHelp;
         };
 
-        $scope.showRepository = function (name) {
-            AdvancedQueryService.getRepository(UserService.userProfile.username);
+        $scope.showRepository = function (repositoryName) {
+            AdvancedQueryService.getRepository(UserService.userProfile.username, repositoryName, null);
         };
 
         $scope.doAdvanceSearch = function () {

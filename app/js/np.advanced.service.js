@@ -71,10 +71,12 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         };
 
-        AdvancedQueryService.prototype.getRepository = function (username, cb) {
+        AdvancedQueryService.prototype.getRepository = function (username, repositoryName, cb) {
 
             var selectedResource = null;
             var me = this;
+
+            this.currentRepository = repositoryName;
 
             if (this.currentRepository == this.repositories.nextprotRep) {
                 selectedResource = $nextprot_query_list;

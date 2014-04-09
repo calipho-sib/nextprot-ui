@@ -47,7 +47,7 @@ SearchUI.directive('npAnimate', ['config', 'Search', '$location' ,function (conf
 	  return function (scope, elm, attrs) {
 	  	var target=attrs.npAnimate;
 	  	scope.$watch(function(){return $location.path()}, function(newValue, oldValue) {
-	  		if (newValue!=="/"){
+	  		if (newValue!=="/" && newValue!=="/home"){
 		  		elm.addClass("animate");
 		  	}else{
 		  		elm.removeClass("animate");
@@ -195,4 +195,5 @@ SearchUI.directive('npAffix', ['$parse','$timeout', function($parse, $timeout) {
 	      },0);
 	  }
 	}]);
+
 

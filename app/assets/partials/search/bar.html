@@ -1,6 +1,5 @@
 <div ng-cloak class="row search-row" np-animate="#main" ng-controller="AdvancedCtrl">
     <a href="http://localhost:3000"><img src="http://www.nextprot.org/db/images/blueflat/np.png" class="home"/></a>
-
     <div class="row-fluid">
         <form ng-submit="go()" validate>
             <div ng-show="!isAdvancedMode()">
@@ -85,7 +84,6 @@
                     </div>
                 </div>
             </div>
-            baaaaaa {{Search.params}}
             <!--             -->
             <!-- Expert mode -->
             <div ng-show="isAdvancedMode()" ng-controller="AdvancedCtrl">
@@ -125,7 +123,7 @@
                             {{Advanced.currentRepository}}
                             <span class="caret"></span> </a>
                         <ul class="dropdown-menu" >
-                            <li><a href="" ng-click="Advanced.getRepository('dani')" ng-repeat="rep in Advanced.repositories">{{rep}}</a></li>
+                            <li><a href="" ng-repeat="rep in Advanced.repositories" ng-click="showRepository(rep)">{{rep}}</a></li>
                         </ul>
                     </div>
 

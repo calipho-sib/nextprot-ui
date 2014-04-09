@@ -7,8 +7,6 @@
 		  	<div class="span3">
 		    	<!-- DISPLAY RESULT INFO -->
 				<ul class="nav nav-list resultfilters" style="">
-
-
 					<li class="dropdown">
 						<!-- <a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{Search.result.docs.length}}</b> on {{Search.result.num}} {{Search.result.display}} <b class="caret"/>
 						</a> -->
@@ -25,13 +23,13 @@
 							<li id="pageInput" ng-show="Search.result.pages.length > 1"><input type="number" min="1" class="span3" ng-model="Search.result.pagination.manual" np-enter="params({start:(Search.result.pagination.manual-1)*Search.result.rows})" style="border: 0px none; width: 50px;"/><sub>/ {{ (Search.result.num / Search.result.rows) | number:0}}</sub></li>
  -->
 						</ul>
-					</li>					
+					</li>
 				</ul>
 
 
 		  	</div>
 		    <div class="span7" style="margin-left:0px">
-		      	
+
 		    	<!-- DISPLAY FILTERS SORT/EXPORT -->
 		    	<ul class="nav">
 
@@ -122,6 +120,14 @@
 			</div>
 	    </div>
 	    <div class="span9">
+
+            <!-- Loading spinner ... -->
+            <div class="row" ng-show="Search.loading">
+                <div class="offset3">
+                    <div align="center" class="throbber" ></div>
+                </div>
+            </div>
+
 	      <!-- RESULT CONTENT -->
 	  	  <b ng-show="!Search.result.docs.length&&Search.params.query">{{Search.result.message}}</b>
 	  	  <div ng-include="getResultTemplateByEntity()"></div>
