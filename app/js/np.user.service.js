@@ -20,7 +20,7 @@ UserService.factory('UserService', [
             history.push($location.$$path);
         });
 
-        var $token = $resource(baseAuthUrl + '/oauth/token', {client_id: config.nextprot.credentials.clientId, grant_type: 'password', username: '@username', password: '@password'}, {
+        var $token = $resource(baseAuthUrl + '/oauth/token', {client_id: config.nextprot.credentials.clientId, client_secret: config.nextprot.credentials.clientSecret, grant_type: 'password', username: '@username', password: '@password'}, {
             get: { method: 'POST' }
         });
 

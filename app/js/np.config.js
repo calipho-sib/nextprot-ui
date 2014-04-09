@@ -30,7 +30,8 @@ angular.module('np.config', []).factory('config', [
 
         var nextprot = {
           credentials: {
-            'clientId': '0b4a32ae-a519-4a88-ab29-578f58f5c2ba'
+            'clientId': '0b4a32ae-a519-4a88-ab29-578f58f5c2ba',
+            'clientSecret':'m07a2frbbcl26dvhpr2o7cqsi2'
           }
         }
 
