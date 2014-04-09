@@ -26,17 +26,16 @@
     </div>
     <div class="span4 fade-in fade-out" ng-show="Advanced.showHelp">
 
-        <input ng-model="filterQuery" placeholder="text filter">
-
+        <!--filter-->
+        <input ng-model="filterQuery" placeholder="search in {{Advanced.currentRepository.title}} repository">
+        <!--Selectable repositories-->
         <div class="btn-group">
-            <a class="btn dropdown-toggle" data-toggle="dropdown">{{Advanced.currentRepository}}<span
-                    class="caret"></span> </a>
-            <!-- dropdown boxes of the repositories -->
-            <ul class="dropdown-menu">
-                <li><a href="" ng-repeat="rep in Advanced.repositories" ng-click="showRepository(rep)">{{rep}}</a></li>
-            </ul>
+            <button  data-toggle="tooltip" title="{{rep.tooltip}}" class="btn {{(Advanced.currentRepository == rep) ? 'btn-inverse' : ''}}"
+                     ng-repeat="rep in Advanced.repositories | orderBy:position:reverse"
+                     type="button" ng-click="showRepository(rep)"><i class="{{rep.icon}}"></i></button>
         </div>
-        <button class="btn " type="button" ng-click="Advanced.clearCurrentQuery();"
+
+        <button class="btn pull-right" type="button" ng-click="Advanced.clearCurrentQuery();"
                 bs-modal="'partials/advanced/advanced-save-modal.html'"><i class="icon-file"></i></button>
 
         <button type="button" class="close" style="padding-right: 5px" ng-click="showHelp=false">×</button>
@@ -49,13 +48,15 @@
                     <td>
                         <i class="{{query.published == 'Y' ? ' icon-globe' : ''}}"></i>
                     </td>
-                    <td><a href="#" ng-click="appendSparqlToCurrentQuery(query)">{{query.title}}</a></td>
-                    <td>
+                    <td><a href="#" ng-click="appendSparqlToCurrentQuery(query)">{{query.title}} [{{query.username}}]</a></td>
+
+                    <!--Don't show edit and remove button if the user is not the owner-->
+                    <td ng-if="hasPrivilegesToEdit(query)">
                         <button class="btn btn-mini pull-right" type="button" ng-click="Advanced.setCurrentQuery(query)"
                                 bs-modal="'partials/advanced/advanced-save-modal.html'"><i
                                 class="icon-edit"></i></button>
                     </td>
-                    <td>
+                    <td ng-if="hasPrivilegesToEdit(query)">
                         <button class="btn btn-mini pull-right" type="button" ng-click="deleteAdvancedQuery(query)"><i
                                 class="icon-remove"></i></button>
                     </td>

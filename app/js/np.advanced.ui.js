@@ -12,3 +12,4 @@ AdvancedUI.filter('sparqlEncode', function() {
     }
 
 });
+

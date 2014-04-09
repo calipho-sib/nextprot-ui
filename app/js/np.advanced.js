@@ -165,6 +165,9 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             AdvancedQueryService.currentSparql += "#pasted from " + query.title + "\n" + query.sparql;
         }
 
+        $scope.hasPrivilegesToEdit = function (query) {
+            return (UserService.userProfile.username == query.username);
+        }
     }
 ]);
 

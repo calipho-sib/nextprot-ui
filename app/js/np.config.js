@@ -121,9 +121,24 @@ angular.module('np.config', []).factory('config', [
                     gold: false
                 },
                 repositories: {
-                    nextprotRep: "neXtProt repository (Tutorial)",
-                    privateRep: "Private repository",
-                    publicRep: "Public repository (Community)"
+                    nextprotRep: {
+                        title: "training",
+                        tooltip: "Examples queries",
+                        icon: "icon-hand-up",
+                        position: 1
+                    },
+                    publicRep: {
+                        title: "community",
+                        tooltip: "Public repository used to share knowledge in the community",
+                        icon: "icon-globe",
+                        position: 2
+                    },
+                    privateRep: {
+                        title: "your private",
+                        tooltip: "your private repository",
+                        icon: "icon-user",
+                        position: 3
+                    }
                 }
             },
 
