@@ -125,9 +125,9 @@ angular.module('np.config', []).factory('config', [
                         title: "training",
                         tooltip: "Examples queries",
                         icon: "icon-hand-up",
-                        position: 1
+                        position: "1"
                     },
-                    publicRep: {
+                    communityRep: {
                         title: "community",
                         tooltip: "Public repository used to share knowledge in the community",
                         icon: "icon-globe",

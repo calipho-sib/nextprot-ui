@@ -81,7 +81,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
             if (this.currentRepository == this.repositories.nextprotRep) {
                 selectedResource = $nextprot_query_list;
-            } else if (this.currentRepository == this.repositories.publicRep) {
+            } else if (this.currentRepository == this.repositories.communityRep) {
                 selectedResource = $public_query_list;
             } else if (this.currentRepository == this.repositories.privateRep) {
                 selectedResource = $user_query_list;

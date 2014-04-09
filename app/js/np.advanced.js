@@ -39,22 +39,13 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         $scope.$watch(
             'User.isAnonymous()',
             function (newValue, oldValue) {
-
-                $scope.queries = null;
                 if ($scope.User.isAnonymous()) {
-                    AdvancedQueryService.getRepository($scope.User.userProfile.username, $scope.reps.nextprotRep, function (repository, queries) {
-                        $scope.repository = repository;
-                        $scope.queries = queries;
-                    });
+                    AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.nextprotRep);
                 } else {
-                    AdvancedQueryService.getRepository($scope.User.userProfile.username, $scope.reps.publicRep, callbackQueryMapping);
-                    $scope.repository = $scope.reps.privateRep;
+                    AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.privateRep);
                 }
-
-                console.log('user changed to' + newValue + " from " + oldValue + " " + UserService.userProfile.userLoggedIn);
             }
         );
-
 
         AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.nextprotRep);
 

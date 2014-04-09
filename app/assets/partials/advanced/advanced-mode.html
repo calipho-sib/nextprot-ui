@@ -31,7 +31,7 @@
         <!--Selectable repositories-->
         <div class="btn-group">
             <button  data-toggle="tooltip" title="{{rep.tooltip}}" class="btn {{(Advanced.currentRepository == rep) ? 'btn-inverse' : ''}}"
-                     ng-repeat="rep in Advanced.repositories | orderBy:position:reverse"
+                     ng-repeat="rep in Advanced.repositories"
                      type="button" ng-click="showRepository(rep)"><i class="{{rep.icon}}"></i></button>
         </div>
 
