@@ -46,9 +46,9 @@
                 <tbody>
                 <tr ng-repeat="query in Advanced.queries | filter:filterQuery | orderBy:'title'">
                     <td>
-                        <i class="{{query.published == 'Y' ? ' icon-globe' : ''}}"></i>
+                        <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}}"></i>
                     </td>
-                    <td><a href="#" ng-click="appendSparqlToCurrentQuery(query)">{{query.title}} [{{query.username}}]</a></td>
+                    <td><a href="" ng-click="appendSparqlToCurrentQuery(query)">{{query.title}} [{{query.username}}]</a></td>
 
                     <!--Don't show edit and remove button if the user is not the owner-->
                     <td ng-if="hasPrivilegesToEdit(query)">

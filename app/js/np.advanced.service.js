@@ -63,7 +63,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         var AdvancedQueryService = function () {
             this.showHelp = true;
-            this.currentRepository = Search.config.widgets.repositories.nextprotRep;
+            this.currentRepository = Search.config.widgets.repositories.aNextprotRep;
             this.repositories = Search.config.widgets.repositories;
 
             this.currentSparql = "";
@@ -79,7 +79,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
             this.currentRepository = repositoryName;
 
-            if (this.currentRepository == this.repositories.nextprotRep) {
+            if (this.currentRepository == this.repositories.aNextprotRep) {
                 selectedResource = $nextprot_query_list;
             } else if (this.currentRepository == this.repositories.communityRep) {
                 selectedResource = $public_query_list;
@@ -89,7 +89,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
             var cbOk = function (data) {
                 me.queries = data['advancedUserQueryList'];
-                if (cb)cb(data);
+                if (cb)cb(me.queries);
             };
 
             var cbFailure = function (error) {
@@ -108,7 +108,6 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         AdvancedQueryService.prototype.createAdvancedQuery = function (username, cb, cbe) {
             $user_query_list.create({ username: username }, this.selectedQuery, function (data) {
-                angular.extend(this.selectedQuery,data);
                 if (cb)cb(data);
             }, function (error) {
                 if (cbe)cbe(error);
@@ -117,7 +116,6 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         AdvancedQueryService.prototype.updateAdvancedQuery = function (username, cb) {
             $api_adv_query_id.update({ username: username, id: this.selectedQuery.advancedUserQueryId }, this.selectedQuery, function (data) {
-                angular.extend(this.selectedQuery,data);
                 if (cb)cb(data);
             });
 

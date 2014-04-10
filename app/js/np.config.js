@@ -121,23 +121,20 @@ angular.module('np.config', []).factory('config', [
                     gold: false
                 },
                 repositories: {
-                    nextprotRep: {
+                    aNextprotRep: { /* 'a' is used to appear fist */
                         title: "training",
-                        tooltip: "Examples queries",
-                        icon: "icon-hand-up",
-                        position: "1"
+                        tooltip: "Queries used for example",
+                        icon: "icon-certificate"
                     },
                     communityRep: {
                         title: "community",
                         tooltip: "Public repository used to share knowledge in the community",
-                        icon: "icon-globe",
-                        position: 2
+                        icon: "icon-globe"
                     },
                     privateRep: {
                         title: "your private",
                         tooltip: "your private repository",
-                        icon: "icon-user",
-                        position: 3
+                        icon: "icon-user"
                     }
                 }
             },

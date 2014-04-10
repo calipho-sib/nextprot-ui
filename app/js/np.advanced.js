@@ -39,15 +39,21 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         $scope.$watch(
             'User.isAnonymous()',
             function (newValue, oldValue) {
+                //TODO watch function is firing twice!!!
                 if ($scope.User.isAnonymous()) {
-                    AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.nextprotRep);
+                    AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.aNextprotRep);
                 } else {
-                    AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.privateRep);
+                    AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.privateRep, function (data) {
+                            //TODO should take the training set if the user does not have any queries.
+                        }
+                    )
+                    ;
                 }
+
             }
         );
 
-        AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.nextprotRep);
+        AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.aNextprotRep);
 
         $scope.toogleShowHelp = function () {
             $scope.showHelp = !$scope.showHelp;
@@ -80,7 +86,6 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             if (AdvancedQueryService.isNew()) {
                 AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username,
                     function (data) {
-                        alert('yoooo');
                         flash('alert-success', data.title + ' query saved successfully!')
                         $route.reload();
                     },
@@ -93,8 +98,8 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             } else {
                 AdvancedQueryService.updateAdvancedQuery(UserService.userProfile.username,
                     function (data) {
-                        alert('yoooo2');
                         flash('alert-success', "Updated successful for " + data.title);
+                        $route.reload();
                         return;
                     },
                     function (error) {
@@ -150,15 +155,19 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
         $scope.appendSparqlToCurrentQuery = function (query) {
-            if(AdvancedQueryService.currentSparql.length > 0){
+            /*
+                 if (AdvancedQueryService.currentSparql.length > 0) {
                 AdvancedQueryService.currentSparql += "\n";
             }
-            AdvancedQueryService.currentSparql += "#pasted from " + query.title + "\n" + query.sparql;
+            AdvancedQueryService.currentSparql += "#pasted from " + query.title + "\n" + query.sparql;*/
+            AdvancedQueryService.currentSparql = query.sparql;
+
         }
 
         $scope.hasPrivilegesToEdit = function (query) {
             return (UserService.userProfile.username == query.username);
         }
     }
-]);
+])
+;
 
