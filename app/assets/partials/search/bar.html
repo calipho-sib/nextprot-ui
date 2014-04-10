@@ -24,23 +24,23 @@
                 </div>
                 <div class="span9 search-bar">
                     <div ng-show="isAdvancedMode()" class=" span11 sparql-small-box fade-in">
-                        <div class="span7 relative" style="position: relative">
-                            <div  style="border-right: 1px solid #ddd;"
+                        <div class="span7 relative" style="position: relative; border: 1px solid #ddd;border-radius: 8px;" >
+                            <div
                                  ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}"
                                  ng-model="Advanced.currentSparql">
 
                             </div>
-                            <div class="sparql-editor-buttons" >
+                            <div class="sparql-editor-buttons">
                                 <button id="adv-user-query" class="btn" type="button" ng-click="toogleSearchMode()"><i
                                         class="{{(Search.params.mode == 'simple') ? 'icon-caret-down' : 'icon-caret-up'}} ajax-end"></i></button>
                                 <button id="search-button" class="btn btn-primary" type="submit"><i class="icon-search"></i>
                                 </button>
+                                <button style="padding: 0px; margin-right: 5px" class="btn btn-mini btn-link" type="button" ng-click="Advanced.showHelp=!Advanced.showHelp;" ><i class="icon-info-sign"></i></button>
                             </div>
-
                         </div>
 
 
-                        <div class="span5 fade-in fade-out" style="padding-left: 5px;margin-left: 10px;padding-top: 5px;" >
+                        <div class="span5 fade-out-left fade-in-left" style="padding-left: 5px;margin-left: 10px;padding: 10px; border: 1px solid #ddd;border-radius: 8px;" ng-show="Advanced.showHelp" >
 
                             <!--filter-->
                             <input ng-model="filterQuery" placeholder="search in {{Advanced.currentRepository.title}} repository">
@@ -52,7 +52,7 @@
                             </div>
 
 
-                            <button type="button" class="close" ng-click="showHelp=false">×</button>
+                            <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
 
                             <div class="row" style="margin-left: 0px; padding: 10px; height: 280px; overflow-y: auto">
                                 <table class="table table-hover">

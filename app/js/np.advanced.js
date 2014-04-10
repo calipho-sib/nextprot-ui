@@ -55,10 +55,6 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 
         AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.aNextprotRep);
 
-        $scope.toogleShowHelp = function () {
-            $scope.showHelp = !$scope.showHelp;
-        };
-
         $scope.showRepository = function (repositoryName) {
             AdvancedQueryService.getRepository(UserService.userProfile.username, repositoryName, null);
         };

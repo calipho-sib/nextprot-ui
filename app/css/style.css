@@ -206,8 +206,6 @@ ul#search-results .result-abstract {
 
 .sparql-small-box {
     margin-left: -10%!important;
-    border: 1px solid #ddd;
-    border-radius: 8px;
     position: relative;
 }
 
@@ -228,6 +226,17 @@ ul#search-results .result-abstract {
     -webkit-animation: fadeIn 0.5s;
     display: block !important;
 }
+
+.fade-out-left.ng-hide-add {
+    -webkit-animation: fadeOutLeft 0.5s;
+    display: block !important;
+}
+
+.fade-in-left.ng-hide-remove {
+    -webkit-animation: fadeInLeft 0.5s;
+    display: block !important;
+}
+
 
 #sparqlTitle {
     width: 500px;
