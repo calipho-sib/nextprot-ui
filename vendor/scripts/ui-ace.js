@@ -21,6 +21,9 @@ angular.module('ui.ace', [])
 
                 acee = window.ace.edit(elm[0]);
                 session = acee.getSession();
+                //removing the vertical line
+                acee.renderer.setShowPrintMargin(false);
+
 
                 onChange = function (callback) {
                     return function (e) {
