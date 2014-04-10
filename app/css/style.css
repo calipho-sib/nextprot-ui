@@ -211,6 +211,14 @@ ul#search-results .result-abstract {
     position: relative;
 }
 
+.sparql-editor-buttons {
+    position: absolute;
+    right: 0;
+    top:0;
+    z-index:10;
+    background-color: white
+}
+
 .fade-out.ng-hide-add {
     -webkit-animation: fadeOut 0.5s;
     display: block !important;

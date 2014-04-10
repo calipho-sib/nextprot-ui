@@ -30,7 +30,7 @@
                                  ng-model="Advanced.currentSparql">
 
                             </div>
-                            <div class=" " style=" position: absolute; right: 0; top:0; z-index:10;background-color: white" >
+                            <div class="sparql-editor-buttons" >
                                 <button id="adv-user-query" class="btn" type="button" ng-click="toogleSearchMode()"><i
                                         class="{{(Search.params.mode == 'simple') ? 'icon-caret-down' : 'icon-caret-up'}} ajax-end"></i></button>
                                 <button id="search-button" class="btn btn-primary" type="submit"><i class="icon-search"></i>
@@ -40,24 +40,21 @@
                         </div>
 
 
-                        <div class="span5 fade-in fade-out" style="padding-left: 5px;" >
+                        <div class="span5 fade-in fade-out" style="padding-left: 5px;margin-left: 10px;padding-top: 5px;" >
 
                             <!--filter-->
                             <input ng-model="filterQuery" placeholder="search in {{Advanced.currentRepository.title}} repository">
                             <!--Selectable repositories-->
-                            <div class="btn-group">
+                            <div class="btn-group" style="margin: 5px;">
                                 <button  data-toggle="tooltip" title="{{rep.tooltip}}" class="btn {{(Advanced.currentRepository == rep) ? 'btn-inverse' : ''}}"
                                          ng-repeat="rep in Advanced.repositories"
                                          type="button" ng-click="showRepository(rep)"><i class="{{rep.icon}}"></i></button>
                             </div>
 
-                            <button class="btn pull-right" type="button" ng-click="Advanced.clearCurrentQuery();"
-                                    bs-modal="'partials/advanced/advanced-save-modal.html'"><i class="icon-file"></i></button>
 
                             <button type="button" class="close" style="padding-right: 5px" ng-click="showHelp=false">×</button>
 
-                            <div class="row"></div>
-                            <div class="row">
+                            <div class="row" style="margin-left: 0px; padding: 10px; height: 280px; overflow-y: auto">
                                 <table class="table table-hover">
                                     <tbody>
                                     <tr ng-repeat="query in Advanced.queries | filter:filterQuery | orderBy:'title'">
@@ -81,6 +78,12 @@
                                 </table>
                             </div>
 
+                            <div class="row" style="height: 50px;">
+                                <button class="btn btn-primary btn-small pull-right" style="margin: 10px;"
+                                        type="button" ng-click="Advanced.clearCurrentQuery();"
+                                        bs-modal="'partials/advanced/advanced-save-modal.html'">Create new
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <!-- END ADV MODE -->
