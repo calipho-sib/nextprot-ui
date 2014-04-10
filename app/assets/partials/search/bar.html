@@ -2,12 +2,12 @@
     <a href="http://localhost:3000"><img src="http://www.nextprot.org/db/images/blueflat/np.png" class="home"/></a>
     <div class="row-fluid">
         <form ng-submit="go()" validate>
-            <div ng-show="!isAdvancedMode()">
+            <div>
                 <div class="span3">
                     <!--                        -->
                     <!--  ENTITY SELECTION      -->
                     <!--                        -->
-                    <div class="btn-group pull-right">
+                    <div class="btn-group pull-right" ng-show="!isAdvancedMode()">
 
                         <a class="btn dropdown-toggle" data-toggle="dropdown" href="" id="search-entity">
                             {{Search.config.entityMapping[Search.params.entity]}}&nbsp;
@@ -23,13 +23,75 @@
                     <!--                        -->
                 </div>
                 <div class="span9 search-bar">
+                    <div ng-show="isAdvancedMode()" class=" span11 sparql-small-box fade-in">
+                        <div class="span7 relative" style="position: relative">
+                            <div  style="border-right: 1px solid #ddd;"
+                                 ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}"
+                                 ng-model="Advanced.currentSparql">
 
-                    <div class=" input-append span8 fade-in fade-out"
+                            </div>
+                            <div class=" " style=" position: absolute; right: 0; top:0; z-index:10;background-color: white" >
+                                <button id="adv-user-query" class="btn" type="button" ng-click="toogleSearchMode()"><i
+                                        class="{{(Search.params.mode == 'simple') ? 'icon-caret-down' : 'icon-caret-up'}} ajax-end"></i></button>
+                                <button id="search-button" class="btn btn-primary" type="submit"><i class="icon-search"></i>
+                                </button>
+                            </div>
+
+                        </div>
+
+
+                        <div class="span5 fade-in fade-out" style="padding-left: 5px;" >
+
+                            <!--filter-->
+                            <input ng-model="filterQuery" placeholder="search in {{Advanced.currentRepository.title}} repository">
+                            <!--Selectable repositories-->
+                            <div class="btn-group">
+                                <button  data-toggle="tooltip" title="{{rep.tooltip}}" class="btn {{(Advanced.currentRepository == rep) ? 'btn-inverse' : ''}}"
+                                         ng-repeat="rep in Advanced.repositories"
+                                         type="button" ng-click="showRepository(rep)"><i class="{{rep.icon}}"></i></button>
+                            </div>
+
+                            <button class="btn pull-right" type="button" ng-click="Advanced.clearCurrentQuery();"
+                                    bs-modal="'partials/advanced/advanced-save-modal.html'"><i class="icon-file"></i></button>
+
+                            <button type="button" class="close" style="padding-right: 5px" ng-click="showHelp=false">×</button>
+
+                            <div class="row"></div>
+                            <div class="row">
+                                <table class="table table-hover">
+                                    <tbody>
+                                    <tr ng-repeat="query in Advanced.queries | filter:filterQuery | orderBy:'title'">
+                                        <td>
+                                            <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}}"></i>
+                                        </td>
+                                        <td><a href="" ng-click="appendSparqlToCurrentQuery(query)">{{query.title}} [{{query.username}}]</a></td>
+
+                                        <!--Don't show edit and remove button if the user is not the owner-->
+                                        <td ng-if="hasPrivilegesToEdit(query)">
+                                            <button class="btn btn-mini pull-right" type="button" ng-click="Advanced.setCurrentQuery(query)"
+                                                    bs-modal="'partials/advanced/advanced-save-modal.html'"><i
+                                                    class="icon-edit"></i></button>
+                                        </td>
+                                        <td ng-if="hasPrivilegesToEdit(query)">
+                                            <button class="btn btn-mini pull-right" type="button" ng-click="deleteAdvancedQuery(query)"><i
+                                                    class="icon-remove"></i></button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- END ADV MODE -->
+
+
+                    <div class=" input-append span8" ng-hide="isAdvancedMode()"
                          ng-class="{'input-prepend':Search.config.widgets[Search.result.display].gold}">
                         <!--                        -->
                         <!--  QUALITY SELECTION     -->
                         <!--                        -->
-                        <div class="btn-group">
+                        <div class="btn-group" ng-show="!isAdvancedMode()">
                             <button class="btn dropdown-toggle btn" type="button" ng-cloak data-toggle="dropdown"
                                     ng-show="Search.config.widgets[Search.result.display].gold" id="search-quality">
                                 {{Search.config.widgets[Search.result.display].qualityLabel[Search.params.quality]}}
@@ -45,24 +107,24 @@
                         <!--                        -->
                         <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
                         <!--                        -->
-                        <input id="search-query" class=" " type="text"
+                        <input ng-show="!isAdvancedMode()" id="search-query" class="" type="text"
                                ng-model="Search.params.query"
                                ng-class="{'quality-search-width':Search.config.widgets[Search.result.display].gold,'no-quality-search-width':!Search.config.widgets[Search.result.display].gold}"
                                autocomplete="off" bs-autocomplete="Search.suggest" autofocus>
 
 
+
                         <!--                        -->
                         <!--  Expert mode button    -->
                         <!--                        -->
-                        <button id="adv-user-query" class="btn" type="button" ng-click="mode('advanced')"><i
-                                class="icon-caret-down ajax-end"></i></button>
+                        <button id="adv-user-query" class="btn" type="button" ng-click="toogleSearchMode()"><i
+                                class="{{(Search.params.mode == 'simple') ? 'icon-caret-down' : 'icon-caret-up'}} ajax-end"></i></button>
 
                         <!--                        -->
                         <!--  SEARCH BUTTON         -->
                         <!--                        -->
                         <button id="search-button" class="btn btn-primary" type="submit"
-                                ng-disabled="!Search.params.query || !Search.params.query.length"><i
-                                class="icon-search"></i>
+                                ng-disabled="(!Search.params.query || !Search.params.query.length) && !isAdvancedMode()"><i class="icon-search"></i>
                         </button>
 
                         <!--                      -->

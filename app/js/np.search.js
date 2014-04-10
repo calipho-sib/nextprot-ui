@@ -168,9 +168,12 @@ SearchModule.controller('SearchCtrl', [
         }
 
         // can be advanced or simple mode
-        $scope.mode = function (mode) {
+        $scope.toogleSearchMode = function () {
 
-            Search.params.mode = mode;
+            if(Search.params.mode == 'advanced')
+                Search.params.mode = 'simple';
+            else Search.params.mode = 'advanced';
+
             $location.search('mode', (mode == 'advanced') ? 'advanced' : null);
 
             if(UserService.userProfile.userLoggedIn){

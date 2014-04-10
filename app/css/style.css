@@ -205,10 +205,10 @@ ul#search-results .result-abstract {
 }
 
 .sparql-small-box {
-    height: 200px;
-    width: 100%;
-    border: 1px solid;
-    border-color: lightgray;
+    margin-left: -10%!important;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    position: relative;
 }
 
 .fade-out.ng-hide-add {
