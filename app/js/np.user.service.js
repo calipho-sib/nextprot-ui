@@ -82,7 +82,9 @@ UserService.factory('UserService', [
                 if(data.authorities && data.username){
                     me.userProfile.authorities = data.authorities;
                     me.userProfile.username = data.username;
+                    me.userProfile.userId = data.userId;
                     me.userProfile.userLoggedIn = true;
+
                 }else {
                     this.logout;
                 }
@@ -91,12 +93,14 @@ UserService.factory('UserService', [
             });
         };
 
+
         UserService.prototype.logout = function (cb) {
             $userLogout.get({token: $window.sessionStorage.token}, function (data) {
                 if (cb)cb(data);
             });
             console.log('deleting session storage')
             delete $window.sessionStorage.token;
+
             this.setGuestUser();
         }
 
@@ -104,11 +108,17 @@ UserService.factory('UserService', [
             this.userProfile.authorities = '[]';
             this.userProfile.username = 'Guest';
             this.userProfile.userLoggedIn = false;
+            this.userProfile.userId = null;
         }
 
 
         UserService.prototype.isAnonymous = function () {
             return !this.userProfile.userLoggedIn;
+        }
+
+
+        UserService.prototype.isUserProfileLoaded = function () {
+            return !(($window.sessionStorage.token != null) && (this.isAnonymous()))
         }
 
         var service = new UserService();

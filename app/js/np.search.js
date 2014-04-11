@@ -174,7 +174,7 @@ SearchModule.controller('SearchCtrl', [
                 Search.params.mode = 'simple';
             else Search.params.mode = 'advanced';
 
-            $location.search('mode', (mode == 'advanced') ? 'advanced' : null);
+            //$location.search('mode', (mode == 'advanced') ? 'advanced' : null);
 
             if(UserService.userProfile.userLoggedIn){
                 $scope.expertMode = !$scope.expertMode;
@@ -203,13 +203,14 @@ SearchModule.controller('ResultCtrl', [
     '$route',
     '$routeParams',
     '$filter',
+    '$timeout',
     '$location',
     'Search',
     'Cart',
     'ProteinListService',
     'UserService',
     'flash',
-    function ($scope, $route, $routeParams, $filter, $location, Search, Cart, ProteinListService, UserService, flash) {
+    function ($scope, $route, $routeParams, $filter, $location, $timeout, Search, Cart, ProteinListService, UserService, flash) {
         $scope.Search = Search;
         $scope.Cart = Cart;
         $scope.selectedResults = {};
@@ -226,6 +227,16 @@ SearchModule.controller('ResultCtrl', [
             delete params.cart;
             params.accs = Cart.getElements();
         }
+
+        //Set the current owner id, if there is a list
+        if ($routeParams.list) {
+            //TODO will not work if the page is full refreshed because of the userprofile not being
+//            while(!UserService.isUserProfileLoaded()){
+//                $timeout(true == true, 100);
+//            }
+            params.listOwner = UserService.userProfile.username;
+        }
+
 
         search(params, function (results) {
             params.start = (!$routeParams.start) ? 0 : $routeParams.start;
@@ -259,8 +270,8 @@ SearchModule.controller('ResultCtrl', [
             if ($routeParams.list) {
                 var list = {};
                 list['accs'] = [docId];
-                if (found == -1) ProteinListService.addElements('mario', $routeParams.list, [docId]);
-                else ProteinListService.removeElements('mario', $routeParams.list, [docId]);
+                if (found == -1) ProteinListService.addElements(UserService.userProfile.username, $routeParams.list, [docId]);
+                else ProteinListService.removeElements(UserService.userProfile.username, $routeParams.list, [docId]);
             }
         }
 
@@ -273,7 +284,7 @@ SearchModule.controller('ResultCtrl', [
 
         $scope.selectAll = function () {
             if ($routeParams.list) {
-                ProteinListService.getListIds('mario', $routeParams.list, function (result) {
+                ProteinListService.getListIds(UserService.userProfile.username, $routeParams.list, function (result) {
                     Cart.setCart(result.ids);
                     setAsSelected(result.ids);
                 });
@@ -301,7 +312,7 @@ SearchModule.controller('ResultCtrl', [
 
         $scope.unselectAll = function () {
             if ($routeParams.list) {
-                ProteinListService.getListIds('mario', $routeParams.list, function (result) {
+                ProteinListService.getListIds(UserService.userProfile.username, $routeParams.list, function (result) {
                     Cart.removeFromCart(result.ids);
                     setAsSelected(result.id);
                 });

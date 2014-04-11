@@ -35,7 +35,7 @@ ProteinListService.factory('ProteinListService', [
 	   });
 
 	   var $elements_api = $resource(baseUrl+'/nextprot-api/user/:username/protein-list/:list/:action.json', {username: '@username', list: '@name'}, {
-	   		fix: { method: 'PUT' },
+	   		fix: { method: 'PUT' }
 	   });
 
 
