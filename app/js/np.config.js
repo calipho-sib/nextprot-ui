@@ -24,15 +24,15 @@ angular.module('np.config', []).factory('config', [
                 'scopes': 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
                 'requestvisibleactions': 'http://schemas.google.com/AddActivity ' + 'http://schemas.google.com/ReviewActivity',
                 'cookiepolicy': 'single_host_origin'
-          }
+            }
 
         }
 
         var nextprot = {
-          credentials: {
-            'clientId': '0b4a32ae-a519-4a88-ab29-578f58f5c2ba',
-            'clientSecret':'m07a2frbbcl26dvhpr2o7cqsi2'
-          }
+            credentials: {
+                'clientId': '0b4a32ae-a519-4a88-ab29-578f58f5c2ba',
+                'clientSecret': 'm07a2frbbcl26dvhpr2o7cqsi2'
+            }
         }
 
 
@@ -43,7 +43,7 @@ angular.module('np.config', []).factory('config', [
             API_SERVER: BASE_URL + ':port/nextprot-api/:action/:entity',
             API_PORT: ':8080',
             BASE_AUTH_URL: BASE_AUTH_URL,
-            AUTH_SERVER : BASE_AUTH_URL + '/nextprot-auth',
+            AUTH_SERVER: BASE_AUTH_URL + '/nextprot-auth',
 
             //base:"/",
             base: "/protosearch/",
@@ -136,7 +136,12 @@ angular.module('np.config', []).factory('config', [
                         tooltip: "your private repository",
                         icon: "icon-user"
                     }
-                }
+                },
+                exportFormats: [
+                    {name: "xml format", extension: "xml"},
+                    {name: "json format", extension: "json"},
+                    {name: "Turtle format", extension: "ttl"}
+                ]
             },
 
 

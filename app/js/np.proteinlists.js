@@ -1,9 +1,9 @@
 'use strict'
 
 var ProteinListModule = angular.module('np.proteinlists', [
-	'np.proteinlist.service', 
-    'np.proteinlist.ui', 
-    'np.proteinlist.upload', 
+	'np.proteinlist.service',
+    'np.proteinlist.ui',
+    'np.proteinlist.upload',
     'np.proteinlist.upload.ui',
     'np.proteinlist.service',
     'np.flash'
@@ -37,7 +37,7 @@ ProteinListModule.controller('ListCtrl', [
 	'Tools',
 	function($resource, $scope, $rootScope, $location, $routeParams, $route, Search, ProteinListService, UserService, Tools) {
 		$scope.Tools = Tools;
-		$scope.ProteinListService = ProteinListService; 
+		$scope.ProteinListService = ProteinListService;
 		$scope.showCombine = false;
 		$scope.combineDisabled = true;
 		$scope.selected = {};
@@ -45,7 +45,7 @@ ProteinListModule.controller('ListCtrl', [
 		$scope.operators = ["AND", "OR", "NOT_IN"];
 		$scope.combination = { first: null, op: $scope.operators[0], second: null};
 		$scope.options = { first: $scope.lists, second: $scope.lists }
-		
+
 
 		init();
 
@@ -53,56 +53,56 @@ ProteinListModule.controller('ListCtrl', [
 			ProteinListService.getByUsername(UserService.userProfile.username, function(data) {
 				$scope.lists = data.lists;
 				$scope.initCombination();
-			});	
+			});
 		}
-		
-		
-		
-		
+
+
+
+
 		$scope.initCombination = function() {
 			$scope.$watch('combination.first', function(newVal, oldVal) {
 				$scope.options.second = $scope.lists.slice(0);
-				
+
 				var index = $scope.options.second.indexOf(newVal);
 				if(index > -1)
 					$scope.options.second.splice(index, 1);
 			});
-			
-			
+
+
 			$scope.$watch('combination.second', function(newVal, oldVal) {
 				$scope.options.first = $scope.lists.slice(0);
-				
+
 				var index = $scope.options.first.indexOf(newVal);
-				
+
 				if(index > -1)
 					$scope.options.first.splice(index, 1);
 			});
 		};
-		
+
 		$scope.switchCombine = function() {
 			var temp = $scope.combination.first;
 			$scope.combination.first = $scope.combination.second;
 			$scope.combination.second = temp;
-		};	
-		
+		};
+
 		$scope.launchModal = function(elem, action) {
 			$scope.selected = {};
 			if(action == 'edit') {
 				$scope.selected = $scope.lists[elem];
 				angular.extend($scope.selected, {index:elem});
-			} 
+			}
 			angular.extend($scope.modal, { type: action});
 		};
 
 		$scope.saveModal = function(dismiss) {
-			
+
 			if($scope.modal.type == 'edit') {
 				angular.extend($scope.lists[$scope.selected.index], $scope.selected);
 
-				var list = { 
-					id: $scope.selected.id, 
-					name: $scope.selected.name, 
-					description: $scope.selected.description 
+				var list = {
+					id: $scope.selected.id,
+					name: $scope.selected.name,
+					description: $scope.selected.description
 				};
 
 				ProteinListService.updateList(UserService.userProfile.username, list);
@@ -111,8 +111,8 @@ ProteinListModule.controller('ListCtrl', [
 
 				ProteinListService.combine(
                     UserService.userProfile.username,
-					newList, 
-					$scope.combination.first.name, 
+					newList,
+					$scope.combination.first.name,
 					$scope.combination.second.name,
 					$scope.combination.op,
 					function(data) {
@@ -130,11 +130,11 @@ ProteinListModule.controller('ListCtrl', [
 			$scope.options = $scope.lists;
 			$scope.initCombination();
 		}
-		
+
 		$scope.buildQuery = buildQuery;
 	}
-]);	
-	
+]);
+
 ProteinListModule.controller('ListViewCtrl', [
 	'$resource',
 	'$scope',
@@ -160,7 +160,7 @@ ProteinListModule.controller('ListViewCtrl', [
 		// 			list = _.find(data.proteinLists, function(l) { return listName == Tools.convertToSlug(l.name) });
 
 
-		// 			Search.docs({ entity: 'proteins', configuration: 'id', query: buildQuery(list.accessions)}, function(docs) { 
+		// 			Search.docs({ entity: 'proteins', configuration: 'id', query: buildQuery(list.accessions)}, function(docs) {
 		// 				console.log('found: ', docs)
 		// 			});
 		// 		});
@@ -185,20 +185,20 @@ ProteinListModule.controller('ListCreateCtrl', [
 	'ProteinListService',
     'UserService',
 	'UploadListService',
-	'flash',	
+	'flash',
 	function($resource, $scope, $rootScope, $routeParams, $location, ProteinListService, UserService, UploadListService, flash) {
-		
+
 		$scope.inputAccessions = "";
 		$scope.listName = "";
 		$scope.files = [];
 		var selectedFiles = [];
-		
+
 		$scope.$watch('files', function (newValue, oldValue) {
 	        // Only act when our property has changed.
 	        if (newValue != oldValue) {
 	        	selectedFiles = $scope.files;
-	        	
-	        	
+
+
 	            //console.log('Controller: $scope.files changed. Start upload.');
 	            //for (var i = 0, length = $scope.files.length; i < length; i++) {
 	                // Hand file off to uploadService.
@@ -206,7 +206,7 @@ ProteinListModule.controller('ListCreateCtrl', [
 	            //}
 	        }
 	    }, true);
-		
+
 		$rootScope.$on('upload:loadstart', function () {
 	        console.log('Controller: on `loadstart`');
 	    });
@@ -214,13 +214,13 @@ ProteinListModule.controller('ListCreateCtrl', [
 	    $rootScope.$on('upload:error', function () {
 	        console.log('Controller: on `error`');
 	    });
-	    
+
 	    $scope.createList = function(listName) {
-	    	
+
 	    	if($scope.inputAccessions.length > 0) {
 	    		var accessions = $scope.inputAccessions.split("\n");
 	    		var list = { name: $scope.listName, accessions: accessions};
-	    		
+
 	    		ProteinListService.createList(UserService.userProfile.username, list, function(data) {
 					if(data.error) flash('alert-warning', data.error);
 					else {
@@ -242,11 +242,49 @@ ProteinListModule.controller('ListCreateCtrl', [
 						}
 	    			});
 	    		});
-	    		
+
 	    	}
 	    }
-	 
+
 	}
-	
-	
-]);                                              
+
+
+]);
+
+
+ProteinListModule.controller('ExportCtrl', [
+    '$resource',
+    '$scope',
+    '$rootScope',
+    '$location',
+    '$routeParams',
+    '$route',
+    'Search',
+    'config',
+    'ProteinListService',
+    'UserService',
+    'Tools',
+    function($resource, $scope, $rootScope, $location, $routeParams, $route, Search, config, ProteinListService, UserService, Tools) {
+
+        var baseUrl = config.api.BASE_URL + config.api.API_PORT;
+
+        $scope.listToExport = {};
+        $scope.exportFormats = Search.config.widgets.exportFormats;
+        $scope.selectedFormat = {"name" : "Select your format", "extension" : null};
+
+        $scope.setListToExport = function (list){
+            angular.extend($scope.listToExport, list);
+            console.log($scope.listToExport);
+        }
+
+        $scope.setSelectedFormat = function (format){
+            angular.extend($scope.selectedFormat, format);
+        }
+
+        $scope.getURL = function (){
+            var exportListURL = baseUrl + "/nextprot-api/export/entries/list/";
+            return exportListURL + $scope.listToExport.id + "." + $scope.selectedFormat.extension;
+        }
+    }
+]);
+

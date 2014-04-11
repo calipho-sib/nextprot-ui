@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>{{listToExport.name}} export</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" style="height: 800px">
+        <div class="control-group">
+            <label class="control-label">Choose the file format for the export: </label>
+            <div class="controls">
+                <div class="btn-group">
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">{{selectedFormat.name}}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="format in exportFormats"><a href="" ng-click="setSelectedFormat(format)">{{format.name}}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <a href="{{getURL()}}" ng-click="dismiss()">Export</a>
+</div>
