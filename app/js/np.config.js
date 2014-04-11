@@ -138,9 +138,13 @@ angular.module('np.config', []).factory('config', [
                     }
                 },
                 exportFormats: [
-                    {name: "xml format", extension: "xml"},
+                    {name: "xml format", extension: "xml", templates: [
+                        {name: 'full entries'},
+                        {name: 'accessions only'}
+                        ]},
                     {name: "json format", extension: "json"},
-                    {name: "Turtle format", extension: "ttl"}
+                    {name: "turtle format", extension: "ttl"},
+                    {name: "tsv format", extension: "tsv"}
                 ]
             },
 

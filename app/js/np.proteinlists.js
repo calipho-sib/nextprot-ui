@@ -271,6 +271,7 @@ ProteinListModule.controller('ExportCtrl', [
         $scope.listToExport = {};
         $scope.exportFormats = Search.config.widgets.exportFormats;
         $scope.selectedFormat = {"name" : "Select your format", "extension" : null};
+        $scope.selectedTemplate = {"name" : "Select your template", "extension" : null};
 
         $scope.setListToExport = function (list){
             angular.extend($scope.listToExport, list);
@@ -278,7 +279,13 @@ ProteinListModule.controller('ExportCtrl', [
         }
 
         $scope.setSelectedFormat = function (format){
+            $scope.selectedFormat = {}
             angular.extend($scope.selectedFormat, format);
+        }
+
+        $scope.setSelectedTemplate = function (template){
+            $scope.selectedTemplate = {}
+            angular.extend($scope.selectedTemplate, template);
         }
 
         $scope.getURL = function (){
