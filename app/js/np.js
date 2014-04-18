@@ -15,7 +15,7 @@ var App = angular.module('np', [
     'np.user',
     'np.proteinlists',
     'np.advanced',
-    'ui.ace'
+    'ui.codemirror'
 ]);
 
 

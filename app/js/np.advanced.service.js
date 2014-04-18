@@ -66,7 +66,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             this.currentRepository = Search.config.widgets.repositories.aNextprotRep;
             this.repositories = Search.config.widgets.repositories;
 
-            this.currentSparql = "";
+            this.currentSparql = "#write your sparql query here";
             this.selectedQuery = {};
             this.queries = {};
 

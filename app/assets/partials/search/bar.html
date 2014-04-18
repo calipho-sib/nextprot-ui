@@ -25,11 +25,16 @@
                 <div class="span9 search-bar">
                     <div ng-show="isAdvancedMode()" class=" span11 sparql-small-box fade-in">
                         <div class="span7 relative" style="position: relative; border: 1px solid #ddd;border-radius: 8px;" >
-                            <div
-                                 ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}"
-                                 ng-model="Advanced.currentSparql">
 
+                            <div>
+                                <ui-codemirror ui-codemirror-opts="editorOptions" ng-model="Advanced.currentSparql"></ui-codemirror>
                             </div>
+
+                            <!--<div-->
+                                 <!--ui-ace="{maxLines: 3, useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}"-->
+                                 <!--ng-model="Advanced.currentSparql">-->
+
+                            <!--</div>-->
                             <div class="sparql-editor-buttons">
                                 <button id="adv-user-query" class="btn" type="button" ng-click="toogleSearchMode()"><i
                                         class="{{(Search.params.mode == 'simple') ? 'icon-caret-down' : 'icon-caret-up'}} ajax-end"></i></button>

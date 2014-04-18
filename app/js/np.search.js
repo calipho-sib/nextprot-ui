@@ -47,6 +47,13 @@ SearchModule.controller('SearchCtrl', [
         $scope.config = config;
         $scope.user = UserService;
 
+        $scope.editorOptions = {
+            lineWrapping : false,
+            lineNumbers: true,
+            readOnly: false,
+            mode: 'sparql'
+        };
+
         $scope.AdvancedQueryService = AdvancedQueryService;
 
         $scope.cookies = function (session) {
@@ -216,6 +223,8 @@ SearchModule.controller('ResultCtrl', [
         $scope.selectedResults = {};
         $scope.showCart = true;
 
+
+
         var params = _.clone($routeParams);
 
         if ($routeParams.sparql) {
@@ -234,31 +243,42 @@ SearchModule.controller('ResultCtrl', [
 //            while(!UserService.isUserProfileLoaded()){
 //                $timeout(true == true, 100);
 //            }
+
             params.listOwner = UserService.userProfile.username;
+
+//            UserService.$promise.then(function(user){
+                search(params)
+//            })
+
         }
 
 
-        search(params, function (results) {
-            params.start = (!$routeParams.start) ? 0 : $routeParams.start;
+        //
+        // run the default search here
+        if (!$routeParams.list) {
+            search(params)
+        }
 
-            if ($routeParams.list) {
-                $scope.showCart = false;
-                _.each(results.docs, function (doc) {
-                    $scope.selectedResults[doc.id] = true;
-                });
-            } else {
-                _.each(results.docs, function (doc) {
-                    if (Cart.inCart(doc.id))
-                        $scope.selectedResults[doc.id] = true;
-                });
-            }
-
-            $scope.start = Search.result.offset >= Search.result.num ? 0 : Search.result.offset;
-            $scope.rows = Search.result.rows;
-        });
 
         function search(params, cb) {
             Search.docs(params, function (results) {
+                params.start = (!$routeParams.start) ? 0 : $routeParams.start;
+
+                if ($routeParams.list) {
+                    $scope.showCart = false;
+                    _.each(results.docs, function (doc) {
+                        $scope.selectedResults[doc.id] = true;
+                    });
+                } else {
+                    _.each(results.docs, function (doc) {
+                        if (Cart.inCart(doc.id))
+                            $scope.selectedResults[doc.id] = true;
+                    });
+                }
+
+                $scope.start = Search.result.offset >= Search.result.num ? 0 : Search.result.offset;
+                $scope.rows = Search.result.rows;
+                console.log("---------------------",results.docs)
                 if (cb) cb(results);
             });
         }
