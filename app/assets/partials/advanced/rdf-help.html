@@ -1,7 +1,8 @@
 <div class="row offset1" ng-controller="AdvancedCtrl">
     <div class="span3 bs-docs-sidebar">
         <ul class="nav nav-list bs-docs-sidenav affix-top">
-            <li ng-repeat="rh in Advanced.rdfHelp"><a href="rdf-help#{{rh.typeName}}"><i class="icon-chevron-right"></i>{{rh.typeName}} ({{rh.instanceCount}})</a>
+            <li ng-repeat="rh in Advanced.rdfHelp"><a href="rdf-help#{{rh.rdfsLabel}}"><i class="icon-chevron-right"></i>{{(rh.rdfsLabel) ? rh.rdfsLabel : rh.typeName.replace(':','')}}
+                ({{rh.instanceCount}})</a>
             </li>
         </ul>
     </div>
@@ -11,12 +12,21 @@
                 <h1>RDF Help</h1>
             </div>
             <div ng-repeat="rh in Advanced.rdfHelp">
-                <h2>{{rh.typeName}}</h2>
+                <h2>{{(rh.rdfsLabel) ? rh.rdfsLabel : rh.typeName.replace(':','')}} <span class="label label-info">{{rh.instanceCount}}</span>                </h2>
+                <p>{{rh.rdfsComment}}</p>
+                <p>Type: <a href="#">{{rh.typeName}}</a></p>
                 <div class="bs-docs-example">
-                    <p>Label: {{rh.rdfsLabel}}</p>
-                    <p>Comment: {{rh.rdfsComment}}</p>
-                    <p>Sample: {{rh.instanceSample}}</p>
-                    <p>Count: {{rh.instanceCount}}</p>
+                    <ul ng-repeat="t in rh.triples">
+                        <li>
+                            <p>Triplet: <code class="text-success">{{t.subjectType}}</code>
+                                <code class="text-alert">{{t.predicate}}</code>
+                                <code class="text-warning">{{t.objectType}}</code>
+                                &nbsp;
+                                <span class="label label-info">{{t.tripleCount}}</span>
+                            <p>
+                            <p>Example: <code class="text-info">{{t.tripleSample}}</code></p>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </section>
