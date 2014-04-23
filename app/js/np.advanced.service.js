@@ -43,7 +43,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
         var $rdf_help_get_resource = $resource('http://localhost:3000/rdfhelp.json', {
-            query: { method: 'GET', isArray: true }
+            get: { method: 'query', isArray: true }
         });
 
         var $nextprot_query_list = $resource(baseUrl + '/nextprot-api/user/advanced-nextprot-query.json', {
@@ -163,7 +163,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         var service = new AdvancedQueryService();
 
         $rdf_help_get_resource.query(null, function (data) {
-            angular.extend(service.rdfHelp, data);
+            service.rdfHelp =  data;
         });
 
         return service;

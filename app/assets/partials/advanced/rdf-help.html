@@ -1,11 +1,9 @@
 <div class="row offset1" ng-controller="AdvancedCtrl">
     <div class="row">
-        <input ng-model="filterRdfQuery" placeholder="filter on some criteria"/>
-    </div>
-    <div class="row">
         <div class="span3 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
-                <li ng-repeat="rh in Advanced.rdfHelp | filter:filterRdfQuery"><a href="rdf-help#{{rh.rdfsLabel}}"><i
+                <input ng-model="filterRdfQuery" placeholder="filter on some criteria">
+                <li ng-repeat="rh in Advanced.rdfHelp | filter : filterRdfQuery"><a href="rdf-help#{{rh.rdfsLabel}}"><i
                         class="icon-chevron-right"></i>{{(rh.rdfsLabel) ? rh.rdfsLabel : rh.typeName.replace(':','')}}
                     ({{rh.instanceCount}})</a>
                 </li>
@@ -16,7 +14,7 @@
                 <div class="page-header">
                     <h1>RDF Help</h1>
                 </div>
-                <div ng-repeat="rh in Advanced.rdfHelp | filter : rdfHelpFilter">
+                <div ng-repeat="rh in Advanced.rdfHelp | filter : filterRdfQuery">
                     <h2>{{(rh.rdfsLabel) ? rh.rdfsLabel : rh.typeName.replace(':','')}} <span class="label label-info">{{rh.instanceCount}}</span>
                     </h2>
 
