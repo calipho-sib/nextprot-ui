@@ -24,10 +24,9 @@
 
         <!-- Sparql -->
         <div class="control-group">
-            <div class="sparql-small-box" style="height: 200px">
-                <div style="height: inherit;"
-                     ui-ace="{useWrapMode : false, showGutter: false, theme:'nextprot', mode: 'sparql', onLoad: aceLoaded, onChange: aceChanged}"
-                     ng-model="Advanced.selectedQuery.sparql"></div>
+            <div style="border: 1px solid #ddd;border-radius: 8px; width: 100%; margin: 20px, 20px, 20px, 20px; ">
+                <ui-codemirror ui-codemirror-opts="editorOptions"
+                               ng-model="Advanced.selectedQuery.sparql"></ui-codemirror>
             </div>
         </div>
 
