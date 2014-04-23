@@ -5,15 +5,13 @@ var AdvancedSearchModule = angular.module('np.advanced', ['np.advanced.search.se
 // TODO Is the AdvanceSearchModule needed? Can't the advanced controller be in the Search module (no urls are defined...)
 // TODO bug when call from outside mode=advanced (the UI does not update)
 //
-//AdvancedSearchModule.config([
-//    '$routeProvider',
-//    '$locationProvider',
-//    '$httpProvider',
-//    function ($routeProvider, $locationProvider, $httpProvider) {
-//        $routeProvider
-//            .when('/home', {templateUrl: 'partials/welcome.html'})
-//    }
-//]);
+AdvancedSearchModule.config([
+    '$routeProvider',
+    function ($routeProvider) {
+        $routeProvider
+            .when('/rdf-help', {templateUrl: 'partials/advanced/rdf-help.html'})
+    }
+]);
 
 AdvancedSearchModule.controller('AdvancedCtrl', [
     '$window',

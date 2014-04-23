@@ -1,0 +1,24 @@
+<div class="row offset1" ng-controller="AdvancedCtrl">
+    <div class="span3 bs-docs-sidebar">
+        <ul class="nav nav-list bs-docs-sidenav affix-top">
+            <li ng-repeat="rh in Advanced.rdfHelp"><a href="rdf-help#{{rh.typeName}}"><i class="icon-chevron-right"></i>{{rh.typeName}} ({{rh.instanceCount}})</a>
+            </li>
+        </ul>
+    </div>
+    <div class="span8">
+        <section id="typography">
+            <div class="page-header">
+                <h1>RDF Help</h1>
+            </div>
+            <div ng-repeat="rh in Advanced.rdfHelp">
+                <h2>{{rh.typeName}}</h2>
+                <div class="bs-docs-example">
+                    <p>Label: {{rh.rdfsLabel}}</p>
+                    <p>Comment: {{rh.rdfsComment}}</p>
+                    <p>Sample: {{rh.instanceSample}}</p>
+                    <p>Count: {{rh.instanceCount}}</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

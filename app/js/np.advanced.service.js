@@ -42,6 +42,10 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
+        var $rdf_help_get_resource = $resource('http://localhost:3000/rdfhelp.json', {
+            query: { method: 'GET', isArray: true }
+        });
+
         var $nextprot_query_list = $resource(baseUrl + '/nextprot-api/user/advanced-nextprot-query.json', {
             get: { method: 'GET', isArray: false }
         });
@@ -63,6 +67,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         var AdvancedQueryService = function () {
             this.showHelp = true;
+            this.rdfHelp = {};
             this.currentRepository = Search.config.widgets.repositories.aNextprotRep;
             this.repositories = Search.config.widgets.repositories;
 
@@ -156,6 +161,11 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         };
 
         var service = new AdvancedQueryService();
+
+        $rdf_help_get_resource.query(null, function (data) {
+            angular.extend(service.rdfHelp, data);
+        });
+
         return service;
 
     }
