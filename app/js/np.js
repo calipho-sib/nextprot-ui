@@ -15,6 +15,7 @@ var App = angular.module('np', [
     'np.user',
     'np.proteinlists',
     'np.advanced',
+    'np.export',
     'ui.codemirror'
 ]);
 

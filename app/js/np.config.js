@@ -136,16 +136,7 @@ angular.module('np.config', []).factory('config', [
                         tooltip: "your private repository",
                         icon: "icon-user"
                     }
-                },
-                exportFormats: [
-                    {name: "xml format", extension: "xml", templates: [
-                        {name: 'full entries'},
-                        {name: 'accessions only'}
-                        ]},
-                    {name: "json format", extension: "json"},
-                    {name: "turtle format", extension: "ttl"},
-                    {name: "tsv format", extension: "tsv"}
-                ]
+                }
             },
 
 

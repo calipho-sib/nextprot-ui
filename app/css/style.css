@@ -211,7 +211,7 @@ ul#search-results .result-abstract {
 
 .sparql-editor-buttons {
     position: absolute;
-    right: 0;
+    right: -100px;
     top:0;
     z-index:10;
     background-color: white
