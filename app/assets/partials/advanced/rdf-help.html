@@ -17,26 +17,39 @@
                 <section id="{{rh.typeName}}">
                     <h2>{{(rh.rdfsLabel) ? rh.rdfsLabel : rh.typeName.replace(':','')}} <span class="label label-info">{{rh.instanceCount}}</span>
                     </h2>
+
                     <p>{{rh.rdfsComment}}</p>
-                    <p><code><a class="text-success"  href="rdf-help#{{rh.typeName}}">{{rh.typeName}}</a></code></p>
-                    <ul ng-repeat="t in rh.triples">
-                        <li>
-                            <p>
-                                <code class="text-warning">{{t.predicate}}</code>
-                                <code><a class="text-success" href="rdf-help#{{t.objectType}}">{{t.objectType}}</a></code>
-                                &nbsp;
-                                <span class="label label-info">{{t.tripleCount}}</span>
-                            </p>
-                        </li>
-                    </ul>
-                    <div class="bs-docs-example">
-                        <ul ng-repeat="t in rh.triples">
-                            <p><code class="text-info">{{t.tripleSample}}</code></p>
-                        </ul>
+
+                    <div class="container-fluid">
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <div ng-repeat="parent in rh.parentTriples">
+                                    <p><code><a class="text-success">{{parent.subjectType}}</a></code>&nbsp;<code
+                                            class="text-warning">{{parent.predicate}}</code></p>
+                                </div>
+                            </div>
+                            <div class="span2">
+                                <p><code><a class="text-success"
+                                            href="rdf-help#{{rh.typeName}}">{{rh.typeName}}</a></code>
+                                </p>
+                            </div>
+                            <div class="span6">
+                                <div ng-repeat="t in rh.triples">
+                                    <p>
+                                        <code class="text-warning">{{t.predicate}}</code>
+                                        <code><a class="text-success"
+                                                 href="rdf-help#{{t.objectType}}">{{t.objectType}}</a></code>
+                                        &nbsp;
+                                        <span class="label label-info">{{t.tripleCount}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <p>Parents:</p>
-                    <div ng-repeat="parent in rh.parentTriples">
-                        <p><code><a class="text-success">{{parent.subjectType}}</a></code>&nbsp;<code class="text-warning">{{parent.predicate}}</code></p>
+                    <div class="bs-docs-example">
+                        <div ng-repeat="t in rh.triples">
+                            <code class="text-info">{{t.tripleSample}}</code>
+                        </div>
                     </div>
                 </section>
             </div>
