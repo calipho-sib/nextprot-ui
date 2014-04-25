@@ -7,7 +7,7 @@ AdvancedSearchService.factory('AdvancedSearchService', [
     'config',
     function ($resource, config) {
 
-        var api = "http://cactusprime:3030/np/query?query=:sparql";
+        var api = "http://kant:3030/np/query?query=:sparql";
         var format = "&output=json";
         var url = api + format;
 

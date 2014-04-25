@@ -18,7 +18,10 @@
                     <h2>{{(rh.rdfsLabel) ? rh.rdfsLabel : rh.typeName.replace(':','')}} <span class="label label-info">{{rh.instanceCount}}</span>
                     </h2>
                     <p>{{rh.rdfsComment}}</p>
-                    <p>Type: <a href="#{{rh.typeName}}">{{rh.typeName}}</a></p>
+                    <p>Type: <a href="rdf-help#{{rh.typeName}}">{{rh.typeName}}</a></p>
+                    <p>Parents: <code><a class="text-success">Entry</a></code>&nbsp;<code class="text-warning">classifiedWith</code>,&nbsp;
+                        <code><a class="text-success">CatalyticActivity</a></code>&nbsp;<code class="text-warning">in</code></p>
+
                     <div class="bs-docs-example">
                         <ul ng-repeat="t in rh.triples">
                             <li>

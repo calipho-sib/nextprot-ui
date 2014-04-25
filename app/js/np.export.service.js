@@ -5,9 +5,14 @@ var ExportService = angular.module('np.export.service', []);
 
 ExportService.factory('ExportService', [
    '$resource',
-   function($resource) {
-	   
-	   var $export_templates_resource = $resource('http://localhost:8080/nextprot-api/export/templates.json', {
+    'config',
+   function($resource, config) {
+
+       var baseUrl = config.api.BASE_URL + config.api.API_PORT;
+       var exportTemplatesUrl = baseUrl + '/nextprot-api/export/templates.json';
+       alert(exportTemplatesUrl);
+
+       var $export_templates_resource = $resource(exportTemplatesUrl, {
 		   get: { method: 'GET', isArray: false }
 	   });
 
