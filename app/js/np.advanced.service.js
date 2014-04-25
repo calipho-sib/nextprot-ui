@@ -69,6 +69,9 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         var AdvancedQueryService = function () {
             this.showHelp = true;
             this.rdfHelp = {};
+            this.sparqlBuilder = "";
+            this.lastAddedTriplet = null;
+
             this.currentRepository = Search.config.widgets.repositories.aNextprotRep;
             this.repositories = Search.config.widgets.repositories;
 
@@ -159,6 +162,39 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         AdvancedQueryService.prototype.isNew = function () {
             return (this.selectedQuery.advancedUserQueryId == null);
+        };
+
+        AdvancedQueryService.prototype.isNew = function () {
+            return (this.selectedQuery.advancedUserQueryId == null);
+        };
+
+        AdvancedQueryService.prototype.addTripletToRDFQueryBuilder = function (triplet, cb) {
+
+
+            //If it is the first time check that it starts from the entry
+            if (this.lastAddedTriplet == null) {
+                if (triplet.subjectType != ':Entry') {
+                    alert('To build the query you need to start by the entry');
+                    if (cb)cb(':Entry');
+                    return;
+                }
+                this.sparqlBuilder = '?entry ';
+            } else { // If it is already in the tree check that the selected entity comes from the relation
+                if (this.lastAddedTriplet.objectType != triplet.subjectType) {
+                    alert('You have chosen the relation ' + this.lastAddedTriplet.predicate + ' for a ' + this.lastAddedTriplet.objectType);
+                    if (cb)cb(this.lastAddedTriplet.objectType);
+                    return;
+                }
+                //Everything is fine
+                this.sparqlBuilder += '/';
+            }
+
+
+            this.sparqlBuilder += triplet.predicate;
+            this.lastAddedTriplet = triplet;
+            if (cb)cb(triplet.objectType);
+
+
         };
 
         var service = new AdvancedQueryService();

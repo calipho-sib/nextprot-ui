@@ -33,6 +33,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 
         $scope.Advanced = AdvancedQueryService;
         $scope.User = UserService;
+        $scope.rdfBuilder = AdvancedQueryService.sparqlBuilder;
 
         $scope.$watch(
             'User.isAnonymous()',
@@ -149,13 +150,15 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
         $scope.appendSparqlToCurrentQuery = function (query) {
-            /*
-                 if (AdvancedQueryService.currentSparql.length > 0) {
-                AdvancedQueryService.currentSparql += "\n";
-            }
-            AdvancedQueryService.currentSparql += "#pasted from " + query.title + "\n" + query.sparql;*/
             AdvancedQueryService.currentSparql = query.sparql;
+        }
 
+        $scope.addTripletToRDFQueryBuilder = function (triplet) {
+
+            AdvancedQueryService.addTripletToRDFQueryBuilder(triplet, function (hashtag){
+                $location.hash(hashtag);
+                $scope.$apply();
+            })
         }
 
         $scope.hasPrivilegesToEdit = function (query) {

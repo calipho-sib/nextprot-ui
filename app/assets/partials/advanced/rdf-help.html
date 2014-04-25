@@ -1,4 +1,7 @@
 <div class="row offset1" ng-controller="AdvancedCtrl">
+    <div class="control-group" style="position: fixed; z-index: 100;  border: 3px solid green;border-radius: 8px;">
+        <ui-codemirror ui-codemirror-opts="editorOptions" ng-model="Advanced.sparqlBuilder"></ui-codemirror>
+    </div>
     <div class="row">
         <div class="span3 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
@@ -12,7 +15,6 @@
             <div class="page-header">
                 <h1>RDF Help</h1>
                 <input ng-model="Advanced.rdfHelp.triples.predicate" placeholder="filter on predicate">
-
             </div>
             <div ng-repeat="rh in Advanced.rdfHelp | filter : Advanced.rdfHelp.triples.predicate">
                 <section id="{{rh.typeName}}">
@@ -23,23 +25,24 @@
 
                     <div class="container-fluid">
                         <div class="row-fluid">
+                            <!-- Reverse Triplets (parents) -->
                             <div class="span4">
                                 <div ng-repeat="parent in rh.parentTriples | filter : Advanced.rdfHelp.triples.predicate">
                                     <p><code><a class="text-success">{{parent.subjectType}}</a></code>&nbsp;<code
                                             class="text-warning">{{parent.predicate}}</code></p>
                                 </div>
                             </div>
+                            <!-- Main entity -->
                             <div class="span2">
-                                <p><code><a class="text-success"
-                                            href="rdf-help#{{rh.typeName}}">{{rh.typeName}}</a></code>
+                                <p><code class="text-success">{{rh.typeName}}</code>
                                 </p>
                             </div>
+                            <!-- Direct triplets (children) -->
                             <div class="span6">
                                 <div ng-repeat="t in rh.triples | filter : Advanced.rdfHelp.triples.predicate">
                                     <p>
                                         <code class="text-warning">{{t.predicate}}</code>
-                                        <code><a class="text-success"
-                                                 href="rdf-help#{{t.objectType}}">{{t.objectType}}</a></code>
+                                        <code><a ng-click="addTripletToRDFQueryBuilder(t)" class="text-success" href="">{{t.objectType}}</a></code>
                                         &nbsp;
                                         <span class="label label-info">{{t.tripleCount}}</span>
                                     </p>
