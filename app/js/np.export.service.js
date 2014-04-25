@@ -10,7 +10,6 @@ ExportService.factory('ExportService', [
 
        var baseUrl = config.api.BASE_URL + config.api.API_PORT;
        var exportTemplatesUrl = baseUrl + '/nextprot-api/export/templates.json';
-       alert(exportTemplatesUrl);
 
        var $export_templates_resource = $resource(exportTemplatesUrl, {
 		   get: { method: 'GET', isArray: false }
