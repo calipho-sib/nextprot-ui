@@ -23,7 +23,7 @@
                     <!--                        -->
                 </div>
                 <div class="span9 search-bar">
-                    <div ng-show="isAdvancedMode()" class=" span11 sparql-small-box fade-in">
+                    <div ng-if="isAdvancedMode()" class=" span11 sparql-small-box fade-in">
                         <div class="span10 relative" style="position: relative; border: 1px solid #ddd;border-radius: 8px;" >
 
                             <div>
@@ -110,7 +110,7 @@
                         <!--                        -->
                         <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
                         <!--                        -->
-                        <input ng-show="!isAdvancedMode()" id="search-query" class="" type="text"
+                        <input ng-if="!isAdvancedMode()" id="search-query" class="" type="text"
                                ng-model="Search.params.query"
                                ng-class="{'quality-search-width':Search.config.widgets[Search.result.display].gold,'no-quality-search-width':!Search.config.widgets[Search.result.display].gold}"
                                autocomplete="off" bs-autocomplete="Search.suggest" autofocus>
