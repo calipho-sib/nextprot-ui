@@ -2,8 +2,7 @@
     <div class="row">
         <div class="span3 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
-                <input ng-model="filterRdfQuery" placeholder="filter on some criteria">
-                <li ng-repeat="rh in Advanced.rdfHelp | filter : filterRdfQuery"><a href="rdf-help#{{rh.typeName}}"><i
+                <li ng-repeat="rh in Advanced.rdfHelp | filter : Advanced.rdfHelp.triples.predicate"><a href="rdf-help#{{rh.typeName}}"><i
                         class="icon-chevron-right"></i>{{(rh.rdfsLabel) ? rh.rdfsLabel : rh.typeName.replace(':','')}}
                     ({{rh.instanceCount}})</a>
                 </li>
@@ -12,8 +11,10 @@
         <div class="span8">
             <div class="page-header">
                 <h1>RDF Help</h1>
+                <input ng-model="Advanced.rdfHelp.triples.predicate" placeholder="filter on predicate">
+
             </div>
-            <div ng-repeat="rh in Advanced.rdfHelp | filter : filterRdfQuery">
+            <div ng-repeat="rh in Advanced.rdfHelp | filter : Advanced.rdfHelp.triples.predicate">
                 <section id="{{rh.typeName}}">
                     <h2>{{(rh.rdfsLabel) ? rh.rdfsLabel : rh.typeName.replace(':','')}} <span class="label label-info">{{rh.instanceCount}}</span>
                     </h2>
@@ -23,7 +24,7 @@
                     <div class="container-fluid">
                         <div class="row-fluid">
                             <div class="span4">
-                                <div ng-repeat="parent in rh.parentTriples">
+                                <div ng-repeat="parent in rh.parentTriples | filter : Advanced.rdfHelp.triples.predicate">
                                     <p><code><a class="text-success">{{parent.subjectType}}</a></code>&nbsp;<code
                                             class="text-warning">{{parent.predicate}}</code></p>
                                 </div>
@@ -34,7 +35,7 @@
                                 </p>
                             </div>
                             <div class="span6">
-                                <div ng-repeat="t in rh.triples">
+                                <div ng-repeat="t in rh.triples | filter : Advanced.rdfHelp.triples.predicate">
                                     <p>
                                         <code class="text-warning">{{t.predicate}}</code>
                                         <code><a class="text-success"
@@ -47,7 +48,7 @@
                         </div>
                     </div>
                     <div class="bs-docs-example">
-                        <div ng-repeat="t in rh.triples">
+                        <div ng-repeat="t in rh.triples | filter : Advanced.rdfHelp.triples.predicate">
                             <code class="text-info">{{t.tripleSample}}</code>
                         </div>
                     </div>
