@@ -42,7 +42,8 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
-        var $rdf_help_get_resource = $resource('http://localhost:3000/rdfhelp.json', {
+        //TODO Should call the api instead
+        var $rdf_help_get_resource = $resource('http://crick.isb-sib.ch:3000/rdfhelp.json', {
             get: { method: 'query', isArray: true }
         });
 
