@@ -192,7 +192,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             this.navTriplets.pop();
             this.buildSparqlString();
 
-            var section = this.navTriplets.length > 0 ? this.navTriplets[this.navTriplets.length - 1] : ':Entry';
+            var section = this.navTriplets.length > 0 ? this.navTriplets[this.navTriplets.length - 1].objectType : ':Entry';
 
             if (cb)cb(section);
         };
