@@ -67,17 +67,16 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
 
         var AdvancedQueryService = function () {
-            this.showHelp = true;
+            this.showHelp = false;
             this.rdfHelp = {};
             this.sparqlBuilder = "";
-            this.lastAddedTriplet = null;
-
             this.currentRepository = Search.config.widgets.repositories.aNextprotRep;
             this.repositories = Search.config.widgets.repositories;
 
             this.currentSparql = "#write your sparql query here";
             this.selectedQuery = {};
             this.queries = {};
+            this.navTriplets = [];
 
         };
 
@@ -94,7 +93,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
                 selectedResource = $public_query_list;
             } else if (this.currentRepository == this.repositories.privateRep) {
                 selectedResource = $user_query_list;
-            } else throw this.currentRepository+ ' repository not found!!!';
+            } else throw this.currentRepository + ' repository not found!!!';
 
             var cbOk = function (data) {
                 me.queries = data['advancedUserQueryList'];
@@ -145,7 +144,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             //The binding is done at the level of the primitive, therefore
             angular.extend(this.selectedQuery, query);
             //change the query for the current username and the id null if it does not belong to the user
-            if(this.selectedQuery.username != UserService.userProfile.username){
+            if (this.selectedQuery.username != UserService.userProfile.username) {
                 this.selectedQuery.username = UserService.userProfile.username
                 this.selectedQuery.advancedUserQueryId = null;
             }
@@ -168,39 +167,41 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             return (this.selectedQuery.advancedUserQueryId == null);
         };
 
-        AdvancedQueryService.prototype.addTripletToRDFQueryBuilder = function (triplet, cb) {
-
-
-            //If it is the first time check that it starts from the entry
-            if (this.lastAddedTriplet == null) {
-                if (triplet.subjectType != ':Entry') {
-                    alert('To build the query you need to start by the entry');
-                    if (cb)cb(':Entry');
-                    return;
-                }
-                this.sparqlBuilder = '?entry ';
-            } else { // If it is already in the tree check that the selected entity comes from the relation
-                if (this.lastAddedTriplet.objectType != triplet.subjectType) {
-                    alert('You have chosen the relation ' + this.lastAddedTriplet.predicate + ' for a ' + this.lastAddedTriplet.objectType);
-                    if (cb)cb(this.lastAddedTriplet.objectType);
-                    return;
-                }
-                //Everything is fine
-                this.sparqlBuilder += '/';
+        AdvancedQueryService.prototype.buildSparqlString = function () {
+            var sp = "?entry ";
+            if(this.navTriplets.length > 0){
+               sp += this.navTriplets[0].predicate;
             }
 
+            for (var i=1; i<this.navTriplets.length; i++) {
+                sp += "/" + this.navTriplets[i].predicate;
+            }
 
-            this.sparqlBuilder += triplet.predicate;
-            this.lastAddedTriplet = triplet;
+            this.currentSparql = sp;
+        }
+
+        AdvancedQueryService.prototype.addTriplet = function (triplet, cb) {
+
+            this.navTriplets.push(triplet);
+            this.buildSparqlString();
             if (cb)cb(triplet.objectType);
 
-
         };
+
+        AdvancedQueryService.prototype.removeLastTriplet = function (cb) {
+            this.navTriplets.pop();
+            this.buildSparqlString();
+
+            var section = this.navTriplets.length > 0 ? this.navTriplets[this.navTriplets.length - 1] : ':Entry';
+
+            if (cb)cb(section);
+        };
+
 
         var service = new AdvancedQueryService();
 
         $rdf_help_get_resource.query(null, function (data) {
-            service.rdfHelp =  data;
+            service.rdfHelp = data;
         });
 
         return service;

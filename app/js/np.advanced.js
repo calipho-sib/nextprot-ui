@@ -10,6 +10,7 @@ AdvancedSearchModule.config([
     function ($routeProvider) {
         $routeProvider
             .when('/rdf-help', {templateUrl: 'partials/advanced/rdf-help.html'})
+            .when('/sparql-wizard', {templateUrl: 'partials/advanced/sparql-wizard.html'})
     }
 ]);
 
@@ -34,25 +35,26 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         $scope.Advanced = AdvancedQueryService;
         $scope.User = UserService;
         $scope.rdfBuilder = AdvancedQueryService.sparqlBuilder;
+        $scope.selectedSection = ':Entry';
 
-        $scope.$watch(
-            'User.isAnonymous()',
-            function (newValue, oldValue) {
-                //TODO watch function is firing twice!!!
-                if ($scope.User.isAnonymous()) {
-                    AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.aNextprotRep);
-                } else {
-                    AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.privateRep, function (data) {
-                            //TODO should take the training set if the user does not have any queries.
-                        }
-                    )
-                    ;
-                }
+//        $scope.$watch(
+//            'User.isAnonymous()',
+//            function (newValue, oldValue) {
+//                //TODO watch function is firing twice!!!
+//                if ($scope.User.isAnonymous()) {
+//                    AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.aNextprotRep);
+//                } else {
+//                    AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.privateRep, function (data) {
+//                            //TODO should take the training set if the user does not have any queries.
+//                        }
+//                    )
+//                    ;
+//                }
+//
+//            }
+//        );
 
-            }
-        );
-
-        AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.aNextprotRep);
+//        AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.aNextprotRep);
 
         $scope.showRepository = function (repositoryName) {
             AdvancedQueryService.getRepository(UserService.userProfile.username, repositoryName, null);
@@ -153,17 +155,31 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             AdvancedQueryService.currentSparql = query.sparql;
         }
 
-        $scope.addTripletToRDFQueryBuilder = function (triplet) {
-
-            AdvancedQueryService.addTripletToRDFQueryBuilder(triplet, function (hashtag){
-                $location.hash(hashtag);
-                $scope.$apply();
-            })
-        }
-
         $scope.hasPrivilegesToEdit = function (query) {
             return (UserService.userProfile.username == query.username);
         }
+
+        $scope.navigateToTriplet = function (triplet) {
+            AdvancedQueryService.addTriplet(triplet, function (nextSection){
+                Search.params.mode = 'advanced'; //TODO should not be done here...
+                $scope.selectedSection = nextSection;
+            })
+        }
+
+        $scope.navigateBack = function () {
+            AdvancedQueryService.removeLastTriplet(function (nextSection){
+                $scope.selectedSection = nextSection;
+            })
+        }
+
+        $scope.showBackButton = function () {
+            return $scope.selectedSection != ':Entry';
+        }
+
+        $scope.showSection = function (section) {
+            return section == $scope.selectedSection;
+        }
+
     }
 ])
 ;
