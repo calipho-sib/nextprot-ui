@@ -106,7 +106,7 @@ App.factory('Tools', [
 ]);
 
 // Authentication interceptors
-App.factory('authInterceptor', function ($rootScope, $q, $window, $location, flash) {
+App.factory('authInterceptor', ["$rootScope", "$q", "$window", "$location", "flash", function ($rootScope, $q, $window, $location, flash) {
     return {
         request: function (config) {
             if (config.url.indexOf('nextprot-api/user') != -1) {
@@ -123,10 +123,10 @@ App.factory('authInterceptor', function ($rootScope, $q, $window, $location, fla
             return config;
         }
     };
-});
-App.config(function ($httpProvider) {
+}]);
+App.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('authInterceptor');
-});
+}]);
 
 
 App.directive('npBase', ['config', function (config) {
