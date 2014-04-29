@@ -43,8 +43,10 @@ Or use can directly work with karma
  
 ## build and minimize the project for production (do not use -m option to debug application)
   >./node_modules/.bin/brunch build -m
-  >rsync -auv build/* np_integration@uat-web1:/home/np_integration/np-drupal/protosearch/
-
+## You can try to launch the build project using a simple http server like "serve ." or "mongoose"
+## Then deploy it in UAT
+  >rsync -auv build/* npteam@uat-web2:/var/www/html/protosearch
+  
 
 
 ## start/kill solr
