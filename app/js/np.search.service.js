@@ -68,6 +68,11 @@ SearchService.factory('Search',[
 		
 	};
 
+	Search.prototype.displayGold=function (){
+		return (this.config.widgets[this.result.display] && this.config.widgets[this.result.display].gold && this.params.mode!="advanced");
+	}
+
+
 	Search.prototype.cookies=function (session){
 		angular.extend(this.session,session, $cookies)
 		Object.keys(session).forEach(function(k){

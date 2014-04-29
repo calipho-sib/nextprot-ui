@@ -122,6 +122,8 @@ SearchModule.controller('SearchCtrl', [
             });
         }
 
+
+
         $scope.active = function (value, key) {
             if (key) {
                 return ($location.search()[key] === value) ? ' active  ' : '';
@@ -174,26 +176,6 @@ SearchModule.controller('SearchCtrl', [
             });
         }
 
-        // can be advanced or simple mode
-        $scope.toogleSearchMode = function () {
-
-            if(Search.params.mode == 'advanced')
-                Search.params.mode = 'simple';
-            else Search.params.mode = 'advanced';
-
-            //$location.search('mode', (mode == 'advanced') ? 'advanced' : null);
-
-            if(UserService.userProfile.userLoggedIn){
-                $scope.expertMode = !$scope.expertMode;
-                if($scope.expertMode){
-                    flash('alert-info', 'Switched to expert search.')
-                }else flash('alert-info', 'Switched to simple search.')
-
-            }else {
-                var message = "You must be logged in to use the expert mode.";
-                flash('alert-warn', message);
-            }
-        }
 
         $scope.$on('bs.autocomplete.update', function (event, arg) {
             $scope.go();
@@ -278,7 +260,6 @@ SearchModule.controller('ResultCtrl', [
 
                 $scope.start = Search.result.offset >= Search.result.num ? 0 : Search.result.offset;
                 $scope.rows = Search.result.rows;
-                console.log("---------------------",results.docs)
                 if (cb) cb(results);
             });
         }

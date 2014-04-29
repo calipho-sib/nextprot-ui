@@ -1,13 +1,27 @@
+body{
+  font-weight: 300!important;
+}
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
+
 a.inactive {
     pointer-events: none;
     cursor: default;
     color: black;
+}
+
+.link{
+  color:#0088CC;
+  cursor: pointer;
+}
+
+.link:hover{
+  text-decoration:underline;
 }
 
 .blue {
@@ -41,6 +55,25 @@ a.inactive {
     top: 0;
 }
 
+.search-bar{
+  position: relative;
+}
+
+.search-toggle{
+    font-size: 80%;
+    margin-top: -5px;
+    position: absolute;
+    left:535px;
+    top:34px;
+    font-weight:300;
+}
+.search-bottom{
+    float: left;
+    margin-left: 20px;
+    width: 600px;
+    min-height: 10px !important;
+}
+
 .search-row {
     margin-top: 20%;
     margin-bottom: 20%;
@@ -51,12 +84,14 @@ a.inactive {
 }
 
 .search-row.animate {
-    margin-top: 90px;
+    margin-top: 0px;
+    padding: 55px 0 10px 0;
     margin-bottom: inherit;
     transition: .2s linear all;
     -webkit-transition: .2s linear all;
     -moz-transition: .2s linear all;
     -o-transition: .2s linear all;
+    background-color:whitesmoke;
 }
 
 .search-row .home {
@@ -241,11 +276,4 @@ ul#search-results .result-abstract {
     width: 500px;
 }
 
-/* Sparql editor adjust height automatically */
-
-.CodeMirror {
-    height: auto;
-    overflow-x: auto;
-    overflow-y: hidden;
-}
 

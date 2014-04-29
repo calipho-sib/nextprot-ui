@@ -1,0 +1,37 @@
+
+
+div.CodeMirror{
+    overflow: hidden!important;
+    height: 100px
+    border: 1px solid #ddd;
+
+}
+
+/* Sparql editor adjust height automatically */
+
+.CodeMirror__ {
+    height: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+
+div.CodeMirror-scroll pre{
+    background-color: #fff;
+    border: 0px solid rgba(0, 0, 0, 0.15);
+    border-radius: 0px;
+    display: block;
+    margin: 0px;
+    padding: 4px;
+}
+
+.CodeMirror-cursors{
+    float: left;
+    z-index: 1;
+    width: 0px;
+}
+
+.CodeMirror-gutters{
+    display: none;
+}
+
