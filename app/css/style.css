@@ -94,6 +94,10 @@ a.inactive {
     background-color:whitesmoke;
 }
 
+.search-row.animate a img{
+  display: none;
+}
+
 .search-row .home {
     position: absolute;
     margin-top: -120px;
