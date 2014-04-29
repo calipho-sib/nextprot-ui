@@ -15,7 +15,7 @@
             </div>
             <div ng-repeat="rh in Advanced.rdfHelp | filter : Advanced.rdfHelp.triples.predicate">
                 <section id="{{rh.typeName}}">
-                    <h2>{{(rh.rdfsLabel) ? rh.rdfsLabel : rh.typeName.replace(':','')}} <span class="label label-info">{{rh.instanceCount}}</span>
+                    <h2>{{(rh.rdfsLabel) ? rh.rdfsLabel : rh.typeName.replace(':','')}} <span class="badge badge-info">{{rh.instanceCount}}</span>
                     </h2>
 
                     <p>{{rh.rdfsComment}}</p>

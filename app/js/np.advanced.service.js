@@ -43,7 +43,11 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
         //TODO Should call the api instead
-        var $rdf_help_get_resource = $resource('http://crick:3000/rdfhelp.json', {
+        var $rdf_help_get_resource = $resource('http://localhost:3000/rdfhelp.json', {
+            get: { method: 'query', isArray: true }
+        });
+
+        var $api_help_get_resource = $resource(baseUrl + '/nextprot-api/jsondoc.json', {
             get: { method: 'query', isArray: true }
         });
 
@@ -58,6 +62,11 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         var $user_query_list = $resource(baseUrl + '/nextprot-api/user/:username/advanced-user-query.json', {username: '@username'}, {
             get: { method: 'GET', isArray: false },
             create: { method: 'POST' }
+        });
+
+        var $api_adv_query_id = $resource(baseUrl + '/nextprot-api/user/:username/advanced-user-query/:id.json', {username: '@username', id: '@id'}, {
+            delete: { method: 'DELETE'},
+            update: { method: 'PUT'}
         });
 
         var $api_adv_query_id = $resource(baseUrl + '/nextprot-api/user/:username/advanced-user-query/:id.json', {username: '@username', id: '@id'}, {
@@ -202,6 +211,10 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         $rdf_help_get_resource.query(null, function (data) {
             service.rdfHelp = data;
+        });
+
+        $api_help_get_resource.get(null, function (data) {
+            service.jsondoc = data;
         });
 
         return service;

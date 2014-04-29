@@ -11,6 +11,7 @@ AdvancedSearchModule.config([
         $routeProvider
             .when('/rdf-help', {templateUrl: 'partials/advanced/rdf-help.html'})
             .when('/sparql-wizard', {templateUrl: 'partials/advanced/sparql-wizard.html'})
+            .when('/api-info', {templateUrl: 'partials/advanced/api-info.html'})
     }
 ]);
 
@@ -24,18 +25,20 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
     '$routeParams',
     '$route',
     'flash',
+    'config',
     'Search',
     'AdvancedSearchService',
     'AdvancedQueryService',
     'Tools',
     'flash',
     'UserService',
-    function ($window, $resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash, UserService) {
+    function ($window, $resource, $http, $scope, $rootScope, $location, $routeParams, $route, $flash, config, Search, AdvancedSearchService, AdvancedQueryService, Tools, flash, UserService) {
 
         $scope.Advanced = AdvancedQueryService;
         $scope.User = UserService;
         $scope.rdfBuilder = AdvancedQueryService.sparqlBuilder;
         $scope.selectedSection = ':Entry';
+        $scope.jsondoc = AdvancedQueryService.jsondoc;
 
 //        $scope.$watch(
 //            'User.isAnonymous()',
@@ -180,7 +183,26 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             return section == $scope.selectedSection;
         }
 
+        $scope.getAPIURL = function (method, entry, format) {
+            var baseUrl = config.api.BASE_URL + config.api.API_PORT + "/nextprot-api";
+            var url = baseUrl+ method.path;
+            url = url.replace('{entry}', entry);
+            url += "." + format;
+            return url;
+        }
+
+        $scope.getURLExtension = function (produce) {
+            switch(produce){
+                case 'application/xml' : return 'xml';
+                case 'application/json' : return 'json';
+                case 'text/turtle' : return 'ttl';
+            }
+        }
+
+        $scope.setSelectedFormat = function (format) {
+            $scope.selectedFormat = $scope.getURLExtension(format);
+        }
+
     }
 ])
 ;
-
