@@ -1,7 +1,7 @@
 <div class="row offset1" ng-controller="AdvancedCtrl">
     <div class="row">
-        <div class="span3 bs-docs-sidebar">
-            <ul class="nav nav-list bs-docs-sidenav affix-top">
+        <div class="span3 bs-docs-sidebar" >
+            <ul class="nav nav-list bs-docs-sidenav affix-top" np-affix="120" >
                 <li ng-repeat="m in Advanced.jsondoc.apis[0].methods | orderBy:'path'"><a href="api-info#{{getHumanReadableFromPath(m.path)}}"><i
                         class="icon-chevron-right"></i>{{getHumanReadableFromPath(m.path)}}</a>
                 </li>
