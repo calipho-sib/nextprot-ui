@@ -203,6 +203,14 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             $scope.selectedFormat = $scope.getURLExtension(format);
         }
 
+        $scope.getHumanReadableFromPath = function (path) {
+            if(path == '/entry/{entry}') return 'Entry';
+
+            var simplePath = path.replace('/entry/{entry}', '');
+            var name = simplePath.split('/').pop();
+            //var name = as[as.length - 1];
+            return 'Entry ' + name;
+        }
     }
 ])
 ;

@@ -2,18 +2,19 @@
     <div class="row">
         <div class="span3 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
-                <li ng-repeat="m in Advanced.jsondoc.apis[0].methods | orderBy:'path'"><a href="api-info#{{m.path}}"><i
-                        class="icon-chevron-right"></i>{{m.path}}</a>
+                <li ng-repeat="m in Advanced.jsondoc.apis[0].methods | orderBy:'path'"><a href="api-info#{{getHumanReadableFromPath(m.path)}}"><i
+                        class="icon-chevron-right"></i>{{getHumanReadableFromPath(m.path)}}</a>
                 </li>
             </ul>
         </div>
         <div class="span8">
             <div class="page-header">
                 <h1>API info</h1>
+                <p>Documentation about nextprot API methods and how to use them.</p>
             </div>
             <div ng-repeat="m in Advanced.jsondoc.apis[0].methods | orderBy:'path'">
-                <section id="{{m.path}}">
-                    <h2>{{m.path}}</h2>
+                <section id="{{getHumanReadableFromPath(m.path)}}">
+                    <h2>{{getHumanReadableFromPath(m.path)}}</h2>
 
                     <p>{{m.description}}</p>
 
@@ -64,15 +65,17 @@
                         </div>
                     </div>
                     <div class="bs-docs-example">
-                        Entry:<input ng-model="m.urlparameters[0].allowedvalues[0]">
-
-                        <div class="btn-group">
-                            <button ng-repeat="p in m.produces" class="btn" type="button"
-                                    ng-click="selectedFormat=setSelectedFormat(p)">{{getURLExtension(p)}}
-                            </button>
+                        <div class="input-append">
+                            <input class="span2" id="appendedDropdownButton" type="text" ng-model="m.urlparameters[0].allowedvalues[0]">
+                            <div class="btn-group">
+                                <button class="btn dropdown-toggle" data-toggle="dropdown">{{selectedFormat ? selectedFormat : 'xml'}}&nbsp;<span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li ng-repeat="p in m.produces">
+                                        <a href="" ng-click="selectedFormat=setSelectedFormat(p)">{{getURLExtension(p)}}</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <p></p>
-
                         <p>URL: <a target="_blank"
                                    href="{{getAPIURL(m, m.urlparameters[0].allowedvalues[0], selectedFormat ? selectedFormat : 'xml')}}">{{getAPIURL(m,m.urlparameters[0].allowedvalues[0],
                             selectedFormat ? selectedFormat : 'xml')}}</a></p>
