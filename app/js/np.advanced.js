@@ -154,8 +154,10 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             );
         }
 
-        $scope.appendSparqlToCurrentQuery = function (query) {
+        $scope.setCurrentQuery = function (query) {
             AdvancedQueryService.currentSparql = query.sparql;
+            //close the help after that
+            AdvancedQueryService.showHelp = false;
         }
 
         $scope.hasPrivilegesToEdit = function (query) {

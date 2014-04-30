@@ -38,53 +38,6 @@
                             </div>
                         </div>
                         <div class="span5"/>
-
-
-                        <div class="span10 fade-out-left fade-in-left" style="padding-left: 5px;margin-left: 10px;padding: 10px; border: 1px solid #ddd;border-radius: 8px;" ng-show="Advanced.showHelp" >
-
-                            <!--filter-->
-                            <input ng-model="filterQuery" placeholder="search in {{Advanced.currentRepository.title}} repository">
-                            <!--Selectable repositories-->
-                            <div class="btn-group" style="margin: 5px;">
-                                <button  data-toggle="tooltip" title="{{rep.tooltip}}" class="btn {{(Advanced.currentRepository == rep) ? 'btn-inverse' : ''}}"
-                                         ng-repeat="rep in Advanced.repositories"
-                                         type="button" ng-click="showRepository(rep)"><i class="{{rep.icon}}"></i></button>
-                            </div>
-
-
-                            <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
-
-                            <div class="row" style="margin-left: 0px; padding: 10px; height: 280px; overflow-y: auto">
-                                <table class="table table-hover">
-                                    <tbody>
-                                    <tr ng-repeat="query in Advanced.queries | filter:filterQuery | orderBy:'title'">
-                                        <td>
-                                            <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}}"></i>
-                                        </td>
-                                        <td><a href="" ng-click="appendSparqlToCurrentQuery(query)">{{query.title}} [{{query.username}}]</a></td>
-
-                                        <!--Don't show edit and remove button if the user is not the owner-->
-                                        <td ng-if="hasPrivilegesToEdit(query)">
-                                            <button class="btn btn-mini pull-right" type="button" ng-click="Advanced.setCurrentQuery(query)"
-                                                    bs-modal="'partials/advanced/advanced-save-modal.html'"><i
-                                                    class="icon-edit"></i></button>
-                                        </td>
-                                        <td ng-if="hasPrivilegesToEdit(query)">
-                                            <button class="btn btn-mini pull-right" type="button" ng-click="deleteAdvancedQuery(query)"><i
-                                                    class="icon-remove"></i></button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="row" style="height: 50px;">
-                                <button class="btn btn-primary btn-small pull-right" style="margin: 10px;"
-                                        type="button" ng-click="Advanced.clearCurrentQuery();"
-                                        bs-modal="'partials/advanced/advanced-save-modal.html'">Create new
-                                </button>
-                            </div>
-                        </div>
                     </div>
                     <!-- END ADV MODE -->
 
@@ -143,11 +96,12 @@
                         <button id="search-button" class="btn " type="submit"
                                 ng-disabled="(!Search.params.query || !Search.params.query.length||!Advanced.currentSparql||!Advanced.currentSparql.length)"><i class="icon-search"></i>&nbsp;Search
                         </button>
+
                     </div>
 
-                    <!--                                                         -->
-                    <!--  SEARCH BUTTOM (did you mean and toggle search)         -->
-                    <!--                                                         -->
+                    <!--                                                                  -->
+                    <!--  SEARCH BOTTOM ('did you mean' option and toggle search)         -->
+                    <!--                                                                  -->
                     <div class="search-bottom">        
                        <span ng-show="Search.result.spellcheck.collations.length" id="search-didyoumean"><b class="gray">&nbsp;Did you mean:</b> 
                          <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[0].query}}">{{Search.result.spellcheck.collations[0].query}}</a>
@@ -157,34 +111,67 @@
                        </span>
                        <span class=" search-toggle"><span ng-click="toggle({mode:null})" ng-class="{link:isAdvancedMode()}">simple</span> / <span ng-class="{link:!isAdvancedMode()}" ng-click="toggle({mode:'advanced'})">advanced</span></span>
 
-                          <div ng-show="Advanced.showHelp" class="row" style="">
-                                <table class="table table-hover">
-                                    <tbody>
-                                    <tr ng-repeat="query in Advanced.queries | filter:filterQuery | orderBy:'title'">
-                                        <td>
-                                            <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}}"></i>
-                                        </td>
-                                        <td><a href="" ng-click="appendSparqlToCurrentQuery(query)">{{query.title}} [{{query.username}}]</a></td>
+                   </div>
 
-                                        <!--Don't show edit and remove button if the user is not the owner-->
-                                        <td ng-if="hasPrivilegesToEdit(query)">
-                                            <button class="btn btn-mini pull-right" type="button" ng-click="Advanced.setCurrentQuery(query)"
-                                                    bs-modal="'partials/advanced/advanced-save-modal.html'"><i
-                                                    class="icon-edit"></i></button>
-                                        </td>
-                                        <td ng-if="hasPrivilegesToEdit(query)">
-                                            <button class="btn btn-mini pull-right" type="button" ng-click="deleteAdvancedQuery(query)"><i
-                                                    class="icon-remove"></i></button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>                       
-                   </div>                    
                 </div>
+
+
             </div>
         </form>
     </div>
+
+
+    <!--                                                                  -->
+    <!--  HELP / REPOSITORY                                               -->
+    <!--                                                                  -->
+    <div class="row-fluid">
+        <div class="offset3 fade-out fade-in" style="padding-left: 5px;padding: 10px; border: 1px solid #ddd;border-radius: 8px; position: absolute; background-color: white; z-index: 100000; width: 600px; opacity: 0.95" ng-show="Advanced.showHelp" >
+
+            <!--filter-->
+            <input ng-model="filterQuery" placeholder="search in {{Advanced.currentRepository.title}} repository">
+            <!--Selectable repositories-->
+            <div class="btn-group" style="margin: 5px;">
+                <button  data-toggle="tooltip" title="{{rep.tooltip}}" class="btn {{(Advanced.currentRepository == rep) ? 'btn-inverse' : ''}}"
+                         ng-repeat="rep in Advanced.repositories"
+                         type="button" ng-click="showRepository(rep)"><i class="{{rep.icon}}"></i></button>
+            </div>
+
+
+            <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
+
+            <div class="row" style="margin-left: 0px; padding: 10px; height: 280px; overflow-y: auto">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr ng-repeat="query in Advanced.queries | filter:filterQuery | orderBy:'title'">
+                        <td>
+                            <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}}"></i>
+                        </td>
+                        <td><a href="" ng-click="setCurrentQuery(query)">{{query.title}} [{{query.username}}]</a></td>
+                        <!--Don't show edit and remove button if the user is not the owner-->
+                        <td ng-if="hasPrivilegesToEdit(query)">
+                            <button class="btn btn-mini pull-right" type="button" ng-click="Advanced.setCurrentQuery(query)"
+                                    bs-modal="'partials/advanced/advanced-save-modal.html'"><i
+                                    class="icon-edit"></i></button>
+                        </td>
+                        <td ng-if="hasPrivilegesToEdit(query)">
+                            <button class="btn btn-mini pull-right" type="button" ng-click="deleteAdvancedQuery(query)"><i
+                                    class="icon-remove"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row" style="height: 50px;">
+                <button class="btn btn-primary btn-small pull-right" style="margin: 10px;"
+                        type="button" ng-click="Advanced.clearCurrentQuery();"
+                        bs-modal="'partials/advanced/advanced-save-modal.html'">Create new
+                </button>
+            </div>
+        </div>
+    </div>
+
+
     <div class="row solrparams">
     </div>
 
