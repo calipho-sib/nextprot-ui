@@ -84,9 +84,15 @@ SearchService.factory('Search',[
 	Search.prototype.clear=function(){
 		angular.copy( defaultUrl,this.params)
 	}
-	
 
-	Search.prototype.paginate=function(params, docs){
+      Search.prototype.isSearchButtonDisabled = function () {
+          if(this.mode == 'advanced')
+            return this.params.query.length == 0;
+          else return this.params.query.length == 0;
+      }
+
+
+      Search.prototype.paginate=function(params, docs){
 			this.result.num=docs.found;
 			this.result.pagination={};
 

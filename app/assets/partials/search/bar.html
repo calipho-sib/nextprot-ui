@@ -76,7 +76,7 @@
                         <!--  SEARCH BUTTON         -->
                         <!--                        -->
                         <button id="search-button" class="btn " type="submit"
-                                ng-disabled="(!Search.params.query || !Search.params.query.length||!Advanced.currentSparql||!Advanced.currentSparql.length)"><i class="icon-search"></i>&nbsp;Search
+                                ng-disabled="Search.isSearchButtonDisabled()"><i class="icon-search"></i>&nbsp;Search
                         </button>
 
                     </div>
@@ -101,7 +101,6 @@
             </div>
         </form>
     </div>
-
 
     <!--                                                                  -->
     <!--  HELP / REPOSITORY                                               -->

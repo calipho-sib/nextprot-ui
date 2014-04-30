@@ -3,7 +3,7 @@
         <div class="span3 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
                 <li ng-repeat="rh in Advanced.rdfHelp | filter : Advanced.rdfHelp.triples.predicate"><a href="rdf-help#{{rh.typeName}}"><i
-                        class="icon-chevron-right"></i>{{(rh.rdfsLabel) ? rh.rdfsLabel : rh.typeName.replace(':','')}}
+                        class="icon-chevron-right"></i>{{rh.typeName.replace(':','')}}
                     ({{rh.instanceCount}})</a>
                 </li>
             </ul>
@@ -15,7 +15,7 @@
             </div>
             <div ng-repeat="rh in Advanced.rdfHelp | filter : Advanced.rdfHelp.triples.predicate">
                 <section id="{{rh.typeName}}">
-                    <h2>{{(rh.rdfsLabel) ? rh.rdfsLabel : rh.typeName.replace(':','')}} <span class="badge badge-info">{{rh.instanceCount}}</span>
+                    <h2>{{rh.typeName.replace(':','')}} <span class="badge badge-info">{{rh.instanceCount}}</span>
                     </h2>
 
                     <p>{{rh.rdfsComment}}</p>
