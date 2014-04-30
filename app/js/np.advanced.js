@@ -185,6 +185,17 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             return section == $scope.selectedSection;
         }
 
+        $scope.showHelpRepository = function (boolean) {
+            if(boolean){
+                AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.aNextprotRep);
+            }
+            AdvancedQueryService.showHelp = boolean;
+        }
+
+        $scope.showHelp = function (section) {
+            return section == $scope.selectedSection;
+        }
+
         $scope.getAPIURL = function (method, entry, format) {
             var baseUrl = config.api.BASE_URL + config.api.API_PORT + "/nextprot-api";
             var url = baseUrl+ method.path;

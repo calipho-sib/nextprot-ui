@@ -46,7 +46,7 @@ Or use can directly work with karma
 ## You can try to launch the build project using a simple http server like "serve ." or "mongoose"
 ## Then deploy it in UAT
   >rsync -auv build/* npteam@uat-web2:/var/www/html/protosearch
-  
+
 
 
 ## start/kill solr

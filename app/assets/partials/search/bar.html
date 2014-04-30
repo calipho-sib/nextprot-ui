@@ -1,5 +1,5 @@
-<div ng-cloak class="row search-row" np-animate="#main" ng-controller="AdvancedCtrl" >
-    <a href="http://localhost:3000"><img src="http://www.nextprot.org/db/images/blueflat/np.png" class="home"/></a>
+<div ng-cloak class="row search-row" np-animate="#main" ng-controller="AdvancedCtrl">
+    <a href="/"><img src="http://www.nextprot.org/db/images/blueflat/np.png" class="home"/></a>
     <div class="row-fluid">
         <form ng-submit="go()" validate>
             <div>
@@ -23,26 +23,8 @@
                     <!--                        -->
                 </div>
                 <div class="span9 search-bar">
-                    <div class=" span11 sparql-small-box fade-in hide">
-                        <div class="span10 relative" style="position: relative; border: 1px solid #ddd;border-radius: 8px;" >
 
-                            <div>
-                                <ui-codemirror ui-codemirror-opts="editorOptions" ng-model="Advanced.currentSparql"></ui-codemirror>
-                            </div>
-                            <div class="sparql-editor-buttons">
-                                <button id="adv-user-query" class="btn" type="button" ng-click="toggleSearchMode()"><i
-                                        class="{{(Search.params.mode == 'simple') ? 'icon-caret-down' : 'icon-caret-up'}} ajax-end"></i></button>
-                                <button id="search-button" class="btn btn-primary" type="submit"><i class="icon-search"></i>
-                                </button>
-                                <button style="padding: 0px; margin-right: 5px" class="btn btn-mini btn-link" type="button" ng-click="Advanced.showHelp=!Advanced.showHelp;" ><i class="icon-info-sign"></i></button>
-                            </div>
-                        </div>
-                        <div class="span5"/>
-                    </div>
-                    <!-- END ADV MODE -->
-
-
-                    <div class=" input-append span8" 
+                    <div class=" input-append span8"
                          ng-class="{'input-prepend':Search.displayGold()}">
                         <!--                        -->
                         <!--  QUALITY SELECTION     -->
@@ -82,7 +64,7 @@
                             <i class="icon-remove "></i>
                         </button>
                         <button id="search-help" class="btn btn-mini btn-circle gray" type="button" 
-                        ng-click="Advanced.showHelp=!Advanced.showHelp;" ng-show="isAdvancedMode()"
+                        ng-click="showHelpRepository(!Advanced.showHelp)" ng-show="isAdvancedMode()"
                         style="margin-left: -54px; position: absolute; margin-top: 5px;z-index:10">
                             <i class="icon-info-sign "></i>
                         </button>
@@ -125,7 +107,7 @@
     <!--  HELP / REPOSITORY                                               -->
     <!--                                                                  -->
     <div class="row-fluid">
-        <div class="offset3 fade-out fade-in" style="padding-left: 5px;padding: 10px; border: 1px solid #ddd;border-radius: 8px; position: absolute; background-color: white; z-index: 100000; width: 600px; opacity: 0.95" ng-show="Advanced.showHelp" >
+        <div class="offset3 fade-out fade-in" style="padding-left: 5px;padding: 10px; border: 1px solid #ddd;border-radius: 8px; position: absolute; background-color: white; z-index: 1000; width: 600px; box-shadow: 0 0 10px 5px lightgray" ng-show="Advanced.showHelp" >
 
             <!--filter-->
             <input ng-model="filterQuery" placeholder="search in {{Advanced.currentRepository.title}} repository">
