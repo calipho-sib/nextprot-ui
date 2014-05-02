@@ -1,240 +1,255 @@
 <div ng-cloak class="row search-row" np-animate="#main" ng-controller="AdvancedCtrl">
-    <a href="/"><img src="http://www.nextprot.org/db/images/blueflat/np.png" class="home"/></a>
-    <div class="row-fluid">
-        <form ng-submit="go()" validate>
-            <div>
-                <div class="span3">
-                    <!--                        -->
-                    <!--  ENTITY SELECTION      -->
-                    <!--                        -->
-                    <div class="btn-group pull-right " >
+<a href="/"><img src="http://www.nextprot.org/db/images/blueflat/np.png" class="home"/></a>
 
-                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="" id="search-entity" ng-class="{disabled:isAdvancedMode()}">
-                            {{Search.config.entityMapping[Search.params.entity]}}&nbsp;
+<div class="row-fluid">
+    <form ng-submit="go()" validate>
+        <div>
+            <div class="span3">
+                <!--                        -->
+                <!--  ENTITY SELECTION      -->
+                <!--                        -->
+                <div class="btn-group pull-right ">
+
+                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="" id="search-entity"
+                       ng-class="{disabled:isAdvancedMode()}">
+                        {{Search.config.entityMapping[Search.params.entity]}}&nbsp;
+                        <span class="caret"></span>
+                    </a>
+                    <ul id="search-entity-dropdown" class="dropdown-menu">
+                        <!-- dropdown menu links -->
+                        <li><a ng-click="entity({entity:'proteins'})">Proteins</a></li>
+                        <li><a ng-click="entity({entity:'publications'})">Publications</a></li>
+                        <li><a ng-click="entity({entity:'terms'})">Terms</a></li>
+                    </ul>
+                </div>
+                <!--                        -->
+            </div>
+            <div class="span9 search-bar">
+
+                <div class=" input-append span8"
+                     ng-class="{'input-prepend':Search.displayGold()}">
+                    <!--                        -->
+                    <!--  QUALITY SELECTION     -->
+                    <!--                        -->
+                    <div class="btn-group">
+                        <button class="btn dropdown-toggle btn" type="button" ng-cloak data-toggle="dropdown"
+                                ng-show="Search.displayGold()" id="search-quality">
+                            {{Search.config.widgets[Search.result.display].qualityLabel[Search.params.quality]}}
                             <span class="caret"></span>
-                        </a>
-                        <ul id="search-entity-dropdown" class="dropdown-menu">
-                            <!-- dropdown menu links -->
-                            <li><a ng-click="entity({entity:'proteins'})">Proteins</a></li>
-                            <li><a ng-click="entity({entity:'publications'})">Publications</a></li>
-                            <li><a ng-click="entity({entity:'terms'})">Terms</a></li>
+                        </button>
+                        <ul id="search-quality-dropdown" class="dropdown-menu"
+                            ng-show="Search.displayGold()">
+                            <li><a ng-click="quality('gold')">Gold only</a></li>
+                            <li><a ng-click="quality('gold-and-silver')">Include silver</a></li>
                         </ul>
                     </div>
+
                     <!--                        -->
+                    <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
+                    <!--                        -->
+                    <input ng-show="!isAdvancedMode()" id="search-query" class="" type="text"
+                           ng-model="Search.params.query"
+                           ng-class="{'quality-search-width':Search.displayGold(),'no-quality-search-width':!Search.displayGold()}"
+                           autocomplete="off" bs-autocomplete="Search.suggest" autofocus>
+
+                    <ui-codemirror ng-show="isAdvancedMode()" ui-codemirror-opts="editorOptions" class="btn-group"
+                                   ng-model="Search.params.sparql"
+                                   ng-class="{'quality-search-width':Search.displayGold(),'no-quality-search-width':!Search.displayGold()}"
+                            ></ui-codemirror>
+
+                    <!--                      -->
+                    <!--  CLEAN/HELP BUTTON        -->
+                    <!--                      -->
+                    <button id="search-clear" class="btn btn-mini btn-circle gray" type="button"
+                            ng-click="clean({})" ng-disabled="!Search.params.query || !Search.params.query.length"
+                            style="margin-left: -30px; position: absolute; margin-top: 5px;z-index:10">
+                        <i class="icon-remove "></i>
+                    </button>
+                    <button id="search-help" class="btn btn-mini btn-circle gray" type="button"
+                            ng-click="showHelpRepository(!Advanced.showHelp)" ng-show="isAdvancedMode()"
+                            style="margin-left: -54px; position: absolute; margin-top: 5px;z-index:10">
+                        <i class="icon-info-sign "></i>
+                    </button>
+
+
+                    <!--                        -->
+                    <!--  SEARCH BUTTON         -->
+                    <!--                        -->
+                    <button id="search-button" class="btn " type="submit"
+                            ng-disabled="Search.isSearchButtonDisabled()"><i class="icon-search"></i>&nbsp;Search
+                    </button>
+
                 </div>
-                <div class="span9 search-bar">
 
-                    <div class=" input-append span8"
-                         ng-class="{'input-prepend':Search.displayGold()}">
-                        <!--                        -->
-                        <!--  QUALITY SELECTION     -->
-                        <!--                        -->
-                        <div class="btn-group" >
-                            <button class="btn dropdown-toggle btn" type="button" ng-cloak data-toggle="dropdown"
-                                    ng-show="Search.displayGold()" id="search-quality">
-                                {{Search.config.widgets[Search.result.display].qualityLabel[Search.params.quality]}}
-                                <span class="caret"></span>
-                            </button>
-                            <ul id="search-quality-dropdown" class="dropdown-menu"
-                                ng-show="Search.displayGold()">
-                                <li><a ng-click="quality('gold')">Gold only</a></li>
-                                <li><a ng-click="quality('gold-and-silver')">Include silver</a></li>
-                            </ul>
-                        </div>
-
-                        <!--                        -->
-                        <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
-                        <!--                        -->
-                        <input ng-show="!isAdvancedMode()" id="search-query" class="" type="text"
-                               ng-model="Search.params.query"
-                               ng-class="{'quality-search-width':Search.displayGold(),'no-quality-search-width':!Search.displayGold()}"
-                               autocomplete="off" bs-autocomplete="Search.suggest" autofocus>
-
-                        <ui-codemirror ng-show="isAdvancedMode()" ui-codemirror-opts="editorOptions"  class="btn-group"
-                               ng-model="Advanced.currentSparql" 
-                               ng-class="{'quality-search-width':Search.displayGold(),'no-quality-search-width':!Search.displayGold()}"
-                               ></ui-codemirror >
-
-                        <!--                      -->
-                        <!--  CLEAN/HELP BUTTON        -->
-                        <!--                      -->
-                        <button id="search-clear" class="btn btn-mini btn-circle gray" type="button" 
-                        ng-click="clean({})" ng-disabled="!Search.params.query || !Search.params.query.length"
-                        style="margin-left: -30px; position: absolute; margin-top: 5px;z-index:10">
-                            <i class="icon-remove "></i>
-                        </button>
-                        <button id="search-help" class="btn btn-mini btn-circle gray" type="button" 
-                        ng-click="showHelpRepository(!Advanced.showHelp)" ng-show="isAdvancedMode()"
-                        style="margin-left: -54px; position: absolute; margin-top: 5px;z-index:10">
-                            <i class="icon-info-sign "></i>
-                        </button>
-
-
- 
-
-                        <!--                        -->
-                        <!--  SEARCH BUTTON         -->
-                        <!--                        -->
-                        <button id="search-button" class="btn " type="submit"
-                                ng-disabled="Search.isSearchButtonDisabled()"><i class="icon-search"></i>&nbsp;Search
-                        </button>
-
-                    </div>
-
-                    <!--                                                                  -->
-                    <!--  SEARCH BOTTOM ('did you mean' option and toggle search)         -->
-                    <!--                                                                  -->
-                    <div class="search-bottom">        
-                       <span ng-show="Search.result.spellcheck.collations.length" id="search-didyoumean"><b class="gray">&nbsp;Did you mean:</b> 
+                <!--                                                                  -->
+                <!--  SEARCH BOTTOM ('did you mean' option and toggle search)         -->
+                <!--                                                                  -->
+                <div class="search-bottom">
+                       <span ng-show="Search.result.spellcheck.collations.length" id="search-didyoumean"><b
+                               class="gray">&nbsp;Did you mean:</b>
                          <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[0].query}}">{{Search.result.spellcheck.collations[0].query}}</a>
                          <span ng-show="Search.result.spellcheck.collations[1]">, 
                            <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[1].query}}">{{Search.result.spellcheck.collations[1].query}}</a>
                          </span>
                        </span>
-                       <span class=" search-toggle"><span ng-click="toggle({mode:null})" ng-class="{link:isAdvancedMode()}">simple</span> / <span ng-class="{link:!isAdvancedMode()}" ng-click="toggle({mode:'advanced'})">advanced</span></span>
-
-                   </div>
+                    <span class=" search-toggle"><span ng-click="toggle({mode:null})"
+                                                       ng-class="{link:isAdvancedMode()}">simple</span> / <span
+                            ng-class="{link:!isAdvancedMode()}"
+                            ng-click="toggle({mode:'advanced'})">advanced</span></span>
 
                 </div>
 
-
             </div>
-        </form>
+
+
+        </div>
+    </form>
+</div>
+
+<!--                                                                  -->
+<!--  HELP / REPOSITORY                                               -->
+<!--                                                                  -->
+<div class="offset3 fade-out fade-in"
+     style="padding-left: 5px;padding: 10px; border: 1px solid #ddd;border-radius: 8px; position: absolute; background-color: white; z-index: 1000; width: 600px; box-shadow: 0 0 10px 5px lightgray"
+     ng-show="Advanced.showHelp">
+
+
+    <div class="modal-header" ng-show="Advanced.isSelectedQueryEmpty()">
+        <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
+        <!--filter-->
+        <input ng-model="filterQuery" placeholder="search in {{Advanced.currentRepository.title}} repository">
+        <!--Selectable repositories-->
+        <div class="btn-group" style="margin: 10px;">
+            <button data-toggle="tooltip" title="{{rep.tooltip}}"
+                    class="btn {{(Advanced.currentRepository == rep) ? 'btn-inverse' : ''}}"
+                    ng-repeat="rep in Advanced.repositories"
+                    type="button" ng-click="showRepository(rep)"><i class="{{rep.icon}}"></i></button>
+        </div>
     </div>
 
-    <!--                                                                  -->
-    <!--  HELP / REPOSITORY                                               -->
-    <!--                                                                  -->
-        <div class="offset3 fade-out fade-in" style="padding-left: 5px;padding: 10px; border: 1px solid #ddd;border-radius: 8px; position: absolute; background-color: white; z-index: 1000; width: 600px; box-shadow: 0 0 10px 5px lightgray" ng-show="Advanced.showHelp" >
+    <div class="modal-header" ng-show="!Advanced.isSelectedQueryEmpty()">
+
+        <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
+
+        <!-- Title -->
+        <input style="width: 85%" ng-show="Advanced.isSelectedQueryEditable()" type="text" placeholder="Name..."
+               ng-model="Advanced.selectedQuery.title" focus>
+        <h4 ng-hide="Advanced.isSelectedQueryEditable()">{{Advanced.selectedQuery.title}}</h4>
+        <!-- Title-->
+        <div ng-show="Advanced.isSelectedQueryEditable()">
+            <button data-toggle="tooltip" title="Keep the query in your private repository"
+                    class="btn btn-small {{(!Advanced.selectedQuery.published) ? 'btn-inverse' : ''}}"
+                    type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
+                <i class="icon-user"></i>
+            </button>
+            <button data-toggle="tooltip" title="Show in the community repository"
+                    class="btn btn-small {{(Advanced.selectedQuery.published) ? 'btn-inverse' : ''}}"
+                    type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
+                <i class="icon-globe"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="modal-body" style="height: 300px; margin: 20px 0px 20px 0px; position: relative;">
+
+        <!--                                 -->
+        <!-- Box for the list                -->
+        <!--                                 -->
+        <div class="slide-in-left slide-out-left" style="position: absolute; top:0; left: 0;"
+             ng-show="Advanced.isSelectedQueryEmpty()">
+
+            <table class="table table-striped">
+                <tbody>
+                <tr ng-repeat="query in Advanced.queries | filter:filterQuery | orderBy:'title'">
+                    <td>
+                        <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}}"></i>
+                    </td>
+                    <td><a href="" ng-click="setCurrentQuery(query)">{{query.title}}
+                        [{{query.username}}]</a></td>
+                    <!--Show the view button-->
+                    <td ng-if="!hasPrivilegesToEdit(query)">
+                        <button class="btn btn-mini pull-right" type="button"
+                                ng-click="Advanced.setCurrentQuery(query)"><i
+                                class="icon-eye-open"></i></button>
+                    </td>
+                    <!--Don't show edit and remove button if the user is not the owner-->
+                    <td ng-if="hasPrivilegesToEdit(query)">
+                        <button class="btn btn-mini pull-right" type="button"
+                                ng-click="Advanced.setCurrentQuery(query)"><i
+                                class="icon-edit"></i></button>
+                    </td>
+                    <td ng-if="hasPrivilegesToEdit(query)">
+                        <button class="btn btn-mini pull-right" type="button"
+                                ng-click="Advanced.deleteAdvancedQuery(query)"><i
+                                class="icon-remove"></i></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
 
-            <div class="modal-header" ng-show="Advanced.isSelectedQueryEmpty()">
-                <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
-                <!--filter-->
-                <input ng-model="filterQuery" placeholder="search in {{Advanced.currentRepository.title}} repository">
-                <!--Selectable repositories-->
-                <div class="btn-group" style="margin: 10px;">
-                    <button  data-toggle="tooltip" title="{{rep.tooltip}}" class="btn {{(Advanced.currentRepository == rep) ? 'btn-inverse' : ''}}"
-                             ng-repeat="rep in Advanced.repositories"
-                             type="button" ng-click="showRepository(rep)"><i class="{{rep.icon}}"></i></button>
+        <!--                                 -->
+        <!-- Box for editing or visualizing  -->
+        <!--                                 -->
+        <div class="slide-in-right slide-out-right" style="position: absolute; top:0; left: 0;"
+             ng-show="!Advanced.isSelectedQueryEmpty()">
+
+            <!-- Sparql -->
+            <div class="control-group">
+                <div class="controls" style="border: 1px solid #ddd; width: 97%;">
+                    <ui-codemirror ui-codemirror-opts="editorOptions" ng-model="Advanced.selectedQuery.sparql"
+                                   focus></ui-codemirror>
                 </div>
             </div>
 
-            <div class="modal-header" ng-show="!Advanced.isSelectedQueryEmpty()">
+            <!-- Description -->
+            <div class="control-group">
+                <div class="control-label" for="inputDescription">
+                    <label>Description: </label>
+                </div>
+                <div class="controls">
+                    <textarea ng-show="Advanced.isSelectedQueryEditable()"
+                              style="width: 95%;" rows="8" id="inputDescription" type="text"
+                              placeholder="Write some description..." ng-model="Advanced.selectedQuery.description">
+                    </textarea>
 
-                <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
-
-                <!-- Title -->
-                <input style="width: 85%" ng-show="Advanced.isSelectedQueryEditable()" type="text" placeholder="Name..." ng-model="Advanced.selectedQuery.title" focus>
-                <h4 ng-hide="Advanced.isSelectedQueryEditable()">{{Advanced.selectedQuery.title}}</h4>
-                <!-- Title-->
-                <div ng-show="Advanced.isSelectedQueryEditable()">
-                    <button data-toggle="tooltip" title="Keep the query in your private repository"
-                            class="btn btn-small {{(!Advanced.selectedQuery.published) ? 'btn-inverse' : ''}}"
-                            type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
-                        <i class="icon-user"></i>
-                    </button>
-                    <button data-toggle="tooltip" title="Show in the community repository"
-                            class="btn btn-small {{(Advanced.selectedQuery.published) ? 'btn-inverse' : ''}}"
-                            type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
-                        <i class="icon-globe"></i>
-                    </button>
+                    <p ng-hide="Advanced.isSelectedQueryEditable()">{{Advanced.selectedQuery.description}}</p>
                 </div>
             </div>
 
-                <div class="modal-body" style="height: 300px; margin: 20px 0px 20px 0px; position: relative;">
-
-                    <!--                                 -->
-                    <!-- Box for the list                -->
-                    <!--                                 -->
-                    <div class="slide-in-left slide-out-left" style="position: absolute" ng-show="Advanced.isSelectedQueryEmpty()">
-
-                        <table class="table table-striped">
-                            <tbody>
-                            <tr ng-repeat="query in Advanced.queries | filter:filterQuery | orderBy:'title'">
-                                <td>
-                                    <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}}"></i>
-                                </td>
-                                <td><a href="" ng-click="setCurrentQuery(query)">{{query.title}}
-                                    [{{query.username}}]</a></td>
-                                <!--Show the view button-->
-                                <td ng-if="!hasPrivilegesToEdit(query)">
-                                    <button class="btn btn-mini pull-right" type="button"
-                                            ng-click="Advanced.setCurrentQuery(query)"><i
-                                            class="icon-eye-open"></i></button>
-                                </td>
-                                <!--Don't show edit and remove button if the user is not the owner-->
-                                <td ng-if="hasPrivilegesToEdit(query)">
-                                    <button class="btn btn-mini pull-right" type="button"
-                                            ng-click="Advanced.setCurrentQuery(query)"><i
-                                        class="icon-edit"></i></button>
-                                </td>
-                                <td ng-if="hasPrivilegesToEdit(query)">
-                                    <button class="btn btn-mini pull-right" type="button"
-                                            ng-click="Advanced.deleteAdvancedQuery(query)"><i
-                                            class="icon-remove"></i></button>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-
-                <!--                                 -->
-                <!-- Box for editing or visualizing  -->
-                <!--                                 -->
-                <div class="slide-in-right slide-out-right" style="position: absolute" ng-show="!Advanced.isSelectedQueryEmpty()">
-
-                    <!-- Sparql -->
-                    <div class="control-group">
-                        <div class="controls" style="border: 1px solid #ddd; width: 97%;">
-                            <ui-codemirror ui-codemirror-opts="editorOptions" ng-model="Advanced.selectedQuery.sparql" focus></ui-codemirror>
-                        </div>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="control-group">
-                        <div class="control-label" for="inputDescription">
-                            <label>Description: </label>
-                        </div>
-                        <div class="controls">
-                            <textarea ng-show="Advanced.isSelectedQueryEditable()"
-                                    style="width: 95%;" rows="8" id="inputDescription" type="text" placeholder="Write some description..." ng-model="Advanced.selectedQuery.description">
-                            </textarea>
-                            <p ng-hide="Advanced.isSelectedQueryEditable()">{{Advanced.selectedQuery.description}}</p>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Create new button -->
-            <div class="modal-footer" >
-
-                <!-- "Create new" only if there is no query selected -->
-                <button ng-show="Advanced.isSelectedQueryEmpty()"
-                        class="btn btn-primary btn-small pull-right"
-                        type="button" ng-click="Advanced.createNewEmptyQuery();">New
-                </button>
-
-                <!-- "Save" button showed only if there is a query selected -->
-                <button ng-show="Advanced.isSelectedQueryEditable()"
-                        class="btn btn-primary btn-small pull-right"
-                        ng-click="Advanced.insertOrUpdateSelectedQuery()">Save</button>
-
-                <!-- "Back" button showed only if there is a query selected -->
-                <button ng-show="!Advanced.isSelectedQueryEmpty()"
-                        class="btn btn-small pull-left" type="button"
-                        ng-click="Advanced.clearSelectedQuery();">Back</button>
-
-            </div>
+        </div>
 
     </div>
 
+    <!-- Create new button -->
+    <div class="modal-footer">
 
-    <div class="row solrparams">
+        <!-- "Create new" only if there is no query selected -->
+        <button ng-show="Advanced.isSelectedQueryEmpty()"
+                class="btn btn-primary btn-small pull-right"
+                type="button" ng-click="Advanced.createNewEmptyQuery();">New
+        </button>
+
+        <!-- "Save" button showed only if there is a query selected -->
+        <button ng-show="Advanced.isSelectedQueryEditable()"
+                class="btn btn-primary btn-small pull-right"
+                ng-click="Advanced.insertOrUpdateSelectedQuery()">Save
+        </button>
+
+        <!-- "Back" button showed only if there is a query selected -->
+        <button ng-show="!Advanced.isSelectedQueryEmpty()"
+                class="btn btn-small pull-left" type="button"
+                ng-click="Advanced.clearSelectedQuery();">Back
+        </button>
+
     </div>
+
+</div>
+
+
+<div class="row solrparams">
+</div>
 
 </div>
   

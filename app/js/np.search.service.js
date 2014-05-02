@@ -86,8 +86,8 @@ SearchService.factory('Search',[
 	}
 
       Search.prototype.isSearchButtonDisabled = function () {
-          if(this.mode == 'advanced')
-            return this.params.query.length == 0;
+          if(this.params.mode == 'advanced')
+            return this.params.sparql.length == 0;
           else return this.params.query.length == 0;
       }
 

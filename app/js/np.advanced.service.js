@@ -83,7 +83,6 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             this.currentRepository = Search.config.widgets.repositories.aNextprotRep;
             this.repositories = Search.config.widgets.repositories;
 
-            this.currentSparql = "#write your sparql query here";
             this.selectedQuery = {};
             this.queries = {};
             this.navTriplets = [];
@@ -176,10 +175,6 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             return (UserService.userProfile.username == this.selectedQuery.username);
         };
 
-        AdvancedQueryService.prototype.clearCurrentQuery = function () {
-            this.currentSparql = "";
-        };
-
         AdvancedQueryService.prototype.isNew = function () {
             return (this.selectedQuery.advancedUserQueryId == null);
         };
@@ -240,7 +235,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
                 sp += "/" + this.navTriplets[i].predicate;
             }
 
-            this.currentSparql = sp;
+            Search.params.sparql = sp;
         }
 
         AdvancedQueryService.prototype.addTriplet = function (triplet, cb) {
