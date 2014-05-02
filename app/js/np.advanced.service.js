@@ -38,7 +38,8 @@ AdvancedQueryService.factory('AdvancedQueryService', [
     'config',
     'UserService',
     'Search',
-    function ($resource, config, UserService, Search) {
+    'flash',
+    function ($resource, config, UserService, Search, flash) {
 
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
@@ -89,7 +90,11 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         };
 
-        AdvancedQueryService.prototype.getRepository = function (username, repositoryName, cb) {
+        AdvancedQueryService.prototype.refreshCurrentRepository = function (cb) {
+            this.getRepository.getRepository(this.currentRepository);
+        }
+
+        AdvancedQueryService.prototype.getRepository = function (repositoryName, cb) {
 
             var selectedResource = null;
             var me = this;
@@ -116,7 +121,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
             //Needs the username
             if (this.currentRepository == this.repositories.privateRep) {
-                return selectedResource.get({username: username}, cbOk, cbFailure);
+                return selectedResource.get({username: UserService.userProfile.username}, cbOk, cbFailure);
             } else {
                 return selectedResource.get(cbOk, cbFailure);
             }
@@ -124,7 +129,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         };
 
         AdvancedQueryService.prototype.createAdvancedQuery = function (username, cb, cbe) {
-            $user_query_list.create({ username: username }, this.selectedQuery, function (data) {
+            $user_query_list.create({ username: UserService.userProfile.username }, this.selectedQuery, function (data) {
                 if (cb)cb(data);
             }, function (error) {
                 if (cbe)cbe(error);
@@ -132,7 +137,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         };
 
         AdvancedQueryService.prototype.updateAdvancedQuery = function (username, cb) {
-            $api_adv_query_id.update({ username: username, id: this.selectedQuery.advancedUserQueryId }, this.selectedQuery, function (data) {
+            $api_adv_query_id.update({ username: UserService.userProfile.username, id: this.selectedQuery.advancedUserQueryId }, this.selectedQuery, function (data) {
                 if (cb)cb(data);
             });
 
@@ -141,7 +146,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         AdvancedQueryService.prototype.deleteAdvancedQuery = function (username, aq, cb) {
             if (confirm("Are you sure you want to delete the selected query?")) {
                 console.log('delete advanced query > ', aq);
-                $api_adv_query_id.delete({ username: username, id: aq.advancedUserQueryId}, function (data) {
+                $api_adv_query_id.delete({ username: UserService.userProfile.username, id: aq.advancedUserQueryId}, function (data) {
                     if (cb)cb(data);
                 });
             }
@@ -156,9 +161,9 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         };
 
         AdvancedQueryService.prototype.isSelectedQueryEmpty = function () {
-            return ((typeof this.selectedQuery.username  === 'undefined') ||
-                    (this.selectedQuery.username == null) ||
-                    (this.selectedQuery.username == ""));
+            return ((typeof this.selectedQuery.username === 'undefined') ||
+                (this.selectedQuery.username == null) ||
+                (this.selectedQuery.username == ""));
         };
 
         AdvancedQueryService.prototype.clearSelectedQuery = function () {
@@ -166,7 +171,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         };
 
         AdvancedQueryService.prototype.isSelectedQueryEditable = function () {
-           return (UserService.userProfile.username == this.selectedQuery.username);
+            return (UserService.userProfile.username == this.selectedQuery.username);
         };
 
         AdvancedQueryService.prototype.clearCurrentQuery = function () {
@@ -177,16 +182,16 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             return (this.selectedQuery.advancedUserQueryId == null);
         };
 
-        AdvancedQueryService.prototype.isNew = function () {
-            return (this.selectedQuery.advancedUserQueryId == null);
-        };
-
-
         AdvancedQueryService.prototype.insertOrUpdateSelectedQuery = function () {
+            var me = this;
             if (this.isNew()) {
                 this.createAdvancedQuery(UserService.userProfile.username,
                     function (data) {
-                        flash('alert-success', data.title + ' query saved successfully!')
+                        alert('a flash image should appear' + data);
+                        flash('alert-success', ' query saved successfully!')
+                        me.selectedQuery = {};
+                        me.getRepository(Search.config.widgets.repositories.privateRep);
+                        return;
                     },
                     function (error) {
                         if (error.status == 409) {
@@ -198,6 +203,8 @@ AdvancedQueryService.factory('AdvancedQueryService', [
                 this.updateAdvancedQuery(UserService.userProfile.username,
                     function (data) {
                         flash('alert-success', "Updated successful for " + data.title);
+                        me.selectedQuery = {};
+                        me.getRepository(Search.config.widgets.repositories.privateRep);
                         return;
                     },
                     function (error) {
@@ -210,13 +217,25 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         }
 
 
+        AdvancedQueryService.prototype.createNewEmptyQuery = function (cb) {
+            this.selectedQuery.title = null;
+            this.selectedQuery.published = false;
+            this.selectedQuery.username = UserService.userProfile.username;
+            this.selectedQuery.sparql = "#Write your sparql query here";
+            this.selectedQuery.description = null;
+        }
+
+
+        /**
+         For the wizard
+         **/
         AdvancedQueryService.prototype.buildSparqlString = function () {
             var sp = "?entry ";
-            if(this.navTriplets.length > 0){
-               sp += this.navTriplets[0].predicate;
+            if (this.navTriplets.length > 0) {
+                sp += this.navTriplets[0].predicate;
             }
 
-            for (var i=1; i<this.navTriplets.length; i++) {
+            for (var i = 1; i < this.navTriplets.length; i++) {
                 sp += "/" + this.navTriplets[i].predicate;
             }
 

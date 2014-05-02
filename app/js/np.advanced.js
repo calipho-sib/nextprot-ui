@@ -60,7 +60,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 //        AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.aNextprotRep);
 
         $scope.showRepository = function (repositoryName) {
-            AdvancedQueryService.getRepository(UserService.userProfile.username, repositoryName, null);
+            AdvancedQueryService.getRepository(repositoryName, null);
         };
 
         $scope.doAdvanceSearch = function () {
@@ -159,7 +159,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 
         $scope.showHelpRepository = function (boolean) {
             if(boolean){
-                AdvancedQueryService.getRepository(UserService.userProfile.username, Search.config.widgets.repositories.aNextprotRep);
+                AdvancedQueryService.getRepository(Search.config.widgets.repositories.aNextprotRep);
             }
             AdvancedQueryService.showHelp = boolean;
         }

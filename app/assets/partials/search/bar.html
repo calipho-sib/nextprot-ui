@@ -107,6 +107,7 @@
     <!--                                                                  -->
         <div class="offset3 fade-out fade-in" style="padding-left: 5px;padding: 10px; border: 1px solid #ddd;border-radius: 8px; position: absolute; background-color: white; z-index: 1000; width: 600px; box-shadow: 0 0 10px 5px lightgray" ng-show="Advanced.showHelp" >
 
+
             <div class="modal-header" ng-show="Advanced.isSelectedQueryEmpty()">
 
                 <!--filter-->
@@ -119,8 +120,6 @@
                 </div>
                 <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
 
-
-
             </div>
 
             <div class="modal-header" ng-show="!Advanced.isSelectedQueryEmpty()">
@@ -128,51 +127,58 @@
                 <input style="width: 85%" ng-show="Advanced.isSelectedQueryEditable()" type="text" placeholder="Name..." ng-model="Advanced.selectedQuery.title" focus>
                 <h4 ng-hide="Advanced.isSelectedQueryEditable()">{{Advanced.selectedQuery.title}}</h4>
                 <!-- Title-->
-                <button ng-show="Advanced.isSelectedQueryEditable()" data-toggle="tooltip" title="Keep the query in your private repository"
-                         class="btn btn-small {{(!Advanced.selectedQuery.published) ? 'btn-inverse' : ''}}"
-                         type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
-                    <i class="icon-user"></i>
-                </button>
-                <button ng-show="Advanced.isSelectedQueryEditable()" data-toggle="tooltip" title="Show in the community repository"
-                         class="btn btn-small {{(Advanced.selectedQuery.published) ? 'btn-inverse' : ''}}"
-                         type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
-                    <i class="icon-globe"></i>
-                </button>
-
+                <div ng-show="Advanced.isSelectedQueryEditable()">
+                    <button data-toggle="tooltip" title="Keep the query in your private repository"
+                            class="btn btn-small {{(!Advanced.selectedQuery.published) ? 'btn-inverse' : ''}}"
+                            type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
+                        <i class="icon-user"></i>
+                    </button>
+                    <button data-toggle="tooltip" title="Show in the community repository"
+                            class="btn btn-small {{(Advanced.selectedQuery.published) ? 'btn-inverse' : ''}}"
+                            type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
+                        <i class="icon-globe"></i>
+                    </button>
+                </div>
             </div>
 
                 <div class="modal-body" style="height: 300px; margin: 20px 0px 20px 0px">
 
-                    <table class="table table-striped" ng-show="Advanced.isSelectedQueryEmpty()">
-                        <tbody>
-                        <tr ng-repeat="query in Advanced.queries | filter:filterQuery | orderBy:'title'">
-                            <td>
-                                <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}}"></i>
-                            </td>
-                            <td><a href="" ng-click="setCurrentQuery(query)">{{query.title}} [{{query.username}}]</a></td>
-                            <!--Show the view button-->
-                            <td ng-if="!hasPrivilegesToEdit(query)">
-                                <button class="btn btn-mini pull-right" type="button" ng-click="Advanced.setCurrentQuery(query)"><i
-                                        class="icon-eye-open"></i></button>
-                            </td>
-                            <!--Don't show edit and remove button if the user is not the owner-->
-                            <td ng-if="hasPrivilegesToEdit(query)">
-                                <button class="btn btn-mini pull-right" type="button" ng-click="Advanced.setCurrentQuery(query)""><i
+                    <div ng-show="Advanced.isSelectedQueryEmpty()">
+
+                        <table class="table table-striped" ng-show="Advanced.isSelectedQueryEmpty()">
+                            <tbody>
+                            <tr ng-repeat="query in Advanced.queries | filter:filterQuery | orderBy:'title'">
+                                <td>
+                                    <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}}"></i>
+                                </td>
+                                <td><a href="" ng-click="setCurrentQuery(query)">{{query.title}}
+                                    [{{query.username}}]</a></td>
+                                <!--Show the view button-->
+                                <td ng-if="!hasPrivilegesToEdit(query)">
+                                    <button class="btn btn-mini pull-right" type="button"
+                                            ng-click="Advanced.setCurrentQuery(query)"><i
+                                            class="icon-eye-open"></i></button>
+                                </td>
+                                <!--Don't show edit and remove button if the user is not the owner-->
+                                <td ng-if="hasPrivilegesToEdit(query)">
+                                    <button class="btn btn-mini pull-right" type="button"
+                                            ng-click="Advanced.setCurrentQuery(query)"><i
                                         class="icon-edit"></i></button>
-                            </td>
-                            <td ng-if="hasPrivilegesToEdit(query)">
-                                <button class="btn btn-mini pull-right" type="button" ng-click="deleteAdvancedQuery(query)"><i
-                                        class="icon-remove"></i></button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                </td>
+                                <td ng-if="hasPrivilegesToEdit(query)">
+                                    <button class="btn btn-mini pull-right" type="button"
+                                            ng-click="deleteAdvancedQuery(query)"><i
+                                            class="icon-remove"></i></button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
 
                 <!--                                 -->
                 <!-- Box for editing or visualizing  -->
                 <!--                                 -->
-
                 <div ng-show="!Advanced.isSelectedQueryEmpty()">
 
                     <!-- Sparql -->
@@ -205,7 +211,7 @@
                 <!-- "Create new" only if there is no query selected -->
                 <button ng-show="Advanced.isSelectedQueryEmpty()"
                         class="btn btn-primary btn-small pull-right"
-                        type="button" ng-click="Advanced.clearCurrentQuery();">New
+                        type="button" ng-click="Advanced.createNewEmptyQuery();">New
                 </button>
 
                 <!-- "Save" button showed only if there is a query selected -->
