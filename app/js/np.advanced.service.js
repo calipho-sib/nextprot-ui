@@ -170,6 +170,10 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             this.selectedQuery = {};
         };
 
+        AdvancedQueryService.prototype.isSelectedQueryEditable = function () {
+            (UserService.userProfile.username == this.selectedQuery.username);
+        };
+
         AdvancedQueryService.prototype.clearCurrentQuery = function () {
             this.currentSparql = "";
         };

@@ -125,13 +125,13 @@
 
             <div class="modal-header" ng-show="!Advanced.isSelectedQueryEmpty()">
                 <!-- Title -->
-                <input ng-hide="hasPrivilegesToEdit(Advanced.selectedQuery)" type="text" placeholder="Name..." ng-model="Advanced.selectedQuery.title">
-                <h4 ng-show="hasPrivilegesToEdit(Advanced.selectedQuery)">{{Advanced.selectedQuery.title}}</h4>
+                <input ng-show="Advanced.isSelectedQueryEditable()" type="text" placeholder="Name..." ng-model="Advanced.selectedQuery.title">
+                <h4 ng-hide="Advanced.isSelectedQueryEditable()">{{Advanced.selectedQuery.title}}</h4>
                 <!-- Title-->
                 <div class="control-group">
                     <div class="controls">
                         <!-- Published -->
-                        <div class="btn-group" style="margin: 10px;" ng-hide="hasPrivilegesToEdit(Advanced.selectedQuery)">
+                        <div class="btn-group" style="margin: 10px;" ng-show="Advanced.isSelectedQueryEditable()">
                             <button  data-toggle="tooltip" title="Keep the query in your private repository"
                                      class="btn btn-mini {{(!Advanced.selectedQuery.published) ? 'btn-inverse' : ''}}"
                                      type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
@@ -196,10 +196,10 @@
                             <label>Description: </label>
                         </div>
                         <div class="controls">
-                            <textarea ng-disabled="hasPrivilegesToEdit(Advanced.selectedQuery)"
-
+                            <textarea ng-show="Advanced.isSelectedQueryEditable()"
                                     style="width: 95%;" rows="15" id="inputDescription" type="text" placeholder="Write some description..." ng-model="Advanced.selectedQuery.description">
                             </textarea>
+                            <p ng-hide="Advanced.isSelectedQueryEditable()">{{Advanced.selectedQuery.description}}</p>
                         </div>
                     </div>
 
