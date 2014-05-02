@@ -286,6 +286,26 @@ ul#search-results .result-abstract {
     display: block !important;
 }
 
+.slide-out-left.ng-hide-add {
+    -webkit-animation: slideOutLeft 1s;
+    display: block !important;
+}
+
+.slide-in-left.ng-hide-remove {
+    -webkit-animation: slideInLeft 1s;
+    display: block !important;
+}
+
+.slide-out-right.ng-hide-add {
+    -webkit-animation: slideOutRight 1s;
+    display: block !important;
+}
+
+.slide-in-right.ng-hide-remove {
+    -webkit-animation: slideInRight 1s;
+    display: block !important;
+}
+
 #sparqlTitle {
     width: 500px;
 }
