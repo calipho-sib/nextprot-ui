@@ -189,7 +189,6 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             if (this.isNew()) {
                 this.createAdvancedQuery(UserService.userProfile.username,
                     function (data) {
-                        alert('a flash image should appear' + data);
                         flash('alert-success', ' query saved successfully!')
                         me.selectedQuery = {};
                         me.getRepository(Search.config.widgets.repositories.privateRep);
