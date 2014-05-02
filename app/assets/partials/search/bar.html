@@ -109,7 +109,7 @@
 
 
             <div class="modal-header" ng-show="Advanced.isSelectedQueryEmpty()">
-
+                <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
                 <!--filter-->
                 <input ng-model="filterQuery" placeholder="search in {{Advanced.currentRepository.title}} repository">
                 <!--Selectable repositories-->
@@ -118,11 +118,12 @@
                              ng-repeat="rep in Advanced.repositories"
                              type="button" ng-click="showRepository(rep)"><i class="{{rep.icon}}"></i></button>
                 </div>
-                <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
-
             </div>
 
             <div class="modal-header" ng-show="!Advanced.isSelectedQueryEmpty()">
+
+                <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
+
                 <!-- Title -->
                 <input style="width: 85%" ng-show="Advanced.isSelectedQueryEditable()" type="text" placeholder="Name..." ng-model="Advanced.selectedQuery.title" focus>
                 <h4 ng-hide="Advanced.isSelectedQueryEditable()">{{Advanced.selectedQuery.title}}</h4>

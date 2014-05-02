@@ -10,7 +10,8 @@ UserService.factory('UserService', [
     '$window',
     '$rootScope',
     '$location',
-    function ($resource, $http, config, $window, $rootScope, $location) {
+    '$cookieStore',
+    function ($resource, $http, config, $window, $rootScope, $location, $cookieStore) {
 
         var history = [];
 
@@ -41,6 +42,10 @@ UserService.factory('UserService', [
             this.userProfile = {};
             this.setGuestUser();
 
+            var token = $cookieStore.get('sessionToken');
+            if(token){
+                $window.sessionStorage.token = token;
+            }
             if ($window.sessionStorage.token) {
                 this.getUserProfile();
             }
@@ -48,7 +53,7 @@ UserService.factory('UserService', [
 
         UserService.prototype.login = function (username, password, cb) {
             $token.get({username: username, password: password}, function (data) {
-                //$cookieStore.put('sessionToken', data.access_token);
+                $cookieStore.put('sessionToken', data.access_token);
                 $window.sessionStorage.token = data.access_token;
                 console.log('got token' + $window.sessionStorage.token);
                 var prevUrl = history.length > 1 ? history.splice(-2)[0] : "/";
@@ -100,8 +105,9 @@ UserService.factory('UserService', [
             });
             console.log('deleting session storage')
             delete $window.sessionStorage.token;
-
+            $cookieStore.remove('sessionToken');
             this.setGuestUser();
+
         }
 
         UserService.prototype.setGuestUser = function () {
