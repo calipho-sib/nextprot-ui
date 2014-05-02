@@ -143,10 +143,12 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         };
 
-        AdvancedQueryService.prototype.deleteAdvancedQuery = function (username, aq, cb) {
+        AdvancedQueryService.prototype.deleteAdvancedQuery = function (aq, cb) {
+            var me = this;
             if (confirm("Are you sure you want to delete the selected query?")) {
-                console.log('delete advanced query > ', aq);
                 $api_adv_query_id.delete({ username: UserService.userProfile.username, id: aq.advancedUserQueryId}, function (data) {
+                    flash('alert-success', aq.title + " query deleted successfully for ");
+                    me.getRepository(Search.config.widgets.repositories.privateRep);
                     if (cb)cb(data);
                 });
             }

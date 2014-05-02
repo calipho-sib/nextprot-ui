@@ -117,15 +117,6 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
             );
         }
 
-        $scope.deleteAdvancedQuery = function (query) {
-            AdvancedQueryService.deleteAdvancedQuery(UserService.userProfile.username, query,
-                function () {
-                    flash('alert-success', query.title + " query deleted successfully for ");
-                    $route.reload();
-                }
-            );
-        }
-
         $scope.setCurrentQuery = function (query) {
             AdvancedQueryService.currentSparql = query.sparql;
             //close the help after that
