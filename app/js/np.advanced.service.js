@@ -160,8 +160,14 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         };
 
+        AdvancedQueryService.prototype.isSelectedQueryEmpty = function () {
+            return ((typeof this.selectedQuery.username  === 'undefined') ||
+                    (this.selectedQuery.username == null) ||
+                    (this.selectedQuery.username == ""));
+        };
+
         AdvancedQueryService.prototype.clearSelectedQuery = function () {
-            this.currentSparql = "";
+            this.selectedQuery = {};
         };
 
         AdvancedQueryService.prototype.clearCurrentQuery = function () {

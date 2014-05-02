@@ -35,3 +35,8 @@ div.CodeMirror-scroll pre{
     display: none;
 }
 
+.CodeMirror {
+    font-family: monospace;
+    height:auto !important;
+}
+
