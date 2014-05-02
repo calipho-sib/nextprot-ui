@@ -276,6 +276,16 @@ ul#search-results .result-abstract {
     display: block !important;
 }
 
+.fade-out-right.ng-hide-add {
+    -webkit-animation: fadeOutRight 0.5s;
+    display: block !important;
+}
+
+.fade-in-right.ng-hide-remove {
+    -webkit-animation: fadeInRight 0.5s;
+    display: block !important;
+}
+
 #sparqlTitle {
     width: 500px;
 }

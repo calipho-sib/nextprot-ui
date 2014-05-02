@@ -142,11 +142,14 @@
                 </div>
             </div>
 
-                <div class="modal-body" style="height: 300px; margin: 20px 0px 20px 0px">
+                <div class="modal-body" style="height: 300px; margin: 20px 0px 20px 0px; position: relative;">
 
-                    <div ng-show="Advanced.isSelectedQueryEmpty()">
+                    <!--                                 -->
+                    <!-- Box for the list                -->
+                    <!--                                 -->
+                    <div class="fade-in-left fade-out-left" style="position: absolute" ng-show="Advanced.isSelectedQueryEmpty()">
 
-                        <table class="table table-striped" ng-show="Advanced.isSelectedQueryEmpty()">
+                        <table class="table table-striped">
                             <tbody>
                             <tr ng-repeat="query in Advanced.queries | filter:filterQuery | orderBy:'title'">
                                 <td>
@@ -180,7 +183,7 @@
                 <!--                                 -->
                 <!-- Box for editing or visualizing  -->
                 <!--                                 -->
-                <div ng-show="!Advanced.isSelectedQueryEmpty()">
+                <div class="fade-out-right fade-in-right" style="position: absolute" ng-show="!Advanced.isSelectedQueryEmpty()">
 
                     <!-- Sparql -->
                     <div class="control-group">
