@@ -82,34 +82,6 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
 
-        $scope.createOrReplaceUserQuery = function () {
-            if (AdvancedQueryService.isNew()) {
-                AdvancedQueryService.createAdvancedQuery(UserService.userProfile.username,
-                    function (data) {
-                        flash('alert-success', data.title + ' query saved successfully!')
-                        $route.reload();
-                    },
-                    function (error) {
-                        if (error.status == 409) {
-                            flash('alert-warn', 'object already exists, choose a different name.')
-                        }
-                    }
-                );
-            } else {
-                AdvancedQueryService.updateAdvancedQuery(UserService.userProfile.username,
-                    function (data) {
-                        flash('alert-success', "Updated successful for " + data.title);
-                        $route.reload();
-                        return;
-                    },
-                    function (error) {
-                        if (error.status == 409) {
-                            flash('alert-warn', 'object already exists, choose a different name.')
-                        }
-                    }
-                );
-            }
-        }
 
         $scope.updateAdvancedQuery = function () {
             AdvancedQueryService.updateAdvancedQuery(UserService.userProfile.username, $scope.selectedQuery,

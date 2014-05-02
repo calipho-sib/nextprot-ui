@@ -152,11 +152,6 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
             //The binding is done at the level of the primitive, therefore
             angular.extend(this.selectedQuery, query);
-            //change the query for the current username and the id null if it does not belong to the user
-            if (this.selectedQuery.username != UserService.userProfile.username) {
-                this.selectedQuery.username = UserService.userProfile.username
-                this.selectedQuery.advancedUserQueryId = null;
-            }
 
         };
 
@@ -171,7 +166,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         };
 
         AdvancedQueryService.prototype.isSelectedQueryEditable = function () {
-            (UserService.userProfile.username == this.selectedQuery.username);
+           return (UserService.userProfile.username == this.selectedQuery.username);
         };
 
         AdvancedQueryService.prototype.clearCurrentQuery = function () {
@@ -185,6 +180,35 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         AdvancedQueryService.prototype.isNew = function () {
             return (this.selectedQuery.advancedUserQueryId == null);
         };
+
+
+        AdvancedQueryService.prototype.insertOrUpdateSelectedQuery = function () {
+            if (this.isNew()) {
+                this.createAdvancedQuery(UserService.userProfile.username,
+                    function (data) {
+                        flash('alert-success', data.title + ' query saved successfully!')
+                    },
+                    function (error) {
+                        if (error.status == 409) {
+                            flash('alert-warn', 'object already exists, choose a different name.')
+                        }
+                    }
+                );
+            } else {
+                this.updateAdvancedQuery(UserService.userProfile.username,
+                    function (data) {
+                        flash('alert-success', "Updated successful for " + data.title);
+                        return;
+                    },
+                    function (error) {
+                        if (error.status == 409) {
+                            flash('alert-warn', 'object already exists, choose a different name.')
+                        }
+                    }
+                );
+            }
+        }
+
 
         AdvancedQueryService.prototype.buildSparqlString = function () {
             var sp = "?entry ";

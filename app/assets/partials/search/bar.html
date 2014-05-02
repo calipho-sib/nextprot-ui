@@ -125,26 +125,19 @@
 
             <div class="modal-header" ng-show="!Advanced.isSelectedQueryEmpty()">
                 <!-- Title -->
-                <input ng-show="Advanced.isSelectedQueryEditable()" type="text" placeholder="Name..." ng-model="Advanced.selectedQuery.title">
+                <input style="width: 85%" ng-show="Advanced.isSelectedQueryEditable()" type="text" placeholder="Name..." ng-model="Advanced.selectedQuery.title" focus>
                 <h4 ng-hide="Advanced.isSelectedQueryEditable()">{{Advanced.selectedQuery.title}}</h4>
                 <!-- Title-->
-                <div class="control-group">
-                    <div class="controls">
-                        <!-- Published -->
-                        <div class="btn-group" style="margin: 10px;" ng-show="Advanced.isSelectedQueryEditable()">
-                            <button  data-toggle="tooltip" title="Keep the query in your private repository"
-                                     class="btn btn-mini {{(!Advanced.selectedQuery.published) ? 'btn-inverse' : ''}}"
-                                     type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
-                                <i class="icon-user"></i>
-                            </button>
-                            <button  data-toggle="tooltip" title="Show in the community repository"
-                                     class="btn btn-mini {{(Advanced.selectedQuery.published) ? 'btn-inverse' : ''}}"
-                                     type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
-                                <i class="icon-globe"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <button ng-show="Advanced.isSelectedQueryEditable()" data-toggle="tooltip" title="Keep the query in your private repository"
+                         class="btn btn-small {{(!Advanced.selectedQuery.published) ? 'btn-inverse' : ''}}"
+                         type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
+                    <i class="icon-user"></i>
+                </button>
+                <button ng-show="Advanced.isSelectedQueryEditable()" data-toggle="tooltip" title="Show in the community repository"
+                         class="btn btn-small {{(Advanced.selectedQuery.published) ? 'btn-inverse' : ''}}"
+                         type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
+                    <i class="icon-globe"></i>
+                </button>
 
             </div>
 
@@ -164,8 +157,7 @@
                             </td>
                             <!--Don't show edit and remove button if the user is not the owner-->
                             <td ng-if="hasPrivilegesToEdit(query)">
-                                <button class="btn btn-mini pull-right" type="button" ng-click="Advanced.setCurrentQuery(query)"
-                                        bs-modal="'partials/advanced/advanced-save-modal.html'"><i
+                                <button class="btn btn-mini pull-right" type="button" ng-click="Advanced.setCurrentQuery(query)""><i
                                         class="icon-edit"></i></button>
                             </td>
                             <td ng-if="hasPrivilegesToEdit(query)">
@@ -197,7 +189,7 @@
                         </div>
                         <div class="controls">
                             <textarea ng-show="Advanced.isSelectedQueryEditable()"
-                                    style="width: 95%;" rows="15" id="inputDescription" type="text" placeholder="Write some description..." ng-model="Advanced.selectedQuery.description">
+                                    style="width: 95%;" rows="8" id="inputDescription" type="text" placeholder="Write some description..." ng-model="Advanced.selectedQuery.description">
                             </textarea>
                             <p ng-hide="Advanced.isSelectedQueryEditable()">{{Advanced.selectedQuery.description}}</p>
                         </div>
@@ -213,14 +205,18 @@
                 <!-- "Create new" only if there is no query selected -->
                 <button ng-show="Advanced.isSelectedQueryEmpty()"
                         class="btn btn-primary btn-small pull-right"
-                        type="button" ng-click="Advanced.clearCurrentQuery();">Create new
+                        type="button" ng-click="Advanced.clearCurrentQuery();">New
                 </button>
+
+                <!-- "Save" button showed only if there is a query selected -->
+                <button ng-show="Advanced.isSelectedQueryEditable()"
+                        class="btn btn-primary btn-small pull-right"
+                        ng-click="Advanced.insertOrUpdateSelectedQuery()">Save</button>
 
                 <!-- "Back" button showed only if there is a query selected -->
                 <button ng-show="!Advanced.isSelectedQueryEmpty()"
-                        class="btn btn-primary btn-small pull-right" type="button"
+                        class="btn btn-small pull-left" type="button"
                         ng-click="Advanced.clearSelectedQuery();">Back</button>
-
 
             </div>
 
