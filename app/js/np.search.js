@@ -102,7 +102,7 @@ SearchModule.controller('SearchCtrl', [
 
         $scope.toggleAdv = function (mode) {
             if (mode==='advanced'){
-                return $location.path('/proteins/search').search('mode', mode);                
+                return $location.path('/proteins/search').search('mode', mode).search('query',null);                
             }
             $location.search('mode', null)
         }
@@ -161,12 +161,18 @@ SearchModule.controller('SearchCtrl', [
             $location.search('rows', null);
             $location.search('start', null);
 
+            $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search')
+
             //Advanced mode
-            if ($scope.isAdvancedMode()) {
-                $location.path('/proteins/search').search('sparql', Search.params.sparql.trim());
-            } else {
-                //We are in simple mode
-                $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search').search('query', Search.params.query.trim());
+            if (Search.params.sparql && Search.params.sparql.length) {
+                $location.search('sparql', Search.params.sparql.trim()).
+                          search('mode','advanced').
+                          search('query',null);                
+            }
+
+            //We are in simple mode
+            if(Search.params.query && Search.params.query.length){
+                $location.search('query', Search.params.query.trim()).search('sparql',null);
             }
 
             //
@@ -215,7 +221,7 @@ SearchModule.controller('ResultCtrl', [
 
         var params = _.clone($routeParams);
 
-
+        console.log("debug params",params)
 
         if ($routeParams.cart) {
             $scope.showCart = false;
@@ -225,16 +231,8 @@ SearchModule.controller('ResultCtrl', [
 
         //Set the current owner id, if there is a list
         if ($routeParams.list) {
-            //TODO will not work if the page is full refreshed because of the userprofile not being
-//            while(!UserService.isUserProfileLoaded()){
-//                $timeout(true == true, 100);
-//            }
-
             params.listOwner = UserService.userProfile.username;
-
-//            UserService.$promise.then(function(user){
-                search(params)
-//            })
+            search(params)
 
         }
 
