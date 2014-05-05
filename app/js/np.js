@@ -109,7 +109,7 @@ App.factory('Tools', [
 App.factory('authInterceptor', ["$rootScope", "$q", "$window", "$location", "flash", function ($rootScope, $q, $window, $location, flash) {
     return {
         request: function (config) {
-            if (config.url.indexOf('nextprot-api/user') != -1) {
+            if (config.url.indexOf('nextprot-api/') != -1) {
                 config.headers = config.headers || {};
                 if ($window.sessionStorage.token) {
                     console.log('adding token ' + $window.sessionStorage.token)
