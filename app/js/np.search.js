@@ -100,6 +100,13 @@ SearchModule.controller('SearchCtrl', [
             $location.path('/' + params.entity + '/search' + ((Search.params.query) ? '/' + Search.params.query : ''));
         }
 
+        $scope.toggleAdv = function (mode) {
+            if (mode==='advanced'){
+                return $location.path('/proteins/search').search('mode', mode);                
+            }
+            $location.search('mode', null)
+        }
+
         $scope.clean = function () {
             $location.search('engine', null)
             $location.search('title', null)
@@ -207,6 +214,7 @@ SearchModule.controller('ResultCtrl', [
 
 
         var params = _.clone($routeParams);
+
 
 
         if ($routeParams.cart) {
