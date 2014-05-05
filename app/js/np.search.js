@@ -327,8 +327,10 @@ SearchModule.controller('ResultCtrl', [
                 Search.getIds(
                     {
                         entity: 'entry.json',
+                        quality: Search.params.quality,
+                        mode: Search.params.mode,
                         query: Search.params.query,
-                        quality: Search.params.quality
+                        sparql: Search.params.sparql
                     }, function (docs) {
                         Cart.removeFromCart(docs.ids);
                         $scope.selectedResults = [];

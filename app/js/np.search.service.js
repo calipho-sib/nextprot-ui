@@ -257,7 +257,7 @@ SearchService.factory('Search',[
 		delete post.entity
 
         // adv search
-        if(this.params.mode == 'advanced')
+        if(params.mode == 'advanced')
             angular.extend(post,  defaultAdv)
 
 
