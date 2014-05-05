@@ -12,8 +12,9 @@ SearchService.factory('Search',[
   '$http',
   '$cookies',
   '$cookieStore',
+  'Tools',
   'config',
-  function($resource, $http, $cookies, $cookieStore, config){
+  function($resource, $http, $cookies, $cookieStore, Tools, config){
 	//
 	// this is the url root
 	var $api = $resource(config.api.API_SERVER, { action:'@action',entity:'@entity', port:config.api.API_PORT },{
@@ -32,7 +33,10 @@ SearchService.factory('Search',[
             mode:'simple' // can be simple or advanced
 	};	
 	
-
+	var defaultAdv={
+			sparqlEngine:'Jena'
+	};	
+	
 	var searchApi={
 		action:'search'
 	}
@@ -87,8 +91,8 @@ SearchService.factory('Search',[
 
       Search.prototype.isSearchButtonDisabled = function () {
           if(this.params.mode == 'advanced')
-            return this.params.sparql.length == 0;
-          else return this.params.query.length == 0;
+            return this.params.sparql&&this.params.sparql.length == 0;
+          else return this.params.sparql&&this.params.query.length == 0;
       }
 
 
@@ -184,8 +188,11 @@ SearchService.factory('Search',[
 		delete this.params.list;
 		delete this.params.accs;
 
-		angular.extend(this.params,  searchApi, defaultUrl, params)		
+		angular.extend(this.params,  searchApi, defaultUrl, params)				
 		this.params.entity=config.api.entityMapping[params.entity];
+
+		// adv search
+		if(this.params.sparql)angular.extend(this.params,  defaultAdv)
 
 		// make a copy to avoid post issue 
 		var post=angular.copy(this.params);
@@ -244,7 +251,12 @@ SearchService.factory('Search',[
 		delete post.action
 		delete post.entity
 
-		$api.search({ action:'search-ids', entity:params.entity, quality: params.quality }, post).$promise.then(function(docs) {
+        // adv search
+        if(this.params.mode == 'advanced')
+            angular.extend(post,  defaultAdv)
+
+
+        $api.search({ action:'search-ids', entity:params.entity, quality: params.quality }, post).$promise.then(function(docs) {
 			if(cb)cb(docs);
 		});
 	};
