@@ -4,18 +4,18 @@ div.CodeMirror{
 }
 
 /* Sparql editor adjust height automatically */
-.CodeMirror-selected{
+#search-query-advanced .CodeMirror-selected{
     opacity: 0.4
 }
 
-.CodeMirror-lines {
+#search-query-advanced .CodeMirror-lines {
     border: 1px solid #DDDDDD;
     border-radius: 4px 0 0px 4px;
     padding: 5px;
     background-color:white;
 }
 
-div.CodeMirror-scroll pre{
+#search-query-advanced div.CodeMirror-scroll pre{
     background-color: #fff;
     border: 0px solid rgba(0, 0, 0, 0.15);
     border-radius: 0px;
@@ -23,29 +23,29 @@ div.CodeMirror-scroll pre{
     margin: 0px;
     padding: 0px;
     font-size:12px;
-    height:18px;
+    -height:18px;
     line-height: 18px;
 }
 
-.CodeMirror-cursors{
+#search-query-advanced .CodeMirror-cursors{
 }
 
-.CodeMirror-cursor{
+#search-query-advanced .CodeMirror-cursor{
     position: absolute;
     background-color: #444;
     width: 1px
 }
 
-.CodeMirror-gutters{
+#search-query-advanced .CodeMirror-gutters{
     display: none;
 }
 
-.CodeMirror {
+#search-query-advanced .CodeMirror {
     font-family: monospace;
     height:auto !important;
 }
 
-.CodeMirror-cursor:before{
+#search-query-advanced .CodeMirror-cursor:before{
     content: '';
     display: inline-block;
     position: absolute;

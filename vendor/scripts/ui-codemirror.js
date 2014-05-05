@@ -6,7 +6,7 @@
  */
 angular.module('ui.codemirror', [])
     .constant('uiCodemirrorConfig', {})
-    .directive('uiCodemirror', ['uiCodemirrorConfig', function (uiCodemirrorConfig) {
+    .directive('uiCodemirror', ['uiCodemirrorConfig','$timeout', function (uiCodemirrorConfig, $timeout) {
 
         return {
             restrict: 'EA',

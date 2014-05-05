@@ -49,7 +49,7 @@ SearchModule.controller('SearchCtrl', [
 
         $scope.editorOptions = {
             lineWrapping : false,
-            lineNumbers: true,
+            lineNumbers: false,
             readOnly: false,
             mode: 'sparql'
         };
@@ -78,7 +78,6 @@ SearchModule.controller('SearchCtrl', [
         //
         // interact with the search bar
         $scope.params = function (params, form) {
-            console.log(form);
             if (form && !form.$valid)
                 return;
             angular.forEach(params, function (v, k) {
@@ -102,6 +101,9 @@ SearchModule.controller('SearchCtrl', [
         }
 
         $scope.clean = function () {
+            $location.search('engine', null)
+            $location.search('title', null)
+            $location.search('sparql', null)
             $location.search('list', null)
             $location.search('rows', null)
             $location.search('start', null)
@@ -154,10 +156,7 @@ SearchModule.controller('SearchCtrl', [
 
             //Advanced mode
             if ($scope.isAdvancedMode()) {
-                $location.path('/proteins/search').
-                    search('sparqlTitle', 'whatever title').
-                    search('sparqlEngine', 'Jena').
-                    search('sparql', AdvancedQueryService.currentSparql);
+                $location.path('/proteins/search').search('sparql', Search.params.sparql.trim());
             } else {
                 //We are in simple mode
                 $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search').search('query', Search.params.query.trim());
@@ -209,9 +208,6 @@ SearchModule.controller('ResultCtrl', [
 
         var params = _.clone($routeParams);
 
-        if ($routeParams.sparql) {
-            console.log('routes' + $routeParams.sparql);
-        }
 
         if ($routeParams.cart) {
             $scope.showCart = false;
