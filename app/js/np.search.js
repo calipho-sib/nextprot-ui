@@ -104,7 +104,8 @@ SearchModule.controller('SearchCtrl', [
             if (mode==='advanced'){
                 return $location.path('/proteins/search').search('mode', mode).search('query',null);                
             }
-            $location.search('mode', null)
+
+            $location.search('mode', null).search('sparql',null)
         }
 
         $scope.clean = function () {
