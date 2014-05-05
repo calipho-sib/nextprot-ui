@@ -256,7 +256,12 @@ SearchService.factory('Search',[
 		delete post.action
 		delete post.entity
 
-		$api.search({ action:'search-ids', entity:params.entity, quality: params.quality }, post).$promise.then(function(docs) {
+        // adv search
+        if(this.params.mode == 'advanced')
+            angular.extend(post,  defaultAdv)
+
+
+        $api.search({ action:'search-ids', entity:params.entity, quality: params.quality }, post).$promise.then(function(docs) {
 			if(cb)cb(docs);
 		});
 	};
