@@ -91,10 +91,10 @@
                            <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[1].query}}">{{Search.result.spellcheck.collations[1].query}}</a>
                          </span>
                        </span>
-                    <span class=" search-toggle"><span ng-click="toggle({mode:null})"
+                    <span class=" search-toggle"><span ng-click="toggleAdv()"
                                                        ng-class="{link:isAdvancedMode()}">simple</span> / <span
                             ng-class="{link:!isAdvancedMode()}"
-                            ng-click="toggle({mode:'advanced'})">advanced</span></span>
+                            ng-click="toggleAdv('advanced')">advanced</span></span>
 
                 </div>
 

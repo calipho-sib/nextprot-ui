@@ -28,6 +28,7 @@ SearchService.factory('Search',[
 			entity:'entry.json',
 			quality:'gold',
 			query:'',
+			sparql:null,
 			sort:'',
 			order:'',
             mode:'simple' // can be simple or advanced
@@ -90,9 +91,9 @@ SearchService.factory('Search',[
 	}
 
       Search.prototype.isSearchButtonDisabled = function () {
-          if(this.params.mode == 'advanced')
-            return this.params.sparql&&this.params.sparql.length == 0;
-          else return this.params.sparql&&this.params.query.length == 0;
+          if(this.params.mode == 'advanced' && (!this.params.sparql || !this.params.sparql.length))
+          	return true;
+          return ((this.params.query) && (this.params.query.length == 0));
       }
 
 
@@ -192,12 +193,16 @@ SearchService.factory('Search',[
 		this.params.entity=config.api.entityMapping[params.entity];
 
 		// adv search
-		if(this.params.sparql)angular.extend(this.params,  defaultAdv)
+		if(this.params.sparql){
+			angular.extend(this.params,  defaultAdv)
+		}
 
 		// make a copy to avoid post issue 
 		var post=angular.copy(this.params);
 		delete post.action
 		delete post.entity
+
+		console.log(this.params)
 
 		// display search status status 
 		me.result.message="Loading content...";
