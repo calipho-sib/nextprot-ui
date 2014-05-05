@@ -161,9 +161,9 @@
                 <tbody>
                 <tr ng-repeat="query in Advanced.queries | filter:filterQuery | orderBy:'title'">
                     <td>
-                        <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}}"></i>
+                        <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}} gray btn-mini"></i>
                     </td>
-                    <td><a href="" ng-click="setCurrentQuery(query)">{{query.title}}
+                    <td><a href="" ng-click="setCurrentQuery(query)"><b>{{query.title}}</b>
                         [{{query.username}}]</a></td>
                     <!--Show the view button-->
                     <td ng-if="!hasPrivilegesToEdit(query)">
