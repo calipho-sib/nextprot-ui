@@ -165,11 +165,21 @@ a.inactive {
 
 .resultfilters {
 }
+.resultparams .affix{
+  top: 40px;  
+}
+.search-row .affix{
+    padding-top:10px;
+    top: 40px;  
+    background-color: #eee;
+
+}
 
 .resultfilters.affix {
     padding-left: 0;
     z-index: 99;
-    margin-top: 40px;
+    margin-top: 100px;
+    background-color: white;
 }
 
 .resultfilters .active {
