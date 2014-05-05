@@ -1,20 +1,19 @@
 
 
 div.CodeMirror{
-    overflow: hidden!important;
-    height: 100px
-    border: 1px solid #ddd;
-
 }
 
 /* Sparql editor adjust height automatically */
-
-.CodeMirror__ {
-    height: auto;
-    overflow-x: auto;
-    overflow-y: hidden;
+.CodeMirror-selected{
+    opacity: 0.4
 }
 
+.CodeMirror-lines {
+    border: 1px solid #DDDDDD;
+    border-radius: 4px 0 0px 4px;
+    padding: 5px;
+    background-color:white;
+}
 
 div.CodeMirror-scroll pre{
     background-color: #fff;
@@ -22,13 +21,19 @@ div.CodeMirror-scroll pre{
     border-radius: 0px;
     display: block;
     margin: 0px;
-    padding: 4px;
+    padding: 0px;
+    font-size:12px;
+    height:18px;
+    line-height: 18px;
 }
 
 .CodeMirror-cursors{
-    float: left;
-    z-index: 1;
-    width: 0px;
+}
+
+.CodeMirror-cursor{
+    position: absolute;
+    background-color: #444;
+    width: 1px
 }
 
 .CodeMirror-gutters{
@@ -38,5 +43,17 @@ div.CodeMirror-scroll pre{
 .CodeMirror {
     font-family: monospace;
     height:auto !important;
+}
+
+.CodeMirror-cursor:before{
+    content: '';
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    width: 9999px;
+    overflow: hidden;
+    height: 1.15em;
+    background: rgba(255,255,255,.08);
+    visibility:visible;
 }
 

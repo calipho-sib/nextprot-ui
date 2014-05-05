@@ -49,12 +49,11 @@
                     <!--                        -->
                     <input ng-show="!isAdvancedMode()" id="search-query" class="" type="text"
                            ng-model="Search.params.query"
-                           ng-class="{'quality-search-width':Search.displayGold(),'no-quality-search-width':!Search.displayGold()}"
+                           ng-class="{'search-width-quality':Search.displayGold(),'search-width-no-quality':!Search.displayGold()}"
                            autocomplete="off" bs-autocomplete="Search.suggest" autofocus>
 
-                    <ui-codemirror ng-show="isAdvancedMode()" ui-codemirror-opts="editorOptions" class="btn-group"
+                    <ui-codemirror ng-show="isAdvancedMode()" ui-codemirror-opts="editorOptions" class="btn-group search-width-advanced"
                                    ng-model="Search.params.sparql"
-                                   ng-class="{'quality-search-width':Search.displayGold(),'no-quality-search-width':!Search.displayGold()}"
                             ></ui-codemirror>
 
                     <!--                      -->

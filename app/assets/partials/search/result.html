@@ -10,7 +10,7 @@
 					<li class="dropdown">
 						<!-- <a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{Search.result.docs.length}}</b> on {{Search.result.num}} {{Search.result.display}} <b class="caret"/>
 						</a> -->
-						<a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{start ++ 1}}</b> to <b>{{rows -- start}}</b> of {{Search.result.num}} {{Search.result.display}}<b class="caret"/></a>
+						<a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{start ++ 1}}</b> to <b>{{rows -- start}}</b> of {{Search.result.num}} <b class="caret"/></a>
 						<ul class="dropdown-menu" >
 							<li><a ng-class="{bold:Search.params.rows=='50'||!Search.params.rows}" href="" ng-click="params({rows:50})">50 rows</a></li>
 							<li><a ng-class="{bold:Search.params.rows=='100'}" href="" ng-click="params({rows:100})">100 rows</a></li>
@@ -34,14 +34,14 @@
 		    	<ul class="nav">
 
 
-					<li id="pageInput" ng-show="Search.result.pages.length > 1" style="margin:5px">
+					<li id="pageInput" ng-show="Search.result.pages.length > 1" style="margin:5px" class="visible-desktop">
 						<form name="paging" ng-submit="params({start:(Search.result.pagination.manual-1)*Search.result.rows},paging)" class="nomargin">
 							<input type="number" min="1" max="{{ Search.result.pagination.numPages | number:0}}" class="bold black" ng-model="Search.result.pagination.manual"  style="border: 0px none; width: 40px;color:black;margin-bottom:0;text-align:right"/> / {{ Search.result.pagination.numPages | number:0}} page(s)
 						</form>
 					</li>
 
-					<li class="divider-vertical"></li>
-					<li id="search-query-affix" class="  fadein black" style="opacity: 0">
+					<li class="divider-vertical visible-desktop"></li>
+					<li id="search-query-affix" class="  fadein black visible-desktop" style="opacity: 0">
 						<input  type="text" placeholder="Search"
 							ng-model="Search.params.query" autocomplete="off"  bs-autocomplete="Search.suggest" 
 							style="border: 0px none; width: 120px;color:black;margin-bottom:0" np-enter="go()">
@@ -56,7 +56,7 @@
 				    	<input type="number" min="1" class="span3" ng-model="Search.result.pagination.manual"  ng-value="Search.result.pagination.manual" np-enter="params({start:(Search.result.pagination.manual-1)*Search.result.rows})"/></label>
 				  	</li> -->
 
-				  <li class="divider-vertical"></li>
+				  <li class="divider-vertical visible-desktop"></li>
 				  <li>
 				  	<div style="padding:7px">				  		
 				  		<a  href="" ng-click="cookies({summary:true});" id="search-summary" 

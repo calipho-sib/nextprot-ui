@@ -63,7 +63,7 @@ a.inactive {
     font-size: 80%;
     margin-top: -5px;
     position: absolute;
-    left:535px;
+    left:565px;
     top:34px;
     font-weight:300;
 }
@@ -215,12 +215,16 @@ a.inactive {
     z-index: 2000;
 }
 
-.no-quality-search-width {
-    width: 500px !important;
+.search-width-no-quality {
+    width: 550px !important;
 }
 
-.quality-search-width {
-    width: 405px !important;
+.search-width-advanced {
+    width: 566px !important;
+}
+
+.search-width-quality {
+    width: 455px !important;
 }
 
 ul#search-results li {
