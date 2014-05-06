@@ -1,3 +1,11 @@
+.navbar-fixed-top, .navbar-fixed-bottom{
+	position: fixed;
+}
+
+.navbar-fixed-top .navbar-inner{
+	padding:0px;
+}
+
 .btn-circle {
   width: 30px;
   height: 30px;
