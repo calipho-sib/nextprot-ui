@@ -55,6 +55,11 @@ a.inactive {
     top: 0;
 }
 
+.query-title{
+  font-size:110%;
+  font-weight: 300;
+}
+
 .search-bar{
   position: relative;
 }
