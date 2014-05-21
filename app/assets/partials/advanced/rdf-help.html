@@ -2,8 +2,11 @@
     <div class="row">
         <div class="span3 bs-docs-sidebar">
             <ul class="nav nav-list bs-docs-sidenav affix-top">
-                <li ng-repeat="rh in Advanced.rdfHelp | filter : Advanced.rdfHelp.triples.predicate"><a href="rdf-help#{{rh.typeName}}"><i
+                <li ng-repeat="rh in Advanced.rdfHelp | filter : Advanced.rdfHelp.triples.predicate"><a
+                        href="rdf-help#{{rh.typeName}}"><i
                         class="icon-chevron-right"></i>{{rh.typeName.replace(':','')}}
+                    <span ng-if="rh.values.length > 0">*</span>
+
                     ({{rh.instanceCount}})</a>
                 </li>
             </ul>
@@ -15,7 +18,18 @@
             </div>
             <div ng-repeat="rh in Advanced.rdfHelp | filter : Advanced.rdfHelp.triples.predicate">
                 <section id="{{rh.typeName}}">
-                    <h2>{{rh.typeName.replace(':','')}} <span class="badge badge-info">{{rh.instanceCount}}</span>
+
+                    <h2>{{rh.typeName.replace(':','')}}
+
+                        <!-- Possible values -->
+                        <div ng-if="rh.values.length > 0" class="btn-group">
+                            <button class="btn dropdown-toggle" data-toggle="dropdown">Values<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="value in rh.values"><a href="">{{value}}</a></li>
+                            </ul>
+                        </div>
+                        <span class="badge badge-info">{{rh.instanceCount}}</span>
                     </h2>
 
                     <p>{{rh.rdfsComment}}</p>
@@ -38,9 +52,16 @@
                                 <div ng-repeat="t in rh.triples | filter : Advanced.rdfHelp.triples.predicate">
                                     <p>
                                         <code class="text-warning">{{t.predicate}}</code>
-                                        <code><a class="text-success" href="rdf-help#{{t.objectType}}">{{t.objectType}}</a></code>
+                                        <code><a class="text-success"
+                                                 href="rdf-help#{{t.objectType}}">{{t.objectType}}</a></code>
                                         &nbsp;
                                         <span class="label label-info">{{t.tripleCount}}</span>
+                                        <!-- Possible values -->
+                                        <select ng-if="t.literalType && t.values.length > 1">
+                                            <option ng-repeat="value in t.values" value="{{value}}">{{value}}</option>
+                                        </select>
+                                        <input ng-if="t.literalType && t.values.length == 1" type="text" placeholder="{{t.values[0]}}"></input>
+
                                     </p>
                                 </div>
                             </div>
@@ -51,6 +72,7 @@
                             <code class="text-info">{{t.tripleSample}}</code>
                         </div>
                     </div>
+                    <a href="rdf-help/#">Top</a>
                 </section>
             </div>
         </div>

@@ -6,7 +6,7 @@
     <meta name="description" content="neXtProt">
     <meta name="author" content="Olivier Evalet">
     <meta name="fragment" content="!"/>
-    <!-- <base href="/protosearch/" /> -->
+    <!--<base href="/protosearch/" />-->
     <base href="/"/>
 
     <title ng-bind-template="{{title}}"></title>
@@ -48,7 +48,7 @@
 
             <div  class="nav-collapse collapse" id="main-menu">
                 <ul class="nav" id="main-menu-left">
-                    <li><a ng-href="/" ng-click="Search.params.query=''">Home</a></li>
+                    <li><a ng-href="#" ng-click="Search.params.query=''">Home</a></li>
                     <!-- DOWNLOAD -->
                     <li><a href="proteinlists">Lists & Export Tools</a>
                     <li><a href="rdf-help">RDF Browser</a>
@@ -56,7 +56,7 @@
                     <li><a href="api-info">API Info</a>
                 </ul>
                 <ul ng-show="!user.userProfile.userLoggedIn" class="nav pull-right" id="main-menu-right-login">
-                    <li><a href="/login"  >Login</a></li>
+                    <li><a href="login"  >Login</a></li>
                 </ul>
                 <div ng-show="user.userProfile.userLoggedIn" class="btn-group pull-right">
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="" id="user-profile-button">{{user.userProfile.username}} &nbsp;<span class="caret"></span></a>

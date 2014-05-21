@@ -91,7 +91,7 @@ UserService.factory('UserService', [
                     me.userProfile.userLoggedIn = true;
 
                 }else {
-                    this.logout;
+                    me.logout();
                 }
                 console.log("me", me);
                 if (cb)cb(data);

@@ -44,7 +44,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
         //TODO Should call the api instead
-        var $rdf_help_get_resource = $resource('http://localhost:3000/rdfhelp.json', {
+        var $rdf_help_get_resource = $resource('rdfhelp.json', {
             get: { method: 'query', isArray: true }
         });
 
