@@ -61,7 +61,6 @@
                                             <option ng-repeat="value in t.values" value="{{value}}">{{value}}</option>
                                         </select>
                                         <input ng-if="t.literalType && t.values.length == 1" type="text" placeholder="{{t.values[0]}}"></input>
-
                                     </p>
                                 </div>
                             </div>
@@ -70,6 +69,11 @@
                     <div class="bs-docs-example">
                         <div ng-repeat="t in rh.triples | filter : Advanced.rdfHelp.triples.predicate">
                             <code class="text-info">{{t.tripleSample}}</code>
+                        </div>
+                    </div>
+                    <div class="bs-docs-example">
+                        <div ng-repeat="path in rh.pathToOrigin">
+                            <code class="text-info">{{path}}</code>
                         </div>
                     </div>
                     <a href="rdf-help/#">Top</a>
