@@ -44,21 +44,13 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
         //TODO Should call the api instead
-        var $rdf_help_get_resource = $resource('rdfhelp.json', {
-            get: { method: 'query', isArray: true }
-        });
+        var $rdf_help_get_resource = $resource('rdfhelp.json');
 
-        var $api_help_get_resource = $resource(baseUrl + '/nextprot-api/jsondoc.json', {
-            get: { method: 'query', isArray: true }
-        });
+        var $api_help_get_resource = $resource(baseUrl + '/nextprot-api/jsondoc.json');
 
-        var $nextprot_query_list = $resource(baseUrl + '/nextprot-api/user/advanced-nextprot-query.json', {
-            get: { method: 'GET', isArray: false }
-        });
+        var $nextprot_query_list = $resource(baseUrl + '/nextprot-api/user/advanced-nextprot-query.json');
 
-        var $public_query_list = $resource(baseUrl + '/nextprot-api/user/advanced-public-query.json', {
-            get: { method: 'GET', isArray: false }
-        });
+        var $public_query_list = $resource(baseUrl + '/nextprot-api/user/advanced-public-query.json');
 
         var $user_query_list = $resource(baseUrl + '/nextprot-api/user/:username/advanced-user-query.json', {username: '@username'}, {
             get: { method: 'GET', isArray: false },
@@ -109,7 +101,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             } else throw this.currentRepository + ' repository not found!!!';
 
             var cbOk = function (data) {
-                me.queries = data['advancedUserQueryList'];
+                me.queries = data.userQueryList;
                 if (cb)cb(me.queries);
             };
 
