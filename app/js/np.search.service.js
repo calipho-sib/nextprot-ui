@@ -1,5 +1,5 @@
 'use strict';
-var SearchService=angular.module('np.search.service',['np.search.ui']);
+var SearchService = angular.module('np.search.service', ['np.search.ui']);
 
 
 // Search API
@@ -7,263 +7,270 @@ var SearchService=angular.module('np.search.service',['np.search.ui']);
 /**
  * define service that made the search
  */
-SearchService.factory('Search',[
-  '$resource',
-  '$http',
-  '$cookies',
-  '$cookieStore',
-  'Tools',
-  'config',
-  function($resource, $http, $cookies, $cookieStore, Tools, config){
-	//
-	// this is the url root
-	var $api = $resource(config.api.API_SERVER, { action:'@action',entity:'@entity', port:config.api.API_PORT },{
-		search: { method:'POST'}
-	});
-
-
-		
-	var defaultUrl={
-			filter:'',
-			entity:'entry.json',
-			quality:'gold',
-			query:'',
-			sparql:null,
-			sort:'',
-			order:'',
-            mode:'simple' // can be simple or advanced
-	};	
-	
-	var defaultAdv={
-			sparqlEngine:'Jena'
-	};	
-	
-	var searchApi={
-		action:'search'
-	}
-
-	var suggestApi={
-		action:'autocomplete'
-	}
-
-
-	
-	var Search=function(data){
-		//
-		// init session
-		this.session={}
-		angular.extend(this.session, $cookies)
-
-		//
-		// default config
-		this.config=config.api;
-		
-		//
-		// app search service params
-		this.params={};
-
-        //for activating the spinner
-        this.loading=false;
-
+SearchService.factory('Search', [
+    '$resource',
+    '$http',
+    '$cookies',
+    '$cookieStore',
+    'Tools',
+    'config',
+    function ($resource, $http, $cookies, $cookieStore, Tools, config) {
         //
-		// result content
-		this.result={};
-		
-		angular.extend(this.params, defaultUrl, data||{})
-		
-	};
-
-	Search.prototype.displayGold=function (){
-		return (this.config.widgets[this.result.display] && this.config.widgets[this.result.display].gold && this.params.mode!="advanced");
-	}
+        // this is the url root
+        var $api = $resource(config.api.API_SERVER, { action: '@action', entity: '@entity', port: config.api.API_PORT }, {
+            search: { method: 'POST'}
+        });
 
 
-	Search.prototype.cookies=function (session){
-		angular.extend(this.session,session, $cookies)
-		Object.keys(session).forEach(function(k){
-			if(session[k]!==undefined)$cookieStore.put(k,session[k])
-		})
-		return true;
-	}
+        var defaultUrl = {
+            filter: '',
+            entity: 'entry.json',
+            quality: 'gold',
+            query: '',
+            sparql: null,
+            sort: '',
+            order: '',
+            mode: 'simple' // can be simple or advanced
+        };
 
-	Search.prototype.clear=function(){
-		angular.copy( defaultUrl,this.params)
-	}
+        var defaultAdv = {
+            sparqlEngine: 'Jena'
+        };
 
-      Search.prototype.isSearchButtonDisabled = function () {
-          if(this.params.mode == 'advanced' && (!this.params.sparql || !this.params.sparql.length))
-          	return true;
-          return ((this.params.query) && (this.params.query.length == 0));
-      }
+        var searchApi = {
+            action: 'search'
+        }
+
+        var suggestApi = {
+            action: 'autocomplete'
+        }
 
 
-      Search.prototype.paginate=function(params, docs){
-			this.result.num=docs.found;
-			this.result.pagination={};
+        var Search = function (data) {
+            //
+            // init session
+            this.session = {}
+            angular.extend(this.session, $cookies)
 
-            if(!params.rows)
+            //
+            // default config
+            this.config = config.api;
+
+            //
+            // app search service params
+            this.params = {};
+
+            //for activating the spinner
+            this.loading = false;
+
+            //
+            // result content
+            this.result = {};
+
+            angular.extend(this.params, defaultUrl, data || {})
+
+        };
+
+        Search.prototype.displayGold = function () {
+            return (this.config.widgets[this.result.display] && this.config.widgets[this.result.display].gold && this.params.mode != "advanced");
+        }
+
+
+        Search.prototype.cookies = function (session) {
+            angular.extend(this.session, session, $cookies)
+            Object.keys(session).forEach(function (k) {
+                if (session[k] !== undefined)$cookieStore.put(k, session[k])
+            })
+            return true;
+        }
+
+        Search.prototype.clear = function () {
+            angular.copy(defaultUrl, this.params)
+        }
+
+        Search.prototype.isSearchButtonDisabled = function () {
+            if (this.params.mode == 'advanced' && (!this.params.sparql || !this.params.sparql.length))
+                return true;
+            return ((this.params.query) && (this.params.query.length == 0));
+        }
+
+
+        Search.prototype.paginate = function (params, docs) {
+            this.result.num = docs.found;
+            this.result.pagination = {};
+
+            if (!params.rows)
                 params.rows = config.api.paginate.defaultRows;
 
-			// current page in the bottom
-			this.result.pagination.current = parseInt((params.start ? params.start : 0) / params.rows) + 1;
+            // current page in the bottom
+            var currentOffset = parseInt((params.start ? params.start : 0) / params.rows);
+            this.result.pagination.current = currentOffset + 1;
 
-			this.result.pagination.numPages = parseInt(this.calcPages(this.result.num, params.rows ? parseInt(params.rows) : 50));
-			//console.log('pages: ', this.result.num, params.rows ? params.rows : 50, this.result.pagination.numPages, this.calcPages(this.result.num, params.rows ? params.rows : 50));
-
-
-			// back button
-			if (params.start > 0 && (this.result.pagination.current) > 0){
-				var offset=this.result.pagination.current;
-				this.result.pagination.prev = {
-					offset: offset - 1, 
-					rows:(offset - 1) * params.rows
-				};
-			}
-			// next button 
-			if (docs.results.length === params.rows){
-				this.result.pagination.next = {
-					offset:this.result.pagination.current + 1, 
-					rows:(this.result.pagination.current + 1) * params.rows
-				};
-			}
-
-			// more button
-			if (  (docs.found/params.rows) > config.api.paginate.steps){
-				this.result.pagination.more = {
-					offset: this.result.pagination.numPages, //parseInt(this.result.num/config.solr.paginate.rows), 
-					rows: parseInt(this.result.num/params.rows) * params.rows
-				};
-			}
-
-			
-			this.result.offset = docs.start;
-			this.result.pages = [];
-			for (var page = 1; page < (this.result.num / params.rows); page++){
-				if (page > config.api.paginate.steps){
-					break;		
-				}
-				this.result.pages.push({
-					offset: page,
-					current: (this.result.pagination.current) === page
-				})
-			}		
-
-	}
-	
-
-	Search.prototype.calcPages = function(numDocs, pageSize) {
-		return ( numDocs + pageSize - 1) / pageSize;
-	}
+            this.result.pagination.numPages = parseInt(this.calcPages(this.result.num, params.rows ? parseInt(params.rows) : 50));
+            //console.log('pages: ', this.result.num, params.rows ? params.rows : 50, this.result.pagination.numPages, this.calcPages(this.result.num, params.rows ? params.rows : 50));
 
 
-	//
-	//
-	// suggest is a quick search
-	Search.prototype.suggest=function(query,cb){
-		var params={};
-		angular.extend(params, defaultUrl,suggestApi, {query:query, entity:this.params.entity})		
+            // back button
+            if (params.start > 0 && (this.result.pagination.current) > 0) {
+                this.result.pagination.prev = {
+                    offset: currentOffset - 1,
+                    rows: params.rows,
+                    start: ((currentOffset - 1) * params.rows)
+                };
+            }
+            // next button
+            if (docs.results.length === params.rows) {
+                this.result.pagination.next = {
+                    offset: currentOffset + 1,
+                    rows: params.rows,
+                    start: ((currentOffset + 1) * params.rows)
+                };
+            }
 
-		$api.search(params, params.query, function(result){				
-	    	var items=[];			    	
-			for (var i=0; i<result.autocomplete.length; i=i+2) {
-				items.push(result.autocomplete[i].name)
-			}
-			if(cb)cb(items)
-		})			
-	}
-		
-
-	
-	//
-	//
-	// solr search in all documents 
-	Search.prototype.docs=function(params,cb){
-
-		var me=this;me.result.error="";
-		me.result.docs = [];
-        me.loading = true;
-
-		delete this.params.list;
-		delete this.params.accs;
-
-		angular.extend(this.params,  searchApi, defaultUrl, params)				
-		this.params.entity=config.api.entityMapping[params.entity];
-
-		// adv search
-		if(this.params.sparql){
-			angular.extend(this.params,  defaultAdv)
-		}
-
-		// make a copy to avoid post issue 
-		var post=angular.copy(this.params);
-		delete post.action
-		delete post.entity
-
-		console.log(this.params)
-
-		// display search status status 
-		me.result.message="Loading content...";
-
-		$api.search({action:this.params.action, entity:this.params.entity}, post).$promise.then(function(docs) {
-			me.result.rows=docs.rows;
-			me.result.params=params;
-			me.result.display=config.api.entityMapping[me.params.entity];
-			me.result.core=docs.index;
-			me.result.time=docs.elapsedTime;
-			me.result.score=docs.maxScore;
-			me.result.docs = docs.results;
-			me.result.ontology=config.api.ontology;
-			me.result.filters=docs.filters
-
-			me.result.message=(docs.rows.length>0)?"":"No search results were found.";
-
-			//
-			// prepare spellcheck stucture
-			me.result.spellcheck=docs.spellcheck;
-
-			//
-			// prepare pagination
-			me.paginate(params, docs)
+            // more button
+            if ((docs.found / params.rows) > config.api.paginate.steps) {
+                this.result.pagination.more = {
+                    offset: this.result.pagination.numPages, //parseInt(this.result.num/config.solr.paginate.rows),
+                    rows: parseInt(this.result.num / params.rows) * params.rows
+                };
+            }
 
 
-			//
-			// special cases: ac on publications
-			if(me.result.display==="publications"){
-				me.result.docs.forEach(function(doc){
-					doc.acs=doc.ac.split(' | ');
-					doc.year=new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi,"")).getFullYear()
-					doc.authors=doc.authors.split(' | ');
-				})
-			}
+            this.result.offset = docs.start;
+            this.result.pages = [];
+            var minPage = this.result.pagination.current - config.api.paginate.steps;
+            var maxPage = this.result.pagination.current + config.api.paginate.steps;
 
-            me.loading = false;
+            if (minPage < 1)
+                minPage = 1;
 
-			if(cb)cb(me.result)
-		},function(error){
-            me.loading = false;
-			//if (error.status)
-			me.result.error="Ooops, request failed: "+error;
-		})	
-	}
-
-	Search.prototype.getIds = function(params, cb) {
-
-		// make a copy to avoid post issue 
-		var post = angular.copy(params);
-		delete post.action
-		delete post.entity
-
-        // adv search
-        if(params.mode == 'advanced')
-            angular.extend(post,  defaultAdv)
+            if (maxPage > (this.result.num / params.rows))
+                maxPage = (this.result.num / params.rows);
 
 
-        $api.search({ action:'search-ids', entity:params.entity, quality: params.quality }, post).$promise.then(function(docs) {
-			if(cb)cb(docs);
-		});
-	};
+            for (var page = minPage; page < maxPage; page++) {
+                this.result.pages.push({
+                    offset: page,
+                    current: (this.result.pagination.current) === page
+                })
+            }
+
+        }
 
 
-	var search=new Search();
-	return search;
-}]);
+        Search.prototype.calcPages = function (numDocs, pageSize) {
+            return ( numDocs + pageSize - 1) / pageSize;
+        }
+
+
+        //
+        //
+        // suggest is a quick search
+        Search.prototype.suggest = function (query, cb) {
+            var params = {};
+            angular.extend(params, defaultUrl, suggestApi, {query: query, entity: this.params.entity})
+
+            $api.search(params, params.query, function (result) {
+                var items = [];
+                for (var i = 0; i < result.autocomplete.length; i = i + 2) {
+                    items.push(result.autocomplete[i].name)
+                }
+                if (cb)cb(items)
+            })
+        }
+
+
+        //
+        //
+        // solr search in all documents
+        Search.prototype.docs = function (params, cb) {
+
+            var me = this;
+            me.result.error = "";
+            me.result.docs = [];
+            me.loading = true;
+
+            delete this.params.list;
+            delete this.params.accs;
+
+            angular.extend(this.params, searchApi, defaultUrl, params)
+            this.params.entity = config.api.entityMapping[params.entity];
+
+            // adv search
+            if (this.params.sparql) {
+                angular.extend(this.params, defaultAdv)
+            }
+
+            // make a copy to avoid post issue
+            var post = angular.copy(this.params);
+            delete post.action
+            delete post.entity
+
+            console.log(this.params)
+
+            // display search status status
+            me.result.message = "Loading content...";
+
+            $api.search({action: this.params.action, entity: this.params.entity}, post).$promise.then(function (docs) {
+                me.result.rows = docs.rows;
+                me.result.params = params;
+                me.result.display = config.api.entityMapping[me.params.entity];
+                me.result.core = docs.index;
+                me.result.time = docs.elapsedTime;
+                me.result.score = docs.maxScore;
+                me.result.docs = docs.results;
+                me.result.ontology = config.api.ontology;
+                me.result.filters = docs.filters
+
+                me.result.message = (docs.rows.length > 0) ? "" : "No search results were found.";
+
+                //
+                // prepare spellcheck stucture
+                me.result.spellcheck = docs.spellcheck;
+
+                //
+                // prepare pagination
+                me.paginate(params, docs)
+
+
+                //
+                // special cases: ac on publications
+                if (me.result.display === "publications") {
+                    me.result.docs.forEach(function (doc) {
+                        doc.acs = doc.ac.split(' | ');
+                        doc.year = new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi, "")).getFullYear()
+                        doc.authors = doc.authors.split(' | ');
+                    })
+                }
+
+                me.loading = false;
+
+                if (cb)cb(me.result)
+            }, function (error) {
+                me.loading = false;
+                //if (error.status)
+                me.result.error = "Ooops, request failed: " + error;
+            })
+        }
+
+        Search.prototype.getIds = function (params, cb) {
+
+            // make a copy to avoid post issue
+            var post = angular.copy(params);
+            delete post.action
+            delete post.entity
+
+            // adv search
+            if (params.mode == 'advanced')
+                angular.extend(post, defaultAdv)
+
+
+            $api.search({ action: 'search-ids', entity: params.entity, quality: params.quality }, post).$promise.then(function (docs) {
+                if (cb)cb(docs);
+            });
+        };
+
+
+        var search = new Search();
+        return search;
+    }]);
