@@ -35,19 +35,23 @@
 
 
 					<li id="pageInput" ng-show="Search.result.pages.length > 1" style="margin:5px" class="visible-desktop">
-						<form name="paging" ng-submit="params({start:(Search.result.pagination.manual-1)*Search.result.rows},paging)" class="nomargin">
-							<input type="number" min="1" max="{{ Search.result.pagination.numPages | number:0}}" class="bold black" ng-model="Search.result.pagination.manual"  style="border: 0px none; width: 40px;color:black;margin-bottom:0;text-align:right"/> / {{ Search.result.pagination.numPages | number:0}} page(s)
+						<form name="paging" ng-submit="params({start:(Search.result.pagination.current - 1)*Search.result.rows},paging)" class="nomargin">
+							<input type="number" min="1" max="{{ Search.result.pagination.numPages | number:0}}" class="bold black"
+                                   ng-model="Search.result.pagination.current"  style="border: 0px none; width: 40px;color:black;margin-bottom:0;text-align:right"
+                                    /> / {{ Search.result.pagination.numPages | number:0}} page(s)
 						</form>
 					</li>
 
-<!-- 					<li class="divider-vertical visible-desktop"></li>
-					<li id="search-query-affix" class="  fadein black visible-desktop" style="opacity: 0">
-						<input  type="text" placeholder="Search"
-							ng-model="Search.params.query" autocomplete="off"  bs-autocomplete="Search.suggest" 
-							style="border: 0px none; width: 120px;color:black;margin-bottom:0" np-enter="go()">
-						<span class="label-gg" ><i class="icon-search"/></span>
-					</li>
- -->
+
+
+                    <!-- 					<li class="divider-vertical visible-desktop"></li>
+                                        <li id="search-query-affix" class="  fadein black visible-desktop" style="opacity: 0">
+                                            <input  type="text" placeholder="Search"
+                                                ng-model="Search.params.query" autocomplete="off"  bs-autocomplete="Search.suggest"
+                                                style="border: 0px none; width: 120px;color:black;margin-bottom:0" np-enter="go()">
+                                            <span class="label-gg" ><i class="icon-search"/></span>
+                                        </li>
+                     -->
 		    	</ul>
 				<ul class="nav pull-right">
 				  	<!-- <li class="divider-vertical"></li>
@@ -131,16 +135,16 @@
 	      <!-- RESULT CONTENT -->
 	  	  <b ng-show="!Search.result.docs.length&&Search.params.query">{{Search.result.message}}</b>
 	  	  <div ng-include="getResultTemplateByEntity()"></div>
-	      
-		  <!-- PAGINATE -->
-		  <div class="result pagination pagination-small" ng-show="Search.result.pages.length>1">
-			<ul>
-				<li ng-class="{disabled:!Search.result.pagination.prev}"><a href="" ng-click="params({start:Search.result.pagination.prev.rows})">&laquo;</a></li>
-				<li ng-repeat="page in Search.result.pages" ng-class="{disabled:page.current}" ><a  href="" ng-click="params({start:page.rows})">{{page.offset}}</a></li>
-				<li ng-show="Search.result.pagination.more"><a href="" ng-click="params({start:Search.result.pagination.more.rows})">... {{Search.result.pagination.more.offset}}</a></li>
-				<li ng-class="{disabled:!Search.result.pagination.next}"><a href="" ng-click="params({start:Search.result.pagination.next.rows})">&raquo;</a></li>
-			</ul>
-		  </div>				  
+
+            <!-- PAGINATE -->
+            <div class="result pagination pagination-small" ng-show="Search.result.pages.length>1">
+                <ul>
+                    <li ng-class="{disabled:!Search.result.pagination.prev}"><a href="" ng-click="params({start:Search.result.pagination.prev.rows})">&laquo;</a></li>
+                    <li ng-repeat="page in Search.result.pages" ng-class="{disabled:page.current}" ><a  href="" ng-click="params({start:((page.offset-1) * Search.result.rows)})">{{page.offset}}</a></li>
+                    <li ng-show="Search.result.pagination.more"><a href="" ng-click="params({start:Search.result.pagination.more.rows})">... {{Search.result.pagination.more.offset}}</a></li>
+                    <li ng-class="{disabled:!Search.result.pagination.next}"><a href="" ng-click="params({start:Search.result.pagination.next.rows})">&raquo;</a></li>
+                </ul>
+            </div>
 
 	    </div>
 	  </div>

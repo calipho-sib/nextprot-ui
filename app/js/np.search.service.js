@@ -101,16 +101,14 @@ SearchService.factory('Search',[
 			this.result.num=docs.found;
 			this.result.pagination={};
 
-			// current page in the bottom
-			this.result.pagination.current = parseInt((params.start ? params.start : 0) / config.api.paginate.rows);
+            if(!params.rows)
+                params.rows = config.api.paginate.defaultRows;
 
-			// current page in input (user)
-			this.result.pagination.manual = this.result.pagination.current + 1;
+			// current page in the bottom
+			this.result.pagination.current = parseInt((params.start ? params.start : 0) / params.rows) + 1;
 
 			this.result.pagination.numPages = parseInt(this.calcPages(this.result.num, params.rows ? parseInt(params.rows) : 50));
 			//console.log('pages: ', this.result.num, params.rows ? params.rows : 50, this.result.pagination.numPages, this.calcPages(this.result.num, params.rows ? params.rows : 50));
-
-
 
 
 			// back button
@@ -118,35 +116,34 @@ SearchService.factory('Search',[
 				var offset=this.result.pagination.current;
 				this.result.pagination.prev = {
 					offset: offset - 1, 
-					rows:(offset - 1) * config.api.paginate.rows
+					rows:(offset - 1) * params.rows
 				};
 			}
 			// next button 
-			if (docs.results.length === config.api.paginate.rows){
+			if (docs.results.length === params.rows){
 				this.result.pagination.next = {
 					offset:this.result.pagination.current + 1, 
-					rows:(this.result.pagination.current + 1) * config.api.paginate.rows
+					rows:(this.result.pagination.current + 1) * params.rows
 				};
 			}
 
 			// more button
-			if (  (docs.found/config.api.paginate.rows) > config.api.paginate.steps){
+			if (  (docs.found/params.rows) > config.api.paginate.steps){
 				this.result.pagination.more = {
 					offset: this.result.pagination.numPages, //parseInt(this.result.num/config.solr.paginate.rows), 
-					rows: parseInt(this.result.num/config.api.paginate.rows) * config.api.paginate.rows
+					rows: parseInt(this.result.num/params.rows) * params.rows
 				};
 			}
 
 			
 			this.result.offset = docs.start;
 			this.result.pages = [];
-			for (var page = 0; page < (this.result.num / config.api.paginate.rows); page++){
+			for (var page = 1; page < (this.result.num / params.rows); page++){
 				if (page > config.api.paginate.steps){
 					break;		
 				}
 				this.result.pages.push({
-					offset: page + 1,
-					rows: page * config.api.paginate.rows,
+					offset: page,
 					current: (this.result.pagination.current) === page
 				})
 			}		
