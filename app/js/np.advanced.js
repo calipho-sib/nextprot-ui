@@ -189,7 +189,8 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
         $scope.openPopup = function (jspname, typeName) {
-            $window.open('http://localhost:8080/nextprot-api/rdf/help/' + jspname + ' /' + typeName, jspname, 'width=800,height=600');
+            var baseUrl = config.api.BASE_URL + config.api.API_PORT;
+            $window.open(baseUrl + '/nextprot-api/rdf/help/' + jspname + ' /' + typeName, jspname, 'width=800,height=600');
         }
 
     }
