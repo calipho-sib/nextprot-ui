@@ -20,7 +20,6 @@
                 <section id="{{rh.typeName}}">
 
                     <h2>{{rh.typeName.replace(':','')}}
-
                         <!-- Possible values -->
                         <div ng-if="rh.values.length > 0" class="btn-group">
                             <button class="btn dropdown-toggle" data-toggle="dropdown">Values<span class="caret"></span>
@@ -29,7 +28,9 @@
                                 <li ng-repeat="value in rh.values"><a href="">{{value}}</a></li>
                             </ul>
                         </div>
+                        <button type="button" ng-click="openPopup('visgraphp', rh.typeName)"><i class="icon-picture"></i></a></button>
                         <span class="badge badge-info">{{rh.instanceCount}}</span>
+                        <!--<button type="button" ng-click="openPopup('visgraph', rh.typeName)"><i class="icon-retweet"></i></a></button>-->
                     </h2>
 
                     <p>{{rh.rdfsComment}}</p>
