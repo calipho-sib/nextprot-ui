@@ -104,6 +104,7 @@ SearchService.factory('Search', [
 
             // current page in the bottom
             var currentOffset = parseInt((params.start ? params.start : 0) / params.rows);
+            //The page starts at 1 and the offset starts at 0
             this.result.pagination.current = currentOffset + 1;
 
             this.result.pagination.numPages = parseInt(this.calcPages(this.result.num, params.rows ? parseInt(params.rows) : 50));
@@ -127,28 +128,33 @@ SearchService.factory('Search', [
                 };
             }
 
-            // more button
-            if ((docs.found / params.rows) > config.api.paginate.steps) {
-                this.result.pagination.more = {
-                    offset: this.result.pagination.numPages, //parseInt(this.result.num/config.solr.paginate.rows),
-                    rows: parseInt(this.result.num / params.rows) * params.rows
-                };
+            this.result.offset = docs.start;
+            this.result.pages = [];
+            var minPage = this.result.pagination.current - (config.api.paginate.steps / 2);
+            var maxPage = this.result.pagination.current + (config.api.paginate.steps / 2);
+            var totalPage = Math.floor(this.result.num / params.rows) + 1;
+
+            if (minPage < 1){
+                maxPage  += (Math.abs(minPage) + 1);
+                minPage = 1;
+            }
+
+            if (maxPage > totalPage){
+                minPage -= Math.abs(totalPage - maxPage);
+                maxPage = totalPage;
+            }
+
+            //Final checks when the num results don't feel the paging
+            if(minPage < 1) {
+                minPage = 1;
+            }
+
+            if(maxPage > totalPage) {
+                maxPage = totalPage;
             }
 
 
-            this.result.offset = docs.start;
-            this.result.pages = [];
-            var minPage = this.result.pagination.current - config.api.paginate.steps;
-            var maxPage = this.result.pagination.current + config.api.paginate.steps;
-
-            if (minPage < 1)
-                minPage = 1;
-
-            if (maxPage > (this.result.num / params.rows))
-                maxPage = (this.result.num / params.rows);
-
-
-            for (var page = minPage; page < maxPage; page++) {
+            for (var page = minPage; page <= maxPage; page++) {
                 this.result.pages.push({
                     offset: page,
                     current: (this.result.pagination.current) === page

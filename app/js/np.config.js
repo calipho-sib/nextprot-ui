@@ -150,7 +150,7 @@ angular.module('np.config', []).factory('config', [
             },
 
             paginate: {
-                steps: 4,
+                steps: 8,
                 defaultRows: 50
             }
 

@@ -10,9 +10,9 @@
 					<li class="dropdown">
 						<!-- <a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{Search.result.docs.length}}</b> on {{Search.result.num}} {{Search.result.display}} <b class="caret"/>
 						</a> -->
-						<a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{start ++ 1}}</b> to <b>{{rows -- start}}</b> of {{Search.result.num}} <b class="caret"/></a>
+						<a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{start ++ 1}}</b> to <b>{{ ((start + rows) > Search.result.num) ? Search.result.num : (start + rows) }}</b> of {{Search.result.num}} <b class="caret"/></a>
 						<ul class="dropdown-menu" >
-							<li><a ng-class="{bold:Search.params.rows=='50'||!Search.params.rows}" href="" ng-click="params({rows:50})">50 rows</a></li>
+    						<li><a ng-class="{bold:Search.params.rows=='50'||!Search.params.rows}" href="" ng-click="params({rows:50})">50 rows</a></li>
 							<li><a ng-class="{bold:Search.params.rows=='100'}" href="" ng-click="params({rows:100})">100 rows</a></li>
 							<li><a ng-class="{bold:Search.params.rows=='150'}" href="" ng-click="params({rows:150})">150 rows</a></li>
 							<li><a ng-class="{bold:Search.params.rows=='200'}" href="" ng-click="params({rows:200})">200 rows</a></li>
@@ -39,8 +39,10 @@
 							<input type="number" min="1" max="{{ Search.result.pagination.numPages | number:0}}" class="bold black"
                                    ng-model="Search.result.pagination.current"  style="border: 0px none; width: 40px;color:black;margin-bottom:0;text-align:right"
                                     /> / {{ Search.result.pagination.numPages | number:0}} page(s)
+                            <!-- PAGINATE -->
 						</form>
 					</li>
+
 
 
 
@@ -140,8 +142,7 @@
             <div class="result pagination pagination-small" ng-show="Search.result.pages.length>1">
                 <ul>
                     <li ng-class="{disabled:!Search.result.pagination.prev}"><a href="" ng-click="params({start:Search.result.pagination.prev.start})">&laquo;</a></li>
-                    <li ng-repeat="page in Search.result.pages" ng-class="{disabled:page.current}" ><a  href="" ng-click="params({start:((page.offset-1) * Search.result.rows)})">{{page.offset}}</a></li>
-                    <li ng-show="Search.result.pagination.more"><a href="" ng-click="params({start:Search.result.pagination.more.rows})">... {{Search.result.pagination.more.offset}}</a></li>
+                    <li ng-repeat="page in Search.result.pages" ng-class="{disabled:page.current}" ><a href="" ng-click="params({start:((page.offset-1) * Search.result.rows)})">{{page.offset}}</a></li>
                     <li ng-class="{disabled:!Search.result.pagination.next}"><a href="" ng-click="params({start:Search.result.pagination.next.start})">&raquo;</a></li>
                 </ul>
             </div>
