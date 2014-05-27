@@ -62,11 +62,6 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             update: { method: 'PUT'}
         });
 
-        var $api_adv_query_id = $resource(baseUrl + '/nextprot-api/user/:username/advanced-user-query/:id.json', {username: '@username', id: '@id'}, {
-            delete: { method: 'DELETE'},
-            update: { method: 'PUT'}
-        });
-
 
         var AdvancedQueryService = function () {
             this.showHelp = false;
@@ -127,17 +122,18 @@ AdvancedQueryService.factory('AdvancedQueryService', [
             });
         };
 
-        AdvancedQueryService.prototype.updateAdvancedQuery = function (username, cb) {
-            $api_adv_query_id.update({ username: UserService.userProfile.username, id: this.selectedQuery.advancedUserQueryId }, this.selectedQuery, function (data) {
+        AdvancedQueryService.prototype.updateAdvancedQuery = function (username, cb, cbe) {
+            $api_adv_query_id.update({ username: UserService.userProfile.username, id: this.selectedQuery.userQueryId }, this.selectedQuery, function (data) {
                 if (cb)cb(data);
+            }, function (error) {
+                if (cbe)cbe(error);
             });
-
         };
 
         AdvancedQueryService.prototype.deleteAdvancedQuery = function (aq, cb) {
             var me = this;
             if (confirm("Are you sure you want to delete the selected query?")) {
-                $api_adv_query_id.delete({ username: UserService.userProfile.username, id: aq.advancedUserQueryId}, function (data) {
+                $api_adv_query_id.delete({ username: UserService.userProfile.username, id: aq.userQueryId}, function (data) {
                     flash('alert-success', aq.title + " query deleted successfully for ");
                     me.getRepository(Search.config.widgets.repositories.privateRep);
                     if (cb)cb(data);
@@ -148,6 +144,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         AdvancedQueryService.prototype.setCurrentQuery = function (query) {
 
+            console.log(query);
             //The binding is done at the level of the primitive, therefore
             angular.extend(this.selectedQuery, query);
 
@@ -168,7 +165,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
         };
 
         AdvancedQueryService.prototype.isNew = function () {
-            return (this.selectedQuery.advancedUserQueryId == null);
+            return (this.selectedQuery.userQueryId == null);
         };
 
         AdvancedQueryService.prototype.insertOrUpdateSelectedQuery = function () {
