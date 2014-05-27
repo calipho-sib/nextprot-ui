@@ -98,14 +98,17 @@ SearchService.factory('Search', [
         Search.prototype.paginate = function (params, docs) {
             this.result.num = docs.found;
             this.result.pagination = {};
-
             if (!params.rows)
                 params.rows = config.api.paginate.defaultRows;
+
 
             // current page in the bottom
             var currentOffset = parseInt((params.start ? params.start : 0) / params.rows);
             //The page starts at 1 and the offset starts at 0
             this.result.pagination.current = currentOffset + 1;
+
+            //total number of pages
+            var totalPage = Math.floor(this.result.num / params.rows) + 1;
 
             this.result.pagination.numPages = parseInt(this.calcPages(this.result.num, params.rows ? parseInt(params.rows) : 50));
             //console.log('pages: ', this.result.num, params.rows ? params.rows : 50, this.result.pagination.numPages, this.calcPages(this.result.num, params.rows ? params.rows : 50));
@@ -116,7 +119,9 @@ SearchService.factory('Search', [
                 this.result.pagination.prev = {
                     offset: currentOffset - 1,
                     rows: params.rows,
-                    start: ((currentOffset - 1) * params.rows)
+                    start: ((currentOffset - 1) * params.rows),
+                    visible : (currentOffset != 0)
+
                 };
             }
             // next button
@@ -124,15 +129,18 @@ SearchService.factory('Search', [
                 this.result.pagination.next = {
                     offset: currentOffset + 1,
                     rows: params.rows,
-                    start: ((currentOffset + 1) * params.rows)
+                    start: ((currentOffset + 1) * params.rows),
+                    visible : (currentOffset != (totalPage - 1))
                 };
             }
 
             this.result.offset = docs.start;
             this.result.pages = [];
+
+
             var minPage = this.result.pagination.current - (config.api.paginate.steps / 2);
             var maxPage = this.result.pagination.current + (config.api.paginate.steps / 2);
-            var totalPage = Math.floor(this.result.num / params.rows) + 1;
+
 
             if (minPage < 1){
                 maxPage  += (Math.abs(minPage) + 1);
