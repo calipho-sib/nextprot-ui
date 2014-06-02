@@ -75,6 +75,22 @@ SearchModule.controller('SearchCtrl', [
             });
         }
 
+
+
+        //
+        // interact with the search bar
+        $scope.manualPaginate = function (form) {
+
+            var currentValue = parseInt(Search.result.pagination.current);
+            var numPages = parseInt( Search.result.pagination.numPages);
+            if(currentValue > numPages){
+                Search.result.pagination.current=numPages;
+            }
+
+            $scope.params({start:(Search.result.pagination.current - 1)*Search.result.rows}, form);
+
+        }
+
         //
         // interact with the search bar
         $scope.params = function (params, form) {

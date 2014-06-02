@@ -106,7 +106,7 @@ SearchService.factory('Search', [
             // current page in the bottom
             var currentOffset = parseInt((params.start ? params.start : 0) / params.rows);
             //The page starts at 1 and the offset starts at 0
-            this.result.pagination.current = currentOffset + 1;
+            this.result.pagination.current = (currentOffset + 1);
 
             //total number of pages
             var totalPage = Math.floor(this.result.num / params.rows) + 1;
