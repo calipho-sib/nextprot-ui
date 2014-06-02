@@ -135,7 +135,7 @@
             </div>
 
 	      <!-- RESULT CONTENT -->
-	  	  <b ng-show="!Search.result.docs.length&&Search.params.query">{{Search.result.message}}</b>
+	  	  <b ng-show="Search.result.message&&(Search.params.query||Search.params.sparql)">{{Search.result.message}}</b>
 	  	  <div ng-include="getResultTemplateByEntity()"></div>
 
             <!-- PAGINATE -->

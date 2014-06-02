@@ -166,9 +166,12 @@ SearchModule.controller('SearchCtrl', [
 
             //Advanced mode
             if (Search.params.sparql && Search.params.sparql.length) {
+
                 $location.search('sparql', Search.params.sparql.trim()).
                           search('mode','advanced').
-                          search('query',null);                
+                          search('rows', (Search.params.rows) ? Search.params.rows : 50).
+                          search('query',null);
+
             }
 
             //We are in simple mode

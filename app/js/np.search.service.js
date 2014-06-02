@@ -101,6 +101,7 @@ SearchService.factory('Search', [
             if (!params.rows)
                 params.rows = config.api.paginate.defaultRows;
 
+            params.rows = parseInt(params.rows);
 
             // current page in the bottom
             var currentOffset = parseInt((params.start ? params.start : 0) / params.rows);
@@ -113,7 +114,6 @@ SearchService.factory('Search', [
             this.result.pagination.numPages = parseInt(this.calcPages(this.result.num, params.rows ? parseInt(params.rows) : 50));
             //console.log('pages: ', this.result.num, params.rows ? params.rows : 50, this.result.pagination.numPages, this.calcPages(this.result.num, params.rows ? params.rows : 50));
 
-
             // back button
             if (params.start > 0 && (this.result.pagination.current) > 0) {
                 this.result.pagination.prev = {
@@ -124,8 +124,9 @@ SearchService.factory('Search', [
 
                 };
             }
+
             // next button
-            if (docs.results.length === params.rows) {
+            if (docs.results.length == params.rows) {
                 this.result.pagination.next = {
                     offset: currentOffset + 1,
                     rows: params.rows,
@@ -236,7 +237,7 @@ SearchService.factory('Search', [
                 me.result.ontology = config.api.ontology;
                 me.result.filters = docs.filters
 
-                me.result.message = (docs.rows.length > 0) ? "" : "No search results were found.";
+                me.result.message = (docs.found == 0) ? "No search results were found." : null;
 
                 //
                 // prepare spellcheck stucture
@@ -245,7 +246,6 @@ SearchService.factory('Search', [
                 //
                 // prepare pagination
                 me.paginate(params, docs)
-
 
                 //
                 // special cases: ac on publications
