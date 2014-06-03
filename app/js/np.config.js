@@ -9,7 +9,7 @@ angular.module('np.config', []).factory('config', [
     function ($http) {
 
         var BASE_URL = 'http://crick';
-        var BASE_AUTH_URL = 'http://crick.isb-sib.ch:9090';
+        var BASE_AUTH_URL = 'http://crick:9090';
 
         // var BASE_URL= 'http://uat-web1.isb-sib.ch';
 
