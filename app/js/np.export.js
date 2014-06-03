@@ -30,6 +30,7 @@ ExportModule.controller('ExportCtrl', [
 
         $scope.setSelectedFormat = function (format){
             $scope.selectedFormat = {}
+            $scope.selectedTemplate = {"name" : "Select your template", "extension" : null};
             angular.extend($scope.selectedFormat, format);
         }
 
