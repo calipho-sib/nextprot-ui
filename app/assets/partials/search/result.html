@@ -33,18 +33,16 @@
 		    	<!-- DISPLAY FILTERS SORT/EXPORT -->
 		    	<ul class="nav">
 
-
-					<li id="pageInput" ng-show="Search.result.pages.length > 1" style="margin:5px" class="visible-desktop">
-						<form name="paging" ng-submit="params({start:(Search.result.pagination.current - 1)*Search.result.rows},paging)" class="nomargin">
-							<input type="number" min="1" max="{{ Search.result.pagination.numPages | number:0}}" class="bold black"
-                                   ng-model="Search.result.pagination.current"  style="border: 0px none; width: 40px;color:black;margin-bottom:0;text-align:right"
+					<li ng-if="Search.result.pagination.numPages" id="pageInput" ng-show="Search.result.pages.length > 1" style="margin:5px" class="visible-desktop">
+						<form name="paging" ng-submit="manualPaginate(paging)" class="nomargin" >
+                            <!--   looks like this breaks the paging check if new version of angular is ok-->
+                            <input type="number" min="1" class="bold black"
+                                   ng-model="Search.result.pagination.current"
+                                   style="border: 0px none; width: 40px;color:black;margin-bottom:0;text-align:right"
                                     /> / {{ Search.result.pagination.numPages | number:0}} page(s)
                             <!-- PAGINATE -->
 						</form>
 					</li>
-
-
-
 
                     <!-- 					<li class="divider-vertical visible-desktop"></li>
                                         <li id="search-query-affix" class="  fadein black visible-desktop" style="opacity: 0">

@@ -43,8 +43,7 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
-        //TODO Should call the api instead
-        var $rdf_help_get_resource = $resource('rdfhelp.json');
+        var $rdf_help_get_resource = $resource(baseUrl + '/nextprot-api/rdf/help/type/all.json');
 
         var $api_help_get_resource = $resource(baseUrl + '/nextprot-api/jsondoc.json');
 
