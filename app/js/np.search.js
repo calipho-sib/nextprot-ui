@@ -178,6 +178,13 @@ SearchModule.controller('SearchCtrl', [
             $location.search('rows', null);
             $location.search('start', null);
 
+            //Set the search order if not set
+            if(!Search.params.order){
+                if(Search.params.sort){
+                    $location.search('order', 'asc');
+                }else $location.search('order', 'desc'); //Default case where it is the ranking score
+            }
+
             $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search')
 
             //Advanced mode
