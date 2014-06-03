@@ -10,7 +10,7 @@
               <span class=" small">{{doc.journal}} <b>{{doc.volume}}</b>, {{doc.first_page}}-{{doc.last_page}}({{doc.year}})
                 [<span ng-repeat="ac in doc.acs"><a href="{{getPublicationUrl(ac)}}">{{ac}}</a></span>] </span> <br/>
               <span><a class="btn btn-mini" toggle="#line-{{$index}}" > Show Abstract</a> </span>
-              <div  id="line-{{$index}}" class="hide result-abstract"  ng-bind="doc.abstract"></div>
+              <div  id="line-{{$index}}" class="hide result-abstract"  ng-bind-html="doc.abstract"></div>
             </div>      
           </li>
         </ul>
