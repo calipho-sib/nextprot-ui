@@ -4,7 +4,7 @@
           <li ng-repeat="doc in Search.result.docs"  ng-cloak>
             <div><a href="http://www.nextprot.org/db/term/{{doc.ac}}">{{doc.name}} [{{doc.ac}}]</a> </div> 
             <div class="gray small">{{Search.result.ontology[doc.filters.toLowerCase()] }}</div>
-            <div class="small" ng-hide="Search.session.summary">{{doc.description}}</div>
+            <div class="small" ng-hide="Search.session.summary" ng-bind-html="doc.description"></div>
 
 
           </li>

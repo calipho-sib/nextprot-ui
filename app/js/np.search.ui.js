@@ -19,13 +19,28 @@ SearchUI.filter('trim', function() {
 		return (input.trim());
 	}
 });
-SearchUI.filter('limit', function() {
-	return function(input, max) {
-		if(!input)return;
-		if(!max)max=200;
-		return (input.substring(0,max)+' ...');
-	}
-});
+
+
+SearchUI.filter('limit', function () {
+        return function (value, max, wordwise, tail) {
+            if (!value) return '';
+            if(!wordwise)wordwise=true;
+
+            max = parseInt(max, 10);
+            if (!max) return value;
+            if (value.length <= max) return value;
+
+            value = value.substr(0, max);
+            if (wordwise) {
+                var lastspace = value.lastIndexOf(' ');
+                if (lastspace != -1) {
+                    value = value.substr(0, lastspace);
+                }
+            }
+
+            return value + (tail || ' ...');
+        };
+    });
 
 SearchUI.directive('version', ['config', function(config) {
     return function(scope, elm, attrs) {
