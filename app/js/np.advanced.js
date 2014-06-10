@@ -118,7 +118,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
         $scope.setCurrentQuery = function (query) {
-            Search.params.sparql = query.sparql;
+            Search.params.sparql = '#' + query.title + "\n" + query.sparql;
             //close the help after that
             AdvancedQueryService.showHelp = false;
         }
