@@ -42,7 +42,12 @@
                         <span id="myGsignin"></span>
                     </span>
 
-                    <button class="btn btn-lg btn-danger btn-block" ng-click="clickSignIn()">Sign in with Google</button>
+                    <div style="text-align:center;">
+                        <button class="btn text-center " ng-click="clickSignIn()">
+                            <img src="../img/google.png" style="height: 20px; width: 20px"/>
+                            Sign in with Google
+                        </button>
+                    </div>
 
 
                     <button class="btn btn-lg btn-block" ng-click="clickSignOut()" ng-show="isSignedIn">Sign out</button>
