@@ -8,17 +8,14 @@ angular.module('np.config', []).factory('config', [
     '$http',
     function ($http) {
 
-        var BASE_URL = 'http://crick';
-        var BASE_AUTH_URL = 'http://crick:9090';
-
-        // var BASE_URL= 'http://uat-web1.isb-sib.ch';
-
+        var BASE_URL = 'http://uat-web2';
+        var BASE_AUTH_URL = 'http://uat-web2:9090';
 
         var google = {
             rootUrl: 'http://localhost:3000',
 
             credentials: {
-                'clientId': '330067914740-lr5rtkdth97c6qpkluj0rqknfe29ecr8.apps.googleusercontent.com',
+                'clientId': '827637097658-imcj14n7j1mc3ac1h2t646rk4jp28smj.apps.googleusercontent.com',
                 'apiBase': '/api/',
                 'rootUrl': 'http://localhost:3000',
                 'scopes': 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
