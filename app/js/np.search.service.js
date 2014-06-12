@@ -30,7 +30,7 @@ SearchService.factory('Search', [
             sparql: null,
             sort: '',
             order: '',
-            mode: 'simple' // can be simple or advanced
+            mode: null // can be simple or advanced
         };
 
         var defaultAdv = {

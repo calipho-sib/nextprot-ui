@@ -97,14 +97,20 @@ angular.module('np.config', []).factory('config', [
 
 
             widgets: {
-                sort: {
-                    //asc:"icon-sort-by-attributes",
+                sort: {                
                     asc: "icon-arrow-up",
                     desc: "icon-arrow-down",
-                    // desc:"icon-sort-by-attributes-alt",
-                    "": ""
                 },
                 proteins: {
+                    sort:{
+                        '':{text:"score",image:"icon-arrow-down", isAsc:false},
+                        'gene':{text:'gene',image:"icon-arrow-up", isAsc:true},
+                        'protein':{text:'protein',image:"icon-arrow-up", isAsc:true},
+                        'family':{text:'family',image:"icon-arrow-up", isAsc:true},
+                        'chromosome':{text:'chr',image:"icon-arrow-up", isAsc:true},
+                        'ac':{text:'ac',image:"icon-arrow-up", isAsc:true},
+                        'length':{text:'len',image:"icon-arrow-up", isAsc:true}
+                    },
                     gold: true,
                     qualityLabel: {
                         'gold': 'Gold only',

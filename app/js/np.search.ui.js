@@ -76,7 +76,7 @@ SearchUI.directive('npAnimate', ['config', 'Search', '$location' ,function (conf
 
 SearchUI.directive('modalOnLoad', function () {
     return function (scope, element, attrs) {
-        element.modal();
+        element.modal({backdrop:false});
     };
 });
 

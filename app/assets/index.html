@@ -44,11 +44,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="">neXtProt</a>
+            <a class="brand" href="#" ng-click="reset()">neXtProt</a>
 
             <div  class="nav-collapse collapse" id="main-menu">
                 <ul class="nav" id="main-menu-left">
-                    <li><a ng-href="#" ng-click="Search.params.query=''">Home</a></li>
+                    <li><a ng-href="#" ng-click="reset()">Home</a></li>
                     <!-- DOWNLOAD -->
                     <li><a href="proteinlists">Lists & Export</a>
                     <li><a href="rdf-help">RDF Help</a>
@@ -71,8 +71,8 @@
     </div>
 </div>
 
-<div ng-cloak ng-show="message" class=" error">
-    <div class="np-alert alert alert-error">{{Search.result.error}} {{message}}</div>
+<div  ng-show="message" class=" error">
+    <div ng-cloak class="np-alert alert alert-error">{{Search.result.error}} {{message}}</div>
 </div>
 
 <!--   <div class="alert alert-success" style="margin-top: 40px">

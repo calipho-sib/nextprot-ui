@@ -149,10 +149,12 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
         $scope.showHelpRepository = function (boolean) {
-            if(boolean){
-                AdvancedQueryService.getRepository(Search.config.widgets.repositories.aNextprotRep);
-            }
-            AdvancedQueryService.showHelp = boolean;
+            AdvancedQueryService.getRepository(Search.config.widgets.repositories.aNextprotRep,function(repos)
+                    AdvancedQueryService.showHelp=true
+                , function(){
+                    $location.path("/login")
+                });
+            // AdvancedQueryService.showHelp = !AdvancedQueryService.showHelp;
         }
 
         $scope.showHelp = function (section) {

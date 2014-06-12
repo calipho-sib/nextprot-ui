@@ -70,9 +70,10 @@ SearchModule.controller('SearchCtrl', [
 
         $scope.logout = function () {
             UserService.logout(function () {
-                    gapi.auth.signOut();
                     flash('alert-info', "Successfully logged out ");
+                    gapi.auth.signOut();
             });
+            $scope.reset()
         }
 
 
@@ -117,11 +118,17 @@ SearchModule.controller('SearchCtrl', [
         }
 
         $scope.toggleAdv = function (mode) {
-            if (mode==='advanced'){
-                return $location.path('/proteins/search').search('mode', mode).search('query',null);                
+            $location.search('query', null)
+            $location.search('sparql', null)
+            $scope.toggle(mode)
+            if(mode.mode){
+                $location.path('/proteins/search')
             }
+            // if (mode==='advanced'){
+            //     return $location.path('/proteins/search').search('mode', mode).search('query',null);                
+            // }
 
-            $location.search('mode', null).search('sparql',null)
+            // $location.search('mode', null).search('sparql',null)
         }
 
         $scope.clean = function () {
@@ -131,13 +138,17 @@ SearchModule.controller('SearchCtrl', [
             $location.search('list', null)
             $location.search('rows', null)
             $location.search('start', null)
-            $location.search('order', null)
             $location.search('cart', null)
             $location.search('query', null)
             $location.search('filter', null)
             $location.search('quality', null)
             $location.search('sort', null)
+            $location.search('order', null)
             $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search');
+        }
+
+        $scope.reset=function(){
+            $location.search({})
         }
 
         $scope.toggle = function (params) {
@@ -166,6 +177,21 @@ SearchModule.controller('SearchCtrl', [
 
         }
 
+        $scope.displaySort=function(){
+            //
+            // map default visual aspect of sort
+            var entity=Search.config.entityMapping[Search.params.entity], 
+                defaultSort=Search.config.widgets[entity].sort[Search.params.sort]
+
+            //
+            // sort order can be overrided by user action
+            if(Search.config.widgets.sort[Search.params.order]){
+                defaultSort.image=Search.config.widgets.sort[Search.params.order]
+                defaultSort.isAsc=(Search.params.order=='asc')
+            }
+            return defaultSort
+        }        
+
         $scope.isAdvancedMode = function () {
             return Search.params.mode == 'advanced';
         }
@@ -178,12 +204,6 @@ SearchModule.controller('SearchCtrl', [
             $location.search('rows', null);
             $location.search('start', null);
 
-            //Set the search order if not set
-            if(!Search.params.order){
-                if(Search.params.sort){
-                    $location.search('order', 'asc');
-                }else $location.search('order', 'desc'); //Default case where it is the ranking score
-            }
 
             $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search')
 
@@ -220,6 +240,25 @@ SearchModule.controller('SearchCtrl', [
             $scope.go();
             $scope.$apply()
         });
+
+
+
+        //
+        // use global scope to save the old location as referrer
+        $rootScope.$watch( function () {
+           return $location.url();
+        }, function( newPath, oldPath ) {
+           if( newPath !== oldPath ) {
+                $scope.referrer = oldPath;
+           } else {
+                $scope.referrer = undefined;
+           }
+        }); 
+
+        $rootScope.locateToReferrer=function() {
+            console.log($location.url(),$scope.referrer)
+            $location.url(($scope.referrer)?$scope.referrer:'/');            
+        }       
     }
 ]);
 
@@ -248,7 +287,6 @@ SearchModule.controller('ResultCtrl', [
 
         var params = _.clone($routeParams);
 
-        console.log("debug params",params)
 
         if ($routeParams.cart) {
             $scope.showCart = false;
@@ -269,6 +307,7 @@ SearchModule.controller('ResultCtrl', [
         if (!$routeParams.list) {
             search(params)
         }
+
 
 
         function search(params, cb) {

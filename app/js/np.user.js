@@ -31,12 +31,9 @@ UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$loc
             UserService.login(username, password, function (err, data) {
                 if (err) {
                     alert(error + data);
-                    console.log('error' + err + data);
                 }
+                $rootScope.locateToReferrer()
                 UserService.getUserProfile();
-               // $location.path('/advanced');
-                //$route.reload();
-
             });
 
         };
@@ -81,6 +78,7 @@ UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$loc
 
         $scope.signIn = function(authResult) {
             // $timeout(function() {
+            $rootScope.locateToReferrer()
             $scope.$apply(function() {
                 $scope.processAuth(authResult);
             });
