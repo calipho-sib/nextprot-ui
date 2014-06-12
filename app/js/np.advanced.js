@@ -149,12 +149,13 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
         $scope.showHelpRepository = function (boolean) {
-            AdvancedQueryService.getRepository(Search.config.widgets.repositories.aNextprotRep,function(repos)
-                    AdvancedQueryService.showHelp=true
-                , function(){
-                    $location.path("/login")
-                });
-            // AdvancedQueryService.showHelp = !AdvancedQueryService.showHelp;
+            if(!UserService.isAnonymous()){
+                AdvancedQueryService.getRepository(Search.config.widgets.repositories.aNextprotRep);
+                AdvancedQueryService.showHelp = true;
+            }else{
+                flash('alert-warning', "You must be logged to access advanced queries ");
+            }
+                
         }
 
         $scope.showHelp = function (section) {

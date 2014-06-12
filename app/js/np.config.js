@@ -119,9 +119,16 @@ angular.module('np.config', []).factory('config', [
 
                 },
                 publications: {
+                    sort:{
+                        '':{text:"",image:"icon-arrow-down", isAsc:false}
+                    },
                     gold: false
                 },
                 terms: {
+                    sort:{
+                        '':{text:"score",image:"icon-arrow-down", isAsc:false},
+                        'name':{text:"name",image:"icon-arrow-up", isAsc:true}
+                    },
                     gold: false
                 },
                 repositories: {
