@@ -13,8 +13,18 @@ UserModule.config([
 ]);
 
 
-UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$location', '$http', '$window','$timeout', 'UserService', 'config',
-        function ($scope, $rootScope, $routeParams, $location, $http, $window, $timeout, UserService, config) {
+UserModule.controller('UserCtrl', [
+    '$scope', 
+    '$rootScope', 
+    '$routeParams', 
+    '$location', 
+    '$http', 
+    '$window',
+    '$timeout', 
+    'User', 
+    'flash', 
+    'config',
+        function ($scope, $rootScope, $routeParams, $location, $http, $window, $timeout, User, flash, config) {
 
 //        $scope.username = "dani";
   //      $scope.password = "123";
@@ -24,17 +34,20 @@ UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$loc
 
         var baseAuthUrl = config.api.AUTH_SERVER;
 
-        console.log('route params', $routeParams);
-        $scope.user = UserService;
+        $scope.user = User;
+
+
 
         $scope.login = function (username, password) {
-            UserService.login(username, password, function (err, data) {
-                if (err) {
-                    alert(error + data);
-                }
-                $rootScope.locateToReferrer()
-                UserService.getUserProfile();
-            });
+            User.login(username, password).$promise.then(function(){
+                $rootScope.locateToReferrer()                
+                User.getProfile()
+            })
+
+            User.$promise.catch(function(error){
+                console.log("login ko",error)
+                flash('alert-error', 'Username or password is wrong' );
+            })
 
         };
 
@@ -96,7 +109,7 @@ UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$loc
                 $scope.immediateFailed = false;
                 // Successfully authorized, create session
 
-                UserService.googleSignin(authResult, function(response) {
+                User.googleSignin(authResult, function(response) {
                     $scope.signedIn();
                 });
             } else if (authResult['error']) {
@@ -109,18 +122,14 @@ UserModule.controller('UserCtrl', ['$scope', '$rootScope', '$routeParams', '$loc
         }
 
         $scope.signedIn = function() {
-            $scope.isSignedIn = true;
-
-            UserService.getUserProfile();
+            User.getProfile();
         }
 
-        // $scope.start();
 
         $scope.clickSignOut = function() {
-    	     console.log('SIGNED OUT!');
 
+             //TODO OLI
     	    gapi.auth.signOut();
-    	     $scope.isSignedIn = false;
          }
 
 

@@ -8,8 +8,8 @@ angular.module('np.config', []).factory('config', [
     '$http',
     function ($http) {
 
-        var BASE_URL = 'http://uat-web2';
-        var BASE_AUTH_URL = 'http://uat-web2:9090';
+        var BASE_URL = 'http://localhost';
+        var BASE_AUTH_URL = 'http://crick:9090';
 
         var google = {
             rootUrl: 'http://localhost:3000',

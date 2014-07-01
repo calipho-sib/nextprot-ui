@@ -36,16 +36,17 @@ SearchModule.controller('SearchCtrl', [
     '$timeout',
     'Search',
     'config',
-    'UserService',
-    'AdvancedQueryService',
+    // 'AdvancedQueryService',
+    'User',
     'flash',
-    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, UserService, AdvancedQueryService, flash) {
+    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, User, flash) {
+
 
 
         // scope from template
         $scope.Search = Search;
         $scope.config = config;
-        $scope.user = UserService;
+        $scope.user = User;
 
         $scope.editorOptions = {
             lineWrapping : false,
@@ -54,7 +55,11 @@ SearchModule.controller('SearchCtrl', [
             mode: 'sparql'
         };
 
-        $scope.AdvancedQueryService = AdvancedQueryService;
+        //
+        // load profile on init
+        User.getProfile();
+
+        // $scope.AdvancedQueryService = AdvancedQueryService;
 
         $scope.cookies = function (session) {
             Search.cookies(session)
@@ -69,8 +74,9 @@ SearchModule.controller('SearchCtrl', [
         }
 
         $scope.logout = function () {
-            UserService.logout(function () {
+            User.logout(function () {
                     flash('alert-info', "Successfully logged out ");
+                    //TODO OLI
                     gapi.auth.signOut();
             });
             $scope.reset()
@@ -273,44 +279,23 @@ SearchModule.controller('ResultCtrl', [
     '$timeout',
     '$location',
     'Search',
+    'User',
     'Cart',
-    'ProteinListService',
-    'UserService',
+    'ProteinList',
     'flash',
-    function ($scope, $route, $routeParams, $filter, $location, $timeout, Search, Cart, ProteinListService, UserService, flash) {
+    function ($scope, $route, $routeParams, $filter, $location, $timeout, Search, User, Cart, ProteinList, flash) {
         $scope.Search = Search;
         $scope.Cart = Cart;
         $scope.selectedResults = {};
         $scope.showCart = true;
 
-
-
-        var params = _.clone($routeParams);
-
-
-        if ($routeParams.cart) {
-            $scope.showCart = false;
-            delete params.cart;
-            params.accs = Cart.getElements();
-        }
-
-        //Set the current owner id, if there is a list
-        if ($routeParams.list) {
-            params.listOwner = UserService.userProfile.username;
-            search(params)
-
-        }
-
-
         //
-        // run the default search here
-        if (!$routeParams.list) {
-            search(params)
-        }
+        // save to cart modal
+        $scope.modal = { options: { edit: { title: 'Edit' }, create: { title: 'Create'} }, type:'create' };
+        
+        var self=this;
 
-
-
-        function search(params, cb) {
+        this.search=function(params, cb) {
             Search.docs(params, function (results) {
                 params.start = (!$routeParams.start) ? 0 : $routeParams.start;
 
@@ -333,14 +318,43 @@ SearchModule.controller('ResultCtrl', [
         }
 
 
+        var params = _.clone($routeParams);
+
+
+        if ($routeParams.cart) {
+            $scope.showCart = false;
+            delete params.cart;
+            params.accs = Cart.getElements();
+        }
+
+        //
+        //Set the current owner id, if there is a list
+        if ($routeParams.list) {
+            User.$promise.then(function(){
+                params.listOwner = User.profile.username;
+                self.search(params)
+            })   
+        }
+
+
+        //
+        // run the default search here
+        if (!$routeParams.list) {
+            self.search(params)
+        }
+
+
+
+
+
         $scope.change = function (docId) {
             var found = Cart.change(docId);
 
             if ($routeParams.list) {
                 var list = {};
                 list['accs'] = [docId];
-                if (found == -1) ProteinListService.addElements(UserService.userProfile.username, $routeParams.list, [docId]);
-                else ProteinListService.removeElements(UserService.userProfile.username, $routeParams.list, [docId]);
+                if (found == -1) ProteinList.addElements(User, $routeParams.list, [docId]);
+                else ProteinList.removeElements(User, $routeParams.list, [docId]);
             }
         }
 
@@ -353,7 +367,7 @@ SearchModule.controller('ResultCtrl', [
 
         $scope.selectAll = function () {
             if ($routeParams.list) {
-                ProteinListService.getListIds(UserService.userProfile.username, $routeParams.list, function (result) {
+                ProteinList.getByIds(User, $routeParams.list, function (result) {
                     Cart.setCart(result.ids);
                     setAsSelected(result.ids);
                 });
@@ -383,7 +397,7 @@ SearchModule.controller('ResultCtrl', [
 
         $scope.unselectAll = function () {
             if ($routeParams.list) {
-                ProteinListService.getListIds(UserService.userProfile.username, $routeParams.list, function (result) {
+                ProteinList.getByIds(User, $routeParams.list, function (result) {
                     Cart.removeFromCart(result.ids);
                     setAsSelected(result.id);
                 });
@@ -455,7 +469,7 @@ SearchModule.controller('ResultCtrl', [
                 ownerId: 1
             };
 
-            ProteinListService.createList(UserService.userProfile.username, proteinList, function (data) {
+            ProteinList.create(User, proteinList, function (data) {
                 if (data.error) flash('alert-warning', data.error);
                 else {
                     flash('alert-info', "List " + proteinList.name + " created.");

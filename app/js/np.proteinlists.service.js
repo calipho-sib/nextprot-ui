@@ -1,9 +1,9 @@
 'use strict';
 
-var ProteinListService = angular.module('np.proteinlist.service', []);
+var ProteinList = angular.module('np.proteinlist.service', []);
 
 
-ProteinListService.factory('ProteinListService', [
+ProteinList.factory('ProteinList', [
    '$resource',
    '$http',
    'config',
@@ -14,97 +14,82 @@ ProteinListService.factory('ProteinListService', [
 		//delete $http.defaults.headers.common["X-Requested-With"]
 	   
 	   var lists;
-	   var selectedList;
 	   var baseUrl = config.api.BASE_URL+config.api.API_PORT;
 
-	   console.log('base url: ', baseUrl);
-
-	   var $api_list = $resource(baseUrl+'/nextprot-api/user/:username/protein-list.json', {username: '@username'}, {
-		   get: { method: 'GET', isArray: false },
-	   	  create: { method: 'POST' },
-	   	  update: { method: 'PUT'}
-	   });
-
-	   var $pi_list = $resource(baseUrl+'/nextprot-api/user/:username/protein-list/:id.json', {username: '@username', id: '@id'}, {
-		   delete: { method: 'DELETE'},
-		   update: { method: 'PUT'}
-	   });
-
-	   var $p = $resource(baseUrl+'/nextprot-api/user/:username/protein-list/:list.json', {username: '@username', name: '@name'}, {
-	   		get: { method: 'GET' }
-	   });
-
-	   var $elements_api = $resource(baseUrl+'/nextprot-api/user/:username/protein-list/:list/:action.json', {username: '@username', list: '@name'}, {
-	   		fix: { method: 'PUT' }
-	   });
 
 
-		var $list_results = $resource(baseUrl+'/nextprot-api/user/:username/protein-list/:list/:action.json', { 
-			username: '@username', list: '@list', action: '@action'
-		}, {
-			get: { method: 'GET'}
-		});
 
 
-	   var ProteinListService = function() {};
-	   
-	   ProteinListService.prototype.getByUsername = function(username, cb) {
-		   $api_list.get({username: username}, function(data) {
-			  service.lists = data;
-			  if(cb)cb(data);
-		   });
+	   var ProteinList = function() {
+	   		this.$dao=$resource(baseUrl+'/nextprot-api/user/:username/protein-list/:id/:action', 
+				{username: '@username', id: '@id', action: '@action'}, {
+				get: { method: 'GET', isArray: false },
+				create: { method: 'POST' },
+				update: { method: 'PUT'},
+				fix: { method: 'PUT' }
+	   		});
+
 	   };
 	   
-	   ProteinListService.prototype.createList = function(username, list, cb) {
-	   		console.log('create list > ', list);
-		   $api_list.create({ username: username }, list, function(data) {
+	   ProteinList.prototype.getByUsername = function(user, cb) {
+	   		var self=this;
+	   		user.$promise.then(function(){
+			   return self.$dao.get({username: user.profile.username}, function(data) {
+				  service.lists = data;
+				  if(cb)cb(data);
+			   });
+	   		})
+	   		return this;
+	   };
+	   
+	   ProteinList.prototype.create = function(user, list, cb) {
+   		var self=this;
+   		user.$promise.then(function(){
+		   return self.$dao.create({ username: user.profile.username }, list, function(data) {
 				if(cb)cb(data);
 			});
+   		})
+   		return this;
 	   };
 	   
-		ProteinListService.prototype.updateList = function(username, list, cb) {
-			$pi_list.update({ username: username, id: list.id }, list, function(data) {
-				console.log('edit: ', data);
+		ProteinList.prototype.update = function(user, list, cb) {
+	   	  var self=this;
+	   	  user.$promise.then(function(){
+			return self.$dao.update({ username: user.profile.username, id: list.id }, list, function(data) {
 			});
+   		  })
+   		  return this;
 		};
 
-		ProteinListService.prototype.deleteList = function(username, listId, cb) {
-			$pi_list.delete({username: username, id: listId}, function(data) {
-				console.log('deleted: ', data);
+		ProteinList.prototype.delete = function(user, listId, cb) {
+	   	  var self=this;
+   		  user.$promise.then(function(){
+			return self.$dao.delete({username: user.profile.username, id: listId}, function(data) {
 			});
+   		  })
+   		  return this;
 		}
 
-		ProteinListService.prototype.getList = function(username, listName, cb) {
-			$p.get({ username: username, name: listName }, function(list) {
-				if(cb)cb(list);
-			});
-		}
 
-	   ProteinListService.prototype.setSelectedList = function(list) {
-		   selectedList = list;
-	   }
 	   
-	   ProteinListService.prototype.getListIds = function(username, list, cb) {
-	   		var params = { username: username, list: list, action: 'ids'};
-	   		$list_results.get(params, function(result) {
+	   ProteinList.prototype.getByIds = function(user, list, cb) {
+	   	  var self=this;
+	   	  user.$promise.then(function(){
+	   		var params = { username: user.profile.username, id: list, action: 'ids'};
+	   		return self.$dao.get(params, function(result) {
 	   			if(cb) cb(result);
 	   		});
+   		  })
+   		  return this;
 	   }
 
-	   ProteinListService.prototype.getSelectedList = function(list) {
-		   return selectedList;
-	   }
 
-		ProteinListService.prototype.getListResults = function(params, cb) {
-			$list_results.get(params, function(results) {
-				if(cb)cb(results);
-			});
-	   	}
-
-	   	ProteinListService.prototype.combine = function(username, list, l1, l2, op, cb) {
-	   		$list_results.get({ 
+	   	ProteinList.prototype.combine = function(user, list, l1, l2, op, cb) {
+	   	  var self=this;
+	   	  user.$promise.then(function(){
+	   		return self.$dao.get({ 
 	   			action: 'combine',
-	   			username: username, 
+	   			username: user.profile.username, 
 	   			name: list.name, 
 	   			description: list.description,
 	   			first: l1,
@@ -113,28 +98,38 @@ ProteinListService.factory('ProteinListService', [
 	   		}, function(data) {
 	   			if(cb) cb(data);
 	   		});
+   		  })
+   		  return this;
 	   	}
 
-	   	ProteinListService.prototype.addElements = function(username, listName, accs, cb) {
-	   		$elements_api.fix( {
+	   	ProteinList.prototype.addElements = function(user, listName, accs, cb) {
+	   	  var self=this;
+	   	  user.$promise.then(function(){
+	   		return self.$dao.fix( {
 	   			action: 'add',
-	   			username: username,
+	   			username: user.profile.username,
 	   			list: listName,
 	   		}, JSON.stringify(accs), function(data) {
 	   			if(cb) cb(data);
 	   		});
+   		  })
+   		  return this;
 	   	}
 	   
-		ProteinListService.prototype.removeElements = function(username, listName, accs, cb) {
-	   		$elements_api.fix( {
+		ProteinList.prototype.removeElements = function(user, listName, accs, cb) {
+	   	  var self=this;
+	   	  return user.$promise.then(function(){
+	   		return self.$dao.fix( {
 	   			action: 'remove',
-	   			username: username,
+	   			username: user.profile.username,
 	   			list: listName
 	   		}, JSON.stringify(accs), function(data) {
 	   			if(cb) cb(data);
 	   		});
+   		  })
+   		  return this;
 	   	}
-	   var service =  new ProteinListService();
+	   var service =  new ProteinList();
 	   return service;
 	   
    }

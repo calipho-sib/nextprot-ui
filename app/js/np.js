@@ -10,10 +10,10 @@ var App = angular.module('np', [
     '$strap.directives',
     'np.flash',
     'np.config',
-    'np.search',
-    'np.cart',
     'np.user',
+    'np.cart',
     'np.proteinlists',
+    'np.search',
     'np.advanced',
     'np.export',
     'ui.codemirror'
@@ -33,12 +33,13 @@ App.config([
             function (scope, $q, flash) {
 
                 function success(response) {
+                    // console.log("the response: ", response)
                     return response;
                 }
 
                 function error(response) {
                     var status = response.status;
-                    console.log("the response: ", response)
+                    // console.log("the error: ", response)
 
                     if (status == 0) {
                         flash('alert-error', "The API is not accessible");
@@ -49,7 +50,8 @@ App.config([
                     }else if (status == 404) {
                         flash('alert-error', "URL not found");
                         return;
-                    } else {
+                    } 
+                    else {
                         if (response.data.message) {
                             flash('alert-warn', response.data.message);
                         } else flash('alert-error', 'Some error occured' + " " + status + " " + response);
@@ -65,9 +67,9 @@ App.config([
 
             }];
         $httpProvider.responseInterceptors.push(interceptor);
-
         //$httpProvider.defaults.useXDomain = true;
         //$httpProvider.defaults.withCredentials = true;
+        $httpProvider.defaults.headers.common.Accept= 'application/json'
 
 
         // List of routes of the application
@@ -163,6 +165,7 @@ App.factory('authInterceptor', ["$rootScope", "$q", "$window", "$location", "fla
         request: function (config) {
             if (config.url.indexOf('nextprot-api/user/') != -1) {
                 config.headers = config.headers || {};
+                console.log("token",$window.sessionStorage.token)
                 if ($window.sessionStorage.token) {
                     console.log('adding token ' + $window.sessionStorage.token)
                     config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;

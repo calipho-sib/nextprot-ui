@@ -2,8 +2,9 @@
 
 var CartService = angular.module('np.cart', ['np.proteinlist.service']);
 
-CartService.factory('Cart', ['$resource', '$http', 'config', '$routeParams', 'ProteinListService', 
-	function($resource, $http, config, $routeParams, ProteinListService) {
+CartService.factory('Cart', [
+	'config', 
+	function(config) {
 
 	var elements;
 

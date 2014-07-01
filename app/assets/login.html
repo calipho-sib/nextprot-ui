@@ -50,7 +50,7 @@
                     </div>
 
 
-                    <button class="btn btn-lg btn-block" ng-click="clickSignOut()" ng-show="isSignedIn">Sign out</button>
+                    <button class="btn btn-lg btn-block" ng-click="clickSignOut()" ng-show="!User.isAnonymous()">Sign out</button>
 
 
                     <!--<span id="signinButton">-->

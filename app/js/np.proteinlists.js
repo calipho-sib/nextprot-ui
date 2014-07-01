@@ -16,10 +16,8 @@ ProteinListModule.config([
     '$httpProvider',
     function($routeProvider, $locationProvider, $httpProvider) {
     	$routeProvider
-        	.when('/proteinlists', { templateUrl: 'partials/proteinlists/list.html'})
-            // .when('/proteinlists/view/:name', { templateUrl: 'partials/proteinlists/view.html'})
-            .when('/proteinlists/view/:list', { templateUrl: 'partials/search/result.html'})
-            .when('/proteinlists/create', { templateUrl: 'partials/proteinlists/create.html'})
+        	.when('/proteins/lists', { templateUrl: 'partials/proteinlists/list.html'})
+            .when('/proteins/lists/create', { templateUrl: 'partials/proteinlists/create.html'})
     }
 ]);
 
@@ -32,34 +30,36 @@ ProteinListModule.controller('ListCtrl', [
 	'$routeParams',
 	'$route',
 	'Search',
-	'ProteinListService',
-    'UserService',
+	'ProteinList',
+    'User',
 	'Tools',
-	function($resource, $scope, $rootScope, $location, $routeParams, $route, Search, ProteinListService, UserService, Tools) {
+	function($resource, $scope, $rootScope, $location, $routeParams, $route, Search, ProteinList, User, Tools) {
 		$scope.Tools = Tools;
-		$scope.ProteinListService = ProteinListService;
+		$scope.ProteinList = ProteinList;
 		$scope.showCombine = false;
 		$scope.combineDisabled = true;
 		$scope.selected = {};
-		$scope.modal = { options: { edit: { title: 'Edit' }, create: { title: 'Create'} } };
+		$scope.modal = { options: { edit: { title: 'Edit' }, create: { title: 'Create'} }, type:'create' };
+		$scope.lists=[]
 		$scope.operators = ["AND", "OR", "NOT_IN"];
 		$scope.combination = { first: null, op: $scope.operators[0], second: null};
-		$scope.options = { first: $scope.lists, second: $scope.lists }
-
-
-		init();
-
-		function init() {
-			ProteinListService.getByUsername(UserService.userProfile.username, function(data) {
-				$scope.lists = data.lists;
-				$scope.initCombination();
-			});
+		$scope.options = { 
+			first: $scope.lists, 
+			second: $scope.lists 
 		}
 
+		ProteinList.getByUsername(User, function(data) {
+			$scope.lists = data.lists;
+			$scope.initCombination();
+		});
 
 
 
+		//
+		// TODO what it mean?
 		$scope.initCombination = function() {
+
+
 			$scope.$watch('combination.first', function(newVal, oldVal) {
 				$scope.options.second = $scope.lists.slice(0);
 
@@ -79,6 +79,11 @@ ProteinListModule.controller('ListCtrl', [
 			});
 		};
 
+
+		$scope.modalDissmiss=function(){
+
+		}
+
 		$scope.switchCombine = function() {
 			var temp = $scope.combination.first;
 			$scope.combination.first = $scope.combination.second;
@@ -95,7 +100,6 @@ ProteinListModule.controller('ListCtrl', [
 		};
 
 		$scope.saveModal = function(dismiss) {
-
 			if($scope.modal.type == 'edit') {
 				angular.extend($scope.lists[$scope.selected.index], $scope.selected);
 
@@ -105,72 +109,40 @@ ProteinListModule.controller('ListCtrl', [
 					description: $scope.selected.description
 				};
 
-				ProteinListService.updateList(UserService.userProfile.username, list);
+				ProteinList.update(User, list);
 			} else if($scope.modal.type == 'create') {
 				var newList = { name: $scope.selected.name, description: $scope.selected.description };
 
-				ProteinListService.combine(
-                    UserService.userProfile.username,
+				ProteinList.combine(
+                    User,
 					newList,
 					$scope.combination.first.name,
 					$scope.combination.second.name,
 					$scope.combination.op,
-					function(data) {
-						init();
+					function(elem) {
+						//
+						// TODO why this is not always an array?
+						elem.accessions=elem.accessions.length
+						$scope.lists.push(elem)
+						$scope.options.first=$scope.options.second=$scope.lists
+						console.log($scope.lists, $scope.options.first)
 					});
 
 			}
+			
 		};
 
 		$scope.delete = function(index) {
-			ProteinListService.deleteList(UserService.userProfile.username, $scope.lists[index].id);
+			ProteinList.delete(User, $scope.lists[index].id);
 			$scope.lists.splice(index, 1);
 
-			$scope.options = $scope.lists;
-			$scope.options = $scope.lists;
-			$scope.initCombination();
+			$scope.options.first=$scope.options.second=$scope.lists
 		}
 
 		$scope.buildQuery = buildQuery;
 	}
 ]);
 
-ProteinListModule.controller('ListViewCtrl', [
-	'$resource',
-	'$scope',
-	'$rootScope',
-	'$location',
-	'$routeParams',
-	'$route',
-	'ProteinListService',
-	'Search',
-	'Tools',
-	function($resource, $scope, $rootScope, $location, $routeParams, $route, ProteinListService, Search, Tools) {
-		var listName = $routeParams.name;
-
-
-		var list = ProteinListService.getSelectedList();
-
-
-		// // coming directly through the URL
-		// if(!list) {
-		// 	// no lists in the Service
-		// 	if(!ProteinListService.lists) {
-		// 		ProteinListService.getByUsername('mario', function(data) {
-		// 			list = _.find(data.proteinLists, function(l) { return listName == Tools.convertToSlug(l.name) });
-
-
-		// 			Search.docs({ entity: 'proteins', configuration: 'id', query: buildQuery(list.accessions)}, function(docs) {
-		// 				console.log('found: ', docs)
-		// 			});
-		// 		});
-		// 	}
-		// } else Search.docs({ entity: 'proteins', configuration: 'id', query: buildQuery(list.accessions)}, function(data) {
-		// 	console.log('search: ', data);
-		// });
-
-	}
-]);
 
 function buildQuery(accessions) {
 	return "id:" + (accessions.length > 1 ? "(" + accessions.join(" ") + ")" : accessions[0]);
@@ -182,11 +154,11 @@ ProteinListModule.controller('ListCreateCtrl', [
 	'$rootScope',
 	'$routeParams',
 	'$location',
-	'ProteinListService',
-    'UserService',
+	'ProteinList',
+    'User',
 	'UploadListService',
 	'flash',
-	function($resource, $scope, $rootScope, $routeParams, $location, ProteinListService, UserService, UploadListService, flash) {
+	function($resource, $scope, $rootScope, $routeParams, $location, ProteinList, User, UploadListService, flash) {
 
 		$scope.inputAccessions = "";
 		$scope.listName = "";
@@ -221,15 +193,15 @@ ProteinListModule.controller('ListCreateCtrl', [
 	    		var accessions = $scope.inputAccessions.split("\n");
 	    		var list = { name: $scope.listName, accessions: accessions};
 
-	    		ProteinListService.createList(UserService.userProfile.username, list, function(data) {
+	    		ProteinList.create(User, list, function(data) {
 					if(data.error) flash('alert-warning', data.error);
 					else {
 						flash('alert-info', "List "+list.name+" created.");
-						$location.path('/proteinlists');
+						$location.path('/proteins/lists');
 					}
 	    		});
 	    	} else {
-	    		ProteinListService.createList(UserService.userProfile.username, {
+	    		ProteinList.create(User, {
                     name: $scope.listName, description: $scope.listDescription, accessions: []
                 }, function(newList) {
 
@@ -238,7 +210,7 @@ ProteinListModule.controller('ListCreateCtrl', [
 						if(data.error) flash('alert-warning', data.error);
 						else {
 							flash('alert-info', "List "+$scope.listName+" created.");
-							$location.path('/proteinlists');
+							$location.path('/proteins/lists');
 						}
 	    			});
 	    		});
