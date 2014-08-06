@@ -5,25 +5,29 @@ var http = require('http');
 var path = require('path');
 var app = exports.app = express();
 
-app.configure(function () {
-  app.set('port', process.env.PORT || 3000);
-  app.set('views', __dirname + '/build');
-  app.set('view engine', 'ejs');
-  app.use(express.favicon());
-  app.use(express.logger('dev'));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(express.cookieParser('my-super-secret-123'));
-  app.use(app.router);
-  app.use(express.compress());
-  app.use(express.static(path.join(__dirname, '/build')));
-  // Render *.html files using ejs
-  app.engine('html', require('ejs').__express);
+app.set('port', process.env.PORT || 3000);
+app.set('views', __dirname + '/build');
+app.set('view engine', 'ejs');
+//app.use(express.favicon());
+//app.use(express.logger('dev'));
+//app.use(express.bodyParser());
+//app.use(express.methodOverride());
 
-});
+var cookieParser = require('cookie-parser')
+var errorHandler = require('errorhandler')
 
-app.configure('development', function () {
-  app.use(express.errorHandler());
+app.use(cookieParser());
+
+//app.use(express.cookieParser('my-super-secret-123'));
+//app.use(express.compress());
+app.use(express.static(path.join(__dirname, '/build')));
+// Render *.html files using ejs
+app.engine('html', require('ejs').__express);
+
+app.use(errorHandler());
+
+var env = process.env.NODE_ENV || 'development';
+if ('development' == env) {
   var exec = require('child_process').exec;
   exec('node_modules/brunch/bin/brunch watch', function callback(error, stdout, stderr) {
     if (error) {
@@ -32,7 +36,7 @@ app.configure('development', function () {
       throw error;
     }
   });
-});
+};
 
 app.get('/',function (req, res) {
 	  res.render('index.html');
