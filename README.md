@@ -10,8 +10,7 @@ Main Client Features:
 * Basket
 
 ## Backends
-nextprot-api from git (npteam@miniwatt:/work/repos/nextprot-api.git)
-
+[nextprot-api](https://github.com/calipho-sib/nextprot-api)
 
 ## Installation
   >sudo npm install -g karma
@@ -19,7 +18,6 @@ nextprot-api from git (npteam@miniwatt:/work/repos/nextprot-api.git)
 
 ## Usage
   >node app
-
 
 ## Testing
 Unit testing
