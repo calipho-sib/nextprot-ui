@@ -39,7 +39,8 @@ SearchModule.controller('SearchCtrl', [
     // 'AdvancedQueryService',
     'User',
     'flash',
-    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, User, flash) {
+    'auth',
+    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, User, flash, auth) {
 
 
 
@@ -47,6 +48,7 @@ SearchModule.controller('SearchCtrl', [
         $scope.Search = Search;
         $scope.config = config;
         $scope.user = User;
+        $scope.auth = auth;
 
         $scope.editorOptions = {
             lineWrapping : false,
@@ -67,6 +69,23 @@ SearchModule.controller('SearchCtrl', [
                 // must be called 2times??
                 Search.cookies(session)
             }, 0)
+        }
+
+        $scope.loginAuth0 = function() {
+            auth.signin({
+                popup: true,
+                icon:           'http://www.nextprot.org/db/images/blueflat/np.png'
+            })
+            .then(function() {
+                console.log(auth.profile);
+                // Success callback
+            }, function() {
+                // Error callback
+            });
+        }
+
+        $scope.logoutAuth0 = function() {
+            auth.signout();
         }
 
         $scope.setAdvancedUserQuery = function (sparql) {

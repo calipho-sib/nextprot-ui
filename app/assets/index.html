@@ -28,7 +28,7 @@
     <script src="https://apis.google.com/js/client:plusone.js"></script>
 
 
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
 </head>
 
@@ -59,6 +59,16 @@
                 <ul ng-show="user.isAnonymous()" class="nav pull-right" id="main-menu-right-login">
                     <li><a href="login"  >Login</a></li>
                 </ul>
+
+                <!-- Auth0 integration -->
+                <ul class="nav pull-right">
+                    <li><a ng-if="!auth.profile.nickname" href="#" ng-click="loginAuth0()">LoginAuth0</a></li>
+                    <li ng-show="auth.profile.nickname"><a> {{auth.profile.name}} </a></li>
+                    <li ng-show="auth.profile.nickname"> <img src="{{auth.profile.picture}}" style="width: 25px; height: 25px; margin: 5px" /></li>
+                    <li ng-show="auth.profile.nickname"><a href ="#"><i class="icon-remove" ng-click="logoutAuth0()"></i></a></li>
+                    <!--{{auth.profile}}-->
+                </ul>
+
                 <div ng-show="!user.isAnonymous()" class="btn-group pull-right">
                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="" id="user-profile-button">{{user.profile.username}} &nbsp;<span class="caret"></span></a>
                     <ul id="search-entity-dropdown" class="dropdown-menu">

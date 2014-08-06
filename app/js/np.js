@@ -16,7 +16,9 @@ var App = angular.module('np', [
     'np.search',
     'np.advanced',
     'np.export',
-    'ui.codemirror'
+    'ui.codemirror',
+    'auth',
+    'authInterceptor'
 ]);
 
 
@@ -25,8 +27,26 @@ App.config([
     '$routeProvider',
     '$locationProvider',
     '$httpProvider',
+    'authProvider',
+    function ($routeProvider, $locationProvider, $httpProvider, authProvider) {
 
-    function ($routeProvider, $locationProvider, $httpProvider) {
+        authProvider.init({
+            clientID: '7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
+            callbackURL: location.href,
+            domain: 'nextprot.auth0.com',
+//            dict: {
+//                signin: {
+//                    title: 'Link with another account'
+//                }
+//            }
+            icon:           'http://www.nextprot.org/db/images/blueflat/np.png'
+
+
+        })
+
+        $httpProvider.interceptors.push('authInterceptor');
+
+        //$httpProvider.interceptors.push(authInterceptor);
 
 
         var interceptor = ['$rootScope', '$q', 'flash',
@@ -158,30 +178,6 @@ App.factory('Tools', [
         return new Tools();
     }
 ]);
-
-// Authentication interceptors
-App.factory('authInterceptor', ["$rootScope", "$q", "$window", "$location", "flash", function ($rootScope, $q, $window, $location, flash) {
-    return {
-        request: function (config) {
-            if (config.url.indexOf('nextprot-api/user/') != -1) {
-                config.headers = config.headers || {};
-                console.log("token",$window.sessionStorage.token)
-                if ($window.sessionStorage.token) {
-                    console.log('adding token ' + $window.sessionStorage.token)
-                    config.headers.Authorization = 'Bearer ' + $window.sessionStorage.token;
-                } else {
-                    var message = "You must be logged in to access " + config.url;
-                    flash('alert-warn', message);
-                    $location.path('login');
-                }
-            }
-            return config;
-        }
-    };
-}]);
-App.config(['$httpProvider', function ($httpProvider) {
-    $httpProvider.interceptors.push('authInterceptor');
-}]);
 
 
 App.directive('npBase', ['config', function (config) {
