@@ -8,8 +8,8 @@ UserModule.config([
         $routeProvider
             .when('/login', { templateUrl: 'login.html'})
             .when('/logout', { templateUrl: 'logout.html'})
-            .when('/user-applications', { templateUrl: 'partials/user/user-profile-and-applications.html'})
-            .when('/user-profile', { templateUrl: 'partials/user/user-profile-and-applications.html'})
+            .when('/user-applications', { templateUrl: 'partials/user/user-applications.html'})
+            .when('/user-profile', { templateUrl: 'partials/user/user-profile.html'})
     }
 ]);
 

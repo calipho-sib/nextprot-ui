@@ -1,0 +1,21 @@
+<div class="row offset1" ng-controller="UserCtrl">
+    <div class="container-fluid" style="margin-top: 50px">
+        <div class="row-fluid">
+            <div class="span2">
+                <p><a href="#user-profile">My profile</a></p>
+                <p><a href="#user-applications">My applications</a></p>
+            </div>
+            <div class="span10">
+                <div class="row">
+                    <div class="control-group">
+                        <label class="control-label">Name: {{auth.profile.name}}</label>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Email: {{auth.profile.email}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

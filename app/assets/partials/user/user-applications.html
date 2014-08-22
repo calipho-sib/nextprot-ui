@@ -1,0 +1,51 @@
+<div class="row offset1" ng-controller="UserCtrl">
+    <div class="container-fluid" style="margin-top: 50px">
+        <div class="row-fluid">
+            <div class="span2">
+                <p><a href="#user-profile">My profile</a></p>
+                <p><a href="#user-applications">My applications</a></p>
+            </div>
+            <div class="span10">
+                <div class="control-group">
+                    <div class="row">
+                        <p>If you would like to access the API or SPARQL endpoint programatically this is where to start</p>
+                        <p>Programmatic access can be handy and necessary in different scenarios, for example:</p>
+                        <ul>
+                            <li>You would like to export regularly the PTMs of a proteins list you have previously saved (See this QA on how to do this)</li>
+                            <li>You are building a javascript website (be careful with your API key, see the recommendations in our QA)</li>
+                            <li>You would like to access our SPARQL endpoint to make federated queries</li>
+                        </ul>
+
+                        <p>To start with this create an application giving it a meaningful name and description and the access grants you would like. Once validated you will get an email with an API key created for you. All API are limited to 1000 calls/day. If you need more than this, please contact us or provide a good explanation in the description.</p>
+                    </div>
+
+                </div>
+                <!--
+                <div class="row">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th ng-show="showCombine"></th>
+                            <th>Name</th>
+                            <th>api key</th>
+                            <td></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="list in lists">
+                            <td ng-show="showCombine"><input type="checkbox"></td>
+                            <td><a href="proteins/search?list={{list.name}}">{{list.name}}</a></td>
+                            <td>{{list.accessions}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button class="btn btn-primary" bs-modal="'partials/user/user-application-create-modal.html'" ng-click="launchModal(0,'create')" backdrop="false" >Create a new application</button>
+                -->
+
+                <button class="btn btn-primary" bs-modal="'partials/user/user-application-create-modal.html'" ng-click="launchModal(0,'create')" backdrop="false" >No applications yet, create your first one?</button>
+            </div>
+        </div>
+    </div>
+</div>
+

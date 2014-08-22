@@ -56,25 +56,25 @@
                     <!--<li><a href="sparql-wizard">SPARQL wizard</a>-->
                     <li><a href="api-info">API Help</a>
                 </ul>
-                <ul ng-show="user.isAnonymous()" class="nav pull-right" id="main-menu-right-login">
-                    <li><a href="login"  >Login</a></li>
-                </ul>
 
                 <!-- Auth0 integration -->
-                <ul class="nav pull-right">
-                    <li><a ng-if="!auth.profile.nickname" href="#" ng-click="loginAuth0()">LoginAuth0</a></li>
-                    <li ng-show="auth.profile.nickname"><a> {{auth.profile.name}} </a></li>
-                    <li ng-show="auth.profile.nickname"> <img src="{{auth.profile.picture}}" style="width: 25px; height: 25px; margin: 5px" /></li>
-                    <li ng-show="auth.profile.nickname"><a href ="#"><i class="icon-remove" ng-click="logoutAuth0()"></i></a></li>
-                    <!--{{auth.profile}}-->
-                </ul>
-
-                <div ng-show="!user.isAnonymous()" class="btn-group pull-right">
-                    <a class="btn dropdown-toggle" data-toggle="dropdown" href="" id="user-profile-button">{{user.profile.username}} &nbsp;<span class="caret"></span></a>
-                    <ul id="search-entity-dropdown" class="dropdown-menu">
-                        <li><a href="#">Profile</a></li>
-                        <li><a href="#" ng-click="logout()">Logout</a></li>
+                <div class="btn-group pull-right" ng-if="auth.profile.nickname">
+                    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="">
+                        {{auth.profile.name}}
+                        <!-- <img src="{{auth.profile.picture}}" style="width: 15px; height: 15px; margin-left: 5px; margin-right: 5px;" /> -->
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="user-profile">Profile</a></li>
+                        <li><a href="user-applications">Applications</a></li>
+                        <li><a href="#" ng-click="logoutAuth0()">Logout</a></li>
+                        <!-- dropdown menu links -->
                     </ul>
+                </div>
+                <div class="btn-group pull-right" ng-if="!auth.profile.nickname">
+                    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#" ng-click="loginAuth0()">
+                        Login
+                    </a>
                 </div>
             </div>
         </div>
