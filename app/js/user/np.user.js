@@ -8,7 +8,7 @@ UserModule.config([
         $routeProvider
             .when('/login', { templateUrl: 'login.html'})
             .when('/logout', { templateUrl: 'logout.html'})
-
+            .when('/profile', { templateUrl: 'partials/user/profile.html'})
     }
 ]);
 
