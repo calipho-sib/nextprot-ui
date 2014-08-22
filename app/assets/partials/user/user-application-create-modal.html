@@ -5,9 +5,27 @@
 <div class="modal-body">
     <form class="form-horizontal">
         <div class="control-group">
-            <label class="control-label" for="inputName">Name: </label>
+            <label class="control-label" for="inputName">Application name: </label>
             <div class="controls">
-                <input id="inputName" type="text" placeholder="Name..." ng-model="selected.name" focus>
+                <input id="inputName" type="text" placeholder="Provide a meaningful name" ng-model="selected.name" focus>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputName">Organisation / Institute: </label>
+            <div class="controls">
+                <input id="inputName" type="text" placeholder="The name of the organisation / institute or university if applicable" ng-model="selected.name" focus>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputName">Responsible person: </label>
+            <div class="controls">
+                <input id="inputName" type="text" placeholder="The name of the responsible person" ng-model="application.responsibleemail" focus>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputName">Responsible email: </label>
+            <div class="controls">
+                <input id="inputName" type="text" placeholder="The email of the responsible person" ng-model="selected.name" focus>
             </div>
         </div>
         <div class="control-group">
@@ -15,11 +33,46 @@
                 <label>Description: </label>
             </div>
             <div class="controls">
-                <textarea id="inputDescription" type="text" placeholder="Description..." ng-model="selected.description"/>
+                <textarea id="inputDescription" type="text" placeholder="Provide a meaningful description..." ng-model="selected.description"/>
             </div>
         </div>
-
+        <div class="control-group">
+            <label class="control-label" for="inputName">Website: </label>
+            <div class="controls">
+                <input id="inputName" type="text" placeholder="If you have a related website" ng-model="application.responsiblename" focus>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputName">Grants: </label>
+            <div class="controls">
+                <div class="btn-group">
+                    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="">
+                        API access <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="user-profile">API access</a></li>
+                        <li><a href="user-applications">SPARQL endpoint access</a></li>
+                        <li><a href="user-applications">API + SPARQL endpoint access</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputName">Key: </label>
+            <div class="controls">
+                <input id="inputName" type="text" value="AFLSKBNASLKF0FKSABFASKJBKASB" disabled="true">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputName">Valid until: </label>
+            <div class="controls">
+                <input id="inputName" type="text" value="31/12/2015" disabled="true">
+            </div>
+        </div>
     </form>
+    <div>
+        Try it! wget http://localhost/....userkey=FBJAKJFBASL
+    </div>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" ng-click="saveModal(dismiss(), 'action')" ng-disabled="!selected.name">Save</button>
