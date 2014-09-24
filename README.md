@@ -1,6 +1,6 @@
 # Nextprot UI
 
-***CAUTION: Nextprot ui is in the very early stages of development. Things are likely
+***CAUTION: Nextprot ui is in early stages of development. Things are likely
 to change in ways that are not backwards compatible***
 
 [AngularJS](http://angularjs.org) + [Brunch](http://brunch.io) + [Bootstrap](http://twitter.github.com/bootstrap/)
