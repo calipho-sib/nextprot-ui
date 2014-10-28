@@ -21,7 +21,7 @@ ProteinList.factory('ProteinList', [
 
 
 	   var ProteinList = function() {
-	   		this.$dao=$resource(baseUrl+'/nextprot-api/user/:username/protein-list/:id/:action', 
+	   		this.$dao=$resource(baseUrl+'/nextprot-api-web/user/:username/protein-list/:id/:action', 
 				{username: '@username', id: '@id', action: '@action'}, {
 				get: { method: 'GET', isArray: false },
 				create: { method: 'POST' },

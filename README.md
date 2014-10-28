@@ -10,7 +10,7 @@ Main Client Features:
 * Basket
 
 ## Backends
-[nextprot-api](https://github.com/calipho-sib/nextprot-api)
+[nextprot-api-web](https://github.com/calipho-sib/nextprot-api-web)
 
 ## Installation
   >sudo npm install -g karma

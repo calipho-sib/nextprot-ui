@@ -43,20 +43,20 @@ AdvancedQueryService.factory('AdvancedQueryService', [
 
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
-        var $rdf_help_get_resource = $resource(baseUrl + '/nextprot-api/rdf/help/type/all.json');
+        var $rdf_help_get_resource = $resource(baseUrl + '/nextprot-api-web/rdf/help/type/all.json');
 
-        var $api_help_get_resource = $resource(baseUrl + '/nextprot-api/jsondoc.json');
+        var $api_help_get_resource = $resource(baseUrl + '/nextprot-api-web/jsondoc.json');
 
-        var $nextprot_query_list = $resource(baseUrl + '/nextprot-api/user/advanced-nextprot-query.json');
+        var $nextprot_query_list = $resource(baseUrl + '/nextprot-api-web/user/advanced-nextprot-query.json');
 
-        var $public_query_list = $resource(baseUrl + '/nextprot-api/user/advanced-public-query.json');
+        var $public_query_list = $resource(baseUrl + '/nextprot-api-web/user/advanced-public-query.json');
 
-        var $user_query_list = $resource(baseUrl + '/nextprot-api/user/:username/advanced-user-query.json', {username: '@username'}, {
+        var $user_query_list = $resource(baseUrl + '/nextprot-api-web/user/:username/advanced-user-query.json', {username: '@username'}, {
             get: { method: 'GET', isArray: false },
             create: { method: 'POST' }
         });
 
-        var $api_adv_query_id = $resource(baseUrl + '/nextprot-api/user/:username/advanced-user-query/:id.json', {username: '@username', id: '@id'}, {
+        var $api_adv_query_id = $resource(baseUrl + '/nextprot-api-web/user/:username/advanced-user-query/:id.json', {username: '@username', id: '@id'}, {
             delete: { method: 'DELETE'},
             update: { method: 'PUT'}
         });

@@ -33,7 +33,7 @@ UploadListService.factory('UploadListService', [
 	
 	       // Send to server, where we can then access it with $_FILES['file].
 	       data.append('file', file, file.name);
-	       xhr.open('POST', baseUrl+'/nextprot-api/protein-list/upload?id='+listId);
+	       xhr.open('POST', baseUrl+'/nextprot-api-web/protein-list/upload?id='+listId);
 	       xhr.send(data);
 	       if(cb) cb({});
 	   }

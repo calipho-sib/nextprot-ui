@@ -37,7 +37,7 @@ angular.module('np.config', []).factory('config', [
         // solr configuration
         var defaultApi = {
             BASE_URL: BASE_URL,
-            API_SERVER: BASE_URL + ':port/nextprot-api/:action/:entity',
+            API_SERVER: BASE_URL + ':port/nextprot-api-web/:action/:entity',
             API_PORT: ':8080',
             BASE_AUTH_URL: BASE_AUTH_URL,
             AUTH_SERVER: BASE_AUTH_URL + '/nextprot-auth',
@@ -97,7 +97,7 @@ angular.module('np.config', []).factory('config', [
 
 
             widgets: {
-                sort: {                
+                sort: {
                     asc: "icon-arrow-up",
                     desc: "icon-arrow-down",
                 },

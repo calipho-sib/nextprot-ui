@@ -8,11 +8,11 @@ UserApplication.factory('UserApplication', [
    '$http',
    'config',
    function($resource, $http, config) {
-	   
+
 	   var baseUrl = config.api.BASE_URL+config.api.API_PORT;
 
 	   var UserApplication = function() {
-	   		this.$dao=$resource(baseUrl+'/nextprot-api/user/:username/user-application/:id',
+	   		this.$dao=$resource(baseUrl+'/nextprot-api-web/user/:username/user-application/:id',
 				{username: '@username', id: '@id'}, {
 				get: { method: 'GET', isArray: false },
 				create: { method: 'POST' },
@@ -31,7 +31,7 @@ UserApplication.factory('UserApplication', [
 	   		return this;
 	   };
 
-       UserApplication.prototype.create = function(user, , cb) {
+       UserApplication.prototype.create = function(user, application, cb) {
    		var self=this;
    		user.$promise.then(function(){
 		   return self.$dao.create({ username: user.profile.username }, list, function(data) {

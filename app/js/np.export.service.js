@@ -9,7 +9,7 @@ ExportService.factory('ExportService', [
    function($resource, config) {
 
        var baseUrl = config.api.BASE_URL + config.api.API_PORT;
-       var exportTemplatesUrl = baseUrl + '/nextprot-api/export/templates.json';
+       var exportTemplatesUrl = baseUrl + '/nextprot-api-web/export/templates.json';
 
        var $export_templates_resource = $resource(exportTemplatesUrl, {
 		   get: { method: 'GET', isArray: false }

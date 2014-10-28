@@ -163,7 +163,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
         }
 
         $scope.getAPIURL = function (method, entry, format) {
-            var baseUrl = config.api.BASE_URL + config.api.API_PORT + "/nextprot-api";
+            var baseUrl = config.api.BASE_URL + config.api.API_PORT + "/nextprot-api-web";
             var url = baseUrl+ method.path;
             url = url.replace('{entry}', entry);
             url += "." + format;
@@ -193,7 +193,7 @@ AdvancedSearchModule.controller('AdvancedCtrl', [
 
         $scope.openPopup = function (jspname, typeName) {
             var baseUrl = config.api.BASE_URL + config.api.API_PORT;
-            $window.open(baseUrl + '/nextprot-api/rdf/help/' + jspname + ' /' + typeName, jspname, 'width=800,height=600');
+            $window.open(baseUrl + '/nextprot-api-web/rdf/help/' + jspname + ' /' + typeName, jspname, 'width=800,height=600');
         }
 
     }
