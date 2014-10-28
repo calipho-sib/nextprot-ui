@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en" ng-app="np">
-<head>
+<!doctype html>
+<html lang="en" ng-app="np"><head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="neXtProt">
     <meta name="author" content="Olivier Evalet">
-    <meta name="fragment" content="!"/>
+    <meta name="fragment" content="!">
     <!--<base href="/protosearch/" />-->
-    <base href="/"/>
+    <base href="/">
 
     <title ng-bind-template="{{title}}"></title>
 
@@ -23,43 +22,42 @@
     <link rel="stylesheet" href="css/vendor.css">
     <link rel="stylesheet" href="css/app.css">
 
-    <link rel="stylesheet" href="stylesheets/gh-buttons.css"/>
+    <link rel="stylesheet" href="stylesheets/gh-buttons.css">
 
     <script src="https://apis.google.com/js/client:plusone.js"></script>
 
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 </head>
 
-<body ng-clock class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90" ng-controller="SearchCtrl"
-      np-background="#main">
+<body ng-clock="" class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90" ng-controller="SearchCtrl" np-background="#main">
 <!-- Navbar
    ================================================== -->
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+<div class="navbar navbar-fixed-top navbar-default">
+    <div class="container">
+        <div class="container"><div class="navbar-header"><a class="navbar-brand" href="#" ng-click="reset()">neXtProt</a></div>
+            <a class="btn btn-navbar btn-default" data-toggle="collapse" data-target=".nav-collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="#" ng-click="reset()">neXtProt</a>
+            
 
-            <div  class="nav-collapse collapse" id="main-menu">
-                <ul class="nav" id="main-menu-left">
+            <div class="collapse navbar-collapse" id="main-menu">
+                <ul class="nav navbar-nav" id="main-menu-left">
                     <li><a ng-href="#" ng-click="reset()">Home</a></li>
                     <!-- DOWNLOAD -->
-                    <li><a href="proteins/lists">Lists & Export</a>
-                    <li><a href="rdf-help">RDF Help</a>
+                    <li><a href="proteins/lists">Lists &amp; Export</a>
+                    </li><li><a href="rdf-help">RDF Help</a>
                     <!--<li><a href="http://uat-web2:6969" target="_blank">Snorql</a>-->
                     <!--<li><a href="sparql-wizard">SPARQL wizard</a>-->
-                    <li><a href="api-info">API Help</a>
-                </ul>
+                    </li><li><a href="api-info">API Help</a>
+                </li></ul>
 
                 <!-- Auth0 integration -->
                 <div class="btn-group pull-right" ng-if="user.isAnonymous()">
-                    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="">
+                    <a class="btn dropdown-toggle btn-default btn-sm" data-toggle="dropdown" href="">
                         {{auth.profile.name}}
                         <!-- <img src="{{auth.profile.picture}}" style="width: 15px; height: 15px; margin-left: 5px; margin-right: 5px;" /> -->
                         <span class="caret"></span>
@@ -72,7 +70,7 @@
                     </ul>
                 </div>
                 <div class="btn-group pull-right" ng-if="!user.isAnonymous()">
-                    <a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#" ng-click="login()">
+                    <a class="btn dropdown-toggle btn-default btn-sm" data-toggle="dropdown" href="#" ng-click="login()">
                         Login
                     </a>
                 </div>
@@ -81,8 +79,8 @@
     </div>
 </div>
 
-<div  ng-show="message" class=" error">
-    <div ng-cloak class="np-alert alert alert-error">{{Search.result.error}} {{message}}</div>
+<div ng-show="message" class=" error">
+    <div ng-cloak="" class="np-alert alert alert-error alert-warning">{{Search.result.error}} {{message}}</div>
 </div>
 
 <!--   <div class="alert alert-success" style="margin-top: 40px">
@@ -98,10 +96,10 @@
 
 <!-- Masthead
 ================================================== -->
-<div ng-include="'partials/search/bar.html'" ></div>
+<div ng-include="'partials/search/bar.html'"></div>
 
 
-<div id="main" class="row-fluid" ng-view>
+<div id="main" class="row" ng-view="">
 </div>
 
 <div ng-include="'partials/footer.html'"></div>
@@ -122,6 +120,5 @@
     };
 </script>
 
-</body>
-</html>
 
+</body></html>
