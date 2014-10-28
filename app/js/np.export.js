@@ -7,10 +7,9 @@ var ExportModule = angular.module('np.export', [
 ExportModule.controller('ExportCtrl', [
     '$resource',
     '$scope',
-    'Search',
     'config',
     'ExportService',
-    function($resource, $scope, Search, config, ExportService) {
+    function($resource, $scope, config, ExportService) {
 
         var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 

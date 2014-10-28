@@ -29,7 +29,6 @@ App.config([
     '$httpProvider',
     'authProvider',
     function ($routeProvider, $locationProvider, $httpProvider, authProvider) {
-
         authProvider.init({
             clientID: '7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
             callbackURL: location.href,
@@ -72,7 +71,9 @@ App.config([
                         return;
                     } 
                     else {
-                        if (response.data.message) {
+                        if(response.message){
+                            flash('alert-warn', response.message);
+                        }else if (response.data.message) {
                             flash('alert-warn', response.data.message);
                         } else flash('alert-error', 'Some error occured' + " " + status + " " + response);
                     }
