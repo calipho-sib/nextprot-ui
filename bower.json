@@ -24,7 +24,7 @@
     }
   },
   "dependencies": {
-    "jquery": "~2.x",
+    "jquery": "~2.1",
     "bootstrap": "~3",
     "underscore": "~1",
     "angular": "~1",
