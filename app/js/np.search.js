@@ -39,8 +39,7 @@ SearchModule.controller('SearchCtrl', [
     // 'AdvancedQueryService',
     'User',
     'flash',
-    'auth',
-    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, User, flash, auth) {
+    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, User, flash) {
 
 
 
@@ -48,7 +47,6 @@ SearchModule.controller('SearchCtrl', [
         $scope.Search = Search;
         $scope.config = config;
         $scope.user = User;
-        $scope.auth = auth;
 
         $scope.editorOptions = {
             lineWrapping : false,
@@ -59,7 +57,7 @@ SearchModule.controller('SearchCtrl', [
 
         //
         // load profile on init
-        User.getProfile();
+        User.me();
 
         // $scope.AdvancedQueryService = AdvancedQueryService;
 
@@ -71,35 +69,25 @@ SearchModule.controller('SearchCtrl', [
             }, 0)
         }
 
-        $scope.loginAuth0 = function() {
-            auth.signin({
-                popup: true,
-                icon:           'http://www.nextprot.org/db/images/blueflat/np.png'
+        $scope.login = function() {
+            User.login(function(err){
+                console.log(User,err);
+                if(err){
+                    return flash('alert-error', "Ooops ");            
+                }
+                flash('alert-info', "Welcome " + User.username);            
             })
-            .then(function() {
-                console.log(auth.profile);
-                // Success callback
-            }, function() {
-                // Error callback
-            });
         }
 
-        $scope.logoutAuth0 = function() {
-            auth.signout();
+        $scope.logout = function () {
+            $scope.reset()
         }
+
 
         $scope.setAdvancedUserQuery = function (sparql) {
             $scope.advancedUserQuery = sparql;
         }
 
-        $scope.logout = function () {
-            User.logout(function () {
-                    flash('alert-info', "Successfully logged out ");
-                    //TODO OLI
-                    gapi.auth.signOut();
-            });
-            $scope.reset()
-        }
 
 
 
@@ -438,9 +426,7 @@ SearchModule.controller('ResultCtrl', [
         }
 
 
-        function buildQuery(accessions) {
-            return "id:" + (accessions.length > 1 ? "(" + accessions.join(" ") + ")" : accessions[0]);
-        }
+
 
         $scope.getResultTemplateByEntity = function () {
             switch (Search.params.entity) {
@@ -464,7 +450,12 @@ SearchModule.controller('ResultCtrl', [
             }
         }
 
+        //TODO deprecated
+        function buildQuery(accessions) {
+            return "id:" + (accessions.length > 1 ? "(" + accessions.join(" ") + ")" : accessions[0]);
+        }
 
+        // TODO deprecated
         $scope.getPublicationUrl = function (ac) {
             return "http://google.com/search?q=" + ac
         }

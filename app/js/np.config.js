@@ -8,7 +8,7 @@ angular.module('np.config', []).factory('config', [
     '$http',
     function ($http) {
 
-        var BASE_URL = 'https://crick';
+        var BASE_URL = 'http://crick';
         var BASE_AUTH_URL = 'http://crick:9090';
 
         var google = {

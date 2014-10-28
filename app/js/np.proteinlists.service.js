@@ -7,8 +7,7 @@ ProteinList.factory('ProteinList', [
    '$resource',
    '$http',
    'config',
-   'Tools',
-   function($resource, $http, config, Tools) {
+   function($resource, $http, config) {
 	   
 	   //$http.defaults.useXDomain = true;
 		//delete $http.defaults.headers.common["X-Requested-With"]

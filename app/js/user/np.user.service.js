@@ -11,38 +11,17 @@ User.factory('User', [
     '$rootScope',
     '$location',
     '$cookieStore',
+    'auth',
     '$q',
-    function ($resource, $http, config, $window, $rootScope, $location, $cookieStore, $q) {
-
-
-        var baseAuthUrl = config.api.AUTH_SERVER;
-
+    function ($resource, $http, config, $window, $rootScope, $location, $cookieStore, auth, $q) {
         //
         // default user data for anonymous
         var defaultProfile={
             authorities : [],
             username : 'Guest',
-            userLoggedIn : false,
-            userId : null
+            profile:{}
         }
 
-
-        //
-        // define data object access here
-        var dao={
-            $token:$resource(baseAuthUrl + '/oauth/token', {client_id: config.nextprot.credentials.clientId, client_secret: config.nextprot.credentials.clientSecret, grant_type: 'password', username: '@username', password: '@password'}, {
-                get: { method: 'POST' }
-            }),
-            $googleToken:$resource(baseAuthUrl + '/google/token?client_id=:client_id', { client_id: config.nextprot.credentials.clientId }, {
-                get: { method: 'POST' }
-            }),
-            $logout:$resource(baseAuthUrl + '/user/logout.json?token=:token', {token: '@token'}, {
-                get: { method: 'POST' }
-            }),
-            $profile:$resource(baseAuthUrl + '/user/profile.json?token=:token', {token: '@token'}, {
-                get: { method: 'POST' }
-            })
-        }
 
 
         //
@@ -51,7 +30,11 @@ User.factory('User', [
 
             //
             // init the dao
-            this.dao=dao;
+            this.dao={
+               $profile:$resource(config.api.baseUrl + '/user/me', {
+                    get: { method: 'GET' }
+                })
+            }
 
             //
             // init user profile
@@ -67,6 +50,11 @@ User.factory('User', [
             this.$promise=$q.when(this)            
         };
 
+        //
+        //
+        User.prototype.isAnonymous = function () {
+            return !this.profile.userId;
+        }
 
         //    
         // make the always User a promise of the dao usage
@@ -84,7 +72,7 @@ User.factory('User', [
             return this;
         };        
 
-        User.prototype.clear = function(data) {
+        User.prototype.clear = function() {
             delete $window.sessionStorage.token;
             $cookieStore.remove('sessionToken');
             angular.extend(this.profile,defaultProfile);
@@ -94,37 +82,30 @@ User.factory('User', [
 
         //
         // kariboo login (request data)
-        User.prototype.login = function (username, password, cb) {
-            var self=this;
-            return this.chain(this.dao.$token.get({username: username, password: password}, function(data) {
-                    $cookieStore.put('sessionToken', data.access_token);
-                    $window.sessionStorage.token = data.access_token;
-                    return self;
-                }).$promise
-            );            
-
+        User.prototype.login = function (cb) {
+            var self=this;        
+            auth.signin({
+                popup: true,
+                icon:           'http://www.nextprot.org/db/images/blueflat/np.png'
+            })
+            .then(function() {
+                sefl.copy(auth.profile)
+                cb()
+                // Success callback
+            }, function(error) {
+                cb(error)
+            });
         }
 
-        User.prototype.googleSignin = function(authResult, cb) {
-           var self=this;
-           return this.chain(this.dao.$googleToken.get({
-                    access_token : authResult.access_token,
-                    refresh_token: authResult.refresh_token,
-                    code: authResult.code,
-                    id_token: authResult.id_token,
-                    expires_at: authResult.expires_at,
-                    expires_in: authResult.expires_in
-                }, function(response) {
-                    $window.sessionStorage.token = response.access_token;
-                    if(cb)cb(response);
-                }).$promise
-            );
-
+        User.prototype.logout = function (cb) {
+            var self=this;
+            auth.signout();
         }
 
-        User.prototype.getProfile = function (cb) {
+
+        User.prototype.me = function (cb) {
             var self=this;
-            return this.chain(this.dao.$profile.get({token: $window.sessionStorage.token}, function (data) {
+            return this.chain(this.dao.$profile.get( function (data) {
                     if(data.username){
                         return self.copy(data)
                     }
@@ -136,17 +117,8 @@ User.factory('User', [
             );
         };
 
-        User.prototype.logout = function (cb) {
-            var self=this;
-            self.clear()
-            return this.chain(this.dao.$logout.get({token: $window.sessionStorage.token}, function (data) {
-                if (cb)cb(data);
-            }).$promise);
-        }
 
-        User.prototype.isAnonymous = function () {
-            return !this.profile.userId;
-        }
+
 
         var service = new User();
         return service;

@@ -12,9 +12,8 @@ SearchService.factory('Search', [
     '$http',
     '$cookies',
     '$cookieStore',
-    'Tools',
     'config',
-    function ($resource, $http, $cookies, $cookieStore, Tools, config) {
+    function ($resource, $http, $cookies, $cookieStore, config) {
         //
         // this is the url root
         var $api = $resource(config.api.API_SERVER, { action: '@action', entity: '@entity', port: config.api.API_PORT }, {

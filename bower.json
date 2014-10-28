@@ -24,8 +24,9 @@
     }
   },
   "dependencies": {
-    "jquery": "~2",
+    "jquery": "~2.x",
     "bootstrap": "~3",
+    "underscore": "~1",
     "angular": "~1",
     "angular-route": "~1",
     "angular-sanitize": "~1",
@@ -35,11 +36,10 @@
     "angular-animate": "~1",
     "angular-cookies": "~1",
     "angular-loader": "~1",
-    "angular-ui-codemirror": "~0.1.6",
     "codemirror": "~4.6.0",
+    "angular-ui-codemirror": "~0.1.6",
     "angular-nextprot-help": "https://github.com/calipho-sib/nextprot-ui-help/tarball/master",
-    "auth0-angular": "~3.0.4",
-    "underscore": "~1.7.0"
+    "typeahead.js": "~0.10.5"
   },
   "devDependencies": {
     "angular-mocks": "latest"

@@ -32,9 +32,7 @@ ProteinListModule.controller('ListCtrl', [
 	'Search',
 	'ProteinList',
     'User',
-	'Tools',
-	function($resource, $scope, $rootScope, $location, $routeParams, $route, Search, ProteinList, User, Tools) {
-		$scope.Tools = Tools;
+	function($resource, $scope, $rootScope, $location, $routeParams, $route, Search, ProteinList, User) {
 		$scope.ProteinList = ProteinList;
 		$scope.showCombine = false;
 		$scope.combineDisabled = true;
@@ -139,11 +137,13 @@ ProteinListModule.controller('ListCtrl', [
 			$scope.options.first=$scope.options.second=$scope.lists
 		}
 
+		// TODO deprecated
 		$scope.buildQuery = buildQuery;
 	}
 ]);
 
 
+// TODO deprecated
 function buildQuery(accessions) {
 	return "id:" + (accessions.length > 1 ? "(" + accessions.join(" ") + ")" : accessions[0]);
 }
