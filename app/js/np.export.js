@@ -39,7 +39,7 @@ ExportModule.controller('ExportCtrl', [
         }
 
         $scope.getFileExportURL = function () {
-            var exportListURL = baseUrl + "/nextprot-api/export";
+            var exportListURL = baseUrl + "/nextprot-api-web/export";
             exportListURL += "/template/" + $scope.selectedTemplate.name;
             exportListURL += "/list/" + $scope.listToExport.id + "." + $scope.selectedFormat.extension;
             return exportListURL;
