@@ -1,0 +1,47 @@
+{
+  "name": "nextprot-ui",
+  "version": "0.7.0",
+  "homepage": "https://github.com/calipho-sib/nextprot-ui",
+  "authors": [
+    "calipho <ndu@isb-sib.ch>"
+  ],
+  "description": "main front end application for nextprot",
+  "keywords": [
+    "nextprot",
+    "angular"
+  ],
+  "license": "GPL",
+  "ignore": [
+    "node_modules",
+    "bower_components",
+    "test",
+    "app",
+    "tests"
+  ],
+  "overrides": {
+    "showdown": {
+      "main": "src/showdown.js"
+    }
+  },
+  "dependencies": {
+    "jquery": "~2",
+    "bootstrap": "~3",
+    "angular": "~1",
+    "angular-route": "~1",
+    "angular-sanitize": "~1",
+    "angular-resource": "~1",
+    "angular-touch": "~1",
+    "angular-strap": "~0",
+    "angular-animate": "~1",
+    "angular-cookies": "~1",
+    "angular-loader": "~1",
+    "angular-ui-codemirror": "~0.1.6",
+    "codemirror": "~4.6.0",
+    "angular-nextprot-help": "https://github.com/calipho-sib/nextprot-ui-help/tarball/master",
+    "auth0-angular": "~3.0.4",
+    "underscore": "~1.7.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "latest"
+  }
+}
