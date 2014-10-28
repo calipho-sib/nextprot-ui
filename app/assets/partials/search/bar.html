@@ -25,11 +25,11 @@
             </div>
             <div class="search-bar col-sm-9 col-md-9">
 
-                <div class="input-append col-sm-8 col-md-8" ng-class="{'input-prepend':Search.displayGold()}">
+                <div class="input-group col-sm-8 col-md-8" ng-class="{'input-group':Search.displayGold()}">
                     <!--                        -->
                     <!--  QUALITY SELECTION     -->
                     <!--                        -->
-                    <div class="btn-group">
+                    <div class="input-group-btn">
                         <button class="btn dropdown-toggle btn btn-default" type="button" ng-cloak="" data-toggle="dropdown" ng-show="Search.displayGold()" id="search-quality">
                             {{Search.config.widgets[Search.result.display].qualityLabel[Search.params.quality]}}
                             <span class="caret"></span>
@@ -48,21 +48,23 @@
                     <ui-codemirror id="search-query-advanced" ng-show="isAdvancedMode()" ui-codemirror-opts="editorOptions" class="btn-group search-width-advanced" ng-model="Search.params.sparql" ui-refresh="Search.params.sparql"></ui-codemirror>
 
                     <!--                      -->
-                    <!--  CLEAN/HELP BUTTON        -->
+                    <!--  CLEAN/HELP BUTTON   -->
                     <!--                      -->
-                    <button id="search-clear" class="btn btn-circle gray btn-default btn-xs" type="button" ng-click="clean({})" ng-disabled="(!Search.params.query || !Search.params.query.length) &amp;&amp; (!Search.params.sparql || !Search.params.sparql.length)" style="margin-left: -30px; position: absolute; margin-top: 5px;z-index:10">
-                        <i class="icon-remove "></i>
-                    </button>
-                    <button id="search-help" class="btn btn-circle gray btn-default btn-xs" type="button" ng-click="showHelpRepository()" ng-show="isAdvancedMode()" style="margin-left: -54px; position: absolute; margin-top: 5px;z-index:10">
-                        <i class="icon-info-sign "></i>
-                    </button>
+                    <div class="input-group-btn">
+                        <button id="search-clear" class="btn btn-circle gray btn-default btn-xs" type="button" ng-click="clean({})" ng-disabled="(!Search.params.query || !Search.params.query.length) &amp;&amp; (!Search.params.sparql || !Search.params.sparql.length)" style="margin-left: -30px; position: absolute; margin-top: 7px;z-index:10">
+                            <i class="icon-remove "></i>
+                        </button>
+                        <button id="search-help" class="btn btn-circle gray btn-default btn-xs" type="button" ng-click="showHelpRepository()" ng-show="isAdvancedMode()" style="margin-left: -54px; position: absolute; margin-top: 5px;z-index:10">
+                            <i class="icon-info-sign "></i>
+                        </button>
 
 
-                    <!--                        -->
-                    <!--  SEARCH BUTTON         -->
-                    <!--                        -->
-                    <button id="search-button" class="btn btn-default" type="submit" style="z-index:10000" ng-disabled="Search.isSearchButtonDisabled()"><i class="icon-search"></i>&nbsp;Search
-                    </button>
+                        <!--                        -->
+                        <!--  SEARCH BUTTON         -->
+                        <!--                        -->
+                        <button id="search-button" class="btn btn-default" type="submit" style="z-index:10000" ng-disabled="Search.isSearchButtonDisabled()"><i class="icon-search"></i>&nbsp;Search
+                        </button>
+                    </div>
 
                 </div>
 
@@ -93,7 +95,7 @@
 <div class="fade-out fade-in col-lg-offset-3" style="padding-left: 5px;padding: 1px; border: 1px solid #ddd;border-radius: 8px; position: absolute; background-color: white; z-index: 1000; width: 700px; box-shadow: 0 0 10px 5px lightgray" ng-show="Advanced.showHelp">
 
 
-    <div class="modal-header input-append" ng-show="Advanced.isSelectedQueryEmpty()">
+    <div class="modal-header input-group" ng-show="Advanced.isSelectedQueryEmpty()">
         <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
         <!--filter-->
         <input type="text" ng-model="filterQuery" placeholder="search in {{Advanced.currentRepository.title}} repository" class="form-control">
@@ -101,7 +103,7 @@
             <button data-toggle="tooltip" title="{{rep.tooltip}}" class="btn {{(Advanced.currentRepository == rep) ? 'btn-inverse' : ''}} btn-default" ng-repeat="rep in Advanced.repositories" type="button" ng-click="showRepository(rep)"><i class="{{rep.icon}}"></i></button>
     </div>
 
-    <div class="modal-header input-append" ng-show="!Advanced.isSelectedQueryEmpty()">
+    <div class="modal-header input-group" ng-show="!Advanced.isSelectedQueryEmpty()">
 
         <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
 
