@@ -39,14 +39,14 @@ SearchModule.controller('SearchCtrl', [
     // 'AdvancedQueryService',
     'User',
     'flash',
-    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, User, flash) {
-
-
+    'auth' ,
+    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, User, flash, auth) {
 
         // scope from template
         $scope.Search = Search;
         $scope.config = config;
         $scope.user = User;
+        $scope.auth = auth;
 
         $scope.editorOptions = {
             lineWrapping : false,
@@ -73,22 +73,21 @@ SearchModule.controller('SearchCtrl', [
             User.login(function(err){
                 console.log(User,err);
                 if(err){
-                    return flash('alert-error', "Ooops ");            
+                    return flash('alert-error', "Ooops ");
                 }
-                flash('alert-info', "Welcome " + User.username);            
+                flash('alert-info', "Welcome " + User.username);
             })
         }
 
         $scope.logout = function () {
-            $scope.reset()
+            $scope.reset();
+            auth.signout();
         }
 
 
         $scope.setAdvancedUserQuery = function (sparql) {
             $scope.advancedUserQuery = sparql;
         }
-
-
 
 
         //
@@ -138,7 +137,7 @@ SearchModule.controller('SearchCtrl', [
                 $location.path('/proteins/search')
             }
             // if (mode==='advanced'){
-            //     return $location.path('/proteins/search').search('mode', mode).search('query',null);                
+            //     return $location.path('/proteins/search').search('mode', mode).search('query',null);
             // }
 
             // $location.search('mode', null).search('sparql',null)
@@ -193,7 +192,7 @@ SearchModule.controller('SearchCtrl', [
         $scope.displaySort=function(){
             //
             // map default visual aspect of sort
-            var entity=Search.config.entityMapping[Search.params.entity], 
+            var entity=Search.config.entityMapping[Search.params.entity],
                 defaultSort=Search.config.widgets[entity].sort[Search.params.sort]
 
             //
@@ -203,7 +202,7 @@ SearchModule.controller('SearchCtrl', [
                 defaultSort.isAsc=(Search.params.order=='asc')
             }
             return defaultSort
-        }        
+        }
 
         $scope.isAdvancedMode = function () {
             return Search.params.mode == 'advanced';
@@ -266,12 +265,12 @@ SearchModule.controller('SearchCtrl', [
            } else {
                 $scope.referrer = undefined;
            }
-        }); 
+        });
 
         $rootScope.locateToReferrer=function() {
             console.log($location.url(),$scope.referrer)
-            $location.url(($scope.referrer)?$scope.referrer:'/');            
-        }       
+            $location.url(($scope.referrer)?$scope.referrer:'/');
+        }
     }
 ]);
 
@@ -299,7 +298,7 @@ SearchModule.controller('ResultCtrl', [
         //
         // save to cart modal
         $scope.modal = { options: { edit: { title: 'Edit' }, create: { title: 'Create'} }, type:'create' };
-        
+
         var self=this;
 
         this.search=function(params, cb) {
@@ -340,7 +339,7 @@ SearchModule.controller('ResultCtrl', [
             User.$promise.then(function(){
                 params.listOwner = User.profile.username;
                 self.search(params)
-            })   
+            })
         }
 
 
