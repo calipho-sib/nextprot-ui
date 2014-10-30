@@ -27,8 +27,8 @@ div.CodeMirror{
     margin: 0px;
     padding: 0px;
     font-size:12px;
-    -height:18px;
     line-height: 18px;
+    min-height:22px;
 }
 
 
@@ -36,7 +36,7 @@ div.CodeMirror{
 #search-query-advanced .CodeMirror-cursor, #search-query-save .CodeMirror-cursor{
     position: absolute;
     background-color: #444;
-    width: 1px
+    width: 1px;
 }
 
 #search-query-advanced .CodeMirror-gutters, #search-query-save .CodeMirror-gutters{
@@ -46,6 +46,7 @@ div.CodeMirror{
 #search-query-advanced .CodeMirror , #search-query-save .CodeMirror {
     font-family: monospace;
     height:auto !important;
+    min-height: 34px;
 }
 
 #search-query-advanced .CodeMirror-cursor:before, #search-query-save .CodeMirror-cursor:before{

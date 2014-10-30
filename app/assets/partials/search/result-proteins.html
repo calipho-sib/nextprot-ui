@@ -1,23 +1,22 @@
-      <!-- RESULT HEADERS -->
-      <div class="row" >
-      	<ul class="inline small" ng-show="showCart && Search.result.docs.length">
-      		<li><a href="" ng-click="selectAll()">Select All</a></li>
-      		<li class="divider-vertical"/>
-      		<li><a href="" ng-click="unselectAll()">Unselect All</a></li>
-      	</ul>
-        <ul ng-cloak id="search-results" class="span8">
-          <li ng-repeat="doc in Search.result.docs" >
-          	<!-- <input type="checkbox" name="docs[]" value="{{doc.id}}" 
+<!-- RESULT HEADERS -->
+      <div class="row">
+        <ul class="small list-inline" ng-show="showCart &amp;&amp; Search.result.docs.length">
+          <li><a href="" ng-click="selectAll()">Select All</a></li>
+          <li class="divider-vertical"></li>
+          <li><a href="" ng-click="unselectAll()">Unselect All</a></li>
+        </ul>
+        <ul ng-cloak="" id="search-results" class="span8">
+          <li ng-repeat="doc in Search.result.docs">
+            <!-- <input type="checkbox" name="docs[]" value="{{doc.id}}" 
                ng-click="selectDoc(doc.id)" ng-model="selectedResults[doc.id]" id="{{doc.id}}"> -->
-            <input type="checkbox" name="docs[]" value="{{doc.id}}" ng-show="showCart"
-               ng-click="change(doc.id)" ng-model="selectedResults[doc.id]" id="{{doc.id}}">
+            <input type="checkbox" name="docs[]" value="{{doc.id}}" ng-show="showCart" ng-click="change(doc.id)" ng-model="selectedResults[doc.id]" id="{{doc.id}}">
 
                <!-- ng-click="Cart.change(doc.id)" -->
 
             <a href="http://www.nextprot.org/entry/{{doc.id}}">
               <span ng-bind-html="doc.recommended_name"></span>
               <span ng-show="doc.ec_name">[{{doc.ec_name}}]</span> ({{doc.recommended_gene_names}}) [{{doc.id}}]</a> 
-              <span><a class="btn btn-mini hide" toggle="#line-{{$index}}"  ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i> Details</a> </span>
+              <span><a class="btn hide btn-default btn-xs" toggle="#line-{{$index}}" ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i> Details</a> </span>
             <div class="small" ng-hide="Search.session.summary">
              <span ng-bind-html="doc.function_desc[0].replace('@@',' ')|limit:300"></span>
              <span ng-hide="doc.function_desc"> No functional information for this protein. </span>&nbsp;
@@ -25,9 +24,9 @@
             <div class="gray small" ng-hide="Search.session.summary">
               Chromosomal location: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/exons">{{doc.chr_loc}}</a> 
               Isoforms: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.isoform_num}}</a> 
-              PTMs: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.ptm_num > 0 ? doc.ptm_num : '0'}}</a> 
+              PTMs: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.ptm_num &gt; 0 ? doc.ptm_num : '0'}}</a> 
               Sequence length: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.aa_length}}</a> 
-              Variants: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.var_num}}</a> <br/>
+              Variants: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.var_num}}</a> <br>
               Disease: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/medical">{{doc.filters|has:'filterdisease'}}</a> 
               Expression: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/expression">{{doc.filters|has:'filterexpressionprofile'}}</a> 
               Mutagenesis: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.filters|has:'filtermutagenesis'}}</a> 
@@ -39,4 +38,3 @@
           </li>
         </ul>
       </div>
-

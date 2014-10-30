@@ -23,9 +23,8 @@
                 </div>
                 <!--                        -->
             </div>
-            <div class="search-bar col-sm-9 col-md-9">
-
-                <div class="input-group col-sm-8 col-md-8" ng-class="{'input-group':Search.displayGold()}">
+            <div class="search-bar col-xs-7 col-md-5">
+                <div class="input-group col-xs-12">
                     <!--                        -->
                     <!--  QUALITY SELECTION     -->
                     <!--                        -->
@@ -50,11 +49,11 @@
                     <!--                      -->
                     <!--  CLEAN/HELP BUTTON   -->
                     <!--                      -->
-                    <div class="input-group-btn">
-                        <button id="search-clear" class="btn btn-circle gray btn-default btn-xs" type="button" ng-click="clean({})" ng-disabled="(!Search.params.query || !Search.params.query.length) &amp;&amp; (!Search.params.sparql || !Search.params.sparql.length)" style="margin-left: -30px; position: absolute; margin-top: 7px;z-index:10">
+                    <div class="input-group-btn " style="vertical-align:top">
+                        <button id="search-clear" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="clean({})" ng-disabled="(!Search.params.query || !Search.params.query.length) &amp;&amp; (!Search.params.sparql || !Search.params.sparql.length)" style="margin-left: -30px; position: absolute; top: 7px;z-index:10">
                             <i class="icon-remove "></i>
                         </button>
-                        <button id="search-help" class="btn btn-circle gray btn-default btn-xs" type="button" ng-click="showHelpRepository()" ng-show="isAdvancedMode()" style="margin-left: -54px; position: absolute; margin-top: 5px;z-index:10">
+                        <button id="search-help" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="showHelpRepository()" ng-show="isAdvancedMode()" style="margin-left: -54px; position: absolute; top: 7px;z-index:10">
                             <i class="icon-info-sign "></i>
                         </button>
 
@@ -62,7 +61,7 @@
                         <!--                        -->
                         <!--  SEARCH BUTTON         -->
                         <!--                        -->
-                        <button id="search-button" class="btn btn-default" type="submit" style="z-index:10000" ng-disabled="Search.isSearchButtonDisabled()"><i class="icon-search"></i>&nbsp;Search
+                        <button id="search-button" class="btn btn-default btn-search" type="submit"  ng-disabled="Search.isSearchButtonDisabled()"><i class="icon-search"></i>&nbsp;Search
                         </button>
                     </div>
 

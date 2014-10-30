@@ -1,17 +1,17 @@
 <div ng-controller="ResultCtrl">
-    <div class=" resultparams"   style="position:relative">
+    <div class=" resultparams" style="position:relative">
       <!-- RESULT HEADERS -->
-		<div style="position: absolute;" np-affix="120"  class="navbar navbar-fixed-top">
-		  <div class="navbar-inner">
+		<nav style="position: absolute;" np-affix="120" class="navbar navbar-fixed-top navbar-default navbar-nextprot-result">
+		  <div class="container">
 		  	<!-- AFFIX fix : width: 980px; padding: 0 30px; -->
-		  	<div class="span3">
+		  	<div class="col-sm-3 col-md-3">
 		    	<!-- DISPLAY RESULT INFO -->
-				<ul class="nav nav-list resultfilters" style="">
+				<ul class="nav navbar-nav resultfilters " style="">
 					<li class="dropdown">
-						<!-- <a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{Search.result.docs.length}}</b> on {{Search.result.num}} {{Search.result.display}} <b class="caret"/>
+						<!-- <a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{Search.result.docs.length}}</b> on {{Search.result.num}} {{Search.result.display}} <b class="caret"></b>
 						</a> -->
-						<a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{start ++ 1}}</b> to <b>{{ ((start + rows) > Search.result.num) ? Search.result.num : (start + rows) }}</b> of {{Search.result.num}} <b class="caret"/></a>
-						<ul class="dropdown-menu" >
+						<a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{start ++ 1}}</b> to <b>{{ ((start + rows) &gt; Search.result.num) ? Search.result.num : (start + rows) }}</b> of {{Search.result.num}} <b class="caret"></b></a>
+						<ul class="dropdown-menu">
     						<li><a ng-class="{bold:Search.params.rows=='50'||!Search.params.rows}" href="" ng-click="params({rows:50})">50 rows</a></li>
 							<li><a ng-class="{bold:Search.params.rows=='100'}" href="" ng-click="params({rows:100})">100 rows</a></li>
 							<li><a ng-class="{bold:Search.params.rows=='150'}" href="" ng-click="params({rows:150})">150 rows</a></li>
@@ -28,18 +28,15 @@
 
 
 		  	</div>
-		    <div class="span7" style="margin-left:0px">
+		    <div class="col-sm-7 col-md-7" style="margin-left:0px">
 
 		    	<!-- DISPLAY FILTERS SORT/EXPORT -->
-		    	<ul class="nav">
+		    	<ul class="nav navbar-nav">
 
-					<li ng-if="Search.result.pagination.numPages" id="pageInput" ng-show="Search.result.pages.length > 1" style="margin:5px" class="visible-desktop">
-						<form name="paging" ng-submit="manualPaginate(paging)" class="nomargin" >
+					<li ng-if="Search.result.pagination.numPages" id="pageInput" ng-show="Search.result.pages.length > 1" style="margin:5px" class="visible-lg">
+						<form name="paging" ng-submit="manualPaginate(paging)" class="nomargin">
                             <!--   looks like this breaks the paging check if new version of angular is ok-->
-                            <input type="number" min="1" class="bold black"
-                                   ng-model="Search.result.pagination.current"
-                                   style="border: 0px none; width: 40px;color:black;margin-bottom:0;text-align:right"
-                                    /> / {{ Search.result.pagination.numPages | number:0}} page(s)
+                            <input type="number" min="1" class="bold black form-control" ng-model="Search.result.pagination.current" style="border: 0px none; width: 40px;color:black;margin-bottom:0;text-align:right"> / {{ Search.result.pagination.numPages | number:0}} page(s)
                             <!-- PAGINATE -->
 						</form>
 					</li>
@@ -49,31 +46,29 @@
                                             <input  type="text" placeholder="Search"
                                                 ng-model="Search.params.query" autocomplete="off"  bs-autocomplete="Search.suggest"
                                                 style="border: 0px none; width: 120px;color:black;margin-bottom:0" np-enter="go()">
-                                            <span class="label-gg" ><i class="icon-search"/></span>
+                                            <span class="label-gg" ><i class="icon-search"></i></span>
                                         </li>
                      -->
 		    	</ul>
-				<ul class="nav pull-right">
+				<ul class="nav pull-right navbar-nav">
 				  	<!-- <li class="divider-vertical"></li>
 				  	<li ng-show="Search.result.pages.length>1">
 				  		<label>Page
 				    	<input type="number" min="1" class="span3" ng-model="Search.result.pagination.manual"  ng-value="Search.result.pagination.manual" np-enter="params({start:(Search.result.pagination.manual-1)*Search.result.rows})"/></label>
 				  	</li> -->
 
-				  <li class="divider-vertical visible-desktop"></li>
+				  <li class="divider-vertical visible-lg"></li>
 				  <li>
-				  	<div style="padding:7px">				  		
-				  		<a  href="" ng-click="cookies({summary:true});" id="search-summary" 
-				  			class="small" ng-class="{inactive:Search.session.summary==='true'}" >Summary</a>&nbsp;<b>|</b>&nbsp;
-				  		<a  href="" ng-click="cookies({summary:false});" id="search-details" 
-				  			class="small" ng-class="{inactive:Search.session.summary!=='true'}">Details</a>
+				  	<div style="padding:14px">				  		
+				  		<a href="" ng-click="cookies({summary:true});" id="search-summary" class="small" ng-class="{inactive:Search.session.summary==='true'}">Summary</a>&nbsp;<b>|</b>&nbsp;
+				  		<a href="" ng-click="cookies({summary:false});" id="search-details" class="small" ng-class="{inactive:Search.session.summary!=='true'}">Details</a>
 				  	</div>
 				  </li>
 				  <li class="divider-vertical"></li>
 
 
 				  <!-- SORTING -->
-				  <li class="dropdown" ng-include="getSortTemplateByEntity()" ></li>
+				  <li class="dropdown" ng-include="getSortTemplateByEntity()"></li>
 		
 				  <!-- EXPORT -->
 				  <!--
@@ -91,7 +86,7 @@
 				  <li class="divider-vertical"></li>
 				  <li class="dropdown">
 				    <a data-toggle="dropdown" class="dropdown-toggle" href="">
-						<i class="icon-shopping-cart"></i><span class="badge">{{Cart.getCartSize()}}</span><b class="caret"/>
+						<i class="icon-shopping-cart"></i><span class="badge">{{Cart.getCartSize()}}</span><b class="caret"></b>
 				    </a>
 					<ul class="dropdown-menu">
 						<li><a href="" ng-click="emptyCart()">Empty Cart</a></li>
@@ -105,43 +100,46 @@
 				</ul>		      
 		    </div>
 		  </div>
-		</div>          
+		</nav>          
     </div>
-    <div >
-	    <div class="span3" >
+    <div>
+	    <div class="col-sm-3 col-md-3">
 	      <!--RESULT SIDEBAR-->
-	      	<div class="  resultfilters" style="width:230px;" np-affix="160">
-				<ul class="nav nav-list " >
-				  <li class="nav-header">Filters</li>
-				  <li class="">For {{Search.result.display}} with:</li>
-			      <li class="solrp " ng-repeat="filter in Search.result.filters | orderBy:'name'">
-			        <a ng-show="filter.count" ng-class="active(filter.name,'filter')"  ng-click="toggle({filter:filter.name})" href="">{{Search.result.ontology[filter.name]}} 
-			          <span class=" "> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&&'icon-remove'"></i>
-			        </a>
-				  </li>
-				  <input id="filters" class=""  type="hidden" ng-model="Search.params.filter"   autocomplete="off" >
-				</ul>
+	      	<div class="  resultfilters"  np-affix="160">
+						<ul class="list-unstyled" >
+						  <!-- header -->
+							<li><h5 class="lead">Filters</h5></li>
+							<li>For {{Search.result.display}} with:</li>
+						  <!-- content -->
+				      <li class="solrp " ng-repeat="filter in Search.result.filters | orderBy:'name'" ng-class="active(filter.name,'filter')">
+					        <a ng-show="filter.count" class=""  ng-click="toggle({filter:filter.name})" href="">{{Search.result.ontology[filter.name]}} 
+					          <span class=""> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&amp;&amp;'icon-remove'"></i>
+					        </a>
+						  </li>
+						  <input id="filters" class="form-control" type="hidden" ng-model="Search.params.filter" autocomplete="off">
+						</ul>	      		
+
 			</div>
 	    </div>
-	    <div class="span9">
+	    <div class="col-sm-9 col-md-9">
 
             <!-- Loading spinner ... -->
             <div class="row" ng-show="Search.loading">
-                <div class="offset3">
-                    <div align="center" class="throbber" ></div>
+                <div class="col-lg-offset-3">
+                    <div align="center" class="throbber"></div>
                 </div>
             </div>
 
 	      <!-- RESULT CONTENT -->
-	  	  <b ng-show="Search.result.message&&(Search.params.query||Search.params.sparql)">{{Search.result.message}}</b>
+	  	  <b ng-show="Search.result.message&amp;&amp;(Search.params.query||Search.params.sparql)">{{Search.result.message}}</b>
 	  	  <div ng-include="getResultTemplateByEntity()"></div>
 
             <!-- PAGINATE -->
-            <div class="result pagination pagination-small" ng-show="Search.result.pages.length>1">
+            <div class="result pagination pagination-sm" ng-show="Search.result.pages.length>1">
                 <ul>
-                    <li ng-if="Search.result.pagination.prev.visible" ng-class="{disabled:!Search.result.pagination.prev}"><a href="" ng-click="params({start:Search.result.pagination.prev.start})">&laquo;</a></li>
-                    <li ng-repeat="page in Search.result.pages" ng-class="{disabled:page.current}" ><a href="" ng-click="params({start:((page.offset-1) * Search.result.rows)})">{{page.offset}}</a></li>
-                    <li ng-if="Search.result.pagination.next.visible" ng-class="{disabled:!Search.result.pagination.next}"><a href="" ng-click="params({start:Search.result.pagination.next.start})">&raquo;</a></li>
+                    <li ng-if="Search.result.pagination.prev.visible" ng-class="{disabled:!Search.result.pagination.prev}"><a href="" ng-click="params({start:Search.result.pagination.prev.start})">«</a></li>
+                    <li ng-repeat="page in Search.result.pages" ng-class="{disabled:page.current}"><a href="" ng-click="params({start:((page.offset-1) * Search.result.rows)})">{{page.offset}}</a></li>
+                    <li ng-if="Search.result.pagination.next.visible" ng-class="{disabled:!Search.result.pagination.next}"><a href="" ng-click="params({start:Search.result.pagination.next.start})">»</a></li>
                 </ul>
             </div>
 

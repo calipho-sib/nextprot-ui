@@ -56,7 +56,7 @@
 
         <!-- login button -->
         <li ng-if="!auth.profile.email">
-          <button type="button" class="btn btn-default" ng-click="login()">Login</button>
+          <a href='' type="button" class="link" ng-click="login()">Login</a>
         </li>
 
         <!-- once logged in user resources -->
@@ -121,8 +121,8 @@
 
 -->
 
-<div ng-show="message" class=" error">
-    <div ng-cloak="" class="np-alert alert alert-error alert-warning">{{Search.result.error}} {{message}}</div>
+<div ng-show="message" class=" error ng-cloak" ng-cloak>
+    <div class="np-alert alert alert-error alert-warning">{{Search.result.error}} {{message}}</div>
 </div>
 
 <!--   <div class="alert alert-success" style="margin-top: 40px">
@@ -138,7 +138,7 @@
 
 <!-- Masthead
 ================================================== -->
-<div ng-include="'partials/search/bar.html'"></div>
+<div ng-include="'partials/search/search-bar.html'"></div>
 
 
 <div id="main" class="row" ng-view="">

@@ -8,16 +8,20 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0;
 }
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+display: none !important;
+}
 
 a.inactive {
     pointer-events: none;
     cursor: default;
-    color: black;
+    color: #666;
 }
 
 .link{
   color:#0088CC;
   cursor: pointer;
+  border-bottom: 1px dotted #999;
 }
 
 .link:hover{
@@ -64,18 +68,19 @@ a.inactive {
   position: relative;
 }
 
+
 .search-toggle{
     font-size: 80%;
     margin-top: -1px;
     position: absolute;
-    left:565px;
+    right:12px;
     top:34px;
     font-weight:300;
 }
 .search-bottom{
     float: left;
-    margin-left: 20px;
-    width: 600px;
+    margin-left: 2px;
+    width: 100%;
     min-height: 10px !important;
 }
 
@@ -90,7 +95,7 @@ a.inactive {
 
 .search-row.animate {
     margin-top: 0px;
-    padding: 55px 0 10px 0;
+    padding: 25px 0 10px 0;
     margin-bottom: inherit;
     transition: .2s linear all;
     -webkit-transition: .2s linear all;
@@ -169,7 +174,9 @@ a.inactive {
 }
 
 .resultfilters {
+    width: 230px
 }
+
 .resultparams .affix{
   top: 40px;  
 }
@@ -191,6 +198,15 @@ a.inactive {
     background-color: aliceblue;
     width: 80%;
     border-radius: 5px;
+}
+
+.resultfilters ul{
+    max-width: 260px;
+    margin-left: 20%;
+}
+
+.resultfilters li{
+    line-height:24px;
 }
 
 .nav .pagination {
@@ -230,16 +246,15 @@ a.inactive {
     z-index: 2000;
 }
 
-.search-width-no-quality {
-    width: 550px !important;
+.search-width-no-quality, .search-width-quality, .search-width-advanced{
 }
 
 .search-width-advanced {
-    width: 566px !important;
+    width: 100%;
+    min-height: 34px;
 }
 
 .search-width-quality {
-    width: 455px !important;
 }
 
 ul#search-results li {
