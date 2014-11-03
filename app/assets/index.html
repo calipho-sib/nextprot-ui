@@ -24,8 +24,6 @@
 
     <link rel="stylesheet" href="stylesheets/gh-buttons.css">
 
-    <script src="https://apis.google.com/js/client:plusone.js"></script>
-
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -138,10 +136,10 @@
 
 <!-- Masthead
 ================================================== -->
-<div ng-include="'partials/search/search-bar.html'"></div>
+<div ng-if="true" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
 
 
-<div id="main" class="row" ng-view="">
+<div id="main" class="container-fluid" ng-view="">
 </div>
 
 <div ng-include="'partials/footer.html'"></div>
@@ -151,7 +149,15 @@
 <!-- Placed at the end of the document so the pages load faster -->
 
 <script type="text/javascript">
- var npHelpSettings={}
+//
+// global settings for angular-nexprot-ui-help
+var npHelpSettings={
+    // baseUrl:"http://uat-web2:8080",
+    baseUrl:'https://api.nextprot.org',
+    helpUrl:'/rdf/help/type/all.json',
+    root:'doc',
+    pages:['doc/home','doc/faq','doc/entity']
+}    
 </script>
 <script src="js/vendor.js"></script>
 <script src="js/app.js"></script>

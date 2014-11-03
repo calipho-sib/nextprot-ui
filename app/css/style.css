@@ -217,6 +217,19 @@ a.inactive {
     margin: 20px 20% !important;
 }
 
+form input.paginate{
+    border: 0px; 
+    border-radius: 0px;
+    width: 40px;
+    height: 20px;
+    color:black;
+    margin-bottom:0;
+    text-align:right;
+    padding: 0px;
+    border-bottom: 1px solid #888;
+    line-height: 22px;
+}
+
 .search-bar .dropdown-menu {
     min-width: 400px;
 }

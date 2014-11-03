@@ -7,6 +7,7 @@ var App = angular.module('np', [
     'ngRoute',
     'ngAnimate',
     'ngCookies',
+    'npHelp',
     '$strap.directives',
     'np.flash',
     'np.config',
@@ -50,6 +51,7 @@ App.config([
         // List of routes of the application
         $routeProvider
             .when('/', {title: 'welcome to nextprot', templateUrl: '/partials/welcome.html'})
+            .when('/doc', {title: 'welcome to nextprot', templateUrl: '/partials/help.html'})
             .when('/about', {title: 'about', templateUrl: '/partials/about.html'})
             .when('/404', {title: '404', templateUrl: '/partials/errors/404.html'})
         // Catch all

@@ -1,4 +1,4 @@
-<div ng-controller="ResultCtrl">
+<div ng-controller="ResultCtrl" class="row">
     <div class=" resultparams" style="position:relative">
       <!-- RESULT HEADERS -->
 		<nav style="position: absolute;" np-affix="120" class="navbar navbar-fixed-top navbar-default navbar-nextprot-result">
@@ -33,10 +33,10 @@
 		    	<!-- DISPLAY FILTERS SORT/EXPORT -->
 		    	<ul class="nav navbar-nav">
 
-					<li ng-if="Search.result.pagination.numPages" id="pageInput" ng-show="Search.result.pages.length > 1" style="margin:5px" class="visible-lg">
+					<li ng-if="Search.result.pagination.numPages" id="pageInput" ng-show="Search.result.pages.length > 1" style="margin:5px" class="visible-lg ">
 						<form name="paging" ng-submit="manualPaginate(paging)" class="nomargin">
                             <!--   looks like this breaks the paging check if new version of angular is ok-->
-                            <input type="number" min="1" class="bold black form-control" ng-model="Search.result.pagination.current" style="border: 0px none; width: 40px;color:black;margin-bottom:0;text-align:right"> / {{ Search.result.pagination.numPages | number:0}} page(s)
+                            <input type="number" min="1" class="bold black form-control paginate" ng-model="Search.result.pagination.current" > <small class="gray">{{ Search.result.pagination.numPages | number:0}} page(s)</small>
                             <!-- PAGINATE -->
 						</form>
 					</li>
@@ -103,10 +103,10 @@
 		</nav>          
     </div>
     <div>
-	    <div class="col-sm-3 col-md-3">
+	    <div class="col-sm-12 col-md-2">
 	      <!--RESULT SIDEBAR-->
 	      	<div class="  resultfilters"  np-affix="160">
-						<ul class="list-unstyled" >
+						<ul class="list-unstyled list-inline" >
 						  <!-- header -->
 							<li><h5 class="lead">Filters</h5></li>
 							<li>For {{Search.result.display}} with:</li>
@@ -121,7 +121,7 @@
 
 			</div>
 	    </div>
-	    <div class="col-sm-9 col-md-9">
+	    <div class="col-sm-12 col-md-10">
 
             <!-- Loading spinner ... -->
             <div class="row" ng-show="Search.loading">

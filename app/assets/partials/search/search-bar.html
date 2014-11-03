@@ -1,92 +1,88 @@
 <div ng-cloak="" class="row search-row" np-animate="#main" ng-controller_="AdvancedCtrl">
 <a href="/"><img src="http://www.nextprot.org/db/images/blueflat/np.png" class="home"></a>
 
-<div class="row">
-    <form ng-submit="go()" validate="">
-        <div>
-            <div class="col-sm-3 col-md-3">
-                <!--                        -->
-                <!--  ENTITY SELECTION      -->
-                <!--                        -->
-                <div class="btn-group pull-right ">
+<form ng-submit="go()" validate="" class="row">
+    <div class="col-sm-3 col-md-3">
+        <!--                        -->
+        <!--  ENTITY SELECTION      -->
+        <!--                        -->
+        <div class="btn-group pull-right ">
 
-                    <a class="btn dropdown-toggle btn-default" data-toggle="dropdown" href="" id="search-entity" ng-class="{disabled:isAdvancedMode()}">
-                        {{Search.config.entityMapping[Search.params.entity]}}&nbsp;
-                        <span class="caret"></span>
-                    </a>
-                    <ul id="search-entity-dropdown" class="dropdown-menu">
-                        <!-- dropdown menu links -->
-                        <li><a ng-click="entity({entity:'proteins'})">Proteins</a></li>
-                        <li><a ng-click="entity({entity:'publications'})">Publications</a></li>
-                        <li><a ng-click="entity({entity:'terms'})">Terms</a></li>
-                    </ul>
-                </div>
-                <!--                        -->
-            </div>
-            <div class="search-bar col-xs-7 col-md-5">
-                <div class="input-group col-xs-12">
-                    <!--                        -->
-                    <!--  QUALITY SELECTION     -->
-                    <!--                        -->
-                    <div class="input-group-btn">
-                        <button class="btn dropdown-toggle btn btn-default" type="button" ng-cloak="" data-toggle="dropdown" ng-show="Search.displayGold()" id="search-quality">
-                            {{Search.config.widgets[Search.result.display].qualityLabel[Search.params.quality]}}
-                            <span class="caret"></span>
-                        </button>
-                        <ul id="search-quality-dropdown" class="dropdown-menu" ng-show="Search.displayGold()">
-                            <li><a ng-click="quality('gold')">Gold only</a></li>
-                            <li><a ng-click="quality('gold-and-silver')">Include silver</a></li>
-                        </ul>
-                    </div>
-
-                    <!--                        -->
-                    <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
-                    <!--                        -->
-                    <input ng-show="!isAdvancedMode()" id="search-query" class="form-control" type="text" ng-model="Search.params.query" ng-class="{'search-width-quality':Search.displayGold(),'search-width-no-quality':!Search.displayGold()}" autocomplete="off" bs-autocomplete="Search.suggest" autofocus="">
-
-                    <ui-codemirror id="search-query-advanced" ng-show="isAdvancedMode()" ui-codemirror-opts="editorOptions" class="btn-group search-width-advanced" ng-model="Search.params.sparql" ui-refresh="Search.params.sparql"></ui-codemirror>
-
-                    <!--                      -->
-                    <!--  CLEAN/HELP BUTTON   -->
-                    <!--                      -->
-                    <div class="input-group-btn " style="vertical-align:top">
-                        <button id="search-clear" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="clean({})" ng-disabled="(!Search.params.query || !Search.params.query.length) &amp;&amp; (!Search.params.sparql || !Search.params.sparql.length)" style="margin-left: -30px; position: absolute; top: 7px;z-index:10">
-                            <i class="icon-remove "></i>
-                        </button>
-                        <button id="search-help" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="showHelpRepository()" ng-show="isAdvancedMode()" style="margin-left: -54px; position: absolute; top: 7px;z-index:10">
-                            <i class="icon-info-sign "></i>
-                        </button>
-
-
-                        <!--                        -->
-                        <!--  SEARCH BUTTON         -->
-                        <!--                        -->
-                        <button id="search-button" class="btn btn-default btn-search" type="submit"  ng-disabled="Search.isSearchButtonDisabled()"><i class="icon-search"></i>&nbsp;Search
-                        </button>
-                    </div>
-
-                </div>
-
-                <!--                                                                  -->
-                <!--  SEARCH BOTTOM ('did you mean' option and toggle search)         -->
-                <!--                                                                  -->
-                <div class="search-bottom">
-                       <span ng-show="Search.result.spellcheck.collations.length" id="search-didyoumean"><b class="gray">&nbsp;Did you mean:</b>
-                         <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[0].query}}">{{Search.result.spellcheck.collations[0].query}}</a>
-                         <span ng-show="Search.result.spellcheck.collations[1]">, 
-                           <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[1].query}}">{{Search.result.spellcheck.collations[1].query}}</a>
-                         </span>
-                       </span>
-                    <span class=" search-toggle"><span ng-click="toggleAdv({mode:null})" ng-class="{link:isAdvancedMode()}">simple</span> / <span ng-class="{link:!isAdvancedMode()}" ng-click="toggleAdv({mode:'advanced'})">advanced</span></span>
-
-                </div>
-
+            <a class="btn dropdown-toggle btn-default" data-toggle="dropdown" href="" id="search-entity" ng-class="{disabled:isAdvancedMode()}">
+                {{Search.config.entityMapping[Search.params.entity]}}&nbsp;
+                <span class="caret"></span>
+            </a>
+            <ul id="search-entity-dropdown" class="dropdown-menu">
+                <!-- dropdown menu links -->
+                <li><a ng-click="entity({entity:'proteins'})">Proteins</a></li>
+                <li><a ng-click="entity({entity:'publications'})">Publications</a></li>
+                <li><a ng-click="entity({entity:'terms'})">Terms</a></li>
+            </ul>
+        </div>
+        <!--                        -->
+    </div>
+    <div class="search-bar col-xs-7 col-md-5">
+        <div class="input-group col-xs-12">
+            <!--                        -->
+            <!--  QUALITY SELECTION     -->
+            <!--                        -->
+            <div class="input-group-btn">
+                <button class="btn dropdown-toggle btn btn-default" type="button" ng-cloak="" data-toggle="dropdown" ng-show="Search.displayGold()" id="search-quality">
+                    {{Search.config.widgets[Search.result.display].qualityLabel[Search.params.quality]}}
+                    <span class="caret"></span>
+                </button>
+                <ul id="search-quality-dropdown" class="dropdown-menu" ng-show="Search.displayGold()">
+                    <li><a ng-click="quality('gold')">Gold only</a></li>
+                    <li><a ng-click="quality('gold-and-silver')">Include silver</a></li>
+                </ul>
             </div>
 
+            <!--                        -->
+            <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
+            <!--                        -->
+            <input ng-show="!isAdvancedMode()" id="search-query" class="form-control" type="text" ng-model="Search.params.query" ng-class="{'search-width-quality':Search.displayGold(),'search-width-no-quality':!Search.displayGold()}" autocomplete="off" bs-autocomplete="Search.suggest" autofocus="">
+
+            <ui-codemirror id="search-query-advanced" ng-show="isAdvancedMode()" ui-codemirror-opts="editorOptions" class="btn-group search-width-advanced" ng-model="Search.params.sparql" ui-refresh="Search.params.sparql"></ui-codemirror>
+
+            <!--                      -->
+            <!--  CLEAN/HELP BUTTON   -->
+            <!--                      -->
+            <div class="input-group-btn " style="vertical-align:top">
+                <button id="search-clear" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="clean({})" ng-disabled="(!Search.params.query || !Search.params.query.length) &amp;&amp; (!Search.params.sparql || !Search.params.sparql.length)" style="margin-left: -30px; position: absolute; top: 7px;z-index:10">
+                    <i class="icon-remove "></i>
+                </button>
+                <button id="search-help" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="showHelpRepository()" ng-show="isAdvancedMode()" style="margin-left: -54px; position: absolute; top: 7px;z-index:10">
+                    <i class="icon-info-sign "></i>
+                </button>
+
+
+                <!--                        -->
+                <!--  SEARCH BUTTON         -->
+                <!--                        -->
+                <button id="search-button" class="btn btn-default btn-search" type="submit"  ng-disabled="Search.isSearchButtonDisabled()"><i class="icon-search"></i>&nbsp;Search
+                </button>
+            </div>
 
         </div>
-    </form>
-</div>
+
+        <!--                                                                  -->
+        <!--  SEARCH BOTTOM ('did you mean' option and toggle search)         -->
+        <!--                                                                  -->
+        <div class="search-bottom">
+               <span ng-show="Search.result.spellcheck.collations.length" id="search-didyoumean"><b class="gray">&nbsp;Did you mean:</b>
+                 <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[0].query}}">{{Search.result.spellcheck.collations[0].query}}</a>
+                 <span ng-show="Search.result.spellcheck.collations[1]">, 
+                   <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[1].query}}">{{Search.result.spellcheck.collations[1].query}}</a>
+                 </span>
+               </span>
+            <span class=" search-toggle"><span ng-click="toggleAdv({mode:null})" ng-class="{link:isAdvancedMode()}">simple</span> / <span ng-class="{link:!isAdvancedMode()}" ng-click="toggleAdv({mode:'advanced'})">advanced</span></span>
+
+        </div>
+
+    </div>
+
+
+</form>
 
 <!--                                                                  -->
 <!--  HELP / REPOSITORY                                               -->
