@@ -5,7 +5,7 @@
 		  <div class="container-fluid">
 		  	<div class="col-xs-3 col-sm-3">
 		    	<!-- DISPLAY RESULT INFO -->
-					<ul class="nav navbar-nav resultfilters " style="">
+					<ul class="nav navbar-nav  " style="">
 						<li class="dropdown">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{start ++ 1}}</b> to <b>{{ ((start + rows) &gt; Search.result.num) ? Search.result.num : (start + rows) }}</b> of {{Search.result.num}} <b class="caret"></b></a>
 							<ul class="dropdown-menu">
@@ -75,44 +75,42 @@
 		  </div>
 		</nav>          
 
-	    <div class="col-sm-12 col-md-2">
-	      <!--RESULT SIDEBAR-->
-      	<div class="  resultfilters"  np-affix="160">
-					<ul class="list-unstyled list-inline" >
-					  <!-- header -->
-						<li><h5 class="lead">Filters</h5></li>
-						<li>For {{Search.result.display}} with:</li>
-					  <!-- content -->
-			      <li class="solrp " ng-repeat="filter in Search.result.filters | orderBy:'name'" ng-class="active(filter.name,'filter')">
-				        <a ng-show="filter.count" class=""  ng-click="toggle({filter:filter.name})" href="">{{Search.result.ontology[filter.name]}} 
-				          <span class=""> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&amp;&amp;'icon-remove'"></i>
-				        </a>
-					  </li>
-					  <input id="filters" class="form-control" type="hidden" ng-model="Search.params.filter" autocomplete="off">
-					</ul>	      		
-				</div>
-	    </div>
-	    <div class="col-sm-12 col-md-10">
+    <div class="col-xs-12 col-sm-2">
+      <!--RESULT SIDEBAR-->
+    	<div class="  resultfilters"  np-affix="150">
+				<ul class="list-unstyled" >
+				  <!-- header -->
+					<li><h5 class="lead">Filters</h5></li>
+					<li>For {{Search.result.display}} with:</li>
+				  <!-- content -->
+		      <li class="solrp " ng-repeat="filter in Search.result.filters | orderBy:'name'" ng-class="active(filter.name,'filter')">
+			        <a ng-show="filter.count" class=""  ng-click="toggle({filter:filter.name})" href="">{{Search.result.ontology[filter.name]}} 
+			          <span class=""> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&amp;&amp;'icon-remove'"></i>
+			        </a>
+				  </li>
+				  <input id="filters" class="form-control" type="hidden" ng-model="Search.params.filter" autocomplete="off">
+				</ul>	      		
+			</div>
+    </div>
+    <div class="col-xs-12  col-sm-10">
 
-            <!-- Loading spinner ... -->
-            <div class="row" ng-show="Search.loading">
-                <div class="col-lg-offset-3">
-                    <div align="center" class="throbber"></div>
-                </div>
-            </div>
+      <!-- Loading spinner ... -->
+      <div class="col-lg-offset-3" ng-show="Search.loading">
+          <div align="center" class="throbber"></div>
+      </div>
 
-	      <!-- RESULT CONTENT -->
-	  	  <b ng-show="Search.result.message&&(Search.params.query||Search.params.sparql)">{{Search.result.message}} </b>
-	  	  <div ng-include="getResultTemplateByEntity()"></div>
+      <!-- RESULT CONTENT -->
+  	  <b ng-show="Search.result.message&&(Search.params.query||Search.params.sparql)">{{Search.result.message}} </b>
+  	  <div ng-include="getResultTemplateByEntity()"></div>
 
-            <!-- PAGINATE -->
-            <div class="result pagination pagination-sm" ng-show="Search.result.pages.length>1">
-                <ul>
-                    <li ng-if="Search.result.pagination.prev.visible" ng-class="{disabled:!Search.result.pagination.prev}"><a href="" ng-click="params({start:Search.result.pagination.prev.start})">«</a></li>
-                    <li ng-repeat="page in Search.result.pages" ng-class="{disabled:page.current}"><a href="" ng-click="params({start:((page.offset-1) * Search.result.rows)})">{{page.offset}}</a></li>
-                    <li ng-if="Search.result.pagination.next.visible" ng-class="{disabled:!Search.result.pagination.next}"><a href="" ng-click="params({start:Search.result.pagination.next.start})">»</a></li>
-                </ul>
-            </div>
+          <!-- PAGINATE -->
+          <div class="result pagination pagination-sm" ng-show="Search.result.pages.length>1">
+              <ul>
+                  <li ng-if="Search.result.pagination.prev.visible" ng-class="{disabled:!Search.result.pagination.prev}"><a href="" ng-click="params({start:Search.result.pagination.prev.start})">«</a></li>
+                  <li ng-repeat="page in Search.result.pages" ng-class="{disabled:page.current}"><a href="" ng-click="params({start:((page.offset-1) * Search.result.rows)})">{{page.offset}}</a></li>
+                  <li ng-if="Search.result.pagination.next.visible" ng-class="{disabled:!Search.result.pagination.next}"><a href="" ng-click="params({start:Search.result.pagination.next.start})">»</a></li>
+              </ul>
+          </div>
 
-	    </div>
+    </div>
 </div>

@@ -174,15 +174,16 @@ a.inactive {
 }
 
 .resultfilters {
+    margin-top: 70px;
     width: 230px
 }
 
 .resultparams .affix{
-  top: 40px;  
+  top: 50px;  
 }
 .search-row .affix{
     padding-top:10px;
-    top: 40px;  
+    top: 50px;  
     background-color: #eee;
 
 }
@@ -190,8 +191,8 @@ a.inactive {
 .resultfilters.affix {
     padding-left: 0;
     z-index: 99;
-    margin-top: 100px;
-    background-color: white;
+    margin-top: 60px;
+    margin-left: 13px;
 }
 
 .resultfilters .active {
@@ -202,7 +203,7 @@ a.inactive {
 
 .resultfilters ul{
     max-width: 260px;
-    margin-left: 20%;
+    margin-left: 15%;
 }
 
 .resultfilters li{
