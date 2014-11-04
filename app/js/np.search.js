@@ -39,14 +39,12 @@ SearchModule.controller('SearchCtrl', [
     // 'AdvancedQueryService',
     'User',
     'flash',
-    'auth' ,
-    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, User, flash, auth) {
+    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, User, flash) {
 
         // scope from template
         $scope.Search = Search;
         $scope.config = config;
         $scope.user = User;
-        $scope.auth = auth;
 
         $scope.editorOptions = {
             lineWrapping : false,
@@ -81,7 +79,7 @@ SearchModule.controller('SearchCtrl', [
 
         $scope.logout = function () {
             $scope.reset();
-            auth.signout();
+            User.logout();
         }
 
 

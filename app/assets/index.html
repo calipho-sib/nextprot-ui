@@ -53,13 +53,13 @@
       <ul class="nav navbar-nav navbar-right">
 
         <!-- login button -->
-        <li ng-if="!auth.profile.email">
+        <li ng-if="!user.profile.email">
           <a href='' type="button" class="link" ng-click="login()">Login</a>
         </li>
 
         <!-- once logged in user resources -->
-        <li class="dropdown" ng-if="auth.profile.email">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{auth.profile.email}}<span class="caret"></span></a>
+        <li class="dropdown" ng-if="user.profile.email" ng-cloak>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.profile.email}}<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#">My profile</a></li>
             <li><a href="#">My lists</a></li>
@@ -98,7 +98,7 @@
 
                 <div class="btn-group pull-right" ng-if="user.isAnonymous()">
                     <a class="btn dropdown-toggle btn-default btn-sm" data-toggle="dropdown" href="">
-                        {{auth.profile.name}}
+                        {{user.profile.name}}
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">

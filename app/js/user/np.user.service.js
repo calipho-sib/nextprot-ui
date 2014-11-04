@@ -89,7 +89,7 @@ User.factory('User', [
                 icon:           'http://www.nextprot.org/db/images/blueflat/np.png'
             })
             .then(function() {
-                sefl.copy(auth.profile)
+                self.copy(auth.profile)
                 cb()
                 // Success callback
             }, function(error) {
