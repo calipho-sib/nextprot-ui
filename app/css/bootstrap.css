@@ -59,12 +59,17 @@
 .navbar-nextprot-result .btn-navbar{
     background-color: #fff;
     color: #428bca;
-    border-bottom: 1px dotted;    
+    border-left: 1px dotted;    
+    -text-decoration:underline;
+}
+
+.navbar-nextprot-result .btn-navbar:first-child {
+    border-bottom: 0px;    
 }
 
 .navbar-nextprot-result .btn-navbar-selected{
     border: 0px;
-    color: #333;
+    color: #333; 
 }
 
 .navbar-nextprot-result .navbar-text {
