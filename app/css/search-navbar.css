@@ -1,0 +1,104 @@
+.navbar-fixed-top, .navbar-fixed-bottom{
+	position: fixed;
+}
+
+.navbar-fixed-top .navbar-inner{
+	padding:0px;
+}
+
+.navbar-nextprot-result {
+    background-color: #fff;
+    border-color: #eee;
+    border-bottom: 1px solid #ddd;
+    min-height: 40px;
+    height: 50px;
+}
+.navbar-nextprot-result .list-group-item{
+    border-radius: 0;
+    border: 0px;
+    padding: 9px;
+}
+
+.navbar-nextprot-result .container { 
+    height: 40px; 
+}
+
+.navbar-nextprot-result .navbar-nav {
+    float: left;
+    margin: 0;
+}
+
+.navbar-nextprot-result .nav {
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.navbar-nextprot-result .navbar-left {
+    float: left !important;
+}
+
+.navbar-nextprot-result .navbar-form {
+    width: auto;
+    border: 0;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.navbar-nextprot-result .navbar-nav.navbar-right:last-child {
+    margin-right: -15px;
+}
+
+.navbar-nextprot-result .navbar-right {
+    float: right !important;
+}
+
+.navbar-nextprot-result .btn-navbar{
+    background-color: #fff;
+    color: #428bca;
+    -text-decoration:underline;
+    border-left: 1px dotted;    
+}
+
+.navbar-nextprot-result .btn-navbar:first-child {
+    border-right: 1px dotted;    
+    margin-right: 1px;
+    border-left: 0px dotted;    
+}
+
+.navbar-nextprot-result .btn-navbar-selected{
+    border: 0px;
+    color: #333; 
+}
+
+.navbar-nextprot-result .navbar-text {
+    float: left;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.navbar-nextprot-result .navbar-text {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.navbar-nextprot-result  .navbar-nav .open .dropdown-menu {
+    top: 100%;
+    z-index: 1000;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+}
