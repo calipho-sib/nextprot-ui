@@ -73,7 +73,7 @@ SearchModule.controller('SearchCtrl', [
                 if(err){
                     return flash('alert-error', "Ooops ");
                 }
-                flash('alert-info', "Welcome " + User.username);
+                flash('alert-info', "Welcome " + User.profile.given_name);
             })
         }
 
