@@ -85,6 +85,7 @@ SearchModule.controller('SearchCtrl', [
         }
 
 
+
         $scope.setAdvancedUserQuery = function (sparql) {
             $scope.advancedUserQuery = sparql;
         }
@@ -206,6 +207,10 @@ SearchModule.controller('SearchCtrl', [
 
         $scope.isAdvancedMode = function () {
             return Search.params.mode == 'advanced';
+        }
+
+        $scope.isSearchBarVisible=function(){
+            return ($location.path()==='/'||$location.path().indexOf('/search')!==-1)
         }
 
         $scope.go = function () {
