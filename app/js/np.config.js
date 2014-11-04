@@ -11,20 +11,6 @@ angular.module('np.config', []).factory('config', [
         var BASE_URL = 'http://crick';
         var BASE_AUTH_URL = 'http://crick:9090';
 
-        var google = {
-            rootUrl: 'http://localhost:3000',
-
-            credentials: {
-                'clientId': '827637097658-imcj14n7j1mc3ac1h2t646rk4jp28smj.apps.googleusercontent.com',
-                'apiBase': '/api/',
-                'rootUrl': 'http://localhost:3000',
-                'scopes': 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/userinfo.email',
-                'requestvisibleactions': 'http://schemas.google.com/AddActivity ' + 'http://schemas.google.com/ReviewActivity',
-                'cookiepolicy': 'single_host_origin'
-            }
-
-        }
-
         var nextprot = {
             credentials: {
                 'clientId': '0b4a32ae-a519-4a88-ab29-578f58f5c2ba',
@@ -170,7 +156,6 @@ angular.module('np.config', []).factory('config', [
         // global application configuration
         var defaultConfig = {
             api: defaultApi,
-            google: google,
             nextprot: nextprot
         }
 
