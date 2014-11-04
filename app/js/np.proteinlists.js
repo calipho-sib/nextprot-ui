@@ -16,8 +16,8 @@ ProteinListModule.config([
     '$httpProvider',
     function($routeProvider, $locationProvider, $httpProvider) {
     	$routeProvider
-        	.when('/proteins/lists', { templateUrl: 'partials/proteinlists/list.html'})
-            .when('/proteins/lists/create', { templateUrl: 'partials/proteinlists/create.html'})
+        	.when('/user/protein/lists', { templateUrl: 'partials/user/user-protein-lists.html'})
+            .when('/user/protein/lists/create', { templateUrl: 'partials/user/user-protein-lists-create.html'})
     }
 ]);
 

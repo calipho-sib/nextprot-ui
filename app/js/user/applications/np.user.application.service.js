@@ -7,20 +7,19 @@ UserApplication.factory('UserApplication', [
    '$resource',
    '$http',
    'config',
-   function($resource, $http, config) {
+   'User',
+   function($resource, $http, config, User) {
 
-	   var baseUrl = config.api.BASE_URL+config.api.API_PORT;
+	   var baseUrl = config.api.BASE_URL+config.api.API_PORT,
+	   		 $dao=$resource(baseUrl+'/nextprot-api-web/user/:username/user-application/:id',
+						{username: '@username', id: '@id'}, {
+						get: { method: 'GET', isArray: false },
+						create: { method: 'POST' },
+						update: { method: 'PUT'}
+	   			});
 
-	   var UserApplication = function() {
-	   		this.$dao=$resource(baseUrl+'/nextprot-api-web/user/:username/user-application/:id',
-				{username: '@username', id: '@id'}, {
-				get: { method: 'GET', isArray: false },
-				create: { method: 'POST' },
-				update: { method: 'PUT'}
-	   		});
-	   };
-
-       UserApplication.prototype.get = function(user, cb) {
+/**
+       User.prototype.getApplications = function(user, cb) {
 	   		var self=this;
 	   		user.$promise.then(function(){
 			   return self.$dao.get({username: user.profile.username}, function(data) {
@@ -58,6 +57,6 @@ UserApplication.factory('UserApplication', [
    		  })
    		  return this;
 		}
-
+*/
    }
 ]);

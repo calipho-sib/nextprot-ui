@@ -6,8 +6,8 @@ UserModule.config([
     '$routeProvider',
     function ($routeProvider) {
         $routeProvider
-            .when('/user-applications', { templateUrl: 'partials/user/user-applications.html'})
-            .when('/user-profile', { templateUrl: 'partials/user/user-profile.html'})
+            .when('/user', { templateUrl: 'partials/user/user-profile.html'})
+            .when('/user/applications', { templateUrl: 'partials/user/user-applications.html'})
     }
 ]);
 
