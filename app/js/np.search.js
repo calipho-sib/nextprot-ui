@@ -1,4 +1,5 @@
-'use strict';
+(function (angular, undefined) {'use strict';
+
 
 //
 //Define the search module (np.search)  for controllers, services and models
@@ -6,7 +7,7 @@ var SearchModule = angular.module('np.search', [
     'np.search.ui',
     'np.search.service',
     'np.cart',
-    'np.proteinlist.service'
+    'np.user.protein.lists'
 ]);
 
 //
@@ -54,10 +55,20 @@ SearchModule.controller('SearchCtrl', [
         };
 
         //
+        // navigation items
+
+
+        //
         // load profile on init
         User.me();
 
         // $scope.AdvancedQueryService = AdvancedQueryService;
+
+        $scope.navClass = function (page) {
+            var currentRoute = $location.path().substring(1) || 'home';
+            console.log('nav',page,currentRoute)
+            return page === currentRoute ? 'active' : '';
+        };   
 
         $scope.cookies = function (session) {
             Search.cookies(session)
@@ -69,7 +80,6 @@ SearchModule.controller('SearchCtrl', [
 
         $scope.login = function() {
             User.login(function(err){
-                console.log(User,err);
                 if(err){
                     return flash('alert-error', "Ooops ");
                 }
@@ -78,6 +88,7 @@ SearchModule.controller('SearchCtrl', [
         }
 
         $scope.logout = function () {
+            flash('alert-info', "Bye bye " + User.profile.given_name);
             $scope.reset();
             User.logout();
         }
@@ -490,3 +501,6 @@ SearchModule.controller('ResultCtrl', [
         }
     }
 ]);
+
+})(angular);
+

@@ -1,6 +1,6 @@
 'use strict';
 
-var CartService = angular.module('np.cart', ['np.proteinlist.service']);
+var CartService = angular.module('np.cart', ['np.user.protein.lists.service']);
 
 CartService.factory('Cart', [
 	'config', 

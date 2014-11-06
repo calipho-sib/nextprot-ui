@@ -8,6 +8,17 @@ h5.lead{
     margin-bottom:3px;   
 }
 
+.nav-header{
+    color: #999;
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 20px;
+    padding: 3px 15px;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+}
+
 .btn-circle {
   width: 20px;
   height: 20px;

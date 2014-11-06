@@ -1,15 +1,14 @@
-'use strict';
+(function (angular, undefined) {'use strict';
 
-var UserApplication = angular.module('np.user.application.service', []);
+angular.module('np.user.application.service', [])
 
 
-UserApplication.factory('UserApplication', [
+.factory('UserApplication', [
    '$resource',
    '$http',
    'config',
    'User',
    function($resource, $http, config, User) {
-
 	   var baseUrl = config.api.BASE_URL+config.api.API_PORT,
 	   		 $dao=$resource(baseUrl+'/nextprot-api-web/user/:username/user-application/:id',
 						{username: '@username', id: '@id'}, {
@@ -60,3 +59,6 @@ UserApplication.factory('UserApplication', [
 */
    }
 ]);
+
+
+})(angular);

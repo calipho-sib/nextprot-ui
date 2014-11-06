@@ -1,0 +1,8 @@
+.sidebar{
+  
+}
+
+.nav.nav-list li.active a{
+  color:#888;
+  background-color: #EAEAEA;
+}

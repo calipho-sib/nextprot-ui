@@ -42,13 +42,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">NeXtProt</a>
+      <a class="navbar-brand" href="/">NeXtProt</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
+        <li class="active"><a href="/">Home</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 
@@ -64,7 +64,7 @@
             <li><a href="/user">My profile</a></li>
             <li><a href="/user/protein/lists">My lists</a></li>
             <li><a href="#">My queries</a></li>
-            <li><a href="#">My applications</a></li>
+            <li><a href="/user/applications">My applications</a></li>
             <li class="divider"></li>
             <li><a href="#" ng-click="logout()">Logout</a></li>
           </ul>
@@ -123,16 +123,7 @@
     <div class="np-alert alert alert-error alert-warning">{{Search.result.error}} {{message}}</div>
 </div>
 
-<!--   <div class="alert alert-success" style="margin-top: 40px">
-        <strong>Well done!</strong> You successfully read <a href="#" class="alert-link">this important alert message</a>.
-      </div> -->
 <flash:messages></flash:messages>
-
-
-<!--Olivier style (with the template in the html)-->
-<!--<ul class="unstyled" style="margin-top: 40px" flash="">-->
-<!--<li ng-repeat="m in messages"><div class="alert {{m.level}}">{{m.text}}</div></li>-->
-<!--</ul>-->
 
 <!-- Masthead
 ================================================== -->

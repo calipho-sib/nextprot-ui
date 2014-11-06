@@ -1,4 +1,4 @@
-'use strict';
+(function (angular, undefined) {'use strict';
 
 //Declare application level module which depends on additional filters and services (most of them are custom)
 var App = angular.module('np', [
@@ -13,7 +13,7 @@ var App = angular.module('np', [
     'np.config',
     'np.user',
     'np.cart',
-    'np.proteinlists',
+    'np.user.protein.lists',
     'np.search',
     'np.advanced',
     'np.export',
@@ -38,7 +38,7 @@ App.config([
 //                signin: {
 //                    title: 'Link with another account'
 //                }
-//            }
+//            } 
             icon:           'http://www.nextprot.org/db/images/blueflat/np.png'
 
 
@@ -101,5 +101,6 @@ App.factory('errorInterceptor', ['$q', '$rootScope', '$location', 'flash',
         };
 }]);
 
+})(angular);
 
 

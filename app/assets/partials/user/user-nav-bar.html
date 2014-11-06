@@ -1,5 +1,7 @@
-<p><a href="/user">My profile</a></p>
-<p><a href="/user/applications">My applications</a></p>
-<p><a href="/user/protein/lists">My lists</a></p>
-<p><a href="/user/queries">My queries</a></p>
-
+<ul class="nav nav-list" style="margin-top: 10px;">
+	<li class="nav-header">{{user.profile.username}}</li>
+	<li ng-class="navClass('user')"></i><a href="/user"><i class="glyphicon icon-home"></i>&nbsp;My profile</a></li>
+	<li ng-class="navClass('user/applications')"></i><a href="/user/applications"><i class="icon-road"></i>&nbsp;My applications</a></li>
+	<li ng-class="navClass('user/queries')"><a href="/user/queries"><i class="icon-heart"></i>&nbsp;My queries</a></li>
+	<li ng-class="navClass('user/protein/lists')"><a href="/user/protein/lists"><i class="icon-th-list"></i>&nbsp;My lists</a></li>
+</ul>

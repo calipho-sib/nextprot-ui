@@ -1,4 +1,5 @@
-'use strict'
+(function (angular, undefined) {'use strict';
+
 
 var flash = angular.module('np.flash', [])
 	.factory('flash', ['$rootScope', '$timeout', function($rootScope, $timeout) {
@@ -82,3 +83,4 @@ var flash = angular.module('np.flash', [])
 //        });
 //    };
 //}]);
+})(angular);
