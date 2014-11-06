@@ -1,18 +1,22 @@
-'use strict'
+(function (angular, undefined) {'use strict';
 
-var UserModule = angular.module('np.user', ['np.user.service', 'np.config']);
+angular.module('np.user', [
+  'np.user.service', 
+  'np.config'
+])
 
-UserModule.config([
-    '$routeProvider',
-    function ($routeProvider) {
-        $routeProvider
-            .when('/user', { templateUrl: 'partials/user/user-profile.html'})
-            .when('/user/applications', { templateUrl: 'partials/user/user-applications.html'})
-    }
-]);
+.config([
+  '$routeProvider',
+  function ($routeProvider) {
+    $routeProvider
+      .when('/user', { templateUrl: 'partials/user/user-profile.html'})
+      .when('/user/queries', { redirectTo: '/user'})
+      .when('/user/applications', { templateUrl: 'partials/user/user-applications.html'})
+  }
+])
 
 
-UserModule.controller('UserCtrl', [
+.controller('UserCtrl', [
     '$scope', 
     '$rootScope', 
     '$routeParams', 
@@ -27,3 +31,5 @@ UserModule.controller('UserCtrl', [
         $scope.user = User;
     }]
 );
+
+})(angular);

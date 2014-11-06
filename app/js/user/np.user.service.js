@@ -1,9 +1,7 @@
-'use strict';
+(function (angular, undefined) {'use strict';
 
-var User = angular.module('np.user.service', []);
-
-
-User.factory('User', [
+angular.module('np.user.service', [])
+.factory('User', [
     '$resource',
     '$http',
     'config',
@@ -22,7 +20,10 @@ User.factory('User', [
             profile:{}
         }
 
-
+        $rootScope.$on('auth:REDIRECT_ENDED',function(){
+            user.copy(auth.profile)
+            user.profile.username=user.username=auth.profile.email;
+        })
 
         //
         // create user domain
@@ -40,11 +41,6 @@ User.factory('User', [
             // init user profile
             this.profile={}            
             angular.extend(this.profile,defaultProfile);
-
-            //
-            // get token from cookie or null if doesn't exist
-            $window.sessionStorage.token = $cookieStore.get('sessionToken');
-
             //
             // wrap promise to this object
             this.$promise=$q.when(this)            
@@ -73,8 +69,6 @@ User.factory('User', [
         };        
 
         User.prototype.clear = function() {
-            delete $window.sessionStorage.token;
-            $cookieStore.remove('sessionToken');
             angular.extend(this.profile,defaultProfile);
             return this;
         };        
@@ -84,27 +78,27 @@ User.factory('User', [
         // kariboo login (request data)
         User.prototype.login = function (cb) {
             var self=this;        
-            auth.signin({
-                popup: true,
-                icon:           'http://www.nextprot.org/db/images/blueflat/np.png'
-            })
-            .then(function() {
-                self.copy(auth.profile)
-                cb()
+            auth.signin({popup: true,
+                icon:'http://www.nextprot.org/db/images/blueflat/np.png'
+            }).then(function() {
                 // Success callback
+                self.copy(auth.profile)
+                self.username=auth.email;
+                cb()
             }, function(error) {
                 cb(error)
             });
         }
 
         User.prototype.logout = function (cb) {
-            var self=this;
+            this.clear()            
             auth.signout();
         }
 
 
         User.prototype.me = function (cb) {
             var self=this;
+            
             return this.chain(this.dao.$profile.get( function (data) {
                     if(data.username){
                         return self.copy(data)
@@ -120,8 +114,12 @@ User.factory('User', [
 
 
 
-        var service = new User();
-        return service;
+        var user = new User();
+        return user;
 
     }
 ]);
+
+
+})(angular);
+
