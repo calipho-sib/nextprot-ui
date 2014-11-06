@@ -1,4 +1,4 @@
-<div class="container">
+<div class="row">
 	
 	<style>
 		.fileinput-button 
@@ -23,38 +23,47 @@
 	
 	</style>
 	
-	<div class="row">
-		<div class="col-xs-3" ng-include="'partials/user/user-protein-lists-sidebar.html'"></div>
-		<div class="col-xs-9" ng-controller="ListCreateCtrl">
-			<h3>Create a protein list from accession numbers</h3>
-			
-			<label>Enter list of accession numbers: </label>
-			<textarea rows="5" ng-model="inputAccessions"></textarea>
-			
-			<p>Or a file</p>
-	
-			<div class="control-group">
-		        <span class="btn btn-success fileinput-button">
-		           	<i class="icon-plus icon-white"></i>
-<!-- 		           	<input type="file" name="file" data-url="home/upload" multiple upload><span>Add files...</span> -->
+	<div class="col-xs-3 col-sm-2 nopadding" >
+    <div ng-include="'partials/user/user-nav-bar.html'"></div>
+    <div ng-include="'partials/user/user-protein-lists-sidebar.html'" ></div>
+	</div>
+	<div class="col-xs-9 col-sm-10" ng-controller="ListCreateCtrl">
+		<h3>Create a protein list from accession numbers</h3>
+		
+		<label>Enter list of accession numbers: </label>
+		<div class="form-group ">		   
+			<textarea rows="5" ng-model="inputAccessions" class="form-control">
+			</textarea>
+		</div>		
+		
+
+		<div class="form-group ">		   
+        <span class="btn btn-default fileinput-button btn-block">
+         	<i class="icon-plus icon-white"></i> Or select a file to upload
 					<input type="file" multiple ng-model="files" file-change>
-		        </span>
-			</div>
-			
-			<form class="form">
-				<input type="text" placeholder="Name..." ng-model="listName">
-				<input type="text" placeholder="Description..." ng-model="listDescription">
-				<button type="button" class="btn btn-primary" ng-click="createList(listName, listDescription)">Create</button>
-			</form>
-			
-			<div>
-	    		<span ng-show="!files.length">No files selected</span>
-	    		<span ng-show="files.length"><b>Uploading: </b></span>
-	    		<ul>
-	        		<li ng-repeat="file in files">{{file.name}}</li>
-	    		</ul>
-			</div>
-	
+        </span>
 		</div>
+		
+
+		<form class="form-inline" role="form">
+		  <div class="form-group col-xs-3 nopadding">
+				<input type="text" placeholder="Eg. my super kinases" ng-model="listName" class="form-control" style="min-width:100%">
+		  </div>
+		  <div class="form-group col-xs-7">
+				<input type="text" placeholder="Ex. a great description ..." ng-model="listDescription" class="form-control" style="min-width:100%">
+		  </div>
+			<button type="button" class="btn btn-primary" ng-click="createList(listName, listDescription)"> Create </button>
+		</form>		
+		<hr/>
+		<div class="form-group ">
+			<blockquote>
+    		<span ng-show="!files.length">No files selected</span>
+    		<span ng-show="files.length"><b>Uploading: </b></span>
+    		<ul>
+        		<li ng-repeat="file in files">{{file.name}}</li>
+    		</ul>
+    	</blockquote>
+		</div>
+
 	</div>
 </div>
