@@ -38,14 +38,14 @@ SearchModule.controller('SearchCtrl', [
     'Search',
     'config',
     // 'AdvancedQueryService',
-    'User',
+    'user',
     'flash',
-    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, User, flash) {
+    function ($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, user, flash) {
 
         // scope from template
         $scope.Search = Search;
         $scope.config = config;
-        $scope.user = User;
+        $scope.user = user;
 
         $scope.editorOptions = {
             lineWrapping : false,
@@ -60,13 +60,12 @@ SearchModule.controller('SearchCtrl', [
 
         //
         // load profile on init
-        User.me();
+        user.me();
 
         // $scope.AdvancedQueryService = AdvancedQueryService;
 
         $scope.navClass = function (page) {
             var currentRoute = $location.path().substring(1) || 'home';
-            console.log('nav',page,currentRoute)
             return page === currentRoute ? 'active' : '';
         };   
 
@@ -79,18 +78,18 @@ SearchModule.controller('SearchCtrl', [
         }
 
         $scope.login = function() {
-            User.login(function(err){
+            user.login(function(err){
                 if(err){
                     return flash('alert-error', "Ooops ");
                 }
-                flash('alert-info', "Welcome " + User.profile.given_name);
+                flash('alert-info', "Welcome " + user.profile.given_name);
             })
         }
 
         $scope.logout = function () {
-            flash('alert-info', "Bye bye " + User.profile.given_name);
+            flash('alert-info', "Bye bye " + user.profile.given_name);
             $scope.reset();
-            User.logout();
+            user.logout();
         }
 
 
@@ -350,8 +349,8 @@ SearchModule.controller('ResultCtrl', [
         //
         //Set the current owner id, if there is a list
         if ($routeParams.list) {
-            User.$promise.then(function(){
-                params.listOwner = User.profile.username;
+            user.$promise.then(function(){
+                params.listOwner = user.profile.username;
                 self.search(params)
             })
         }

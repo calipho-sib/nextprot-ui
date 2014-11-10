@@ -24,11 +24,11 @@ angular.module('np.user', [
     '$http', 
     '$window',
     '$timeout', 
-    'User', 
+    'user', 
     'flash', 
     'config',
-    function ($scope, $rootScope, $routeParams, $location, $http, $window, $timeout, User, flash, config) {
-        $scope.user = User;
+    function ($scope, $rootScope, $routeParams, $location, $http, $window, $timeout, user, flash, config) {
+        $scope.user = user;
     }]
 );
 

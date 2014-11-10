@@ -1,7 +1,7 @@
 (function (angular, undefined) {'use strict';
 
 angular.module('np.user.service', [])
-.factory('User', [
+.factory('user', [
     '$resource',
     '$http',
     'config',
@@ -44,6 +44,8 @@ angular.module('np.user.service', [])
             //
             // wrap promise to this object
             this.$promise=$q.when(this)            
+
+            this.application={};
         };
 
         //
@@ -98,7 +100,7 @@ angular.module('np.user.service', [])
 
         User.prototype.me = function (cb) {
             var self=this;
-            
+
             return this.chain(this.dao.$profile.get( function (data) {
                     if(data.username){
                         return self.copy(data)
@@ -110,6 +112,7 @@ angular.module('np.user.service', [])
                 }).$promise
             );
         };
+
 
 
 

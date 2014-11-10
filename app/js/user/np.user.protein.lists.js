@@ -30,8 +30,8 @@ angular.module('np.user.protein.lists', [
 	'$route',
 	'Search',
 	'ProteinList',
-    'User',
-	function($resource, $scope, $rootScope, $location, $routeParams, $route, Search, ProteinList, User) {
+  'user',
+	function($resource, $scope, $rootScope, $location, $routeParams, $route, Search, ProteinList, user) {
 		$scope.ProteinList = ProteinList;
 		$scope.showCombine = false;
 		$scope.combineDisabled = true;
@@ -45,7 +45,7 @@ angular.module('np.user.protein.lists', [
 			second: $scope.lists 
 		}
 
-		ProteinList.getByUsername(User, function(data) {
+		ProteinList.getByUsername(user, function(data) {
 			$scope.lists = data.lists;
 			$scope.initCombination();
 		});
@@ -106,12 +106,12 @@ angular.module('np.user.protein.lists', [
 					description: $scope.selected.description
 				};
 
-				ProteinList.update(User, list);
+				ProteinList.update(user, list);
 			} else if($scope.modal.type == 'create') {
 				var newList = { name: $scope.selected.name, description: $scope.selected.description };
 
 				ProteinList.combine(
-                    User,
+                    user,
 					newList,
 					$scope.combination.first.name,
 					$scope.combination.second.name,
@@ -130,7 +130,7 @@ angular.module('np.user.protein.lists', [
 		};
 
 		$scope.delete = function(index) {
-			ProteinList.delete(User, $scope.lists[index].id);
+			ProteinList.delete(user, $scope.lists[index].id);
 			$scope.lists.splice(index, 1);
 
 			$scope.options.first=$scope.options.second=$scope.lists
@@ -152,11 +152,11 @@ angular.module('np.user.protein.lists', [
 	'$routeParams',
 	'$location',
 	'ProteinList',
-    'User',
+  'user',
 	'UploadListService',
 	'flash',
 	'$log',
-	function($resource, $scope, $rootScope, $routeParams, $location, ProteinList, User, UploadListService, flash, $log) {
+	function($resource, $scope, $rootScope, $routeParams, $location, ProteinList, user, UploadListService, flash, $log) {
 
 		$scope.inputAccessions = "";
 		$scope.listName = "";
@@ -191,7 +191,7 @@ angular.module('np.user.protein.lists', [
 	    		var accessions = $scope.inputAccessions.split("\n");
 	    		var list = { name: $scope.listName, accessions: accessions};
 
-	    		ProteinList.create(User, list, function(data) {
+	    		ProteinList.create(user, list, function(data) {
 					if(data.error) flash('alert-warning', data.error);
 					else {
 						flash('alert-info', "List "+list.name+" created.");
@@ -199,7 +199,7 @@ angular.module('np.user.protein.lists', [
 					}
 	    		});
 	    	} else {
-	    		ProteinList.create(User, {
+	    		ProteinList.create(user, {
                     name: $scope.listName, description: $scope.listDescription, accessions: []
                 }, function(newList) {
 

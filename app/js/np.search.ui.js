@@ -1,4 +1,4 @@
-'use strict';
+(function (angular, undefined) {'use strict';
 
 
 var SearchUI=angular.module('np.search.ui', []);
@@ -210,5 +210,7 @@ SearchUI.directive('npAffix', ['$parse','$timeout', function($parse, $timeout) {
 	      },0);
 	  }
 	}]);
+
+})(angular);
 
 

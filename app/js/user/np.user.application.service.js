@@ -7,8 +7,8 @@ angular.module('np.user.application.service', [])
    '$resource',
    '$http',
    'config',
-   'User',
-   function($resource, $http, config, User) {
+   'user',
+   function($resource, $http, config, user) {
 	   var baseUrl = config.api.BASE_URL+config.api.API_PORT,
 	   		 $dao=$resource(baseUrl+'/nextprot-api-web/user/:username/user-application/:id',
 						{username: '@username', id: '@id'}, {
@@ -16,6 +16,7 @@ angular.module('np.user.application.service', [])
 						create: { method: 'POST' },
 						update: { method: 'PUT'}
 	   			});
+
 
 /**
        User.prototype.getApplications = function(user, cb) {
