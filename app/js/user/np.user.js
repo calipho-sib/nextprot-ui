@@ -1,7 +1,8 @@
 (function (angular, undefined) {'use strict';
 
 angular.module('np.user', [
-  'np.user.service', 
+  'np.user.service',
+  'np.user.query.service',
   'np.config'
 ])
 

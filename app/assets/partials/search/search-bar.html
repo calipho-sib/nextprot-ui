@@ -1,4 +1,4 @@
-<div ng-cloak="" class="row search-row animate" np-animate="#main">
+<div ng-cloak="" class="row search-row animate" np-animate="#main" ng-controller="QueryRepositoryCtrl">
 
   <a href="/"><img src="http://www.nextprot.org/db/images/blueflat/np.png" class="home"></a>
 
@@ -48,7 +48,7 @@
         <!--                      -->
         <!--  CLEAN/HELP BUTTON   -->
         <!--                      -->
-        <div class="input-group-btn " style="vertical-align:top"  ng-controller="QueryRepositoryCtrl">
+        <div class="input-group-btn " style="vertical-align:top"  >
 
           <button id="search-clear" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="clean({})" ng-disabled="(!Search.params.query || !Search.params.query.length) &amp;&amp; (!Search.params.sparql || !Search.params.sparql.length)" style="margin-left: -30px; position: absolute; top: 7px;z-index:10">
             <i class="icon-remove "></i>
@@ -63,11 +63,6 @@
           <!--                        -->
           <button id="search-button" class="btn btn-default btn-search" type="submit"  ng-disabled="Search.isSearchButtonDisabled()"><i class="icon-search"></i>&nbsp;Search
           </button>
-
-            <!--                        -->
-            <!--  REPO                  -->
-            <!--                        -->
-            <div ng-include="'partials/search/user-queries-popup.html'" class=""></div>
 
         </div>
 
@@ -91,7 +86,14 @@
 
     </div>
 
+  <!--                        -->
+  <!--  REPO                  -->
+  <!--                        -->
+  <div ng-include="'partials/search/user-queries-popup.html'" class=""></div>
+
+
   </form>
+
 
 </div>
 

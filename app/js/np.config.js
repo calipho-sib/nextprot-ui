@@ -118,7 +118,7 @@ angular.module('np.config', []).factory('config', [
                     gold: false
                 },
                 repositories: {
-                    aNextprotRep: { /* 'a' is used to appear fist */
+                    aNextprotRep: { /* 'a' is used to appear first */
                         title: "training",
                         tooltip: "Queries used for example",
                         icon: "icon-certificate"

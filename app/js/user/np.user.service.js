@@ -45,7 +45,7 @@ angular.module('np.user.service', [])
             // wrap promise to this object
             this.$promise=$q.when(this)            
 
-            this.application={};
+            //this.application={};
         };
 
         //

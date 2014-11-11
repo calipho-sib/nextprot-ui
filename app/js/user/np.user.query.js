@@ -8,7 +8,7 @@ angular.module('np.user.query.service', [])
         //  this.selectedQuery = {};
         this.queries = {};
         this.$dao={
-            queries:$resource(baseUrl+'/nextprot-api-web/user/:username/query/:id',
+            queries:$resource(config.baseUrl+'/nextprot-api-web/user/:username/query/:id',
                 {username: '@username', id: '@id'}, {
                     get: { method: 'GET', isArray: false },
                     create: { method: 'POST' },
@@ -154,6 +154,18 @@ angular.module('np.user.query.service', [])
    }
 
 
+])
+
+.controller('QueryRepositoryCtrl', [
+    '$scope', 'config','user', function($scope, config, user) {
+
+        $scope.showRepository = false;
+
+        $scope.toggleRepository = function() {
+            $scope.showRepository = !$scope.showRepository;
+        }
+
+    }
 ]);
 
 
