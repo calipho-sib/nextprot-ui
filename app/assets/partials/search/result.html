@@ -81,7 +81,7 @@
 				  <!-- content -->
 		      <li class="solrp " ng-repeat="filter in Search.result.filters | orderBy:'name'" ng-class="active(filter.name,'filter')">
 			        <a ng-show="filter.count" class=""  ng-click="toggle({filter:filter.name})" href="">{{Search.result.ontology[filter.name]}} 
-			          <span class=""> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&amp;&amp;'icon-remove'"></i>
+			          <span class=""> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&&'icon-remove'"></i>
 			        </a>
 				  </li>
 				  <input id="filters" class="form-control" type="hidden" ng-model="Search.params.filter" autocomplete="off">
