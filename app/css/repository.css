@@ -1,0 +1,29 @@
+
+.repository-modal{
+	margin-top: 0px;
+	z-index: 1000;
+	width: 700px;
+	margin-left:auto;
+	margin-right: auto;
+	position: absolute;
+	left:20%;
+}
+
+.repository-modal .modal-body{
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 400px;  
+}
+
+
+@media (max-width: 980px){
+	.repository-modal{
+		left:10%;
+	}	
+}
+
+@media (max-width: 750px){
+	.repository-modal{
+		left:0;
+	}	
+}

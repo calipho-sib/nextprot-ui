@@ -1,4 +1,4 @@
-'use strict';
+(function (angular, undefined) {'use strict';
 var SearchService = angular.module('np.search.service', ['np.search.ui']);
 
 
@@ -287,3 +287,4 @@ SearchService.factory('Search', [
         var search = new Search();
         return search;
     }]);
+})(angular);

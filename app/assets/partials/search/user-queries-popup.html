@@ -1,99 +1,99 @@
 <!--                                                                  -->
 <!--  HELP / REPOSITORY                                               -->
-<div class="fade-out fade-in col-lg-offset-3" style="padding-left: 5px;padding: 1px; border: 1px solid #ddd;border-radius: 8px; position: absolute; background-color: white; z-index: 1000; width: 700px; box-shadow: 0 0 10px 5px lightgray" ng-show="showRepository">
-
-
-  <div class="modal-header input-group" ng-show="Advanced.isSelectedQueryEmpty()">
-    <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
-    <!--filter-->
-    <input type="text" ng-model="filterQuery" placeholder="search in {{Advanced.currentRepository.title}} repository" class="form-control">
-    <!--Selectable repositories-->
-    <button data-toggle="tooltip" title="{{rep.tooltip}}" class="btn {{(Advanced.currentRepository == rep) ? 'btn-inverse' : ''}} btn-default" ng-repeat="rep in Advanced.repositories" type="button" ng-click="showRepository(rep)"><i class="{{rep.icon}}"></i></button>
-  </div>
-
-  <div class="modal-header input-group" ng-show="!Advanced.isSelectedQueryEmpty()">
-
-    <button type="button" class="close" ng-click="Advanced.showHelp=false">×</button>
-
-    <!-- Title -->
-    <input type="text" ng-show="Advanced.isSelectedQueryEditable()" placeholder="Name..." ng-model="Advanced.selectedQuery.title" focus="" class="span6 form-control">
-    <h4 ng-hide="Advanced.isSelectedQueryEditable()">{{Advanced.selectedQuery.title}}</h4>
-    <!-- Title-->
-    <button data-toggle="tooltip" title="Keep the query in your private repository" ng-if="Advanced.isSelectedQueryEditable()" class="btn  {{(!Advanced.selectedQuery.published) ? 'btn-inverse' : ''}} btn-default" type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
-      <i class="icon-user"></i>
-    </button>
-    <button data-toggle="tooltip" title="Show in the community repository" ng-if="Advanced.isSelectedQueryEditable()" class="btn  {{(Advanced.selectedQuery.published) ? 'btn-inverse' : ''}} btn-default" type="button" ng-click="Advanced.selectedQuery.published=!Advanced.selectedQuery.published">
-      <i class="icon-globe"></i>
-    </button>
-  </div>
-
-  <div class="modal-body" style="overflow-x:hidden;">
-
-    <!--                                 -->
-    <!-- Box for the list                -->
-    <!--                                 -->
-    <div class="slide-in-left slide-out-left" ng-show="Advanced.isSelectedQueryEmpty()">
-
-      <table class="table table-striped">
-        <tbody>
-          <tr ng-repeat="query in Advanced.queries | filter:filterQuery | orderBy:'title'">
-            <td style="padding-left:0px;padding-right:0px">
-              <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}} gray btn-xs"></i>
-            </td>
-            <td><a href="" ng-click="setCurrentQuery(query)" class="query-title">{{query.title}}
-              [{{query.username}}]</a></td>
-              <!--Show the view button-->
-              <td class="btn-group">
-                <button class="btn btn-default btn-xs" type="button" ng-if="!hasPrivilegesToEdit(query)" ng-click="Advanced.setCurrentQuery(query)"><i class="icon-eye-open"></i></button>
-                <button class="btn btn-default btn-xs" type="button" ng-if="hasPrivilegesToEdit(query)" ng-click="Advanced.setCurrentQuery(query)"><i class="icon-edit"></i></button>
-                <button class="btn btn-default btn-xs" type="button" ng-if="hasPrivilegesToEdit(query)" ng-click="Advanced.deleteAdvancedQuery(query)"><i class="icon-remove"></i></button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+<div class="modal-dialog fade-out fade-in  repository-modal" ng-show="repository.show" >
+    <div class="modal-content">
+      <div class="modal-header " ng-show="!repository.selectedQuery">
+          <button type="button" class="close" ng-click="repository.show=false">×</button>
+          <!--filter-->
+          <input type="text" ng-model="filterQuery" placeholder="search in {{queryRepository.category}} repository" class="form-control " style="width:80%">
+          <!--Selectable repositories-->
+          <button data-toggle="tooltip" title="{{queryRepository.getDescription()}}" class="btn {{(Advanced.currentRepository == rep) ? 'btn-inverse' : ''}} btn-default" ng-repeat="rep in Advanced.repositories" type="button" ng-click="showRepository2(rep)"><i class="{{rep.icon}}"></i></button>
       </div>
 
+      <div class="modal-header " ng-show="repository.selectedQuery">
 
-      <!--                                 -->
-      <!-- Box for editing or visualizing  -->
-      <!--                                 -->
-      <div class="slide-in-right slide-out-right" style="height: 300px;" ng-show="!Advanced.isSelectedQueryEmpty()">
+        <button type="button" class="close" ng-click="repository.show=false">×</button>
 
-        <!-- Sparql -->
-        <div class="col-sm-6 col-md-6" style="width: 670px; margin: 15px;">
-          <ui-codemirror id="search-query-save" ui-codemirror-opts="editorOptions" class=" search-width-advanced" ng-model="Advanced.selectedQuery.sparql" ui-refresh="Advanced.selectedQuery.sparql"></ui-codemirror>
+        <!-- Title -->
+        <input type="text" ng-show="query.isEditable()" placeholder="Name..." ng-model="repository.selectedQuery.title" focus="" class="span6 form-control">
+        <h4 ng-hide="query.isEditable()">{{repository.selectedQuery.title}}</h4>
+        <!-- Title-->
+        <button data-toggle="tooltip" title="Keep the query in your private repository" ng-if="repository.selectedQuery.isEditable()" class="btn  {{(!repository.selectedQuery.published) ? 'btn-inverse' : ''}} btn-default" type="button" ng-click="repository.selectedQuery.published=!repository.selectedQuery.published">
+          <i class="icon-user"></i>
+        </button>
+        <button data-toggle="tooltip" title="Show in the community repository" ng-if="repository.selectedQuery.isEditable()" class="btn  {{(repository.selectedQuery.published) ? 'btn-inverse' : ''}} btn-default" type="button" ng-click="repository.selectedQuery.published=!selectedQuery.published">
+          <i class="icon-globe"></i>
+        </button>
+      </div>
 
+      <div class="modal-body" >
+        <!--                                 -->
+        <!-- Box for the list                -->
+        <!--                                 -->
+        <div class="slide-in-left slide-out-left" ng-show="!repository.selectedQuery">
+
+          <table class="table table-striped">
+            <tbody>
+              <tr ng-repeat="query in repository.queries | filter:filterQuery | orderBy:'title'">
+                <td style="padding-left:0px;padding-right:0px">
+                  <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}} gray btn-xs"></i>
+                </td>
+                <td><a href="" ng-click="setCurrentQuery(query)" class="query-title">{{query.title}}
+                  [{{query.username}}]</a></td>
+                  <!--Show the view button-->
+                  <td class="btn-group">
+                    <button class="btn btn-default btn-xs" type="button" ng-if="!query.isEditable" ng-click="setCurrentQuery(query)"><i class="icon-eye-open"></i></button>
+                    <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable" ng-click="setCurrentQuery(query)"><i class="icon-edit"></i></button>
+                    <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable" ng-click="deleteAdvancedQuery(query)"><i class="icon-remove"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+          <!--                                 -->
+          <!-- Box for editing or visualizing  -->
+          <!--                                 -->
+          <div class="slide-in-right slide-out-right" style="height: 300px;" ng-show="repository.selectedQuery">
+            <!-- Sparql -->
+            <div class="col-sm-6 col-md-6" style="width: 670px; margin: 15px;">
+              <ui-codemirror id="search-query-save" class=" search-width-advanced" 
+                             ui-codemirror-opts="editorOptions" ng-model="repository.selectedQuery.sparql" ui-refresh="repository.selectedQuery.sparql">
+              </ui-codemirror>
+            </div>
+
+            <!-- Description -->
+            <div class="col-sm-6 col-md-6" style="width: 670px; margin: 15px;">
+              <textarea ng-show="query.isEditable()" rows="4" id="inputDescription" class="span6" placeholder="Write some description..." ng-model="repository.selectedQuery.description">                </textarea>
+
+              <p ng-hide="query.isEditable()">{{repository.selectedQuery.description}}</p>
+            </div>
+
+          </div>
 
         </div>
 
-        <!-- Description -->
-        <div class="col-sm-6 col-md-6" style="width: 670px; margin: 15px;">
-          <textarea ng-show="Advanced.isSelectedQueryEditable()" rows="4" id="inputDescription" class="span6" placeholder="Write some description..." ng-model="Advanced.selectedQuery.description">                </textarea>
+        <!-- Create new button -->
+        <div class="modal-footer">
 
-          <p ng-hide="Advanced.isSelectedQueryEditable()">{{Advanced.selectedQuery.description}}</p>
+          <!-- "Create new" only if there is no query selected -->
+          <button ng-show="!repository.selectedQuery" class="btn btn-primary pull-right btn-sm" type="button" 
+                  ng-click="createNewEmptyQuery();">New
+          </button>
+
+          <!-- "Save" button showed only if there is a query selected -->
+          <button ng-show="repository.selectedQuery.isEditable()" class="btn btn-primary pull-right btn-sm" 
+                  ng-click="saveSelectedQuery()">Save
+          </button>
+
+          <!-- "Back" button showed only if there is a query selected -->
+          <button ng-show="repository.selectedQuery" class="btn pull-left btn-default btn-sm" type="button" 
+                  ng-click="clearSelectedQuery();">Back
+          </button>
+
         </div>
-
       </div>
-
     </div>
-
-    <!-- Create new button -->
-    <div class="modal-footer">
-
-      <!-- "Create new" only if there is no query selected -->
-      <button ng-show="Advanced.isSelectedQueryEmpty()" class="btn btn-primary pull-right btn-sm" type="button" ng-click="Advanced.createNewEmptyQuery();">New
-      </button>
-
-      <!-- "Save" button showed only if there is a query selected -->
-      <button ng-show="Advanced.isSelectedQueryEditable()" class="btn btn-primary pull-right btn-sm" ng-click="Advanced.insertOrUpdateSelectedQuery()">Save
-      </button>
-
-      <!-- "Back" button showed only if there is a query selected -->
-      <button ng-show="!Advanced.isSelectedQueryEmpty()" class="btn pull-left btn-default btn-sm" type="button" ng-click="Advanced.clearSelectedQuery();">Back
-      </button>
-
-    </div>
-
   </div>
-
 </div>
