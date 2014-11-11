@@ -1,4 +1,4 @@
-<div ng-cloak="" class="row search-row animate" np-animate="#main" ng-controller_="AdvancedCtrl">
+<div ng-cloak="" class="row search-row animate" np-animate="#main">
 
   <a href="/"><img src="http://www.nextprot.org/db/images/blueflat/np.png" class="home"></a>
 
@@ -48,11 +48,12 @@
         <!--                      -->
         <!--  CLEAN/HELP BUTTON   -->
         <!--                      -->
-        <div class="input-group-btn " style="vertical-align:top">
+        <div class="input-group-btn " style="vertical-align:top"  ng-controller="QueryRepositoryCtrl">
+
           <button id="search-clear" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="clean({})" ng-disabled="(!Search.params.query || !Search.params.query.length) &amp;&amp; (!Search.params.sparql || !Search.params.sparql.length)" style="margin-left: -30px; position: absolute; top: 7px;z-index:10">
             <i class="icon-remove "></i>
           </button>
-          <button id="search-help" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="showHelpRepository()" ng-show="isAdvancedMode()" style="margin-left: -54px; position: absolute; top: 7px;z-index:10">
+          <button id="search-help" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="toggleRepository()" ng-show="isAdvancedMode()" style="margin-left: -54px; position: absolute; top: 7px;z-index:10">
             <i class="icon-info-sign "></i>
           </button>
 
@@ -62,7 +63,15 @@
           <!--                        -->
           <button id="search-button" class="btn btn-default btn-search" type="submit"  ng-disabled="Search.isSearchButtonDisabled()"><i class="icon-search"></i>&nbsp;Search
           </button>
+
+            <!--                        -->
+            <!--  REPO                  -->
+            <!--                        -->
+            <div ng-include="'partials/search/user-queries-popup.html'" class=""></div>
+
         </div>
+
+
 
       </div>
 
@@ -86,6 +95,3 @@
 
 </div>
 
-<div ng-include="'partials/search/user-queries-popup.html'" class="row"></div>
-
-<div class="row solrparams"/>
