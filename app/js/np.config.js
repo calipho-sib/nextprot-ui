@@ -9,7 +9,6 @@ angular.module('np.config', []).factory('config', [
     function ($http) {
 
         var BASE_URL = 'http://crick';
-        var BASE_AUTH_URL = 'http://crick:9090';
 
         var nextprot = {
             credentials: {
@@ -25,8 +24,6 @@ angular.module('np.config', []).factory('config', [
             BASE_URL: BASE_URL,
             API_SERVER: BASE_URL + ':port/nextprot-api-web/:action/:entity',
             API_PORT: ':8080',
-            BASE_AUTH_URL: BASE_AUTH_URL,
-            AUTH_SERVER: BASE_AUTH_URL + '/nextprot-auth',
 
             //base:"/",
             base: "/protosearch/",
