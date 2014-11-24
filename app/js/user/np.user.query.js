@@ -126,7 +126,7 @@ angular.module('np.user.query.service', [])
  }])
 
 .factory('queryRepository', [
-   '$resource','config','user','$q', function($resource, config, user, $q) {
+   '$resource','config','user','UserQuery','$q', function($resource, config, user, UserQuery, $q) {
        var baseUrl = config.api.BASE_URL + config.api.API_PORT;
 
 
