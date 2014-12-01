@@ -8,7 +8,7 @@ var q=angular.module('np.user.query.service', [])
 
   //
   // init module
-  initQueryModule.$inject=['$resource','config','user','$q','$cacheFactory');
+  initQueryModule.$inject=['$resource','config','user','$q','$cacheFactory'];
   function initQueryModule($resource,config,user,$q,$cacheFactory){
       //
       // data access
