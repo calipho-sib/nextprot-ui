@@ -26,8 +26,8 @@ App.run(function ($log,gitHubContent) {
     $log.info("init githubdoc");
     // init app
     gitHubContent.initialize({
-            // baseUrl:"http://uat-web2:8080",
-            helpPath:'rdfhelp.json',
+            baseUrl:"https://api.nextprot.org",
+            helpPath:'/rdf/help/type/all.json',
             helpTitle:'Main truc',
             root:'', // specify the root of RDF entity routes
             githubRepo:'calipho-sib/nextprot-docs',

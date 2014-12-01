@@ -179,8 +179,8 @@ function queryRepository($resource, config, user, $q) {
 
 //
 //
-QueryRepositoryCtrl.$inject=['$scope', 'config','user','queryRepository']
-function QueryRepositoryCtrl($scope, config, user, queryRepository) {
+QueryRepositoryCtrl.$inject=['$scope', '$timeout','config','user','queryRepository']
+function QueryRepositoryCtrl($scope, $timeout, config, user, queryRepository) {
 
     // publish data
     $scope.repository={
@@ -209,6 +209,7 @@ function QueryRepositoryCtrl($scope, config, user, queryRepository) {
 
     $scope.setCurrentQuery=function(query){
         $scope.repository.selectedQuery=query;
+        $timeout(function(){},100)
     }
 
     $scope.createNewEmptyQuery=function(){            

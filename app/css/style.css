@@ -1,5 +1,5 @@
 body{
-  -font-weight: 400!important;
+  font-family: 'Lato', sans-serif;
 }
 
 input[type=number]::-webkit-inner-spin-button,

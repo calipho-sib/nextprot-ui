@@ -1,7 +1,7 @@
     <div id="content" class="content " ng-controller="HelpCtrl">
 
       <!-- CONTENT -->
-      <div class="container-fluid">
+      <div class="container-fluid" ng-init="initHelp()">
         <div class="row">
         <!-- LEFT PANE -->
           <div class="col-sm-4 col-lg-3 sidebar">
@@ -22,5 +22,4 @@
           <markdown class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3 main"  md-src="{{mdFile}}"/>
         </div>
       </div>
-      <hr>
     </div><!--/.container-->

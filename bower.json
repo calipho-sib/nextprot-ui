@@ -20,7 +20,7 @@
   ],
   "overrides": {
     "showdown": {
-      "main": "src/showdown.js"
+      "main": ["src/showdown.js","src/extensions/github.js","src/extensions/table.js","src/extensions/twitter.js"]
     }
   },
   "dependencies": {
