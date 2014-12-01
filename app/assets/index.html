@@ -46,9 +46,10 @@
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="HelpCtrl">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Home</a></li>
+        <li ng-class="{'active':isActiveDoc('')}"><a href="/">Home</a></li>
+        <li ng-class="{'active':isActiveDoc('/pages/about')}"><a href="/pages/about">About</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 
@@ -144,10 +145,7 @@
 // global settings for angular-nexprot-ui-help
 var npHelpSettings={
     // baseUrl:"http://uat-web2:8080",
-    baseUrl:'https://api.nextprot.org',
-    helpUrl:'/rdf/help/type/all.json',
-    root:'doc',
-    pages:['doc/home','doc/faq','doc/entity']
+    baseUrl:'https://api.nextprot.org'
 }    
 </script>
 <script src="js/vendor.js"></script>

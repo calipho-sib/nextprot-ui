@@ -57,7 +57,7 @@ var q=angular.module('np.user.query.service', [])
 
       //
       // check is this query is owned by the current user
-      Query.prototype.isOwner=function(){
+      Query.prototype.isOwner=Query.prototype.isEditable=function(){
           return (this.username === user.profile.username);
       }    
 
