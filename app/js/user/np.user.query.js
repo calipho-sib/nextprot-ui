@@ -3,143 +3,116 @@
 var q=angular.module('np.user.query.service', [])
     .factory('queryRepository',queryRepository)
     .controller('QueryRepositoryCtrl', QueryRepositoryCtrl)
-    .run(['$resource','config','user','$q','$cacheFactory',
-    function($resource,config,user,$q,$cacheFactory){
-        //
-        // data access
-        var $dao={
-            queries:$resource(config.baseUrl+'/nextprot-api-web/user/:username/query/:id',
-                {username: '@username', id: '@id'}, {
-                    get: { method: 'GET', isArray: false },
-                    create: { method: 'POST' },
-                    update: { method: 'PUT'}
-                })
-        }
-
-        //
-        // repository of queries (TODO more cache access)
-        var queryList=$cacheFactory('queries')
+    .run(initQueryModule);
 
 
+  //
+  // init module
+  initQueryModule.$inject=['$resource','config','user','$q','$cacheFactory');
+  function initQueryModule($resource,config,user,$q,$cacheFactory){
+      //
+      // data access
+      var $dao={
+          queries:$resource(config.baseUrl+'/nextprot-api-web/user/:username/query/:id',
+              {username: '@username', id: '@id'}, {
+                  get: { method: 'GET', isArray: false },
+                  create: { method: 'POST' },
+                  update: { method: 'PUT'}
+              })
+      }
 
-        //
-        // model for user sparql queries
-        var Query = function (data) {
-
-            // init this instance
-            this.id         = data&&data.id||undefined;
-            this.title      = data&&data.title||'';
-            this.published  = data&&data.published||false;
-            this.username   = data&&data.username||user.profile.username;
-            this.sparql     = data&&data.sparql||"#Write your sparql query here";
-            this.description= data&&data.description||'';
-            this.isEditable = (this.username===user.profile.username);
-
-            //
-            // wrap promise to this object
-            this.$promise=$q.when(this)            
-
-            // save this instance
-            queryList.put(this.id,this)
-        };
-
-        //
-        // create a new query for this user
-        Query.prototype.createOne=function(init){
-            return new Query(init);
-        }    
-
-        // CRUD operations
-        // list queries for this user
-        Query.prototype.list = function () {
-
-            var me = this, params={username:user.profile.username};
-            me.$promise=$dao.queries.query(params)
-            me.$promise.then(function(data){
-                // TODO instance of query should be Query class
-                // TODO QueryRepository should maintain local store?
-                // me.getRepository(Search.config.widgets.repositories.privateRep);
-                me.queries=data;
-            })
-            return me;
-        };
-
-        //
-        // save or create the current instance
-        Query.prototype.save = function () {
-            var me = this, params={username:this.username};
-            // on update
-            if(this.id){
-                params.id=this.id;
-                me.$promise=$dao.queries.update(params,me)
-            }else{
-                me.$promise=$dao.queries.create(params,me)    
-            }
-            
-            // TODO me.$promise.then
-            // me.getRepository(Search.config.widgets.repositories.privateRep);
-            return me;
-        };
-
-        //
-        // delete the current instance
-        Query.prototype.delete = function () {
-            var me = this, params={username:this.username};
-            me.$promise=$dao.queries.delete(params,me)
-            // TODO me.$promise.then
-            // me.getRepository(Search.config.widgets.repositories.privateRep);
-            return me;
-        };
+      //
+      // repository of queries (TODO more cache access)
+      var queryList=$cacheFactory('queries')
 
 
 
+      //
+      // model for user sparql queries
+      var Query = function (data) {
+
+          // init this instance
+          this.id         = data&&data.id||undefined;
+          this.title      = data&&data.title||'';
+          this.published  = data&&data.published||false;
+          this.username   = data&&data.username||user.profile.username;
+          this.sparql     = data&&data.sparql||"#Write your sparql query here";
+          this.description= data&&data.description||'';
+          this.isEditable = (this.username===user.profile.username);
+
+          //
+          // wrap promise to this object
+          this.$promise=$q.when(this)            
+
+          // save this instance
+          queryList.put(this.id,this)
+      };
 
 
-        // Query.prototype.insertOrUpdateSelectedQuery = function () {
-        //     var me = this;
-        //     if (this.isNew()) {
-        //         this.createAdvancedQuery(user.profile.username,
-        //             function (data) {
-        //                 flash('alert-success', ' query saved successfully!')
-        //                 me.selectedQuery = {};
-        //                 me.getRepository(Search.config.widgets.repositories.privateRep);
-        //                 return;
-        //             },
-        //             function (error) {
-        //                 if (error.status == 409) {
-        //                     flash('alert-warn', 'object already exists, choose a different name.')
-        //                 }
-        //             }
-        //         );
-        //     } else {
-        //         this.updateAdvancedQuery(user.profile.username,
-        //             function (data) {
-        //                 flash('alert-success', "Updated successful for " + data.title);
-        //                 me.selectedQuery = {};
-        //                 me.getRepository(Search.config.widgets.repositories.privateRep);
-        //                 return;
-        //             },
-        //             function (error) {
-        //                 if (error.status == 409) {
-        //                     flash('alert-warn', 'object already exists, choose a different name.')
-        //                 }
-        //             }
-        //         );
-        //     }
-        // }
+      //
+      // create a new query for this user
+      Query.prototype.createOne=function(init){
+          return new Query(init);
+      }    
+
+      //
+      // check is this query is owned by the current user
+      Query.prototype.isOwner=function(){
+          return (this.username === user.profile.username);
+      }    
 
 
-        user.query=new Query();
+      //
+      // CRUD operations
+      //
 
-        return Query;
+      //
+      // list queries for this user
+      Query.prototype.list = function () {
 
-    }])
+          var me = this, params={username:user.profile.username};
+          me.$promise=$dao.queries.query(params)
+          me.$promise.then(function(data){
+              // TODO instance of query should be Query class
+              // TODO QueryRepository should maintain local store?
+              // me.getRepository(Search.config.widgets.repositories.privateRep);
+              me.queries=data;
+          })
+          return me;
+      };
 
-//
-// 
-//query.$inject=['$resource','config','user','$q','$cacheFactory'];
-//function query($resource,config,user,$q,$cacheFactory){}
+      //
+      // save or create the current instance
+      Query.prototype.save = function () {
+          var me = this, params={username:this.username};
+          // on update
+          if(this.id){
+              params.id=this.id;
+              me.$promise=$dao.queries.update(params,me)
+          }else{
+              me.$promise=$dao.queries.create(params,me)    
+          }
+          
+          // TODO me.$promise.then
+          // me.getRepository(Search.config.widgets.repositories.privateRep);
+          return me;
+      };
 
+      //
+      // delete the current instance
+      Query.prototype.delete = function () {
+          var me = this, params={username:this.username};
+          me.$promise=$dao.queries.delete(params,me)
+          // TODO me.$promise.then
+          // me.getRepository(Search.config.widgets.repositories.privateRep);
+          return me;
+      };
+
+      user.query=new Query();
+
+      return Query;
+
+  }
 
 //
 // 
