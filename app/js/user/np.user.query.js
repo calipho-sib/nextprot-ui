@@ -35,10 +35,10 @@ var q=angular.module('np.user.query.service', [])
           this.id         = data&&data.id||undefined;
           this.title      = data&&data.title||'';
           this.published  = data&&data.published||false;
-          this.username   = data&&data.username||user.profile.username;
+          this.resourceOwner   = data&&data.resourceOwner||user.profile.username;
           this.sparql     = data&&data.sparql||"#Write your sparql query here";
           this.description= data&&data.description||'';
-          this.isEditable = (this.username===user.profile.username);
+          this.isEditable = (this.resourceOwner===user.profile.username);
 
           //
           // wrap promise to this object
@@ -58,7 +58,7 @@ var q=angular.module('np.user.query.service', [])
       //
       // check is this query is owned by the current user
       Query.prototype.isOwner=Query.prototype.isEditable=function(){
-          return (this.username === user.profile.username);
+          return (this.resourceOwner === user.profile.username);
       }
 
 
@@ -140,7 +140,7 @@ function queryRepository($resource, config, user, $q) {
        this.$dao={
            queries:$resource(config.api.API_URL + '/queries/public.json',
                 {username: '@username', id: '@id'}, {
-                   list: { method: 'GET', isArray: false }
+                   list: { method: 'GET', isArray: true }
                })
        }
 
@@ -168,7 +168,7 @@ function queryRepository($resource, config, user, $q) {
         var me=this;
        this.$promise=this.$dao.queries.list().$promise;
        this.$promise.then(function(data){
-         me.queries=data.userQueryList.map(function(q){return user.query.createOne(q)})
+         me.queries=data.map(function(q){return user.query.createOne(q)})
        })
        return this
    }
