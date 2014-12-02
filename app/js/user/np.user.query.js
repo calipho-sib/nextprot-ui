@@ -13,7 +13,7 @@ var q=angular.module('np.user.query.service', [])
       //
       // data access
       var $dao={
-          queries:$resource(config.baseUrl+'/nextprot-api-web/user/:username/query/:id',
+          queries:$resource(config.api.API_URL + '/user/:username/query/:id',
               {username: '@username', id: '@id'}, {
                   get: { method: 'GET', isArray: false },
                   create: { method: 'POST' },
@@ -35,14 +35,14 @@ var q=angular.module('np.user.query.service', [])
           this.id         = data&&data.id||undefined;
           this.title      = data&&data.title||'';
           this.published  = data&&data.published||false;
-          this.username   = data&&data.username||user.profile.username;
+          this.resourceOwner   = data&&data.resourceOwner||user.profile.username;
           this.sparql     = data&&data.sparql||"#Write your sparql query here";
           this.description= data&&data.description||'';
-          this.isEditable = (this.username===user.profile.username);
+          this.isEditable = (this.resourceOwner===user.profile.username);
 
           //
           // wrap promise to this object
-          this.$promise=$q.when(this)            
+          this.$promise=$q.when(this)
 
           // save this instance
           queryList.put(this.id,this)
@@ -53,13 +53,13 @@ var q=angular.module('np.user.query.service', [])
       // create a new query for this user
       Query.prototype.createOne=function(init){
           return new Query(init);
-      }    
+      }
 
       //
       // check is this query is owned by the current user
       Query.prototype.isOwner=Query.prototype.isEditable=function(){
-          return (this.username === user.profile.username);
-      }    
+          return (this.resourceOwner === user.profile.username);
+      }
 
 
       //
@@ -90,9 +90,9 @@ var q=angular.module('np.user.query.service', [])
               params.id=this.id;
               me.$promise=$dao.queries.update(params,me)
           }else{
-              me.$promise=$dao.queries.create(params,me)    
+              me.$promise=$dao.queries.create(params,me)
           }
-          
+
           // TODO me.$promise.then
           // me.getRepository(Search.config.widgets.repositories.privateRep);
           return me;
@@ -115,11 +115,9 @@ var q=angular.module('np.user.query.service', [])
   }
 
 //
-// 
+//
 queryRepository.$inject=['$resource','config','user','$q'];
 function queryRepository($resource, config, user, $q) {
-   var baseUrl = config.api.BASE_URL + config.api.API_PORT;
-
 
    var description={
     'public':'This is the public repository',
@@ -137,17 +135,18 @@ function queryRepository($resource, config, user, $q) {
        //  this.selectedQuery = {};
        this.category='public';
 
+       console.log(config.api);
        this.queries = {};
        this.$dao={
-           queries:$resource('https://api.nextprot.org/user/advanced-nextprot-query.json',
+           queries:$resource(config.api.API_URL + '/queries/public.json',
                 {username: '@username', id: '@id'}, {
-                   list: { method: 'GET', isArray: false }
+                   list: { method: 'GET', isArray: true }
                })
        }
 
         //
         // wrap promise to this object
-        this.$promise=$q.when(this)            
+        this.$promise=$q.when(this)
 
    };
 
@@ -155,21 +154,21 @@ function queryRepository($resource, config, user, $q) {
    // return
    QueryRepository.prototype.setCategory=function(name){
         return this.category=name;
-   }       
+   }
 
    QueryRepository.prototype.getDescription=function(name){
         return description[this.category];
-   }       
+   }
 
    QueryRepository.prototype.getIcon=function(name){
         return icons[this.category];
-   }       
+   }
 
    QueryRepository.prototype.list = function () {
         var me=this;
        this.$promise=this.$dao.queries.list().$promise;
        this.$promise.then(function(data){
-         me.queries=data.userQueryList.map(function(q){return user.query.createOne(q)})
+         me.queries=data.map(function(q){return user.query.createOne(q)})
        })
        return this
    }
@@ -212,7 +211,7 @@ function QueryRepositoryCtrl($scope, $timeout, config, user, queryRepository) {
         $timeout(function(){},100)
     }
 
-    $scope.createNewEmptyQuery=function(){            
+    $scope.createNewEmptyQuery=function(){
         $scope.repository.selectedQuery=user.queries.createOne();
     }
 

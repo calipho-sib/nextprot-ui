@@ -8,22 +8,12 @@ angular.module('np.config', []).factory('config', [
     '$http',
     function ($http) {
 
-        var BASE_URL = 'http://crick';
+        var DEF_BASE_URL = 'http://localhost:8080/nextprot-api-web';
 
-        var nextprot = {
-            credentials: {
-                'clientId': '0b4a32ae-a519-4a88-ab29-578f58f5c2ba',
-                'clientSecret': 'm07a2frbbcl26dvhpr2o7cqsi2'
-            }
-        }
-
-
-        //
         // solr configuration
         var defaultApi = {
-            BASE_URL: BASE_URL,
-            API_SERVER: BASE_URL + ':port/nextprot-api-web/:action/:entity',
-            API_PORT: ':8080',
+
+            API_URL: DEF_BASE_URL,
 
             //base:"/",
             base: "/protosearch/",
@@ -152,8 +142,7 @@ angular.module('np.config', []).factory('config', [
         //
         // global application configuration
         var defaultConfig = {
-            api: defaultApi,
-            nextprot: nextprot
+            api: defaultApi
         }
 
 

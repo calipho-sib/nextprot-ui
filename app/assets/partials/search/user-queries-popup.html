@@ -39,7 +39,7 @@
                   <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}} gray btn-xs"></i>
                 </td>
                 <td><a href="" ng-click="setCurrentQuery(query)" class="query-title">{{query.title}}
-                  [{{query.username}}]</a></td>
+                  [{{query.resourceOwner}}]</a></td>
                   <!--Show the view button-->
                   <td class="btn-group">
                     <button class="btn btn-default btn-xs" type="button" ng-if="!query.isEditable()" ng-click="setCurrentQuery(query)"><i class="icon-eye-open"></i></button>
@@ -58,14 +58,14 @@
           <div ng-if="repository.selectedQuery" class="slide-in-right slide-out-right" style="height: 300px;" >
             <!-- Sparql -->
             <div class="col-sm-6 col-md-6" style="width: 670px; margin: 15px;">
-              <ui-codemirror id="search-query-save" class=" search-width-advanced" 
+              <ui-codemirror id="search-query-save" class=" search-width-advanced"
                              ui-codemirror-opts="editorOptions" ng-model="repository.selectedQuery.sparql" ui-refresh="repository.selectedQuery.sparql">
               </ui-codemirror>
             </div>
 
             <!-- Description -->
             <div class="col-sm-6 col-md-6" style="width: 670px; margin: 15px;">
-              <textarea ng-show="query.isEditable()" rows="4" id="inputDescription" class="span6" placeholder="Write some description..." ng-model="repository.selectedQuery.description">               
+              <textarea ng-show="query.isEditable()" rows="4" id="inputDescription" class="span6" placeholder="Write some description..." ng-model="repository.selectedQuery.description">
               </textarea>
 
               <p ng-hide="query.isEditable()">{{repository.selectedQuery.description}}</p>
@@ -79,17 +79,17 @@
         <div class="modal-footer">
 
           <!-- "Create new" only if there is no query selected -->
-          <button ng-show="!repository.selectedQuery" class="btn btn-primary pull-right btn-sm" type="button" 
+          <button ng-show="!repository.selectedQuery" class="btn btn-primary pull-right btn-sm" type="button"
                   ng-click="createNewEmptyQuery();">New
           </button>
 
           <!-- "Save" button showed only if there is a query selected -->
-          <button ng-show="repository.selectedQuery.isEditable()" class="btn btn-primary pull-right btn-sm" 
+          <button ng-show="repository.selectedQuery.isEditable()" class="btn btn-primary pull-right btn-sm"
                   ng-click="saveSelectedQuery()">Save
           </button>
 
           <!-- "Back" button showed only if there is a query selected -->
-          <button ng-show="repository.selectedQuery" class="btn pull-left btn-default btn-sm" type="button" 
+          <button ng-show="repository.selectedQuery" class="btn pull-left btn-default btn-sm" type="button"
                   ng-click="clearSelectedQuery();">Back
           </button>
 
