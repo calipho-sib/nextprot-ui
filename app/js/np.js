@@ -57,6 +57,7 @@ App.config([
         })
 
         $httpProvider.interceptors.push('authInterceptor');
+        $httpProvider.interceptors.push('errorInterceptor');
         $httpProvider.defaults.headers.common.Accept= 'application/json'
 
 
@@ -101,6 +102,7 @@ App.factory('errorInterceptor', ['$q', '$rootScope', '$location', 'flash',
                     return;
                 } 
                 else {
+                    console.log(response)
                     if(response.message){
                         flash('alert-warn', response.message);
                     }else if (response.data.message) {

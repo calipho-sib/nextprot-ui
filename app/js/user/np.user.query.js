@@ -104,6 +104,9 @@ var q=angular.module('np.user.query.service', [])
               me.$promise=$dao.queries.create(params,this.payload())
           }
 
+          // save this instance
+          queryList.put(this.userQueryId,this)
+
           // TODO me.$promise.then
           // me.getRepository(Search.config.widgets.repositories.privateRep);
           return me;
@@ -120,6 +123,7 @@ var q=angular.module('np.user.query.service', [])
       };
 
       user.query=new Query();
+
 
       return Query;
 
