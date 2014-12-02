@@ -463,11 +463,6 @@ SearchModule.controller('ResultCtrl', [
             }
         }
 
-        //TODO deprecated
-        function buildQuery(accessions) {
-            return "id:" + (accessions.length > 1 ? "(" + accessions.join(" ") + ")" : accessions[0]);
-        }
-
         // TODO deprecated
         $scope.getPublicationUrl = function (ac) {
             return "http://google.com/search?q=" + ac
