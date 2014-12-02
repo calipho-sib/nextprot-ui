@@ -83,7 +83,7 @@ var q=angular.module('np.user.query.service', [])
       //
       // save or create the current instance
       Query.prototype.save = function () {
-          var me = this, params={username:this.username};
+          var me = this, params={username:this.owner,id:this.userQueryId};
           // on update
           if(this.id){
               params.id=this.id;
@@ -100,7 +100,7 @@ var q=angular.module('np.user.query.service', [])
       //
       // delete the current instance
       Query.prototype.delete = function () {
-          var me = this, params={username:this.username};
+          var me = this, params={username:this.owner,id:this.userQueryId};
           me.$promise=$dao.queries.delete(params,me)
           // TODO me.$promise.then
           // me.getRepository(Search.config.widgets.repositories.privateRep);
