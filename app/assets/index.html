@@ -46,7 +46,25 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="HelpCtrl">
       <ul class="nav navbar-nav">
         <li ng-class="{'active':isActiveDoc('')}"><a href="/">Home</a></li>
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+          aria-expanded="false">Learn <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Learn about simple search</a></li>
+            <li><a href="#">Learn about Advanced Search</a></li>
+            <li ng-class="{'active':isActiveDoc('/pages/demo-sparql-queries')}"><a href="/pages/demo-sparql-queries">Look at example queries for Advanced Search</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Learn about protein lists</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Learn how to use the developer API</a></li>
+          </ul>
+        </li>
+
+        <li ng-class=""><a target="_blank" href="http://snorql.nextprot.org">Snorql Interface</a></li>
+        <li ng-class=""><a target="_blank" href="https://api.nextprot.org">Developer API</a></li>
         <li ng-class="{'active':isActiveDoc('/pages/about')}"><a href="/pages/about">About</a></li>
+        <li ng-class=""><a href="mailto:support@nextprot.org">Contact Us</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 
@@ -142,7 +160,7 @@
 // global settings for angular-nexprot-ui-help
 var npHelpSettings={
     baseUrl:'https://api.nextprot.org'
-}    
+}
 </script>
 <script defer src="js/vendor.js"></script>
 <script defer src="js/app.js"></script>
