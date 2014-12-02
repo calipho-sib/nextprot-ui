@@ -32,20 +32,20 @@ var q=angular.module('np.user.query.service', [])
       var Query = function (data) {
 
           // init this instance
-          this.id         = data&&data.id||undefined;
-          this.title      = data&&data.title||'';
-          this.published  = data&&data.published||false;
-          this.resourceOwner   = data&&data.resourceOwner||user.profile.username;
-          this.sparql     = data&&data.sparql||"#Write your sparql query here";
-          this.description= data&&data.description||'';
-          this.isEditable = (this.resourceOwner===user.profile.username);
+          this.userQueryId    = data&&data.userQueryId||undefined;
+          this.title                 = data&&data.title||'';
+          this.published        = data&&Boolean(data.published)||false;
+          this.owner              = data&&data.owner||user.profile.username;
+          this.sparql              = data&&data.sparql||"#Write your sparql query here";
+          this.description      = data&&data.description||'';
+          this.tags                 = data&&data.tags;
 
           //
           // wrap promise to this object
           this.$promise=$q.when(this)
 
           // save this instance
-          queryList.put(this.id,this)
+          queryList.put(this.userQueryId,this)
       };
 
 
@@ -57,10 +57,9 @@ var q=angular.module('np.user.query.service', [])
 
       //
       // check is this query is owned by the current user
-      Query.prototype.isOwner=Query.prototype.isEditable=function(){
-          return (this.resourceOwner === user.profile.username);
+      Query.prototype.isOwner=Query.prototype.isEditable=function(who){
+          return (this.owner.toLowerCase() == (who||user.profile.username).toLowerCase());
       }
-
 
       //
       // CRUD operations
@@ -178,8 +177,8 @@ function queryRepository($resource, config, user, $q) {
 
 //
 //
-QueryRepositoryCtrl.$inject=['$scope', '$timeout','config','user','queryRepository']
-function QueryRepositoryCtrl($scope, $timeout, config, user, queryRepository) {
+QueryRepositoryCtrl.$inject=['$scope', '$timeout','config','user','queryRepository','Search']
+function QueryRepositoryCtrl($scope, $timeout, config, user, queryRepository,Search) {
 
     // publish data
     $scope.repository={
@@ -208,7 +207,12 @@ function QueryRepositoryCtrl($scope, $timeout, config, user, queryRepository) {
 
     $scope.setCurrentQuery=function(query){
         $scope.repository.selectedQuery=query;
-        $timeout(function(){},100)
+    }
+
+    $scope.applyCurrentQueryForSearch=function(query){
+            Search.params.sparql = '#' + query.title + "\n" + query.sparql;
+            //close after that
+            $scope.repository.show = false;    
     }
 
     $scope.createNewEmptyQuery=function(){

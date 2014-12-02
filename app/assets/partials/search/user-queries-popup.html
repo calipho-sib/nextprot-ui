@@ -36,10 +36,10 @@
             <tbody>
               <tr ng-repeat="query in repository.queries | filter:filterQuery | orderBy:'title'">
                 <td style="padding-left:0px;padding-right:0px">
-                  <i class="{{query.published ? (query.username == 'nextprot' ? 'icon-certificate' : 'icon-globe') : ''}} gray btn-xs"></i>
+                  <i class="gray btn-xs"  ng-class="(query.published && query.isOwner('nextprot') ? 'icon-certificate' : 'icon-globe')"></i>
                 </td>
-                <td><a href="" ng-click="setCurrentQuery(query)" class="query-title">{{query.title}}
-                  [{{query.resourceOwner}}]</a></td>
+                <td><a href="" ng-click="applyCurrentQueryForSearch(query)" class="query-title">{{query.title}}
+                  [{{query.owner}}]</a></td>
                   <!--Show the view button-->
                   <td class="btn-group">
                     <button class="btn btn-default btn-xs" type="button" ng-if="!query.isEditable()" ng-click="setCurrentQuery(query)"><i class="icon-eye-open"></i></button>

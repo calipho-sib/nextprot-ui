@@ -62,7 +62,6 @@ function user($resource, $http, config, $window, $rootScope, $location, $cookieS
     User.prototype.copy = function(data) {
         angular.extend(this.profile,defaultProfile, data);
         this.profile.username=this.username=data.email;
-        console.log('copy',this.profile,data)
         return this;
     };        
 
@@ -104,7 +103,7 @@ function user($resource, $http, config, $window, $rootScope, $location, $cookieS
 
                 //
                 // the passing token is wrong
-                return self.clear()
+                //return self.clear()
             }).$promise
         );
     };
