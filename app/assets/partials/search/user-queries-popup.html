@@ -15,8 +15,8 @@
         <button type="button" class="close" ng-click="repository.show=false">×</button>
 
         <!-- Title -->
-        <input type="text" ng-show="query.isEditable()" placeholder="Name..." ng-model="repository.selectedQuery.title" focus="" class="span6 form-control">
-        <h4 ng-hide="query.isEditable()">{{repository.selectedQuery.title}}</h4>
+        <input  ng-show="repository.selectedQuery.isEditable()" type="text" placeholder="Name..." ng-model="repository.selectedQuery.title" focus="" class="span6 form-control">
+        <h4 ng-hide="repository.selectedQuery.isEditable()">{{repository.selectedQuery.title}}</h4>
         <!-- Title-->
         <button data-toggle="tooltip" title="Keep the query in your private repository" ng-if="repository.selectedQuery.isEditable()" class="btn  {{(!repository.selectedQuery.published) ? 'btn-inverse' : ''}} btn-default" type="button" ng-click="repository.selectedQuery.published=!repository.selectedQuery.published">
           <i class="icon-user"></i>
@@ -28,7 +28,7 @@
 
       <div class="modal-body" >
         <!--                                 -->
-        <!-- Box for the list                -->
+        <!-- Box for the list         -->
         <!--                                 -->
         <div class="slide-in-left slide-out-left" ng-show="!repository.selectedQuery">
 
@@ -42,9 +42,9 @@
                   [{{query.username}}]</a></td>
                   <!--Show the view button-->
                   <td class="btn-group">
-                    <button class="btn btn-default btn-xs" type="button" ng-if="!query.isEditable" ng-click="setCurrentQuery(query)"><i class="icon-eye-open"></i></button>
-                    <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable" ng-click="setCurrentQuery(query)"><i class="icon-edit"></i></button>
-                    <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable" ng-click="deleteAdvancedQuery(query)"><i class="icon-remove"></i></button>
+                    <button class="btn btn-default btn-xs" type="button" ng-if="!query.isEditable()" ng-click="setCurrentQuery(query)"><i class="icon-eye-open"></i></button>
+                    <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="setCurrentQuery(query)"><i class="icon-edit"></i></button>
+                    <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="deleteAdvancedQuery(query)"><i class="icon-remove"></i></button>
                   </td>
                 </tr>
               </tbody>
@@ -52,10 +52,10 @@
           </div>
 
 
-          <!--                                 -->
+          <!--                                                -->
           <!-- Box for editing or visualizing  -->
-          <!--                                 -->
-          <div class="slide-in-right slide-out-right" style="height: 300px;" ng-show="repository.selectedQuery">
+          <!--                                                 -->
+          <div ng-if="repository.selectedQuery" class="slide-in-right slide-out-right" style="height: 300px;" >
             <!-- Sparql -->
             <div class="col-sm-6 col-md-6" style="width: 670px; margin: 15px;">
               <ui-codemirror id="search-query-save" class=" search-width-advanced" 
@@ -65,7 +65,8 @@
 
             <!-- Description -->
             <div class="col-sm-6 col-md-6" style="width: 670px; margin: 15px;">
-              <textarea ng-show="query.isEditable()" rows="4" id="inputDescription" class="span6" placeholder="Write some description..." ng-model="repository.selectedQuery.description">                </textarea>
+              <textarea ng-show="query.isEditable()" rows="4" id="inputDescription" class="span6" placeholder="Write some description..." ng-model="repository.selectedQuery.description">               
+              </textarea>
 
               <p ng-hide="query.isEditable()">{{repository.selectedQuery.description}}</p>
             </div>

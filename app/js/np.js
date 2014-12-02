@@ -22,6 +22,18 @@ var App = angular.module('np', [
     'authInterceptor'
 ]);
 
+App.run(function ($log,gitHubContent) {
+    $log.info("init githubdoc");
+    // init app
+    gitHubContent.initialize({
+            baseUrl:"https://api.nextprot.org",
+            helpPath:'/rdf/help/type/all.json',
+            helpTitle:'Main truc',
+            root:'', // specify the root of RDF entity routes
+            githubRepo:'calipho-sib/nextprot-docs',
+            githubToken:'2e36ce76cfb03358f0a38630007840e7cb432a24'
+    });
+});
 
 //Configure application $route, $location and $http services.
 App.config([
@@ -51,9 +63,9 @@ App.config([
         // List of routes of the application
         $routeProvider
             .when('/', {title: 'welcome to nextprot', templateUrl: '/partials/welcome.html'})
-            .when('/doc', {title: 'welcome to nextprot', templateUrl: '/partials/doc/page.html'})
+            .when('/doc', {title: 'welcome to nextprot', templateUrl: '/partials/doc/doc.html'})
             .when('/doc/entity/:entity', {title: 'welcome to nextprot', templateUrl: '/partials/doc/help.html'})
-            .when('/about', {title: 'about', templateUrl: '/partials/about.html'})
+            .when('/pages/:article', {title: 'page', templateUrl: '/partials/doc/page.html'})
             .when('/404', {title: '404', templateUrl: '/partials/errors/404.html'})
         // Catch all
         //.otherwise({redirectTo : '/404'});

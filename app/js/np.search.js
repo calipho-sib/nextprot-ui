@@ -50,6 +50,7 @@ SearchModule.controller('SearchCtrl', [
         $scope.editorOptions = {
             lineWrapping : false,
             lineNumbers: false,
+            autofocus:true,
             readOnly: false,
             mode: 'sparql'
         };
