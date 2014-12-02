@@ -7,7 +7,18 @@
           <!--filter-->
           <input type="text" ng-model="filterQuery" placeholder="search in {{queryRepository.category}} repository" class="form-control " style="width:80%">
           <!--Selectable repositories-->
-          <button data-toggle="tooltip" title="{{queryRepository.getDescription()}}" class="btn {{(Advanced.currentRepository == rep) ? 'btn-inverse' : ''}} btn-default" ng-repeat="rep in Advanced.repositories" type="button" ng-click="showRepository2(rep)"><i class="{{rep.icon}}"></i></button>
+          <div class="radio">
+            <label><input type="radio" name="visibility"  ng-click="loadQueries('tutorial')"  
+                                    ng-selected="queryRepository.category==='tutorial'"
+                                    title="Show in the community repository">tutorial</label>
+            <label><input type="radio" name="visibility"  ng-click="loadQueries('public')"
+                                    ng-selected="queryRepository.category==='public'"
+                                    title="Show in the community repository">public</label>
+            <label><input type="radio" name="visibility"  ng-click="loadMyQueries()"
+                                    ng-selected="queryRepository.category==='private'"
+                                    title="Keep the query in your private repository" >private</label>
+          </div>
+
       </div>
 
       <!-- HEADER QUERY TITLE  -->
@@ -23,16 +34,15 @@
                      placeholder="Name..." ng-model="repository.selectedQuery.title" focus="" class="span6 form-control">
         
         <div class="radio">
-          <label><input type="radio" name="visibility"  value="option1" checked> public</label>
-          <label><input type="radio" name="visibility"  value="option2" checked> private</label>
+          <label><input type="radio" name="visibility"  ng-value="true"  
+                                  ng-model="repository.selectedQuery.published"
+                                  ng-selected="repository.selectedQuery.published"
+                                  title="Show in the community repository">public</label>
+          <label><input type="radio" name="visibility"  ng-value="false"  
+                                  ng-model="repository.selectedQuery.published"
+                                  ng-selected="!repository.selectedQuery.published"
+                                  title="Keep the query in your private repository" >private</label>
         </div>
-        <button data-toggle="tooltip" title="Keep the query in your private repository" 
-                      ng-if="repository.selectedQuery.isEditable()" class="btn  {{(!repository.selectedQuery.published) ? 'btn-inverse' : ''}} btn-default" type="button" ng-click="repository.selectedQuery.published=!repository.selectedQuery.published">
-                  <i class="icon-user"></i>
-        </button>
-        <button data-toggle="tooltip" title="Show in the community repository" ng-if="repository.selectedQuery.isEditable()" class="btn  {{(repository.selectedQuery.published) ? 'btn-inverse' : ''}} btn-default" type="button" ng-click="repository.selectedQuery.published=!selectedQuery.published">
-          <i class="icon-globe"></i>
-        </button>
       </div>
 
       <div class="modal-body" >

@@ -16,6 +16,7 @@ var q=angular.module('np.user.query.service', [])
           queries:$resource(config.api.API_URL + '/user/:username/query/:id',
               {username: '@username', id: '@id'}, {
                   get: { method: 'GET', isArray: false },
+                  list: { method: 'GET', isArray: false },
                   create: { method: 'POST' },
                   update: { method: 'PUT'}
               })
@@ -81,7 +82,7 @@ var q=angular.module('np.user.query.service', [])
       Query.prototype.list = function () {
 
           var me = this, params={username:user.profile.username};
-          me.$promise=$dao.queries.query(params)
+          me.$promise=$dao.queries.list(params).$promise
           me.$promise.then(function(data){
               // TODO instance of query should be Query class
               // TODO QueryRepository should maintain local store?
@@ -99,9 +100,9 @@ var q=angular.module('np.user.query.service', [])
           // on update
           if(this.userQueryId){
               params.id=this.userQueryId;
-              me.$promise=$dao.queries.update(params,this.payload())
+              me.$promise=$dao.queries.update(params,this.payload()).$promise
           }else{
-              me.$promise=$dao.queries.create(params,this.payload())
+              me.$promise=$dao.queries.create(params,this.payload()).$promise
           }
 
           // save this instance
@@ -116,7 +117,7 @@ var q=angular.module('np.user.query.service', [])
       // delete the current instance
       Query.prototype.delete = function () {
           var me = this, params={username:this.owner,id:this.userQueryId};
-          me.$promise=$dao.queries.delete(params)
+          me.$promise=$dao.queries.delete(params).$promise
           // TODO me.$promise.then
           // me.getRepository(Search.config.widgets.repositories.privateRep);
           return me;
@@ -143,18 +144,17 @@ function queryRepository($resource, config, user, $q) {
    var icons={
     'public':'icon-globe',
     'private':'icon-user',
-    'nextprot':'icon-certificate'
+    'tutorial':'icon-certificate'
    }
 
    var QueryRepository = function () {
        //  this.selectedQuery = {};
-       this.category='public';
+       this.category='tutorial';
 
-       console.log(config.api);
        this.queries = {};
        this.$dao={
-           queries:$resource(config.api.API_URL + '/queries/public.json',
-                {username: '@username', id: '@id'}, {
+           queries:$resource(config.api.API_URL + '/queries/:category.json',
+                {category: '@category'}, {
                    list: { method: 'GET', isArray: true }
                })
        }
@@ -165,11 +165,7 @@ function queryRepository($resource, config, user, $q) {
 
    };
 
-   //
-   // return
-   QueryRepository.prototype.setCategory=function(name){
-        return this.category=name;
-   }
+   
 
    QueryRepository.prototype.getDescription=function(name){
         return description[this.category];
@@ -179,9 +175,10 @@ function queryRepository($resource, config, user, $q) {
         return icons[this.category];
    }
 
-   QueryRepository.prototype.list = function () {
+   QueryRepository.prototype.list = function (category) {
         var me=this;
-       this.$promise=this.$dao.queries.list().$promise;
+       this.category=category||'tutorial';
+       this.$promise=this.$dao.queries.list({category:this.category}).$promise;
        this.$promise.then(function(data){
          me.queries=data.map(function(q){return user.query.createOne(q)})
        })
@@ -211,13 +208,19 @@ function QueryRepositoryCtrl($scope, $timeout, config, user, queryRepository,Sea
         //
         // needs to load queries
         if($scope.repository.show && !$scope.repository.queries.length){
-            $scope.loadQueries();
+            $scope.loadQueries('tutorial');
         }
     }
 
-    $scope.loadQueries=function(){
-        queryRepository.list().$promise.then(function(){
+    $scope.loadQueries=function(category){
+        queryRepository.list(category).$promise.then(function(){
             $scope.repository.queries=queryRepository.queries
+        })
+    }
+
+    $scope.loadMyQueries=function(category){
+        user.query.list().$promise.then(function(q){
+            $scope.repository.queries=q.userQueryList
         })
     }
 
@@ -236,7 +239,9 @@ function QueryRepositoryCtrl($scope, $timeout, config, user, queryRepository,Sea
     }
 
     $scope.saveSelectedQuery=function(){
-        $scope.repository.selectedQuery.save();
+        $scope.repository.selectedQuery.save().$promise.then(function(){
+          $scope.repository.selectedQuery=false;
+        });
     }
 
     $scope.deleteSelectedQuery=function(){
