@@ -92,6 +92,7 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 	};
 
 	$scope.saveModal = function(dismiss) {
+
 		if($scope.modal.type == 'edit') {
 			angular.extend($scope.lists[$scope.selected.index], $scope.selected);
 
@@ -169,7 +170,6 @@ function ListCreateCtrl($resource, $scope, $rootScope, $routeParams, $location, 
     		var accessions = $scope.inputAccessions.split("\n");
     		var list = { name: $scope.listName, accessions: accessions};
 
-console.log(user)
     		ProteinList.create(user, list, function(data) {
 				if(data.error) flash('alert-warning', data.error);
 				else {

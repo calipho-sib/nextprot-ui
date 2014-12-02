@@ -36,8 +36,9 @@ function ProteinList($resource, $http, config) {
    
    Proteins.prototype.create = function(user, list, cb) {
  		var self=this;
+		console.log("create list",user)
  		user.$promise.then(function(){
-	 		return self.$dao.create({ username: user.profile.username }, list, function(data) {
+	 		return self.$dao.create({ username: user.username }, list, function(data) {
 				if(cb)cb(data);
 			});
  		})
