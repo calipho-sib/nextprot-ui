@@ -55,6 +55,17 @@ var q=angular.module('np.user.query.service', [])
           return new Query(init);
       }
 
+      Query.prototype.payload=function(){
+        return {
+              userQueryId:this.userQueryId,
+              title:this.title,
+              published:this.published,
+              owner:this.owner,
+              sparql:this.sparql,
+              description:this.description,
+              tags:this.tags
+          }
+      }
       //
       // check is this query is owned by the current user
       Query.prototype.isOwner=Query.prototype.isEditable=function(who){
@@ -84,12 +95,13 @@ var q=angular.module('np.user.query.service', [])
       // save or create the current instance
       Query.prototype.save = function () {
           var me = this, params={username:this.owner,id:this.userQueryId};
+
           // on update
-          if(this.id){
-              params.id=this.id;
-              me.$promise=$dao.queries.update(params,me)
+          if(this.userQueryId){
+              params.id=this.userQueryId;
+              me.$promise=$dao.queries.update(params,this.payload())
           }else{
-              me.$promise=$dao.queries.create(params,me)
+              me.$promise=$dao.queries.create(params,this.payload())
           }
 
           // TODO me.$promise.then
@@ -101,7 +113,7 @@ var q=angular.module('np.user.query.service', [])
       // delete the current instance
       Query.prototype.delete = function () {
           var me = this, params={username:this.owner,id:this.userQueryId};
-          me.$promise=$dao.queries.delete(params,me)
+          me.$promise=$dao.queries.delete(params)
           // TODO me.$promise.then
           // me.getRepository(Search.config.widgets.repositories.privateRep);
           return me;
@@ -216,7 +228,7 @@ function QueryRepositoryCtrl($scope, $timeout, config, user, queryRepository,Sea
     }
 
     $scope.createNewEmptyQuery=function(){
-        $scope.repository.selectedQuery=user.queries.createOne();
+        $scope.repository.selectedQuery=user.query.createOne();
     }
 
     $scope.saveSelectedQuery=function(){

@@ -30,7 +30,7 @@
         <!--                                 -->
         <!-- Box for the list         -->
         <!--                                 -->
-        <div class="slide-in-left slide-out-left" ng-show="!repository.selectedQuery">
+        <div class="-slide-in-left -slide-out-left" ng-show="!repository.selectedQuery">
 
           <table class="table table-striped">
             <tbody>
@@ -66,7 +66,8 @@
             </div>
 
             <!-- Description -->
-            <div class="col-xs-12" >
+            <hr/>
+            <div class="col-xs-12 nopadding" >
               <textarea ng-show="repository.selectedQuery.isEditable()" rows="4" id="inputDescription" class="form-control" placeholder="Write some description..." ng-model="repository.selectedQuery.description">
               </textarea>
 
