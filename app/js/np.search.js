@@ -68,7 +68,7 @@ SearchModule.controller('SearchCtrl', [
         $scope.navClass = function (page) {
             var currentRoute = $location.path().substring(1) || 'home';
             return page === currentRoute ? 'active' : '';
-        };   
+        };
 
         $scope.cookies = function (session) {
             Search.cookies(session)
@@ -79,18 +79,26 @@ SearchModule.controller('SearchCtrl', [
         }
 
         $scope.login = function() {
-            user.login(function(err){
-                if(err){
-                    return flash('alert-error', "Ooops ");
-                }
+            var currentUrl = $location.url();
+            $location.url("/"); //need to go to context path since the callback is handled only in context path
+
+            var callBackUrl = $location.absUrl();
+            user.login(callBackUrl, function(err){
+              if(err){
+                flash('alert-error', "Ooops an error occured with your login");
+              }else {
                 flash('alert-info', "Welcome " + user.profile.given_name);
-            })
+                $location.url(currentUrl);
+              }
+            });
+
         }
 
         $scope.logout = function () {
-            flash('alert-info', "Bye bye " + user.profile.given_name);
             $scope.reset();
             user.logout();
+            $location.url("/");
+            flash('alert-info', "You have successfully logged out!");
         }
 
 
@@ -498,4 +506,3 @@ SearchModule.controller('ResultCtrl', [
 ]);
 
 })(angular);
-

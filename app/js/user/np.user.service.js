@@ -33,11 +33,11 @@ function user($resource, $http, config, $window, $rootScope, $location, $cookieS
 
         //
         // init user profile
-        this.profile={}            
+        this.profile={}
         angular.extend(this.profile,defaultProfile);
         //
         // wrap promise to this object
-        this.$promise=$q.when(this)            
+        this.$promise=$q.when(this)
 
         //this.application={};
     };
@@ -48,7 +48,7 @@ function user($resource, $http, config, $window, $rootScope, $location, $cookieS
         return !this.profile.userId;
     }
 
-    //    
+    //
     // make the always User a promise of the dao usage
     User.prototype.chain=function(promise){
       this.$promise=this.$promise.then(function(){
@@ -63,20 +63,22 @@ function user($resource, $http, config, $window, $rootScope, $location, $cookieS
         angular.extend(this.profile,defaultProfile, data);
         this.profile.username=this.username=data.email;
         return this;
-    };        
+    };
 
     User.prototype.clear = function() {
-        angular.extend(this.profile,defaultProfile);
+        angular.copy(defaultProfile, this.profile);
         return this;
-    };        
+    };
 
 
     //
     // kariboo login (request data)
-    User.prototype.login = function (cb) {
-        var self=this;        
-        auth.signin({popup: true,
-            icon:'http://www.nextprot.org/db/images/blueflat/np.png'
+    User.prototype.login = function (cbUrl, cb) {
+        var self=this;
+        auth.signin({
+            callbackURL: cbUrl,
+            popup: true,
+            icon:'img/np.png'
         }).then(function() {
             // Success callback
             self.copy(auth.profile)
@@ -88,7 +90,7 @@ function user($resource, $http, config, $window, $rootScope, $location, $cookieS
     }
 
     User.prototype.logout = function (cb) {
-        this.clear()            
+        this.clear()
         auth.signout();
     }
 
@@ -117,4 +119,3 @@ function user($resource, $http, config, $window, $rootScope, $location, $cookieS
 
 
 })(angular);
-
