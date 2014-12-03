@@ -146,3 +146,13 @@ a.inactive {
     -webkit-animation: slideInRight 1s;
     display: block !important;
 }
+
+.footer {
+  bottom: 0;
+  position:absolute;
+  margin-left:auto;
+  margin-right:auto;
+  left:0;
+  right:0;
+
+}
