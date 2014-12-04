@@ -40,7 +40,14 @@ function user($resource, $http, config, $window, $rootScope, $location, $cookieS
         // wrap promise to this object
         this.$promise=$q.when(this)
 
-        //this.application={};
+        var me = this;
+        if($cookieStore.get('idToken')){
+            var promiseProfile = auth.getProfile($cookieStore.get('idToken'))
+            promiseProfile.then(function (data) {
+                angular.extend(me.profile,defaultProfile, data);
+            })
+       }
+
     };
 
     //
