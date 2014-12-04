@@ -82,7 +82,7 @@ SearchModule.controller('SearchCtrl', [
             var currentUrl = $location.url();
             $location.url("/"); //need to go to context path since the callback is handled only in context path
 
-            var callBackUrl = $location.absUrl();
+            var callBackUrl = Search.config.AUTH_CALLBACK_URL;
             user.login(callBackUrl, function(err){
               if(err){
                 flash('alert-error', "Ooops an error occured with your login");

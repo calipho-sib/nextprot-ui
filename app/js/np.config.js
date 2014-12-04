@@ -8,12 +8,13 @@ angular.module('np.config', []).factory('config', [
     '$http',
     function ($http) {
 
-        var DEF_BASE_URL = 'http://crick:8080/nextprot-api-web';
+        var DEF_BASE_URL = 'http://localhost:8080/nextprot-api-web';
 
         // solr configuration
         var defaultApi = {
 
             API_URL: DEF_BASE_URL,
+            AUTH_CALLBACK_URL: 'http://localhost:3000/', //should not need this! should be able to use $location.absUrl
 
             //base:"/",
             base: "/protosearch/",

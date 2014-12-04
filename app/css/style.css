@@ -21,7 +21,6 @@ a.inactive {
 .link{
   color:#0088CC;
   cursor: pointer;
-  border-bottom: 1px dotted #999;
 }
 
 .link:hover{

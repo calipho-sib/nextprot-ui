@@ -1,0 +1,39 @@
+<div ng-controller="QueryRepositoryCtrl" ng-init="loadMyQueries()" class="row">
+  <div class="col-xs-3 col-sm-2 nopadding">
+    <div ng-include="'partials/user/user-nav-bar.html'"></div>
+  </div>
+  <div class="col-xs-9 col-sm-10">
+    <h4>My queries</h4>
+    <!--filter-->
+    <input type="text" ng-model="filterQuery" placeholder="search in your repository" class="form-control " style="width:80%">
+
+    <!--                                 -->
+    <!-- Box for the list                -->
+    <!--                                 -->
+    <div>
+
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Owner</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="query in repository.queries | filter:filterQuery | orderBy:'title'">
+            <td >
+              {{query.title}}
+            </td>
+            <td >
+              <div class="btn-group">
+                <button class="btn btn-default btn-xs" type="button" ng-if="!query.isEditable()" ng-click="setCurrentQuery(query)"><i class="icon-eye-open"></i></button>
+                <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="setCurrentQuery(query)"><i class="icon-edit"></i></button>
+                <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="deleteAdvancedQuery(query)"><i class="icon-remove"></i></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

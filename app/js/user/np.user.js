@@ -11,22 +11,22 @@ angular.module('np.user', [
   function ($routeProvider) {
     $routeProvider
       .when('/user', { templateUrl: 'partials/user/user-profile.html'})
-      .when('/user/queries', { redirectTo: '/user'})
+      .when('/user/queries', { templateUrl: 'partials/user/user-queries.html'})
       .when('/user/applications', { templateUrl: 'partials/user/user-applications.html'})
   }
 ])
 
 
 .controller('UserCtrl', [
-    '$scope', 
-    '$rootScope', 
-    '$routeParams', 
-    '$location', 
-    '$http', 
+    '$scope',
+    '$rootScope',
+    '$routeParams',
+    '$location',
+    '$http',
     '$window',
-    '$timeout', 
-    'user', 
-    'flash', 
+    '$timeout',
+    'user',
+    'flash',
     'config',
     function ($scope, $rootScope, $routeParams, $location, $http, $window, $timeout, user, flash, config) {
         $scope.user = user;
