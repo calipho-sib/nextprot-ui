@@ -87,7 +87,7 @@ SearchModule.controller('SearchCtrl', [
               if(err){
                 flash('alert-error', "Ooops an error occured with your login");
               }else {
-                flash('alert-info', "Welcome " + user.profile.given_name);
+                flash('alert-info', "Welcome " + user.profile.name);
                 $location.url(currentUrl);
               }
             });
