@@ -8,6 +8,7 @@ angular.module('np.user.service', [])
 user.$inject=['$resource','$http','config','$window','$rootScope','$location','$cookieStore','auth','$q'];
 function user($resource, $http, config, $window, $rootScope, $location, $cookieStore, auth, $q) {
     //
+
     // default user data for anonymous
     var defaultProfile={
         authorities : [],
@@ -71,12 +72,9 @@ function user($resource, $http, config, $window, $rootScope, $location, $cookieS
     };
 
 
-    //
-    // kariboo login (request data)
-    User.prototype.login = function (cbUrl, cb) {
+    User.prototype.login = function (cb) {
         var self=this;
         auth.signin({
-            callbackURL: cbUrl,
             popup: true,
             icon:'img/np.png'
         }).then(function() {

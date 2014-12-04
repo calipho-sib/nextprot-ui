@@ -153,5 +153,12 @@ a.inactive {
   margin-right:auto;
   left:0;
   right:0;
+}
 
+.flashmsg {
+    position: fixed;
+    margin-top:10px;
+    margin-left:auto;
+    margin-right:auto;
+    width:60%;
 }

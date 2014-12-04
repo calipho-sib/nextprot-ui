@@ -19,7 +19,7 @@ var App = angular.module('np', [
     'np.export',
     'ui.codemirror',
     'auth',
-    'authInterceptor'
+    'auth0.interceptor'
 ]);
 
 App.run(function ($log,gitHubContent) {
@@ -41,17 +41,17 @@ App.config([
     '$locationProvider',
     '$httpProvider',
     'authProvider',
-    function ($routeProvider, $locationProvider, $httpProvider, authProvider) {
+    function ($routeProvider,  $locationProvider, $httpProvider, authProvider) {
         authProvider.init({
             clientID: '7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
-            callbackURL: location.href,
+            callbackURL: "http://localhost:3000", // $location.port() + "://" + $location.host(), //TODO can't we use locations here?
             domain: 'nextprot.auth0.com',
 //            dict: {
 //                signin: {
 //                    title: 'Link with another account'
 //                }
 //            } 
-            icon:           'http://www.nextprot.org/db/images/blueflat/np.png'
+            icon: 'img/np.png'
 
 
         })
@@ -92,13 +92,13 @@ App.factory('errorInterceptor', ['$q', '$rootScope', '$location', 'flash',
             responseError: function (response) {
                 var status = response.status;
                 if (status == 0) {
-                    flash('alert-error', "The API is not accessible");
+                    flash('alert-danger', "The API is not accessible");
                     return;
                 } else if (status == 401) {
-                    flash('alert-error', "You are not authorized to access the resource. Please login or review your privileges.");
+                    flash('alert-danger', "You are not authorized to access the resource. Please login or review your privileges.");
                     return;
                 }else if (status == 404) {
-                    flash('alert-error', "URL not found");
+                    flash('alert-danger', "URL not found");
                     return;
                 } 
                 else {
@@ -108,7 +108,7 @@ App.factory('errorInterceptor', ['$q', '$rootScope', '$location', 'flash',
                     }else if (response.data.message) {
                         flash('alert-warn', response.data.message);
                     } else 
-                        flash('alert-error', 'Some error occured' + " " + status + " " + response);
+                        flash('alert-danger', 'Some error occured' + " " + status + " " + response);
                 }
                 return $q.reject(response);
             }

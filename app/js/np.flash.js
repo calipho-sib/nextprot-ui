@@ -55,11 +55,15 @@ var flash = angular.module('np.flash', [])
 .directive('flashMessages', [function() {
   var directive = { restrict: 'EA', replace: true };
 
-        directive.template = '<ul class="unstyled" style="position: absolute;top: -2px;left: 15%;right: 15%;z-index:10010;opacity:0.9">' +
-            '<li ng-repeat="m in messages">' +
-            '<button type="button" class="close" style="padding-right: 5px" data-dismiss="alert">&times;</button>' +
-            '<div style="border-width: 1px; border-color: lightgray" class="alert {{m.level}}">{{m.text}}</div>' +
-            '</li>' +
+        directive.template =
+			'<ul style="position: absolute;top: -2px;left: 15%;right: 15%;z-index:10010;opacity:0.9">' +
+            	'<li style="list-style: none " ng-repeat="m in messages">' +
+					'<div style="border-width: 1px; border-color: lightgray; border-top: 10px;" class="flashmsg alert {{m.level}} alert-dismissible" role="alert">' +
+					'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span>' +
+					'<span class="sr-only">Close</span></button>' +
+					'{{m.text}}' +
+					'</div>' +
+				'</li>' +
             '</ul>';
 
         directive.controller = ['$scope', '$rootScope', function($scope, $rootScope) {
