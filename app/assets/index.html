@@ -47,28 +47,31 @@
       <ul class="nav navbar-nav">
         <li ng-class="{'active':isActiveDoc('')}"><a href="/">Home</a></li>
 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-          aria-expanded="false">Learn <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li ng-class="{'active':isActiveDoc('/pages/learn-simple-search')}"><a href="/pages/learn-simple-search">Learn about Simple Search</a></li>
-            <li ng-class="{'active':isActiveDoc('/pages/learn-advanced-search')}"><a href="/pages/learn-advanced-search">Learn about Advanced Search</a></li>
-            <li><a href="#"></a></li>
-            <li ng-class="{'active':isActiveDoc('/pages/demo-sparql-queries')}"><a href="/pages/demo-sparql-queries">Look at example queries for Advanced Search</a></li>
-            <li class="divider"></li>
-            <li ng-class="{'active':isActiveDoc('/pages/learn-protein-lists')}"><a href="/pages/learn-protein-lists">Learn about Protein Lists</a></li>
-            <li class="divider"></li>
-            <li ng-class="{'active':isActiveDoc('/pages/learn-developer-api')}"><a href="/pages/learn-developer-api">Learn about Developer API</a></li>
-            <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li>
-          </ul>
-        </li>
 
         <li ng-class=""><a target="_blank" href="http://snorql.nextprot.org">SNORQL Interface</a></li>
         <li ng-class=""><a target="_blank" href="https://api.nextprot.org">Developer API</a></li>
 
 
 
-        <li class="dropdown">
+          <!-- Learn dropdown -->
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                 aria-expanded="false">Learn <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                  <li ng-class="{'active':isActiveDoc('/pages/learn-simple-search')}"><a href="/pages/learn-simple-search">Learn about Simple Search</a></li>
+                  <li ng-class="{'active':isActiveDoc('/pages/learn-advanced-search')}"><a href="/pages/learn-advanced-search">Learn about Advanced Search</a></li>
+                  <li><a href="#"></a></li>
+                  <li ng-class="{'active':isActiveDoc('/pages/demo-sparql-queries')}"><a href="/pages/demo-sparql-queries">Look at example queries for Advanced Search</a></li>
+                  <li class="divider"></li>
+                  <li ng-class="{'active':isActiveDoc('/pages/learn-protein-lists')}"><a href="/pages/learn-protein-lists">Learn about Protein Lists</a></li>
+                  <li class="divider"></li>
+                  <li ng-class="{'active':isActiveDoc('/pages/learn-developer-api')}"><a href="/pages/learn-developer-api">Learn about Developer API</a></li>
+                  <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li>
+              </ul>
+          </li>
+
+          <!-- Help dropdown -->
+          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
           aria-expanded="false">Help <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">

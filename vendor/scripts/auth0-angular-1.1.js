@@ -348,8 +348,7 @@
           auth.signin = function (options, lib) {
             options = options || {};
             options.scope = 'openid email name picture';
-            console.log("here are the options", options)
-
+            
             checkHandlers(options);
             var auth0lib = lib || config.auth0lib;
             var signinPromisify = authUtils.promisify(auth0lib.signin, auth0lib);
