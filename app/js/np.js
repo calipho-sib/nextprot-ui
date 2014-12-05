@@ -104,9 +104,9 @@ App.factory('errorInterceptor', ['$q', '$rootScope', '$location', 'flash',
                 else {
                     console.log(response)
                     if(response.message){
-                        flash('alert-warn', response.message);
+                        flash('alert-warning', response.message);
                     }else if (response.data.message) {
-                        flash('alert-warn', response.data.message);
+                        flash('alert-warning', response.data.message);
                     } else 
                         flash('alert-danger', 'Some error occured' + " " + status + " " + response);
                 }
