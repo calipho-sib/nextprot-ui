@@ -123,6 +123,7 @@
         Query.prototype.delete = function () {
             var me = this, params = {username: this.owner, id: this.userQueryId};
             me.$promise = $dao.queries.delete(params).$promise
+
             // TODO me.$promise.then
             // me.getRepository(Search.config.widgets.repositories.privateRep);
             return me;
@@ -196,8 +197,8 @@
 
 //
 //
-    QueryRepositoryCtrl.$inject = ['$scope', '$timeout', 'config', 'user', 'queryRepository', 'Search']
-    function QueryRepositoryCtrl($scope, $timeout, config, user, queryRepository, Search) {
+    QueryRepositoryCtrl.$inject = ['$scope', '$timeout', 'config', 'user', 'queryRepository', 'Search', 'flash']
+    function QueryRepositoryCtrl($scope, $timeout, config, user, queryRepository, Search, flash) {
 
         // publish data
         $scope.repository = {
@@ -250,8 +251,12 @@
             });
         }
 
-        $scope.deleteSelectedQuery = function () {
+        $scope.deleteUserQuery = function (query) {
             if (confirm("Are you sure you want to delete the selected query?")) {
+                query.delete().$promise.then(function () {
+                    flash('alert-info', query.title + 'query successfully deleted');
+                    $scope.loadMyQueries(); // not sure about this
+                });
             }
         }
 

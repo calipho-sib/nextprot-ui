@@ -45,6 +45,7 @@ function user($resource, $http, config, $window, $rootScope, $location, $cookieS
             var promiseProfile = auth.getProfile($cookieStore.get('idToken'))
             promiseProfile.then(function (data) {
                 angular.extend(me.profile,defaultProfile, data);
+                me.profile.username=data.email;
             })
        }
 
