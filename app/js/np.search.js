@@ -308,9 +308,9 @@ SearchModule.controller('ResultCtrl', [
     'Search',
     'user',
     'Cart',
-    'ProteinList',
+    'userProteinList',
     'flash',
-    function ($scope, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, ProteinList, flash) {
+    function ($scope, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash) {
         $scope.Search = Search;
         $scope.Cart = Cart;
         $scope.selectedResults = {};
@@ -380,8 +380,8 @@ SearchModule.controller('ResultCtrl', [
             if ($routeParams.list) {
                 var list = {};
                 list['accs'] = [docId];
-                if (found == -1) ProteinList.addElements(user, $routeParams.list, [docId]);
-                else ProteinList.removeElements(user, $routeParams.list, [docId]);
+                if (found == -1) userProteinList.addElements(user, $routeParams.list, [docId]);
+                else userProteinList.removeElements(user, $routeParams.list, [docId]);
             }
         }
 
@@ -394,7 +394,7 @@ SearchModule.controller('ResultCtrl', [
 
         $scope.selectAll = function () {
             if ($routeParams.list) {
-                ProteinList.getByIds(user, $routeParams.list, function (result) {
+                userProteinList.getByIds(user, $routeParams.list, function (result) {
                     Cart.setCart(result.ids);
                     setAsSelected(result.ids);
                 });
@@ -424,7 +424,7 @@ SearchModule.controller('ResultCtrl', [
 
         $scope.unselectAll = function () {
             if ($routeParams.list) {
-                ProteinList.getByIds(user, $routeParams.list, function (result) {
+                userProteinList.getByIds(user, $routeParams.list, function (result) {
                     Cart.removeFromCart(result.ids);
                     setAsSelected(result.id);
                 });
@@ -494,7 +494,7 @@ SearchModule.controller('ResultCtrl', [
                 ownerId: 1
             };
 
-            ProteinList.create(user, proteinList, function (data) {
+            userProteinList.create(user, proteinList, function (data) {
                 if (data.error) flash('alert-warning', data.error);
                 else {
                     flash('alert-info', "List " + proteinList.name + " created.");

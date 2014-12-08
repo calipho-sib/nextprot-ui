@@ -2,31 +2,31 @@
 
 // create the module and define one service
 angular.module('np.user.protein.lists.service', [])
-	.factory('ProteinList',ProteinList)
+	.factory('userProteinList',userProteinList)
 	.factory('UploadListService',UploadListService); 
 
 
 //
 // implement the service
-ProteinList.$inject=['$resource', '$http', 'config']; 
-function ProteinList($resource, $http, config) {
-	var lists;
-	var baseUrl = config.api.BASE_URL+config.api.API_PORT;
+userProteinList.$inject=['$resource', 'config'];
+function userProteinList($resource, config) {
 
 	var Proteins = function() {
-		this.$dao=$resource(baseUrl+'/nextprot-api-web/user/:username/protein-list/:id/:action', 
+
+		this.$dao=$resource(config.api.API_URL +'/user/:username/protein-list/:id/:action',
 			{username: '@username', id: '@id', action: '@action'}, {
 			get: { method: 'GET', isArray: false },
-			create: { method: 'POST' },
+				list: { method: 'GET', isArray: false },
+				create: { method: 'POST' },
 			update: { method: 'PUT'},
 			fix: { method: 'PUT' }
 		});
 	};
    
 	Proteins.prototype.getByUsername = function(user, cb) {
-		var self=this;
+		var me=this;
 		user.$promise.then(function(){
-			return self.$dao.get({username: user.profile.username}, function(data) {
+			return me.$dao.get({username: user.profile.username}, function(data) {
 				service.lists = data;
 				if(cb)cb(data);
 	 		});

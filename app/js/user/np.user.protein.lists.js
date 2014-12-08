@@ -13,8 +13,7 @@ angular.module('np.user.protein.lists', [
 	'$locationProvider',
 	'$httpProvider',
 	function($routeProvider, $locationProvider, $httpProvider) {
-		$routeProvider
-	    	.when('/user/protein/lists', { templateUrl: 'partials/user/user-protein-lists.html'})
+		$routeProvider.when('/user/protein/lists', { templateUrl: 'partials/user/user-protein-lists.html'})
 	      .when('/user/protein/lists/create', { templateUrl: 'partials/user/user-protein-lists-create.html'})
 	}
 ])
@@ -25,9 +24,9 @@ angular.module('np.user.protein.lists', [
 
 //
 // Controller
-ListCtrl.$inject=['$resource','$scope','$rootScope','$location','$routeParams','$route','Search','ProteinList','user'];
-function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route, Search, ProteinList, user) {
-	$scope.ProteinList = ProteinList;
+ListCtrl.$inject=['$resource','$scope','$rootScope','$location','$routeParams','$route','Search','userProteinList','user'];
+function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route, Search, userProteinList, user) {
+	$scope.userProteinList = userProteinList;
 	$scope.showCombine = false;
 	$scope.combineDisabled = true;
 	$scope.selected = {};
@@ -40,12 +39,10 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 		second: $scope.lists 
 	}
 
-	ProteinList.getByUsername(user, function(data) {
+	userProteinList.getByUsername(user, function(data) {
 		$scope.lists = data.lists;
-		$scope.initCombination();
+		//$scope.initCombination();
 	});
-
-
 
 	//
 	// TODO what it mean?
@@ -102,11 +99,11 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 				description: $scope.selected.description
 			};
 
-			ProteinList.update(user, list);
+			userProteinList.update(user, list);
 		} else if($scope.modal.type == 'create') {
 			var newList = { name: $scope.selected.name, description: $scope.selected.description };
 
-			ProteinList.combine(
+			userProteinList.combine(
                   user,
 				newList,
 				$scope.combination.first.name,
@@ -126,7 +123,7 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 	};
 
 	$scope.delete = function(index) {
-		ProteinList.delete(user, $scope.lists[index].id);
+		userProteinList.delete(user, $scope.lists[index].id);
 		$scope.lists.splice(index, 1);
 
 		$scope.options.first=$scope.options.second=$scope.lists
@@ -135,8 +132,8 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 }
 
 
-ListCreateCtrl.$inject=['$resource','$scope','$rootScope','$routeParams','$location','ProteinList','user','UploadListService','flash','$log']
-function ListCreateCtrl($resource, $scope, $rootScope, $routeParams, $location, ProteinList, user, UploadListService, flash, $log) {
+ListCreateCtrl.$inject=['$resource','$scope','$rootScope','$routeParams','$location','userProteinList','user','UploadListService','flash','$log']
+function ListCreateCtrl($resource, $scope, $rootScope, $routeParams, $location, userProteinList, user, UploadListService, flash, $log) {
 	$scope.inputAccessions = "";
 	$scope.listName = "";
 	$scope.files = [];
@@ -170,7 +167,7 @@ function ListCreateCtrl($resource, $scope, $rootScope, $routeParams, $location, 
     		var accessions = $scope.inputAccessions.split("\n");
     		var list = { name: $scope.listName, accessions: accessions};
 
-    		ProteinList.create(user, list, function(data) {
+    		userProteinList.create(user, list, function(data) {
 				if(data.error) flash('alert-warning', data.error);
 				else {
 					flash('alert-info', "List "+list.name+" created.");
@@ -178,7 +175,7 @@ function ListCreateCtrl($resource, $scope, $rootScope, $routeParams, $location, 
 				}
     		});
     	} else {
-    		ProteinList.create(user, {
+    		userProteinList.create(user, {
                   name: $scope.listName, description: $scope.listDescription, accessions: []
               }, function(newList) {
 
