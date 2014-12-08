@@ -26,7 +26,7 @@
 
         //
         // repository of queries (TODO more cache access)
-        var queryList = $cacheFactory('queries')
+        var queryList = $cacheFactory('queries'), queries=[]
 
 
         //
@@ -57,6 +57,12 @@
             return new Query(init);
         }
 
+        //
+        // return current queries of this user
+        Query.prototype.queries = function () {
+            return queries;
+        }
+
         Query.prototype.payload = function () {
             return {
                 userQueryId: this.userQueryId,
@@ -85,7 +91,7 @@
             var me = this, params = {username: user.profile.username};
             me.$promise = $dao.queries.list(params).$promise
             me.$promise.then(function (data) {
-                me.queries = data.map(function (q) {
+                queries = data.map(function (q) {
                     return me.createOne(q)
                 })
             })
@@ -118,9 +124,15 @@
         Query.prototype.delete = function () {
             var me = this, params = {username: this.owner, id: this.userQueryId};
             me.$promise = $dao.queries.delete(params).$promise
+            me.$promise.then(function(){
+              queries.every(function(query,i){
+                  if(query.userQueryId===me.userQueryId){
+                      return queries.splice(i,1);
+                  }
+                  return true;
+              })
+            })
 
-            // TODO me.$promise.then
-            // me.getRepository(Search.config.widgets.repositories.privateRep);
             return me;
         };
 
@@ -224,7 +236,7 @@
         $scope.loadMyQueries = function () {
           user.$promise.then(function(){
               user.query.list().$promise.then(function (q) {
-                  $scope.repository.queries = user.query.queries
+                  $scope.repository.queries = user.query.queries()
               })
 
           })
@@ -254,7 +266,7 @@
             if (confirm("Are you sure you want to delete the selected query?")) {
                 query.delete().$promise.then(function () {
                     flash('alert-info', query.title + 'query successfully deleted');
-                    $scope.loadMyQueries(); // not sure about this
+                    //$scope.loadMyQueries(); // not sure about this
                 });
             }
         }
