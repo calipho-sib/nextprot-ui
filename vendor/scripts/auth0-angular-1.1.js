@@ -208,6 +208,7 @@
             return config.eventHandlers[anEvent];
           };
           var callHandler = function (anEvent, locals) {
+           $rootScope.$broadcast('auth0.' + anEvent, locals);
             angular.forEach(getHandlers(anEvent) || [], function (handler) {
               $injector.invoke(handler, auth, locals);
             });
@@ -347,7 +348,6 @@
           };
           auth.signin = function (options, lib) {
             options = options || {};
-            options.scope = 'openid email name picture';
             
             checkHandlers(options);
             var auth0lib = lib || config.auth0lib;

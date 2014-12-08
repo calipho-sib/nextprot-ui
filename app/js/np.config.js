@@ -5,16 +5,14 @@
 //Define the application global configuration
 
 angular.module('np.config', []).factory('config', [
-    '$http',
-    function ($http) {
+    '$http','npSettings',
+    function ($http, npSettings) {
 
-        var DEF_BASE_URL = 'http://localhost:8080/nextprot-api-web';
-
-        // solr configuration
+        // api configuration
         var defaultApi = {
 
-            API_URL: DEF_BASE_URL,
-            AUTH_CALLBACK_URL: 'http://localhost:3000/', //should not need this! should be able to use $location.absUrl
+            API_URL: npSettings.base,
+            AUTH_CALLBACK_URL: npSettings.callback, 
 
             //base:"/",
             base: "/protosearch/",

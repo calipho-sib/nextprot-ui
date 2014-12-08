@@ -88,11 +88,6 @@
                 me.queries = data.map(function (q) {
                     return me.createOne(q)
                 })
-
-                // TODO instance of query should be Query class
-                // TODO QueryRepository should maintain local store?
-                // me.getRepository(Search.config.widgets.repositories.privateRep);
-                //me.queries = data;
             })
             return this;
         };
@@ -188,6 +183,7 @@
                 me.queries = data.map(function (q) {
                     return user.query.createOne(q)
                 })
+                return me.queries
             })
             return this
         }
@@ -197,8 +193,8 @@
 
 //
 //
-    QueryRepositoryCtrl.$inject = ['$scope', '$timeout', 'config', 'user', 'queryRepository', 'Search', 'flash']
-    function QueryRepositoryCtrl($scope, $timeout, config, user, queryRepository, Search, flash) {
+    QueryRepositoryCtrl.$inject = ['$scope', '$timeout', '$log','config', 'user', 'queryRepository', 'Search', 'flash']
+    function QueryRepositoryCtrl($scope, $timeout, $log, config, user, queryRepository, Search, flash) {
 
         // publish data
         $scope.repository = {
@@ -226,9 +222,12 @@
         }
 
         $scope.loadMyQueries = function () {
-            user.query.list().$promise.then(function (q) {
-                $scope.repository.queries = user.query.queries
-            })
+          user.$promise.then(function(){
+              user.query.list().$promise.then(function (q) {
+                  $scope.repository.queries = user.query.queries
+              })
+
+          })
         }
 
         $scope.setCurrentQuery = function (query) {

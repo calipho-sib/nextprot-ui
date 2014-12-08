@@ -5,8 +5,8 @@ angular.module('np.user.service', [])
 
 //
 // implement user service
-user.$inject=['$resource','$http','config','$window','$rootScope','$location','$cookieStore','auth','$q'];
-function user($resource, $http, config, $window, $rootScope, $location, $cookieStore, auth, $q) {
+user.$inject=['$resource','$http','config','$timeout','$rootScope','$location','$cookieStore','auth','$q'];
+function user($resource, $http, config, $timeout, $rootScope, $location, $cookieStore, auth,$q) {
     //
 
     // default user data for anonymous
@@ -16,9 +16,12 @@ function user($resource, $http, config, $window, $rootScope, $location, $cookieS
         profile:{}
     }
 
-    $rootScope.$on('auth:REDIRECT_ENDED',function(){
-        user.copy(auth.profile)
-    })
+    $rootScope.$on('auth0.loginSuccess', function (event,auth) {
+            user.$promise=auth.profile
+            auth.profile.then(function(profile){
+                user.copy(profile)   
+            })
+    });
 
     //
     // create user domain
@@ -41,13 +44,7 @@ function user($resource, $http, config, $window, $rootScope, $location, $cookieS
         this.$promise=$q.when(this)
 
         var me = this;
-        if($cookieStore.get('idToken')){
-            var promiseProfile = auth.getProfile($cookieStore.get('idToken'))
-            promiseProfile.then(function (data) {
-                angular.extend(me.profile,defaultProfile, data);
-                me.profile.username=data.email;
-            })
-       }
+
 
     };
 
@@ -84,7 +81,8 @@ function user($resource, $http, config, $window, $rootScope, $location, $cookieS
         var self=this;
         auth.signin({
             popup: true,
-            icon:'img/np.png'
+            icon:'img/np.png',
+            scope: 'openid email name picture' // This is if you want the full JWT
         }).then(function() {
             // Success callback
             self.copy(auth.profile)

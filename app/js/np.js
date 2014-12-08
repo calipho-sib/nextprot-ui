@@ -23,7 +23,7 @@ var App = angular.module('np', [
 ]);
 
 App.constant('npSettings', {
-    base:'http://localhost:8080/nextprot-api-web',
+    base:'http://mac-097:8080/nextprot-api-web',
     callback:'http://localhost:3000/',
     auth0_cliendId:'7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
     githubToken:'2e36ce76cfb03358f0a38630007840e7cb432a24'
@@ -51,7 +51,7 @@ App.config([
     '$httpProvider',
     'authProvider',
     'npSettings',
-    function ($routeProvider,  $locationProvider, $httpProvider, authProvider, npSettings) {
+    function ( $routeProvider,  $locationProvider, $httpProvider, authProvider, npSettings) {
         authProvider.init({
             clientID: npSettings.auth0_cliendId,
             callbackURL: npSettings.callback, // $location.port() + "://" + $location.host(), //TODO can't we use locations here?
@@ -62,8 +62,6 @@ App.config([
 //                }
 //            } 
             icon: 'img/np.png'
-
-
         })
 
         $httpProvider.interceptors.push('authInterceptor');
