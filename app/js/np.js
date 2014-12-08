@@ -22,7 +22,16 @@ var App = angular.module('np', [
     'auth0.interceptor'
 ]);
 
-App.run(function ($log,gitHubContent) {
+App.constant('npSettings', {
+    base:'http://localhost:8080/nextprot-api-web',
+    callback:'http://localhost:3000/',
+    auth0_cliendId:'7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
+    githubToken:'2e36ce76cfb03358f0a38630007840e7cb432a24'
+})
+
+
+
+App.run(function ($log,gitHubContent,npSettings) {
     $log.info("init githubdoc");
     // init app
     gitHubContent.initialize({
@@ -31,7 +40,7 @@ App.run(function ($log,gitHubContent) {
             helpTitle:'Main truc',
             root:'', // specify the root of RDF entity routes
             githubRepo:'calipho-sib/nextprot-docs',
-            githubToken:'2e36ce76cfb03358f0a38630007840e7cb432a24'
+            githubToken:npSettings.githubToken
     });
 });
 
@@ -41,10 +50,11 @@ App.config([
     '$locationProvider',
     '$httpProvider',
     'authProvider',
-    function ($routeProvider,  $locationProvider, $httpProvider, authProvider) {
+    'npSettings',
+    function ($routeProvider,  $locationProvider, $httpProvider, authProvider, npSettings) {
         authProvider.init({
-            clientID: '7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
-            callbackURL: "http://localhost:3000", // $location.port() + "://" + $location.host(), //TODO can't we use locations here?
+            clientID: npSettings.auth0_cliendId,
+            callbackURL: npSettings.callback, // $location.port() + "://" + $location.host(), //TODO can't we use locations here?
             domain: 'nextprot.auth0.com',
 //            dict: {
 //                signin: {
