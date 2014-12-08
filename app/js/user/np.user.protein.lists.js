@@ -39,7 +39,7 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 		second: $scope.lists 
 	}
 
-	userProteinList.getByUsername(user, function(data) {
+	userProteinList.list(user, function(data) {
 		$scope.lists = data.lists;
 		//$scope.initCombination();
 	});

@@ -17,17 +17,17 @@
             this.$dao = $resource(config.api.API_URL + '/user/:username/protein-list/:id/:action',
                 {username: '@username', id: '@id', action: '@action'}, {
                     get: {method: 'GET', isArray: false},
-                    list: {method: 'GET', isArray: false},
+                    list: {method: 'GET', isArray: true},
                     create: {method: 'POST'},
                     update: {method: 'PUT'},
                     fix: {method: 'PUT'}
                 });
         };
 
-        Proteins.prototype.getByUsername = function (user, cb) {
+        Proteins.prototype.list = function (user, cb) {
             var me = this;
             user.$promise.then(function () {
-                return me.$dao.get({username: user.profile.username}, function (data) {
+                return me.$dao.list({username: user.profile.username}, function (data) {
                     service.lists = data;
                     if (cb)cb(data);
                 });
