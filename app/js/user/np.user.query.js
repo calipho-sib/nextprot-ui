@@ -2,7 +2,7 @@
     'use strict';
 
 
-    angular.module('np.user.query.service', [])
+    angular.module('np.user.query', [])
         .factory('queryRepository', queryRepository)
         .controller('QueryRepositoryCtrl', QueryRepositoryCtrl)
         .run(initQueryModule);

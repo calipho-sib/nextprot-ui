@@ -20,8 +20,12 @@ var App = angular.module('np', [
     'ui.codemirror',
     'auth',
     'auth0.interceptor'
-]);
+]).config(configApplication)
+  .factory('errorInterceptor',errorInterceptor)
+  .run(runApplication);
 
+//
+// main application settings
 App.constant('npSettings', {
     base:'http://mac-097:8080/nextprot-api-web',
     callback:'http://localhost:3000/',
@@ -30,63 +34,55 @@ App.constant('npSettings', {
 })
 
 
-
-App.run(function ($log,gitHubContent,npSettings) {
-    $log.info("init githubdoc");
-    // init app
+//
+// init application components
+runApplication.$inject=['$log','gitHubContent','npSettings']
+function runApplication($log,gitHubContent,npSettings) {
     gitHubContent.initialize({
             baseUrl:"https://api.nextprot.org",
             helpPath:'/rdf/help/type/all.json',
             helpTitle:'Main truc',
-            root:'', // specify the root of RDF entity routes
+            root:'',                                                            // specify a URI prefix
             githubRepo:'calipho-sib/nextprot-docs',
             githubToken:npSettings.githubToken
     });
-});
+};
 
-//Configure application $route, $location and $http services.
-App.config([
-    '$routeProvider',
-    '$locationProvider',
-    '$httpProvider',
-    'authProvider',
-    'npSettings',
-    function ( $routeProvider,  $locationProvider, $httpProvider, authProvider, npSettings) {
-        authProvider.init({
-            clientID: npSettings.auth0_cliendId,
-            callbackURL: npSettings.callback, // $location.port() + "://" + $location.host(), //TODO can't we use locations here?
-            domain: 'nextprot.auth0.com',
-//            dict: {
-//                signin: {
-//                    title: 'Link with another account'
-//                }
-//            } 
-            icon: 'img/np.png'
-        })
+//
+// config application $route, $location and $http services.
+configApplication.$inject=['$routeProvider','$locationProvider','$httpProvider','authProvider','npSettings'];
+function configApplication( $routeProvider,  $locationProvider, $httpProvider, authProvider, npSettings) {
+    authProvider.init({
+        clientID: npSettings.auth0_cliendId,
+        callbackURL: npSettings.callback, 
+        domain: 'nextprot.auth0.com',
+        icon: 'img/np.png'
+    })
 
-        $httpProvider.interceptors.push('authInterceptor');
-        $httpProvider.interceptors.push('errorInterceptor');
-        $httpProvider.defaults.headers.common.Accept= 'application/json'
+    $httpProvider.interceptors.push('authInterceptor');
+    $httpProvider.interceptors.push('errorInterceptor');
+    $httpProvider.defaults.headers.common.Accept= 'application/json'
 
 
-        // List of routes of the application
-        $routeProvider
-            .when('/', {title: 'welcome to nextprot', templateUrl: '/partials/welcome.html'})
-            .when('/doc', {title: 'welcome to nextprot', templateUrl: '/partials/doc/doc.html'})
-            .when('/doc/entity/:entity', {title: 'welcome to nextprot', templateUrl: '/partials/doc/help.html'})
-            .when('/pages/:article', {title: 'page', templateUrl: '/partials/doc/page.html'})
-            .when('/404', {title: '404', templateUrl: '/partials/errors/404.html'})
-        // Catch all
-        //.otherwise({redirectTo : '/404'});
+    // List of routes of the application
+    $routeProvider
+        .when('/', {title: 'welcome to nextprot', templateUrl: '/partials/welcome.html'})
+        .when('/doc', {title: 'welcome to nextprot', templateUrl: '/partials/doc/doc.html'})
+        .when('/doc/entity/:entity', {title: 'welcome to nextprot', templateUrl: '/partials/doc/help.html'})
+        .when('/pages/:article', {title: 'page', templateUrl: '/partials/doc/page.html'})
+        .when('/404', {title: '404', templateUrl: '/partials/errors/404.html'})
+    // Catch all
+    //.otherwise({redirectTo : '/404'});
 
-        // Without serve side support html5 must be disabled.
-        $locationProvider.html5Mode(true);
-        //$locationProvider.hashPrefix = '!';
-    }
-]);
+    // Without serve side support html5 must be disabled.
+    $locationProvider.html5Mode(true);
+    //$locationProvider.hashPrefix = '!';
+};
 
-App.factory('errorInterceptor', ['$q', '$rootScope', '$location', 'flash',
-    function ($q, $rootScope, $location, flash) {
+//
+// define default behavior for all http request
+errorInterceptor.$inject=['$q', '$rootScope', '$location', 'flash']
+function errorInterceptor($q, $rootScope, $location, flash) {
         return {
             request: function (config) {
                 return config || $q.when(config);
@@ -121,7 +117,7 @@ App.factory('errorInterceptor', ['$q', '$rootScope', '$location', 'flash',
                 return $q.reject(response);
             }
         };
-}]);
+};
 
 })(angular);
 
