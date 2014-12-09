@@ -20,12 +20,12 @@
 					<td ng-show="showCombine"><input type="checkbox"></td>
 					<td><a href="proteins/search?list={{list.name}}">{{list.name}}</a></td>
 					<td>{{list.description}}</td>
-					<td>{{list.accessions}}</td>
+					<td>{{list.entriesCount}}</td>
 					<td style="width:100px; height:25px">
 						<div ng-controller="ExportCtrl">
-                                <button class="btn btn-mini" bs-modal="'partials/export/export.html'" ng-click="setListToExport(list)"><i class="icon-arrow-down"></i></button>
-							<button class="btn btn-mini" bs-modal="'partials/user/user-protein-lists-modal.html'" ng-click="launchModal($index, 'edit')"><i class="icon-edit"></i></button>
-                                <button class="btn btn-mini" ng-click="delete($index)">
+                                <button class="btn btn-xs" bs-modal="'partials/export/export.html'" ng-click="setListToExport(list)"><i class="icon-arrow-down"></i></button>
+							<button class="btn btn-xs" bs-modal="'partials/user/user-protein-lists-modal.html'" ng-click="launchModal($index, 'edit')"><i class="icon-edit"></i></button>
+                                <button class="btn btn-xs" ng-click="delete($index)">
                                     <i class="icon-remove"></i>
                                 </button>
 						</div>

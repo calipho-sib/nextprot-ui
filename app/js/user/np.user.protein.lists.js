@@ -40,7 +40,8 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 	}
 
 	userProteinList.list(user, function(data) {
-		$scope.lists = data.lists;
+		$scope.lists = data;
+		console.log($scope.lists,data)
 		//$scope.initCombination();
 	});
 

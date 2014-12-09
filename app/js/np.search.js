@@ -43,7 +43,13 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $routeParams, $rou
     };
 
     //
-    // navigation items
+    // update entity documentation on path change
+    $scope.$on('$routeChangeSuccess', function(event, next, current) { 
+        if($location.path()==='/'){
+            $scope.reset();
+            Search.clear();
+        }
+    });  
 
 
     //
