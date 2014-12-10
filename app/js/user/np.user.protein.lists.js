@@ -80,13 +80,13 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 		$scope.combination.second = temp;
 	};
 
-	$scope.launchModal = function(elem, action) {
+	$scope.launchModal = function (elem, action) {
 		$scope.selected = {};
-		if(action == 'edit') {
+		if (action == 'edit') {
 			$scope.selected = $scope.lists[elem];
-			angular.extend($scope.selected, {index:elem});
+			angular.extend($scope.selected, {index: elem});
 		}
-		angular.extend($scope.modal, { type: action});
+		angular.extend($scope.modal, {type: action});
 	};
 
 	$scope.saveModal = function(dismiss) {

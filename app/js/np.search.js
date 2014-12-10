@@ -290,8 +290,8 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $routeParams, $rou
 
 //
 // implement search result controller
-ResultCtrl.$inject=['$scope','$route','$routeParams','$filter','$timeout','$location','Search','user','Cart','userProteinList','flash'];
-function ResultCtrl($scope, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash) {
+ResultCtrl.$inject=['$scope','$modal', '$route','$routeParams','$filter','$timeout','$location','Search','user','Cart','userProteinList','flash'];
+function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash) {
     $scope.Search = Search;
     $scope.Cart = Cart;
     $scope.selectedResults = {};
@@ -461,9 +461,19 @@ function ResultCtrl($scope, $route, $routeParams, $filter, $location, $timeout, 
         $(selector).affix()
     }
 
-    $scope.launchModal = function (elem, action) {
-        $scope.selected = {};
-        angular.extend($scope.modal, { type: action});
+
+
+    $scope.launchModalList = function (elem, action) {
+        if(!user.isAnonymous()){
+
+            $scope.selected = {};
+            angular.extend($scope.modal, { type: action});
+            var proteinListModal = $modal({scope: $scope, template: 'partials/user/user-protein-lists-modal.html', show: true});
+            //proteinListModal.$promise.then(proteinListModal.show);
+
+        } else {
+            flash('alert-warning', 'Please login to save a list');
+        }
     }
 
 

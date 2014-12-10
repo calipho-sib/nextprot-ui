@@ -63,7 +63,7 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
     //
     //
     User.prototype.isAnonymous = function () {
-        return !this.profile.userId;
+        return this.profile.username === 'Guest';
     }
 
     //
