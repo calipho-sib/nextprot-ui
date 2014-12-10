@@ -41,7 +41,7 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 
 	userProteinList.list(user, function(data) {
 		$scope.lists = data;
-		console.log($scope.lists,data)
+		console.log('---------------', $scope.lists,data)
 		//$scope.initCombination();
 	});
 
@@ -124,10 +124,13 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 	};
 
 	$scope.delete = function(index) {
-		userProteinList.delete(user, $scope.lists[index].id);
-		$scope.lists.splice(index, 1);
 
-		$scope.options.first=$scope.options.second=$scope.lists
+		if (confirm("Are you sure you want to delete the selected query?")) {
+			userProteinList.delete(user, $scope.lists[index].id);
+			$scope.lists.splice(index, 1);
+			$scope.options.first=$scope.options.second=$scope.lists
+		}
+
 	}
 
 }

@@ -266,7 +266,6 @@
             if (confirm("Are you sure you want to delete the selected query?")) {
                 query.delete().$promise.then(function () {
                     flash('alert-info', query.title + 'query successfully deleted');
-                    //$scope.loadMyQueries(); // not sure about this
                 });
             }
         }
