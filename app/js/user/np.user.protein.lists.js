@@ -39,15 +39,16 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 		second: $scope.lists 
 	}
 
-	userProteinList.list(user, function(data) {
-		$scope.lists = data;
-		console.log('---------------', $scope.lists,data)
-		//$scope.initCombination();
-	});
 
-	//
-	// TODO what it mean?
-	$scope.initCombination = function() {
+	$scope.loadMyLists = function (){
+		userProteinList.list(user, function(data) {
+			$scope.lists = data;
+			console.log('---------------', $scope.lists,data)
+			$scope.initCombinationForm();
+		});
+	}
+
+	$scope.initCombinationForm = function() {
 
 
 		$scope.$watch('combination.first', function(newVal, oldVal) {
@@ -67,6 +68,7 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 			if(index > -1)
 				$scope.options.first.splice(index, 1);
 		});
+
 	};
 
 
