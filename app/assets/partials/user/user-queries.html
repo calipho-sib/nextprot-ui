@@ -7,7 +7,7 @@
 
         <!--filter-->
         <div class="input-group col-sm-4" style="margin-bottom: 20px;margin-top: 20px;">
-            <input type="text"  ng-model="filterQuery" class="form-control" placeholder="search in your queries">
+            <input type="text" ng-model="filterQuery" class="form-control" placeholder="search in your queries">
             <span class="input-group-addon"><i class="icon-filter"></i></span>
         </div>
 
@@ -25,7 +25,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="query in repository.queries | filter:filterQuery | orderBy:'title'">
-                <td class="col-md-6"><a href="proteins/search?mode=advanced&order=desc&sparql={{query.sparql}}">{{query.title}}</a></td>
+                <td class="col-md-6"><a href="proteins/search?mode=advanced&sparql={{query.sparql | encodeURIComponent | trim}}">{{query.title}}</a></td>
                 <td class="col-md-5">{{query.description}}</td>
                 <td class="col-md-1" style="width: 100%">
                     <div class="btn-group">
