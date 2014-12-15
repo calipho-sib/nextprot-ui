@@ -205,8 +205,8 @@
 
 //
 //
-    QueryRepositoryCtrl.$inject = ['$scope', '$timeout', '$log','config', 'user', 'queryRepository', 'Search', 'flash']
-    function QueryRepositoryCtrl($scope, $timeout, $log, config, user, queryRepository, Search, flash) {
+    QueryRepositoryCtrl.$inject = ['$scope', '$location', '$timeout', '$log','config', 'user', 'queryRepository', 'Search', 'flash']
+    function QueryRepositoryCtrl($scope, $location, $timeout, $log, config, user, queryRepository, Search, flash) {
 
         // publish data
         $scope.repository = {
@@ -268,6 +268,17 @@
                     flash('alert-info', query.title + 'query successfully deleted');
                 });
             }
+        }
+
+
+        $scope.doSparqlSearch = function (query) {
+
+            $location.path("/proteins/search");
+
+            $location.search("query", null);
+            $location.search("mode", "advanced");
+            $location.search("sparql", query.sparql);
+
         }
 
         $scope.clearSelectedQuery = function () {
