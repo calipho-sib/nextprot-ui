@@ -25,7 +25,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="query in repository.queries | filter:filterQuery | orderBy:'title'">
-                <td class="col-md-6"><a href="proteins/search?mode=advanced&sparql={{query.sparql | encodeURIComponent | trim}}">{{query.title}}</a></td>
+                <td class="col-md-6"><a href="#" ng-click="doSparqlSearch(query)" >{{query.title}}</a></td>
                 <td class="col-md-5">{{query.description}}</td>
                 <td class="col-md-1" style="width: 100%">
                     <div class="btn-group">
