@@ -15,7 +15,6 @@ var App = angular.module('np', [
     'np.cart',
     'np.user.protein.lists',
     'np.search',
-    'np.advanced',
     'np.export',
     'ui.codemirror',
     'auth',

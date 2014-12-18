@@ -41,11 +41,13 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 
 
 	$scope.loadMyLists = function (){
-		userProteinList.list(user, function(data) {
+          user.$promise.then(function(){
+		userProteinList.list(user).$promise.then(function(data) {
+			console.log('get lists')
 			$scope.lists = data;
-			console.log('---------------', $scope.lists,data)
 			$scope.initCombinationForm();
 		});
+          })
 	}
 
 	$scope.initCombinationForm = function() {
@@ -138,26 +140,12 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 }
 
 
-ListCreateCtrl.$inject=['$resource','$scope','$rootScope','$routeParams','$location','userProteinList','user','UploadListService','flash','$log']
-function ListCreateCtrl($resource, $scope, $rootScope, $routeParams, $location, userProteinList, user, UploadListService, flash, $log) {
+ListCreateCtrl.$inject=['$q','$resource','$scope','$rootScope','$routeParams','$location','userProteinList','user','uploadListService','flash','$log']
+function ListCreateCtrl($q, $resource, $scope, $rootScope, $routeParams, $location, userProteinList, user, uploadListService, flash, $log) {
 	$scope.inputAccessions = "";
 	$scope.listName = "";
 	$scope.files = [];
-	var selectedFiles = [];
 
-	$scope.$watch('files', function (newValue, oldValue) {
-        // Only act when our property has changed.
-        if (newValue != oldValue) {
-        	selectedFiles = $scope.files;
-
-
-            //$log.info('Controller: $scope.files changed. Start upload.');
-            //for (var i = 0, length = $scope.files.length; i < length; i++) {
-                // Hand file off to uploadService.
-              //  UploadListService.send($scope.files[i]);
-            //}
-        }
-    }, true);
 
 	$rootScope.$on('upload:loadstart', function () {
         $log.info('Controller: on `loadstart`');
@@ -168,34 +156,48 @@ function ListCreateCtrl($resource, $scope, $rootScope, $routeParams, $location, 
     });
 
     $scope.createList = function(listName) {
-
+    	var list={}
     	if($scope.inputAccessions.length > 0) {
     		var accessions = $scope.inputAccessions.split("\n");
-    		var list = { name: $scope.listName, accessions: accessions};
-
-    		userProteinList.create(user, list, function(data) {
-				if(data.error) flash('alert-warning', data.error);
-				else {
-					flash('alert-info', "List "+list.name+" created.");
-					$location.path('/user/protein/lists');
-				}
-    		});
-    	} else {
-    		userProteinList.create(user, {
-                  name: $scope.listName, description: $scope.listDescription, accessions: []
-              }, function(newList) {
-
-    			for(var i=0; i<selectedFiles.length; i++)
-    			UploadListService.send(newList.id, selectedFiles[i], function(data) {
-					if(data.error) flash('alert-warning', data.error);
-					else {
-						flash('alert-info', "List "+$scope.listName+" created.");
-						$location.path('/user/protein/lists');
-					}
-    			});
-    		});
-
+    		list = { 
+    			name: $scope.listName, 
+                  description: $scope.listDescription, 
+    			accessions: accessions
+    		};
+    	}else{
+		list={
+                  name: $scope.listName, 
+                  description: $scope.listDescription, 
+                  accessions: []
+              }
     	}
+
+	userProteinList.create(user, list).$promise
+	.then(function(newList){
+		flash('alert-info', "List "+list.name+" created.");
+		var promises=[$q.when(true)]
+		
+
+		for (var i = $scope.files.length - 1; i >= 0; i--) {		
+			promises.push(uploadListService.send(newList.id, $scope.files[i]));
+		};
+
+		$q.all(promises).then(function(){
+			flash('alert-info', "List "+$scope.listName+" created.");
+			$scope.files=[]
+			$location.path('/user/protein/lists');
+		},function(e){
+			if(e.message) {return flash('alert-warning', e.message)};
+		})
+
+		
+	},function(data){
+		console.log("cb new list error",data)		
+		if(data.error) {
+			return flash('alert-warning', data.error)
+		};
+	});
+
     }
 
 }

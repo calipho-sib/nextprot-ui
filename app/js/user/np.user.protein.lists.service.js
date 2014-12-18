@@ -4,13 +4,13 @@
 // create the module and define one service
     angular.module('np.user.protein.lists.service', [])
         .factory('userProteinList', userProteinList)
-        .factory('UploadListService', UploadListService);
+        .factory('uploadListService', uploadListService);
 
 
 //
 // implement the service
-    userProteinList.$inject = ['$resource', 'config'];
-    function userProteinList($resource, config) {
+    userProteinList.$inject = ['$resource', 'config','$q'];
+    function userProteinList($resource, config, $q) {
 
         var Proteins = function () {
 
@@ -22,81 +22,71 @@
                     update: {method: 'PUT'},
                     fix: {method: 'PUT'}
                 });
+
+            //
+            // wrap promise to this object
+            this.$promise = $q.when(this)
         };
 
         Proteins.prototype.list = function (user, cb) {
-            var me = this;
-            user.$promise.then(function () {
-                return me.$dao.list({username: user.profile.username}, function (data) {
-                    service.lists = data;
-                    if (cb)cb(data);
-                });
-            })
-            return this;
+            var self = this;
+            self.$promise=self.$dao.list({username: user.profile.username}).$promise;
+            self.$promise.then(function (data) {
+                service.lists = data;
+            });                
+            return self;
         };
 
         Proteins.prototype.create = function (user, list, cb) {
             var self = this;
-            console.log("create list", user)
-            user.$promise.then(function () {
-                return self.$dao.create({username: user.username}, list, function (data) {
-                    if (cb)cb(data);
-                });
-            })
-            return this;
+            self.$promise=self.$dao.create({username: user.username}, list).$promise;
+            return self;
         };
 
         Proteins.prototype.update = function (user, list, cb) {
             var self = this;
-            user.$promise.then(function () {
-                return self.$dao.update({username: user.profile.username, id: list.id}, list, function (data) {
-                });
-            })
-            return this;
+            self.$promise=self.$dao.update({username: user.profile.username, id: list.id}, list).$promise;
+            return self;
         };
 
         Proteins.prototype.delete = function (user, listId, cb) {
             var self = this;
-            user.$promise.then(function () {
-                return self.$dao.delete({username: user.profile.username, id: listId}, function (data) {
-                });
-            })
-            return this;
+            self.$promise=self.$dao.delete({username: user.profile.username, id: listId}).$promise;
+            return self;
         }
 
 
         Proteins.prototype.getByIds = function (user, list, cb) {
             var self = this;
-            user.$promise.then(function () {
-                var params = {username: user.profile.username, id: list, action: 'ids'};
-                return self.$dao.get(params, function (result) {
-                    if (cb) cb(result);
-                });
-            })
-            return this;
+            var params = {username: user.profile.username, id: list, action: 'ids'};
+            //TODO remove cb
+            self.$promise=self.$dao.get(params, function (result) {
+                if (cb) cb(result);
+            });
+            return self;
         }
 
 
         Proteins.prototype.combine = function (user, list, l1, l2, op, cb) {
             var self = this;
-            user.$promise.then(function () {
-                return self.$dao.get({
-                    action: 'combine',
-                    username: user.profile.username,
-                    name: list.name,
-                    description: list.description,
-                    first: l1,
-                    second: l2,
-                    op: op
-                }, function (data) {
-                    if (cb) cb(data);
-                });
-            })
+            //TODO remove cb
+            self.$promise=self.$dao.get({
+                action: 'combine',
+                username: user.profile.username,
+                name: list.name,
+                description: list.description,
+                first: l1,
+                second: l2,
+                op: op
+            }, function (data) {
+                if (cb) cb(data);
+            });
             return this;
         }
 
         Proteins.prototype.addElements = function (user, listName, accs, cb) {
             var self = this;
+            //TODO remove cb and user promise
             user.$promise.then(function () {
                 return self.$dao.fix({
                     action: 'add',
@@ -111,6 +101,7 @@
 
         Proteins.prototype.removeElements = function (user, listName, accs, cb) {
             var self = this;
+            //TODO remove cb and user promise
             return user.$promise.then(function () {
                 return self.$dao.fix({
                     action: 'remove',
@@ -129,9 +120,8 @@
 
 //
 // implement the service
-    UploadListService.$inject = ['config', '$http', '$rootScope'];
-    function UploadListService(config, $http, $rootScope) {
-        var baseUrl = config.api.BASE_URL + config.api.API_PORT;
+    uploadListService.$inject = ['config', '$q','$http', '$rootScope','user','auth'];
+    function uploadListService(config, $q, $http, $rootScope,user,auth) {
         var _files = [];
 
         $http.defaults.useXDomain = true;
@@ -141,25 +131,40 @@
         }
         UploadList.prototype.send = function (listId, file, cb) {
             var data = new FormData(),
-                xhr = new XMLHttpRequest();
+                xhr = new XMLHttpRequest(),
+                deferred=$q.defer(),
+	          url=config.api.API_URL + '/user/:username/protein-list/:id/upload'
+        	 			.replace(':username',user.profile.username);
+
 
             // When the request starts.
             xhr.onloadstart = function () {
-                console.log('Factory: upload started: ', file.name);
                 $rootScope.$emit('upload:loadstart', xhr);
             };
 
             // When the request has failed.
             xhr.onerror = function (e) {
                 $rootScope.$emit('upload:error', e);
-                if (cb) cb({error: e});
+                console.log('errrr',e)
+                return deferred.reject(e,xhr)            		
+
             };
+
+            xhr.onreadystatechange=function(){
+            	if(xhr.readyState==4 && xhr.status>305){
+            		return deferred.reject(JSON.parse(xhr.responseText))            		
+            	}
+            	if(xhr.readyState===4 &&  xhr.status===200){
+            		return deferred.resolve(xhr)            		
+            	}
+            }
 
             // Send to server, where we can then access it with $_FILES['file].
             data.append('file', file, file.name);
-            xhr.open('POST', baseUrl + '/nextprot-api-web/protein-list/upload?id=' + listId);
+            xhr.open('POST', url.replace(':id',listId));
+            xhr.setRequestHeader('Authorization','Bearer ' + auth.idToken)
             xhr.send(data);
-            if (cb) cb({});
+            return deferred.promise;
         }
         return new UploadList();
     }

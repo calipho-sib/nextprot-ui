@@ -38,11 +38,9 @@ angular.module('np.user.protein.lists.ui', [])
 	        // onChange, push the files to $scope.files.
 	        element.bind('change', function (event) {
 	            var files = event.target.files;
-	            $scope.$apply(function () {
-	                for (var i = 0, length = files.length; i < length; i++) {
-	                    $scope.files.push(files[i]);
-	                }
-	            });
+			for (var i = 0, length = files.length; i < length; i++) {
+			    $scope.files.push(files[i]);
+			}
 	        });
 	    };
 
