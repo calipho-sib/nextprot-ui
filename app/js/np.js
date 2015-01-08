@@ -26,7 +26,7 @@ var App = angular.module('np', [
 //
 // main application settings
 App.constant('npSettings', {
-    base:'http://mac-097:8080/nextprot-api-web',
+    base:'http://localhost:8080/nextprot-api-web',
     callback:'http://localhost:3000/',
     auth0_cliendId:'7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
     githubToken:'2e36ce76cfb03358f0a38630007840e7cb432a24'

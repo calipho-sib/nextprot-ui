@@ -1,38 +1,44 @@
-<div class="modal-dialog fade-out-right fade-in-left  repository-modal"  >
+<div class="modal-dialog fade-out-right fade-in-left repository-modal">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3>Export {{listToExport.name}} list</h3>
+            <h3>Export '<i>{{listToExport.name}}</i>' list</h3>
         </div>
-        <div class="modal-body">
-            <form class="form-horizontal" style="height: 350px">
-                <div class="control-group">
-                    <label class="control-label">Format: </label>
-                    <div class="controls">
-                        <div class="btn-group">
-                            <button class="btn dropdown-toggle" data-toggle="dropdown">{{selectedFormat.name}}
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li ng-repeat="format in exportFormats"><a href="" ng-click="setSelectedFormat(format)">{{format.name}}</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="control-group" ng-show="selectedFormat.templates != null">
-                    <label class="control-label">Template: </label>
-                    <div class="controls">
-                        <div class="btn-group">
-                            <button class="btn dropdown-toggle" data-toggle="dropdown">{{selectedTemplate.name}}
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li ng-repeat="template in selectedFormat.templates"><a href="" ng-click="setSelectedTemplate(template)">{{template.name}}</a></li>
-                            </ul>
-                        </div>
+        <div class="modal-body"  style="height: 800px">
+            <form>
+                <div class="form-group">
+                    <div class="dropdown">
+                        <label class="">Format: </label>
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                                data-toggle="dropdown" aria-expanded="true">
+                            {{selectedFormat.name}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li ng-repeat="format in exportFormats"><a href="" ng-click="setSelectedFormat(format)">{{format.name}}</a>
+                            </li>
+                        </ul>
+                        <label class="">Sub-Part</label>
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                                data-toggle="dropdown" aria-expanded="true">
+                            {{selectedTemplate}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                            <li ng-repeat="template in selectedFormat.templates"><a href="" ng-click="setSelectedTemplate(template)">{{template}}</a></li>
+                        </ul>
                     </div>
                 </div>
             </form>
+            <div class="bs-example" data-example-id="simple-small">
+                <p>
+                    Did you know you could also use the API directly to export? Just copy the code below.
+                </p>
+            </div>
+            <div class="highlight">
+                <pre><code class="language-html" data-lang="html"><span class="nt"></span>curl {{getFileExportURL()}}</span></code></pre>
+            </div>
+
         </div>
         <div class="modal-footer">
             <a class="btn btn-primary" href="{{getFileExportURL()}}" target="_blank" ng-click="dismiss()">Export</a>
