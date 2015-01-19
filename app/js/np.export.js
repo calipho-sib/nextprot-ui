@@ -9,15 +9,21 @@
     ExportCtrl.$inject = ['$resource', '$scope', 'config', 'exportService'];
     function ExportCtrl($resource, $scope, config, exportService) {
 
-        var allEntryTemplateValue = "All entries";
+        var allEntryTemplateValue = null;
         $scope.listToExport = {};
-        $scope.exportFormats = [];
-        $scope.selectedFormat = {"name": "Select your format", "extension": null};
-        $scope.selectedTemplate = allEntryTemplateValue;
 
-        exportService.getTemplates(function (formatTemplates) {
-            angular.extend($scope.exportFormats, formatTemplates.formats);
-            $scope.selectedFormat = $scope.exportFormats[0];
+        $scope.formats = ["xml","txt"];
+        $scope.selectedFormat = "xml";
+
+
+        $scope.views = null;
+        $scope.selectedView = null;
+
+        exportService.getTemplates(function (formatViews) {
+            //angular.copy($scope.exportFormats, formatTemplates);
+            $scope.formatViews = formatViews;
+            $scope.setSelectedFormat("xml");
+
         });
 
         $scope.setListToExport = function (list) {
@@ -25,26 +31,26 @@
         }
 
         $scope.setSelectedFormat = function (format) {
-            $scope.selectedFormat = {}
-            $scope.selectedTemplate = allEntryTemplateValue;
-            $scope.selectedFormat  = angular.copy(format);
+            $scope.selectedFormat = format;
+            $scope.views = $scope.formatViews[format];
+            $scope.selectedView = $scope.views[0];
+            allEntryTemplateValue = $scope.views[0];
         }
 
-        $scope.setSelectedTemplate = function (template) {
-            $scope.selectedTemplate = template.replace(new RegExp('^-+', ''), '');
+        $scope.setSelectedView = function (view) {
+            $scope.selectedView = view.replace(new RegExp('^-+', ''), '');
         }
 
         $scope.getFileExportURL = function () {
             var exportListURL = config.api.API_URL + "/export";
             exportListURL += "/list/" + $scope.listToExport.id;
-            if($scope.selectedTemplate !== allEntryTemplateValue){
-                exportListURL += "/" + $scope.selectedTemplate;
+            if($scope.selectedView !== allEntryTemplateValue){
+                exportListURL += "/" + $scope.selectedView;
             }
 
-            exportListURL += "." + $scope.selectedFormat.extension;
+            exportListURL += "." + $scope.selectedFormat;
             return exportListURL;
         };
-
 
     }
 
