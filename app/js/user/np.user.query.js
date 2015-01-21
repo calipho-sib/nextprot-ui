@@ -210,11 +210,17 @@
 
         // publish data
         $scope.repository = {
-            show: false,
+            show: true,
             queries: [],
+            queriesTags: [],
+            filterTag: null,
             selectedQuery: false
         };
         $scope.queryRepository = queryRepository;
+
+        $scope.setFilterTag = function (tag) {
+            $scope.repository.filterTag = tag;
+        }
 
         // publish function
         $scope.toggleRepository = function () {
@@ -222,25 +228,41 @@
 
             //
             // needs to load queries
-            if ($scope.repository.show && !$scope.repository.queries.length) {
+            //if ($scope.repository.show && !$scope.repository.queries.length) {
                 $scope.loadQueries('tutorial');
-            }
+            //}
         }
 
         $scope.loadQueries = function (category) {
             queryRepository.list(category).$promise.then(function () {
-                $scope.repository.queries = queryRepository.queries
+                $scope.repository.queries = queryRepository.queries;
+                $scope.setTags();
             })
         }
 
         $scope.loadMyQueries = function () {
           user.$promise.then(function(){
               user.query.list().$promise.then(function (q) {
-                  $scope.repository.queries = user.query.queries()
+                  $scope.repository.queries = user.query.queries
               })
 
           })
         }
+
+        $scope.setTags = function () {
+            var queries = $scope.repository.queries;
+            var tags = [];
+            queries.forEach(function (query) {
+                query.tags.forEach(function (tag) {
+                        if (tags.indexOf(tag.trim()) == -1) {
+                            tags.push(tag)
+                        }
+                    }
+                )
+            });
+            angular.copy(tags,$scope.repository.queriesTags);
+        }
+
 
         $scope.setCurrentQuery = function (query) {
             $scope.repository.selectedQuery = query;

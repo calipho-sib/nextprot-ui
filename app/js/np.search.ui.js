@@ -21,6 +21,21 @@
         }
     });
 
+    SearchUI.filter('containsTag', function () {
+        return function( items, selectedTag) {
+            var filtered = [];
+            if(selectedTag == null)
+                return items;
+
+            angular.forEach(items, function(item) {
+                if(_.intersection([selectedTag], item.tags).length > 0) {
+                    filtered.push(item);
+                }
+            });
+            return filtered;
+        };
+    });
+
     SearchUI.filter('encodeURIComponent', function() {
         return window.encodeURIComponent;
     });

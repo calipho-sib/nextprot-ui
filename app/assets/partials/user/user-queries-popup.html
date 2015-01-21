@@ -1,27 +1,28 @@
 <!--                                                                  -->
 <!--  HELP / REPOSITORY                                               -->
-<div class="modal-dialog fade-out fade-in  repository-modal" ng-show="repository.show" >
+<div class="modal-dialog fade-out fade-in  repository-modal" ng-show="repository.show">
     <div class="modal-content">
       <div class="modal-header " ng-show="!repository.selectedQuery">
           <button type="button" class="close" ng-click="repository.show=false">×</button>
-          <!--filter-->
-          <input type="text" ng-model="filterQuery" placeholder="search in {{queryRepository.category}} repository" class="form-control " style="width:80%">
-          <!--Selectable repositories-->
-          <div class="radio">
-            <label><input type="radio" name="visibility"  ng-click="loadQueries('tutorial')"  
-                                    ng-selected="queryRepository.category==='tutorial'"
-                                    title="Show in the community repository">tutorial</label>
-            <label><input type="radio" name="visibility"  ng-click="loadQueries('public')"
-                                    ng-selected="queryRepository.category==='public'"
-                                    title="Show in the community repository">public</label>
-            <label><input type="radio" name="visibility"  ng-click="loadMyQueries()"
-                                    ng-selected="queryRepository.category==='private'"
-                                    title="Keep the query in your private repository" >private</label>
+
+          <!--filter tag-->
+          <div class="input-group filter-search  has-feedback">
+              <div class="input-group-btn ">
+                  <button type="button" class="btn btn-default  ng-binding" data-toggle="dropdown">{{(repository.filterTag == null) ? "Tags"  : repository.filterTag}} <span class="caret"></span></button>
+                  <ul class="dropdown-menu scrollable-menu" role="menu">
+                      <li ng-click="resetFilters(); repository.filterTag=null"><a href="#">Clear filter</a></li>
+                      <li class="divider"></li>
+                      <li> <a href="/user/queries">My queries</a></li>
+                      <li class="divider"></li>
+                      <li ng-repeat="tag in repository.queriesTags|orderBy" ng-click="setFilterTag(tag)"><a href="" >{{tag}}</a></li>
+                  </ul>
+              </div><!-- /btn-group -->
+              <input type="text" ng-model="filterQuery" placeholder="search in {{queryRepository.category}} repository" class="form-control " style="width:80%">
           </div>
 
-      </div>
+        </div>
 
-      <!-- HEADER QUERY TITLE  -->
+        <!-- HEADER QUERY TITLE  -->
       <div class="modal-header " ng-show="repository.selectedQuery">
 
         <button type="button" class="close" ng-click="repository.show=false">×</button>
@@ -53,12 +54,11 @@
 
           <table class="table table-striped">
             <tbody>
-              <tr ng-repeat="query in repository.queries | filter:filterQuery | orderBy:'title'">
+              <tr ng-repeat="query in repository.queries | containsTag:repository.filterTag | orderBy:'userQueryId'">
                 <td style="padding-left:0px;padding-right:0px">
                   <i class="gray btn-xs"  ng-class="(query.published && query.isOwner('nextprot') ? 'icon-certificate' : 'icon-globe')"></i>
                 </td>
-                <td style="width:85%"><a href="" ng-click="applyCurrentQueryForSearch(query)" class="query-title">{{query.title}}
-                  [{{query.owner}}]</a></td>
+                <td style="width:85%"><a title="{{query.description}} {{query.sparql}}" href="" ng-click="applyCurrentQueryForSearch(query)" class="query-title">{{query.title}} - {{query.tags}}</a></td>
                   <!--Show the view button-->
                   <td >
                     <div class="btn-group">
