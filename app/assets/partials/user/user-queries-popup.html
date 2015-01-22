@@ -17,7 +17,7 @@
                       <li ng-repeat="tag in repository.queriesTags|orderBy" ng-click="setFilterTag(tag)"><a href="" >{{tag}}</a></li>
                   </ul>
               </div><!-- /btn-group -->
-              <input type="text" ng-model="filterQuery" placeholder="search in {{queryRepository.category}} repository" class="form-control " style="width:80%">
+              <input type="text" ng-model="filterQuery" placeholder="search in repository (ex: liver)" class="form-control " style="width:80%">
           </div>
 
         </div>
@@ -25,16 +25,30 @@
         <!-- HEADER QUERY TITLE  -->
       <div class="modal-header " ng-show="repository.selectedQuery">
 
-        <button type="button" class="close" ng-click="repository.show=false">×</button>
+          <!-- "Back" button showed only if there is a query selected -->
+          <button ng-show="repository.selectedQuery" class="btn pull-left btn-default" style="margin-right: 10px" type="button"
+                  ng-click="clearSelectedQuery();">
+              <i class="icon-align-justify"></i>
+          </button>
 
-        <!-- Title when query is readonly -->
-        <h4 ng-if="!repository.selectedQuery.isEditable()">{{repository.selectedQuery.title}}</h4>
+          <button type="button" class="close" ng-click="repository.show=false">×</button>
 
-        <!-- Title when query is editable  -->
-        <input  ng-show="repository.selectedQuery.isEditable()" type="text" 
-                     placeholder="Name..." ng-model="repository.selectedQuery.title" focus="" class="span6 form-control">
-        
-        <div ng-if="false" class="radio">
+          <button hint="hello" class="btn btn-default pull-right" style="margin-right: 20px" type="button" ng-click="applyCurrentQueryForSearch(repository.selectedQuery)">
+              <i class="icon-share"></i>
+          </button>
+
+          <!-- Title when query is readonly -->
+          <h4 ng-if="!repository.selectedQuery.isEditable()">{{repository.selectedQuery.title}}</h4>
+
+          <!-- Title when query is editable  -->
+          <input  ng-show="repository.selectedQuery.isEditable()" type="text"
+                  placeholder="Name..." ng-model="repository.selectedQuery.title" focus="" class="span6 form-control">
+
+
+
+
+          <!--
+            <div class="radio">
           <label><input type="radio" name="visibility"  ng-value="true"  
                                   ng-model="repository.selectedQuery.published"
                                   ng-selected="repository.selectedQuery.published"
@@ -44,6 +58,7 @@
                                   ng-selected="!repository.selectedQuery.published"
                                   title="Keep the query in your private repository" >private</label>
         </div>
+        -->
       </div>
 
       <div class="modal-body" >
@@ -54,15 +69,15 @@
 
           <table class="table table-striped">
             <tbody>
-              <tr ng-repeat="query in repository.queries | containsTag:repository.filterTag | orderBy:'userQueryId'">
-                <td ng-if="false" style="padding-left:0px;padding-right:0px">
+              <tr ng-repeat="query in repository.queries | containsTag:repository.filterTag | filter:filterQuery | orderBy:'userQueryId'">
+                <!--<td style="padding-left:0px;padding-right:0px">
                   <i class="gray btn-xs"  ng-class="(query.published && query.isOwner('nextprot') ? 'icon-certificate' : 'icon-globe')"></i>
-                </td>
-                <td style="width:85%"><a title="{{query.description}} {{query.sparql}}" href="" ng-click="applyCurrentQueryForSearch(query)" class="query-title">{{query.title}}</a></td>
+                </td>-->
+                <td style="width:85%"><a title="{{query.description}} {{query.sparql}}" href="" ng-click="setCurrentQuery(query)" class="query-title">{{query.title}}</a></td>
                   <!--Show the view button-->
                   <td >
                     <div class="btn-group pull-right">
-                      <button class="btn btn-default btn-xs" type="button" ng-if="!query.isEditable()" ng-click="setCurrentQuery(query)"><i class="icon-eye-open"></i></button>
+                      <button class="btn btn-default btn-xs" type="button" ng-if="!query.isEditable()" ng-click="applyCurrentQueryForSearch(query)"><i class="icon-share"></i></button>
                       <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="setCurrentQuery(query)"><i class="icon-edit"></i></button>
                       <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="deleteAdvancedQuery(query)"><i class="icon-remove"></i></button>
                     </div>
@@ -110,10 +125,9 @@
                   ng-click="saveSelectedQuery()">Save
           </button>
 
-          <!-- "Back" button showed only if there is a query selected -->
-          <button ng-show="repository.selectedQuery" class="btn pull-left btn-default btn-sm" type="button"
-                  ng-click="clearSelectedQuery();">Back
-          </button>
+
+            <p class="pull-left">For help with these queries look at <a target="_blank" href="http://snorql.nextprot.org/page"> the model</a> or <a href="mailto:support@nextprot.org">contact us.</a>
+            </p>
 
         </div>
       </div>
