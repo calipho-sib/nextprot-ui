@@ -92,25 +92,44 @@
           <!-- Box for editing or visualizing  -->
           <!--                                                 -->
           <div ng-if="repository.selectedQuery" class="slide-in-right slide-out-right" style="height: 300px;" >
-            <!-- Sparql -->
+
+
+
+
+              <!-- Sparql -->
             <div class="col-xs12" >
               <ui-codemirror id="search-query-save" class=" search-width-advanced"
                              ui-codemirror-opts="editorOptions" ng-model="repository.selectedQuery.sparql" ui-refresh="repository.selectedQuery.sparql">
               </ui-codemirror>
             </div>
 
-            <!-- Description -->
-            <hr/>
-            <div class="col-xs-12 nopadding" >
-              <textarea ng-show="repository.selectedQuery.isEditable()" rows="4" id="inputDescription" class="form-control" placeholder="Write some description..." ng-model="repository.selectedQuery.description">
-              </textarea>
+              <!-- Horizontal break -->
+              <hr/>
 
-              <p ng-hide="repository.selectedQuery.isEditable()">{{repository.selectedQuery.description}}</p>
-            </div>
+              <!-- Description -->
+              <div class="col-xs-12 nopadding" >
+                  <!-- when editing -->
+                  <textarea ng-show="repository.selectedQuery.isEditable()" rows="4" id="inputDescription" class="form-control" placeholder="Write some description..." ng-model="repository.selectedQuery.description">
+                  </textarea>
+
+                  <!-- when visualizing -->
+                  <p ng-hide="repository.selectedQuery.isEditable()">{{repository.selectedQuery.description}}</p>
+              </div>
+
+              <p ng-if="repository.selectedQuery.owner === 'nextprot'">Tags:
+                  <span ng-repeat="tag in repository.selectedQuery.tags | orderBy" class="label label-default label-as-badge">{{tag}}</span>
+                  <p class="pull-right"><a target="_blank" href="{{repository.selectedQuery.userQueryId | getGitHubUrl}}">Improve this query</a></p>
+              </p>
+
+
 
           </div>
 
         </div>
+
+        <!--------------------------------------------------------------------------------- -->
+        <!--                 FOOTER                                                         -->
+        <!-------------------------------------------------------------------------------- -->
 
         <!-- Create new button -->
         <div class="modal-footer">

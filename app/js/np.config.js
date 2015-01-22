@@ -12,10 +12,13 @@ angular.module('np.config', []).factory('config', [
         var defaultApi = {
 
             API_URL: npSettings.base,
-            AUTH_CALLBACK_URL: npSettings.callback, 
+            AUTH_CALLBACK_URL: npSettings.callback,
+
+            githubQueriesEdit : "https://github.com/calipho-sib/nextprot-queries/edit/develop/src/main/resources/nextprot-queries/",
 
             //base:"/",
             base: "/protosearch/",
+
 
 
             ontology: {

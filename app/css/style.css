@@ -167,3 +167,11 @@ a.inactive {
     border-width: 1px; 
     border-color: lightgray; 
 }
+
+.label-as-badge {
+    border-radius: 1em;
+    margin-right: 2px;
+    background: #ccf;
+    color: #05a;
+    font-size: 10px;
+}

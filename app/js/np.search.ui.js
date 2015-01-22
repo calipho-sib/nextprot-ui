@@ -21,6 +21,18 @@
         }
     });
 
+    SearchUI.filter('getGitHubUrl', ['config', function (config) {
+
+        return function (queryId) {
+
+            var s = "000000000" + queryId;
+            var fileName = "NXQ_" + s.substr(s.length - 5) + ".rq";
+            return config.api.githubQueriesEdit + fileName;
+        };
+
+    }]);
+
+
     SearchUI.filter('containsTag', function () {
         return function( items, selectedTag) {
             var filtered = [];
