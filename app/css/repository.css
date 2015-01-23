@@ -1,12 +1,11 @@
 
 .repository-modal{
-	margin-top: 80px;
 	z-index: 1040;
 	width: 700px;
-	margin-left:auto;
-	margin-right: auto;
 	position: absolute;
-	left:20%;
+	margin: -5px auto;
+	left: 0;
+	right: 0;
 }
 
 .repository-modal .modal-body{
