@@ -8,7 +8,6 @@ div.CodeMirror{
 #search-query-advanced{
     border:1px solid #DDDDDD;    
     max-height: 200px;
-    max-width: 610px;
     overflow-y:auto;
     overflow-x:auto;
     float: right;
@@ -18,7 +17,7 @@ div.CodeMirror{
 #search-query-advanced .CodeMirror , #search-query-save .CodeMirror {
     font-family: monospace;
     height:auto !important;
-    min-height: 34px;
+    min-height: 32px;
 }
 
 
