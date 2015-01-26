@@ -93,16 +93,19 @@
     </div>
     <div class="col-xs-12  col-sm-9 result-content">
 
-      <!-- Loading spinner ... -->
-      <div class="col-lg-offset-3" ng-show="Search.loading">
-          <div align="center" class="throbber"></div>
-      </div>
 
       <!-- RESULT CONTENT -->
   	  <b ng-show="Search.result.message&&(Search.params.query||Search.params.sparql)">{{Search.result.message}} </b>
+
+
   	  <div ng-include="getResultTemplateByEntity()"></div>
 
-      <!-- PAGINATE -->
+		<!-- Loading spinner ... -->
+		<div class="col-lg-offset-3" ng-show="Search.loading">
+			<div align="center" class="throbber" style="z-index:1000"></div>
+		</div>
+
+		<!-- PAGINATE -->
       <nav  ng-show="Search.result.pages.length>1">
           <ul class=" pagination pagination-sm">
               <li ng-if="Search.result.pagination.prev.visible" ng-class="{disabled:!Search.result.pagination.prev}"><a href="" ng-click="params({start:Search.result.pagination.prev.start})">«</a></li>
@@ -111,5 +114,7 @@
           </ul>
       </nav>
 
-    </div>
+
+
+	</div>
 </div>
