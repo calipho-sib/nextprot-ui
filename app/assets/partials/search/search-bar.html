@@ -44,7 +44,7 @@
           <!--                        -->
           <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
           <!--                        -->
-          <input ng-if="!isAdvancedMode()" id="search-query" class="form-control" type="text" ng-model="Search.params.query" ng-class="{'search-width-quality':Search.displayGold(),'search-width-no-quality':!Search.displayGold()}" autocomplete="off" bs-autocomplete="Search.suggest" autofocus="">
+          <input ng-show="!isAdvancedMode()" id="search-query" class="form-control" type="text" ng-model="Search.params.query" ng-class="{'search-width-quality':Search.displayGold(),'search-width-no-quality':!Search.displayGold()}" autocomplete="off" bs-autocomplete="Search.suggest" autofocus="">
 
           <ui-codemirror id="search-query-advanced" ng-if="isAdvancedMode()" ui-codemirror-opts="editorOptions" class="btn-group search-width-advanced" ng-model="Search.params.sparql" ui-refresh="Search.params.sparql"></ui-codemirror>
 
@@ -57,7 +57,7 @@
               <i class="icon-remove "></i>
             </button>
             <button id="search-help" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="toggleRepository()" ng-show="isAdvancedMode()" style="margin-left: -54px; position: absolute; top: 7px;z-index:10">
-              <i class="icon-info-sign "></i>
+              <i class="icon-align-justify"></i>
             </button>
 
 
@@ -83,7 +83,8 @@
                             <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[1].query}}">{{Search.result.spellcheck.collations[1].query}}</a>
                         </span>
                     </span>
-          <span class=" search-toggle"><span ng-click="toggleAdv({mode:null})" ng-class="{link:isAdvancedMode()}">simple</span> / <span ng-class="{link:!isAdvancedMode()}" ng-click="toggleAdv({mode:'advanced'})">advanced</span></span>
+          <span class=" search-toggle"><span ng-click="toggleAdv({mode:null})" ng-class="{link:isAdvancedMode()}">simple</span> /
+            <span ng-class="{link:!isAdvancedMode()}" ng-click="toggleAdv({mode:'advanced'}); repository.show=true">advanced</span></span>
         </div>
 
       </div>
@@ -94,7 +95,7 @@
   <!--                        -->
   <!--  REPO                  -->
   <!--                        -->
-  <div ng-include="'partials/user/user-queries-popup.html'"></div>
+  <div ng-if="isAdvancedMode()" ng-include="'partials/user/user-queries-popup.html'"></div>
 
 </div>
 
