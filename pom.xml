@@ -4,9 +4,25 @@
 	<groupId>org.nextprot</groupId>
 	<artifactId>nextprot-scripts</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1</version>
+	<version>0.0.2-SNAPSHOT</version>
 
 	<build>
 		<finalName>nextprot-scripts</finalName>
 	</build>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>nextprot-snapshot-repo</id>
+			<url>http://miniwatt:8800/nexus/content/repositories/nextprot-snapshot-repo</url>
+		</snapshotRepository>
+		<repository>
+			<id>nextprot-repo</id>
+			<url>http://miniwatt:8800/nexus/content/repositories/nextprot-repo</url>
+		</repository>
+	</distributionManagement>
+
+	<scm>
+		<connection>scm:git:git@github.com:calipho-sib/nextprot-queries.git</connection>
+		<developerConnection>scm:git:git@github.com:calipho-sib/nextprot-queries.git</developerConnection>
+	</scm>
 </project>
