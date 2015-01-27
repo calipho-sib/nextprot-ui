@@ -35,17 +35,18 @@ getReleaseVersion () {
     echo ${devVersion%-*}
 }
 
-# change to branch master
-git checkout master || stopDebugModeAndExit 1
-git merge -X theirs develop || stopDebugModeAndExit 2
+git checkout master || stopDebugModeAndExit 3
+
+# change to branch master (should probably done before calling this script)
+#git merge -X theirs develop || stopDebugModeAndExit 2
 
 # get release version of the maven project
 RELEASE_VERSION=$(getReleaseVersion)
 
 # set new version in pom.xml
-mvn versions:set -DnewVersion=${RELEASE_VERSION} -DgenerateBackupPoms=false || stopDebugModeAndExit 3
+mvn versions:set -DnewVersion=${RELEASE_VERSION} -DgenerateBackupPoms=false || stopDebugModeAndExit 4
 git add pom.xml
-git commit -m "New release version ${RELEASE_VERSION}" # returns -1 if nothing to commit || stopDebugModeAndExit 4
+git commit -m "New release version ${RELEASE_VERSION}" # returns -1 if nothing to commit
 
 ### Warning: the following push potentially could trigger a "chain reaction" of infinite call of this script !!
 git push origin master || stopDebugModeAndExit 5
