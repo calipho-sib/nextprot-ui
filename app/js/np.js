@@ -17,8 +17,7 @@ var App = angular.module('np', [
     'np.search',
     'np.export',
     'ui.codemirror',
-    'auth',
-    'auth0.interceptor'
+    'auth0', 'angular-storage', 'angular-jwt'
 ]).config(configApplication)
   .factory('errorInterceptor',errorInterceptor)
   .run(runApplication);
@@ -49,8 +48,8 @@ function runApplication($log,gitHubContent,npSettings) {
 
 //
 // config application $route, $location and $http services.
-configApplication.$inject=['$routeProvider','$locationProvider','$httpProvider','authProvider','npSettings'];
-function configApplication( $routeProvider,  $locationProvider, $httpProvider, authProvider, npSettings) {
+configApplication.$inject=['$routeProvider','$locationProvider','$httpProvider','authProvider','npSettings', 'jwtInterceptorProvider'];
+function configApplication( $routeProvider,  $locationProvider, $httpProvider, authProvider, npSettings, jwtInterceptorProvider) {
     authProvider.init({
         clientID: npSettings.auth0_cliendId,
         callbackURL: npSettings.callback, 
@@ -58,8 +57,15 @@ function configApplication( $routeProvider,  $locationProvider, $httpProvider, a
         icon: 'img/np.png'
     })
 
-    $httpProvider.interceptors.push('authInterceptor');
-    $httpProvider.interceptors.push('errorInterceptor');
+
+    jwtInterceptorProvider.tokenGetter = ['store', function(store) {
+        // Return the saved token
+        return store.get('authAccessToken');
+    }];
+    $httpProvider.interceptors.push('jwtInterceptor');
+
+    //$httpProvider.interceptors.push('authInterceptor');
+    //$httpProvider.interceptors.push('errorInterceptor');
     $httpProvider.defaults.headers.common.Accept= 'application/json'
 
 

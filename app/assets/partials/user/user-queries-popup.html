@@ -17,7 +17,7 @@
                       <li ng-repeat="tag in repository.queriesTags|orderBy" ng-click="setFilterTag(tag)"><a href="" >{{tag}}</a></li>
                   </ul>
               </div><!-- /btn-group -->
-              <input type="text" ng-model="filterQuery" placeholder="search in repository (ex: liver)" class="form-control " style="width:80%">
+              <input type="text" ng-model="filterQuery" placeholder="search in {{(repository.queries | containsTag:repository.filterTag | filter:filterQuery).length}} queries (ex: liver)" class="form-control " style="width:80%">
           </div>
 
         </div>
