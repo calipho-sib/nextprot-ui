@@ -37,7 +37,7 @@ getReleaseVersion () {
 
 # change to branch master
 git checkout master || stopDebugModeAndExit 1
-git merge develop || stopDebugModeAndExit 2
+git merge -X theirs develop || stopDebugModeAndExit 2
 
 # get release version of the maven project
 RELEASE_VERSION=$(getReleaseVersion)
