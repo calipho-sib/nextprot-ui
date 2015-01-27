@@ -1,5 +1,9 @@
 #!/bin/bash
 
+VERSION=0.0.1
+
+echo run create-release-and-deploy.sh v${VERSION}...
+
 # [should be executed by jenkins each time a push is done on master on branch master]
 
 # This script makes and deploys a new release on nexus
