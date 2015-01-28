@@ -350,12 +350,6 @@
             var successFn = !successCallback ? null : function (profile, idToken, accessToken, state, refreshToken) {
                 onSigninOk(idToken, accessToken, state, refreshToken, profile).then(function (profile) {
                   if (successCallback) {
-                    console.log("profile", profile);
-                    console.log("idToken", idToken);
-                    console.log("accessToken", accessToken);
-                    console.log("state", state);
-                    console.log("refreshToken", refreshToken);
-
                     successCallback(profile, idToken, accessToken, state, refreshToken);
                   }
                 });

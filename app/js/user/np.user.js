@@ -28,12 +28,24 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
         profile:{}
     }
 
-    $rootScope.$on('auth0.loginSuccess', function (event,auth) {
-            user.$promise=auth.profile
-            /*auth.getProfile().then(function(profile){
-                user.copy(profile)   
-            })*/
+
+    //See also the refresh token https://github.com/auth0/auth0-angular/blob/master/docs/refresh-token.md
+    $rootScope.$on('$locationChangeStart', function() {
+        if(store.get('profile') != null){
+            user.copy(store.get('profile'));
+        }else {
+            store.remove('profile');
+            store.remove('token');
+        }
     });
+
+    /*
+    $rootScope.$on('auth0.loginSuccess', function (event,auth) {
+        user.$promise=auth.profile
+        auth.getProfile().then(function(profile){
+         user.copy(profile)
+         })
+    });*/
 
     //
     // create user domain
@@ -92,15 +104,16 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
     User.prototype.login = function (cb) {
         var self=this;
 
-        auth.signin({popup: true, icon:'img/np.png', scope: 'openid name email picture'},
-            function(profile, token, accessToken) {
+        auth.signin({popup: true, icon:'img/np.png', authParams: {
+                scope: 'openid email name picture'
+            }},
+            function(profile, token) {
             // Success callback
-                console.log("Received token" + accessToken);
             store.set('profile', profile);
-            store.set('authAccessToken', accessToken);
+            store.set('token', token);
             $location.path('/');
 
-            self.copy(auth.profile)
+            self.copy(auth.profile);
             self.username=auth.email;
             cb()
 

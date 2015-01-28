@@ -25,8 +25,8 @@ var App = angular.module('np', [
 //
 // main application settings
 App.constant('npSettings', {
-    base:'http://localhost:8080/nextprot-api-web',
-    callback:'http://localhost:3000/',
+    base:'http://alpha-api.nextprot.org',
+    callback:'http://alpha-search.nextprot.org',
     auth0_cliendId:'7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
     githubToken:'2e36ce76cfb03358f0a38630007840e7cb432a24'
 })
@@ -60,7 +60,7 @@ function configApplication( $routeProvider,  $locationProvider, $httpProvider, a
 
     jwtInterceptorProvider.tokenGetter = ['store', function(store) {
         // Return the saved token
-        return store.get('authAccessToken');
+        return store.get('token');
     }];
     $httpProvider.interceptors.push('jwtInterceptor');
 
