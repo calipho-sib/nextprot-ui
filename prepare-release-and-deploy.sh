@@ -6,7 +6,7 @@
 # This script is triggered in a jenkins job each time a push is done on branch master.
 
 # start debug mode
-#set -x
+set -x
 
 # return the next release version to prepare on master
 getNextReleaseVersion () {
