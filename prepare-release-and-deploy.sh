@@ -37,23 +37,22 @@ getNextReleaseVersion () {
 git checkout master
 
 # get release version to prepare
-if ! getNextReleaseVersion RELEASE_VERSION; then
-    exit 1
+if getNextReleaseVersion RELEASE_VERSION; then
+
+    echo preparing ${RELEASE_NAME} v${RELEASE_VERSION}...
+
+    # prepare new version
+    mvn versions:set -DnewVersion=${RELEASE_VERSION} -DgenerateBackupPoms=false || exit 1
+
+    git add pom.xml
+    git commit -m "New release version ${RELEASE_VERSION}"
+
+    # create a new release tag
+    git tag -a v${RELEASE_VERSION} -m "tag v${RELEASE_VERSION}" || exit 2
+    git push origin master --tags || exit 3
+
+    # deploy on nexus
+    mvn clean deploy || exit 4
 fi
-
-echo preparing ${RELEASE_NAME} v${RELEASE_VERSION}...
-
-# prepare new version
-mvn versions:set -DnewVersion=${RELEASE_VERSION} -DgenerateBackupPoms=false || exit 2
-
-git add pom.xml
-git commit -m "New release version ${RELEASE_VERSION}"
-
-# create a new release tag
-git tag -a v${RELEASE_VERSION} -m "tag v${RELEASE_VERSION}" || exit 3
-git push origin master --tags || exit 4
-
-# deploy on nexus
-mvn clean deploy || exit 5
 
 exit 0
