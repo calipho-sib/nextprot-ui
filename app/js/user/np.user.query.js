@@ -281,6 +281,7 @@
         $scope.saveSelectedQuery = function () {
             $scope.repository.selectedQuery.save().$promise.then(function () {
                 $scope.repository.selectedQuery = false;
+                flash('alert-info', query.title + 'saved successfully');
             });
         }
 
