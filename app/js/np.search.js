@@ -35,7 +35,7 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $routeParams, $rou
     $scope.user = user;
 
     $scope.editorOptions = {
-        lineWrapping : false,
+        lineWrapping : true,
         lineNumbers: false,
         autofocus:true,
         readOnly: false,
