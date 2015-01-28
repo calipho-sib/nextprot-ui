@@ -79,7 +79,7 @@
                     <div class="btn-group pull-right">
                       <button class="btn btn-default btn-xs" type="button" ng-if="!query.isEditable()" ng-click="applyCurrentQueryForSearch(query)"><i class="icon-share"></i></button>
                       <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="setCurrentQuery(query)"><i class="icon-edit"></i></button>
-                      <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="deleteAdvancedQuery(query)"><i class="icon-remove"></i></button>
+                      <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="deleteUserQuery(query)"><i class="icon-remove"></i></button>
                     </div>
                   </td>
                 </tr>
@@ -118,7 +118,7 @@
 
               <p ng-if="repository.selectedQuery.owner === 'nextprot'">Tags:
                   <span ng-repeat="tag in repository.selectedQuery.tags | orderBy" class="label label-default label-as-badge">{{tag}}</span>
-                  <p class="pull-right"><a target="_blank" href="{{repository.selectedQuery.userQueryId | getGitHubUrl}}">Improve this query</a></p>
+                  <p ng-show="repository.selectedQuery.owner === 'nextprot'" class="pull-right"><a target="_blank" href="{{repository.selectedQuery.userQueryId | getGitHubUrl}}">Improve this query</a></p>
               </p>
 
 
