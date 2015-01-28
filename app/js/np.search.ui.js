@@ -33,7 +33,7 @@
     }]);
 
 
-    SearchUI.filter('containsTag', function (user) {
+    SearchUI.filter('containsTag', ['user',function (user) {
         return function(items, selectedTag) {
             var filtered = [];
             if(selectedTag == null)
@@ -56,7 +56,7 @@
 
             return filtered;
         };
-    });
+    }]);
 
     SearchUI.filter('encodeURIComponent', function() {
         return window.encodeURIComponent;
