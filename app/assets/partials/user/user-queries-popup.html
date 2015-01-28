@@ -12,7 +12,7 @@
                   <ul class="dropdown-menu scrollable-menu" role="menu">
                       <li ng-click="resetFilters(); repository.filterTag=null"><a href="#">Clear filter</a></li>
                       <li class="divider"></li>
-                      <li> <a href="/user/queries">My queries</a></li>
+                      <li> <a ng-click="setFilterTag('My queries')" href="">My queries</a></li>
                       <li class="divider"></li>
                       <li ng-repeat="tag in repository.queriesTags|orderBy" ng-click="setFilterTag(tag)"><a href="" >{{tag}}</a></li>
                   </ul>
@@ -77,9 +77,8 @@
                   <!--Show the view button-->
                   <td >
                     <div class="btn-group pull-right">
-                      <button class="btn btn-default btn-xs" type="button" ng-if="!query.isEditable()" ng-click="applyCurrentQueryForSearch(query)"><i class="icon-share"></i></button>
-                      <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="setCurrentQuery(query)"><i class="icon-edit"></i></button>
-                      <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="deleteUserQuery(query)"><i class="icon-remove"></i></button>
+                        <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="deleteUserQuery(query)"><i class="icon-remove"></i></button>
+                      <button class="btn btn-default btn-xs" type="button" ng-click="applyCurrentQueryForSearch(query)"><i class="icon-share"></i></button>
                     </div>
                   </td>
                 </tr>
@@ -92,9 +91,6 @@
           <!-- Box for editing or visualizing  -->
           <!--                                                 -->
           <div ng-if="repository.selectedQuery" class="slide-in-right slide-out-right" style="height: 300px;" >
-
-
-
 
               <!-- Sparql -->
             <div class="col-xs12" >

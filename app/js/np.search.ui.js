@@ -33,17 +33,27 @@
     }]);
 
 
-    SearchUI.filter('containsTag', function () {
-        return function( items, selectedTag) {
+    SearchUI.filter('containsTag', function (user) {
+        return function(items, selectedTag) {
             var filtered = [];
             if(selectedTag == null)
                 return items;
 
-            angular.forEach(items, function(item) {
-                if(_.intersection([selectedTag], item.tags).length > 0) {
-                    filtered.push(item);
-                }
-            });
+            if(selectedTag === 'My queries'){
+                angular.forEach(items, function(item) {
+                    if(item.owner === user.username) {
+                        filtered.push(item);
+                    }
+                });
+            }else {
+                angular.forEach(items, function(item) {
+                    if(_.intersection([selectedTag], item.tags).length > 0) {
+                        filtered.push(item);
+                    }
+                });
+
+            }
+
             return filtered;
         };
     });

@@ -280,14 +280,16 @@
 
         $scope.saveSelectedQuery = function () {
             $scope.repository.selectedQuery.save().$promise.then(function () {
+                flash('alert-info', $scope.repository.selectedQuery.title + 'saved successfully');
+                $scope.loadQueries('tutorial'); //TODO should remove the entry from the list without having to call the api again
                 $scope.repository.selectedQuery = false;
-                flash('alert-info', query.title + 'saved successfully');
             });
         }
 
         $scope.deleteUserQuery = function (query) {
             if (confirm("Are you sure you want to delete the selected query?")) {
                 query.delete().$promise.then(function () {
+                    $scope.loadQueries('tutorial'); //TODO should remove the entry from the list without having to call the api again
                     flash('alert-info', query.title + 'query successfully deleted');
                 });
             }
