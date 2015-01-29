@@ -29,8 +29,8 @@ var nxEnvironment = "alpha";
 // main application settings
 App.constant('npSettings', {
     environment:nxEnvironment,
-    base:'http://' + nxEnvironment +' -api.nextprot.org',
-    callback:'http://' + nxEnvironment + ' -search.nextprot.org',
+    base:'http://' + nxEnvironment +'-api.nextprot.org',
+    callback:'http://' + nxEnvironment + '-search.nextprot.org',
     auth0_cliendId:'7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
     githubToken:'2e36ce76cfb03358f0a38630007840e7cb432a24'
 })
