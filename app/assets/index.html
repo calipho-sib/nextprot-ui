@@ -9,7 +9,7 @@
     <!--<base href="/protosearch/" />-->
     <base href="/">
 
-    <title ng-bind-template="{{title}}"></title>
+    <title>neXtProt Search</title>
 
     <!--[if lte IE 7]>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js"></script>
@@ -42,24 +42,22 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">neXtProt</a>
+            <a class="navbar-brand navbar-logo" href="/"><img src="/img/np-logo.png">neXtProt Search</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="HelpCtrl">
             <ul class="nav navbar-nav">
-                <li ng-class="{'active':isActiveDoc('')}"><a href="/">Home</a></li>
 
-
-                <li ng-class=""><a target="_blank" href="http://snorql.nextprot.org">Snorql</a></li>
                 <li ng-class=""><a target="_blank" href="https://api.nextprot.org">API</a></li>
+                <li ng-class=""><a target="_blank" href="http://snorql.nextprot.org">Snorql</a></li>
 
-
-                <!-- Learn dropdown -->
+                <!-- Help dropdown -->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-expanded="false">Learn <span class="caret"></span></a>
+                       aria-expanded="false">Help <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
+                        <!-- Learn -->
                         <li ng-class="{'active':isActiveDoc('/pages/learn-simple-search')}"><a
                                 href="/pages/learn-simple-search">Learn about Simple Search</a></li>
                         <li ng-class="{'active':isActiveDoc('/pages/learn-advanced-search')}"><a
@@ -73,24 +71,21 @@
                         <li class="divider"></li>
                         <li ng-class="{'active':isActiveDoc('/pages/learn-developer-api')}"><a
                                 href="/pages/learn-developer-api">Learn about Developer API</a></li>
-                        <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li>
-                    </ul>
-                </li>
+                       <!--  <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li> -->
+                        <li class="divider"></li>
 
-                <!-- Help dropdown -->
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-expanded="false">Help <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
+                        <!-- FAQ -->
                         <li ng-class="{'active':isActiveDoc('/pages/faq')}"><a href="/pages/faq">FAQ</a></li>
                         <li class="divider"></li>
+
+                        <!-- Found a bug -->
                         <li ng-class=""><a target="_blank" href="https://github.com/calipho-sib/nextprot-ui/issues">Found
                             a bug?<i class="icon-github"></i></a></li>
-                        <li class="divider"></li>
-                        <li ng-class=""><a href="mailto:support@nextprot.org">Contact us</a></li>
                     </ul>
                 </li>
 
+                <li ng-class=""><a href="/pages/about">About</a></li>
+                <li ng-class=""><a href="mailto:support@nextprot.org?subject=[neXtProt%20Search]">Contact us</a></li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
