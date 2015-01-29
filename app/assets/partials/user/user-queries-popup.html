@@ -26,14 +26,15 @@
       <div class="modal-header " ng-show="repository.selectedQuery">
 
           <!-- "Back" button showed only if there is a query selected -->
-          <button ng-show="repository.selectedQuery" class="btn pull-left btn-default" style="margin-right: 10px" type="button"
+          <button ng-show="repository.selectedQuery" class="btn pull-left btn-default back-list" type="button" title="Back to query list" alt="Back to query list"
                   ng-click="clearSelectedQuery();">
               <i class="icon-align-justify"></i>
           </button>
 
           <button type="button" class="close" ng-click="repository.show=false">×</button>
 
-          <button class="btn btn-default pull-right" style="margin-right: 20px" type="button" ng-click="applyCurrentQueryForSearch(repository.selectedQuery)">
+          <button class="btn btn-default pull-right put-query" type="button" ng-click="applyCurrentQueryForSearch(repository.selectedQuery)"
+                  title="Put query in search bar" alt="Put query in search bar">
               <i class="icon-share"></i>
           </button>
 

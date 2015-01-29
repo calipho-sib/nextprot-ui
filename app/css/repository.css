@@ -14,6 +14,13 @@
   max-height: 400px;  
 }
 
+.back-list {
+	margin: 0 10px 10px 0;
+}
+
+.put-query {
+	margin: 0 10px 10px 10px;
+}
 
 @media (max-width: 980px){
 	.repository-modal{
