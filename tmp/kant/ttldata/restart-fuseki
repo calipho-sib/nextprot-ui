@@ -1,0 +1,22 @@
+line=$(ps -x | grep java | grep fuseki)
+for elem in $line
+do
+    echo ""
+    echo "process is:$elem"
+    kill $elem
+    echo "process $elem killed, sleeping 5 secs before restarting..."
+    echo ""
+    sleep 5
+    cd $FUSEKI
+    echo "Restarting fuseki"
+    # sh -c "./fuseki-server --update --loc=/work/tdbdata /np &"
+    sh -c "./fuseki-server --update --config=/work/ttldata/config/config-tdb.ttl >> fuseki-tdb.log 2>&1 &" 
+    exit 0
+done
+echo ""
+echo "Fuseki was not running, starting...."
+cd $FUSEKI
+#sh -c "./fuseki-server --update --loc=/work/tdbdata /np &"
+sh -c "./fuseki-server --update --config=/work/ttldata/config/config-tdb.ttl >> fuseki-tdb.log 2>&1 &"
+echo ""
+

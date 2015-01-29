@@ -1,0 +1,13 @@
+line=$(ps -x | grep java | grep fuseki)
+for elem in $line
+do
+    echo ""
+    kill $elem
+    echo "process $elem killed"
+    echo ""
+    exit 0
+done
+echo ""
+echo "Fuseki was not running"
+echo ""
+

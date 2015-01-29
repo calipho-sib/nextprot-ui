@@ -1,0 +1,12 @@
+datadir=/work/ttldata/chromosome
+files=$(ls -1 $datadir/*.ttl)
+d1=$(date)
+cd /work/devtools/jena/jena-fuseki/
+for f in $files
+do
+  echo "$(date) posting file $f"
+  ./s-post http://localhost:3030/np/data default $f
+done
+d2=$(date)
+echo "started at $d1"
+echo "ended   at $d2"
