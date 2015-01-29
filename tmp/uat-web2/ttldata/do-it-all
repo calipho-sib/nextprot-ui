@@ -1,0 +1,4 @@
+./download-per-chromosome.sh
+#./load-and-infer-fuseki
+./load-virtuoso
+

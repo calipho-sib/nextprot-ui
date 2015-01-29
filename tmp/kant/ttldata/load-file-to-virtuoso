@@ -1,0 +1,12 @@
+#!/bin/sh
+
+rm -rf ./tmp2
+mkdir -p ./tmp2
+cp $1 ./tmp2
+
+isql 1111 dba dba exec="delete from DB.DBA.load_list;"
+isql 1111 dba dba exec="ld_dir ('/work/ttldata/tmp2', '*.ttl', 'http://nextprot.org/rdf') ;"
+isql 1111 dba dba exec="rdf_loader_run();"
+sleep 2
+isql 1111 dba dba exec="select * from DB.DBA.load_list;"
+
