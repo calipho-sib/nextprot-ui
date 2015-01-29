@@ -32,6 +32,11 @@
 
     }]);
 
+    SearchUI.filter('getNeXtProtUrl', ['config', function (config) {
+        return function (input) {
+            return "http://"+ config.api.environment + "-" + input + ".nextprot.org";
+        };
+    }]);
 
     SearchUI.filter('containsTag', ['user',function (user) {
         return function(items, selectedTag) {

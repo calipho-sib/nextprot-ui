@@ -22,11 +22,15 @@ var App = angular.module('np', [
   .factory('errorInterceptor',errorInterceptor)
   .run(runApplication);
 
-//
+
+//Environment that should be set from outside
+var nxEnvironment = "alpha";
+
 // main application settings
 App.constant('npSettings', {
-    base:'http://alpha-api.nextprot.org',
-    callback:'http://alpha-search.nextprot.org',
+    environment:nxEnvironment,
+    base:'http://' + nxEnvironment +' -api.nextprot.org',
+    callback:'http://' + nxEnvironment + ' -search.nextprot.org',
     auth0_cliendId:'7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
     githubToken:'2e36ce76cfb03358f0a38630007840e7cb432a24'
 })
