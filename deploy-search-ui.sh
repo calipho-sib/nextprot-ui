@@ -15,8 +15,8 @@ stopDebugModeAndExit () {
 
 
 echo "deploy to $1"
-#rm -rf build || stopDebugModeAndExit 1
-#./node_modules/.bin/brunch build -P || stopDebugModeAndExit 2
+rm -rf build || stopDebugModeAndExit 1
+./node_modules/.bin/brunch build -P || stopDebugModeAndExit 2
 
 if [ $1 = "dev" ]; then
     rsync -auv build/* npteam@crick:/work/www/dev-search.nextprot.org/ || stopDebugModeAndExit 3
