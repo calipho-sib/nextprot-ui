@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script prepares and deploys a new release on nexus.
+# This script prepares and deploys a new maven project release on nexus.
 
 # [A merge of develop to master triggers this script]
 # This script is triggered in a jenkins job each time a push is done on branch master.
