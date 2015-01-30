@@ -132,7 +132,7 @@
         <div class="modal-footer">
 
           <!-- "Create new" only if there is no query selected -->
-          <button ng-show="!repository.selectedQuery" class="btn btn-primary pull-right btn-sm" type="button"
+          <button ng-show="!repository.selectedQuery && user.profile.email" class="btn btn-primary pull-right btn-sm" type="button"
                   ng-click="createNewEmptyQuery();">New
           </button>
 
