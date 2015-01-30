@@ -11,21 +11,23 @@
                         <label class="">Format: </label>
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
                                 data-toggle="dropdown" aria-expanded="true">
-                            {{selectedFormat.name}}
+                            {{selectedFormat}}
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li ng-repeat="format in exportFormats"><a href="" ng-click="setSelectedFormat(format)">{{format.name}}</a>
+                            <li ng-repeat="format in formats"><a href="" ng-click="setSelectedFormat(format)">{{format}}</a>
                             </li>
                         </ul>
+                    </div>
+                    <div class="dropdown">
                         <label class="">Sub-Part</label>
-                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2"
                                 data-toggle="dropdown" aria-expanded="true">
-                            {{selectedTemplate}}
+                            {{selectedView}}
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li ng-repeat="template in selectedFormat.templates"><a href="" ng-click="setSelectedTemplate(template)">{{template}}</a></li>
+                            <li ng-repeat="view in views"><a href="" ng-click="setSelectedView(view)">{{view}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -36,7 +38,7 @@
                 </p>
             </div>
             <div class="highlight">
-                <pre><code class="language-html" data-lang="html"><span class="nt"></span>curl {{getFileExportURL()}}</span></code></pre>
+                <pre><code class="language-html" data-lang="html"><span class="nt"></span>wget {{getFileExportURL()}}</span></code></pre>
             </div>
 
         </div>
