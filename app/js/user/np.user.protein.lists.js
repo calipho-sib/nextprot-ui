@@ -24,8 +24,8 @@ angular.module('np.user.protein.lists', [
 
 //
 // Controller
-ListCtrl.$inject=['$resource','$scope','$rootScope','$location','$routeParams','$route','Search','userProteinList','user'];
-function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route, Search, userProteinList, user) {
+ListCtrl.$inject=['$resource','$scope','$rootScope','$location','$routeParams','$route','Search','userProteinList','user', 'flash'];
+function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route, Search, userProteinList, user, flash) {
 	$scope.userProteinList = userProteinList;
 	$scope.showCombine = false;
 	$scope.combineDisabled = true;
@@ -105,34 +105,54 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 			};
 
 			userProteinList.update(user, list);
+
 		} else if($scope.modal.type == 'create') {
 			var newList = { name: $scope.selected.name, description: $scope.selected.description };
 
 			userProteinList.combine(
-                  user,
+				user,
 				newList,
 				$scope.combination.first.name,
 				$scope.combination.second.name,
-				$scope.combination.op,
-				function(elem) {
-					//
-					// TODO why this is not always an array?
-					elem.accessions=elem.accessions.length
-					$scope.lists.push(elem)
-					$scope.options.first=$scope.options.second=$scope.lists
-					$log.info($scope.lists, $scope.options.first)
+				$scope.combination.op
+			).$promise.then(function (returnedList) {
+					returnedList.accessions = returnedList.accessionNumbers.length
+					$scope.lists.push(returnedList)
+					$scope.options.first = $scope.options.second = $scope.lists
+					flash("alert-success", newList.name + " was successfully created");
+				}, function (error) {
+					flash("alert-warning", error.data.message);
 				});
 
 		}
 		
 	};
 
-	$scope.delete = function(index) {
+	// Remove from list
+	function removeFromList(list, listId){
+		for(var i= list.length-1; i--;){
+			if(list[i].id === listId){
+				list.splice(i, 1);
+				break;
+			}
+		}
+	}
 
-		if (confirm("Are you sure you want to delete the selected query?")) {
-			userProteinList.delete(user, $scope.lists[index].id);
-			$scope.lists.splice(index, 1);
-			$scope.options.first=$scope.options.second=$scope.lists
+
+	$scope.delete = function(list) {
+
+		if (confirm("Are you sure you want to delete the " + list.name + " list ?")) {
+			var listName = list.name;
+			var listId = list.id;
+			userProteinList.delete(user, listId).$promise.then(
+				function () {
+					removeFromList($scope.lists, listId);
+					$scope.options.first = $scope.options.second = $scope.lists
+					flash("alert-success", listName + " was successfully deleted");
+				}, function (error) {
+					flash("alert-warning", error.data.message);
+				}
+			)
 		}
 
 	}

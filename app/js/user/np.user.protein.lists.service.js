@@ -67,9 +67,8 @@
         }
 
 
-        Proteins.prototype.combine = function (user, list, l1, l2, op, cb) {
+        Proteins.prototype.combine = function (user, list, l1, l2, op) {
             var self = this;
-            //TODO remove cb
             self.$promise=self.$dao.get({
                 action: 'combine',
                 username: user.profile.username,
@@ -78,10 +77,8 @@
                 listname1: l1,
                 listname2: l2,
                 op: op
-            }, function (data) {
-                if (cb) cb(data);
-            });
-            return this;
+            }).$promise;
+            return self;
         }
 
         Proteins.prototype.addElements = function (user, listName, accs, cb) {
