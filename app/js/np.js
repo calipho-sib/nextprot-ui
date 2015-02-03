@@ -24,7 +24,7 @@ var App = angular.module('np', [
 
 
 //Environment that should be set from outside
-var nxEnvironment = "dev";
+var nxEnvironment = "NX_ENV";
 
 // main application settings
 App.constant('npSettings', {
