@@ -4,7 +4,7 @@
 	<groupId>org.nextprot</groupId>
 	<artifactId>nextprot-scripts</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.7-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 
 	<build>
 		<finalName>nextprot-scripts</finalName>
