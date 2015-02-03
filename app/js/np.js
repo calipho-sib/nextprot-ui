@@ -30,6 +30,7 @@ var nxEnvironment = "dev";
 App.constant('npSettings', {
     environment:nxEnvironment,
     base:'http://' + nxEnvironment +'-api.nextprot.org',
+    //base:'http://localhost:8080/nextprot-api-web',    
     callback:'http://' + nxEnvironment + '-search.nextprot.org',
     auth0_cliendId:'7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
     githubToken:'2e36ce76cfb03358f0a38630007840e7cb432a24'
