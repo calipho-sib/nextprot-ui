@@ -179,48 +179,53 @@ function ListCreateCtrl($q, $resource, $scope, $rootScope, $routeParams, $locati
         $log.info('Controller: on `error`');
     });
 
-    $scope.createList = function(listName) {
-    	var list={}
-    	if($scope.inputAccessions.length > 0) {
-    		var accessions = $scope.inputAccessions.split("\n");
-    		list = { 
-    			name: $scope.listName, 
-                  description: $scope.listDescription, 
-    			accessions: accessions
-    		};
-    	}else{
-		list={
-                  name: $scope.listName, 
-                  description: $scope.listDescription, 
-                  accessions: []
-              }
-    	}
+	$scope.createList = function (listName) {
+		var list = {}
+		if ($scope.inputAccessions.length > 0) {
+			var accessions = $scope.inputAccessions.split("\n");
+			list = {
+				name: $scope.listName,
+				description: $scope.listDescription,
+				accessions: accessions
+			};
+		} else {
+			list = {
+				name: $scope.listName,
+				description: $scope.listDescription,
+				accessions: []
+			}
+		}
 
-	userProteinList.create(user, list).$promise
-	.then(function(newList){
-		flash('alert-info', "List "+list.name+" created.");
-		var promises=[$q.when(true)]
-		
+		userProteinList.create(user, list).$promise
+			.then(function (newList) {
+				flash('alert-info', "List " + list.name + " created.");
 
-		for (var i = $scope.files.length - 1; i >= 0; i--) {		
-			promises.push(uploadListService.send(newList.id, $scope.files[i]));
-		};
+				var promises = [$q.when(true)]
 
-		$q.all(promises).then(function(){
-			flash('alert-info', "List "+$scope.listName+" created.");
-			$scope.files=[]
-			$location.path('/user/protein/lists');
-		},function(e){
-			if(e.message) {return flash('alert-warning', e.message)};
-		})
+				for (var i = $scope.files.length - 1; i >= 0; i--) {
+					promises.push(uploadListService.send(newList.id, $scope.files[i]));
+				}
+				;
 
-		
-	},function(data){
-		console.log("cb new list error",data)		
-		if(data.error) {
-			return flash('alert-warning', data.error)
-		};
-	});
+				$q.all(promises).then(function () {
+					flash('alert-info', "List " + $scope.listName + " created.");
+					$scope.files = []
+					$location.path('/user/protein/lists');
+				}, function (e) {
+					if (e.message) {
+						return flash('alert-warning', e.message)
+					}
+					;
+				})
+
+
+			}, function (data) {
+				console.log("cb new list error", data)
+				if (data.error) {
+					return flash('alert-warning', data.error)
+				}
+				;
+			});
 
     }
 

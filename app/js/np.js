@@ -31,8 +31,8 @@ App.constant('npSettings', {
     environment:nxEnvironment,
 
     //API URL
-    //base:'http://' + nxEnvironment +'-api.nextprot.org',
-    base:'http://localhost:8080/nextprot-api-web',
+    base:'http://' + nxEnvironment +'-api.nextprot.org',
+    //base:'http://localhost:8080/nextprot-api-web',
     //base:'http://mac-096:8080/nextprot-api-web',
     //callback:'http://' + nxEnvironment + '-search.nextprot.org',
 
@@ -114,22 +114,20 @@ function errorInterceptor($q, $rootScope, $location, flash) {
                 if (status == 0) {
                     flash('alert-danger', "The API is not accessible");
                     return;
-                }else if (status == 400) {
-                    flash('alert-danger', response.data.message);
-                    return;
-                }else if (status == 401) {
+                }/*else if (status == 400) { //Should be handled by the controller}*/
+                else if ((status == 401) || (status == 403)) {
                     flash('alert-danger', "You are not authorized to access the resource. Please login or review your privileges.");
                     return;
-                }else if (status == 404) {
+                }/*else if (status == 404) {
                     flash('alert-danger', "URL not found");
                     return;
-                } 
-                else {
+                } */
+                else if (status >= 500) {
                     console.log(response)
                     if(response.message){
                         flash('alert-warning', response.message);
                     }else if (response.data.message) {
-                        flash('alert-warning', response.data.message);
+                        flash('alert-danger', response.data.message);
                     } else 
                         flash('alert-danger', 'Some error occured' + " " + status + " " + response);
                 }

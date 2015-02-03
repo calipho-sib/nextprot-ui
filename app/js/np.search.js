@@ -478,6 +478,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
 
 
     $scope.saveModal = function (dismiss) {
+
         var proteinList = {
             name: $scope.selected.name,
             description: $scope.selected.description,
@@ -485,12 +486,13 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
             ownerId: 1
         };
 
-        userProteinList.create(user, proteinList, function (data) {
-            if (data.error) flash('alert-warning', data.error);
-            else {
-                flash('alert-info', "List " + proteinList.name + " created.");
+        userProteinList.create(user, proteinList).$promise.then(
+            function () {
+                flash('alert-success', "List " + proteinList.name + " succesfully created.");
+            }, function(error)  {
+                flash('alert-warning', error.data.message);
             }
-        });
+        );
     }
 };
 
