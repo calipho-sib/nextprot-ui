@@ -53,6 +53,8 @@ if getNextReleaseVersion RELEASE_VERSION; then
 
     # deploy on nexus
     mvn clean deploy || exit 4
+else
+    exit 5
 fi
 
 exit 0
