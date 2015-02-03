@@ -29,8 +29,16 @@ var nxEnvironment = "NX_ENV";
 // main application settings
 App.constant('npSettings', {
     environment:nxEnvironment,
-    base:'http://' + nxEnvironment +'-api.nextprot.org',
-    callback:'http://' + nxEnvironment + '-search.nextprot.org',
+
+    //API URL
+    //base:'http://' + nxEnvironment +'-api.nextprot.org',
+    base:'http://localhost:8080/nextprot-api-web',
+    //base:'http://mac-096:8080/nextprot-api-web',
+    //callback:'http://' + nxEnvironment + '-search.nextprot.org',
+
+    //Used for auth callback
+    callback:'http://alpha-api.nextprot.org',
+
     auth0_cliendId:'7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
     githubToken:'2e36ce76cfb03358f0a38630007840e7cb432a24'
 })
@@ -68,8 +76,7 @@ function configApplication( $routeProvider,  $locationProvider, $httpProvider, a
     }];
     $httpProvider.interceptors.push('jwtInterceptor');
 
-    //$httpProvider.interceptors.push('authInterceptor');
-    //$httpProvider.interceptors.push('errorInterceptor');
+    $httpProvider.interceptors.push('errorInterceptor');
     $httpProvider.defaults.headers.common.Accept= 'application/json'
 
 
@@ -88,7 +95,7 @@ function configApplication( $routeProvider,  $locationProvider, $httpProvider, a
     //$locationProvider.hashPrefix = '!';
 };
 
-//
+
 // define default behavior for all http request
 errorInterceptor.$inject=['$q', '$rootScope', '$location', 'flash']
 function errorInterceptor($q, $rootScope, $location, flash) {
@@ -107,7 +114,10 @@ function errorInterceptor($q, $rootScope, $location, flash) {
                 if (status == 0) {
                     flash('alert-danger', "The API is not accessible");
                     return;
-                } else if (status == 401) {
+                }else if (status == 400) {
+                    flash('alert-danger', response.data.message);
+                    return;
+                }else if (status == 401) {
                     flash('alert-danger', "You are not authorized to access the resource. Please login or review your privileges.");
                     return;
                 }else if (status == 404) {
