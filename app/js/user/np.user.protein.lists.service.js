@@ -73,10 +73,10 @@
             self.$promise=self.$dao.get({
                 action: 'combine',
                 username: user.profile.username,
-                name: list.name,
+                listname: list.name,
                 description: list.description,
-                first: l1,
-                second: l2,
+                listname1: l1,
+                listname2: l2,
                 op: op
             }, function (data) {
                 if (cb) cb(data);
