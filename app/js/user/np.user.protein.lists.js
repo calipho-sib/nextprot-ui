@@ -104,7 +104,14 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 				description: $scope.selected.description
 			};
 
-			userProteinList.update(user, list);
+			userProteinList.update(user, list).$promise.then(
+				function(){
+					flash("alert-success", list.name + " list was successfully updated");
+				},
+				function(error){
+					flash("alert-warning", error.message);
+				}
+			)
 
 		} else if($scope.modal.type == 'create') {
 			var newList = { name: $scope.selected.name, description: $scope.selected.description };
@@ -123,21 +130,18 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 				}, function (error) {
 					flash("alert-warning", error.data.message);
 				});
-
 		}
-		
 	};
 
 	// Remove from list
 	function removeFromList(list, listId){
-		for(var i= list.length-1; i--;){
+		for(var i=0; i < list.length;i++){
 			if(list[i].id === listId){
 				list.splice(i, 1);
 				break;
 			}
 		}
 	}
-
 
 	$scope.delete = function(list) {
 
