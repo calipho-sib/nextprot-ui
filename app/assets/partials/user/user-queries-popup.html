@@ -115,7 +115,9 @@
 
               <p ng-if="repository.selectedQuery.owner === 'nextprot'">Tags:
                   <span ng-repeat="tag in repository.selectedQuery.tags | orderBy" class="label label-default label-as-badge">{{tag}}</span>
-                  <p ng-show="repository.selectedQuery.owner === 'nextprot'" class="pull-right"><a target="_blank" href="{{repository.selectedQuery.userQueryId | getGitHubUrl}}">Improve this query</a></p>
+                  <p class="pull-right"><a target="_blank" ng-click="runQuery(repository.selectedQuery)">Run this query!</a></p>
+
+                  <!-- <p ng-show="repository.selectedQuery.owner === 'nextprot'" class="pull-right"><a target="_blank" href="{{repository.selectedQuery.userQueryId | getGitHubUrl}}">Improve this query</a></p>-->
               </p>
 
 

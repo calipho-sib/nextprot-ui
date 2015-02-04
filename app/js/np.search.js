@@ -183,6 +183,21 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $routeParams, $rou
 
 
 
+    $scope.goToUser = function (resourceType) {
+        if(!user.isAnonymous()){
+            if(resourceType == "lists"){
+                $location.path("/user/protein/lists");
+            }else  if(resourceType == "queries"){
+                $location.path("/user/queries");
+            }
+
+            }else {
+            flash("alert-warning", "Please login to access your " + resourceType + ".")
+        }
+    }
+
+
+
     $scope.active = function (value, key) {
         if (key) {
             return ($location.search()[key] === value) ? ' active  ' : '';
@@ -451,9 +466,8 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         }
     }
 
-    // TODO deprecated
     $scope.getPublicationUrl = function (ac) {
-        return "http://google.com/search?q=" + ac
+        return "http://www.ncbi.nlm.nih.gov/pubmed?cmd=search&term=" + ac
     }
 
 

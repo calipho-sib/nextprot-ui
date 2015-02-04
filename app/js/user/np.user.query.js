@@ -218,6 +218,10 @@
         };
         $scope.queryRepository = queryRepository;
 
+        $scope.runQuery = function (query) {
+            $location.search("sparql", query.sparql);
+        }
+
         $scope.setFilterTag = function (tag) {
             $scope.repository.filterTag = tag;
         }
