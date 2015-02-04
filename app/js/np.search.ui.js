@@ -34,9 +34,17 @@
 
     SearchUI.filter('getNeXtProtUrl', ['config', function (config) {
         return function (input) {
-            if(input === "api"){
-                return config.api.base;
-            } else return "http://"+ config.api.environment + "-" + input + ".nextprot.org";
+
+                if(config.api.environment === "pro"){
+                 switch(input) {
+                        case "api": return "https://api.nextprot.org" ;
+                        case "search": return "http://search.nextprot.org" ;
+                        case "snorql": return "http://snorql.nextprot.org" ;
+                    }
+                }
+
+                if(input == "api") return config.api.API_URL;
+                else return "http://"+ config.api.environment + "-" + input + ".nextprot.org";
         };
     }]);
 

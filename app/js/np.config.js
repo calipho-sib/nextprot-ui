@@ -17,10 +17,6 @@ angular.module('np.config', []).factory('config', [
 
             githubQueriesEdit : "https://github.com/calipho-sib/nextprot-queries/edit/develop/src/main/resources/nextprot-queries/",
 
-            //base:"/",
-            base: "/protosearch/",
-
-
 
             ontology: {
                 /* Ontology filters */
