@@ -23,25 +23,25 @@ var App = angular.module('np', [
   .run(runApplication);
 
 
-//Environment that should be set from outside
-var nxEnvironment = "NX_ENV";
+    //Environment that should be set from outside //TODO should replace this using GRUNT
+    var nxEnvironment = "NX_ENV"; //env can be replaced, by dev, alpha or pro
+    var apiBase = "http://localhost:8080/nextprot-api-web"; //default
 
-// main application settings
-App.constant('npSettings', {
-    environment:nxEnvironment,
-
-    //API URL
-    base:'http://' + nxEnvironment +'-api.nextprot.org',
-    //base:'http://localhost:8080/nextprot-api-web',
-    //base:'http://mac-096:8080/nextprot-api-web',
-    //callback:'http://' + nxEnvironment + '-search.nextprot.org',
-
-    //Used for auth callback
-    callback:'http://alpha-api.nextprot.org',
-
-    auth0_cliendId:'7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
-    githubToken:'2e36ce76cfb03358f0a38630007840e7cb432a24'
-})
+    if(nxEnvironment.indexOf("NX_") == -1) // means an environment has been set, sed command has done some magic tricks
+    {
+        apiBase='http://' + nxEnvironment.toLowerCase() +'-api.nextprot.org';
+        if(nxEnvironment.toLowerCase() ===  "pro"){
+            apiBase='https://api.nextprot.org'; // Don't forget https!
+        }
+    }
+    // main application settings
+    App.constant('npSettings', {
+        environment: nxEnvironment,
+        base: apiBase,   //API URL
+        callback: window.location.origin,
+        auth0_cliendId: '7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
+        githubToken: '2e36ce76cfb03358f0a38630007840e7cb432a24'
+    })
 
 
 //
