@@ -103,6 +103,15 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
 
+                <li>
+                    <a title="My lists" href='user/protein/lists' type="button" class="link"><i class="icon-list-alt"></i></a>
+                </li>
+
+                <li>
+                    <a title="My queries" href='user/protein/queries' type="button" class="link"><i class="icon-heart"></i></a>
+                </li>
+
+
                 <!-- login button -->
                 <li ng-if="!user.profile.email">
                     <a href='' type="button" class="link" ng-click="login()">Login</a>
@@ -113,10 +122,10 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.profile.name ||
                         user.profile.email}}<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="/user">My profile</a></li>
+                        <!--<li><a href="/user">My profile</a></li>-->
                         <li><a href="/user/protein/lists">My protein lists</a></li>
                         <li><a href="/user/queries">My queries</a></li>
-                        <li><a href="/user/applications">My applications</a></li>
+                        <!-- <li><a href="/user/applications">My applications</a></li>-->
                         <li class="divider"></li>
                         <li><a href="#" ng-click="logout()">Logout</a></li>
                     </ul>

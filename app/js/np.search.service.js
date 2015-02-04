@@ -225,6 +225,8 @@ SearchService.factory('Search', [
             // display search status status
             me.result.message = "Loading content...";
 
+
+
             $api.search({action: this.params.action, entity: this.params.entity}, post).$promise.then(function (docs) {
                 me.result.rows = docs.rows;
                 me.result.params = params;
@@ -260,9 +262,10 @@ SearchService.factory('Search', [
 
                 if (cb)cb(me.result)
             }, function (error) {
+                flash("alert-danger", error.data.message);
                 me.loading = false;
                 //if (error.status)
-                me.result.error = "Ooops, request failed: " + error;
+                //me.result.error = "Ooops, request failed: " + error;
             })
         }
 

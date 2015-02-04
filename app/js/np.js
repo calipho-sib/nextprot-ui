@@ -116,7 +116,8 @@
                     return;
                 }/*else if (status == 400) { //Should be handled by the controller}*/
                 else if ((status == 401) || (status == 403)) {
-                    flash('alert-danger', "You are not authorized to access the resource. Please login or review your privileges.");
+                    flash('alert-warning', "You are not authorized to access the resource. Please login.");
+                    $location.url("");
                     return;
                 }/*else if (status == 404) {
                  flash('alert-danger', "URL not found");

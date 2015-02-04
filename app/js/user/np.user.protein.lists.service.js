@@ -37,19 +37,19 @@
             return self;
         };
 
-        Proteins.prototype.create = function (user, list, cb) {
+        Proteins.prototype.create = function (user, list) {
             var self = this;
             self.$promise=self.$dao.create({username: user.username}, list).$promise;
             return self;
         };
 
-        Proteins.prototype.update = function (user, list, cb) {
+        Proteins.prototype.update = function (user, list) {
             var self = this;
             self.$promise=self.$dao.update({username: user.profile.username, id: list.id}, list).$promise;
             return self;
         };
 
-        Proteins.prototype.delete = function (user, listId, cb) {
+        Proteins.prototype.delete = function (user, listId) {
             var self = this;
             self.$promise=self.$dao.delete({username: user.profile.username, id: listId}).$promise;
             return self;
