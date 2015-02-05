@@ -47,8 +47,8 @@ function check_npdb() {
 
     echo ${MESS}
 
-    if [ "MESS" = "" ]; then
-        echo ${user}@${host} did not correctly restart ; exit 2
+    if [ -z ${MESS} ]; then
+        echo "warning: postgresql on ${user}@${host} did not correctly restart" >&2 ; exit 2
     fi
 }
 
