@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # this script deploys PostgreSQL database between 2 machines.
 # It stops postgresql on both <src> and <dest> hosts and rsync the npdb directory and restart postgresql.
@@ -8,6 +8,8 @@
 # -v: verbose mode
 
 # ex: bash -c deploy-npdb.sh kant uat-web2 npdb
+
+source "../strict-mode.sh"
 
 function echoUsage() {
     echo "usage: $0 [-c][-v] <src_host> <dest_host> <dest_user>" >&2
@@ -48,7 +50,7 @@ function check_npdb() {
     echo ${MESS}
 
     if [ -z ${MESS} ]; then
-        echo "warning: postgresql on ${user}@${host} did not correctly restart" >&2 ; exit 2
+        echo "warning: postgresql on ${user}@${host} did not correctly restart" >&2
     fi
 }
 
@@ -86,19 +88,19 @@ if [ "$coldbackup_flag" ]
     printf "Cold backup activated\n"
 fi
 
-stop_pg ${SRC_HOST} ${DEST_USER} || exit 3
+stop_pg ${SRC_HOST} ${DEST_USER}
 sleep 5
 
 if [ "$coldbackup_flag" ]; then
-    stop_pg ${DEST_HOST} ${DEST_USER} || exit 4
-    copy_npdb ${SRC_HOST} ${DEST_HOST} ${DEST_USER} || exit 5
-    start_pg ${DEST_HOST} ${DEST_USER} || exit 6
+    stop_pg ${DEST_HOST} ${DEST_USER}
+    copy_npdb ${SRC_HOST} ${DEST_HOST} ${DEST_USER}
+    start_pg ${DEST_HOST} ${DEST_USER}
 else
-    copy_npdb ${SRC_HOST} ${DEST_HOST} ${DEST_USER} .back || exit 7
+    copy_npdb ${SRC_HOST} ${DEST_HOST} ${DEST_USER} .back
 fi
 
-start_pg ${SRC_HOST} ${DEST_USER} || exit 8
+start_pg ${SRC_HOST} ${DEST_USER}
 
-check_npdb ${DEST_HOST} ${DEST_USER} || exit 9
+check_npdb ${DEST_HOST} ${DEST_USER}
 
 exit 0
