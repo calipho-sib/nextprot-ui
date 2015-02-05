@@ -9,6 +9,8 @@
 
 source "../strict-mode.sh"
 
+set -x
+
 function echoUsage() {
     echo "usage: $0 [-c][-v] <src_host> <dest_host>" >&2
 }
@@ -76,7 +78,7 @@ function copyDb() {
     src=$1
     dest=$2
 
-    ssh npteam@${src} "rsync -avz /var/lib/virtuoso/db/* ${dest}:/var/lib/virtuoso/db"
+    ssh npteam@${src} "rsync -avz --progress /var/lib/virtuoso/db/* ${dest}:/var/lib/virtuoso/db"
     ssh npteam@${dest} "rm /var/lib/virtuoso/db/virtuoso.trx"
     ssh npteam@${dest} "cp /var/lib/virtuoso/tmp/virtuoso.ini /var/lib/virtuoso/db"
 }
@@ -93,7 +95,6 @@ DEST_HOST=$2
 
 check-virtuoso-is-up ${SRC_HOST}
 check-virtuoso-is-up ${DEST_HOST}
-exit 23
 
 ssh npteam@${SRC_HOST} isql 1111 dba dba exec="checkpoint;"
 
@@ -105,9 +106,9 @@ stop-virtuoso ${DEST_HOST}
 clear-virtuoso ${DEST_HOST}
 
 # copy db from source to dest host
-copyDb ${SRC_HOST} ${DEST_HOST}
+time copyDb ${SRC_HOST} ${DEST_HOST}
 
 # restart virtuoso servers
-restart-virtuoso ${SRC_HOST}
-restart-virtuoso ${DEST_HOST}
+start-virtuoso ${SRC_HOST}
+start-virtuoso ${DEST_HOST}
 
