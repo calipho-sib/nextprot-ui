@@ -1,14 +1,16 @@
 #!/bin/bash
 
-# cold backup: this script deploys PostgreSQL database between 2 machines.
+# this script deploys PostgreSQL database between 2 machines.
 # It stops postgresql on both <src> and <dest> hosts and rsync the npdb directory and restart postgresql.
 
-# ex: bash deploy-npdb.sh kant uat-web2 npdb
+# options:
+# -c: activate cold backup mode
+# -v: verbose mode
 
-set -x
+# ex: bash -c deploy-npdb.sh kant uat-web2 npdb
 
 function echoUsage() {
-    echo "usage: $0 <src_host> <dest_host> <dest_user>" >&2
+    echo "usage: $0 [-c][-v] <src_host> <dest_host> <dest_user>" >&2
 }
 
 function start_pg() {
@@ -50,7 +52,25 @@ function check_npdb() {
     fi
 }
 
-args=("$@")
+# handle optional arg
+coldbackup_flag=
+
+while getopts 'cv' OPTION
+do
+    case ${OPTION} in
+    c)  coldbackup_flag=1
+        ;;
+    v) set -x
+        ;;
+    ?) echoUsage
+        exit 2
+        ;;
+    esac
+done
+
+shift $(($OPTIND - 1))
+
+args=("$*")
 
 if [ $# -lt 3 ]; then
   echo missing arguments >&2
@@ -60,26 +80,25 @@ fi
 SRC_HOST=$1
 DEST_HOST=$2
 DEST_USER=$3
-COLD_BACKUP=false
 
-if [ $# -eq 4 ]; then
-    COLD_BACKUP=true
+if [ "$coldbackup_flag" ]
+  then
+    printf "Cold backup activated\n"
 fi
 
-
-echo stop_pg ${SRC_HOST} ${DEST_USER} || exit 3
+stop_pg ${SRC_HOST} ${DEST_USER} || exit 3
 sleep 5
 
-if [ COLD_BACKUP = "true" ]; then
-    echo stop_pg ${DEST_HOST} ${DEST_USER} || exit 4
-    echo copy_npdb ${SRC_HOST} ${DEST_HOST} ${DEST_USER} || exit 5
-    echo start_pg ${DEST_HOST} ${DEST_USER} || exit 6
+if [ "$coldbackup_flag" ]; then
+    stop_pg ${DEST_HOST} ${DEST_USER} || exit 4
+    copy_npdb ${SRC_HOST} ${DEST_HOST} ${DEST_USER} || exit 5
+    start_pg ${DEST_HOST} ${DEST_USER} || exit 6
 else
-    echo copy_npdb ${SRC_HOST} ${DEST_HOST} ${DEST_USER} .back || exit 7
+    copy_npdb ${SRC_HOST} ${DEST_HOST} ${DEST_USER} .back || exit 7
 fi
 
-echo start_pg ${SRC_HOST} ${DEST_USER} || exit 8
+start_pg ${SRC_HOST} ${DEST_USER} || exit 8
 
-echo check_npdb ${DEST_HOST} ${DEST_USER} || exit 9
+check_npdb ${DEST_HOST} ${DEST_USER} || exit 9
 
 exit 0
