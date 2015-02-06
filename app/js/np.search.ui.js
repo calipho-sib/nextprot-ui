@@ -38,7 +38,7 @@
                 if(config.api.environment === "pro"){
                  switch(input) {
                         case "api": return "https://api.nextprot.org" ;
-                        case "search": return "http://search.nextprot.org" ;
+                        case "search": return "https://search.nextprot.org" ;
                         case "snorql": return "http://snorql.nextprot.org" ;
                     }
                 }
