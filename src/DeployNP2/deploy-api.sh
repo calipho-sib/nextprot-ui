@@ -1,4 +1,6 @@
 #!/bin/bash
+red='\e[0;31m'
+NC='\e[0m' # No Color
 
 #set -x
 set -o errexit  # make your script exit when a command fails.
@@ -11,23 +13,26 @@ set -o nounset  # exit when your script tries to use undeclared variables.
 function stop_jetty() {
   host=$1
   ssh npteam@$host /work/jetty/bin/jetty.sh stop
-  echo "Stopping jetty ..."
+  echo "{red}Stopping jetty ...{NC}"
   while [ -f /work/jetty/jetty.pid ]
   do
     sleep 1
   done
-  echo "Jetty has stopped in $1"
+  echo "{red}Jetty has stopped in $1{NC}"
 }
 
 function start_jetty() {
-  echo "Starting jetty ..."
+  echo "{red}Starting jetty ...{NC}"
   host=$1
   ssh npteam@$host "/work/jetty/bin/jetty.sh jetty start > /dev/null 2>&1 &"
-  while [ grep STARTED /work/jetty/jetty.state ]
-  do
-    sleep 1
+  while true ; do
+    if grep STARTED /work/jetty/jetty.state; then
+        break;
+    else
+        sleep 1
+    fi
   done
-  echo "Jetty has started in $1"
+  echo "{red}Jetty has started in $1{NC}"
 }
 
 SRC_HOST=$1
@@ -39,10 +44,10 @@ time stop_jetty ${SRC_HOST}
 
 dirs="webapps cache repository"
 for dir in $dirs; do
-  echo "Copying directory $dir to ${TRG_HOST}"
+  echo "{red}Copying directory $dir to ${TRG_HOST}{NC}"
   ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.new"
   ssh npteam@${TRG_HOST} "mkdir /work/jetty/${dir}.new"
-  ssh npteam@${SRC_HOST} "rsync -avz /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new"
+  ssh npteam@${SRC_HOST} "rsync --progress -az /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new"
 done
 
 start_jetty ${SRC_HOST}
@@ -53,7 +58,7 @@ stop_jetty ${TRG_HOST}
 
 dirs="webapps cache repository"
 for dir in $dirs; do
-  echo "Backing up directory $dir in ${TRG_HOST}"
+  echo "{red}Backing up directory $dir in ${TRG_HOST}{NC}"
   ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.bak"
   ssh npteam@${TRG_HOST} "mv /work/jetty/${dir} /work/jetty/${dir}.bak "
   ssh npteam@${TRG_HOST} "mv /work/jetty/${dir}.new /work/jetty/${dir} "
