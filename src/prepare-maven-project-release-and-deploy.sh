@@ -1,12 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # This script prepares and deploys a new maven project release on nexus.
 
 # [A merge of develop to master triggers this script]
 # This script is triggered in a jenkins job each time a push is done on branch master.
 
-# start debug mode
-set -x
+source strict-mode.sh
 
 # return the next release version to prepare on master
 getNextReleaseVersion () {

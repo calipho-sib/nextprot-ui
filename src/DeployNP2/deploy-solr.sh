@@ -1,13 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# This script deploy solr data between 2 machines. It stops solr service on both <src> and >target> hosts,
+# This script deploys solr data between 2 machines. It stops solr service on both <src> and <target> hosts,
 # rsync the solr directory and restart the solr services.
 
 # Option no-clean: do not clean solr data directories on target server before copy
-# ex: bash deploy-solr crick uat-web2
+# ex: bash deploy-solr.sh crick uat-web2
 
 # Warning: This script assumes that the solr config / indexes are up-to-date on <src_host>.
 # TODO: instead of assuming it should check and exit if it is not the case
+
+source "../strict-mode.sh"
 
 SOLR_PID=""
 
