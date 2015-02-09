@@ -1,5 +1,5 @@
 #!/bin/bash
-red='\e[0;31m'
+color='\e[1;34m'
 NC='\e[0m' # No Color
 
 #set -x
@@ -13,26 +13,26 @@ set -o nounset  # exit when your script tries to use undeclared variables.
 function stop_jetty() {
   host=$1
   ssh npteam@$host /work/jetty/bin/jetty.sh stop
-  echo "{red}Stopping jetty ...{NC}"
+  echo -e "{color}Stopping jetty ...{NC}"
   while [ -f /work/jetty/jetty.pid ]
   do
     sleep 1
   done
-  echo "{red}Jetty has stopped in $1{NC}"
+  echo -e "{color}Jetty has stopped in $1{NC}"
 }
 
 function start_jetty() {
-  echo "{red}Starting jetty ...{NC}"
+  echo -e "{color}Starting jetty ...{NC}"
   host=$1
   ssh npteam@$host "/work/jetty/bin/jetty.sh jetty start > /dev/null 2>&1 &"
   while true ; do
-    if grep STARTED /work/jetty/jetty.state; then
+    if ssh npteam@$host "grep STARTED /work/jetty/jetty.state"; then
         break;
     else
         sleep 1
     fi
   done
-  echo "{red}Jetty has started in $1{NC}"
+  echo -e "{color}Jetty has started in $1{NC}"
 }
 
 SRC_HOST=$1
@@ -44,10 +44,10 @@ time stop_jetty ${SRC_HOST}
 
 dirs="webapps cache repository"
 for dir in $dirs; do
-  echo "{red}Copying directory $dir to ${TRG_HOST}{NC}"
+  echo -e "{color}Copying directory $dir to ${TRG_HOST}{NC}"
   ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.new"
   ssh npteam@${TRG_HOST} "mkdir /work/jetty/${dir}.new"
-  ssh npteam@${SRC_HOST} "rsync --progress -az /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new"
+  ssh npteam@${SRC_HOST} "rsync -auz /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new"
 done
 
 start_jetty ${SRC_HOST}
@@ -58,7 +58,7 @@ stop_jetty ${TRG_HOST}
 
 dirs="webapps cache repository"
 for dir in $dirs; do
-  echo "{red}Backing up directory $dir in ${TRG_HOST}{NC}"
+  echo -e "{color}Backing up directory $dir in ${TRG_HOST}{NC}"
   ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.bak"
   ssh npteam@${TRG_HOST} "mv /work/jetty/${dir} /work/jetty/${dir}.bak "
   ssh npteam@${TRG_HOST} "mv /work/jetty/${dir}.new /work/jetty/${dir} "
