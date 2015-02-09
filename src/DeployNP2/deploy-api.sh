@@ -1,7 +1,9 @@
 #!/bin/bash
 
-color='\e[1;34m' # begin color
-_color='\e[0m'   # end Color
+color='\e[1;34m'         # begin color
+error_color='\e[1;32m'   # begin error color
+warning_color='\e[1;33m' # begin warning color
+_color='\e[0m'           # end Color
 
 #set -x
 set -o errexit  # make your script exit when a command fails.
@@ -11,30 +13,31 @@ set -o nounset  # exit when your script tries to use undeclared variables.
 
 function stop_jetty() {
   host=$1
-
-  if [ ! -f "ssh npteam@kant /work/jetty/jetty.pid" ]; then
-      echo -e "${color}Jetty is not running at $host ${_color}"
+  if ! ssh npteam@${host} test -f /work/jetty/jetty.pid; then
+      echo -e "${warning_color}Jetty was not running at $host ${_color}"
       return 0
   fi
 
-  ssh npteam@$host /work/jetty/bin/jetty.sh stop
-  echo -e "${color}Stopping jetty ...${_color}"
+  ssh npteam@${host} /work/jetty/bin/jetty.sh stop
+  echo -e "${color}Stopping jetty at ${host}...${_color}"
 
-  while [ -f "ssh npteam@${host} /work/jetty/jetty.pid" ]; do
+  while ssh npteam@${host} test -f /work/jetty/jetty.pid; do
       sleep 1
+      echo -n .
   done
 
-  echo -e "${color}Jetty has stopped at $host ${_color}"
+  echo -e "${color}Jetty has been correctly stopped at ${host} ${_color}"
 }
 
 function start_jetty() {
-  echo -e "${color}Starting jetty ...${_color}"
+  echo -e "${color}Starting jetty at ${host}...${_color}"
   host=$1
-  ssh npteam@$host "/work/jetty/bin/jetty.sh jetty start > /dev/null 2>&1 &"
-  while [ ! ssh npteam@$host "grep STARTED /work/jetty/jetty.state" ]; do
+  ssh npteam@${host} "/work/jetty/bin/jetty.sh start > /dev/null 2>&1 &"
+  while ! ssh npteam@${host} "grep -q STARTED /work/jetty/jetty.state 2>/dev/null"; do
       sleep 1
+      echo -n .
   done
-  echo -e "${color}Jetty has started at $host ${_color}"
+  echo -e "${color}Jetty has been correctly started at ${host} ${_color}"
 }
 
 SRC_HOST=$1
@@ -43,13 +46,18 @@ TRG_HOST=$2
 stop_jetty ${SRC_HOST}
 
 dirs="webapps cache repository"
-for dir in $dirs; do
-  echo -e "${color}Copying directory $dir to ${TRG_HOST}${_color}"
+for dir in ${dirs}; do
+  echo -e "${color}Copying directory ${dir} to ${TRG_HOST}${_color}"
   ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.new"
   ssh npteam@${TRG_HOST} "mkdir /work/jetty/${dir}.new"
 
-  if [ -d "ssh npteam@${SRC_HOST} /work/jetty/${dir}" ]; then
+  if ssh npteam@${SRC_HOST} test -d /work/jetty/${dir}; then
       ssh npteam@${SRC_HOST} "rsync -az /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new"
+  elif [ ${dir} = "webapps" ]; then
+      echo -e "${error_color}ERROR: /work/jetty/${dir} is missing at ${host} ${_color}"
+      exit 2
+  else
+      echo -e "${warning_color}WARNING: /work/jetty/${dir} is missing at ${host} ${_color}"
   fi
 done
 
@@ -58,8 +66,8 @@ start_jetty ${SRC_HOST}
 stop_jetty ${TRG_HOST}
 
 dirs="webapps cache repository"
-for dir in $dirs; do
-  echo -e "${color}Backing up directory $dir in ${TRG_HOST}${_color}"
+for dir in ${dirs}; do
+  echo -e "${color}Backing up directory ${dir} in ${TRG_HOST}${_color}"
   ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.bak"
   ssh npteam@${TRG_HOST} "mv /work/jetty/${dir} /work/jetty/${dir}.bak "
   ssh npteam@${TRG_HOST} "mv /work/jetty/${dir}.new /work/jetty/${dir} "
