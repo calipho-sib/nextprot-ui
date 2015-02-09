@@ -18,7 +18,7 @@ function stop_jetty() {
       return 0
   fi
 
-  ssh npteam@${host} /work/jetty/bin/jetty.sh stop
+  ssh npteam@${host} "/work/jetty/bin/jetty.sh stop > /dev/null 2>&1 &"
   echo -e "${color}Stopping jetty at ${host}...${_color}"
 
   while ssh npteam@${host} test -f /work/jetty/jetty.pid; do
