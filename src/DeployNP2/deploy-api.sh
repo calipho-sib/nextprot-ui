@@ -47,7 +47,10 @@ for dir in $dirs; do
   echo -e "${color}Copying directory $dir to ${TRG_HOST}${_color}"
   ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.new"
   ssh npteam@${TRG_HOST} "mkdir /work/jetty/${dir}.new"
-  ssh npteam@${SRC_HOST} "rsync -az /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new"
+
+  if [ -d "ssh npteam@${SRC_HOST} /work/jetty/${dir}" ]; then
+      ssh npteam@${SRC_HOST} "rsync -az /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new"
+  fi
 done
 
 start_jetty ${SRC_HOST}
