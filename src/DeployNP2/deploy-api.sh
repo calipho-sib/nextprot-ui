@@ -12,7 +12,7 @@ set -o nounset  # exit when your script tries to use undeclared variables.
 function stop_jetty() {
   host=$1
 
-  if [ -f "ssh npteam@kant /work/jetty/jetty.pid" ]; then
+  if [ ! -f "ssh npteam@kant /work/jetty/jetty.pid" ]; then
       echo -e "${color}Jetty is not running at $host ${_color}"
       return 0
   fi
