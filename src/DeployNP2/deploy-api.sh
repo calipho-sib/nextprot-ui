@@ -22,7 +22,8 @@ SRC_HOST=$1
 TRG_HOST=$2
 
 
-stop_jetty ${SRC_HOST}
+time stop_jetty ${SRC_HOST}
+
 
 dirs="webapps cache repository"
 for dir in $dirs; do
