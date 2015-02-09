@@ -12,7 +12,7 @@ function stop_jetty() {
   host=$1
   ssh npteam@$host /work/jetty/bin/jetty.sh stop
   echo "Stopping jetty ..."
-  while [ ! -f /work/jetty/jetty.pid ]
+  while [ -f /work/jetty/jetty.pid ]
   do
     sleep 1
   done
