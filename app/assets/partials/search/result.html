@@ -89,10 +89,10 @@
     </div>
     <div class="col-xs-12  col-sm-9 result-content">
 
-
-      <!-- RESULT CONTENT -->
-  	  <b ng-show="Search.result.message&&(Search.params.query||Search.params.sparql)">{{Search.result.message}} </b>
-
+		<!-- RESULT CONTENT -->
+		<div ng-show="Search.result.message&&(Search.params.query||Search.params.sparql)" class="row">
+			<b>{{Search.result.message}} </b>
+		</div>
 
   	  <div ng-include="getResultTemplateByEntity()"></div>
 

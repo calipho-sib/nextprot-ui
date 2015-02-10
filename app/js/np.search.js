@@ -320,26 +320,27 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
 
     var self=this;
 
-    this.search=function(params, cb) {
-        Search.docs(params, function (results) {
-            params.start = (!$routeParams.start) ? 0 : $routeParams.start;
+    this.search = function (params, cb) {
+        Search.docs(params,
+            function (results) {
+                params.start = (!$routeParams.start) ? 0 : $routeParams.start;
 
-            if ($routeParams.list) {
-                $scope.showCart = false;
-                _.each(results.docs, function (doc) {
-                    $scope.selectedResults[doc.id] = true;
-                });
-            } else {
-                _.each(results.docs, function (doc) {
-                    if (Cart.inCart(doc.id))
+                if ($routeParams.list) {
+                    $scope.showCart = false;
+                    _.each(results.docs, function (doc) {
                         $scope.selectedResults[doc.id] = true;
-                });
-            }
+                    });
+                } else {
+                    _.each(results.docs, function (doc) {
+                        if (Cart.inCart(doc.id))
+                            $scope.selectedResults[doc.id] = true;
+                    });
+                }
 
-            $scope.start = Search.result.offset >= Search.result.num ? 0 : Search.result.offset;
-            $scope.rows = Search.result.rows;
-            if (cb) cb(results);
-        });
+                $scope.start = Search.result.offset >= Search.result.num ? 0 : Search.result.offset;
+                $scope.rows = Search.result.rows;
+                if (cb) cb(results);
+            });
     }
 
 

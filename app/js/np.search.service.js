@@ -13,7 +13,7 @@ SearchService.factory('Search', [
     '$cookies',
     '$cookieStore',
     'config',
-    'flash', //TODO flash should not be here
+    'flash', //TODO flash should not be here, it should be placed on the controller, but before, the search need to be promised
     function ($resource, $http, $cookies, $cookieStore, config, flash) {
         //
         // this is the url root
