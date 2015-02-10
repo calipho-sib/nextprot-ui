@@ -86,9 +86,8 @@ function restart_solr() {
 SRC_HOST=$1
 TRG_HOST=$2
 
-echo -n "checking solr is properly installed on ${SRC_HOST} and ${TRG_HOST}... "
+echo -n "checking solr is properly installed on ${SRC_HOST}... "
 check_solr ${SRC_HOST}
-check_solr ${TRG_HOST}
 echo "OK"
 
 echo "killing solr on ${SRC_HOST} and ${TRG_HOST}"
