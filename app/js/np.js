@@ -41,7 +41,7 @@
         base: apiBase,   //API URL
         callback: window.location.origin,
         auth0_cliendId: '7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
-        githubToken: '2e36ce76cfb03358f0a38630007840e7cb432a24'
+        githubToken: '3a4071994c064adf33fb9ed3cd3a17b2a9fde8d9' //TODO should revoke and move this to the api
     })
 
 
