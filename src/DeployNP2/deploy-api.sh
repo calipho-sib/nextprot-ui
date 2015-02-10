@@ -52,7 +52,7 @@ for dir in ${dirs}; do
   ssh npteam@${TRG_HOST} "mkdir /work/jetty/${dir}.new"
 
   if ssh npteam@${SRC_HOST} test -d /work/jetty/${dir}; then
-      ssh npteam@${SRC_HOST} "rsync -az /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new"
+      ssh npteam@${SRC_HOST} "rsync -az /work/jetty/${dir}/ npteam@${TRG_HOST}:/work/jetty/${dir}.new"
   elif [ ${dir} = "webapps" ]; then
       echo -e "${error_color}ERROR: /work/jetty/${dir} is missing at ${host} ${_color}"
       exit 2
