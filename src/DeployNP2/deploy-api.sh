@@ -11,6 +11,17 @@ set -o pipefail # prevents errors in a pipeline from being masked. If any comman
 set -o nounset  # exit when your script tries to use undeclared variables.
 #set -o xtrace   # trace what gets executed. Useful for debugging.
 
+function echoUsage() {
+    echo "usage: $0 <src_host> <dest_host>" >&2
+}
+
+args=("$*")
+
+if [ $# -lt 2 ]; then
+  echo missing arguments >&2
+  echoUsage; exit 1
+fi
+
 function stop_jetty() {
   host=$1
   if ! ssh npteam@${host} test -f /work/jetty/jetty.pid; then
