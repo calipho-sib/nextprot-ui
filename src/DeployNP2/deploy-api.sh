@@ -18,7 +18,7 @@ function stop_jetty() {
       return 0
   fi
 
-  ssh npteam@${host} /work/jetty/bin/jetty.sh stop
+  ssh npteam@${host} "/work/jetty/bin/jetty.sh stop > /dev/null 2>&1 &"
   echo -e "${color}Stopping jetty at ${host}...${_color}"
 
   while ssh npteam@${host} test -f /work/jetty/jetty.pid; do
@@ -52,7 +52,7 @@ for dir in ${dirs}; do
   ssh npteam@${TRG_HOST} "mkdir /work/jetty/${dir}.new"
 
   if ssh npteam@${SRC_HOST} test -d /work/jetty/${dir}; then
-      ssh npteam@${SRC_HOST} "rsync -az /work/jetty/${dir}/* npteam@${TRG_HOST}:/work/jetty/${dir}.new"
+      ssh npteam@${SRC_HOST} "rsync -az /work/jetty/${dir}/ npteam@${TRG_HOST}:/work/jetty/${dir}.new"
   elif [ ${dir} = "webapps" ]; then
       echo -e "${error_color}ERROR: /work/jetty/${dir} is missing at ${host} ${_color}"
       exit 2
@@ -67,9 +67,13 @@ stop_jetty ${TRG_HOST}
 
 dirs="webapps cache repository"
 for dir in ${dirs}; do
-  echo -e "${color}Backing up directory ${dir} in ${TRG_HOST}${_color}"
+  echo -e "${color}Removing directory ${dir}.bak in ${TRG_HOST}${_color}"
   ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.bak"
-  ssh npteam@${TRG_HOST} "mv /work/jetty/${dir} /work/jetty/${dir}.bak "
+  if ssh npteam@${TRG_HOST} test -d /work/jetty/${dir}; then
+    echo -e "${color}Backing up directory ${dir} in ${TRG_HOST}${_color}"
+    ssh npteam@${TRG_HOST} "mv /work/jetty/${dir} /work/jetty/${dir}.bak "
+  fi
+  echo -e "${color}Finalizing directory ${dir} in ${TRG_HOST}${_color}"
   ssh npteam@${TRG_HOST} "mv /work/jetty/${dir}.new /work/jetty/${dir} "
 done
 
