@@ -167,6 +167,8 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $routeParams, $rou
         $location.search('sort', null)
         $location.search('order', null)
         $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search');
+
+        Search.params.sparql = ""; //This is needed only when the user is in this page proteins/search?mode=advanced and he has typed something and has clean (otherwise it is driven by the url)
     }
 
     $scope.reset=function(){

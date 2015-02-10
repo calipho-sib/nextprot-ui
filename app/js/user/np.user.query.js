@@ -273,9 +273,10 @@
         }
 
         $scope.applyCurrentQueryForSearch = function (query) {
-            Search.params.sparql = '#' + query.title + "\n" + query.sparql;
+            $location.search('sparql', '#' + query.title + "\n" + query.sparql);
             //close after that
             $scope.repository.show = false;
+            $scope.repository.selectedQuery = false;
         }
 
         $scope.createNewEmptyQuery = function () {

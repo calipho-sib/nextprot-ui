@@ -13,7 +13,8 @@ SearchService.factory('Search', [
     '$cookies',
     '$cookieStore',
     'config',
-    function ($resource, $http, $cookies, $cookieStore, config) {
+    'flash', //TODO flash should not be here
+    function ($resource, $http, $cookies, $cookieStore, config, flash) {
         //
         // this is the url root
         var $api = $resource(config.api.API_URL + '/:action/:entity', { action: '@action', entity: '@entity', port: config.api.API_PORT }, {
@@ -262,7 +263,7 @@ SearchService.factory('Search', [
 
                 if (cb)cb(me.result)
             }, function (error) {
-                flash("alert-danger", error.data.message);
+                flash("alert-warning", error.data.message); //TODO remove this!!!
                 me.loading = false;
                 //if (error.status)
                 //me.result.error = "Ooops, request failed: " + error;
