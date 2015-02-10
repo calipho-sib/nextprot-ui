@@ -30,6 +30,11 @@
             $scope.listToExport = angular.copy(list);
         }
 
+
+        $scope.getListExportUrl = function (list) {
+            return config.api.API_URL + "/export/list/" + list.id;
+        }
+
         $scope.setSelectedFormat = function (format) {
             $scope.selectedFormat = format;
             $scope.views = $scope.formatViews[format];
