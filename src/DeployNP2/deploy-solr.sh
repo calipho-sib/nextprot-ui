@@ -55,7 +55,7 @@ function kill_solr() {
     echo "solr was not running on ${host}"
   else
     echo "killing solr process $SOLR_PID on ${host}"
-    ssh npteam@$${host} kill ${SOLR_PID}
+    ssh npteam@${host} kill ${SOLR_PID}
   fi
 }
 
@@ -80,7 +80,7 @@ function restart_solr() {
     kill_solr ${host}
   fi
   echo "starting solr on ${host}"
-  ssh npteam@$${host} "sh -c 'cd /work/devtools/solr-4.5.0/example; nohup java -Dnextprot.solr -Xmx1024m -jar -Djetty.port=8985 start.jar  > solr.log 2>&1  &'"
+  ssh npteam@${host} "sh -c 'cd /work/devtools/solr-4.5.0/example; nohup java -Dnextprot.solr -Xmx1024m -jar -Djetty.port=8985 start.jar  > solr.log 2>&1  &'"
 }
 
 SRC_HOST=$1
