@@ -67,9 +67,13 @@ stop_jetty ${TRG_HOST}
 
 dirs="webapps cache repository"
 for dir in ${dirs}; do
-  echo -e "${color}Backing up directory ${dir} in ${TRG_HOST}${_color}"
+  echo -e "${color}Removing directory ${dir}.bak in ${TRG_HOST}${_color}"
   ssh npteam@${TRG_HOST} "rm -rf /work/jetty/${dir}.bak"
-  ssh npteam@${TRG_HOST} "mv /work/jetty/${dir} /work/jetty/${dir}.bak "
+  if ssh npteam@${TRG_HOST} test -d /work/jetty/${dir}; then
+    echo -e "${color}Backing up directory ${dir} in ${TRG_HOST}${_color}"
+    ssh npteam@${TRG_HOST} "mv /work/jetty/${dir} /work/jetty/${dir}.bak "
+  fi
+  echo -e "${color}Finalizing directory ${dir} in ${TRG_HOST}${_color}"
   ssh npteam@${TRG_HOST} "mv /work/jetty/${dir}.new /work/jetty/${dir} "
 done
 
