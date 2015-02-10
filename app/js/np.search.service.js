@@ -264,7 +264,13 @@ SearchService.factory('Search', [
                 if (cb)cb(me.result)
             }, function (error) {
                 flash("alert-warning", error.data.message); //TODO remove this!!!
+
+                //See if there is a cleaner way of doing this
                 me.loading = false;
+                me.result.message = null;
+                me.result.pages = [];
+                me.result.filters = null;
+                me.result.num = 0;
                 //if (error.status)
                 //me.result.error = "Ooops, request failed: " + error;
             })
