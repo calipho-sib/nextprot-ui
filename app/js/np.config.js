@@ -72,7 +72,7 @@ angular.module('np.config', []).factory('config', [
             widgets: {
                 sort: {
                     asc: "icon-arrow-up",
-                    desc: "icon-arrow-down",
+                    desc: "icon-arrow-down"
                 },
                 proteins: {
                     sort:{
