@@ -2,9 +2,8 @@
 
 # This script deploys repo web app content in dev, build, alpha or pro machine
 
-# ex: bash deploy-ui.sh dev /Users/fnikitin/Projects/nextprot-ui/
-
-set -x
+# ex1: bash -x deploy-ui.sh /Users/fnikitin/Projects/nextprot-ui/ dev
+# ex2: bash deploy-ui.sh /Users/fnikitin/Projects/nextprot-snorql/ dev
 
 set -o errexit  # make your script exit when a command fails.
 set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
@@ -17,7 +16,7 @@ warning_color='\e[1;33m' # begin warning color
 _color='\e[0m'           # end Color
 
 function echoUsage() {
-    echo "usage: $0 <[dev|build|alpha|pro]> <repo>" >&2
+    echo "usage: $0 <repo> <[dev|build|alpha|pro]>" >&2
 }
 
 args=("$*")
@@ -27,8 +26,8 @@ if [ $# -lt 2 ]; then
   echoUsage; exit 1
 fi
 
-target=$1
-repo=$2
+repo=$1
+target=$2
 
 if [ ! -d ${repo} ]; then
     echo -e "${error_color}${repo} is not a directory${_color}"
@@ -43,22 +42,24 @@ source ${repo}/deploy.conf
 echo "entering repository ${repo}"
 cd ${repo}
 
-echo "deploying to ${target}"
+echo "brunching modules"
 rm -rf build
 ./node_modules/.bin/brunch build -P
 
-sedcmd="s/NX_ENV/$1/g"
+sedcmd="s/NX_ENV/${target}/g"
 sed ${sedcmd} build/js/app.js > tmp.dat
 mv tmp.dat build/js/app.js
 
+echo "deploying to ${target}"
+
 # for pro, send to plato, see target directory there
-if [ $1 = "dev" ]; then
+if [ ${target} = "dev" ]; then
     rsync -auv build/* ${DEV_PATH}
-elif [ $1 = "pro" ]; then
+elif [ ${target} = "pro" ]; then
     rsync -auv build/* ${PRO_PATH}
-elif [ $1 = "build" ]; then
+elif [ ${target} = "build" ]; then
     rsync -auv build/* ${BUILD_PATH}
-elif [ $1 = "alpha" ]; then
+elif [ ${target} = "alpha" ]; then
     rsync -auv build/* ${ALPHA_PATH}
 else
     echo "wrong environment"
