@@ -29,10 +29,10 @@
 						</p>
 
 						<div class="btn-group navbar-form nopadding" >
-				  		<a href="" ng-click="cookies({summary:true});" id="search-summary" class="btn  btn-navbar" 
-				  							 ng-class="Search.session.summary==='false'? 'btn-navbar':'btn-navbar-selected'">Summary</a>
-				  		<a href="" ng-click="cookies({summary:false});" id="search-details" class="btn  btn-navbar" 
-				  							 ng-class="Search.session.summary==='true'? 'btn-navbar':'btn-navbar-selected'">Details</a>
+				  		<a href="" ng-click="Search.session.summary=true" id="search-summary" class="btn  btn-navbar"
+				  							 ng-class="!Search.session.summary? 'btn-navbar':'btn-navbar-selected'">Summary</a>
+				  		<a href="" ng-click="Search.session.summary=false" id="search-details" class="btn  btn-navbar"
+				  							 ng-class="Search.session.summary? 'btn-navbar':'btn-navbar-selected'">Details</a>
 						</div>	
 
 						<ul class="nav  navbar-nav navbar-right" >

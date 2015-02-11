@@ -63,13 +63,13 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $routeParams, $rou
         return page === currentRoute ? 'active' : '';
     };
 
-    $scope.cookies = function (session) {
+    /*$scope.cookies = function (session) {
         Search.cookies(session)
         $timeout(function () {
             // must be called 2times??
             Search.cookies(session)
         }, 0)
-    }
+    }*/
 
     $scope.login = function() {
         var currentUrl = $location.url();

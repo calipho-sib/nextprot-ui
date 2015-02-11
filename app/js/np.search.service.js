@@ -49,8 +49,8 @@ SearchService.factory('Search', [
         var Search = function (data) {
             //
             // init session
-            this.session = {}
-            angular.extend(this.session, $cookies)
+            this.session = {summary : false}
+            //angular.extend(this.session, $cookies)
 
             //
             // default config
@@ -76,13 +76,13 @@ SearchService.factory('Search', [
         }
 
 
-        Search.prototype.cookies = function (session) {
+        /*Search.prototype.cookies = function (session) {
             angular.extend(this.session, session, $cookies)
             Object.keys(session).forEach(function (k) {
                 if (session[k] !== undefined)$cookieStore.put(k, session[k])
             })
             return true;
-        }
+        }*/
 
         Search.prototype.clear = function () {
             angular.copy(defaultUrl, this.params)
