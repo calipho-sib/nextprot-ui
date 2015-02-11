@@ -21,6 +21,7 @@
         }
     });
 
+
     SearchUI.filter('getGitHubUrl', ['config', function (config) {
 
         return function (queryId) {
@@ -45,6 +46,18 @@
 
                 if(input == "api") return config.api.API_URL;
                 else return "http://"+ config.api.environment + "-" + input + ".nextprot.org";
+        };
+    }]);
+
+    SearchUI.filter('filterMyQueries', ['user', function (user) {
+        return function (items) {
+            var filtered = [];
+            angular.forEach(items, function (item) {
+                if (item.owner === user.username) {
+                    filtered.push(item);
+                }
+            });
+            return filtered;
         };
     }]);
 
