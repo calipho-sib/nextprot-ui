@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# This script deploys web app content in dev,build,alpha or pro machine
+# This script deploys repo web app content in dev, build, alpha or pro machine
 
-# ex: bash deploy-ui.sh dev /Users/fnikitin/Projects/nextprot-ui/deploy.conf
+# ex: bash deploy-ui.sh dev /Users/fnikitin/Projects/nextprot-ui/
 
 set -x
 
@@ -40,6 +40,7 @@ fi
 
 source ${repo}/deploy.conf
 
+echo "entering repository ${repo}"
 cd ${repo}
 
 echo "deploying to ${target}"
