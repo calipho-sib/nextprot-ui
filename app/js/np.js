@@ -40,8 +40,7 @@
         environment: nxEnvironment,
         base: apiBase,   //API URL
         callback: window.location.origin,
-        auth0_cliendId: '7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW',
-        githubToken: '3a4071994c064adf33fb9ed3cd3a17b2a9fde8d9' //TODO should revoke and move this to the api
+        auth0_cliendId: '7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW'
     })
 
 
@@ -51,10 +50,11 @@
         gitHubContent.initialize({
             baseUrl: "https://api.nextprot.org",
             helpPath: '/rdf/help/type/all.json',
-            helpTitle: 'Main truc',
+            helpTitle: 'Generalities',
             root: '',                                                            // specify a URI prefix
-            githubRepo: 'calipho-sib/nextprot-docs',
-            githubToken: npSettings.githubToken
+            githubRepo: '/',
+            githubApi:apiBase,
+            githubEditPage : "https://github.com/calipho-sib/nextprot-docs/edit/master/"
         });
     };
 
