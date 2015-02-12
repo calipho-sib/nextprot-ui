@@ -5,10 +5,7 @@
 # ex1: bash -x deploy-ui.sh /Users/fnikitin/Projects/nextprot-ui/ dev
 # ex2: bash deploy-ui.sh /Users/fnikitin/Projects/nextprot-snorql/ dev
 
-set -o errexit  # make your script exit when a command fails.
-set -o pipefail # prevents errors in a pipeline from being masked. If any command in a pipeline fails, that return code will be used as the return code of the whole pipeline.
-set -o nounset  # exit when your script tries to use undeclared variables.
-#set -o xtrace   # trace what gets executed. Useful for debugging.
+source "./strict-mode.sh"
 
 color='\e[1;34m'         # begin color
 error_color='\e[1;32m'   # begin error color
