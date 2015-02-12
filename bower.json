@@ -20,7 +20,12 @@
   ],
   "overrides": {
     "showdown": {
-      "main": ["src/showdown.js","src/extensions/github.js","src/extensions/table.js","src/extensions/twitter.js"]
+      "main": [
+        "src/showdown.js",
+        "src/extensions/github.js",
+        "src/extensions/table.js",
+        "src/extensions/twitter.js"
+      ]
     }
   },
   "dependencies": {
@@ -43,5 +48,11 @@
   },
   "devDependencies": {
     "angular-mocks": "latest"
+  },
+  "resolutions": {
+    "angular": "~1",
+    "bootstrap": "~3",
+    "jquery": "~2.1",
+    "codemirror": "~4.6.0"
   }
 }
