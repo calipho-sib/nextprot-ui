@@ -9,7 +9,7 @@
 
 # ex: bash -c deploy-npdb.sh kant uat-web2 npdb
 
-source "../strict-mode.sh"
+source "./strict-mode.sh"
 
 function echoUsage() {
     echo "usage: $0 [-c][-v] <src_host> <dest_host> <dest_user>" >&2
