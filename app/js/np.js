@@ -23,7 +23,7 @@
         .factory('errorInterceptor', errorInterceptor)
         .run(runApplication);
 
-
+    ///// TODO: fixing; we are breaking the DRY principle and it is really bad (see duplication in nextprot-snorql/app/js/app.config.js) !!!!
     //Environment that should be set from outside //TODO should replace this using GRUNT
     var nxEnvironment = "NX_ENV"; //env can be replaced, by dev, alpha or pro
     var apiBase = "http://localhost:8080/nextprot-api-web"; //default
