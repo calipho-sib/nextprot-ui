@@ -58,7 +58,7 @@ function flashMessages() {
   var directive = { restrict: 'EA', replace: true };
 
         directive.template =
-			'<ul style="position: absolute;top: -2px;left: 15%;right: 15%;z-index:10010;opacity:0.9">' +
+			'<ul style="position: fixed;top: -2px;left: 15%;right: 15%;z-index:10010;opacity:0.9">' +
             	'<li style="list-style: none " ng-repeat="m in messages">' +
 					'<div  class="flashmsg alert {{m.level}} alert-dismissible" role="alert">' +
 					'<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span>' +
