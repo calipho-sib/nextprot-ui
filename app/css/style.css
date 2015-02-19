@@ -175,3 +175,7 @@ a.inactive {
     color: #05a;
     font-size: 10px;
 }
+
+.details-query-popup {
+    font-size:13px;
+}

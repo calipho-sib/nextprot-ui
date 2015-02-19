@@ -76,8 +76,13 @@
                 </td>-->
                 <td style="width:85%">
                     <a title="{{query.description}} {{query.sparql}}" href="" ng-click="applyCurrentQueryForSearch(query)" class="query-title">{{query.title}}</a>
-                    <p ng-show="query.seeDetails"><i>{{query.sparql}}</i></p>
-                    <p ng-show="query.seeDetails">{{query.description}}</p>
+                    <div class="details-query-popup" ng-show="query.seeDetails">
+                        <p><b>Tags: </b>{{query.tags.join(", ")}}</span></p>
+                        <p><b>Description: </b>{{query.description}}</p>
+                        <p><b>Sparql: </b><i>{{query.sparql}}</i></p>
+                        <p><b>Quey Id: </b>{{query.userQueryId | getUserQueryId}}</span></p>
+                    </div>
+
                 </td>
                   <!--Show the view button-->
                   <td >

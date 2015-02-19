@@ -33,6 +33,17 @@
 
     }]);
 
+    SearchUI.filter('getUserQueryId', [function () {
+
+        return function (queryId) {
+
+            var s = "000000000" + queryId;
+            var fileName = "NXQ_" + s.substr(s.length - 5);
+            return fileName;
+        };
+
+    }]);
+
     SearchUI.filter('getNeXtProtUrl', ['config', function (config) {
         return function (input) {
 
