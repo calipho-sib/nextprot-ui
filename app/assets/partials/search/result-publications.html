@@ -2,7 +2,7 @@
       <div class="row" >
         <ul ng-cloak id="search-results" class="span8">
           <li ng-repeat="doc in Search.result.docs"  ng-cloak>
-            <a href="https://www.nextprot.org/db/publication/{{doc.ac}}"> {{doc.title}} ({{doc.year}})</a>
+            <a href="https://www.nextprot.org/db/publication/{{doc.id}}"> {{doc.title}} ({{doc.year}})</a>
             <div class=" small" ng-show="Search.session.summary">{{doc.authors[0]}}, <span class="gray">{{doc.journal}} <b>{{doc.volume}}</b>, {{doc.first_page}}-{{doc.last_page}}({{doc.year}})</span>
             </div>
             <div ng-hide="Search.session.summary">
