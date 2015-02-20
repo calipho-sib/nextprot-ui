@@ -51,7 +51,8 @@
     SearchUI.filter('getPubUrl', [function () {
         return function (ac) {
             if (ac.indexOf(":PubMed") != -1) {
-                return "http://www.ncbi.nlm.nih.gov/pubmed?term=" + ac.substring(ac, ac.indexOf(":"));
+                //return "http://www.ncbi.nlm.nih.gov/pubmed?term=" + ac.substring(ac, ac.indexOf(":"));
+                return "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=search&term=" + ac.substring(ac, ac.indexOf(":"));
             } else if (ac.indexOf(":DOI") != -1) {
                 return "http://dx.doi.org/" + ac.substring(ac, ac.indexOf(":"));
             }
