@@ -85,6 +85,7 @@
 
                 </td>
                   <!--Show the view button-->
+                  <td style="font-size: 10px" class="bottom:-10">{{query.userQueryId | getUserQueryId}}</td>
                   <td >
                     <div class="btn-group pull-right">
                         <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="deleteUserQuery(query)"><i class="icon-remove"></i></button>
