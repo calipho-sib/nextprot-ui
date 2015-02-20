@@ -469,11 +469,6 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         }
     }
 
-    $scope.getPublicationUrl = function (ac) {
-        return "http://www.ncbi.nlm.nih.gov/pubmed?cmd=search&term=" + ac
-    }
-
-
     $scope.affix = function (selector) {
         $(selector).affix()
     }

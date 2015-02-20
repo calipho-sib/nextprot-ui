@@ -44,6 +44,34 @@
 
     }]);
 
+    /**
+     * Filters for publications
+     */
+
+    SearchUI.filter('getPubUrl', [function () {
+        return function (ac) {
+            if (ac.indexOf(":PubMed") != -1) {
+                return "http://www.ncbi.nlm.nih.gov/pubmed?term=" + ac.substring(ac, ac.indexOf(":"));
+            } else if (ac.indexOf(":DOI") != -1) {
+                return "http://dx.doi.org/" + ac.substring(ac, ac.indexOf(":"));
+            }
+        }
+    }]);
+
+    SearchUI.filter('getPubSource', [function () {
+        return function (ac) {
+            if (ac.toLowerCase().indexOf("pubmed") != -1) return "PubMed";
+            else return "Full text";
+        };
+    }]);
+
+    SearchUI.filter('getPubId', [function () {
+        return function (ac) {
+            return ac.substring(0, ac.indexOf(":"));
+        };
+    }]);
+
+
     SearchUI.filter('getNeXtProtUrl', ['config', function (config) {
         return function (input) {
 

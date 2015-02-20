@@ -7,8 +7,11 @@
             </div>
             <div ng-hide="Search.session.summary">
               <span class="result-authors" ><span ng-repeat="author in doc.authors"><a ng-href="publications/search/{{author|trim}}">{{author}}</a>, </span></span><br/>
-              <span class=" small">{{doc.journal}} <b>{{doc.volume}}</b>, {{doc.first_page}}-{{doc.last_page}}({{doc.year}})
-                [<span ng-repeat="ac in doc.acs"><a href="{{getPublicationUrl(ac)}}">{{ac}}</a></span>] </span> <br/>
+              <span class=" small">{{doc.journal}} <b>{{doc.volume}}</b>, {{doc.first_page}}-{{doc.last_page}}({{doc.year}})</span>
+
+                  <!--PubMed --> <span> [{{doc.acs[0] | getPubSource}}:<a target="_blank" href="{{doc.acs[0] | getPubUrl}}">{{doc.acs[0] | getPubId}}</a>]</span>
+                  <!--DOI -->    <span ng-if="doc.acs.length > 1"> [{{doc.acs[1] | getPubSource}}:<a target="_blank" href="{{doc.acs[1] | getPubUrl}}">{{doc.acs[1] | getPubId}}</a>]</span>
+                  <br/>
               <span><a class="btn btn-mini" toggle="#line-{{$index}}" > Show Abstract</a> </span>
               <div  id="line-{{$index}}" class="hide result-abstract"  ng-bind-html="doc.abstract"></div>
             </div>      
