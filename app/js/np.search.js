@@ -370,9 +370,6 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
     }
 
 
-
-
-
     $scope.change = function (docId) {
         var found = Cart.change(docId);
 
@@ -382,6 +379,10 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
             if (found == -1) userProteinList.addElements(user, $routeParams.list, [docId]);
             else userProteinList.removeElements(user, $routeParams.list, [docId]);
         }
+    }
+
+    $scope.isInCart = function (docId) {
+        return Cart.isInCart(docId);
     }
 
 
@@ -410,6 +411,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                 }, function (docs) {
                     Cart.setCart(docs.ids);
                     setAsSelected(docs.ids);
+                    flash("alert-info", docs.ids.length + " entries added to basket");
                 });
         }
     }
@@ -440,6 +442,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                 }, function (docs) {
                     Cart.removeFromCart(docs.ids);
                     $scope.selectedResults = [];
+                    flash("alert-info", docs.ids.length + " entries removed from basket");
                 });
         }
     }

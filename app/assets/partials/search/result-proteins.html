@@ -1,21 +1,26 @@
 <!-- RESULT HEADERS -->
       <div class="row">
         <p class="col-xs-6" ng-show="showCart&&Search.result.docs.length">
-          <a href="" class="btn btn-xs btn-default " ng-click="selectAll()">Select All</a>
-          <a href="" class="btn btn-xs btn-default "  ng-click="unselectAll()">Unselect All</a>
+          <a href="" class="btn btn-xs btn-default " ng-click="selectAll()">Add all to basket</a>
+          <a href="" class="btn btn-xs btn-default "  ng-click="unselectAll()">Remove all from basket</a>
         </p>
         <ul ng-cloak id="search-results" class="col-xs-12 list-unstyled">
           <li ng-repeat="doc in Search.result.docs">
             <!-- <input type="checkbox" name="docs[]" value="{{doc.id}}" 
                ng-click="selectDoc(doc.id)" ng-model="selectedResults[doc.id]" id="{{doc.id}}"> -->
-            <input type="checkbox" name="docs[]" value="{{doc.id}}" ng-show="showCart" ng-click="change(doc.id)" ng-model="selectedResults[doc.id]" id="{{doc.id}}">
+            <!-- <input type="checkbox" name="docs[]" value="{{doc.id}}" ng-show="showCart" ng-click="change(doc.id)" ng-model="selectedResults[doc.id]" id="{{doc.id}}">-->
 
                <!-- ng-click="Cart.change(doc.id)" -->
+            <!-- Add to basket -->
+            <a id="{{doc.id}}" ng-click="change(doc.id)" ng-show="showCart" href="#" title="{{!isInCart(doc.id)? 'Add entry to basket' : 'Remove entry from basket'}}"> <i ng-class="!isInCart(doc.id) ? 'icon-plus' : 'icon-minus'"></i></a>
 
             <a href="http://www.nextprot.org/entry/{{doc.id}}">
               <span ng-bind-html="doc.recommended_name"></span>
               <span ng-show="doc.ec_name">[{{doc.ec_name}}]</span> ({{doc.recommended_gene_names}}) [{{doc.id}}]</a> 
               <span><a class="btn hide btn-default btn-xs" toggle="#line-{{$index}}" ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i> Details</a> </span>
+
+
+
             <div class="small" ng-show="!Search.session.summary">
              <span ng-bind-html="doc.function_desc[0].replace('@@',' ')|limit:300"></span>
              <span ng-hide="doc.function_desc"> No functional information for this protein. </span>&nbsp;
