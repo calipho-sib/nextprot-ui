@@ -10,14 +10,19 @@
   position: relative;
 }
 
+.color-inherit{
+    color: inherit;
+}
 
 .search-toggle{
-    font-size: 80%;
-    margin-top: -1px;
     position: absolute;
-    right:8px;
-    top:34px;
+    top:-25px;
+    left: 20px;
+    font-size: 90%;
     font-weight:300;
+    /*right:400px;
+    top:-20px;*/
+    /**/
 }
 .search-bottom{
     float: left;
