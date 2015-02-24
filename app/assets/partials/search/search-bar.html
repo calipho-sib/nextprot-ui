@@ -25,6 +25,17 @@
         <!--                        -->
       </div>
       <div class="search-bar col-xs-9 col-sm-7">
+
+        <div class="search-toggle">
+          <a ng-class="{'color-inherit':isAdvancedMode()}" href="#" ng-click="toggleAdv({mode:null})"><input type="radio" name="editList" ng-checked="!isAdvancedMode()">&nbsp;Simple search</a>
+          &nbsp;&nbsp;
+          <a ng-class="{'color-inherit':!isAdvancedMode()}" href="#" ng-click="toggleAdv({mode:'advanced'})"><input type="radio" name="editList" ng-checked="isAdvancedMode()">&nbsp;Advanced search
+          </a>
+          <!--<span class=""><span ng-click="toggleAdv({mode:null})" ng-class="{link:isAdvancedMode()}">Simple search</span> /
+          <span ng-class="{link:!isAdvancedMode()}" ng-click="toggleAdv({mode:'advanced'}); repository.show=true">Advanced search</span></span>-->
+        </div>
+
+
         <div class="input-group col-xs-12">
 
           <!--                        -->
@@ -56,9 +67,10 @@
             <button id="search-clear" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="clean()" ng-disabled="(!Search.params.query || !Search.params.query.length) && (!Search.params.sparql || !Search.params.sparql.length)" style="margin-left: -30px; position: absolute; top: 7px;z-index:10">
               <i class="icon-remove "></i>
             </button>
-            <button id="search-help" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="toggleRepository()" ng-show="isAdvancedMode()" style="margin-left: -54px; position: absolute; top: 7px;z-index:10">
+            <button title="Show example queries" id="search-help" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="showRepository()" ng-show="isAdvancedMode()" style="margin-left: -54px; position: absolute; top: 7px;z-index:10">
               <i class="icon-align-justify"></i>
             </button>
+
 
 
             <!--                        -->
@@ -73,6 +85,7 @@
 
         </div>
 
+
         <!--                                                                  -->
         <!--  SEARCH BOTTOM ('did you mean' option and toggle search)         -->
         <!--                                                                  -->
@@ -83,8 +96,6 @@
                             <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[1].query}}">{{Search.result.spellcheck.collations[1].query}}</a>
                         </span>
                     </span>
-          <span class=" search-toggle"><span ng-click="toggleAdv({mode:null})" ng-class="{link:isAdvancedMode()}">simple</span> /
-            <span ng-class="{link:!isAdvancedMode()}" ng-click="toggleAdv({mode:'advanced'}); repository.show=true">advanced</span></span>
         </div>
 
       </div>

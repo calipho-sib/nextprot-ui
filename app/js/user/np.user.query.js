@@ -227,6 +227,11 @@
         }
 
         // publish function
+        $scope.showRepository = function () {
+            $scope.repository.show = true;
+        }
+
+        // publish function
         $scope.toggleRepository = function () {
             $scope.repository.show = !$scope.repository.show;
 

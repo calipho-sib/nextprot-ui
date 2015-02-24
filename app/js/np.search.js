@@ -36,7 +36,7 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $routeParams, $rou
 
     $scope.editorOptions = {
         lineWrapping : true,
-        lineNumbers: false,
+        lineNumbers: true,
         autofocus:true,
         readOnly: false,
         mode: 'sparql'
@@ -140,11 +140,15 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $routeParams, $rou
     }
 
     $scope.toggleAdv = function (mode) {
-        $location.search('query', null)
-        $location.search('sparql', null)
-        $scope.toggle(mode)
-        if(mode.mode){
-            $location.path('/proteins/search')
+        if(mode != $location.search("mode")){
+
+            $location.search('query', null)
+            $location.search('sparql', null)
+            $scope.toggle(mode)
+            if(mode.mode){
+                $location.path('/proteins/search')
+            }
+
         }
         // if (mode==='advanced'){
         //     return $location.path('/proteins/search').search('mode', mode).search('query',null);
@@ -326,7 +330,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                 params.start = (!$routeParams.start) ? 0 : $routeParams.start;
 
                 if ($routeParams.list) {
-                    $scope.showCart = false;
+                    $scope.showCart = true;
                     _.each(results.docs, function (doc) {
                         $scope.selectedResults[doc.id] = true;
                     });
