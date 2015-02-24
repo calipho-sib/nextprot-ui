@@ -67,7 +67,7 @@
             <button id="search-clear" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="clean()" ng-disabled="(!Search.params.query || !Search.params.query.length) && (!Search.params.sparql || !Search.params.sparql.length)" style="margin-left: -30px; position: absolute; top: 7px;z-index:10">
               <i class="icon-remove "></i>
             </button>
-            <button title="Show example queries" id="search-help" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="toggleRepository()" ng-show="isAdvancedMode()" style="margin-left: -54px; position: absolute; top: 7px;z-index:10">
+            <button title="Show example queries" id="search-help" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="showRepository()" ng-show="isAdvancedMode()" style="margin-left: -54px; position: absolute; top: 7px;z-index:10">
               <i class="icon-align-justify"></i>
             </button>
 
