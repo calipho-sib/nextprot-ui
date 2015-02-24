@@ -13,6 +13,14 @@
         }
     });
 
+    SearchUI.filter('getStyleClass', function () {
+        return function (input) {
+            if (input == 'no')
+                return 'inactive';
+            return 'a';
+        }
+    });
+
     SearchUI.filter('trim', function () {
         return function (input) {
             if (!input || !input.length)
