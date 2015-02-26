@@ -352,7 +352,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
 
 
     if ($routeParams.cart) {
-        $scope.showCart = false;
+        //$scope.showCart = false;
         delete params.cart;
         params.accs = Cart.getElements();
     }
@@ -377,12 +377,28 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
     $scope.change = function (docId) {
         var found = Cart.change(docId);
 
-        if ($routeParams.list) {
-            var list = {};
-            list['accs'] = [docId];
-            if (found == -1) userProteinList.addElements(user, $routeParams.list, [docId]);
-            else userProteinList.removeElements(user, $routeParams.list, [docId]);
+        if ($routeParams.cart) {
+            $route.reload();
         }
+
+            /*
+            if ($routeParams.list) {
+                var list = {};
+                list['accs'] = [docId];
+                if (found == -1) userProteinList.addElements(user, $routeParams.list, [docId]);
+                else userProteinList.removeElements(user, $routeParams.list, [docId]);
+            }*/
+    }
+
+    $scope.getResultHeaderText = function () {
+        if ($routeParams.list) {
+            return "Export list entries of \'" + $routeParams.list + "\'";
+        } else if ($routeParams.userQueryId) {
+            return "Export query entries of \'" + $routeParams.list + "\'";
+        } else if ($routeParams.cart) {
+            return "Export basket entries";
+        }
+        return null;
     }
 
     $scope.isInCart = function (docId) {
@@ -396,7 +412,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
     }
 
 
-    $scope.selectAll = function () {
+    $scope.addAllToBasket = function () {
         if ($routeParams.list) {
             userProteinList.getByIds(user, $routeParams.list, function (result) {
                 Cart.setCart(result.ids);
@@ -427,13 +443,15 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         });
     }
 
-    $scope.unselectAll = function () {
+    $scope.removeAllFromBasket = function () {
         if ($routeParams.list) {
             userProteinList.getByIds(user, $routeParams.list, function (result) {
                 Cart.removeFromCart(result.ids);
                 setAsSelected(result.id);
             });
         } else if ($routeParams.cart) {
+            Cart.emptyCart();
+            $route.reload();
             // removed for now
         } else {
             Search.getIds(

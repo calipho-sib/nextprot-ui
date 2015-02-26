@@ -33,36 +33,34 @@
 				  							 ng-class="!Search.session.summary? 'btn-navbar':'btn-navbar-selected'">Summary</a>
 				  		<a href="" ng-click="Search.session.summary=false" id="search-details" class="btn  btn-navbar"
 				  							 ng-class="Search.session.summary? 'btn-navbar':'btn-navbar-selected'">Details</a>
-						</div>	
+						</div>
 
-						<ul class="nav  navbar-nav navbar-right" >
-						  <!-- SORTING -->
-						  <li class="dropdown " ng-include="getSortTemplateByEntity()"></li>
-				
-						  <!-- EXPORT -->
-						  <!--
-						  <li class="divider-vertical"></li>
-						  <li class="dropdown">
-							  <a data-toggle="dropdown" class="dropdown-toggle" href="">Export  <b class="caret"></b></a>
-							  <ul class="dropdown-menu">
-								  <li><a href="#">XML</a></li>
-								  <li class="divider"></li>
-								  <li><a href="#">API JSON </a></li>
-								  <li><a href="#">API XML </a></li>
-							  </ul>
-						  </li>
-						  -->
-						  <li class="dropdown ">
-						    <a data-toggle="dropdown" class="dropdown-toggle" href="">
-								<i class="icon-shopping-cart"></i><span class="badge">{{Cart.getCartSize()}}</span><b class="caret"></b>
-						    </a>
+
+						<!-- EXPORT -->
+						<!--					  -->
+						<button ng-show="getResultHeaderText() != null" type="button" bs-modal="'partials/export/export-modal.html'"
+								ng-click="launchModal($index, 'edit')" class="btn btn-link navbar-btn btn-navbar-selected">
+							{{getResultHeaderText()}}&nbsp;<i class="icon-download"></i></button>
+
+
+						<ul class="nav navbar-nav navbar-right" >
+							<!-- Basket -->
+							<li class="dropdown ">
+						    <a title="Basket" data-toggle="dropdown" class="dropdown-toggle" href="">
+								<span class="badge">{{Cart.getCartSize()}}
+								<i class="icon-briefcase"></i>
+								</span><b class="caret"></b>
+							</a>
 							<ul class="dropdown-menu pull-right">
-								<li><a href="" ng-click="emptyCart()">Empty Cart</a></li>
-								<li><a href="" ng-click="launchModalList($index, 'create')">Save Cart as List</a></li>
-								<li><a href="proteins/search?cart=true">View Cart</a></li>
+								<li><a href="" ng-click="emptyCart()">Empty basket</a></li>
+								<li><a href="" ng-click="launchModalList($index, 'create')">Save basket as a list</a></li>
+								<li><a href="proteins/search?cart=true">Manage basket</a></li>
 
 						    </ul>
 						  </li>
+							<!-- Sorting -->
+							<li class="dropdown " ng-include="getSortTemplateByEntity()"></li>
+
 						</ul>		
 					</div>
 

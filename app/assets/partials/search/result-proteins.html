@@ -1,8 +1,8 @@
 <!-- RESULT HEADERS -->
       <div class="row">
         <p class="col-xs-6" ng-show="showCart&&Search.result.docs.length">
-          <a href="" class="btn btn-xs btn-default " ng-click="selectAll()">Add all to basket</a>
-          <a href="" class="btn btn-xs btn-default "  ng-click="unselectAll()">Remove all from basket</a>
+          <a href="" class="btn btn-xs btn-default " ng-click="addAllToBasket()">Add all to basket</a>
+          <a href="" class="btn btn-xs btn-default "  ng-click="removeAllFromBasket()">Remove all from basket</a>
         </p>
         <ul ng-cloak id="search-results" class="col-xs-12 list-unstyled">
           <li ng-repeat="doc in Search.result.docs">
@@ -12,13 +12,16 @@
 
                <!-- ng-click="Cart.change(doc.id)" -->
             <!-- Add to basket -->
-            <a id="{{doc.id}}" ng-click="change(doc.id)" ng-show="showCart" href="#" title="{{!isInCart(doc.id)? 'Add entry to basket' : 'Remove entry from basket'}}"> <i ng-class="!isInCart(doc.id) ? 'icon-plus' : 'icon-minus'"></i></a>
 
             <a href="http://www.nextprot.org/entry/{{doc.id}}">
               <span ng-bind-html="doc.recommended_name"></span>
               <span ng-show="doc.ec_name">[{{doc.ec_name}}]</span> ({{doc.recommended_gene_names}}) [{{doc.id}}]</a> 
               <span><a class="btn hide btn-default btn-xs" toggle="#line-{{$index}}" ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i> Details</a> </span>
 
+            | <!-- Export entry -->
+            <a href="#" title="Export entry"> <i class="icon-download"></i></a>
+            | <!-- Add / remove from basket -->
+            <a id="{{doc.id}}" ng-click="change(doc.id)" ng-show="showCart" href="#" title="{{!isInCart(doc.id)? 'Add entry to basket' : 'Remove entry from basket'}}">{{isInCart(doc.id) ? '-' : '+'}}<i class="icon-briefcase"></i></a>
 
 
             <div class="small" ng-show="!Search.session.summary">
