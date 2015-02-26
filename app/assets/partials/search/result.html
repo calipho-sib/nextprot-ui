@@ -38,13 +38,13 @@
 
 						<!-- EXPORT -->
 						<!--					  -->
-						<button ng-show="getResultHeaderText() != null" type="button" bs-modal="'partials/export/export-modal.html'"
-								ng-click="launchModal($index, 'edit')" class="btn btn-link navbar-btn btn-navbar-selected">
+						<button ng-show="getResultHeaderText()" type="button" bs-modal="'partials/export/export-modal.html'"
+								ng-click="setListToExport()" class="btn btn-link navbar-btn btn-navbar-selected">
 							{{getResultHeaderText()}}&nbsp;<i class="icon-download"></i></button>
 
 
 						<ul class="nav navbar-nav navbar-right">
-							
+
 							<!-- Basket -->
 							<li class="{{Search.result.params.entity|has:'proteins'|showDropdown}}">
 								<a data-toggle="dropdown" class="dropdown-toggle" href="">

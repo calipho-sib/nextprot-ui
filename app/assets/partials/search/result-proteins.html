@@ -19,7 +19,7 @@
               <span><a class="btn hide btn-default btn-xs" toggle="#line-{{$index}}" ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i> Details</a> </span>
 
             | <!-- Export entry -->
-            <a href="#" title="Export entry"> <i class="icon-download"></i></a>
+            <a bs-modal="'partials/export/export-modal.html'" href="#" title="Export entry"> <i class="icon-download"></i></a>
             | <!-- Add / remove from basket -->
             <a id="{{doc.id}}" ng-click="change(doc.id)" ng-show="showCart" href="#" title="{{!isInCart(doc.id)? 'Add entry to basket' : 'Remove entry from basket'}}">{{isInCart(doc.id) ? '-' : '+'}}<i class="icon-briefcase"></i></a>
 

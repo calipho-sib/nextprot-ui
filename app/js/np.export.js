@@ -15,9 +15,19 @@
         $scope.formats = ["xml","txt"];
         $scope.selectedFormat = "xml";
 
-
         $scope.views = null;
         $scope.selectedView = null;
+
+        $scope.export = exportService;
+
+        //Can be an entry, a list a query or the car
+        $scope.setExportObjectType = function (exportType){
+            exportService.exportObjectType = exportType;
+        }
+
+        $scope.getExportObjectType = function (){
+            return exportService.exportObjectType;
+        }
 
         exportService.getTemplates(function (formatViews) {
             //angular.copy($scope.exportFormats, formatTemplates);
@@ -47,14 +57,21 @@
         }
 
         $scope.getFileExportURL = function () {
-            var exportListURL = config.api.API_URL + "/export";
-            exportListURL += "/list/" + $scope.listToExport.id;
-            if($scope.selectedView !== allEntryTemplateValue){
-                exportListURL += "/" + $scope.selectedView;
+
+            var exportURL = config.api.API_URL;
+
+            if($scope.export.exportObjectType === "entry"){
+                exportURL +=  "/entry/" + $scope.export.exportObjectName;
+            }else if($scope.export.exportObjectType === "list"){
+                exportURL += "/lits/" + $scope.export.exportObjectName;
             }
 
-            exportListURL += "." + $scope.selectedFormat;
-            return exportListURL;
+            if($scope.selectedView !== allEntryTemplateValue){
+                exportURL += "/" + $scope.selectedView;
+            }
+
+            exportURL += "." + $scope.selectedFormat;
+            return exportURL;
         };
 
     }
@@ -71,6 +88,8 @@
 
 
         var ExportService = function () {
+            this.exportObjectType = "entry";
+            this.exportObjectName = "NX_P35568";
         };
 
         ExportService.prototype.getTemplates = function (cb) {
