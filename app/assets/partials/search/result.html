@@ -52,7 +52,8 @@
 							  </ul>
 						  </li>
 						  -->
-						  <li class="dropdown ">
+
+                            <li class="{{Search.result.params.entity|has:'proteins'|showDropdown}}">
 						    <a data-toggle="dropdown" class="dropdown-toggle" href="">
 								<i class="icon-shopping-cart"></i><span class="badge">{{Cart.getCartSize()}}</span><b class="caret"></b>
 						    </a>

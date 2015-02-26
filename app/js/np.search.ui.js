@@ -21,6 +21,14 @@
         }
     });
 
+    SearchUI.filter('showDropdown', function () {
+        return function (input) {
+            if (input == 'no')
+                return 'hidden';
+            return 'dropdown';
+        }
+    });
+
     SearchUI.filter('trim', function () {
         return function (input) {
             if (!input || !input.length)
