@@ -43,25 +43,29 @@
 							{{getResultHeaderText()}}&nbsp;<i class="icon-download"></i></button>
 
 
-						<ul class="nav navbar-nav navbar-right" >
+						<ul class="nav navbar-nav navbar-right">
+							
 							<!-- Basket -->
-							<li class="dropdown ">
-						    <a title="Basket" data-toggle="dropdown" class="dropdown-toggle" href="">
-								<span class="badge">{{Cart.getCartSize()}}
-								<i class="icon-briefcase"></i>
-								</span><b class="caret"></b>
-							</a>
-							<ul class="dropdown-menu pull-right">
-								<li><a href="" ng-click="emptyCart()">Empty basket</a></li>
-								<li><a href="" ng-click="launchModalList($index, 'create')">Save basket as a list</a></li>
-								<li><a href="proteins/search?cart=true">Manage basket</a></li>
+							<li class="{{Search.result.params.entity|has:'proteins'|showDropdown}}">
+								<a data-toggle="dropdown" class="dropdown-toggle" href="">
+									<span class="badge">{{Cart.getCartSize()}}
+									<i class="icon-briefcase"></i>
+									</span><b class="caret"></b>
+								</a>
+								<ul class="dropdown-menu pull-right">
+									<li><a href="" ng-click="emptyCart()">Empty basket</a></li>
+									<li><a href="" ng-click="launchModalList($index, 'create')">Save basket as a
+										list</a></li>
+									<li><a href="proteins/search?cart=true">Manage basket</a></li>
 
-						    </ul>
-						  </li>
-							<!-- Sorting -->
+								</ul>
+							</li>
+
+
+							<!-- SORTING -->
 							<li class="dropdown " ng-include="getSortTemplateByEntity()"></li>
 
-						</ul>		
+						</ul>
 					</div>
 
 
