@@ -63,7 +63,7 @@
             if($scope.export.exportObjectType === "entry"){
                 exportURL +=  "/entry/" + $scope.export.exportObjectName;
             }else if($scope.export.exportObjectType === "list"){
-                exportURL += "/lits/" + $scope.export.exportObjectName;
+                exportURL += "/list/" + $scope.export.exportObjectName;
             }
 
             if($scope.selectedView !== allEntryTemplateValue){
@@ -90,6 +90,7 @@
         var ExportService = function () {
             this.exportObjectType = "entry";
             this.exportObjectName = "NX_P35568";
+            this.exportObjectIdentifier = "NX_P35568";
         };
 
         ExportService.prototype.getTemplates = function (cb) {
@@ -97,6 +98,20 @@
                 if (cb)cb(data)
             });
         };
+
+
+        ExportService.prototype.setExportObjectName = function (name) {
+            this.exportObjectName = name;
+        };
+
+        ExportService.prototype.setExportObjectIdentifier = function (identifier) {
+            this.exportObjectIdentifier = identifier;
+        };
+
+        ExportService.prototype.setExportObjectType = function (type) {
+            this.exportObjectType = type;
+        };
+
 
         var service = new ExportService();
         return service;
