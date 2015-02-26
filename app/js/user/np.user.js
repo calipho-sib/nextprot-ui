@@ -17,8 +17,8 @@ function userConfig($routeProvider) {
 
 //
 // implement user factory
-user.$inject=['$resource','$http','config','$timeout','$rootScope','$location','$cookieStore','auth','$q', 'store'];
-function user($resource, $http, config, $timeout, $rootScope, $location, $cookieStore, auth,$q, store) {
+user.$inject=['$resource','$http','config','$timeout','$rootScope','$location','$cookieStore','auth','$q'];
+function user($resource, $http, config, $timeout, $rootScope, $location, $cookieStore, auth,$q) {
     //
 
     // default user data for anonymous
@@ -31,11 +31,11 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
 
     //See also the refresh token https://github.com/auth0/auth0-angular/blob/master/docs/refresh-token.md
     $rootScope.$on('$locationChangeStart', function() {
-        if(store.get('profile') != null){
-            user.copy(store.get('profile'));
+        if($cookieStore.get('profile') != null){
+            user.copy($cookieStore.get('profile'));
         }else {
-            store.remove('profile');
-            store.remove('token');
+            $cookieStore.remove('profile');
+            $cookieStore.remove('token');
         }
     });
 
@@ -109,8 +109,8 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
             }},
             function(profile, token) {
             // Success callback
-            store.set('profile', profile);
-            store.set('token', token);
+            $cookieStore.put('profile', profile);
+            $cookieStore.put('token', token);
             $location.path('/');
 
             self.copy(auth.profile);
@@ -138,8 +138,8 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
     User.prototype.logout = function (cb) {
         this.clear()
         auth.signout();
-        store.remove('profile');
-        store.remove('token');
+        $cookieStore.remove('profile');
+        $cookieStore.remove('token');
     }
 
 
