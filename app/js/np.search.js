@@ -311,8 +311,8 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $routeParams, $rou
 
 //
 // implement search result controller
-ResultCtrl.$inject=['$scope','$modal', '$route','$routeParams','$filter','$timeout','$location','Search','user','Cart','userProteinList','flash'];
-function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash) {
+ResultCtrl.$inject=['$scope','$modal', '$route','$routeParams','$filter','$timeout','$location','Search','user','Cart','userProteinList','flash', 'exportService'];
+function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash, exportService) {
     $scope.Search = Search;
     $scope.Cart = Cart;
     $scope.selectedResults = {};
@@ -441,6 +441,24 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         _.each(ids, function (id) {
             $scope.selectedResults[id] = true;
         });
+    }
+
+    $scope.setExportParameters = function (type, name){
+        exportService.setExportObjectType(type);
+
+        if(type === 'entry'){
+            exportService.setExportObjectName(name);
+            exportService.setExportObjectName(name);
+        }else if(type === 'list'){
+            exportService.setExportObjectName($routeParams.listId);
+            exportService.setExportObjectIdentifier($routeParams.list);
+        }else if(type === 'query'){
+            exportService.setExportObjectName($routeParams.queryId);
+            exportService.setExportObjectIdentifier($routeParams.queryName);
+        }else if(type === 'basket'){
+            exportService.setExportObjectName('basket');
+            exportService.setExportObjectIdentifier(null);
+        }
     }
 
     $scope.removeAllFromBasket = function () {
