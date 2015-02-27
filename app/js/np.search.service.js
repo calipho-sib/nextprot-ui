@@ -271,7 +271,7 @@ SearchService.factory('Search', [
                         }
 
                         doc.year = new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi, "")).getFullYear()
-                        doc.authors = doc.authors.split(' | ');
+                        doc.authors = doc.pretty_authors.split(' | ');
                     })
                 }
 
