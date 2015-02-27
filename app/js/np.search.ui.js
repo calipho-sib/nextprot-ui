@@ -8,16 +8,8 @@
     SearchUI.filter('has', function () {
         return function (input, filter) {
             if (!input || !filter || !input.length || !filter.length)
-                return 'no';
-            return (input.indexOf(filter) > -1) ? 'yes' : 'no';
-        }
-    });
-
-    SearchUI.filter('getStyleClass', function () {
-        return function (input) {
-            if (input == 'no')
-                return 'inactive';
-            return 'a';
+                return false;
+            return input.indexOf(filter) > -1;
         }
     });
 

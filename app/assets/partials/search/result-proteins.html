@@ -34,11 +34,11 @@
               PTMs: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.ptm_num &gt; 0 ? doc.ptm_num : '0'}}</a> 
               Sequence length: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.aa_length}}</a> 
               Variants: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.var_num}}</a> <br>
-              Disease: <a class="{{doc.filters|has:'filterdisease'|getStyleClass}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/medical">{{doc.filters|has:'filterdisease'}}</a>
-              Expression: <a class="{{doc.filters|has:'filterexpressionprofile'|getStyleClass}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/expression">{{doc.filters|has:'filterexpressionprofile'}}</a>
-              Mutagenesis: <a class="{{doc.filters|has:'filtermutagenesis'|getStyleClass}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.filters|has:'filtermutagenesis'}}</a>
-              Proteomics: <a class="{{doc.filters|has:'filterproteomics'|getStyleClass}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/proteomics">{{doc.filters|has:'filterproteomics'}}</a>
-              Structure: <a class="{{doc.filters|has:'filterstructure'|getStyleClass}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/structures">{{doc.filters|has:'filterstructure'}}</a>
+                Disease: <a class="{{(doc.filters|has:'filterdisease')? '':'inactive'}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/medical">{{(doc.filters|has:'filterdisease') ? 'yes':'no'}}</a>
+              Expression: <a class="{{(doc.filters|has:'filterexpressionprofile')? '':'inactive'}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/expression">{{(doc.filters|has:'filterexpressionprofile') ? 'yes':'no'}}</a>
+              Mutagenesis: <a class="{{(doc.filters|has:'filtermutagenesis')? '':'inactive'}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{(doc.filters|has:'filtermutagenesis') ? 'yes':'no'}}</a>
+              Proteomics: <a class="{{(doc.filters|has:'filterproteomics')? '':'inactive'}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/proteomics">{{(doc.filters|has:'filterproteomics') ? 'yes':'no'}}</a>
+              Structure: <a class="{{(doc.filters|has:'filterstructure')? '':'inactive'}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/structures">{{(doc.filters|has:'filterstructure') ? 'yes':'no'}}</a>
               Proteins existence: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/function">{{doc.protein_existence}}</a>
             </div>
 
