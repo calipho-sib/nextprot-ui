@@ -312,7 +312,7 @@
 
             $location.search("query", null);
             $location.search("mode", "advanced");
-            $location.search("sparql", query.sparql);
+            $location.search("NXQ_ID", query.userQueryId);
 
         }
 

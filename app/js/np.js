@@ -16,6 +16,7 @@
         'np.cart',
         'np.user.protein.lists',
         'np.search',
+        'np.viewer',
         'np.export',
         'ui.codemirror',
         'auth0', 'angular-storage', 'angular-jwt'
@@ -26,7 +27,9 @@
     ///// TODO: fixing; we are breaking the DRY principle and it is really bad (see duplication in nextprot-snorql/app/js/app.config.js) !!!!
     //Environment that should be set from outside //TODO should replace this using GRUNT
     var nxEnvironment = "NX_ENV"; //env can be replaced, by dev, alpha or pro
-    var apiBase = "http://localhost:8080/nextprot-api-web"; //default
+    //var apiBase = "http://localhost:8080/nextprot-api-web"; //default
+    var apiBase = "http://dev-api.nextprot.org"; //default
+
 
     if (nxEnvironment.indexOf("NX_") == -1) // means an environment has been set, sed command has done some magic tricks
     {
