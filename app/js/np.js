@@ -73,7 +73,7 @@
 
         jwtInterceptorProvider.tokenGetter = ['ipCookie', function (ipCookie) {
             // Return the saved token
-            return ipCookie('token');
+            return ipCookie('nxtoken');
         }];
         $httpProvider.interceptors.push('jwtInterceptor');
 
