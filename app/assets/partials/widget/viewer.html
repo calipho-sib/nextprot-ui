@@ -1,30 +1,32 @@
-<div class="row" ng-controller="ViewerCtrl">
-  <div class="col-xs-3 col-sm-1 nopadding" style="margin:25px">
-    <ul class="nav nav-list" style="line-height:5px;">
+<div ng-controller="ViewerCtrl">
+  <div class="col-sm-2 nopadding">
+    <ul class="nav nav-list" style="line-height:5px; margin:10px">
       <li class="nav-header ng-binding">Protein</li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/function')"><a href="/entry/{{widgetEntry}}/function">&nbsp;Function</a></li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/medical')"><a href="/entry/{{widgetEntry}}/medical">&nbsp;Medical</a></li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/expression')"><a href="/entry/{{widgetEntry}}/expression">&nbsp;Expression</a></li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/interactions')"><a href="/entry/{{widgetEntry}}/interactions">&nbsp;Interactions</a></li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/localisation')"><a href="/entry/{{widgetEntry}}/localisation">&nbsp;Localisation</a></li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/sequence')"><a href="/entry/{{widgetEntry}}/sequence">&nbsp;Sequence</a></li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/proteomics')"><a href="/entry/{{widgetEntry}}/proteomics">&nbsp;Proteomics</a></li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/structures')"><a href="/entry/{{widgetEntry}}/structures">&nbsp;Structures</a></li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/identifiers')"><a href="/entry/{{widgetEntry}}/identifiers">&nbsp;Identifiers</a></li>
+      <li ng-class="activePage('/entry/')"><a href="/entry/{{widgetEntry}}">&nbsp;Function</a></li>
+      <li ng-class="activePage('medical')"><a href="/entry/{{widgetEntry}}/medical">&nbsp;Medical</a></li>
+      <li ng-class="activePage('expression')"><a href="/entry/{{widgetEntry}}/expression">&nbsp;Expression</a></li>
+      <li ng-class="activePage('interactions')"><a href="/entry/{{widgetEntry}}/interactions">&nbsp;Interactions</a></li>
+      <li ng-class="activePage('localisation')"><a href="/entry/{{widgetEntry}}/localisation">&nbsp;Localisation</a></li>
+      <li ng-class="activePage('sequence')"><a href="/entry/{{widgetEntry}}/sequence">&nbsp;Sequence</a></li>
+      <li ng-class="activePage('proteomics')"><a href="/entry/{{widgetEntry}}/proteomics">&nbsp;Proteomics</a></li>
+      <li ng-class="activePage('structures')"><a href="/entry/{{widgetEntry}}/structures">&nbsp;Structures</a></li>
+      <li ng-class="activePage('identifiers')"><a href="/entry/{{widgetEntry}}/identifiers">&nbsp;Identifiers</a></li>
       <li class="nav-header ng-binding">Gene</li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/exons')"><a href="/entry/{{widgetEntry}}/exons">&nbsp;Exons</a></li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/gene_identifiers')"><a href="/entry/{{widgetEntry}}/gene_identifiers">&nbsp;Identifiers</a></li>
-      <li class="nav-header ng-binding">Other viewers</li>
-      <li ng-class="navClass('viewer/peptide')"><a href="/widget/function">&nbsp;Widget PViz</a></li>
+      <li ng-class="activePage('exons')"><a href="/entry/{{widgetEntry}}/exons">&nbsp;Exons</a></li>
+      <li ng-class="activePage('gene_identifiers')"><a href="/entry/{{widgetEntry}}/gene_identifiers">&nbsp;Identifiers</a></li>
+      <li class="nav-header ng-binding">Community viewers</li>
+      <li ng-class="activePage('ddtxra/a751c484551db9171976')"><a href="/entry/{{widgetEntry}}/gist/ddtxra/a751c484551db9171976">&nbsp;Sequence viewer</a></li>
+      <li ng-class="activePage('alexmasselot/9399600')"><a href="/entry/{{widgetEntry}}/gist/alexmasselot/9399600">&nbsp;pViz selected categories</a></li>
+      <li ng-class="activePage('alexmasselot/9399553')"><a href="/entry/{{widgetEntry}}/gist/alexmasselot/9399553">&nbsp;pViz customizing interaction</a></li>
       <li class="nav-header ng-binding">References</li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/publications')"><a href="/entry/{{widgetEntry}}/publications">&nbsp;Curated publications</a></li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/computed_references')"><a href="/entry/{{widgetEntry}}/computed_references">&nbsp;Additional publications</a></li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/patents')"><a href="/entry/{{widgetEntry}}/patents">&nbsp;Patents</a></li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/submissions')"><a href="/entry/{{widgetEntry}}/submissions">&nbsp;Submissions</a></li>
-      <li ng-class="navClass('/entry/{{widgetEntry}}/web')"><a href="/entry/{{widgetEntry}}/exons">&nbsp;Web resources</a></li>
+      <li ng-class="activePage('publications')"><a href="/entry/{{widgetEntry}}/publications">&nbsp;Curated publications</a></li>
+      <li ng-class="activePage('computed_references')"><a href="/entry/{{widgetEntry}}/computed_references">&nbsp;Additional publications</a></li>
+      <li ng-class="activePage('patents')"><a href="/entry/{{widgetEntry}}/patents">&nbsp;Patents</a></li>
+      <li ng-class="activePage('submissions')"><a href="/entry/{{widgetEntry}}/submissions">&nbsp;Submissions</a></li>
+      <li ng-class="activePage('web')"><a href="/entry/{{widgetEntry}}/web">&nbsp;Web resources</a></li>
     </ul>
   </div>
-  <div class="col-xs-9 col-sm-10">
-    <iframe id="iframeViewer" ng-src="{{widgetURL}}" style="width: 100%; height: 2000px;"></iframe>
+  <div class="col-sm-10">
+    <iframe id="iframeViewer" ng-src="{{widgetURL}}" style="width: 100%; height: 600px; border: 0"></iframe>
   </div>
 </div>
