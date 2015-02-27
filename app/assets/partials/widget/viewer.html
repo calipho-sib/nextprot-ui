@@ -1,0 +1,30 @@
+<div class="row" ng-controller="ViewerCtrl">
+  <div class="col-xs-3 col-sm-1 nopadding" style="margin:25px">
+    <ul class="nav nav-list" style="line-height:5px;">
+      <li class="nav-header ng-binding">Protein</li>
+      <li ng-class="navClass('/entry/{{widgetEntry}}/function')"><a href="/entry/{{widgetEntry}}/function">&nbsp;Function</a></li>
+      <li ng-class="navClass('/entry/{{widgetEntry}}/medical')"><a href="/entry/{{widgetEntry}}/medical">&nbsp;Medical</a></li>
+      <li ng-class="navClass('/entry/{{widgetEntry}}/expression')"><a href="/entry/{{widgetEntry}}/expression">&nbsp;Expression</a></li>
+      <li ng-class="navClass('/entry/{{widgetEntry}}/interactions')"><a href="/entry/{{widgetEntry}}/interactions">&nbsp;Interactions</a></li>
+      <li ng-class="navClass('/entry/{{widgetEntry}}/localisation')"><a href="/entry/{{widgetEntry}}/localisation">&nbsp;Localisation</a></li>
+      <li ng-class="navClass('/entry/{{widgetEntry}}/sequence')"><a href="/entry/{{widgetEntry}}/sequence">&nbsp;Sequence</a></li>
+      <li ng-class="navClass('/entry/{{widgetEntry}}/proteomics')"><a href="/entry/{{widgetEntry}}/proteomics">&nbsp;Proteomics</a></li>
+      <li ng-class="navClass('/entry/{{widgetEntry}}/structures')"><a href="/entry/{{widgetEntry}}/structures">&nbsp;Structures</a></li>
+      <li ng-class="navClass('/entry/{{widgetEntry}}/identifiers')"><a href="/entry/{{widgetEntry}}/identifiers">&nbsp;Identifies</a></li>
+      <li class="nav-header ng-binding">Gene</li>
+      <li ng-class="navClass('viewer/peptide')"><a href="/viewer/function">&nbsp;Exons</a></li>
+      <li ng-class="navClass('viewer/peptide')"><a href="/viewer/function">&nbsp;Identifiers</a></li>
+      <li class="nav-header ng-binding">References</li>
+      <li ng-class="navClass('viewer/peptide')"><a href="/viewer/function">&nbsp;Curated publications</a></li>
+      <li ng-class="navClass('viewer/peptide')"><a href="/viewer/function">&nbsp;Additional publications</a></li>
+      <li ng-class="navClass('viewer/peptide')"><a href="/viewer/function">&nbsp;Patents</a></li>
+      <li ng-class="navClass('viewer/peptide')"><a href="/viewer/function">&nbsp;Submissions</a></li>
+      <li ng-class="navClass('viewer/peptide')"><a href="/viewer/function">&nbsp;Web resources</a></li>
+      <li class="nav-header ng-binding">Widgets</li>
+      <li ng-class="navClass('viewer/peptide')"><a href="/widget/function">&nbsp;Widget PViz</a></li>
+    </ul>
+  </div>
+  <div class="col-xs-9 col-sm-10">
+    <iframe id="iframeViewer" ng-src="{{widgetURL}}" style="width: 100%; height: 2000px;"></iframe>
+  </div>
+</div>
