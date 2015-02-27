@@ -9,9 +9,9 @@
     viewerConfig.$inject=['$routeProvider'];
     function viewerConfig($routeProvider) {
         $routeProvider
-            .when('/entry/:entry/gist/:gistusr/:gistid', { templateUrl: '/partials/widget/viewer.html'})
-            .when('/entry/:entry/:element', { templateUrl: '/partials/widget/viewer.html'})
-            .when('/entry/:entry/', { templateUrl: '/partials/widget/viewer.html'})
+            .when('/entry/:entry/viewer/:gistusr/:gistid', { templateUrl: '/partials/viewer/viewer-gist.html'})
+            .when('/entry/:entry/:element', { templateUrl: '/partials/viewer/viewer-np1.html'})
+            .when('/entry/:entry/', { templateUrl: '/partials/viewer/viewer-np1.html'})
 
     }
 
