@@ -2,11 +2,11 @@
       <div class="row" >
         <ul ng-cloak id="search-results" class="span8">
           <li ng-repeat="doc in Search.result.docs"  ng-cloak>
-            <a href="https://www.nextprot.org/db/publication/{{doc.id}}"> {{doc.title}} ({{doc.year}})</a>
-            <div class=" small" ng-show="Search.session.summary">{{doc.authors[0]}}, <span class="gray">{{doc.journal}} <b>{{doc.volume}}</b>, {{doc.first_page}}-{{doc.last_page}}({{doc.year}})</span>
+            <a href="https://www.nextprot.org/db/publication/{{doc.id}}"><span ng-bind-html="doc.title"></span></a>
+            <div class=" small" ng-show="Search.session.summary"><span ng-bind-html="doc.authors[0]"></span>, <span class="gray">{{doc.journal}} <b>{{doc.volume}}</b>, {{doc.first_page}}-{{doc.last_page}}({{doc.year}})</span>
             </div>
             <div ng-hide="Search.session.summary">
-              <span class="result-authors" ><span ng-repeat="author in doc.authors"><a ng-href="publications/search/{{author|trim}}">{{author}}</a>, </span></span><br/>
+              <span class="result-authors" ><span ng-repeat="author in doc.authors"><a ng-href="publications/search/{{author|trim}}"><span ng-bind-html="author"></span></a>, </span></span><br/>
               <span class=" small">{{doc.journal}} <b>{{doc.volume}}</b>, {{doc.first_page}}-{{doc.last_page}}({{doc.year}})</span>
 
                   <!--PubMed --> <span> [{{doc.acs[0] | getPubSource}}:<a target="_blank" href="{{doc.acs[0] | getPubUrl}}">{{doc.acs[0] | getPubId}}</a>]</span>
