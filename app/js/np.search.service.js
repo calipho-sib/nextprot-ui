@@ -253,7 +253,23 @@ SearchService.factory('Search', [
                 // special cases: ac on publications
                 if (me.result.display === "publications") {
                     me.result.docs.forEach(function (doc) {
+                        // pubmed last in "ac":"25174335:PubMed | 10.1016/j.jmb.2014.08.014:DOI"
                         doc.acs = doc.ac.split(' | ');
+
+                        if (doc.acs.length>1) {
+                            var i = 0;
+                            while (i < doc.acs.length) {
+                                if (doc.acs[i].match("PubMed")) break;
+                                i++;
+                            }
+
+                            if (i < doc.acs.length) {
+                                var pubmed = doc.acs[i];
+                                doc.acs[0] = doc.acs[doc.acs.length - 1];
+                                doc.acs[doc.acs.length - 1] = pubmed;
+                            }
+                        }
+
                         doc.year = new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi, "")).getFullYear()
                         doc.authors = doc.authors.split(' | ');
                     })
