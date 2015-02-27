@@ -17,8 +17,8 @@ function userConfig($routeProvider) {
 
 //
 // implement user factory
-user.$inject=['$resource','$http','config','$timeout','$rootScope','$location','$cookieStore','auth','$q'];
-function user($resource, $http, config, $timeout, $rootScope, $location, $cookieStore, auth,$q) {
+user.$inject=['$resource','$http','config','$timeout','$rootScope','$location','$cookieStore','auth','$q', 'ipCookie', '$window'];
+function user($resource, $http, config, $timeout, $rootScope, $location, $cookieStore, auth, $q, ipCookie, $window) {
     //
 
     // default user data for anonymous
@@ -31,11 +31,11 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
 
     //See also the refresh token https://github.com/auth0/auth0-angular/blob/master/docs/refresh-token.md
     $rootScope.$on('$locationChangeStart', function() {
-        if($cookieStore.get('profile') != null){
-            user.copy($cookieStore.get('profile'));
-        }else {
-            $cookieStore.remove('profile');
-            $cookieStore.remove('token');
+        if(ipCookie('nxprofile') != null){
+            user.copy(ipCookie('nxprofile'));
+        } else {
+            ipCookie.remove('nxprofile');
+            ipCookie.remove('nxtoken');
         }
     });
 
@@ -109,8 +109,13 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
             }},
             function(profile, token) {
             // Success callback
-            $cookieStore.put('profile', profile);
-            $cookieStore.put('token', token);
+            if ($window.location.hostname === "localhost") {
+                ipCookie('nxprofile', profile);
+                ipCookie('nxtoken', token);
+            } else {
+                ipCookie('nxprofile', profile, { domain: '.nextprot.org' });
+                ipCookie('nxtoken', token, { domain: '.nextprot.org' });
+            }
             $location.path('/');
 
             self.copy(auth.profile);
@@ -138,8 +143,9 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
     User.prototype.logout = function (cb) {
         this.clear()
         auth.signout();
-        $cookieStore.remove('profile');
-        $cookieStore.remove('token');
+
+        ipCookie.remove('nxprofile');
+        ipCookie.remove('nxtoken');
     }
 
 
@@ -166,8 +172,8 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
 
 //
 // implement user controller
-UserCtrl.$inject=['$scope','user','flash','config'];
-function UserCtrl($scope, user, flash, config) {
+UserCtrl.$inject=['$scope','user','flash','config','ipCookie'];
+function UserCtrl($scope, user, flash, config, ipCookie) {
     $scope.user = user;
 };
 

@@ -8,6 +8,7 @@
         'ngRoute',
         'ngAnimate',
         'ngCookies',
+        'ipCookie',
         'npHelp',
         '$strap.directives',
         'np.flash',
@@ -70,9 +71,9 @@
         })
 
 
-        jwtInterceptorProvider.tokenGetter = ['store', function (store) {
+        jwtInterceptorProvider.tokenGetter = ['ipCookie', function (ipCookie) {
             // Return the saved token
-            return store.get('token');
+            return ipCookie('token');
         }];
         $httpProvider.interceptors.push('jwtInterceptor');
 
