@@ -196,11 +196,12 @@ ul#search-results li {
 }
 
 ul#search-results .result-authors {
-    font-size: 93%;
+    font-size: 90%;
 }
 
 ul#search-results .result-authors a {
-    color: #6A90D9;
+    color: #5496cf;
+    /*color: #67a2d4;*/
 }
 
 ul#search-results .result-abstract {
