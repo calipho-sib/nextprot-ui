@@ -165,15 +165,13 @@
         };
     }]);
 
-
     SearchUI.directive('toggle', [function () {
         return function (scope, elm, attrs) {
             elm.click(function () {
 
-                if (elm.context.text.match(/Show/)) {
-
+                if (elm.context.text.match(/Show Abstract/)) {
                     elm.context.text = "Hide Abstract";
-                } else {
+                } else if (elm.context.text.match(/Hide Abstract/)) {
                     elm.context.text = "Show Abstract";
                 }
                 angular.element(attrs.toggle).toggleClass("hide")
