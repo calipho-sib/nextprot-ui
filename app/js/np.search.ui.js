@@ -169,6 +169,13 @@
     SearchUI.directive('toggle', [function () {
         return function (scope, elm, attrs) {
             elm.click(function () {
+
+                if (elm.context.text.match(/Show/)) {
+
+                    elm.context.text = "Hide Abstract";
+                } else {
+                    elm.context.text = "Show Abstract";
+                }
                 angular.element(attrs.toggle).toggleClass("hide")
             })
         };
