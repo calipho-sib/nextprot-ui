@@ -17,8 +17,8 @@ function userConfig($routeProvider) {
 
 //
 // implement user factory
-user.$inject=['$resource','$http','config','$timeout','$rootScope','$location','$cookieStore','auth','$q', 'ipCookie', '$window'];
-function user($resource, $http, config, $timeout, $rootScope, $location, $cookieStore, auth, $q, ipCookie, $window) {
+user.$inject=['$resource','$http','config','$timeout','$rootScope','$location','$cookieStore','auth','$q', 'ipCookie', '$window', 'store'];
+function user($resource, $http, config, $timeout, $rootScope, $location, $cookieStore, auth, $q, ipCookie, $window, store) {
     //
 
     // default user data for anonymous
@@ -146,6 +146,11 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
 
         ipCookie.remove('nxprofile');
         ipCookie.remove('nxtoken');
+
+        //legacy remove if it exists (should be removed from June 2015)
+        store.remove('profile');
+        store.remove('token');
+
     }
 
 
