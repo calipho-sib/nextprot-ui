@@ -23,7 +23,7 @@
         $scope.activePage = function(page) {
           if($routeParams.element){
             if(page === $routeParams.element) return 'active';
-          }else if($routeParams.gistusr && $routeParams.gistusr){
+          }else if($routeParams.gistusr && $routeParams.gistid){
             if(page === ($routeParams.gistusr + "/" + $routeParams.gistid)) return 'active';
           }
           else return '';
@@ -35,13 +35,19 @@
           if($routeParams.gistusr && $routeParams.gistid){
             $scope.widgetURL = $sce.trustAsResourceUrl("http://bl.ocks.org/" + $routeParams.gistusr + "/raw/" + $routeParams.gistid + "/?nxentry=" +  $routeParams.entry);
           }else { //nextprot
+            var urlBase = "http://uat-web1.isb-sib.ch/db/entry/";
             if($routeParams.element){
-              $scope.widgetURL = $sce.trustAsResourceUrl("http://www.nextprot.org/db/entry/" + $routeParams.entry + "/" + $routeParams.element);
+              $scope.widgetURL = $sce.trustAsResourceUrl(urlBase + $routeParams.entry + "/" + $routeParams.element + "?np2=yes");
             }else{
-              $scope.widgetURL = $sce.trustAsResourceUrl("http://www.nextprot.org/db/entry/" + $routeParams.entry);
+              $scope.widgetURL = $sce.trustAsResourceUrl(urlBase + $routeParams.entry + "?np2=yes");
             }
           }
         });
+
+
+        $scope.getGistUrl = function (){
+          return "http://gist.github.com/" + $routeParams.gistusr + "/" + $routeParams.gistid;
+        }
 
     }
 
