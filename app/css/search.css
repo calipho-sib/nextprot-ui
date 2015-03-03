@@ -229,3 +229,7 @@ ul#search-results .result-abstract {
     width: 500px;
 }
 
+.ngTruncateToggleText {
+    color: grey;
+}
+

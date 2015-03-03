@@ -159,17 +159,56 @@
         };
     });
 
+    SearchUI.filter('tail', function () {
+        return function (value, max) {
+            if (!value) return '';
+
+            max = parseInt(max, 10);
+            if (!max) return value;
+            if (value.length <= max) return '';
+
+            var head = value.substr(0, max);
+            var lastHeadSpace = head.lastIndexOf(' ');
+            var tail;
+
+            if (lastHeadSpace != -1) {
+                tail = value.substr(lastHeadSpace+1);
+            }
+
+            return tail;
+        };
+    });
+
     SearchUI.directive('version', ['config', function (config) {
         return function (scope, elm, attrs) {
             elm.text(config.version);
         };
     }]);
 
-
     SearchUI.directive('toggle', [function () {
         return function (scope, elm, attrs) {
             elm.click(function () {
+
+                if (elm.context.text.match(/Show Abstract/)) {
+                    elm.context.text = "Hide Abstract";
+                } else if (elm.context.text.match(/Hide Abstract/)) {
+                    elm.context.text = "Show Abstract";
+                }
                 angular.element(attrs.toggle).toggleClass("hide")
+            })
+        };
+    }]);
+
+    SearchUI.directive('togglemore', [function () {
+        return function (scope, elm, attrs) {
+            elm.click(function () {
+
+                if (elm.context.text.match(/more/)) {
+                    elm.context.text = "less";
+                } else if (elm.context.text.match(/less/)) {
+                    elm.context.text = "more";
+                }
+                angular.element(attrs.togglemore).toggleClass("hide")
             })
         };
     }]);

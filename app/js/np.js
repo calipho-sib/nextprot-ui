@@ -20,7 +20,8 @@
         'np.viewer',
         'np.export',
         'ui.codemirror',
-        'auth0', 'angular-storage', 'angular-jwt'
+        'auth0', 'angular-storage', 'angular-jwt',
+        'ngTextTruncate'
     ]).config(configApplication)
         .factory('errorInterceptor', errorInterceptor)
         .run(runApplication);
