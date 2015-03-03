@@ -30,6 +30,7 @@
     var nxEnvironment = "NX_ENV"; //env can be replaced, by dev, alpha or pro
     //var apiBase = "http://localhost:8080/nextprot-api-web"; //default
     var apiBase = "http://dev-api.nextprot.org"; //default
+    var np1Base = "http://uat-web1";
 
 
     if (nxEnvironment.indexOf("NX_") == -1) // means an environment has been set, sed command has done some magic tricks
@@ -37,12 +38,14 @@
         apiBase = 'http://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
         if (nxEnvironment.toLowerCase() === "pro") {
             apiBase = 'https://api.nextprot.org'; // Don't forget https!
+            np1Base = 'http://www.nextprot.org';
         }
     }
     // main application settings
     App.constant('npSettings', {
         environment: nxEnvironment,
         base: apiBase,   //API URL
+        np1: np1Base,    //NP1 URL
         callback: window.location.origin,
         auth0_cliendId: '7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW'
     })
