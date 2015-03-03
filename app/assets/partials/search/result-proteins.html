@@ -25,7 +25,9 @@
 
 
             <div class="small" ng-show="!Search.session.summary">
-             <span ng-bind-html="doc.function_desc[0].replace('@@',' ')|limit:300"></span>
+
+                <span ng-text-truncate="doc.function_desc[0].replace('@@',' ')" ng-tt-words-threshold="30" ng-tt-more-label="[more]" ng-tt-less-label="[less]"></span>
+
              <span ng-hide="doc.function_desc"> No functional information for this protein. </span>&nbsp;
             </div>
             <div class="gray small" ng-show="!Search.session.summary">
