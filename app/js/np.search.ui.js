@@ -185,7 +185,7 @@
         };
     }]);
 
-    SearchUI.directive('toggle', [function () {
+    SearchUI.directive('npToggleAbstract', [function () {
         return function (scope, elm, attrs) {
             elm.click(function () {
 
@@ -195,20 +195,6 @@
                     elm.context.text = "Show Abstract";
                 }
                 angular.element(attrs.toggle).toggleClass("hide")
-            })
-        };
-    }]);
-
-    SearchUI.directive('togglemore', [function () {
-        return function (scope, elm, attrs) {
-            elm.click(function () {
-
-                if (elm.context.text.match(/more/)) {
-                    elm.context.text = "less";
-                } else if (elm.context.text.match(/less/)) {
-                    elm.context.text = "more";
-                }
-                angular.element(attrs.togglemore).toggleClass("hide")
             })
         };
     }]);

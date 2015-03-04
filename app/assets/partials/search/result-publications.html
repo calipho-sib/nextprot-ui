@@ -13,7 +13,7 @@
                   <!--PubMed --> <span ng-if="doc.acs.length > 1"> [{{doc.acs[1] | getPubSource}}:<a target="_blank" href="{{doc.acs[1] | getPubUrl}}">{{doc.acs[1] | getPubId}}</a>]</span>
                   <br/>
                 </div>
-                <span><a class="btn btn-xs btn-default" toggle="#line-{{$index}}">Show Abstract</a> </span>
+                <span><a class="btn btn-xs btn-default" np-toggle-abstract="#line-{{$index}}">Show Abstract</a> </span>
               <div id="line-{{$index}}" class="hide result-abstract" ng-bind-html="doc.abstract"></div>
             </div>
           </li>
