@@ -311,8 +311,8 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $routeParams, $rou
 
 //
 // implement search result controller
-ResultCtrl.$inject=['$scope','$modal', '$route','$routeParams','$filter','$timeout','$location','Search','user','Cart','userProteinList','flash', 'exportService'];
-function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash, exportService) {
+ResultCtrl.$inject=['$scope','$modal', '$route','$routeParams','$filter','$timeout','$location','Search','user','Cart','userProteinList','flash', 'exportService', 'queryRepository'];
+function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash, exportService, queryRepository) {
     $scope.Search = Search;
     $scope.Cart = Cart;
     $scope.selectedResults = {};
@@ -325,10 +325,13 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
     var self=this;
 
     this.search = function (params, cb) {
+        if ($routeParams.queryId) {
+            queryRepository.repository.show = false;
+        }
+
         Search.docs(params,
             function (results) {
                 params.start = (!$routeParams.start) ? 0 : $routeParams.start;
-
                 if ($routeParams.list) {
                     $scope.showCart = true;
                     _.each(results.docs, function (doc) {
@@ -392,11 +395,11 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
 
     $scope.getResultHeaderText = function () {
         if ($routeParams.list) {
-            return "Export list entries of \'" + $routeParams.list + "\'";
-        } else if ($routeParams.userQueryId) {
-            return "Export query entries of \'" + $routeParams.list + "\'";
-        } else if ($routeParams.cart) {
-            return "Export basket entries";
+            return "Export entries for list \'" + $routeParams.list + "\'";
+        } else if ($routeParams.queryId) {
+            return "Export entries for query \'" + $filter('getUserQueryId')($routeParams.queryId) + "\'";
+        } else if ($routeParams.query) {
+            return "Export search results";
         }
         return null;
     }
@@ -443,21 +446,24 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         });
     }
 
-    $scope.setExportParameters = function (type, name){
-        exportService.setExportObjectType(type);
+    $scope.setExportParameters = function (type, name, identifier){
+        if(type){
+            exportService.exportObjectType = type;
+            exportService.exportObjectName = name;
+            exportService.exportObjectIdentifier =  identifier;
+        }else {
 
-        if(type === 'entry'){
-            exportService.setExportObjectName(name);
-            exportService.setExportObjectName(name);
-        }else if(type === 'list'){
-            exportService.setExportObjectName($routeParams.listId);
-            exportService.setExportObjectIdentifier($routeParams.list);
-        }else if(type === 'query'){
-            exportService.setExportObjectName($routeParams.queryId);
-            exportService.setExportObjectIdentifier($routeParams.queryName);
-        }else if(type === 'basket'){
-            exportService.setExportObjectName('basket');
-            exportService.setExportObjectIdentifier(null);
+            if($routeParams.queryId){
+                exportService.exportObjectType = "query"; //shown on title and url
+                exportService.exportObjectName = $filter('getUserQueryId')($routeParams.queryId); // name on title
+                exportService.exportObjectIdentifier =  $filter('getUserQueryId')($routeParams.queryId); //changed on url
+            }
+            if($routeParams.list){
+                exportService.exportObjectType = "list"; //shown on title and url
+                exportService.exportObjectName = $routeParams.list; // name on title
+                exportService.exportObjectIdentifier =  $routeParams.list; //changed on url
+            }
+
         }
     }
 

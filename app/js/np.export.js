@@ -10,46 +10,23 @@
     function ExportCtrl($resource, $scope, config, exportService) {
 
         var allEntryTemplateValue = null;
-        $scope.listToExport = {};
-
-        $scope.formats = ["xml","txt"];
-        $scope.selectedFormat = "xml";
-
-        $scope.views = null;
-        $scope.selectedView = null;
+        $scope.selectedFormat;
+        $scope.views;
+        $scope.selectedView;
+        $scope.limitNumberEntries = 2;
 
         $scope.export = exportService;
 
-        //Can be an entry, a list a query or the car
-        $scope.setExportObjectType = function (exportType){
-            exportService.exportObjectType = exportType;
-        }
-
-        $scope.getExportObjectType = function (){
-            return exportService.exportObjectType;
-        }
-
-        exportService.getTemplates(function (formatViews) {
-            //angular.copy($scope.exportFormats, formatTemplates);
-            $scope.formatViews = formatViews;
-            $scope.setSelectedFormat("xml");
-
-        });
-
-        $scope.setListToExport = function (list) {
-            $scope.listToExport = angular.copy(list);
-        }
-
-
-        $scope.getListExportUrl = function (list) {
-            return config.api.API_URL + "/export/list/" + list.id;
-        }
 
         $scope.setSelectedFormat = function (format) {
             $scope.selectedFormat = format;
-            $scope.views = $scope.formatViews[format];
+            $scope.views = exportService.templates[format];
             $scope.selectedView = $scope.views[0];
             allEntryTemplateValue = $scope.views[0];
+        }
+
+        $scope.getFormats = function () {
+            return Object.keys(exportService.templates);
         }
 
         $scope.setSelectedView = function (view) {
@@ -58,21 +35,39 @@
 
         $scope.getFileExportURL = function () {
 
-            var exportURL = config.api.API_URL;
+            //multiple entries
+            if ($scope.export.exportObjectType == "list" || $scope.export.exportObjectType == "query") {
 
-            if($scope.export.exportObjectType === "entry"){
-                exportURL +=  "/entry/" + $scope.export.exportObjectName;
-            }else if($scope.export.exportObjectType === "list"){
-                exportURL += "/list/" + $scope.export.exportObjectName;
+                var exportURL = config.api.API_URL + "/entries"
+                if ($scope.selectedView !== allEntryTemplateValue) {
+                    exportURL += "/" + $scope.selectedView;
+                }
+                exportURL += "." + $scope.selectedFormat;
+                exportURL += "?match={" + $scope.export.exportObjectType + "Id:" + $scope.export.exportObjectIdentifier + "}";
+
+
+                if ($scope.limitNumberEntries)
+                    exportURL += "&limit=" + $scope.limitNumberEntries;
+
+                return exportURL;
+
+            } else if ($scope.export.exportObjectType == "entry") {
+
+                var exportURL = config.api.API_URL + "/entries"
+                if ($scope.selectedView !== allEntryTemplateValue) {
+                    exportURL += "/" + $scope.selectedView;
+                }
+                exportURL += "/" + $scope.export.exportObjectIdentifier;
+                exportURL += "." + $scope.selectedFormat;
+                return exportURL;
+
             }
+            ;
+        }
 
-            if($scope.selectedView !== allEntryTemplateValue){
-                exportURL += "/" + $scope.selectedView;
-            }
+        //initialize with xml
+        $scope.setSelectedFormat("xml");
 
-            exportURL += "." + $scope.selectedFormat;
-            return exportURL;
-        };
 
     }
 
@@ -80,36 +75,42 @@
     exportService.$inject = ['$resource', 'config'];
     function exportService($resource, config) {
 
-        var exportTemplatesUrl = config.api.API_URL + '/export/templates.json';
+        /*
+         var exportTemplatesUrl = config.api.API_URL + '/export/templates.json';
 
-        var $export_templates_resource = $resource(exportTemplatesUrl, {
-            get: {method: 'GET', isArray: false}
-        });
+         var $export_templates_resource = $resource(exportTemplatesUrl, {
+         get: {method: 'GET', isArray: false}}, { cache : true}
+         );
+         ExportService.prototype.getTemplates = function (cb) {
+         console.log("cache this");
+         return $export_templates_resource.get(function (data) {
+         if (cb)cb(data)
+         });
+         };*/
 
 
         var ExportService = function () {
             this.exportObjectType = "entry";
             this.exportObjectName = "NX_P35568";
             this.exportObjectIdentifier = "NX_P35568";
-        };
+            //ok this is ugly, it should ask the api
+            this.templates = {
+                "xml": [
+                    "full-entry",
+                    "accession",
+                    "annotation",
+                    "-positional-annotation",
+                    "--non-consecutive-residue",
+                    "--domain-info",
+                    "peptide",
+                    "srm-peptide-mapping"
+                ],
+                "txt": [
+                    "full-entry",
+                    "accession"
+                ]
+            };
 
-        ExportService.prototype.getTemplates = function (cb) {
-            return $export_templates_resource.get(null, function (data) {
-                if (cb)cb(data)
-            });
-        };
-
-
-        ExportService.prototype.setExportObjectName = function (name) {
-            this.exportObjectName = name;
-        };
-
-        ExportService.prototype.setExportObjectIdentifier = function (identifier) {
-            this.exportObjectIdentifier = identifier;
-        };
-
-        ExportService.prototype.setExportObjectType = function (type) {
-            this.exportObjectType = type;
         };
 
 

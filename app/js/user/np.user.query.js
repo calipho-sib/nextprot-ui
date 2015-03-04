@@ -163,6 +163,13 @@
         var QueryRepository = function () {
             //  this.selectedQuery = {};
             this.category = 'tutorial';
+            this.repository = {
+                show: true,
+                queries: [],
+                queriesTags: [],
+                filterTag: null,
+                selectedQuery: false
+            };
 
             this.queries = {};
             this.$dao = {
@@ -209,13 +216,7 @@
     function QueryRepositoryCtrl($scope, $location, $timeout, $log, config, user, queryRepository, Search, flash) {
 
         // publish data
-        $scope.repository = {
-            show: true,
-            queries: [],
-            queriesTags: [],
-            filterTag: null,
-            selectedQuery: false
-        };
+        $scope.repository = queryRepository.repository;
         $scope.queryRepository = queryRepository;
 
         $scope.runQuery = function (query) {
