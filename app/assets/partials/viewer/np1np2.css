@@ -1,0 +1,48 @@
+/* This css is passed to NP1 pages for them to be displayed properly in the NP2 UI inside an iframe */
+
+/* Example: add parameter np2=http://localhost:3000/partials/viewer/np1np2.css to the NP1 url */
+
+bodyx {
+    background: #eeee;
+    border:2px solid red;
+}
+
+#np-header-first-child {
+	display:none;
+}
+
+#np-footer {
+	display:none;	
+}
+
+#np-content-top {
+	min-width:900px;	
+}
+
+#np-content-top-first-child {
+	display:none;	
+}
+
+#whereiam  {
+	display:none;	
+}
+
+/* any HTML element in NP1 with the attribute 'np2hidden' will be hidden */
+[np2hidden] {
+	display:none;		
+}
+
+/* used for entry, publication */
+#np-content-center-column {
+	min-height: 500px;
+	width:100% !important ; 
+	padding-left:0px; 
+	padding-top:0px; 
+	border:0px;
+}
+
+
+
+#np-publi-abstract-parent {
+	width:95%; padding-right:0px;
+}
