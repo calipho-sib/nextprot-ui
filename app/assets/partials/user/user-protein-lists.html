@@ -29,7 +29,7 @@
             <tbody>
             <tr ng-repeat="list in lists | filter:filterUserProteinLists | orderBy:'name'">
                 <td class="col-md-1" ng-show="showCombine"><input type="checkbox"></td>
-                <td class="col-md-6"><a href="proteins/search?list={{list.id}}">{{list.name}}</a></td>
+                <td class="col-md-6"><a href="proteins/search?listId={{list.id}}">{{list.name}}</a></td>
                 <td class="col-md-3">{{list.description}}</td>
                 <td class="col-md-1">{{list.entriesCount}}</td>
                 <td class="col-md-1">

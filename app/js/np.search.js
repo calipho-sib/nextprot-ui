@@ -332,7 +332,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         Search.docs(params,
             function (results) {
                 params.start = (!$routeParams.start) ? 0 : $routeParams.start;
-                if ($routeParams.list) {
+                if ($routeParams.listId) {
                     $scope.showCart = true;
                     _.each(results.docs, function (doc) {
                         $scope.selectedResults[doc.id] = true;
@@ -362,7 +362,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
 
     //
     //Set the current owner id, if there is a list
-    if ($routeParams.list) {
+    if ($routeParams.listId) {
         user.$promise.then(function(){
             params.listOwner = user.profile.username;
             self.search(params)
@@ -372,7 +372,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
 
     //
     // run the default search here
-    if (!$routeParams.list) {
+    if (!$routeParams.listId) {
         self.search(params)
     }
 
@@ -385,17 +385,17 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         }
 
             /*
-            if ($routeParams.list) {
+            if ($routeParams.listId) {
                 var list = {};
                 list['accs'] = [docId];
-                if (found == -1) userProteinList.addElements(user, $routeParams.list, [docId]);
-                else userProteinList.removeElements(user, $routeParams.list, [docId]);
+                if (found == -1) userProteinList.addElements(user, $routeParams.listId, [docId]);
+                else userProteinList.removeElements(user, $routeParams.listId, [docId]);
             }*/
     }
 
     $scope.getResultHeaderText = function () {
-        if ($routeParams.list) {
-            return "Export entries for list \'" + $routeParams.list + "\'";
+        if ($routeParams.listId) {
+            return "Export entries for list \'" + $routeParams.listId + "\'";
         } else if ($routeParams.queryId) {
             return "Export entries for query \'" + $filter('getUserQueryId')($routeParams.queryId) + "\'";
         } else if ($routeParams.query) {
@@ -411,13 +411,13 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
 
     $scope.emptyCart = function () {
         Cart.emptyCart();
-        if (!$routeParams.list) $scope.selectedResults = [];
+        if (!$routeParams.listId) $scope.selectedResults = [];
     }
 
 
     $scope.addAllToBasket = function () {
-        if ($routeParams.list) {
-            userProteinList.getByIds(user, $routeParams.list, function (result) {
+        if ($routeParams.listId) {
+            userProteinList.getByIds(user, $routeParams.listId, function (result) {
                 Cart.setCart(result.ids);
                 setAsSelected(result.ids);
             });
@@ -458,18 +458,18 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                 exportService.exportObjectName = $filter('getUserQueryId')($routeParams.queryId); // name on title
                 exportService.exportObjectIdentifier =  $filter('getUserQueryId')($routeParams.queryId); //changed on url
             }
-            if($routeParams.list){
+            if($routeParams.listId){
                 exportService.exportObjectType = "list"; //shown on title and url
-                exportService.exportObjectName = $routeParams.list; // name on title
-                exportService.exportObjectIdentifier =  $routeParams.list; //changed on url
+                exportService.exportObjectName = $routeParams.listId; // name on title
+                exportService.exportObjectIdentifier =  $routeParams.listId; //changed on url
             }
 
         }
     }
 
     $scope.removeAllFromBasket = function () {
-        if ($routeParams.list) {
-            userProteinList.getByIds(user, $routeParams.list, function (result) {
+        if ($routeParams.listId) {
+            userProteinList.getByIds(user, $routeParams.listId, function (result) {
                 Cart.removeFromCart(result.ids);
                 setAsSelected(result.id);
             });
