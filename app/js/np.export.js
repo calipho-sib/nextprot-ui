@@ -53,11 +53,11 @@
 
             } else { // export an entry
 
-                var exportURL = config.api.API_URL + "/entries"
+                var exportURL = config.api.API_URL + "/entry" //TODO should we keep it singular or maintain it plural as for lists????
+                exportURL += "/" + $scope.export.exportObjectIdentifier;
                 if ($scope.selectedView !== allEntryTemplateValue) {
                     exportURL += "/" + $scope.selectedView;
                 }
-                exportURL += "/" + $scope.export.exportObjectIdentifier;
                 exportURL += "." + $scope.selectedFormat;
                 return exportURL;
             }
@@ -94,24 +94,8 @@
             this.exportTitle;
             this.exportObjectIdentifier;
 
-            //ok this is ugly, it should requeste the api
-            this.templates = {
-                "xml": [
-                    "full-entry",
-                    "accession",
-                    "annotation",
-                    "-positional-annotation",
-                    "--non-consecutive-residue",
-                    "--domain-info",
-                    "peptide",
-                    "srm-peptide-mapping"
-                ],
-                "txt": [
-                    "full-entry",
-                    "accession"
-                ]
-            };
-
+            //ok this is ugly, it should request the api
+            this.templates = {"txt":["full-entry","accession"],"turtle":[],"xml":["full-entry","accession","overview","annotation","-positional-annotation","--region","---compositionally-biased-region","---repeat","---short-sequence-motif","---miscellaneous-region","---domain","---zinc-finger-region","---nucleotide-phosphate-binding-region","---dna-binding-region","---interacting-region","---calcium-binding-region","---coiled-coil-region","--non-consecutive-residue","--variant","--mutagenesis","--sequence-conflict","--ptm","---ptm-info","---lipidation-site","---glycosylation-site","---disulfide-bond","---modified-residue","---selenocysteine","---cross-link","--non-terminal-residue","--variant-info","--secondary-structure","---beta-strand","---helix","---turn","--domain-info","--processing-product","---peroxisome-transit-peptide","---mature-protein","---cleavage-site","---signal-peptide","---maturation-peptide","---initiator-methionine","---mitochondrial-transit-peptide","--site","---miscellaneous-site","---binding-site","---metal-binding-site","---active-site","--topology","---topological-domain","---intramembrane-region","---transmembrane-region","--mapping","---pdb-mapping","-general-annotation","--enzyme-classification","--miscellaneous","--caution","--sequence-caution","--interaction","---binary-interaction","---small-molecule-interaction","---cofactor","---enzyme-regulation","---interaction-info","--keyword","---uniprot-keyword","--medical","---disease","---allergen","---pharmaceutical","--induction","--function","---catalytic-activity","---function-info","---go-molecular-function","---pathway","---go-biological-process","--cellular-component","---go-cellular-component","---subcellular-location","---subcellular-location-note","--expression","---expression-info","---developmental-stage-info","---expression-profile","-name","--family-name","publication","xref","keyword","identifier","chromosomal-location","genomic-mapping","interaction","protein-sequence","antibody","peptide","srm-peptide-mapping"],"tsv":[],"json":[]};
         };
 
         ExportService.prototype.setExportEntry = function (entry) {
