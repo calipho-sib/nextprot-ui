@@ -36,14 +36,14 @@
         $scope.getFileExportURL = function () {
 
             //multiple entries
-            if ($scope.export.exportObjectType == "list" || $scope.export.exportObjectType == "query") {
+            if ($scope.export.exportObjectType) {
 
                 var exportURL = config.api.API_URL + "/entries"
                 if ($scope.selectedView !== allEntryTemplateValue) {
                     exportURL += "/" + $scope.selectedView;
                 }
                 exportURL += "." + $scope.selectedFormat;
-                exportURL += "?match={" + $scope.export.exportObjectType + "Id:" + $scope.export.exportObjectIdentifier + "}";
+                exportURL += "?" + $scope.export.exportObjectType + "=" + $scope.export.exportObjectIdentifier;
 
 
                 if ($scope.limitNumberEntries)
@@ -51,7 +51,7 @@
 
                 return exportURL;
 
-            } else if ($scope.export.exportObjectType == "entry") {
+            } else { // export an entry
 
                 var exportURL = config.api.API_URL + "/entries"
                 if ($scope.selectedView !== allEntryTemplateValue) {
@@ -60,10 +60,10 @@
                 exportURL += "/" + $scope.export.exportObjectIdentifier;
                 exportURL += "." + $scope.selectedFormat;
                 return exportURL;
-
             }
             ;
         }
+
 
         //initialize with xml
         $scope.setSelectedFormat("xml");
@@ -90,10 +90,11 @@
 
 
         var ExportService = function () {
-            this.exportObjectType = "entry";
-            this.exportObjectName = "NX_P35568";
-            this.exportObjectIdentifier = "NX_P35568";
-            //ok this is ugly, it should ask the api
+            this.exportObjectType;
+            this.exportTitle;
+            this.exportObjectIdentifier;
+
+            //ok this is ugly, it should requeste the api
             this.templates = {
                 "xml": [
                     "full-entry",
@@ -112,6 +113,32 @@
             };
 
         };
+
+        ExportService.prototype.setExportEntry = function (entry) {
+            this.exportObjectType = null;
+            this.exportObjectIdentifier = entry;
+            this.exportTitle = "Export entry '" + entry + "'";
+        }
+
+
+        ExportService.prototype.setExportParameters = function (params) {
+
+            if (params.queryId) { // neXtProt Query example NXQ_000001
+                var queryNxId = $filter('getUserQueryId')(params.queryId);
+                this.exportObjectType = "queryId";
+                this.exportObjectIdentifier = queryNxId;
+                this.exportTitle = "Export entries for query '" + queryNxId + "'";
+            } else if (params.listId) { //a simple list
+                this.exportObjectType = "listId";
+                this.exportObjectIdentifier = params.listId;
+                this.exportTitle = "Export entries for list '" + params.listId + "'";
+            } else if (params.query) {  //result from a query
+                this.exportObjectType = "query";
+                this.exportObjectIdentifier = params.query;
+                this.exportTitle = "Export search results for '" + params.query + "'";
+            }
+
+        }
 
 
         var service = new ExportService();

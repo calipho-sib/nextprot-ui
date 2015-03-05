@@ -446,24 +446,11 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         });
     }
 
-    $scope.setExportParameters = function (type, name, identifier){
-        if(type){
-            exportService.exportObjectType = type;
-            exportService.exportObjectName = name;
-            exportService.exportObjectIdentifier =  identifier;
-        }else {
-
-            if($routeParams.queryId){
-                exportService.exportObjectType = "query"; //shown on title and url
-                exportService.exportObjectName = $filter('getUserQueryId')($routeParams.queryId); // name on title
-                exportService.exportObjectIdentifier =  $filter('getUserQueryId')($routeParams.queryId); //changed on url
-            }
-            if($routeParams.listId){
-                exportService.exportObjectType = "list"; //shown on title and url
-                exportService.exportObjectName = $routeParams.listId; // name on title
-                exportService.exportObjectIdentifier =  $routeParams.listId; //changed on url
-            }
-
+    $scope.setExportParameters = function (identifier) {
+        if (identifier) { //export an entry
+            exportService.setExportEntry(identifier);
+        } else {
+            exportService.setExportParameters($routeParams);
         }
     }
 
