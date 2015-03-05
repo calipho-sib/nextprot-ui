@@ -65,6 +65,15 @@ SearchService.factory('Search', [
             }
         }
 
+        function sortFilters(filters) {
+
+            filters.sort(function(f1, f2) {
+
+                    return (config.api.ontology[f1.name][0] < config.api.ontology[f2.name][0]) ? -1 : 1 ;
+                }
+            );
+        }
+
         function formatDoc(doc) {
 
             formatPubSources(doc)
@@ -253,8 +262,6 @@ SearchService.factory('Search', [
             // display search status status
             me.result.message = "Loading content...";
 
-
-
             $api.search({action: this.params.action, entity: this.params.entity}, post).$promise.then(function (docs) {
                 me.result.rows = docs.rows;
                 me.result.params = params;
@@ -280,6 +287,7 @@ SearchService.factory('Search', [
                 // special cases: ac on publications
                 if (me.result.display === "publications") {
                     me.result.docs.forEach(formatDoc)
+                    sortFilters(me.result.filters)
                 }
 
                 me.loading = false;

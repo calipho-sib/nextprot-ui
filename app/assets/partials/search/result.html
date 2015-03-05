@@ -72,21 +72,23 @@
 		</nav>          
 
     <div class="col-xs-12 col-sm-3 nopadding">
-      <!--RESULT SIDEBAR-->
-    	<div class="  resultfilters hidden-xs"  np-affix="150">
-				<ul class="list-unstyled" >
-				  <!-- header -->
-					<li><h5 class="lead">Filters</h5></li>
-					<li>For {{Search.result.display}} with:</li>
-				  <!-- content -->
-		      <li class="solrp " ng-repeat="filter in Search.result.filters | orderBy:'name'" ng-class="active(filter.name,'filter')">
-			        <a ng-show="filter.count" class=""  ng-click="toggle({filter:filter.name})" href="">{{Search.result.ontology[filter.name]}} 
-			          <span class=""> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&&'icon-remove'"></i>
-			        </a>
-				  </li>
-				  <input id="filters" class="form-control" type="hidden" ng-model="Search.params.filter" autocomplete="off">
-				</ul>
-			</div>
+        <!--RESULT SIDEBAR-->
+        <div class="  resultfilters hidden-xs" np-affix="150">
+            <ul class="list-unstyled">
+                <!-- header -->
+                <li><h5 class="lead">Filters</h5></li>
+                <li>For {{Search.result.display}} with:</li>
+                <!-- content -->
+                <li class="solrp " ng-repeat="filter in Search.result.filters"
+                    ng-class="active(filter.name,'filter')">
+                    <a ng-show="filter.count" class="" ng-click="toggle({filter:filter.name})" href="">{{Search.result.ontology[filter.name]}}
+                        <span class=""> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&&'icon-remove'"></i>
+                    </a>
+                </li>
+                <input id="filters" class="form-control" type="hidden" ng-model="Search.params.filter"
+                       autocomplete="off">
+            </ul>
+        </div>
     </div>
     <div class="col-xs-12  col-sm-9 result-content">
 
