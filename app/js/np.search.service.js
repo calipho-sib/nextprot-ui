@@ -65,7 +65,7 @@ SearchService.factory('Search', [
             }
         }
 
-        function sortFilters(filters) {
+        function sortFiltersByFirstLetter(filters) {
 
             filters.sort(function(f1, f2) {
 
@@ -74,7 +74,7 @@ SearchService.factory('Search', [
             );
         }
 
-        function formatDoc(doc) {
+        function formatAuthorYearPubsource(doc) {
 
             formatPubSources(doc)
 
@@ -283,12 +283,11 @@ SearchService.factory('Search', [
                 // prepare pagination
                 me.paginate(params, docs)
 
-                //
-                // special cases: ac on publications
-                if (me.result.display === "publications") {
-                    me.result.docs.forEach(formatDoc)
-                    sortFilters(me.result.filters)
-                }
+                // sort filters in lexicographical order
+                sortFiltersByFirstLetter(me.result.filters)
+
+                // format doc
+                if (me.result.display === "publications") me.result.docs.forEach(formatAuthorYearPubsource)
 
                 me.loading = false;
 
