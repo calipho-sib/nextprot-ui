@@ -108,21 +108,22 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
                 scope: 'openid email name picture'
             }},
             function(profile, token) {
-            // Success callback
-            if ($window.location.hostname === "localhost") {
-                ipCookie('nxprofile', profile);
-                ipCookie('nxtoken', token);
-            } else {
-                ipCookie('nxprofile', profile, { domain: '.nextprot.org' });
-                ipCookie('nxtoken', token, { domain: '.nextprot.org' });
-            }
-            $location.path('/');
+                // Success callback
+                var expirationInDays = 730; // 730 days = 2 years
+                if ($window.location.hostname === "localhost") {
+                    ipCookie('nxprofile', profile, { expires: expirationInDays });
+                    ipCookie('nxtoken', token, { expires: expirationInDays });
+                } else {
+                    ipCookie('nxprofile', profile, { domain: '.nextprot.org', expires: expirationInDays });
+                    ipCookie('nxtoken', token, { domain: '.nextprot.org', expires: expirationInDays });
+                }
+                $location.path('/');
 
-            self.copy(auth.profile);
-            self.username=auth.email;
-            cb()
+                self.copy(auth.profile);
+                self.username=auth.email;
+                cb()
 
-        }, function(error) {
+            }, function(error) {
             cb(error)
         });
 
