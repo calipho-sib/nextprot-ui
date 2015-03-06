@@ -39,11 +39,11 @@ SearchService.factory('Search', [
 
         var searchApi = {
             action: 'search'
-        }
+        };
 
         var suggestApi = {
             action: 'autocomplete'
-        }
+        };
 
 
         /**
@@ -53,9 +53,9 @@ SearchService.factory('Search', [
          */
         function reformatPublication(doc) {
 
-            splitPubAcsPubMedLast(doc)
+            splitPubAcsPubMedLast(doc);
 
-            doc.year = new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi, "")).getFullYear()
+            doc.year = new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi, "")).getFullYear();
             doc.authors = doc.pretty_authors.split(' | ');
         }
 
@@ -88,13 +88,18 @@ SearchService.factory('Search', [
         /**
          * Sort filters in ascending order of their mapped values
          *
-         * @method sortFilters
-         * @param {Array} filters array to sort
-         * @param {Map} map a dictionary of key/values
-         * @param {String} key name to access value from filters element object
+         * @method sortFiltersByKey
+         * @param {Object} parameters
+         *   + {Array} filters array to sort
+         *   + {Object} map a dictionary of key/values
+         *   + {String='name'} key name to access value from filters element object ('name' by default)
          * @return {Array} Returns a sorted list of filters
          */
-        function sortFiltersByKey(filters, map, key) {
+        function sortFiltersByKey(parameters) {
+
+            var filters = parameters.filters;
+            var map = parameters.map;
+            var key = parameters.key;
 
             key = typeof key !== 'undefined' ? key : 'name';
 
@@ -109,7 +114,7 @@ SearchService.factory('Search', [
         var Search = function (data) {
             //
             // init session
-            this.session = {summary : false}
+            this.session = {summary : false};
             //angular.extend(this.session, $cookies)
 
             //
@@ -133,7 +138,7 @@ SearchService.factory('Search', [
 
         Search.prototype.displayGold = function () {
             return (this.config.widgets[this.result.display] && this.config.widgets[this.result.display].gold && this.params.mode != "advanced");
-        }
+        };
 
 
         /*Search.prototype.cookies = function (session) {
@@ -146,13 +151,13 @@ SearchService.factory('Search', [
 
         Search.prototype.clear = function () {
             angular.copy(defaultUrl, this.params)
-        }
+        };
 
         Search.prototype.isSearchButtonDisabled = function () {
             if (this.params.mode == 'advanced' && (!this.params.sparql || !this.params.sparql.length))
                 return true;
             return ((this.params.query) && (this.params.query.length == 0));
-        }
+        };
 
 
         Search.prototype.paginate = function (params, docs) {
@@ -230,12 +235,12 @@ SearchService.factory('Search', [
                 })
             }
 
-        }
+        };
 
 
         Search.prototype.calcPages = function (numDocs, pageSize) {
             return ( numDocs + pageSize - 1) / pageSize;
-        }
+        };
 
 
         //
@@ -243,7 +248,7 @@ SearchService.factory('Search', [
         // suggest is a quick search
         Search.prototype.suggest = function (query, cb) {
             var params = {};
-            angular.extend(params, defaultUrl, suggestApi, {query: query, entity: this.params.entity})
+            angular.extend(params, defaultUrl, suggestApi, {query: query, entity: this.params.entity});
 
             $api.search(params, params.query, function (result) {
                 var items = [];
@@ -252,7 +257,7 @@ SearchService.factory('Search', [
                 }
                 if (cb)cb(items)
             })
-        }
+        };
 
 
         //
@@ -268,20 +273,20 @@ SearchService.factory('Search', [
             delete this.params.list;
             delete this.params.accs;
 
-            angular.extend(this.params, searchApi, defaultUrl, params)
+            angular.extend(this.params, searchApi, defaultUrl, params);
             this.params.entity = config.api.entityMapping[params.entity];
 
             // adv search
             if (this.params.sparql) {
-                angular.extend(this.params, defaultAdv)
+                angular.extend(this.params, defaultAdv);
             }
 
             // make a copy to avoid post issue
             var post = angular.copy(this.params);
-            delete post.action
-            delete post.entity
+            delete post.action;
+            delete post.entity;
 
-            console.log(this.params)
+            console.log(this.params);
 
             // display search status status
             me.result.message = "Loading content...";
@@ -295,7 +300,7 @@ SearchService.factory('Search', [
                 me.result.score = docs.maxScore;
                 me.result.docs = docs.results;
                 me.result.ontology = config.api.ontology;
-                me.result.filters = sortFiltersByKey(docs.filters, me.result.ontology);
+                me.result.filters = sortFiltersByKey({filters: docs.filters, map: me.result.ontology});
 
                 me.result.message = (docs.found == 0) ? "No search results were found." : null;
 
@@ -305,9 +310,10 @@ SearchService.factory('Search', [
 
                 //
                 // prepare pagination
-                me.paginate(params, docs)
+                me.paginate(params, docs);
 
-                if (me.result.display === "publications") me.result.docs.forEach(reformatPublication)
+                if (me.result.display === "publications")
+                    me.result.docs.forEach(reformatPublication);
 
                 me.loading = false;
 
@@ -324,18 +330,18 @@ SearchService.factory('Search', [
                 //if (error.status)
                 //me.result.error = "Ooops, request failed: " + error;
             })
-        }
+        };
 
         Search.prototype.getIds = function (params, cb) {
 
             // make a copy to avoid post issue
             var post = angular.copy(params);
-            delete post.action
-            delete post.entity
+            delete post.action;
+            delete post.entity;
 
             // adv search
             if (params.mode == 'advanced')
-                angular.extend(post, defaultAdv)
+                angular.extend(post, defaultAdv);
 
 
             $api.search({ action: 'search-ids', entity: params.entity, quality: params.quality }, post).$promise.then(function (docs) {
