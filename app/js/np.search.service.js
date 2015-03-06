@@ -45,7 +45,27 @@ SearchService.factory('Search', [
             action: 'autocomplete'
         }
 
-        function formatPubSources(doc) {
+
+        /**
+         * Reformat publication fields in doc
+         *
+         * @param {Object} doc publications to reformat
+         */
+        function reformatPublication(doc) {
+
+            splitPubAcsPubMedLast(doc)
+
+            doc.year = new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi, "")).getFullYear()
+            doc.authors = doc.pretty_authors.split(' | ');
+        }
+
+        /**
+         * Format publication sources accessions line in doc object
+         *
+         * @method formatPubSources
+         * @param {Object} doc the doc on which format has to be done
+         */
+        function splitPubAcsPubMedLast(doc) {
 
             // pubmed last in "ac":"25174335:PubMed | 10.1016/j.jmb.2014.08.014:DOI"
             doc.acs = doc.ac.split(' | ');
@@ -65,21 +85,25 @@ SearchService.factory('Search', [
             }
         }
 
-        function sortFiltersByFirstLetter(filters) {
+        /**
+         * Sort filters in ascending order of their mapped values
+         *
+         * @method sortFilters
+         * @param {Array} filters array to sort
+         * @param {Map} map a dictionary of key/values
+         * @param {String} key name to access value from filters element object
+         * @return {Array} Returns a sorted list of filters
+         */
+        function sortFiltersByKey(filters, map, key) {
 
-            filters.sort(function(f1, f2) {
+            key = typeof key !== 'undefined' ? key : 'name';
 
-                    return (config.api.ontology[f1.name][0] < config.api.ontology[f2.name][0]) ? -1 : 1 ;
-                }
-            );
-        }
+            return filters.sort(function(f1, f2) {
 
-        function formatAuthorYearPubsource(doc) {
-
-            formatPubSources(doc)
-
-            doc.year = new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi, "")).getFullYear()
-            doc.authors = doc.pretty_authors.split(' | ');
+                if (! (key in f1) ) console.error("alert-warning", "'"+key+"' was not found in "+JSON.stringify(f1, null, 4));
+                else if (! (key in f2) ) console.error("alert-warning", "'"+key+"' was not found in "+JSON.stringify(f2, null, 4));
+                else return map[f1[key]].localeCompare(map[f2[key]]);
+            });
         }
 
         var Search = function (data) {
@@ -271,7 +295,7 @@ SearchService.factory('Search', [
                 me.result.score = docs.maxScore;
                 me.result.docs = docs.results;
                 me.result.ontology = config.api.ontology;
-                me.result.filters = docs.filters
+                me.result.filters = sortFiltersByKey(docs.filters, me.result.ontology);
 
                 me.result.message = (docs.found == 0) ? "No search results were found." : null;
 
@@ -283,11 +307,7 @@ SearchService.factory('Search', [
                 // prepare pagination
                 me.paginate(params, docs)
 
-                // sort filters in lexicographical order
-                sortFiltersByFirstLetter(me.result.filters)
-
-                // format doc
-                if (me.result.display === "publications") me.result.docs.forEach(formatAuthorYearPubsource)
+                if (me.result.display === "publications") me.result.docs.forEach(reformatPublication)
 
                 me.loading = false;
 
