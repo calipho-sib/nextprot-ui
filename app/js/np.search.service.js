@@ -67,21 +67,26 @@ SearchService.factory('Search', [
          */
         function splitPubAcsPubMedLast(doc) {
 
-            // pubmed last in "ac":"25174335:PubMed | 10.1016/j.jmb.2014.08.014:DOI"
-            doc.acs = doc.ac.split(' | ');
+            if (doc.ac != undefined) {
 
-            if (doc.acs.length>1) {
-                var i = 0;
-                while (i < doc.acs.length) {
-                    if (doc.acs[i].match("PubMed")) break;
-                    i++;
-                }
+                // pubmed last in "ac":"25174335:PubMed | 10.1016/j.jmb.2014.08.014:DOI"
+                doc.acs = doc.ac.split(' | ');
 
-                if (i < doc.acs.length) {
-                    var pubmed = doc.acs[i];
-                    doc.acs[0] = doc.acs[doc.acs.length - 1];
-                    doc.acs[doc.acs.length - 1] = pubmed;
+                if (doc.acs.length > 1) {
+                    var i = 0;
+                    while (i < doc.acs.length) {
+                        if (doc.acs[i].match("PubMed")) break;
+                        i++;
+                    }
+
+                    if (i < doc.acs.length) {
+                        var pubmed = doc.acs[i];
+                        doc.acs[0] = doc.acs[doc.acs.length - 1];
+                        doc.acs[doc.acs.length - 1] = pubmed;
+                    }
                 }
+            } else {
+                doc.acs = "";
             }
         }
 

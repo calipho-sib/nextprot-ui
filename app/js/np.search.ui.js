@@ -194,7 +194,7 @@
                 } else if (elm.context.text.match(/Hide Abstract/)) {
                     elm.context.text = "Show Abstract";
                 }
-                angular.element(attrs.toggle).toggleClass("hide")
+                angular.element(attrs.npToggleAbstract).toggleClass("hide")
             })
         };
     }]);
