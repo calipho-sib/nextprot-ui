@@ -15,7 +15,7 @@ Backends
 Installation
 ------------
 
-> sudo npm install -g karma npm install
+> npm install
 
 Usage
 -----
