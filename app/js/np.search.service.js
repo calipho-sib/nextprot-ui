@@ -39,53 +39,87 @@ SearchService.factory('Search', [
 
         var searchApi = {
             action: 'search'
-        }
+        };
 
         var suggestApi = {
             action: 'autocomplete'
+        };
+
+
+        /**
+         * Reformat publication fields in doc
+         *
+         * @param {Object} doc publications to reformat
+         */
+        function reformatPublication(doc) {
+
+            splitPubAcsPubMedLast(doc);
+
+            doc.year = new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi, "")).getFullYear();
+            doc.authors = doc.pretty_authors.split(' | ');
         }
 
-        function formatPubSources(doc) {
+        /**
+         * Format publication sources accessions line in doc object
+         *
+         * @method formatPubSources
+         * @param {Object} doc the doc on which format has to be done
+         */
+        function splitPubAcsPubMedLast(doc) {
 
-            // pubmed last in "ac":"25174335:PubMed | 10.1016/j.jmb.2014.08.014:DOI"
-            doc.acs = doc.ac.split(' | ');
+            if (doc.ac != undefined) {
 
-            if (doc.acs.length>1) {
-                var i = 0;
-                while (i < doc.acs.length) {
-                    if (doc.acs[i].match("PubMed")) break;
-                    i++;
+                // pubmed last in "ac":"25174335:PubMed | 10.1016/j.jmb.2014.08.014:DOI"
+                doc.acs = doc.ac.split(' | ');
+
+                if (doc.acs.length > 1) {
+                    var i = 0;
+                    while (i < doc.acs.length) {
+                        if (doc.acs[i].match("PubMed")) break;
+                        i++;
+                    }
+
+                    if (i < doc.acs.length) {
+                        var pubmed = doc.acs[i];
+                        doc.acs[0] = doc.acs[doc.acs.length - 1];
+                        doc.acs[doc.acs.length - 1] = pubmed;
+                    }
                 }
-
-                if (i < doc.acs.length) {
-                    var pubmed = doc.acs[i];
-                    doc.acs[0] = doc.acs[doc.acs.length - 1];
-                    doc.acs[doc.acs.length - 1] = pubmed;
-                }
+            } else {
+                doc.acs = "";
             }
         }
 
-        function sortFiltersByFirstLetter(filters) {
+        /**
+         * Sort filters in ascending order of their mapped values
+         *
+         * @method sortFiltersByKey
+         * @param {Object} parameters
+         *   + {Array} filters array to sort
+         *   + {Object} map a dictionary of key/values
+         *   + {String='name'} key name to access value from filters element object ('name' by default)
+         * @return {Array} Returns a sorted list of filters
+         */
+        function sortFiltersByKey(parameters) {
 
-            filters.sort(function(f1, f2) {
+            var filters = parameters.filters;
+            var map = parameters.map;
+            var key = parameters.key;
 
-                    return (config.api.ontology[f1.name][0] < config.api.ontology[f2.name][0]) ? -1 : 1 ;
-                }
-            );
-        }
+            key = typeof key !== 'undefined' ? key : 'name';
 
-        function formatAuthorYearPubsource(doc) {
+            return filters.sort(function(f1, f2) {
 
-            formatPubSources(doc)
-
-            doc.year = new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi, "")).getFullYear()
-            doc.authors = doc.pretty_authors.split(' | ');
+                if (! (key in f1) ) console.error("alert-warning", "'"+key+"' was not found in "+JSON.stringify(f1, null, 4));
+                else if (! (key in f2) ) console.error("alert-warning", "'"+key+"' was not found in "+JSON.stringify(f2, null, 4));
+                else return map[f1[key]].localeCompare(map[f2[key]]);
+            });
         }
 
         var Search = function (data) {
             //
             // init session
-            this.session = {summary : false}
+            this.session = {summary : false};
             //angular.extend(this.session, $cookies)
 
             //
@@ -109,7 +143,7 @@ SearchService.factory('Search', [
 
         Search.prototype.displayGold = function () {
             return (this.config.widgets[this.result.display] && this.config.widgets[this.result.display].gold && this.params.mode != "advanced");
-        }
+        };
 
 
         /*Search.prototype.cookies = function (session) {
@@ -122,13 +156,13 @@ SearchService.factory('Search', [
 
         Search.prototype.clear = function () {
             angular.copy(defaultUrl, this.params)
-        }
+        };
 
         Search.prototype.isSearchButtonDisabled = function () {
             if (this.params.mode == 'advanced' && (!this.params.sparql || !this.params.sparql.length))
                 return true;
             return ((this.params.query) && (this.params.query.length == 0));
-        }
+        };
 
 
         Search.prototype.paginate = function (params, docs) {
@@ -206,12 +240,12 @@ SearchService.factory('Search', [
                 })
             }
 
-        }
+        };
 
 
         Search.prototype.calcPages = function (numDocs, pageSize) {
             return ( numDocs + pageSize - 1) / pageSize;
-        }
+        };
 
 
         //
@@ -219,7 +253,7 @@ SearchService.factory('Search', [
         // suggest is a quick search
         Search.prototype.suggest = function (query, cb) {
             var params = {};
-            angular.extend(params, defaultUrl, suggestApi, {query: query, entity: this.params.entity})
+            angular.extend(params, defaultUrl, suggestApi, {query: query, entity: this.params.entity});
 
             $api.search(params, params.query, function (result) {
                 var items = [];
@@ -228,7 +262,7 @@ SearchService.factory('Search', [
                 }
                 if (cb)cb(items)
             })
-        }
+        };
 
 
         //
@@ -244,20 +278,20 @@ SearchService.factory('Search', [
             delete this.params.list;
             delete this.params.accs;
 
-            angular.extend(this.params, searchApi, defaultUrl, params)
+            angular.extend(this.params, searchApi, defaultUrl, params);
             this.params.entity = config.api.entityMapping[params.entity];
 
             // adv search
             if (this.params.sparql) {
-                angular.extend(this.params, defaultAdv)
+                angular.extend(this.params, defaultAdv);
             }
 
             // make a copy to avoid post issue
             var post = angular.copy(this.params);
-            delete post.action
-            delete post.entity
+            delete post.action;
+            delete post.entity;
 
-            console.log(this.params)
+            console.log(this.params);
 
             // display search status status
             me.result.message = "Loading content...";
@@ -271,7 +305,7 @@ SearchService.factory('Search', [
                 me.result.score = docs.maxScore;
                 me.result.docs = docs.results;
                 me.result.ontology = config.api.ontology;
-                me.result.filters = docs.filters
+                me.result.filters = sortFiltersByKey({filters: docs.filters, map: me.result.ontology});
 
                 me.result.message = (docs.found == 0) ? "No search results were found." : null;
 
@@ -281,13 +315,10 @@ SearchService.factory('Search', [
 
                 //
                 // prepare pagination
-                me.paginate(params, docs)
+                me.paginate(params, docs);
 
-                // sort filters in lexicographical order
-                sortFiltersByFirstLetter(me.result.filters)
-
-                // format doc
-                if (me.result.display === "publications") me.result.docs.forEach(formatAuthorYearPubsource)
+                if (me.result.display === "publications")
+                    me.result.docs.forEach(reformatPublication);
 
                 me.loading = false;
 
@@ -304,18 +335,18 @@ SearchService.factory('Search', [
                 //if (error.status)
                 //me.result.error = "Ooops, request failed: " + error;
             })
-        }
+        };
 
         Search.prototype.getIds = function (params, cb) {
 
             // make a copy to avoid post issue
             var post = angular.copy(params);
-            delete post.action
-            delete post.entity
+            delete post.action;
+            delete post.entity;
 
             // adv search
             if (params.mode == 'advanced')
-                angular.extend(post, defaultAdv)
+                angular.extend(post, defaultAdv);
 
 
             $api.search({ action: 'search-ids', entity: params.entity, quality: params.quality }, post).$promise.then(function (docs) {
