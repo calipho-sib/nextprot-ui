@@ -28,7 +28,7 @@
             this.$promise = $q.when(this)
         };
 
-        Proteins.prototype.list = function (user, cb) {
+        Proteins.prototype.list = function (user) {
             var self = this;
             self.$promise=self.$dao.list({username: user.profile.username}).$promise;
             self.$promise.then(function (data) {
