@@ -26,7 +26,7 @@
             <tbody>
             <tr ng-repeat="query in repository.queries | filterMyQueries | filter:filterQuery | orderBy:userQueryId">
                 <td class="col-md-1">NXQ_{{query.userQueryId}}</td>
-                <td class="col-md-10"><a href="proteins/search?mode=advanced&queryId={{query.userQueryId | getUserQueryId}}">{{query.title}}</a></td>
+                <td class="col-md-10"><a ng-href="proteins/search?mode=advanced&queryId={{query.userQueryId}}">{{query.title}}</a></td>
                 <td class="col-md-2" style="width: 100%">
                     <div class="btn-group">
                         <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()"

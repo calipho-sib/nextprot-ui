@@ -15,9 +15,9 @@
         //
         // data access
         var $dao = {
-            queries: $resource(config.api.API_URL + '/user/:username/query/:id',
+            queries: $resource(config.api.API_URL + '/user/queries/:id',
                 {username: '@username', id: '@id'}, {
-                    get: {method: 'GET', isArray: true},
+                    get: {method: 'GET'},
                     list: {method: 'GET', isArray: true},
                     create: {method: 'POST'},
                     update: {method: 'PUT'}
@@ -136,6 +136,14 @@
             return me;
         };
 
+
+        // gets the query instance
+        Query.prototype.get = function (queryId) {
+            var self = this;
+            self.$promise=self.$dao.get({id: queryId}).$promise;
+            return self;
+       };
+
         user.query = new Query();
 
 
@@ -172,9 +180,20 @@
             };
 
             this.queries = {};
-            this.$dao = {
-                queries: $resource(config.api.API_URL + '/queries/:category.json',
-                    {category: '@category'}, {
+
+            this.userQueryResource = $resource(config.api.API_URL + '/user/queries/:id', {}, {
+                    get: {method: 'GET'},
+                    list: {method: 'GET', isArray: true},
+                    create: {method: 'POST'},
+                    update: {method: 'PUT'},
+                    delete: {method: 'DELETE'}
+                });
+
+
+
+            this.$dao = { //should be removed!!!
+                queries: $resource(config.api.API_URL + '/user/queries.json',
+                    {}, {
                         list: {method: 'GET', isArray: true}
                     })
             }
@@ -205,6 +224,12 @@
                 return me.queries
             })
             return this
+        }
+
+
+        // new method definitions (by Daniel)
+        QueryRepository.prototype.getQueryById = function (queryId) {
+            return this.userQueryResource.get({id: queryId}).$promise;
         }
 
         return new QueryRepository();

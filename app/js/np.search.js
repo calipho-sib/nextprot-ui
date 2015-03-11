@@ -26,13 +26,14 @@ function searchConfig($routeProvider, $locationProvider, $httpProvider) {
 
 //
 // implement main application controller
-SearchCtrl.$inject=['$resource','$scope','$rootScope','$location','$routeParams','$route','$timeout','Search','config','user','flash'];
-function SearchCtrl($resource, $scope, $rootScope, $location, $routeParams, $route, $timeout, Search, config, user, flash) {
+SearchCtrl.$inject=['$resource','$scope','$rootScope','$location', '$filter', '$routeParams','$route','$timeout','Search','config','user','flash', 'userProteinList', 'queryRepository', 'exportService'];
+function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routeParams, $route, $timeout, Search, config, user, flash, userProteinList, queryRepository, exportService) {
 
     // scope from template
     $scope.Search = Search;
     $scope.config = config;
     $scope.user = user;
+    $scope.export = exportService;
 
     $scope.editorOptions = {
         lineWrapping : true,
@@ -42,9 +43,31 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $routeParams, $rou
         mode: 'sparql'
     };
 
+
     //
     // update entity documentation on path change
-    $scope.$on('$routeChangeSuccess', function(event, next, current) { 
+    $scope.$on('$routeChangeSuccess', function(event, next, current) {
+
+        exportService.reset();
+
+        if ($routeParams.queryId) {
+            queryRepository.getQueryById($routeParams.queryId).then(function (query) {
+                //Setting the sparql box with the sparql
+                Search.params.sparql = "#" + $filter('getUserQueryId')(query.userQueryId);
+                Search.params.sparql += " " + query.title + "\n";
+                Search.params.sparql += query.sparql;
+                exportService.userQuery = query;
+            });
+        } else if ($routeParams.listId) {
+            userProteinList.getListById($routeParams.listId).then(function (list) {
+                exportService.userList = list;
+            });
+
+        } else if ($routeParams.query){
+            exportService.searchQuery = $routeParams.query;
+            $scope.currentSearch = $routeParams.query;
+        }
+
         if($location.path()==='/'){
             $scope.reset();
             Search.clear();
@@ -166,6 +189,7 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $routeParams, $rou
         $location.search('start', null)
         $location.search('cart', null)
         $location.search('query', null)
+        $location.search('queryId', null)
         $location.search('filter', null)
         $location.search('quality', null)
         $location.search('sort', null)
@@ -250,6 +274,7 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $routeParams, $rou
         $location.search('cart', null);
         $location.search('rows', null);
         $location.search('start', null);
+        $location.search('queryId', null);
 
 
         $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search')
@@ -393,16 +418,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
             }*/
     }
 
-    $scope.getResultHeaderText = function () {
-        if ($routeParams.listId) {
-            return "Export entries for list \'" + $routeParams.listId + "\'";
-        } else if ($routeParams.queryId) {
-            return "Export entries for query \'" + $filter('getUserQueryId')($routeParams.queryId) + "\'";
-        } else if ($routeParams.query) {
-            return "Export search results";
-        }
-        return null;
-    }
+
 
     $scope.isInCart = function (docId) {
         return Cart.isInCart(docId);

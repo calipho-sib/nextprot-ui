@@ -14,8 +14,8 @@
 
         var Proteins = function () {
 
-            this.$dao = $resource(config.api.API_URL + '/user/:username/protein-list/:id/:action',
-                {username: '@username', id: '@id', action: '@action'}, {
+            this.$dao = $resource(config.api.API_URL + '/user/lists/:id/:action',
+                {id: '@id', action: '@action'}, {
                     get: {method: 'GET', isArray: false},
                     list: {method: 'GET', isArray: true},
                     create: {method: 'POST'},
@@ -30,7 +30,7 @@
 
         Proteins.prototype.list = function (user) {
             var self = this;
-            self.$promise=self.$dao.list({username: user.profile.username}).$promise;
+            self.$promise=self.$dao.list({}).$promise;
             self.$promise.then(function (data) {
                 service.lists = data;
             });                
@@ -39,21 +39,26 @@
 
         Proteins.prototype.create = function (user, list) {
             var self = this;
-            self.$promise=self.$dao.create({username: user.username}, list).$promise;
+            self.$promise=self.$dao.create({}, list).$promise;
             return self;
         };
 
         Proteins.prototype.update = function (user, list) {
             var self = this;
-            self.$promise=self.$dao.update({username: user.profile.username, id: list.id}, list).$promise;
+            self.$promise=self.$dao.update({id: list.id}, list).$promise;
             return self;
         };
 
         Proteins.prototype.delete = function (user, listId) {
             var self = this;
-            self.$promise=self.$dao.delete({username: user.profile.username, id: listId}).$promise;
+            self.$promise=self.$dao.delete({id: listId}).$promise;
             return self;
         }
+
+        //makes more sense to me (Daniel)
+        Proteins.prototype.getListById = function (listId) {
+            return this.$dao.get({id: listId}).$promise;
+        };
 
 
         Proteins.prototype.getByIds = function (user, list, cb) {
