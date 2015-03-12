@@ -26,7 +26,7 @@
             <tbody>
             <tr ng-repeat="query in repository.queries | filterMyQueries | filter:filterQuery | orderBy:userQueryId">
                 <td class="col-md-5"><a ng-href="proteins/search?mode=advanced&queryId={{query.publicId}}">{{query.title}}</a></td>
-                <td class="col-md-5"><a>{{query.description}}</a></td>
+                <td class="col-md-5">{{query.description}}</td>
                 <td class="col-md-2" style="width: 100%">
                     <div class="btn-group">
                         <button class="btn btn-default btn-xs" type="button" ng-click="deleteUserQuery(query)"><i class="icon-remove"></i></button>
