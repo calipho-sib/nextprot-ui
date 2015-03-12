@@ -15,7 +15,7 @@
         //
         // data access
         var $dao = {
-            queries: $resource(config.api.API_URL + '/user/queries/:id',
+            queries: $resource(config.api.API_URL + '/user/me/queries/:id',
                 {username: '@username', id: '@id'}, {
                     get: {method: 'GET'},
                     list: {method: 'GET', isArray: true},
@@ -181,7 +181,7 @@
 
             this.queries = {};
 
-            this.userQueryResource = $resource(config.api.API_URL + '/user/queries/:id', {}, {
+            this.userQueryResource = $resource(config.api.API_URL + '/user/me/queries/:id', {}, {
                     get: {method: 'GET'},
                     list: {method: 'GET', isArray: true},
                     create: {method: 'POST'},
@@ -192,11 +192,19 @@
 
 
             this.$dao = { //should be removed!!!
-                queries: $resource(config.api.API_URL + '/user/queries.json',
+                queries: $resource(config.api.API_URL + '/user/me/queries.json',
                     {}, {
+                        get: {method: 'GET'},
                         list: {method: 'GET', isArray: true}
                     })
             }
+
+
+            this.$daoQueries = $resource(config.api.API_URL + '/queries/:id',
+                    {}, {
+                        get: {method: 'GET'},
+                        list: {method: 'GET', isArray: true}
+                    });
 
             //
             // wrap promise to this object
@@ -211,6 +219,11 @@
 
         QueryRepository.prototype.getIcon = function (name) {
             return icons[this.category];
+        }
+
+
+        QueryRepository.prototype.getTutorialQueries = function (name) {
+            return this.$daoQueries.list().$promise;
         }
 
         QueryRepository.prototype.list = function (category) {
@@ -228,8 +241,12 @@
 
 
         // new method definitions (by Daniel)
-        QueryRepository.prototype.getQueryById = function (queryId) {
-            return this.userQueryResource.get({id: queryId}).$promise;
+        QueryRepository.prototype.getQueryByPublicId = function (queryId) {
+            return this.$daoQueries.get({id: queryId}).$promise;
+        }
+
+        QueryRepository.prototype.deleteUserQuery = function (query) {
+            return this.userQueryResource.delete({id: query.userQueryId}).$promise;
         }
 
         return new QueryRepository();
@@ -269,8 +286,8 @@
         }
 
         $scope.loadQueries = function (category) {
-            queryRepository.list(category).$promise.then(function () {
-                $scope.repository.queries = queryRepository.queries;
+            queryRepository.getTutorialQueries().then(function (queries) {
+                $scope.repository.queries = queries;
                 $scope.setTags();
             })
         }
@@ -324,7 +341,7 @@
 
         $scope.deleteUserQuery = function (query) {
             if (confirm("Are you sure you want to delete the selected query?")) {
-                query.delete().$promise.then(function () {
+                queryRepository.deleteUserQuery(query).then(function () {
                     $scope.loadQueries('tutorial'); //TODO should remove the entry from the list without having to call the api again
                     flash('alert-info', query.title + 'query successfully deleted');
                 });

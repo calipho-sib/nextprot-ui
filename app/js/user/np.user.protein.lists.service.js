@@ -14,7 +14,14 @@
 
         var Proteins = function () {
 
-            this.$dao = $resource(config.api.API_URL + '/user/lists/:id/:action',
+            this.$daoLists = $resource(config.api.API_URL + '/lists/:id',
+                {}, {
+                    get: {method: 'GET'},
+                    list: {method: 'GET', isArray: true}
+                });
+
+
+            this.$dao = $resource(config.api.API_URL + '/user/me/lists/:id/:action',
                 {id: '@id', action: '@action'}, {
                     get: {method: 'GET', isArray: false},
                     list: {method: 'GET', isArray: true},
@@ -55,9 +62,8 @@
             return self;
         }
 
-        //makes more sense to me (Daniel)
-        Proteins.prototype.getListById = function (listId) {
-            return this.$dao.get({id: listId}).$promise;
+        Proteins.prototype.getListByPublicId = function (listId) {
+            return this.$daoLists.get({id: listId}).$promise;
         };
 
 
@@ -135,8 +141,7 @@
             var data = new FormData(),
                 xhr = new XMLHttpRequest(),
                 deferred=$q.defer(),
-	          url=config.api.API_URL + '/user/:username/protein-list/:id/upload'
-        	 			.replace(':username',user.profile.username);
+	          url=config.api.API_URL + '/user/me/protein-list/:id/upload';
 
 
             // When the request starts.

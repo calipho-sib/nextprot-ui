@@ -18,19 +18,18 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Query id</th>
                 <th>Query name</th>
-                <th></th>
+                <th>Query description</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="query in repository.queries | filterMyQueries | filter:filterQuery | orderBy:userQueryId">
-                <td class="col-md-1">NXQ_{{query.userQueryId}}</td>
-                <td class="col-md-10"><a ng-href="proteins/search?mode=advanced&queryId={{query.userQueryId}}">{{query.title}}</a></td>
+                <td class="col-md-5"><a ng-href="proteins/search?mode=advanced&queryId={{query.publicId}}">{{query.title}}</a></td>
+                <td class="col-md-5"><a>{{query.description}}</a></td>
                 <td class="col-md-2" style="width: 100%">
                     <div class="btn-group">
-                        <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()"
-                                ng-click="deleteUserQuery(query)"><i class="icon-remove"></i></button>
+                        <button class="btn btn-default btn-xs" type="button" ng-click="deleteUserQuery(query)"><i class="icon-remove"></i></button>
                     </div>
                 </td>
             </tr>

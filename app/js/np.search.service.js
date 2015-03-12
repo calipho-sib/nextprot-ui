@@ -275,6 +275,7 @@ SearchService.factory('Search', [
             me.result.docs = [];
             me.loading = true;
 
+            delete this.params.listId;
             delete this.params.queryId;
             delete this.params.list;
             delete this.params.accs;

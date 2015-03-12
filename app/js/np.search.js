@@ -51,15 +51,15 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         exportService.reset();
 
         if ($routeParams.queryId) {
-            queryRepository.getQueryById($routeParams.queryId).then(function (query) {
+            queryRepository.getQueryByPublicId($routeParams.queryId).then(function (query) {
                 //Setting the sparql box with the sparql
-                Search.params.sparql = "#" + $filter('getUserQueryId')(query.userQueryId);
+                Search.params.sparql = "#" + query.publicId;
                 Search.params.sparql += " " + query.title + "\n";
                 Search.params.sparql += query.sparql;
                 exportService.userQuery = query;
             });
         } else if ($routeParams.listId) {
-            userProteinList.getListById($routeParams.listId).then(function (list) {
+            userProteinList.getListByPublicId($routeParams.listId).then(function (list) {
                 exportService.userList = list;
             });
 
@@ -216,9 +216,9 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
     $scope.goToUser = function (resourceType) {
         if(!user.isAnonymous()){
             if(resourceType == "lists"){
-                $location.path("/user/protein/lists");
+                $location.url("/user/protein/lists");
             }else  if(resourceType == "queries"){
-                $location.path("/user/queries");
+                $location.url("/user/queries");
             }
 
             }else {
