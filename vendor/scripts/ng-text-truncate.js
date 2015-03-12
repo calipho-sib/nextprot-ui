@@ -4,7 +4,7 @@
     'use strict';
 
 
-    angular.module('ngTextTruncate', []).factory('ValidationServices', validationServices).factory('CharBasedTruncation', charBasedTruncation).factory('WordBasedTruncation', wordBasedTruncation).directive("ngTextTruncate", ngTextTruncate);
+    angular.module('ngTextTrunc', []).factory('ValidationServices', validationServices).factory('CharBasedTruncation', charBasedTruncation).factory('WordBasedTruncation', wordBasedTruncation).directive("ngTextTruncate", ngTextTruncate);
 
     ngTextTruncate.$inject = ['$compile', 'ValidationServices', 'CharBasedTruncation', 'WordBasedTruncation'];
     function ngTextTruncate($compile, ValidationServices, CharBasedTruncation, WordBasedTruncation) {
