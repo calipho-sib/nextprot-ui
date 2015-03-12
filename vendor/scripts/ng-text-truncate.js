@@ -1,8 +1,5 @@
 // A modified version of https://github.com/lorenooliveira/ng-text-truncate
-
-(function () {
-    'use strict';
-
+(function (angular, undefined) {'use strict';
 
     angular.module('ngTextTrunc', []).factory('ValidationServices', validationServices).factory('CharBasedTruncation', charBasedTruncation).factory('WordBasedTruncation', wordBasedTruncation).directive("ngTextTruncate", ngTextTruncate);
 
@@ -144,4 +141,4 @@
         };
     };
 
-}());
+})(angular);
