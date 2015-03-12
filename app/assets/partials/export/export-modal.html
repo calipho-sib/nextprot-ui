@@ -30,7 +30,7 @@
                             <li ng-repeat="view in views"><a href="" ng-click="setSelectedView(view)">{{view}}</a></li>
                         </ul>
                     </div>
-                    <div class="dropdown">
+                    <div class="dropdown" ng-show="export.exportObjectType">
                         <label class="">Limit entries (consider a small set before exporting all entries)</label>
                         <button class="btn btn-default dropdown-toggle" type="button"
                                 data-toggle="dropdown" aria-expanded="true">
@@ -38,7 +38,6 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li><a ng-click="limitNumberEntries=1" href="">1</a></li>
                             <li><a ng-click="limitNumberEntries=2" href="">2</a></li>
                             <li><a ng-click="limitNumberEntries=50" href="">20</a></li>
                             <li><a ng-click="limitNumberEntries=500" href="">200</a></li>
