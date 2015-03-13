@@ -9,15 +9,21 @@
     viewerConfig.$inject=['$routeProvider'];
     function viewerConfig($routeProvider) {
         $routeProvider
+            .when('/db/term/:db', { templateUrl: '/partials/viewer/viewer-entry-np1.html'})
+            .when('/db/entry/:db', { templateUrl: '/partials/viewer/viewer-entry-np1.html'})
+            .when('/db/entry/:element/:db', { templateUrl: '/partials/viewer/viewer-entry-np1.html'})
+            .when('/db/publication/:db', { templateUrl: '/partials/viewer/viewer-entry-np1.html'})
+
             .when('/entry/:entry/viewer/:gistusr/:gistid', { templateUrl: '/partials/viewer/viewer-gist.html'})
             .when('/entry/:entry/:element', { templateUrl: '/partials/viewer/viewer-np1.html'})
-            .when('/entry/:entry/', { templateUrl: '/partials/viewer/viewer-np1.html'})
+            .when('/entry/:entry/', { templateUrl: '/partials/viewer/viewer-entry-np1.html'})
+            .when('/term/:termid/', { templateUrl: '/partials/viewer/viewer-term-np1.html'})
 
     }
 
 
-    ViewerCtrl.$inject = ['$resource', '$scope', '$sce', '$routeParams', 'config'];
-    function ViewerCtrl($resource, $scope, $sce, $routeParams, config) {
+    ViewerCtrl.$inject = ['$resource', '$scope', '$sce', '$routeParams', '$location', 'config'];
+    function ViewerCtrl($resource, $scope, $sce, $routeParams, $location, config) {
         $scope.widgetEntry = null;
 
         $scope.activePage = function(page) {
@@ -32,6 +38,11 @@
         // update entity documentation on path change
         $scope.$on('$routeChangeSuccess', function(event, next, current) {
           $scope.widgetEntry = $routeParams.entry;
+
+            if($routeParams.db){
+                $location.path($location.$$path.replace("db/", ""));
+            }
+
           if($routeParams.gistusr && $routeParams.gistid){
             $scope.widgetURL = $sce.trustAsResourceUrl("http://bl.ocks.org/" + $routeParams.gistusr + "/raw/" + $routeParams.gistid + "/?nxentry=" +  $routeParams.entry);
           }else { //nextprot
@@ -40,7 +51,7 @@
               np1Base: origin of NP1 http service, read from conf or set to localhost for dev/debug 
             */
             //var np1Base = "http://localhost:8080/db/entry/";
-            var np1Base = config.api.NP1_URL+ "/db/entry/";
+            var np1Base = config.api.NP1_URL+ "/db";
 
             /*
              * np2css: the css hiding header, footer and navigation items of NP1 page
@@ -58,12 +69,9 @@
             */
             var np1Params =  "?np2css=" + np2css + "&np2ori=" +  np2ori;
 
+              console.log($location);
 
-            if($routeParams.element){
-              $scope.widgetURL = $sce.trustAsResourceUrl(np1Base + $routeParams.entry + "/" + $routeParams.element + np1Params);
-            }else{
-              $scope.widgetURL = $sce.trustAsResourceUrl(np1Base + $routeParams.entry +  np1Params);
-            }
+              $scope.widgetURL = $sce.trustAsResourceUrl(np1Base + $location.$$path  + np1Params);
           }
         });
 
