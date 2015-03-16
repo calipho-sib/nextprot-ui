@@ -22,10 +22,10 @@ CartService.factory('Cart', [
             // it was found so remove
             if (found != -1) {
                 elements = _.without(elements, docId);
-                flash("alert-info", docId + " successfully removed from basket")
+                flash("alert-info", docId + " successfully cleared from clipboard")
             } else {	// not found so add
                 elements.push(docId);
-                flash("alert-info", docId + " successfully added to basket")
+                flash("alert-info", docId + " successfully added to clipboard")
             }
 
             this.saveCartToStorage();

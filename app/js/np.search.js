@@ -450,7 +450,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                 }, function (docs) {
                     Cart.setCart(docs.ids);
                     setAsSelected(docs.ids);
-                    flash("alert-info", docs.ids.length + " entries added to basket");
+                    flash("alert-info", docs.ids.length + " entries added to clipboard");
                 });
         }
     }
@@ -491,7 +491,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                 }, function (docs) {
                     Cart.removeFromCart(docs.ids);
                     $scope.selectedResults = [];
-                    flash("alert-info", docs.ids.length + " entries removed from basket");
+                    flash("alert-info", docs.ids.length + " entries removed from clipboard");
                 });
         }
     }
