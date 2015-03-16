@@ -340,6 +340,7 @@ ResultCtrl.$inject=['$scope','$modal', '$route','$routeParams','$filter','$timeo
 function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash, exportService, queryRepository) {
     $scope.Search = Search;
     $scope.Cart = Cart;
+    $scope.allSelected = false;
     $scope.selectedResults = {};
     $scope.showCart = true;
 

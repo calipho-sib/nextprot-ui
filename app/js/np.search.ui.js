@@ -352,6 +352,64 @@
         }
     }]);
 
+    SearchUI.directive('indeterminateCheckbox', [function () {
+        return {
+            // Create a new scope for this directive rather than inheriting the parent scope.
+            scope: true,
+            // Require that "ngModel" directive be present for this directive to function correctly.
+            require: '?ngModel',
+            // scope – A scope to be used by the directive (https://docs.angularjs.org/api/ng/type/$rootScope.Scope).
+            // element – An element the directive is bound to (https://docs.angularjs.org/api/ng/function/angular.element)
+            // attrs – A list of attributes associated with the element ().
+            link: function (scope, element, attrs, modelCtrl) {
+                var proteinList = attrs.proteinList;
+                var property = attrs.property;
+
+                // Bind the onChange event to update children
+                element.bind('change', function () {
+                    scope.$apply(function () {
+                        var isChecked = element.prop('checked');
+
+                        // Set each child's selected property to the checkbox's checked property
+                        angular.forEach(scope.$eval(childList), function (child) {
+                            child[property] = isChecked;
+                        });
+                    });
+                });
+
+                // Watch the children for changes
+                scope.$watch(childList, function (newValue) {
+                    var hasChecked = false;
+                    var hasUnchecked = false;
+
+                    // Loop through the children
+                    angular.forEach(newValue, function (child) {
+                        if (child[property]) {
+                            hasChecked = true;
+                        } else {
+                            hasUnchecked = true;
+                        }
+                    });
+
+                    // Determine which state to put the checkbox in
+                    if (hasChecked && hasUnchecked) {
+                        element.prop('checked', false);
+                        element.prop('indeterminate', true);
+                        if (modelCtrl) {
+                            modelCtrl.$setViewValue(false);
+                        }
+                    } else {
+                        element.prop('checked', hasChecked);
+                        element.prop('indeterminate', false);
+                        if (modelCtrl) {
+                            modelCtrl.$setViewValue(hasChecked);
+                        }
+                    }
+                }, true);
+            }
+        }
+    }]);
+
 })(angular);
 
 
