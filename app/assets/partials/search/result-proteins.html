@@ -2,12 +2,22 @@
       <div class="row">
         <p class="col-xs-6" ng-show="showCart&&Search.result.docs.length">
           <a href="" class="btn btn-xs btn-default " ng-click="addAllToBasket()">Add all to basket</a>
-          <a href="" class="btn btn-xs btn-default "  ng-click="removeAllFromBasket()">Remove all from basket</a>
+          <a href="" class="btn btn-xs btn-default " ng-click="removeAllFromBasket()">Remove all from basket</a>
+            <!--<label>
+                <input type="checkbox" ng-click="addAllToBasket()" ng-model="selectedResults">
+                <input type="checkbox" ng-click="removeAllFromBasket()">
+            </label>
+
+
+-->
+            <label><span class="badge">{{Cart.getCartSize()}}</span></label>
+            <!--<label>
+                <input type="checkbox" indeterminate-checkbox protein-list="selectedResults" property="allSelected" ng-model="selectedResults"> {{person.name}} [All selected: {{allSelected}}]
+            </label>-->
         </p>
         <ul ng-cloak id="search-results" class="col-xs-12 list-unstyled">
           <li ng-repeat="doc in Search.result.docs">
-            <!-- <input type="checkbox" name="docs[]" value="{{doc.id}}" 
-               ng-click="selectDoc(doc.id)" ng-model="selectedResults[doc.id]" id="{{doc.id}}"> -->
+            <input type="checkbox" name="docs[]" value="{{doc.id}}" ng-click="change(doc.id)" ng-model="selectedResults[doc.id]">
             <!-- <input type="checkbox" name="docs[]" value="{{doc.id}}" ng-show="showCart" ng-click="change(doc.id)" ng-model="selectedResults[doc.id]" id="{{doc.id}}">-->
 
                <!-- ng-click="Cart.change(doc.id)" -->
@@ -20,9 +30,8 @@
 
             | <!-- Export entry -->
             <a bs-modal="'partials/export/export-modal.html'" href="#" title="Export entry" ng-click="setExportParameters(doc.id)"> <i class="icon-download"></i></a>
-            | <!-- Add / remove from basket -->
-            <a id="{{doc.id}}" ng-click="change(doc.id)" ng-show="showCart" href="#" title="{{!isInCart(doc.id)? 'Add entry to basket' : 'Remove entry from basket'}}">{{isInCart(doc.id) ? '-' : '+'}}<i class="icon-briefcase"></i></a>
-
+            <!--| <!-- Add / remove from basket
+            <a id="{{doc.id}}" ng-click="change(doc.id)" ng-show="showCart" href="#" title="{{!isInCart(doc.id)? 'Add entry to basket' : 'Remove entry from basket'}}">{{isInCart(doc.id) ? '-' : '+'}}<i class="icon-briefcase"></i></a>-->
 
             <div class="small" ng-show="!Search.session.summary">
 
