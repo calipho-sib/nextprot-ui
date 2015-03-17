@@ -138,10 +138,10 @@
         return window.encodeURIComponent;
     });
 
-    SearchUI.filter('limit', function () {
+    /*SearchUI.filter('limit', function () {
         return function (value, max, wordwise, tail) {
             if (!value) return '';
-            if (!wordwise)wordwise = true;
+            if (!wordwise) wordwise = true;
 
             max = parseInt(max, 10);
             if (!max) return value;
@@ -157,9 +157,30 @@
 
             return value + (tail || ' ...');
         };
+    });*/
+
+    SearchUI.filter('prefix', function () {
+        return function (value, max, wordwise) {
+            if (!value) return '';
+            if (!wordwise) wordwise = true;
+
+            max = parseInt(max, 10);
+            if (!max) return value;
+            if (value.length <= max) return value;
+
+            value = value.substr(0, max);
+            if (wordwise) {
+                var lastspace = value.lastIndexOf(' ');
+                if (lastspace != -1) {
+                    value = value.substr(0, lastspace);
+                }
+            }
+
+            return value;
+        };
     });
 
-    SearchUI.filter('tail', function () {
+    SearchUI.filter('suffix', function () {
         return function (value, max) {
             if (!value) return '';
 
@@ -195,6 +216,20 @@
                     elm.context.text = "Show Abstract";
                 }
                 angular.element(attrs.npToggleAbstract).toggleClass("hide")
+            })
+        };
+    }]);
+
+    SearchUI.directive('npToggleMore', [function () {
+        return function (scope, elm, attrs) {
+            elm.click(function () {
+
+                if (elm.context.text.match(/more/)) {
+                    elm.context.text = "[less]";
+                } else if (elm.context.text.match(/less/)) {
+                    elm.context.text = "[more]";
+                }
+                angular.element(attrs.npToggleMore).toggleClass("hide")
             })
         };
     }]);
