@@ -387,7 +387,7 @@
         }
     }]);
 
-    SearchUI.directive('indeterminateCheckbox', [function () {
+    SearchUI.directive('indeterminateCheckbox', ['Cart', 'Search', function (Cart, Search) {
         return {
             // Create a new scope for this directive rather than inheriting the parent scope.
             scope: true,
@@ -395,7 +395,8 @@
             require: '?ngModel',
             link: function (scope, element, attrs, modelCtrl) {
                 var proteinList = attrs.proteinList;
-                var property = attrs.property;
+
+                var property ="checked";
 
                 // Bind the onChange event to update children
                 element.bind('change', function () {
@@ -409,22 +410,19 @@
                     });
                 });
 
-                // Watch the children for changes
+                // Watch found proteins for changes
                 scope.$watch(proteinList, function (newValue) {
                     var hasChecked = false;
-                    var hasUnchecked = false;
+                    var isIndeterminate = false;
 
-                    // Loop through the children
-                    angular.forEach(newValue, function (protein) {
-                        if (protein[property]) {
-                            hasChecked = true;
-                        } else {
-                            hasUnchecked = true;
-                        }
-                    });
+                    if (Cart.getCartSize() > 0) {
+                        hasChecked = true;
+                        if (Cart.getCartSize() < Search.result.num)
+                            isIndeterminate = true;
+                    }
 
                     // Determine which state to put the checkbox in
-                    if (hasChecked && hasUnchecked) {
+                    if (hasChecked && isIndeterminate) {
                         element.prop('checked', false);
                         element.prop('indeterminate', true);
                         if (modelCtrl) {

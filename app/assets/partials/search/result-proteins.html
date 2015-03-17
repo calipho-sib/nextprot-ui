@@ -3,8 +3,11 @@
         <p class="col-xs-6" ng-show="showCart&&Search.result.docs.length">
           <!--<a href="" class="btn btn-xs btn-default " ng-click="toggleAllToBasket()">Add all to basket</a>
           <a href="" class="btn btn-xs btn-default " ng-click="removeAllFromBasket()">Remove all from basket</a>-->
-            <label>
+            <!--<label>
                 <input type="checkbox" ng-click="toggleAllToBasket()">
+            </label>-->
+            <label>
+                <input type="checkbox" indeterminate-checkbox protein-list="Cart.getElements()" ng-model="selectedResults" ng-click="toggleAllToBasket()">
             </label>
 
             <label><span class="badge"> {{Cart.getCartSize()}}</span></label>
@@ -14,10 +17,9 @@
               <div ng-if="export.searchQuery && Cart.getCartSize()>0"><a href="" ng-click="launchModalList($index, 'create')"> Save as list</a></div>
             </button>
 
-            <!--<label>
-                <input type="checkbox" indeterminate-checkbox protein-list="selectedResults" property="allSelected" ng-model="selectedResults">
-                {{Search.result.num}}[All selected: {{userProteinList.length}}]
-            </label>-->
+
+
+
         </p>
         <ul ng-cloak id="search-results" class="col-xs-12 list-unstyled">
           <li ng-repeat="doc in Search.result.docs">
