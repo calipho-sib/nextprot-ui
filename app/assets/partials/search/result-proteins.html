@@ -1,18 +1,16 @@
 <!-- RESULT HEADERS -->
       <div class="row">
         <p class="col-xs-6" ng-show="showCart&&Search.result.docs.length">
-          <a href="" class="btn btn-xs btn-default " ng-click="addAllToBasket()">Add all to basket</a>
-          <a href="" class="btn btn-xs btn-default " ng-click="removeAllFromBasket()">Remove all from basket</a>
-            <!--<label>
-                <input type="checkbox" ng-click="addAllToBasket()" ng-model="selectedResults">
-                <input type="checkbox" ng-click="removeAllFromBasket()">
+          <!--<a href="" class="btn btn-xs btn-default " ng-click="toggleAllToBasket()">Add all to basket</a>
+          <a href="" class="btn btn-xs btn-default " ng-click="removeAllFromBasket()">Remove all from basket</a>-->
+            <label>
+                <input type="checkbox" ng-click="toggleAllToBasket()">
             </label>
 
-
--->
             <label><span class="badge">{{Cart.getCartSize()}}</span></label>
             <!--<label>
-                <input type="checkbox" indeterminate-checkbox protein-list="selectedResults" property="allSelected" ng-model="selectedResults"> {{person.name}} [All selected: {{allSelected}}]
+                <input type="checkbox" indeterminate-checkbox protein-list="selectedResults" property="allSelected" ng-model="selectedResults">
+                {{Search.result.num}}[All selected: {{userProteinList.length}}]
             </label>-->
         </p>
         <ul ng-cloak id="search-results" class="col-xs-12 list-unstyled">
