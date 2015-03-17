@@ -23,12 +23,13 @@
             | <!-- Add / remove from basket -->
             <a id="{{doc.id}}" ng-click="change(doc.id)" ng-show="showCart" href="#" title="{{!isInCart(doc.id)? 'Add entry to basket' : 'Remove entry from basket'}}">{{isInCart(doc.id) ? '-' : '+'}}<i class="icon-briefcase"></i></a>
 
-
             <div class="small" ng-show="!Search.session.summary">
 
-              <span ng-text-truncate="doc.function_desc[0].replace('@@',' ')" ng-tt-words-threshold="30" ng-tt-more-label="[more]" ng-tt-less-label="[less]"></span>
+                <span ng-bind-html="doc.function_desc[0].replace('@@',' ') | head:300"></span>
+                <span ng-if="doc.function_desc[0].length > 300" id="tail-{{$index}}" class="hide" ng-bind-html="doc.function_desc[0].replace('@@',' ') | tail:300"></span>
+                <span ng-if="doc.function_desc[0].length > 300"><a class="btn btn-xs btn-default" np-toggle-more="#tail-{{$index}}">more</a></span>
 
-             <span ng-hide="doc.function_desc"> No functional information for this protein. </span>&nbsp;
+                <span ng-hide="doc.function_desc"> No functional information for this protein. </span>&nbsp;
             </div>
             <div class="gray small" ng-show="!Search.session.summary">
               Chromosomal location: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/exons">{{doc.chr_loc}}</a> 
