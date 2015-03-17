@@ -342,6 +342,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
     $scope.Cart = Cart;
     $scope.selectedResults = [];
     $scope.showCart = true;
+    $scope.allSelected = false;
 
     //
     // save to cart modal
@@ -354,6 +355,8 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
             queryRepository.repository.show = false;
         }
 
+        // 1) Each time a new search is run, the basket (entries selected) should be emptied
+        // 2) Each time a list content is displayed, the basket (entries selected) should be emptied
         Cart.emptyCart();
 
         Search.docs(params,
@@ -500,10 +503,14 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
 
     $scope.toggleAllToBasket = function () {
 
-        if (Cart.getCartFromStorage().elements.length > 0) {
-            $scope.removeAllFromBasket();
-        } else {
+        $scope.allSelected = !$scope.allSelected;
+
+        if ($scope.allSelected) {
+
             $scope.addAllToBasket();
+        } else {
+
+            $scope.removeAllFromBasket();
         }
     }
 
