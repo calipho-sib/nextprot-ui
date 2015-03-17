@@ -159,7 +159,7 @@
         };
     });*/
 
-    SearchUI.filter('head', function () {
+    SearchUI.filter('prefix', function () {
         return function (value, max, wordwise) {
             if (!value) return '';
             if (!wordwise) wordwise = true;
@@ -180,7 +180,7 @@
         };
     });
 
-    SearchUI.filter('tail', function () {
+    SearchUI.filter('suffix', function () {
         return function (value, max) {
             if (!value) return '';
 
