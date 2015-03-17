@@ -387,37 +387,25 @@
         }
     }]);
 
-    SearchUI.directive('indeterminateCheckbox', ['Cart', 'Search', function (Cart, Search) {
+    SearchUI.directive('indeterminateCheckbox', ['Search', function (Search) {
         return {
             // Create a new scope for this directive rather than inheriting the parent scope.
             scope: true,
-            // Require that "ngModel" directive be present for this directive to function correctly.
-            require: '?ngModel',
-            link: function (scope, element, attrs, modelCtrl) {
+            link: function (scope, element, attrs) {
                 var proteinList = attrs.proteinList;
 
-                var property ="checked";
-
-                // Bind the onChange event to update children
-                element.bind('change', function () {
-                    scope.$apply(function () {
-                        var isChecked = element.prop('checked');
-
-                        // Set each protein's selected property to the checkbox's checked property
-                        angular.forEach(scope.$eval(proteinList), function (protein) {
-                            protein[property] = isChecked;
-                        });
-                    });
-                });
-
                 // Watch found proteins for changes
-                scope.$watch(proteinList, function (newValue) {
+                scope.$watch(proteinList, function (selectedProteins) {
                     var hasChecked = false;
                     var isIndeterminate = false;
 
-                    if (Cart.getCartSize() > 0) {
+                    // some proteins are selected
+                    if (selectedProteins.length > 0) {
+                        // some proteins are selected
                         hasChecked = true;
-                        if (Cart.getCartSize() < Search.result.num)
+
+                        // not all proteins are selected -> indeterminate state
+                        if (selectedProteins.length < Search.result.num)
                             isIndeterminate = true;
                     }
 
@@ -425,15 +413,9 @@
                     if (hasChecked && isIndeterminate) {
                         element.prop('checked', false);
                         element.prop('indeterminate', true);
-                        if (modelCtrl) {
-                            modelCtrl.$setViewValue(false);
-                        }
                     } else {
                         element.prop('checked', hasChecked);
                         element.prop('indeterminate', false);
-                        if (modelCtrl) {
-                            modelCtrl.$setViewValue(hasChecked);
-                        }
                     }
                 }, true);
             }

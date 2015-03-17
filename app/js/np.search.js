@@ -345,7 +345,6 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
     $scope.Cart = Cart;
     $scope.selectedResults = [];
     $scope.showCart = true;
-    $scope.allSelected = false;
 
     //
     // save to cart modal
@@ -502,13 +501,9 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
 
     $scope.toggleAllToBasket = function () {
 
-        $scope.allSelected = !$scope.allSelected;
-
-        if ($scope.allSelected) {
-
+        if (Cart.getCartSize() < Search.result.num) {
             $scope.addAllToBasket();
-        } else {
-
+        }else {
             $scope.removeAllFromBasket();
         }
     }

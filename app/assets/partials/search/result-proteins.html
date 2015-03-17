@@ -1,13 +1,8 @@
 <!-- RESULT HEADERS -->
       <div class="row">
         <p class="col-xs-6" ng-show="showCart&&Search.result.docs.length">
-          <!--<a href="" class="btn btn-xs btn-default " ng-click="toggleAllToBasket()">Add all to basket</a>
-          <a href="" class="btn btn-xs btn-default " ng-click="removeAllFromBasket()">Remove all from basket</a>-->
-            <!--<label>
-                <input type="checkbox" ng-click="toggleAllToBasket()">
-            </label>-->
             <label>
-                <input type="checkbox" indeterminate-checkbox protein-list="Cart.getElements()" ng-model="selectedResults" ng-click="toggleAllToBasket()">
+                <input type="checkbox" indeterminate-checkbox protein-list="Cart.getElements()" ng-click="toggleAllToBasket()">
             </label>
 
             <label><span class="badge"> {{Cart.getCartSize()}}</span></label>
@@ -16,19 +11,12 @@
                     ng-click="setExportParameters()" class="btn btn-link navbar-btn btn-navbar-selected">
               <div ng-if="export.searchQuery && Cart.getCartSize()>0"><a href="" ng-click="launchModalList($index, 'create')"> Save as list</a></div>
             </button>
-
-
-
-
         </p>
         <ul ng-cloak id="search-results" class="col-xs-12 list-unstyled">
           <li ng-repeat="doc in Search.result.docs">
             <input type="checkbox" name="docs[]" value="{{doc.id}}" ng-click="change(doc.id)" ng-model="selectedResults[doc.id]">
-            <!-- <input type="checkbox" name="docs[]" value="{{doc.id}}" ng-show="showCart" ng-click="change(doc.id)" ng-model="selectedResults[doc.id]" id="{{doc.id}}">-->
 
-               <!-- ng-click="Cart.change(doc.id)" -->
             <!-- Add to basket -->
-
             <a href="entry/{{doc.id}}">
               <span ng-bind-html="doc.recommended_name"></span>
               <span ng-show="doc.ec_name">[{{doc.ec_name}}]</span> ({{doc.recommended_gene_names}}) [{{doc.id}}]</a> 
@@ -36,9 +24,6 @@
 
             | <!-- Export entry -->
             <a bs-modal="'partials/export/export-modal.html'" href="#" title="Export entry" ng-click="setExportParameters(doc.id)"> <i class="icon-download"></i></a>
-
-            <!--| <!-- Add / remove from basket
-            <a id="{{doc.id}}" ng-click="change(doc.id)" ng-show="showCart" href="#" title="{{!isInCart(doc.id)? 'Add entry to basket' : 'Remove entry from basket'}}">{{isInCart(doc.id) ? '-' : '+'}}<i class="icon-briefcase"></i></a>-->
 
             <div class="small" ng-show="!Search.session.summary">
 
