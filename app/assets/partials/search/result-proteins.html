@@ -7,7 +7,13 @@
                 <input type="checkbox" ng-click="toggleAllToBasket()">
             </label>
 
-            <label><span class="badge">{{Cart.getCartSize()}}</span></label>
+            <label><span class="badge"> {{Cart.getCartSize()}}</span></label>
+
+            <button type="button" bs-modal="'partials/export/export-modal.html'"
+                    ng-click="setExportParameters()" class="btn btn-link navbar-btn btn-navbar-selected">
+              <div ng-if="export.searchQuery && Cart.getCartSize()>0"><a href="" ng-click="launchModalList($index, 'create')"> Save as list</a></div>
+            </button>
+
             <!--<label>
                 <input type="checkbox" indeterminate-checkbox protein-list="selectedResults" property="allSelected" ng-model="selectedResults">
                 {{Search.result.num}}[All selected: {{userProteinList.length}}]
