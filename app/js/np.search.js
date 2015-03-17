@@ -340,8 +340,7 @@ ResultCtrl.$inject=['$scope','$modal', '$route','$routeParams','$filter','$timeo
 function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash, exportService, queryRepository) {
     $scope.Search = Search;
     $scope.Cart = Cart;
-    $scope.allSelected = false;
-    $scope.selectedResults = {};
+    $scope.selectedResults = [];
     $scope.showCart = true;
 
     //
@@ -354,6 +353,8 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         if ($routeParams.queryId) {
             queryRepository.repository.show = false;
         }
+
+        Cart.emptyCart();
 
         Search.docs(params,
             function (results) {
@@ -497,7 +498,14 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         }
     }
 
+    $scope.toggleAllToBasket = function () {
 
+        if (Cart.getCartFromStorage().elements.length > 0) {
+            $scope.removeAllFromBasket();
+        } else {
+            $scope.addAllToBasket();
+        }
+    }
 
 
     $scope.getResultTemplateByEntity = function () {
