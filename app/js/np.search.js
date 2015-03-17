@@ -26,8 +26,8 @@ function searchConfig($routeProvider, $locationProvider, $httpProvider) {
 
 //
 // implement main application controller
-SearchCtrl.$inject=['$resource','$scope','$rootScope','$location', '$filter', '$routeParams','$route','$timeout','Search','config','user','flash', 'userProteinList', 'queryRepository', 'exportService'];
-function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routeParams, $route, $timeout, Search, config, user, flash, userProteinList, queryRepository, exportService) {
+SearchCtrl.$inject=['$resource','$scope','$rootScope','$location', '$filter', '$routeParams','$route','$timeout','Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService'];
+function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routeParams, $route, $timeout, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService) {
 
     // scope from template
     $scope.Search = Search;
@@ -276,6 +276,9 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         $location.search('start', null);
         $location.search('queryId', null);
 
+        // 1) Each time a new search is run, the basket (entries selected) should be emptied
+        // 2) Each time a list content is displayed, the basket (entries selected) should be emptied
+        Cart.emptyCart();
 
         $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search')
 
@@ -354,10 +357,6 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         if ($routeParams.queryId) {
             queryRepository.repository.show = false;
         }
-
-        // 1) Each time a new search is run, the basket (entries selected) should be emptied
-        // 2) Each time a list content is displayed, the basket (entries selected) should be emptied
-        Cart.emptyCart();
 
         Search.docs(params,
             function (results) {
