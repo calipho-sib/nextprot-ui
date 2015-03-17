@@ -225,9 +225,9 @@
             elm.click(function () {
 
                 if (elm.context.text.match(/more/)) {
-                    elm.context.text = "less";
+                    elm.context.text = "[less]";
                 } else if (elm.context.text.match(/less/)) {
-                    elm.context.text = "more";
+                    elm.context.text = "[more]";
                 }
                 angular.element(attrs.npToggleMore).toggleClass("hide")
             })

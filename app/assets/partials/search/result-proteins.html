@@ -27,7 +27,7 @@
 
                 <span ng-bind-html="doc.function_desc[0].replace('@@',' ') | head:300"></span>
                 <span ng-if="doc.function_desc[0].length > 300" id="tail-{{$index}}" class="hide" ng-bind-html="doc.function_desc[0].replace('@@',' ') | tail:300"></span>
-                <span ng-if="doc.function_desc[0].length > 300"><a class="btn btn-xs btn-default" np-toggle-more="#tail-{{$index}}">more</a></span>
+                <span ng-if="doc.function_desc[0].length > 300"><a class="npToggleMoreText" np-toggle-more="#tail-{{$index}}">[more]</a></span>
 
                 <span ng-hide="doc.function_desc"> No functional information for this protein. </span>&nbsp;
             </div>
