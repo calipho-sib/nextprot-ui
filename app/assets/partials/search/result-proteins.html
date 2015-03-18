@@ -1,9 +1,26 @@
 <!-- RESULT HEADERS -->
       <div class="row">
-        <p class="col-xs-6" ng-show="showCart&&Search.result.docs.length">
-            <label>
-                <input type="checkbox" indeterminate-checkbox protein-list="Cart.getElements()" ng-click="toggleAllToBasket()">
-            </label>
+        <div class="col-xs-6" ng-show="showCart&&Search.result.docs.length">
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-default">
+                    <div style="margin: 0">
+                        <label>
+                            <input type="checkbox" indeterminate-checkbox protein-list="Cart.getElements()" ng-click="toggleAllToBasket()">
+                        </label>
+                    </div>
+                </button>
+
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#" ng-click="addAllToBasket()">All</a></li>
+                    <li><a href="#" ng-click="removeAllFromBasket()">None</a></li>
+                    <!--<li><a href="#" ng-click="inverseBasketSelection()">Inverse</a></li>-->
+                </ul>
+            </div>
 
             <label><span class="badge"> {{Cart.getCartSize()}}</span></label>
 
@@ -11,7 +28,7 @@
                     ng-click="setExportParameters()" class="btn btn-link navbar-btn btn-navbar-selected">
               <div ng-if="export.searchQuery && Cart.getCartSize()>0"><a href="" ng-click="launchModalList($index, 'create')"> Save as list</a></div>
             </button>
-        </p>
+        </div>
         <ul ng-cloak id="search-results" class="col-xs-12 list-unstyled">
           <li ng-repeat="doc in Search.result.docs">
             <input type="checkbox" name="docs[]" value="{{doc.id}}" ng-click="change(doc.id)" ng-model="selectedResults[doc.id]">
