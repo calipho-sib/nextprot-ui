@@ -1,64 +1,90 @@
 <!-- RESULT HEADERS -->
-      <div class="row">
-        <div class="col-xs-6" ng-show="showCart&&Search.result.docs.length">
+<div class="row">
+    <div class="col-xs-6" ng-show="showCart&&Search.result.docs.length">
 
-            <!-- clipboard selector -->
-            <div class="btn-group" style="vertical-align:top">
-                <button type="button" class="btn btn-default">
-                    <input type="checkbox" indeterminate-checkbox protein-list="Cart.getElements()" ng-click="toggleAllToBasket()">
-                </button>
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a href="#" ng-click="addAllToBasket()">All</a></li>
-                    <li><a href="#" ng-click="removeAllFromBasket()">None</a></li>
-                    <!--<li><a href="#" ng-click="inverseBasketSelection()">Inverse</a></li>-->
-                </ul>
+        <!-- clipboard selector -->
+        <div class="btn-group" style="vertical-align:top; margin-bottom: 10px">
+            <button type="button" class="btn btn-default">
+                <input type="checkbox" indeterminate-checkbox protein-list="Cart.getElements()"
+                       ng-click="toggleAllToBasket()">
+            </button>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#" ng-click="addAllToBasket()">All</a></li>
+                <li><a href="#" ng-click="removeAllFromBasket()">None</a></li>
+                <!--<li><a href="#" ng-click="inverseBasketSelection()">Inverse</a></li>-->
+            </ul>
+
+            <button class="btn btn-default" disabled><span class="badge"> {{Cart.getCartSize()}}</span></button>
+
+            <button ng-show="export.searchQuery && Cart.getCartSize()>0" type="button" class="btn btn-link"
+                    ng-click="launchModalList($index, 'create')">Save as list
+            </button>
+
+        </div>
+    </div>
+    <ul ng-cloak id="search-results" class="col-xs-12 list-unstyled">
+        <li ng-repeat="doc in Search.result.docs">
+            <div style="display: inline-block; width:20px; vertical-align:top">
+                <input type="checkbox" name="docs[]" value="{{doc.id}}" ng-click="change(doc.id)"
+                       ng-model="selectedResults[doc.id]">
             </div>
 
-            <label><span class="badge"> {{Cart.getCartSize()}}</span></label>
+            <div style="display: inline-block; width:80%; vertical-align:top">
+                <!-- Add to basket -->
+                <a href="entry/{{doc.id}}">
+                    <span ng-bind-html="doc.recommended_name"></span>
+                    <span ng-show="doc.ec_name">[{{doc.ec_name}}]</span> ({{doc.recommended_gene_names}})
+                    [{{doc.id}}]</a>
+                      <span><a class="btn hide btn-default btn-xs" toggle="#line-{{$index}}"
+                               ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i>
+                          Details</a> </span>
 
-            <button ng-show="export.searchQuery && Cart.getCartSize()>0" type="button" class="btn btn-link">
-                <a href="#" ng-click="launchModalList($index, 'create')">Save as list</a>
-            </button>
-        </div>
-        <ul ng-cloak id="search-results" class="col-xs-12 list-unstyled">
-          <li ng-repeat="doc in Search.result.docs">
-            <input type="checkbox" name="docs[]" value="{{doc.id}}" ng-click="change(doc.id)" ng-model="selectedResults[doc.id]">
-
-            <!-- Add to basket -->
-            <a href="entry/{{doc.id}}">
-              <span ng-bind-html="doc.recommended_name"></span>
-              <span ng-show="doc.ec_name">[{{doc.ec_name}}]</span> ({{doc.recommended_gene_names}}) [{{doc.id}}]</a> 
-              <span><a class="btn hide btn-default btn-xs" toggle="#line-{{$index}}" ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i> Details</a> </span>
-
-            | <!-- Export entry -->
-            <a bs-modal="'partials/export/export-modal.html'" href="#" title="Export entry" ng-click="setExportParameters(doc.id)"> <i class="icon-download"></i></a>
+                | <!-- Export entry -->
+                <a bs-modal="'partials/export/export-modal.html'" href="#" title="Export entry"
+                   ng-click="setExportParameters(doc.id)"> <i class="icon-download"></i></a>
 
             <div class="small" ng-show="!Search.session.summary">
 
                 <span ng-bind-html="doc.function_desc[0].replace('@@',' ') | prefix:300"></span>
-                <span ng-if="doc.function_desc[0].length > 300" id="suffix-{{$index}}" class="hide" ng-bind-html="doc.function_desc[0].replace('@@',' ') | suffix:300"></span>
-                <span ng-if="doc.function_desc[0].length > 300"><a class="npToggleMoreText" np-toggle-more="#suffix-{{$index}}">[more]</a></span>
+                      <span ng-if="doc.function_desc[0].length > 300" id="suffix-{{$index}}" class="hide"
+                            ng-bind-html="doc.function_desc[0].replace('@@',' ') | suffix:300"></span>
+                      <span ng-if="doc.function_desc[0].length > 300"><a class="npToggleMoreText"
+                                                                         np-toggle-more="#suffix-{{$index}}">[more]</a></span>
 
                 <span ng-hide="doc.function_desc"> No functional information for this protein. </span>&nbsp;
             </div>
-            <div class="gray small" ng-show="!Search.session.summary">
-              Chromosomal location: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/exons">{{doc.chr_loc}}</a> 
-              Isoforms: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.isoform_num}}</a> 
-              PTMs: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.ptm_num &gt; 0 ? doc.ptm_num : '0'}}</a> 
-              Sequence length: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.aa_length}}</a> 
-              Variants: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.var_num}}</a> <br>
-                Disease: <a class="{{(doc.filters|has:'filterdisease')? '':'inactive'}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/medical">{{(doc.filters|has:'filterdisease') ? 'yes':'no'}}</a>
-              Expression: <a class="{{(doc.filters|has:'filterexpressionprofile')? '':'inactive'}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/expression">{{(doc.filters|has:'filterexpressionprofile') ? 'yes':'no'}}</a>
-              Mutagenesis: <a class="{{(doc.filters|has:'filtermutagenesis')? '':'inactive'}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{(doc.filters|has:'filtermutagenesis') ? 'yes':'no'}}</a>
-              Proteomics: <a class="{{(doc.filters|has:'filterproteomics')? '':'inactive'}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/proteomics">{{(doc.filters|has:'filterproteomics') ? 'yes':'no'}}</a>
-              Structure: <a class="{{(doc.filters|has:'filterstructure')? '':'inactive'}}" href="http://www.nextprot.org/db/entry/{{doc.id}}/structures">{{(doc.filters|has:'filterstructure') ? 'yes':'no'}}</a>
-              Proteins existence: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/function">{{doc.protein_existence}}</a>
-            </div>
 
-          </li>
-        </ul>
-      </div>
+            <div class="gray small" ng-show="!Search.session.summary">
+                Chromosomal location: <a
+                    href="http://www.nextprot.org/db/entry/{{doc.id}}/exons">{{doc.chr_loc}}</a>
+                Isoforms: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.isoform_num}}</a>
+                PTMs: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.ptm_num &gt; 0 ?
+                doc.ptm_num : '0'}}</a>
+                Sequence length: <a
+                    href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.aa_length}}</a>
+                Variants: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.var_num}}</a> <br>
+                Disease: <a class="{{(doc.filters|has:'filterdisease')? '':'inactive'}}"
+                            href="http://www.nextprot.org/db/entry/{{doc.id}}/medical">{{(doc.filters|has:'filterdisease')
+                ? 'yes':'no'}}</a>
+                Expression: <a class="{{(doc.filters|has:'filterexpressionprofile')? '':'inactive'}}"
+                               href="http://www.nextprot.org/db/entry/{{doc.id}}/expression">{{(doc.filters|has:'filterexpressionprofile')
+                ? 'yes':'no'}}</a>
+                Mutagenesis: <a class="{{(doc.filters|has:'filtermutagenesis')? '':'inactive'}}"
+                                href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{(doc.filters|has:'filtermutagenesis')
+                ? 'yes':'no'}}</a>
+                Proteomics: <a class="{{(doc.filters|has:'filterproteomics')? '':'inactive'}}"
+                               href="http://www.nextprot.org/db/entry/{{doc.id}}/proteomics">{{(doc.filters|has:'filterproteomics')
+                ? 'yes':'no'}}</a>
+                Structure: <a class="{{(doc.filters|has:'filterstructure')? '':'inactive'}}"
+                              href="http://www.nextprot.org/db/entry/{{doc.id}}/structures">{{(doc.filters|has:'filterstructure')
+                ? 'yes':'no'}}</a>
+                Proteins existence: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/function">{{doc.protein_existence}}</a>
+            </div>
+            </div>
+        </li>
+    </ul>
+</div>
