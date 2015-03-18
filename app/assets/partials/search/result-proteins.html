@@ -2,15 +2,11 @@
       <div class="row">
         <div class="col-xs-6" ng-show="showCart&&Search.result.docs.length">
 
-            <div class="btn-group">
+            <!-- clipboard selector -->
+            <div class="btn-group" style="vertical-align:top">
                 <button type="button" class="btn btn-default">
-                    <div style="margin: 0">
-                        <label>
-                            <input type="checkbox" indeterminate-checkbox protein-list="Cart.getElements()" ng-click="toggleAllToBasket()">
-                        </label>
-                    </div>
+                    <input type="checkbox" indeterminate-checkbox protein-list="Cart.getElements()" ng-click="toggleAllToBasket()">
                 </button>
-
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
@@ -24,9 +20,8 @@
 
             <label><span class="badge"> {{Cart.getCartSize()}}</span></label>
 
-            <button type="button" bs-modal="'partials/export/export-modal.html'"
-                    ng-click="setExportParameters()" class="btn btn-link navbar-btn btn-navbar-selected">
-              <div ng-if="export.searchQuery && Cart.getCartSize()>0"><a href="" ng-click="launchModalList($index, 'create')"> Save as list</a></div>
+            <button ng-show="export.searchQuery && Cart.getCartSize()>0" type="button" class="btn btn-link">
+                <a href="#" ng-click="launchModalList($index, 'create')">Save as list</a>
             </button>
         </div>
         <ul ng-cloak id="search-results" class="col-xs-12 list-unstyled">
