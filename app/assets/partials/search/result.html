@@ -42,13 +42,13 @@
 								ng-click="setExportParameters()" class="btn btn-link navbar-btn btn-navbar-selected">
 							<div ng-show="export.userQuery">Export {{export.userQuery.title}}&nbsp;<i class="icon-download"></i></div>
 							<div ng-show="export.userList">Export {{export.userList.name}}&nbsp;<i class="icon-download"></i></div>
-							<div ng-show="export.searchQuery">Export search for '{{export.searchQuery}}'&nbsp;<i class="icon-download"></i></div>
+							<div ng-show="export.searchQuery">Download '{{export.searchQuery}}'&nbsp;<i class="icon-download"></i></div>
 						</button>
 
 						<ul class="nav navbar-nav navbar-right">
 
 							<!-- Basket -->
-							<li class="{{(Search.result.params.entity|has:'proteins') ? 'dropdown':'hidden'}}">
+							<!--<li class="{{(Search.result.params.entity|has:'proteins') ? 'dropdown':'hidden'}}">
 								<a data-toggle="dropdown" class="dropdown-toggle" href="">
 									<span class="badge">{{Cart.getCartSize()}}
 									<i class="icon-briefcase"></i>
@@ -61,7 +61,7 @@
 									<li><a href="proteins/search?cart=true">Manage basket</a></li>
 
 								</ul>
-							</li>
+							</li>-->
 
 
 							<!-- SORTING -->

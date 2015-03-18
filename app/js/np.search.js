@@ -26,8 +26,8 @@ function searchConfig($routeProvider, $locationProvider, $httpProvider) {
 
 //
 // implement main application controller
-SearchCtrl.$inject=['$resource','$scope','$rootScope','$location', '$filter', '$routeParams','$route','$timeout','Search','config','user','flash', 'userProteinList', 'queryRepository', 'exportService'];
-function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routeParams, $route, $timeout, Search, config, user, flash, userProteinList, queryRepository, exportService) {
+SearchCtrl.$inject=['$resource','$scope','$rootScope','$location', '$filter', '$routeParams','$route','$timeout','Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService'];
+function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routeParams, $route, $timeout, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService) {
 
     // scope from template
     $scope.Search = Search;
@@ -276,6 +276,9 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         $location.search('start', null);
         $location.search('queryId', null);
 
+        // 1) Each time a new search is run, the basket (entries selected) should be emptied
+        // 2) Each time a list content is displayed, the basket (entries selected) should be emptied
+        Cart.emptyCart();
 
         $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search')
 
@@ -340,7 +343,7 @@ ResultCtrl.$inject=['$scope','$modal', '$route','$routeParams','$filter','$timeo
 function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash, exportService, queryRepository) {
     $scope.Search = Search;
     $scope.Cart = Cart;
-    $scope.selectedResults = {};
+    $scope.selectedResults = [];
     $scope.showCart = true;
 
     //
@@ -450,7 +453,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                 }, function (docs) {
                     Cart.setCart(docs.ids);
                     setAsSelected(docs.ids);
-                    flash("alert-info", docs.ids.length + " entries added to basket");
+                    flash("alert-info", docs.ids.length + " entries added to clipboard");
                 });
         }
     }
@@ -471,6 +474,9 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
     }
 
     $scope.removeAllFromBasket = function () {
+
+        var cartSize = Cart.getCartSize();
+
         if ($routeParams.listId) {
             userProteinList.getByIds(user, $routeParams.listId, function (result) {
                 Cart.removeFromCart(result.ids);
@@ -491,12 +497,24 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                 }, function (docs) {
                     Cart.removeFromCart(docs.ids);
                     $scope.selectedResults = [];
-                    flash("alert-info", docs.ids.length + " entries removed from basket");
+                    flash("alert-info", cartSize + " entries removed from clipboard");
                 });
         }
     }
 
+    $scope.toggleAllToBasket = function () {
 
+        if (Cart.getCartSize() < Search.result.num) {
+            $scope.addAllToBasket();
+        }else {
+            $scope.removeAllFromBasket();
+        }
+    };
+
+    $scope.inverseBasketSelection = function () {
+
+        alert("not yet implemented");
+    }
 
 
     $scope.getResultTemplateByEntity = function () {
