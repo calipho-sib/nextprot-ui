@@ -474,6 +474,9 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
     }
 
     $scope.removeAllFromBasket = function () {
+
+        var cartSize = Cart.getCartSize();
+
         if ($routeParams.listId) {
             userProteinList.getByIds(user, $routeParams.listId, function (result) {
                 Cart.removeFromCart(result.ids);
@@ -494,7 +497,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                 }, function (docs) {
                     Cart.removeFromCart(docs.ids);
                     $scope.selectedResults = [];
-                    flash("alert-info", docs.ids.length + " entries removed from clipboard");
+                    flash("alert-info", cartSize + " entries removed from clipboard");
                 });
         }
     }
@@ -506,6 +509,11 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         }else {
             $scope.removeAllFromBasket();
         }
+    };
+
+    $scope.inverseBasketSelection = function () {
+
+        alert("not yet implemented");
     }
 
 
