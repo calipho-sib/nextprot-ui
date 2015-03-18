@@ -28,7 +28,7 @@
     </div>
     <ul ng-cloak id="search-results" class="col-xs-12 list-unstyled">
         <li ng-repeat="doc in Search.result.docs">
-            <div style="display: inline-block; width:20px; vertical-align:top">
+            <div style="display: inline-block; width:20px; vertical-align:top; margin-left: 13px">
                 <input type="checkbox" name="docs[]" value="{{doc.id}}" ng-click="change(doc.id)"
                        ng-model="selectedResults[doc.id]">
             </div>
