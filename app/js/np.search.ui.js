@@ -387,38 +387,41 @@
         }
     }]);
 
-    SearchUI.directive('indeterminateCheckbox', ['Search', function (Search) {
-        return {
-            // Create a new scope for this directive rather than inheriting the parent scope.
-            scope: true,
-            link: function (scope, element, attrs) {
-                var proteinList = attrs.proteinList;
+    SearchUI.directive('indeterminateCheckbox', [function () {
+                return {
+                    scope: true,
+                    restrict: 'A',
+                    link: function (scope, element, attrs) {
+                        var selectedProteinList = attrs.selectedProteinList;
+                        var foundProteinCount = attrs.foundProteinCount;
 
-                // Watch found proteins for changes
-                scope.$watch(proteinList, function (selectedProteins) {
-                    var hasChecked = false;
-                    var isIndeterminate = false;
+                        // Watch found proteins for changes
+                        scope.$watch(selectedProteinList, function (selectedProteinList) {
+                            var hasChecked = false;
+                            var isIndeterminate = false;
 
-                    // some proteins are selected
-                    if (selectedProteins.length > 0) {
-                        // some proteins are selected
-                        hasChecked = true;
+                            //console.log(selectedProteinList);
 
-                        // not all proteins are selected -> indeterminate state
-                        if (selectedProteins.length < Search.result.num)
-                            isIndeterminate = true;
+                            // some proteins are selected
+                            if (selectedProteinList.length > 0) {
+                                // some proteins are selected
+                                hasChecked = true;
+
+                                // not all proteins are selected -> indeterminate state
+                                if (selectedProteinList.length < foundProteinCount)
+                                    isIndeterminate = true;
+                            }
+
+                            // Determine which state to put the checkbox in
+                            if (hasChecked && isIndeterminate) {
+                                element.prop('checked', false);
+                                element.prop('indeterminate', true);
+                            } else {
+                                element.prop('checked', hasChecked);
+                                element.prop('indeterminate', false);
+                            }
+                        }, true);
                     }
-
-                    // Determine which state to put the checkbox in
-                    if (hasChecked && isIndeterminate) {
-                        element.prop('checked', false);
-                        element.prop('indeterminate', true);
-                    } else {
-                        element.prop('checked', hasChecked);
-                        element.prop('indeterminate', false);
-                    }
-                }, true);
-            }
         }
     }]);
 
