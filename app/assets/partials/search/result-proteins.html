@@ -52,7 +52,7 @@
                 <span ng-bind-html="doc.function_desc[0].replace('@@',' ') | prefix:300"></span>
                       <span ng-if="doc.function_desc[0].length > 300" id="suffix-{{$index}}" class="hide"
                             ng-bind-html="doc.function_desc[0].replace('@@',' ') | suffix:300"></span>
-                      <span ng-if="doc.function_desc[0].length > 300"><a class="npToggleMoreText"
+                      <span ng-if="doc.function_desc[0].length > 300"><a href="#" class="npToggleMoreText"
                                                                          np-toggle-more="#suffix-{{$index}}">[more]</a></span>
 
                 <span ng-hide="doc.function_desc"> No functional information for this protein. </span>&nbsp;
