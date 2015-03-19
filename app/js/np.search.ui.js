@@ -387,18 +387,18 @@
         }
     }]);
 
-    SearchUI.directive('indeterminateCheckbox', [function () {
+    SearchUI.directive('indeterminateCheckbox', ['Search', function (Search) {
                 return {
                     scope: true,
                     restrict: 'A',
                     link: function (scope, element, attrs) {
                         var selectedProteinList = attrs.selectedProteinList;
-                        var foundProteinCount = attrs.foundProteinCount;
 
                         // Watch found proteins for changes
                         scope.$watch(selectedProteinList, function (selectedProteinList) {
                             var hasChecked = false;
                             var isIndeterminate = false;
+                            var foundProteinCount = Search.result.num;
 
                             //console.log(selectedProteinList);
 
