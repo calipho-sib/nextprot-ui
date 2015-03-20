@@ -34,8 +34,13 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
         if(ipCookie('nxprofile') != null){
             user.copy(ipCookie('nxprofile'));
         } else {
-            ipCookie.remove('nxprofile');
-            ipCookie.remove('nxtoken');
+            if ($window.location.hostname === "localhost") {
+                ipCookie.remove('nxprofile', { path: '/' });
+                ipCookie.remove('nxtoken', { path: '/' });
+            } else {
+                ipCookie.remove('nxprofile', { path: '/', domain: ".nextprot.org" });
+                ipCookie.remove('nxtoken', { path: '/', domain: ".nextprot.org" });
+            }
         }
     });
 
@@ -111,11 +116,11 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
                 // Success callback
                 var expirationInDays = 730; // 730 days = 2 years
                 if ($window.location.hostname === "localhost") {
-                    ipCookie('nxprofile', profile, { expires: expirationInDays });
-                    ipCookie('nxtoken', token, { expires: expirationInDays });
+                    ipCookie('nxprofile', profile, { path: '/', expires: expirationInDays });
+                    ipCookie('nxtoken', token, { path: '/', expires: expirationInDays });
                 } else {
-                    ipCookie('nxprofile', profile, { domain: '.nextprot.org', expires: expirationInDays });
-                    ipCookie('nxtoken', token, { domain: '.nextprot.org', expires: expirationInDays });
+                    ipCookie('nxprofile', profile, { path: '/', domain: '.nextprot.org', expires: expirationInDays });
+                    ipCookie('nxtoken', token, { path: '/', domain: '.nextprot.org', expires: expirationInDays });
                 }
                 $location.path('/');
 
@@ -145,8 +150,13 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
         this.clear()
         auth.signout();
 
-        ipCookie.remove('nxprofile');
-        ipCookie.remove('nxtoken');
+        if ($window.location.hostname === "localhost") {
+            ipCookie.remove('nxprofile', { path: '/' });
+            ipCookie.remove('nxtoken', { path: '/' });
+        } else {
+            ipCookie.remove('nxprofile', { path: '/', domain: ".nextprot.org" });
+            ipCookie.remove('nxtoken', { path: '/', domain: ".nextprot.org" });
+        }
 
         //legacy remove if it exists (should be removed from June 2015)
         store.remove('profile');
