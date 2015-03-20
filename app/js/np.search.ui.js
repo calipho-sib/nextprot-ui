@@ -138,10 +138,10 @@
         return window.encodeURIComponent;
     });
 
-    SearchUI.filter('limit', function () {
+    /*SearchUI.filter('limit', function () {
         return function (value, max, wordwise, tail) {
             if (!value) return '';
-            if (!wordwise)wordwise = true;
+            if (!wordwise) wordwise = true;
 
             max = parseInt(max, 10);
             if (!max) return value;
@@ -157,9 +157,30 @@
 
             return value + (tail || ' ...');
         };
+    });*/
+
+    SearchUI.filter('prefix', function () {
+        return function (value, max, wordwise) {
+            if (!value) return '';
+            if (!wordwise) wordwise = true;
+
+            max = parseInt(max, 10);
+            if (!max) return value;
+            if (value.length <= max) return value;
+
+            value = value.substr(0, max);
+            if (wordwise) {
+                var lastspace = value.lastIndexOf(' ');
+                if (lastspace != -1) {
+                    value = value.substr(0, lastspace);
+                }
+            }
+
+            return value;
+        };
     });
 
-    SearchUI.filter('tail', function () {
+    SearchUI.filter('suffix', function () {
         return function (value, max) {
             if (!value) return '';
 
@@ -195,6 +216,20 @@
                     elm.context.text = "Show Abstract";
                 }
                 angular.element(attrs.npToggleAbstract).toggleClass("hide")
+            })
+        };
+    }]);
+
+    SearchUI.directive('npToggleMore', [function () {
+        return function (scope, elm, attrs) {
+            elm.click(function () {
+
+                if (elm.context.text.match(/more/)) {
+                    elm.context.text = "[less]";
+                } else if (elm.context.text.match(/less/)) {
+                    elm.context.text = "[more]";
+                }
+                angular.element(attrs.npToggleMore).toggleClass("hide")
             })
         };
     }]);
@@ -349,6 +384,44 @@
             $timeout(function () {
                 element.affix({offset: attr['npAffix']});
             }, 0);
+        }
+    }]);
+
+    SearchUI.directive('indeterminateCheckbox', ['Search', function (Search) {
+                return {
+                    scope: true,
+                    restrict: 'A',
+                    link: function (scope, element, attrs) {
+                        var selectedProteinList = attrs.selectedProteinList;
+
+                        // Watch found proteins for changes
+                        scope.$watch(selectedProteinList, function (selectedProteinList) {
+                            var hasChecked = false;
+                            var isIndeterminate = false;
+                            var foundProteinCount = Search.result.num;
+
+                            //console.log(selectedProteinList);
+
+                            // some proteins are selected
+                            if (selectedProteinList.length > 0) {
+                                // some proteins are selected
+                                hasChecked = true;
+
+                                // not all proteins are selected -> indeterminate state
+                                if (selectedProteinList.length < foundProteinCount)
+                                    isIndeterminate = true;
+                            }
+
+                            // Determine which state to put the checkbox in
+                            if (hasChecked && isIndeterminate) {
+                                element.prop('checked', false);
+                                element.prop('indeterminate', true);
+                            } else {
+                                element.prop('checked', hasChecked);
+                                element.prop('indeterminate', false);
+                            }
+                        }, true);
+                    }
         }
     }]);
 
