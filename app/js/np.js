@@ -57,13 +57,13 @@
     runApplication.$inject = ['$log', 'gitHubContent', 'npSettings']
     function runApplication($log, gitHubContent, npSettings) {
         gitHubContent.initialize({
-            baseUrl: "https://api.nextprot.org",
-            helpPath: '/rdf/help/type/all.json',
+            helpPath: 'rdfhelp.json',
             helpTitle: 'Generalities',
             root: 'help', // specify a URI prefix
             githubRepo: '/',
             githubApi:apiBase,
             githubEditPage : "https://github.com/calipho-sib/nextprot-docs/edit/master/"
+            githubToken : null
         });
     };
 
@@ -93,13 +93,15 @@
         $routeProvider
             // Home page
             .when('/', {title: 'welcome to nextprot', templateUrl: '/partials/welcome.html'})
-            //// Help pages
-            // learn pages
-            .when('/help', {title: 'welcome to nextprot', templateUrl: '/partials/doc/doc.html'})
-            // RDF ENTITIES
-            .when('/help/entity/:entity', {title: 'welcome to nextprot', templateUrl: '/partials/doc/help.html'})
             // Pages (in nextprot-docs/pages): about, copyright...
             .when('/:article', {title: 'page', templateUrl: '/partials/doc/page.html'})
+            //// Help pages
+            // Simple pages
+            .when('/help/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/page.html'})
+            // RDF generalities
+            .when('/help/doc/:article', {title: 'help for RDF', templateUrl: '/partials/doc/doc.html'})
+            // RDF entities
+            .when('/help/entity/:entity', {title: 'help for RDF', templateUrl: '/partials/doc/help.html'})
             // 404 error page
             .when('/404', {title: '404', templateUrl: '/partials/errors/404.html'})
             // Catch all
