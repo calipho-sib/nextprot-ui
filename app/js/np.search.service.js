@@ -137,6 +137,8 @@ SearchService.factory('Search', [
             // result content
             this.result = {};
 
+            this.resultCount = 0;
+
             angular.extend(this.params, defaultUrl, data || {})
 
         };
@@ -166,7 +168,7 @@ SearchService.factory('Search', [
 
 
         Search.prototype.paginate = function (params, docs) {
-            this.result.num = docs.found;
+            this.resultCount = docs.found;
             this.result.pagination = {};
             if (!params.rows)
                 params.rows = config.api.paginate.defaultRows;
@@ -179,9 +181,9 @@ SearchService.factory('Search', [
             this.result.pagination.current = (currentOffset + 1);
 
             //total number of pages
-            var totalPage = Math.floor(this.result.num / params.rows) + 1;
+            var totalPage = Math.floor(this.resultCount / params.rows) + 1;
 
-            this.result.pagination.numPages = parseInt(this.calcPages(this.result.num, params.rows ? parseInt(params.rows) : 50));
+            this.result.pagination.numPages = parseInt(this.calcPages(this.resultCount, params.rows ? parseInt(params.rows) : 50));
             //console.log('pages: ', this.result.num, params.rows ? params.rows : 50, this.result.pagination.numPages, this.calcPages(this.result.num, params.rows ? params.rows : 50));
 
             // back button
@@ -293,8 +295,6 @@ SearchService.factory('Search', [
             delete post.action;
             delete post.entity;
 
-            console.log(this.params);
-
             // display search status status
             me.result.message = "Loading content...";
 
@@ -333,7 +333,7 @@ SearchService.factory('Search', [
                 me.result.message = null;
                 me.result.pages = [];
                 me.result.filters = null;
-                me.result.num = 0;
+                me.resultCount = 0;
                 //if (error.status)
                 //me.result.error = "Ooops, request failed: " + error;
             })

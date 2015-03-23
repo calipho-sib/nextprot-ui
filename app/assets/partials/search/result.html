@@ -7,7 +7,7 @@
 		    	<!-- DISPLAY RESULT INFO -->
 					<ul class="nav navbar-nav  " style="">
 						<li class="dropdown">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{start ++ 1}}</b> to <b>{{ ((start + rows) > Search.result.num) ? Search.result.num : (start + rows) }}</b> <span class="hidden-xs">of {{Search.result.num}} </span><b class="caret"></b></a>
+							<a data-toggle="dropdown" class="dropdown-toggle" href="">Show <b>{{start ++ 1}}</b> to <b>{{ ((start + rows) > Search.resultCount) ? Search.resultCount : (start + rows) }}</b> <span class="hidden-xs">of {{Search.resultCount}} </span><b class="caret"></b></a>
 							<ul class="dropdown-menu">
 	    						<li><a ng-class="{bold:Search.params.rows=='50'||!Search.params.rows}" href="" ng-click="params({rows:50})">50 rows</a></li>
 								<li><a ng-class="{bold:Search.params.rows=='100'}" href="" ng-click="params({rows:100})">100 rows</a></li>

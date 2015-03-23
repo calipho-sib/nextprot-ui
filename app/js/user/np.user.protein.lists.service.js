@@ -66,7 +66,7 @@
             return this.$daoLists.get({id: listId}).$promise;
         };
 
-
+/*
         Proteins.prototype.getByIds = function (user, list, cb) {
             var self = this;
             var params = {username: user.profile.username, id: list, action: 'ids'};
@@ -76,7 +76,7 @@
             });
             return self;
         }
-
+*/
 
         Proteins.prototype.combine = function (user, list, l1, l2, op) {
             var self = this;
