@@ -360,14 +360,14 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
             queryRepository.repository.show = false;
         }
 
-        Search.docs(params,
-            function (results) {
+        Search.docs(params, function (results) {
+
                 params.start = (!$routeParams.start) ? 0 : $routeParams.start;
                 if ($routeParams.listId) {
                     $scope.showCart = true;
-                    _.each(results.docs, function (doc) {
+                    /*_.each(results.docs, function (doc) {
                         $scope.selectedResults[doc.id] = true;
-                    });
+                    });*/
                 } else {
                     _.each(results.docs, function (doc) {
                         if (Cart.inCart(doc.id))
@@ -375,7 +375,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                     });
                 }
 
-                $scope.start = Search.result.offset >= Search.result.num ? 0 : Search.result.offset;
+                $scope.start = Search.result.offset >= Search.resultCount ? 0 : Search.result.offset;
                 $scope.rows = Search.result.rows;
                 if (cb) cb(results);
             });
@@ -438,18 +438,19 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
 
 
     $scope.addAllToBasket = function () {
+
         if ($routeParams.listId) {
+
             userProteinList.getListByPublicId($routeParams.listId).then(
                 function (result) {
-                    console.log(result.accessionNumbers);
-                Cart.setCart(result.accessionNumbers);
-                setAsSelected(result.accessionNumbers);
-            },  function(error){
+
+                    Cart.setCart(result.accessionNumbers);
+                    setAsSelected(result.accessionNumbers);
+                },
+                function(error){
                     flash(error);
                 }
             );
-        } else if ($routeParams.cart) {
-            // removed for now
         } else {
             Search.getIds(
                 {
@@ -486,13 +487,14 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         var cartSize = Cart.getCartSize();
 
         if ($routeParams.listId) {
+
             userProteinList.getListByPublicId($routeParams.listId).then(
                 function (result) {
-                    Cart.removeFromCart(result.accessionNumbers);
-                    setAsSelected(result.accessionNumbers);
-                    console.log(result.accessionNumbers);
 
-                }, function (error) {
+                    Cart.removeFromCart(result.accessionNumbers);
+                    $scope.selectedResults = [];
+                },
+                function (error) {
                     flash(error);
                 });
         } else if ($routeParams.cart) {
@@ -517,7 +519,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
 
     $scope.toggleAllToBasket = function () {
 
-        if (Cart.getCartSize() < Search.result.num) {
+        if (Cart.getCartSize() < Search.resultCount) {
             $scope.addAllToBasket();
         }else {
             $scope.removeAllFromBasket();
