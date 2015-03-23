@@ -400,8 +400,6 @@
                             var isIndeterminate = false;
                             var foundProteinCount = Search.result.num;
 
-                            //console.log(selectedProteinList);
-
                             // some proteins are selected
                             if (selectedProteinList.length > 0) {
                                 // some proteins are selected
@@ -411,6 +409,9 @@
                                 if (selectedProteinList.length < foundProteinCount)
                                     isIndeterminate = true;
                             }
+
+                            console.log("count:", foundProteinCount, "proteins:", selectedProteinList);
+                            console.log("has checked:", hasChecked, "is indeterminate:", isIndeterminate);
 
                             // Determine which state to put the checkbox in
                             if (hasChecked && isIndeterminate) {
