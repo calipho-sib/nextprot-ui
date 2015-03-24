@@ -565,16 +565,16 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
 
             $scope.selected = {};
             angular.extend($scope.modal, { type: action});
-            var proteinListModal = $modal({scope: $scope, template: 'partials/user/user-protein-lists-modal.html', show: true});
-            //proteinListModal.$promise.then(proteinListModal.show);
 
+            var proteinListModal = $modal({scope: $scope.$new(), template: 'partials/user/user-protein-lists-modal.html', show: true});
+            //proteinListModal.$promise.then(proteinListModal.show);
         } else {
             flash('alert-warning', 'Please login to save a list');
         }
     }
 
 
-    $scope.saveModal = function (dismiss) {
+    $scope.saveModal = function () {
 
         var proteinList = {
             name: $scope.selected.name,
@@ -585,7 +585,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
 
         userProteinList.create(user, proteinList).$promise.then(
             function () {
-                flash('alert-success', "List " + proteinList.name + " succesfully created.");
+                flash('alert-success', "List " + proteinList.name + " successfully created.");
             }, function(error)  {
                 flash('alert-warning', error.data.message);
             }

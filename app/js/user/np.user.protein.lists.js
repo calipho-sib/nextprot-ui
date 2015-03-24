@@ -97,7 +97,7 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 		angular.extend($scope.modal, {type: action});
 	};
 
-	$scope.saveModal = function(dismiss) {
+	$scope.saveModal = function() {
 
 		if($scope.modal.type == 'edit') {
 			angular.extend($scope.lists[$scope.selected.index], $scope.selected);
