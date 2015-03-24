@@ -56,13 +56,13 @@
     runApplication.$inject = ['$log', 'gitHubContent', 'npSettings']
     function runApplication($log, gitHubContent, npSettings) {
         gitHubContent.initialize({
-            baseUrl: "https://api.nextprot.org",
-            helpPath: '/rdf/help/type/all.json',
+            helpPath: 'rdfhelp.json',
             helpTitle: 'Generalities',
-            root: '',                                                            // specify a URI prefix
+            root: 'help', // specify a URI prefix
             githubRepo: '/',
             githubApi:apiBase,
-            githubEditPage : "https://github.com/calipho-sib/nextprot-docs/edit/master/"
+            githubEditPage : "https://github.com/calipho-sib/nextprot-docs/edit/master/",
+            githubToken : null
         });
     };
 
@@ -90,13 +90,21 @@
 
         // List of routes of the application
         $routeProvider
+            // Home page
             .when('/', {title: 'welcome to nextprot', templateUrl: '/partials/welcome.html'})
-            .when('/doc', {title: 'welcome to nextprot', templateUrl: '/partials/doc/doc.html'})
-            .when('/doc/entity/:entity', {title: 'welcome to nextprot', templateUrl: '/partials/doc/help.html'})
-            .when('/pages/:article', {title: 'page', templateUrl: '/partials/doc/page.html'})
+            // Pages (in nextprot-docs/pages): about, copyright...
+            .when('/:article', {title: 'page', templateUrl: '/partials/doc/page.html'})
+            //// Help pages
+            // Simple pages
+            .when('/help/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/page.html'})
+            // RDF generalities
+            .when('/help/doc/:article', {title: 'help for RDF', templateUrl: '/partials/doc/doc.html'})
+            // RDF entities
+            .when('/help/entity/:entity', {title: 'help for RDF', templateUrl: '/partials/doc/help.html'})
+            // 404 error page
             .when('/404', {title: '404', templateUrl: '/partials/errors/404.html'})
-        // Catch all
-        //.otherwise({redirectTo : '/404'});
+            // Catch all
+            //.otherwise({redirectTo : '/404'});
 
         // Without serve side support html5 must be disabled.
         $locationProvider.html5Mode(true);
