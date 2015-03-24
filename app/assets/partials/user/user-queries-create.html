@@ -1,0 +1,68 @@
+<div class="row">
+
+    <style>
+        .fileinput-button {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fileinput-button input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            transform: translate(-300px, 0) scale(4);
+            font-size: 23px;
+            direction: ltr;
+            cursor: pointer;
+        }
+
+    </style>
+
+    <div class="col-xs-3 col-sm-2 nopadding">
+        <div ng-include="'partials/user/user-nav-bar.html'"></div>
+        <div ng-include="'partials/user/user-protein-lists-sidebar.html'"></div>
+    </div>
+    <div class="col-xs-9 col-sm-10" ng-controller="ListCreateCtrl">
+        <h3>Create a new query</h3>
+
+        <!--                                                                  -->
+        <!--  HELP / REPOSITORY                                               -->
+        <div>
+
+            <!-- Title when query is editable  -->
+            <input type="text" placeholder="Query name..." focus=""/>
+            <!-- Sparql -->
+            <div class="col-xs12">
+                <ui-codemirror id="search-query-save" class=" search-width-advanced"
+                               ui-codemirror-opts="editorOptions" ng-model="repository.selectedQuery.sparql"
+                               ui-refresh="repository.selectedQuery.sparql" >
+                </ui-codemirror>
+            </div>
+
+            <!-- Horizontal break -->
+            <hr/>
+
+            <!-- Description -->
+            <div class="col-xs-12 nopadding">
+                <!-- when editing -->
+                <textarea rows="4" id="inputDescription"
+                          class="form-control" placeholder="Write some description..."
+                          ng-model="repository.selectedQuery.description">
+                </textarea>
+
+            </div>
+
+            <p ng-if="repository.selectedQuery.owner === 'nextprot'">Tags:
+                            <span ng-repeat="tag in repository.selectedQuery.tags | orderBy"
+                                  class="label label-default label-as-badge">{{tag}}</span>
+
+            <p class="pull-right"><a target="_blank" ng-click="runQuery(repository.selectedQuery)">Run this
+                query!</a></p>
+
+
+        </div>
+    </div>
+</div>

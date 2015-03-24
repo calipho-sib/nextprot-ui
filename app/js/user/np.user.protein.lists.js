@@ -24,8 +24,8 @@ angular.module('np.user.protein.lists', [
 
 //
 // Controller
-ListCtrl.$inject=['$resource','$scope','$rootScope','$location','$routeParams','$route','Search','userProteinList','user', 'flash'];
-function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route, Search, userProteinList, user, flash) {
+ListCtrl.$inject=['$resource','$scope','$rootScope','$location','$routeParams','$route','Search','userProteinList','user', 'flash', 'config'];
+function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route, Search, userProteinList, user, flash, config) {
 	$scope.userProteinList = userProteinList;
 	$scope.showCombine = false;
 	$scope.combineDisabled = true;
@@ -48,6 +48,10 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 			$scope.initCombinationForm();
 		});
           })
+	}
+
+	$scope.getListExportUrl = function(list){
+		return config.api.API_URL + "/export/lists/" + list.publicId;
 	}
 
 	$scope.initCombinationForm = function() {

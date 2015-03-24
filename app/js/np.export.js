@@ -13,7 +13,6 @@
         $scope.selectedFormat;
         $scope.views;
         $scope.selectedView;
-        $scope.limitNumberEntries = 2;
 
         $scope.export = exportService;
 
@@ -42,17 +41,15 @@
             //multiple entries
             if ($scope.export.exportObjectType) {
 
-                var exportURL = config.api.API_URL + "/entries"
+                var exportURL = config.api.API_URL + "/export/entries"
                 if ($scope.selectedView !== allEntryTemplateValue) {
                     exportURL += "/" + $scope.selectedView;
                 }
                 exportURL += "." + $scope.selectedFormat;
                 exportURL += "?" + $scope.export.exportObjectType + "=" + $scope.export.exportObjectIdentifier;
 
-
-                if ($scope.limitNumberEntries)
-                    exportURL += "&limit=" + $scope.limitNumberEntries;
-
+                //TODO
+                /*
                 if ($routeParams.filter)
                     exportURL += "&filter=" + $routeParams.filter;
 
@@ -61,6 +58,8 @@
 
                 if ($routeParams.order)
                     exportURL += "&order=" + $routeParams.order;
+
+                */
 
                 return exportURL;
 

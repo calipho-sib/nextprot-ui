@@ -7,13 +7,14 @@ angular.module('np.user', [
   .factory('user', user)
   .controller('UserCtrl',UserCtrl);
 
-userConfig.$inject=['$routeProvider'];
-function userConfig($routeProvider) {
-  $routeProvider
-    .when('/user', { templateUrl: 'partials/user/user-profile.html'})
-    .when('/user/queries', { templateUrl: 'partials/user/user-queries.html'})
-    .when('/user/applications', { templateUrl: 'partials/user/user-applications.html'})
-}
+    userConfig.$inject = ['$routeProvider'];
+    function userConfig($routeProvider) {
+        $routeProvider
+            .when('/user', {templateUrl: 'partials/user/user-profile.html'})
+            .when('/user/queries', {templateUrl: 'partials/user/user-queries.html'})
+            .when('/user/queries/create', {templateUrl: 'partials/user/user-queries-create.html'})
+            .when('/user/applications', {templateUrl: 'partials/user/user-applications.html'})
+    }
 
 //
 // implement user factory
