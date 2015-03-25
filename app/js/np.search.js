@@ -52,9 +52,7 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
 
         if ($routeParams.queryId) {
             queryRepository.getQueryByPublicId($routeParams.queryId).then(function (query) {
-                //Setting the sparql box with the sparql
-                Search.params.sparql = "#" + query.publicId;
-                Search.params.sparql += " " + query.title + "\n";
+                Search.params.sparql = "#" + query.title + "\n";
                 Search.params.sparql += query.sparql;
                 exportService.userQuery = query;
             });
