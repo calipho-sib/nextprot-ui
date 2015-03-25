@@ -26,8 +26,8 @@ function searchConfig($routeProvider, $locationProvider, $httpProvider) {
 
 //
 // implement main application controller
-SearchCtrl.$inject=['$resource','$scope','$rootScope','$location', '$filter', '$routeParams','$route','$timeout','Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService'];
-function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routeParams, $route, $timeout, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService) {
+SearchCtrl.$inject=['$resource','$scope','$rootScope','$location', '$filter', '$routeParams','$route','$window','$timeout','Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService'];
+function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routeParams, $route, $window, $timeout, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService) {
 
     // scope from template
     $scope.Search = Search;
@@ -67,6 +67,7 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         }
 
         if($location.path()==='/'){
+            $window.document.title = "neXtProt Search";
             $scope.reset();
             Search.clear();
         }
