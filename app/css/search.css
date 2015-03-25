@@ -10,8 +10,17 @@
   position: relative;
 }
 
-.color-inherit{
-    color: inherit;
+.checked-label,
+.unchecked-label {
+    color: #777;
+}
+
+.unchecked-label {
+    font-weight: normal;
+}
+
+.checked-label {
+    font-weight: bold;
 }
 
 .search-toggle{
