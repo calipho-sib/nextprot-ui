@@ -34,19 +34,15 @@
             </form>
             <div class="bs-example" data-example-id="simple-small">
                 <p>
-                    Click on the export button or simply request the API by using the link below:
+                    Click on the download button or simply request the API by using the link below:
                 </p>
             </div>
             <div class="highlight">
-                <pre><code class="language-html link" data-lang="html"><span class="nt"></span><a target="_blank"
-                                                                                                  href="{{getFileExportURL()}}">{{getFileExportURL()}}</a></span>
-                </code></pre>
+                <pre><code class="language-html link" data-lang="html"><span class="nt"></span><a target="_blank" href="{{getFileExportURL()}}">{{getFileExportURL()}}</a></span></code></pre>
             </div>
-            <label style="color: rosybrown" class="">Note: Filter sort and order not supported yet.</label>
-
         </div>
         <div class="modal-footer">
-            <a class="btn btn-primary" href="{{getFileExportURL()}}" target="_blank" ng-click="dismiss()">Export</a>
+            <a class="btn btn-primary" href="{{getFileExportURL()}}" target="_blank" ng-click="dismiss()">Download</a>
         </div>
     </div>
 </div>

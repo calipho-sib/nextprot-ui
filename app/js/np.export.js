@@ -49,9 +49,11 @@
                 exportURL += "?" + $scope.export.exportObjectType + "=" + $scope.export.exportObjectIdentifier;
 
                 //TODO
-                /*
                 if ($routeParams.filter)
                     exportURL += "&filter=" + $routeParams.filter;
+
+                if ($routeParams.quality)
+                    exportURL += "&quality=" + $routeParams.quality;
 
                 if ($routeParams.sort)
                     exportURL += "&sort=" + $routeParams.sort;
@@ -59,7 +61,6 @@
                 if ($routeParams.order)
                     exportURL += "&order=" + $routeParams.order;
 
-                */
 
                 return exportURL;
 
@@ -108,7 +109,7 @@
         ExportService.prototype.setExportEntry = function (entry) {
             this.exportObjectType = null;
             this.exportObjectIdentifier = entry;
-            this.exportTitle = "Export entry '" + entry + "'";
+            this.exportTitle = "Download entry '" + entry + "'";
         }
 
         ExportService.prototype.reset = function () {
@@ -120,18 +121,22 @@
 
         ExportService.prototype.setExportParameters = function (params) {
 
-            if (this.userQuery) { // neXtProt Query example NXQ_000001
+            if (params.queryId) { // neXtProt Query example NXQ_000001
                 this.exportObjectType = "queryId";
                 this.exportObjectIdentifier = this.userQuery.publicId;
-                this.exportTitle = "Export entries for query: '" + this.userQuery.title + "' " + this.userQuery.publicId;
-            } else if (this.userList) { //a simple list
+                this.exportTitle = "Download entries for query: '" + this.userQuery.publicId + "'";
+            } else if (params.listId) { //a simple list
                 this.exportObjectType = "listId";
                 this.exportObjectIdentifier = this.userList.publicId;
-                this.exportTitle = "Export entries for list '" + this.userList.name + "'";
+                this.exportTitle = "Download entries for list '" + this.userList.publicId + "'";
             } else if (params.query) {  //result from a query
                 this.exportObjectType = "query";
                 this.exportObjectIdentifier = params.query;
-                this.exportTitle = "Export search results for '" + params.query + "'";
+                this.exportTitle = "Download entries for simple query";
+            }else if (params.sparql) {  //result from a query
+                this.exportObjectType = "sparql";
+                this.exportObjectIdentifier = params.sparql;
+                this.exportTitle = "Download entries for sparql query";
             }
 
         }
