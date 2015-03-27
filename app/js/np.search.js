@@ -272,6 +272,7 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
     $scope.go = function () {
         var url = $location.url();
         $location.search('filter', null);
+        $location.search('listId', null);
         $location.search('list', null);
         $location.search('cart', null);
         $location.search('rows', null);
