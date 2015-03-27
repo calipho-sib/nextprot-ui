@@ -3,12 +3,12 @@
     <div class="col-xs-6" ng-show="showCart&&Search.result.docs.length">
 
         <!-- PROTEINS SELECTOR -->
-        <div class="btn-group" style="vertical-align:top; margin-bottom: 10px">
-            <button type="button" class="btn btn-default">
+        <div class="btn-group" style="vertical-align:top; margin-bottom: 10px; height: 40px">
+            <button type="button" class="btn btn-default" style="height: 100%; border-top-left-radius: 5px; border-bottom-left-radius: 5px">
                 <input type="checkbox" indeterminate-checkbox selected-protein-list="Cart.getElements()"
                        ng-click="toggleAllToBasket()">
             </button>
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="height: 100%; border-radius: initial">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
@@ -18,10 +18,10 @@
                 <!--<li><a href="#" ng-click="inverseBasketSelection()">Inverse</a></li>-->
             </ul>
 
-            <button class="btn btn-default" disabled><span class="badge"> {{Cart.getCartSize()}}</span></button>
+            <button class="btn btn-default" style="height: 100%; border-top-right-radius: 5px; border-bottom-right-radius: 5px" disabled><span class="badge"> {{Cart.getCartSize()}}</span></button>
 
             <button ng-show="Search.result.params.entity == 'proteins' && Cart.getCartSize()>0" type="button" class="btn btn-link"
-                    ng-click="launchModalList($index, 'create')">Save as list
+                    ng-click="launchModalList($index, 'create')" style="height: 100%">Save as list
             </button>
 
         </div>
