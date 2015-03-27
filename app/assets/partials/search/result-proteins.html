@@ -18,7 +18,7 @@
                 <!--<li><a href="#" ng-click="inverseBasketSelection()">Inverse</a></li>-->
             </ul>
 
-            <button class="btn btn-default" style="height: 100%; border-top-right-radius: 5px; border-bottom-right-radius: 5px" disabled><span class="badge"> {{Cart.getCartSize()}}</span></button>
+            <button class="btn btn-default" style="height: 100%; border-left: hidden; border-top-right-radius: 5px; border-bottom-right-radius: 5px" disabled><span class="badge"> {{Cart.getCartSize()}}</span></button>
 
             <button ng-show="Search.result.params.entity == 'proteins' && Cart.getCartSize()>0" type="button" class="btn btn-link"
                     ng-click="launchModalList($index, 'create')" style="height: 100%">Save as list
