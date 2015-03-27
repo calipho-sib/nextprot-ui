@@ -4,9 +4,8 @@
 
         <!-- PROTEINS SELECTOR -->
         <div class="btn-group" style="vertical-align:top; margin-bottom: 10px; height: 40px">
-            <button type="button" class="btn btn-default" style="height: 100%; border-top-left-radius: 5px; border-bottom-left-radius: 5px">
-                <input type="checkbox" indeterminate-checkbox selected-protein-list="Cart.getElements()"
-                       ng-click="toggleAllToBasket()">
+            <button type="button" class="btn btn-default" style="height: 100%; border-top-left-radius: 5px; border-bottom-left-radius: 5px" ng-click="toggleAllToBasket()">
+                <input type="checkbox" indeterminate-checkbox selected-protein-list="Cart.getElements()">
             </button>
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="height: 100%; border-radius: initial">
                 <span class="caret"></span>
@@ -29,7 +28,7 @@
     <ul ng-cloak id="search-results" class="col-xs-12 list-unstyled">
         <li ng-repeat="doc in Search.result.docs">
             <div style="display: inline-block; width:20px; vertical-align:top; margin-left: 13px">
-                <input type="checkbox" name="docs[]" value="{{doc.id}}" ng-click="change(doc.id)"
+                <input type="checkbox" name="docs[]" value="{{doc.id}}" ng-change="change(doc.id)"
                        ng-model="selectedResults[doc.id]">
             </div>
 
