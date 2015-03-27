@@ -43,7 +43,7 @@
     "angular-loader": "~1",
     "codemirror": "~4.6.0",
     "angular-ui-codemirror": "~0.1.6",
-    "angular-nextprot-help": "https://github.com/calipho-sib/nextprot-ui-help/tarball/master",
+    "angular-nextprot-help": "https://github.com/calipho-sib/nextprot-ui-help/archive/v0.0.2.tar.gz",
     "typeahead.js": "~0.10.5"
   },
   "devDependencies": {
