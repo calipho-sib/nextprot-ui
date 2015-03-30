@@ -350,8 +350,7 @@ SearchService.factory('Search', [
             if (params.mode == 'advanced')
                 angular.extend(post, defaultAdv);
 
-
-            $api.search({ action: 'search-ids', entity: params.entity, quality: params.quality }, post).$promise.then(function (docs) {
+            $api.search({ action: 'search-ids', entity: params.entity, quality: params.quality, filter: params.filters }, post).$promise.then(function (docs) {
                 if (cb)cb(docs);
             });
         };
