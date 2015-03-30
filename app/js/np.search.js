@@ -203,6 +203,9 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
     }
 
     $scope.toggle = function (params) {
+
+        Cart.emptyCart();
+
         $location.search('start', null)
         angular.forEach(params, function (v, k) {
             var t = ($location.search()[k] && $location.search()[k] === v) ? null : v;
@@ -458,7 +461,8 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                     quality: Search.params.quality,
                     mode: Search.params.mode,
                     query: Search.params.query,
-                    sparql: Search.params.sparql
+                    sparql: Search.params.sparql,
+                    filter: Search.params.filter
                 }, function (docs) {
                     Cart.setCart(docs.ids);
                     setAsSelected(docs.ids);
