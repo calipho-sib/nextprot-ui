@@ -25,7 +25,7 @@
             $scope.selectedFormat = format;
             $scope.views = exportService.templates[format];
             $scope.selectedView = $scope.views[0];
-            allEntryTemplateValue = $scope.views[0];
+            allEntryTemplateValue = $scope.views[15]; //TODO make this a bit more clever "full-entry"?
         }
 
         $scope.getFormats = function () {
@@ -46,7 +46,7 @@
                     exportURL += "/" + $scope.selectedView;
                 }
                 exportURL += "." + $scope.selectedFormat;
-                exportURL += "?" + $scope.export.exportObjectType + "=" + $scope.export.exportObjectIdentifier;
+                exportURL += "?" + $scope.export.exportObjectType + "=" + window.encodeURIComponent($scope.export.exportObjectIdentifier);
 
                 //TODO
                 if ($routeParams.filter)
@@ -99,10 +99,114 @@
             this.exportTitle;
             this.exportObjectIdentifier;
 
-            //TODO this is ugly, it should request the api (be careful with multiple calls though)
+
+            //TODO this is a bit ugly, it should request the api (be careful with multiple calls though)
+
+            var exportViews = [
+                "accession",
+                "overview",
+                "annotation",
+                "-positional-annotation",
+                "publication",
+                "xref",
+                "keyword",
+                "identifier",
+                "chromosomal-location",
+                "genomic-mapping",
+                "interaction",
+                "protein-sequence",
+                "antibody",
+                "peptide",
+                "srm-peptide-mapping",
+                "full-entry",
+                "--region",
+                "---compositionally-biased-region",
+                "---repeat",
+                "---short-sequence-motif",
+                "---miscellaneous-region",
+                "---domain",
+                "---zinc-finger-region",
+                "---nucleotide-phosphate-binding-region",
+                "---dna-binding-region",
+                "---interacting-region",
+                "---calcium-binding-region",
+                "---coiled-coil-region",
+                "--non-consecutive-residue",
+                "--variant",
+                "--mutagenesis",
+                "--sequence-conflict",
+                "--ptm",
+                "---ptm-info",
+                "---lipidation-site",
+                "---glycosylation-site",
+                "---disulfide-bond",
+                "---modified-residue",
+                "---selenocysteine",
+                "---cross-link",
+                "--non-terminal-residue",
+                "--variant-info",
+                "--secondary-structure",
+                "---beta-strand",
+                "---helix",
+                "---turn",
+                "--domain-info",
+                "--processing-product",
+                "---peroxisome-transit-peptide",
+                "---mature-protein",
+                "---cleavage-site",
+                "---signal-peptide",
+                "---maturation-peptide",
+                "---initiator-methionine",
+                "---mitochondrial-transit-peptide",
+                "--site",
+                "---miscellaneous-site",
+                "---binding-site",
+                "---metal-binding-site",
+                "---active-site",
+                "--topology",
+                "---topological-domain",
+                "---intramembrane-region",
+                "---transmembrane-region",
+                "--mapping",
+                "---pdb-mapping",
+                "-general-annotation",
+                "--enzyme-classification",
+                "--miscellaneous",
+                "--caution",
+                "--sequence-caution",
+                "--interaction",
+                "---binary-interaction",
+                "---small-molecule-interaction",
+                "---cofactor",
+                "---enzyme-regulation",
+                "---interaction-info",
+                "--keyword",
+                "---uniprot-keyword",
+                "--medical",
+                "---disease",
+                "---allergen",
+                "---pharmaceutical",
+                "--induction",
+                "--function",
+                "---catalytic-activity",
+                "---function-info",
+                "---go-molecular-function",
+                "---pathway",
+                "---go-biological-process",
+                "--cellular-component",
+                "---go-cellular-component",
+                "---subcellular-location",
+                "---subcellular-location-note",
+                "--expression",
+                "---expression-info",
+                "---developmental-stage-info",
+                "---expression-profile",
+                "-name",
+                "--family-name"
+            ]
             this.templates = {
-                "xml": ["full-entry", "accession", "overview", "annotation", "-positional-annotation", "--region", "---compositionally-biased-region", "---repeat", "---short-sequence-motif", "---miscellaneous-region", "---domain", "---zinc-finger-region", "---nucleotide-phosphate-binding-region", "---dna-binding-region", "---interacting-region", "---calcium-binding-region", "---coiled-coil-region", "--non-consecutive-residue", "--variant", "--mutagenesis", "--sequence-conflict", "--ptm", "---ptm-info", "---lipidation-site", "---glycosylation-site", "---disulfide-bond", "---modified-residue", "---selenocysteine", "---cross-link", "--non-terminal-residue", "--variant-info", "--secondary-structure", "---beta-strand", "---helix", "---turn", "--domain-info", "--processing-product", "---peroxisome-transit-peptide", "---mature-protein", "---cleavage-site", "---signal-peptide", "---maturation-peptide", "---initiator-methionine", "---mitochondrial-transit-peptide", "--site", "---miscellaneous-site", "---binding-site", "---metal-binding-site", "---active-site", "--topology", "---topological-domain", "---intramembrane-region", "---transmembrane-region", "--mapping", "---pdb-mapping", "-general-annotation", "--enzyme-classification", "--miscellaneous", "--caution", "--sequence-caution", "--interaction", "---binary-interaction", "---small-molecule-interaction", "---cofactor", "---enzyme-regulation", "---interaction-info", "--keyword", "---uniprot-keyword", "--medical", "---disease", "---allergen", "---pharmaceutical", "--induction", "--function", "---catalytic-activity", "---function-info", "---go-molecular-function", "---pathway", "---go-biological-process", "--cellular-component", "---go-cellular-component", "---subcellular-location", "---subcellular-location-note", "--expression", "---expression-info", "---developmental-stage-info", "---expression-profile", "-name", "--family-name", "publication", "xref", "keyword", "identifier", "chromosomal-location", "genomic-mapping", "interaction", "protein-sequence", "antibody", "peptide", "srm-peptide-mapping"],
-                "json":  ["full-entry", "accession", "overview", "annotation", "-positional-annotation", "--region", "---compositionally-biased-region", "---repeat", "---short-sequence-motif", "---miscellaneous-region", "---domain", "---zinc-finger-region", "---nucleotide-phosphate-binding-region", "---dna-binding-region", "---interacting-region", "---calcium-binding-region", "---coiled-coil-region", "--non-consecutive-residue", "--variant", "--mutagenesis", "--sequence-conflict", "--ptm", "---ptm-info", "---lipidation-site", "---glycosylation-site", "---disulfide-bond", "---modified-residue", "---selenocysteine", "---cross-link", "--non-terminal-residue", "--variant-info", "--secondary-structure", "---beta-strand", "---helix", "---turn", "--domain-info", "--processing-product", "---peroxisome-transit-peptide", "---mature-protein", "---cleavage-site", "---signal-peptide", "---maturation-peptide", "---initiator-methionine", "---mitochondrial-transit-peptide", "--site", "---miscellaneous-site", "---binding-site", "---metal-binding-site", "---active-site", "--topology", "---topological-domain", "---intramembrane-region", "---transmembrane-region", "--mapping", "---pdb-mapping", "-general-annotation", "--enzyme-classification", "--miscellaneous", "--caution", "--sequence-caution", "--interaction", "---binary-interaction", "---small-molecule-interaction", "---cofactor", "---enzyme-regulation", "---interaction-info", "--keyword", "---uniprot-keyword", "--medical", "---disease", "---allergen", "---pharmaceutical", "--induction", "--function", "---catalytic-activity", "---function-info", "---go-molecular-function", "---pathway", "---go-biological-process", "--cellular-component", "---go-cellular-component", "---subcellular-location", "---subcellular-location-note", "--expression", "---expression-info", "---developmental-stage-info", "---expression-profile", "-name", "--family-name", "publication", "xref", "keyword", "identifier", "chromosomal-location", "genomic-mapping", "interaction", "protein-sequence", "antibody", "peptide", "srm-peptide-mapping"]
+                "xml": exportViews,
+                "json": exportViews
             };
         };
 
