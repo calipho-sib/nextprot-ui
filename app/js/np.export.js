@@ -25,7 +25,7 @@
             $scope.selectedFormat = format;
             $scope.views = exportService.templates[format];
             $scope.selectedView = $scope.views[0];
-            allEntryTemplateValue = $scope.views[15]; //TODO make this a bit more clever "full-entry"?
+            allEntryTemplateValue = $scope.views[2]; //TODO make this a bit more clever "full-entry"?
         }
 
         $scope.getFormats = function () {
@@ -105,8 +105,8 @@
             var exportViews = [
                 "accession",
                 "overview",
+                "full-entry",
                 "annotation",
-                "-positional-annotation",
                 "publication",
                 "xref",
                 "keyword",
@@ -118,7 +118,7 @@
                 "antibody",
                 "peptide",
                 "srm-peptide-mapping",
-                "full-entry",
+                "-positional-annotation",
                 "--region",
                 "---compositionally-biased-region",
                 "---repeat",
