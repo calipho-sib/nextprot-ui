@@ -59,6 +59,14 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         } else if ($routeParams.listId) {
             userProteinList.getListByPublicId($routeParams.listId).then(function (list) {
                 exportService.userList = list;
+
+                var button = angular.element('#main-clipboard-button');
+
+                // button is clicked is delayed (waiting for end of $digest progress)
+                $timeout(function() {
+
+                    button.click();
+                })
             });
 
         } else if ($routeParams.query){
