@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="np">
+<html lang="en" ng-app="np" xmlns:flash="">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -208,6 +208,8 @@
 <div ng-show="message" class=" error ng-cloak" ng-cloak>
     <div class="np-alert alert alert-error alert-warning">{{Search.result.error}} {{message}}</div>
 </div>
+
+<flash:messages></flash:messages>
 
 <!-- Masthead
 ================================================== -->
