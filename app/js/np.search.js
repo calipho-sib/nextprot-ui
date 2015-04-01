@@ -80,20 +80,19 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
             Search.clear();
         }
 
-        gaTrackPageView();
+        gaTrackPage();
     });
 
-    function gaTrackPageView() {
+    // Track the page path and query string of the page
+    function gaTrackPage() {
 
-        var output = $location.path()+"?";
+        /*var output = $location.path()+"?";
         angular.forEach($routeParams, function(value,key){
             output += key + "=" + value + "&";
         });
-        output=output.substr(0,output.length-1);
+        output=output.substr(0,output.length-1);*/
 
-        //console.log("*** gaTrackPageView: ", output,", url=", $location.url());
-
-        $window.ga('send', 'pageview', output);
+        $window.ga('send', 'pageview', $location.url());
     }
 
     //

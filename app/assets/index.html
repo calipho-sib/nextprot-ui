@@ -31,11 +31,13 @@
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })
-        //(window,document,'script','//www.google-analytics.com/analytics.js','ga'); // PROD MODE
+        //(window,document,'script','//www.google-analytics.com/analytics.js','ga');                                      // PROD MODE
         (window,document,'script','//www.google-analytics.com/analytics_debug.js','ga'); window.ga_debug = {trace: true}; // DEBUG MODE
 
         // Creates a new default tracker object
         ga('create', 'UA-61448300-1', 'auto');
+        //ga('set', 'forceSSL', true);                                                                                    // Send all data using SSL, even from insecure (HTTP) pages.
+        //ga('require', 'linkid');                                                                                        // Enhanced Link Attribution
         ga('send', 'pageview');
     </script>
     <!-- End Google Analytics -->
