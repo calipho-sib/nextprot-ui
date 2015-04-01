@@ -86,12 +86,6 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
     // Track the page path and query string of the page
     function gaTrackPage() {
 
-        /*var output = $location.path()+"?";
-        angular.forEach($routeParams, function(value,key){
-            output += key + "=" + value + "&";
-        });
-        output=output.substr(0,output.length-1);*/
-
         $window.ga('send', 'pageview', $location.url());
     }
 
@@ -358,7 +352,7 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
     });
 
     $rootScope.locateToReferrer=function() {
-        //console.log($location.url(),$scope.referrer)
+        console.log($location.url(),$scope.referrer)
         $location.url(($scope.referrer)?$scope.referrer:'/');
     }
 };
@@ -611,6 +605,9 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         userProteinList.create(user, proteinList).$promise.then(
             function () {
                 flash('alert-success', "List " + proteinList.name + " successfully created.");
+
+                var button = angular.element('#saveAsListButton');
+                ga('send', 'event', 'button', 'click', 'save-as-list');
             }, function(error)  {
                 flash('alert-warning', error.data.message);
             }
