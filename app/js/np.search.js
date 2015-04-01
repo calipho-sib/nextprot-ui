@@ -79,8 +79,22 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
             $scope.reset();
             Search.clear();
         }
-    });  
 
+        gaTrackPageView();
+    });
+
+    function gaTrackPageView() {
+
+        var output = $location.path()+"?";
+        angular.forEach($routeParams, function(value,key){
+            output += key + "=" + value + "&";
+        });
+        output=output.substr(0,output.length-1);
+
+        console.log("*** gaTrackPageView:", output);
+
+        $window._gaq.push(['_trackPageview', output]);
+    }
 
     //
     // load profile on init
@@ -345,7 +359,7 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
     });
 
     $rootScope.locateToReferrer=function() {
-        console.log($location.url(),$scope.referrer)
+        //console.log($location.url(),$scope.referrer)
         $location.url(($scope.referrer)?$scope.referrer:'/');
     }
 };
