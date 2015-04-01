@@ -91,9 +91,9 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         });
         output=output.substr(0,output.length-1);
 
-        console.log("*** gaTrackPageView:", output);
+        //console.log("*** gaTrackPageView: ", output,", url=", $location.url());
 
-        $window._gaq.push(['_trackPageview', output]);
+        $window.ga('send', 'pageview', output);
     }
 
     //
