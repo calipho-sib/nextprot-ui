@@ -80,13 +80,110 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
             Search.clear();
         }
 
-        gaTrackPage();
+        gaTrackPageView();
+        gaRouteChangeEvent();
     });
 
     // Track the page path and query string of the page
-    function gaTrackPage() {
+    function gaTrackPageView() {
 
         $window.ga('send', 'pageview', $location.url());
+    }
+
+    function Category(type, query) {
+
+        var delimitor = '_';
+
+        var object = {
+            type: type,
+            targets: (type == "search_advanced" || type == "help") ? [] : [$routeParams.entity],
+            details: { query: query }
+        };
+
+        if ("filter" in $routeParams) {
+            object.targets.push("subset");
+            object.details.filter = $routeParams.filter;
+        }
+
+        object.level1Path = function() {
+
+            return type;
+        };
+
+        object.level2Path = function() {
+
+            var content = type;
+
+            if (content && object.targets.length > 0) {
+                object.targets.forEach(function (target) {
+                    content += delimitor + target;
+                });
+            }
+
+            return content;
+        };
+
+        object.level3Path = function() {
+            var content = object.level2Path();
+
+            if (content) {
+                for (var detail in object.details) {
+                    content += delimitor + object.details[detail];
+                }
+            }
+
+            return content;
+        };
+
+        Category.prototype.toString = object.level3Path;
+
+        return object;
+    }
+
+    function categorize() {
+
+        console.log("location:", $location, "routeParams:", $routeParams);
+
+        var category = {};
+
+        if ("query" in $routeParams) {
+            category = new Category('search_simple', $routeParams.query);
+        }
+        else if ("queryId" in $routeParams) {
+            category = new Category('search_advanced', $routeParams.queryId);
+        }
+        else if ("listId" in $routeParams) {
+            category = new Category('search_list', $routeParams.listId);
+        }
+        else if ("queryId" in $routeParams) {
+            category = new Category('search_query', $routeParams.queryId);
+        }
+        else if ("article" in $routeParams) {
+            category = new Category('help', $routeParams.article);
+        }
+
+        return category;
+    }
+
+    function gaRouteChangeEvent() {
+
+        var category = categorize();
+
+        /*ga('send', {
+            'hitType': 'event',
+            'eventCategory': eventCategory,
+            'eventAction': eventAction,
+            'eventLabel': 'route-change'
+        });*/
+
+        if (category.length>0) {
+            ga('send', {
+                'hitType': 'event',
+                'eventCategory': category.level1Path(),
+                'eventAction': category.level2Path(),
+                'eventLabel': category.level3Path()
+            });
+        }
     }
 
     //
