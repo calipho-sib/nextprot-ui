@@ -80,8 +80,10 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
             Search.clear();
         }
 
+        //console.log("location:", $location, "routeParams:", $routeParams);
+
         gaTrackPageView();
-        gaRouteChangeEvent();
+        gaTrackRouteChangeEvent();
     });
 
     // Track the page path and query string of the page
@@ -90,114 +92,146 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         $window.ga('send', 'pageview', $location.url());
     }
 
-    function RouteCategory(type1, type2, query) {
+    function RouteEvent(funcCategory, funcAction, funcLabel) {
+
+        funcCategory = typeof funcCategory !== 'undefined' ? funcCategory : function() {return ""};
+
+        var event = {
+            'hitType': 'event',
+            'eventCategory': funcCategory()
+        };
+
+        if (typeof funcAction !== 'undefined')
+            event.eventAction = funcAction();
+
+        if (typeof funcLabel !== 'undefined')
+            event.eventLabel = funcLabel();
+
+        return event;
+    }
+
+    function SimpleSearchRouteEvent(entity, query, filter) {
 
         var delimitor = '_';
 
-        var object = {
-
-            type: type1,
-            type2: type2,
-            // only simple searches can give different entity types (proteins, publications, terms)
-            targets: (type1 == "search_simple") ? [$routeParams.entity] : [],
-            details: (type1 == "help") ? {} : { query: query }
-        };
-
-        if ("filter" in $routeParams) {
-            object.targets.push("filtered");
-            object.details.filter = $routeParams.filter;
+        function category() {
+            return 'search'+delimitor+'simple';
         }
 
-        object.level1Path = function() {
+        function action() {
+            var action = category()+delimitor+entity;
 
-            return type1;
-        };
+            if (typeof filter !== 'undefined')
+                action += delimitor + "filtered";
 
-        object.level2Path = function() {
+            return action;
+        }
 
-            var content = type1;
+        function label() {
+            return action()+delimitor+query;
+        }
 
-            if (content && object.targets.length > 0) {
-                object.targets.forEach(function (target) {
-                    content += delimitor + target;
-                });
-            }
+        return new RouteEvent(category, action, label);
+    }
 
-            if (type2.length > 0)
-                content += delimitor + type2;
+    function AdvancedSearchRouteEvent(type, queryId, filter) {
 
-            return content;
-        };
+        var delimitor = '_';
 
-        object.level3Path = function() {
-            var content = object.level2Path();
+        function category() {
+            return 'search'+delimitor+"advanced";
+        }
 
-            if (content) {
-                for (var detail in object.details) {
-                    content += delimitor + object.details[detail];
-                }
-            }
+        function action() {
+            var action = category()+delimitor+type;
 
-            return content;
-        };
+            if (typeof filter !== 'undefined')
+                action += delimitor + "filtered";
 
-        RouteCategory.prototype.toString = object.level3Path;
+            return action;
+        }
+
+        if (typeof queryId !== 'undefined' && type == 'NXQ')
+            return new RouteEvent(category, action, function label() { return action()+delimitor+queryId; });
+        else
+            return new RouteEvent(category, action);
+    }
+
+    function ListSearchRouteEvent(filter) {
+
+        var delimitor = '_';
+
+        function category() {
+            return 'search'+delimitor+'list';
+        }
+
+        function action() {
+            return category()+ delimitor + "filtered";
+        }
+
+        function label() {
+            return action()+delimitor+filter;
+        }
+
+        if (typeof filter !== 'undefined')
+           return new RouteEvent(category, action);
+
+        return new RouteEvent(category);
+    }
+
+    function HelpRouteEvent(docname) {
+
+        var delimitor = '_';
+
+        var object = new RouteEvent(category, action);
+
+        function category() {
+            return 'help';
+        }
+
+        function action() {
+            return category()+delimitor+docname;
+        }
 
         return object;
     }
 
-    function categorizeRoute() {
+    function gaTrackRouteChangeEvent() {
 
-        var category = {};
+        var event = {};
 
         if ("query" in $routeParams) {
-            category = new RouteCategory('search_simple', '', $routeParams.query);
+            event = new SimpleSearchRouteEvent($routeParams.entity, $routeParams.query, $routeParams.filter);
+        }
+        else if ("sparql" in $routeParams) {
+            event = new AdvancedSearchRouteEvent('sparql', null, $routeParams.filter);
         }
         else if ("queryId" in $routeParams) {
 
             var queryId = $routeParams.queryId;
+            var type;
 
-            // query predefined
+            // predefined query
             if (queryId.startsWith("NXQ_")) {
-                category = new RouteCategory('search_advanced', 'NXQ', $routeParams.queryId);
+                type = 'NXQ';
+                queryId = queryId.split("_")[1];
             }
             // private query
-            else {
-                category = new RouteCategory('search_advanced', 'query', $routeParams.queryId);
-            }
-        }
-        else if ("sparql" in $routeParams) {
+            else
+                type = 'query';
 
-            category = new RouteCategory('search_advanced', 'sparql', $routeParams.sparql);
+            event = new AdvancedSearchRouteEvent(type, queryId, $routeParams.filter);
         }
         else if ("listId" in $routeParams) {
-            category = new RouteCategory('search_list', '', $routeParams.listId);
+            event = new ListSearchRouteEvent($routeParams.filter);
         }
         else if ("article" in $routeParams) {
-            category = new RouteCategory('help', $routeParams.article, '');
+            event = new HelpRouteEvent($routeParams.article);
         }
 
-        return category;
-    }
+        if (Object.keys(event).length>0) {
 
-    function gaRouteChangeEvent() {
-
-        console.log("location:", $location, "routeParams:", $routeParams);
-
-        var category = categorizeRoute();
-
-        console.log(category);
-
-        if (Object.keys(category).length>0) {
-
-            console.log(category.level1Path(), category.level2Path(), category.level3Path());
-
-            ga('send', {
-                'hitType': 'event',
-                'eventCategory': category.level1Path(),
-                'eventAction': category.level2Path(),
-                'eventLabel': category.level3Path()
-            });
+            ga('send', event);
         }
     }
 
