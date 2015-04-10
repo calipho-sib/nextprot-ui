@@ -95,14 +95,13 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
     function RouteEvent(funcCategory, funcAction, funcLabel) {
 
         funcCategory = typeof funcCategory !== 'undefined' ? funcCategory : function() {return ""};
+        funcAction = typeof funcAction !== 'undefined' ? funcAction : function() {return ""};
 
         var event = {
             'hitType': 'event',
-            'eventCategory': funcCategory()
+            'eventCategory': funcCategory(),
+            'eventAction': funcAction();
         };
-
-        if (typeof funcAction !== 'undefined')
-            event.eventAction = funcAction();
 
         if (typeof funcLabel !== 'undefined')
             event.eventLabel = funcLabel();
@@ -166,17 +165,19 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         }
 
         function action() {
-            return category()+ delimitor + "filtered";
+            var action = category();
+
+            if (typeof filter !== 'undefined')
+                action += delimitor + "filtered";
+
+            return action;
         }
 
         function label() {
             return action()+delimitor+filter;
         }
 
-        if (typeof filter !== 'undefined')
-           return new RouteEvent(category, action);
-
-        return new RouteEvent(category);
+        return new RouteEvent(category, action);
     }
 
     function HelpRouteEvent(docname) {
