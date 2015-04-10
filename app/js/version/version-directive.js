@@ -13,4 +13,16 @@ angular.module('np.version.version-directive', [])
   return function (scope, elm, attrs) {
     elm.text(build);
   };
+}])
+.directive('npBuildVersion', ['version', 'build', function (version, build) {
+
+  return function (scope, elm, attrs) {
+
+    var content = version;
+
+    if (!isNaN(build))
+      content += " (build "+build+")";
+
+    elm.text(content);
+  };
 }]);
