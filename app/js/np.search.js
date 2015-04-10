@@ -90,7 +90,7 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         $window.ga('send', 'pageview', $location.url());
     }
 
-    function Category(type, query) {
+    function RouteCategory(type, query) {
 
         var delimitor = '_';
 
@@ -101,7 +101,7 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         };
 
         if ("filter" in $routeParams) {
-            object.targets.push("subset");
+            object.targets.push("filtered");
             object.details.filter = $routeParams.filter;
         }
 
@@ -135,31 +135,29 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
             return content;
         };
 
-        Category.prototype.toString = object.level3Path;
+        RouteCategory.prototype.toString = object.level3Path;
 
         return object;
     }
 
-    function categorize() {
-
-        console.log("location:", $location, "routeParams:", $routeParams);
+    function categorizeRoute() {
 
         var category = {};
 
         if ("query" in $routeParams) {
-            category = new Category('search_simple', $routeParams.query);
+            category = new RouteCategory('search_simple', $routeParams.query);
         }
         else if ("queryId" in $routeParams) {
-            category = new Category('search_advanced', $routeParams.queryId);
+            category = new RouteCategory('search_advanced', $routeParams.queryId);
         }
         else if ("listId" in $routeParams) {
-            category = new Category('search_list', $routeParams.listId);
+            category = new RouteCategory('search_list', $routeParams.listId);
         }
         else if ("queryId" in $routeParams) {
-            category = new Category('search_query', $routeParams.queryId);
+            category = new RouteCategory('search_query', $routeParams.queryId);
         }
         else if ("article" in $routeParams) {
-            category = new Category('help', $routeParams.article);
+            category = new RouteCategory('help', $routeParams.article);
         }
 
         return category;
@@ -167,16 +165,13 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
 
     function gaRouteChangeEvent() {
 
-        var category = categorize();
+        //console.log("location:", $location, "routeParams:", $routeParams);
 
-        /*ga('send', {
-            'hitType': 'event',
-            'eventCategory': eventCategory,
-            'eventAction': eventAction,
-            'eventLabel': 'route-change'
-        });*/
+        var category = categorizeRoute();
 
-        if (category.length>0) {
+        //console.log(category);
+
+        if (Object.keys(category).length>0) {
             ga('send', {
                 'hitType': 'event',
                 'eventCategory': category.level1Path(),
