@@ -90,14 +90,17 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         $window.ga('send', 'pageview', $location.url());
     }
 
-    function RouteCategory(type, query) {
+    function RouteCategory(type1, type2, query) {
 
         var delimitor = '_';
 
         var object = {
-            type: type,
-            targets: (type == "search_advanced" || type == "help") ? [] : [$routeParams.entity],
-            details: { query: query }
+
+            type: type1,
+            type2: type2,
+            // only simple searches can give different entity types (proteins, publications, terms)
+            targets: (type1 == "search_simple") ? [$routeParams.entity] : [],
+            details: (type1 == "help") ? {} : { query: query }
         };
 
         if ("filter" in $routeParams) {
@@ -107,18 +110,21 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
 
         object.level1Path = function() {
 
-            return type;
+            return type1;
         };
 
         object.level2Path = function() {
 
-            var content = type;
+            var content = type1;
 
             if (content && object.targets.length > 0) {
                 object.targets.forEach(function (target) {
                     content += delimitor + target;
                 });
             }
+
+            if (type2.length > 0)
+                content += delimitor + type2;
 
             return content;
         };
@@ -145,19 +151,30 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         var category = {};
 
         if ("query" in $routeParams) {
-            category = new RouteCategory('search_simple', $routeParams.query);
+            category = new RouteCategory('search_simple', '', $routeParams.query);
         }
         else if ("queryId" in $routeParams) {
-            category = new RouteCategory('search_advanced', $routeParams.queryId);
+
+            var queryId = $routeParams.queryId;
+
+            // query predefined
+            if (queryId.startsWith("NXQ_")) {
+                category = new RouteCategory('search_advanced', 'NXQ', $routeParams.queryId);
+            }
+            // private query
+            else {
+                category = new RouteCategory('search_advanced', 'query', $routeParams.queryId);
+            }
+        }
+        else if ("sparql" in $routeParams) {
+
+            category = new RouteCategory('search_advanced', 'sparql', $routeParams.sparql);
         }
         else if ("listId" in $routeParams) {
-            category = new RouteCategory('search_list', $routeParams.listId);
-        }
-        else if ("queryId" in $routeParams) {
-            category = new RouteCategory('search_query', $routeParams.queryId);
+            category = new RouteCategory('search_list', '', $routeParams.listId);
         }
         else if ("article" in $routeParams) {
-            category = new RouteCategory('help', $routeParams.article);
+            category = new RouteCategory('help', $routeParams.article, '');
         }
 
         return category;
@@ -165,13 +182,16 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
 
     function gaRouteChangeEvent() {
 
-        //console.log("location:", $location, "routeParams:", $routeParams);
+        console.log("location:", $location, "routeParams:", $routeParams);
 
         var category = categorizeRoute();
 
-        //console.log(category);
+        console.log(category);
 
         if (Object.keys(category).length>0) {
+
+            console.log(category.level1Path(), category.level2Path(), category.level3Path());
+
             ga('send', {
                 'hitType': 'event',
                 'eventCategory': category.level1Path(),
