@@ -44,7 +44,7 @@
             }
 
           if($routeParams.gistusr && $routeParams.gistid){
-            $scope.widgetURL = $sce.trustAsResourceUrl("http://bl.ocks.org/" + $routeParams.gistusr + "/raw/" + $routeParams.gistid + "/?nxentry=" +  $routeParams.entry);
+            $scope.widgetURL = $sce.trustAsResourceUrl("https://cdn.rawgit.com/" + $routeParams.gistusr + "/" + $routeParams.gistid + "/raw/index.html?nxentry=" +  $routeParams.entry);
           }else { //nextprot
 
             /* 
