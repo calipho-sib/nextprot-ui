@@ -1,7 +1,6 @@
 'use strict';
 
 angular.module('np.version', [
-  'np.version.interpolate-filter',
   'np.version.version-directive'
 ])
 
