@@ -79,8 +79,167 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
             $scope.reset();
             Search.clear();
         }
-    });  
 
+        //console.log("location:", $location, "routeParams:", $routeParams);
+
+        gaTrackPageView();
+        gaTrackRouteChangeEvent();
+    });
+
+    // Track the page path and query string of the page
+    function gaTrackPageView() {
+
+        $window.ga('send', 'pageview', $location.url());
+    }
+
+    function RouteEvent(funcCategory, funcAction, funcLabel) {
+
+        var delimitor = '_';
+
+        funcCategory = typeof funcCategory !== 'undefined' ? funcCategory : function() {return ""};
+        funcAction = typeof funcAction !== 'undefined' ? funcAction : function() {return ""};
+
+        var event = {
+            'hitType': 'event',
+            'eventCategory': 'ui'+delimitor+funcCategory(),
+            'eventAction': 'ui'+delimitor+funcAction()
+        };
+
+        if (typeof funcLabel !== 'undefined')
+            event.eventLabel = 'ui'+delimitor+funcLabel();
+
+        return event;
+    }
+
+    function SimpleSearchRouteEvent(entity, query, filter) {
+
+        var delimitor = '_';
+
+        function category() {
+            return 'search'+delimitor+'simple';
+        }
+
+        function action() {
+            var action = category()+delimitor+entity;
+
+            if (typeof filter !== 'undefined')
+                action += delimitor + "filtered";
+
+            return action;
+        }
+
+        function label() {
+            return action()+delimitor+query;
+        }
+
+        return new RouteEvent(category, action, label);
+    }
+
+    function AdvancedSearchRouteEvent(type, queryId, filter) {
+
+        var delimitor = '_';
+
+        function category() {
+            return 'search'+delimitor+"advanced";
+        }
+
+        function action() {
+            var action = category()+delimitor+type;
+
+            if (typeof filter !== 'undefined')
+                action += delimitor + "filtered";
+
+            return action;
+        }
+
+        if (typeof queryId !== 'undefined' && type == 'NXQ')
+            return new RouteEvent(category, action, function label() { return action()+delimitor+queryId; });
+        else
+            return new RouteEvent(category, action);
+    }
+
+    function ListSearchRouteEvent(filter) {
+
+        var delimitor = '_';
+
+        function category() {
+            return 'search'+delimitor+'list';
+        }
+
+        function action() {
+            var action = category();
+
+            if (typeof filter !== 'undefined')
+                action += delimitor + "filtered";
+
+            return action;
+        }
+
+        function label() {
+            return action()+delimitor+filter;
+        }
+
+        return new RouteEvent(category, action);
+    }
+
+    function HelpRouteEvent(docname) {
+
+        var delimitor = '_';
+
+        var object = new RouteEvent(category, action);
+
+        function category() {
+            return 'help';
+        }
+
+        function action() {
+            return category()+delimitor+docname;
+        }
+
+        return object;
+    }
+
+    function gaTrackRouteChangeEvent() {
+
+        var event = {};
+
+        if ("query" in $routeParams) {
+            event = new SimpleSearchRouteEvent($routeParams.entity, $routeParams.query, $routeParams.filter);
+        }
+        else if ("sparql" in $routeParams) {
+            event = new AdvancedSearchRouteEvent('sparql', null, $routeParams.filter);
+        }
+        else if ("queryId" in $routeParams) {
+
+            var queryId = $routeParams.queryId;
+            var type;
+
+            // predefined query
+            if (queryId.startsWith("NXQ_")) {
+                type = 'NXQ';
+                queryId = queryId.split("_")[1];
+            }
+            // private query
+            else
+                type = 'query';
+
+            event = new AdvancedSearchRouteEvent(type, queryId, $routeParams.filter);
+        }
+        else if ("listId" in $routeParams) {
+            event = new ListSearchRouteEvent($routeParams.filter);
+        }
+        else if ("article" in $routeParams) {
+            event = new HelpRouteEvent($routeParams.article);
+        }
+
+        console.log("$location:", $location, ", $routeParams:", $routeParams);
+        console.log("event:", event);
+
+        if (Object.keys(event).length>0) {
+
+            ga('send', event);
+        }
+    }
 
     //
     // load profile on init
@@ -598,6 +757,9 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         userProteinList.create(user, proteinList).$promise.then(
             function () {
                 flash('alert-success', "List " + proteinList.name + " successfully created.");
+
+                var button = angular.element('#saveAsListButton');
+                ga('send', 'event', 'button', 'click', 'save-as-list');
             }, function(error)  {
                 flash('alert-warning', error.data.message);
             }

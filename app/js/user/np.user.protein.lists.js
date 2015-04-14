@@ -43,7 +43,6 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 	$scope.loadMyLists = function (){
           user.$promise.then(function(){
 		userProteinList.list(user).$promise.then(function(data) {
-			console.log('get lists')
 			$scope.lists = data;
 			$scope.initCombinationForm();
 		});

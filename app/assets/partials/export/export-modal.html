@@ -38,11 +38,11 @@
                 </p>
             </div>
             <div class="highlight">
-                <pre><code class="language-html link" data-lang="html"><span class="nt"></span><a target="_blank" href="{{getFileExportURL()}}">{{getFileExportURL()}}</a></span></code></pre>
+                <pre><code class="language-html link" data-lang="html"><span class="nt"></span><a target="_blank" href="{{getFileExportURL()}}" ng-click="gaTrackDownloadEvent(false)">{{getFileExportURL()}}</a></span></code></pre>
             </div>
         </div>
         <div class="modal-footer">
-            <a class="btn btn-primary" href="{{getFileExportURL()}}" target="_blank" ng-click="dismiss()">Download</a>
+            <a class="btn btn-primary" href="{{getFileExportURL()}}" target="_blank" ng-click="gaTrackDownloadEvent(true)">Download</a>
         </div>
     </div>
 </div>

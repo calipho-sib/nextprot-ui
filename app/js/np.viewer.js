@@ -69,8 +69,6 @@
             */
             var np1Params =  "?np2css=" + np2css + "&np2ori=" +  np2ori;
 
-              console.log($location);
-
               $scope.widgetURL = $sce.trustAsResourceUrl(np1Base + $location.$$path  + np1Params);
           }
         });
