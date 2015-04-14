@@ -94,17 +94,19 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
 
     function RouteEvent(funcCategory, funcAction, funcLabel) {
 
+        var delimitor = '_';
+
         funcCategory = typeof funcCategory !== 'undefined' ? funcCategory : function() {return ""};
         funcAction = typeof funcAction !== 'undefined' ? funcAction : function() {return ""};
 
         var event = {
             'hitType': 'event',
-            'eventCategory': 'ui-'+funcCategory(),
-            'eventAction': 'ui-'+funcAction()
+            'eventCategory': 'ui'+delimitor+funcCategory(),
+            'eventAction': 'ui'+delimitor+funcAction()
         };
 
         if (typeof funcLabel !== 'undefined')
-            event.eventLabel = 'ui-'+funcLabel();
+            event.eventLabel = 'ui'+delimitor+funcLabel();
 
         return event;
     }
