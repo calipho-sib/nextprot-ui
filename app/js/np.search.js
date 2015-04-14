@@ -100,7 +100,7 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         var event = {
             'hitType': 'event',
             'eventCategory': funcCategory(),
-            'eventAction': funcAction();
+            'eventAction': funcAction()
         };
 
         if (typeof funcLabel !== 'undefined')
@@ -229,6 +229,8 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         else if ("article" in $routeParams) {
             event = new HelpRouteEvent($routeParams.article);
         }
+
+        console.log(event);
 
         if (Object.keys(event).length>0) {
 
