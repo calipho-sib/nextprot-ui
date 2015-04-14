@@ -99,12 +99,12 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
 
         var event = {
             'hitType': 'event',
-            'eventCategory': funcCategory(),
-            'eventAction': funcAction()
+            'eventCategory': 'ui-'+funcCategory(),
+            'eventAction': 'ui-'+funcAction()
         };
 
         if (typeof funcLabel !== 'undefined')
-            event.eventLabel = funcLabel();
+            event.eventLabel = 'ui-'+funcLabel();
 
         return event;
     }
@@ -230,7 +230,8 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
             event = new HelpRouteEvent($routeParams.article);
         }
 
-        console.log(event);
+        console.log("$location:", $location, ", $routeParams:", $routeParams);
+        console.log("event:", event);
 
         if (Object.keys(event).length>0) {
 
