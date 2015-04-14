@@ -36,6 +36,23 @@
             $scope.selectedView = view.replace(new RegExp('^-+', ''), '');
         }
 
+        $scope.gaTrackDownloadEvent = function (closeModal) {
+
+            var gaEvent = {
+                'hitType': 'event',
+                'eventCategory': 'ui_download'
+            };
+
+            gaEvent.eventAction = gaEvent.eventCategory+"_"+$routeParams.entity;
+            gaEvent.eventLabel = gaEvent.eventAction+"_"+$scope.selectedFormat;
+            //SUBPART:gaEvent.eventLabel = gaEvent.eventAction+"_"+$scope.selectedView;
+
+            console.log("tracking download event -> ga event:", gaEvent);
+            ga('send', gaEvent);
+
+            if (closeModal) $scope.dismiss();
+        }
+
         $scope.getFileExportURL = function () {
 
             //multiple entries
