@@ -80,8 +80,6 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
             Search.clear();
         }
 
-        //console.log("location:", $location, "routeParams:", $routeParams);
-
         gaTrackPageView();
         gaTrackRouteChangeEvent();
     });
@@ -232,7 +230,6 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
             event = new HelpRouteEvent($routeParams.article);
         }
 
-        console.log("$location:", $location, ", $routeParams:", $routeParams);
         console.log("event:", event);
 
         if (Object.keys(event).length>0) {
