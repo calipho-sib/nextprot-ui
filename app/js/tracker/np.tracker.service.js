@@ -25,7 +25,7 @@ TrackingService.factory('Tracker', [
                 gaEvent.eventAction += "_+silver";
             gaEvent.eventLabel = gaEvent.eventAction + "_" + selectedFormat;
 
-            console.log("tracking download event -> ga event:", gaEvent);
+            //console.log("tracking download event -> ga event:", gaEvent);
             ga('send', gaEvent);
         };
 
