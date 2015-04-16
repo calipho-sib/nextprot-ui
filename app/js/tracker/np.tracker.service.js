@@ -14,18 +14,29 @@ TrackingService.factory('Tracker', [
             $window.ga('send', 'pageview', $location.url());
         };
 
-        Tracker.prototype.trackDownloadEvent = function (selectedFormat) {
+        Tracker.prototype.trackTransitionRouteChangeEvent = function(dest) {
+
+            var gaEvent = {
+                'hitType': 'event',
+                'eventCategory': 'ui_routing-'+dest
+            };
+            console.log("tracking route -> ga event:", gaEvent);
+
+            if (Object.keys(gaEvent).length>0) {
+                ga('send', gaEvent);
+            }
+        };
+
+        Tracker.prototype.trackDownloadEvent = function (selectedFormat, selectedView) {
             var gaEvent = {
                 'hitType': 'event',
                 'eventCategory': 'ui_download'
             };
 
-            gaEvent.eventAction = gaEvent.eventCategory + "_" + $routeParams.entity;
-            if ('quality' in $routeParams)
-                gaEvent.eventAction += "_+silver";
-            gaEvent.eventLabel = gaEvent.eventAction + "_" + selectedFormat;
+            gaEvent.eventAction = gaEvent.eventCategory;
+            gaEvent.eventLabel = gaEvent.eventAction + "_" + selectedView+"-"+selectedFormat;
 
-            //console.log("tracking download event -> ga event:", gaEvent);
+            console.log("tracking download event -> ga event:", gaEvent);
             ga('send', gaEvent);
         };
 
@@ -154,7 +165,7 @@ TrackingService.factory('Tracker', [
                 var action = parentAction;
 
                 if (typeof silverPlus !== 'undefined')
-                    action += delimitor + "+silver";
+                    action += delimitor + "gold-and-silver";
 
                 return action;
             }

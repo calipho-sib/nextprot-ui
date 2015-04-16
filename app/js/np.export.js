@@ -38,7 +38,7 @@
 
         $scope.gaTrackDownloadEvent = function (closeModal) {
 
-            Tracker.trackDownloadEvent($scope.selectedFormat);
+            Tracker.trackDownloadEvent($scope.selectedFormat, $scope.selectedView);
 
             if (closeModal) $scope.dismiss();
         }
