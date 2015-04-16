@@ -27,13 +27,13 @@ TrackingService.factory('Tracker', [
             }
         };
 
-        Tracker.prototype.trackDownloadEvent = function (selectedFormat, selectedView) {
+        Tracker.prototype.trackDownloadEvent = function (type, selectedFormat, selectedView) {
             var gaEvent = {
                 'hitType': 'event',
                 'eventCategory': 'ui_download'
             };
 
-            gaEvent.eventAction = gaEvent.eventCategory;
+            gaEvent.eventAction = gaEvent.eventCategory+"_"+((type != null) ? 'entries':'entry');
             gaEvent.eventLabel = gaEvent.eventAction + "_" + selectedView+"-"+selectedFormat;
 
             console.log("tracking download event -> ga event:", gaEvent);
