@@ -90,55 +90,61 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         $window.ga('send', 'pageview', $location.url());
     }
 
-    function RouteEvent(funcCategory, funcAction, funcLabel) {
-
-        var delimitor = '_';
-
-        funcCategory = typeof funcCategory !== 'undefined' ? funcCategory : function() {return ""};
-        funcAction = typeof funcAction !== 'undefined' ? funcAction : function() {return ""};
+    function gaEvent(category, action, label) {
 
         var event = {
             'hitType': 'event',
-            'eventCategory': 'ui'+delimitor+funcCategory(),
-            'eventAction': 'ui'+delimitor+funcAction()
+            'eventCategory': category,
+            'eventAction': action
         };
 
-        if (typeof funcLabel !== 'undefined')
-            event.eventLabel = 'ui'+delimitor+funcLabel();
+        if (typeof label !== 'undefined')
+            event.eventLabel = label;
 
         return event;
     }
 
-    function SimpleSearchRouteEvent(entity, query, filter) {
+    function RouteEventFactory(funcCategory, funcAction, funcLabel) {
 
         var delimitor = '_';
 
-        function category() {
-            return 'search'+delimitor+'simple';
+        var factory = {};
+
+        factory.category = function() {
+
+            return 'ui'+delimitor+funcCategory()
+        };
+
+        factory.action = function() {
+
+            return 'ui'+delimitor+funcAction()
+        };
+
+        if (typeof funcLabel !== 'undefined') {
+
+            factory.label = function() {
+
+                return 'ui'+delimitor+funcLabel()
+            };
         }
 
-        function action() {
-            var action = category()+delimitor+entity;
+        factory.create = function() {
 
-            if (typeof filter !== 'undefined')
-                action += delimitor + "filtered";
+            if ('label' in this)
+                return new gaEvent(this.category(), this.action(), this.label());
+            else
+                return new gaEvent(this.category(), this.action());
+        };
 
-            return action;
-        }
-
-        function label() {
-            return action()+delimitor+query;
-        }
-
-        return new RouteEvent(category, action, label);
+        return factory;
     }
 
-    function AdvancedSearchRouteEvent(type, queryId, filter) {
+    function SearchRouteEventFactory(kind, type, filter) {
 
         var delimitor = '_';
 
         function category() {
-            return 'search'+delimitor+"advanced";
+            return 'search'+delimitor+kind;
         }
 
         function action() {
@@ -150,13 +156,45 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
             return action;
         }
 
-        if (typeof queryId !== 'undefined' && type == 'NXQ')
-            return new RouteEvent(category, action, function label() { return action()+delimitor+queryId; });
-        else
-            return new RouteEvent(category, action);
+        return new RouteEventFactory(category, action);
     }
 
-    function ListSearchRouteEvent(filter) {
+    function SimpleSearchRouteEventFactory(type, query, filter) {
+
+        var delimitor = '_';
+
+        var factory = new SearchRouteEventFactory('simple', type, filter);
+
+        factory.label = function() {
+
+            return factory.action()+delimitor+query;
+        };
+
+        return factory;
+    }
+
+    function AdvancedSparqlSearchRouteEventFactory(filter) {
+
+        return new SearchRouteEventFactory('advanced', 'sparql', filter);
+    }
+
+    function AdvancedQueryIdSearchRouteEventFactory(type, queryId, filter) {
+
+        var delimitor = '_';
+
+        var factory = new SearchRouteEventFactory('advanced', type, filter);
+
+        if (typeof queryId !== 'undefined' && type == 'NXQ') {
+
+            factory.label = function() {
+
+                return factory.action()+delimitor+queryId;
+            };
+        }
+        return factory;
+    }
+
+    function ListSearchRouteEventFactory(filter) {
 
         var delimitor = '_';
 
@@ -173,18 +211,21 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
             return action;
         }
 
-        function label() {
-            return action()+delimitor+filter;
+        var factory = new RouteEventFactory(category, action);
+
+        if (typeof filter !== 'undefined') {
+            factory.label = function () {
+
+                return factory.action() + delimitor + filter;
+            };
         }
 
-        return new RouteEvent(category, action);
+        return factory;
     }
 
-    function HelpRouteEvent(docname) {
+    function HelpRouteEventFactory(docname) {
 
         var delimitor = '_';
-
-        var object = new RouteEvent(category, action);
 
         function category() {
             return 'help';
@@ -194,18 +235,18 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
             return category()+delimitor+docname;
         }
 
-        return object;
+        return new RouteEventFactory(category, action);
     }
 
     function gaTrackRouteChangeEvent() {
 
-        var event = {};
+        var factory = {};
 
         if ("query" in $routeParams) {
-            event = new SimpleSearchRouteEvent($routeParams.entity, $routeParams.query, $routeParams.filter);
+            factory = new SimpleSearchRouteEventFactory($routeParams.entity, $routeParams.query, $routeParams.filter);
         }
         else if ("sparql" in $routeParams) {
-            event = new AdvancedSearchRouteEvent('sparql', null, $routeParams.filter);
+            factory = new AdvancedSparqlSearchRouteEventFactory($routeParams.filter);
         }
         else if ("queryId" in $routeParams) {
 
@@ -221,18 +262,20 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
             else
                 type = 'query';
 
-            event = new AdvancedSearchRouteEvent(type, queryId, $routeParams.filter);
+            factory = new AdvancedQueryIdSearchRouteEventFactory(type, queryId, $routeParams.filter);
         }
         else if ("listId" in $routeParams) {
-            event = new ListSearchRouteEvent($routeParams.filter);
+            factory = new ListSearchRouteEventFactory($routeParams.filter);
         }
         else if ("article" in $routeParams) {
-            event = new HelpRouteEvent($routeParams.article);
+            factory = new HelpRouteEventFactory($routeParams.article);
         }
 
-        console.log("event:", event);
+        if (Object.keys(factory).length>0) {
 
-        if (Object.keys(event).length>0) {
+            var event = factory.create();
+
+            console.log("$location:", $location,", $routeParams:", $routeParams, "event:", event);
 
             ga('send', event);
         }
