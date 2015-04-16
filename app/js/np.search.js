@@ -356,8 +356,8 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
 
 //
 // implement search result controller
-ResultCtrl.$inject=['$scope','$modal', '$route','$routeParams','$filter','$timeout','$location','Search','user','Cart','userProteinList','flash', 'exportService', 'queryRepository'];
-function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash, exportService, queryRepository) {
+ResultCtrl.$inject=['Tracker', '$scope','$modal', '$route','$routeParams','$filter','$timeout','$location','Search','user','Cart','userProteinList','flash', 'exportService', 'queryRepository'];
+function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash, exportService, queryRepository) {
     $scope.Search = Search;
     $scope.Cart = Cart;
     $scope.selectedResults = [];
@@ -601,8 +601,12 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         userProteinList.create(user, proteinList).$promise.then(
             function () {
                 flash('alert-success', "List " + proteinList.name + " successfully created.");
+
+                console.log(Cart.getElements());
+                Tracker.trackSaveAsListEvent(Cart.getElements().length, true);
             }, function(error)  {
                 flash('alert-warning', error.data.message);
+                Tracker.trackSaveAsListEvent(Cart.getElements().length, false);
             }
         );
     }

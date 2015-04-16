@@ -40,6 +40,19 @@ TrackingService.factory('Tracker', [
             ga('send', gaEvent);
         };
 
+        Tracker.prototype.trackSaveAsListEvent = function (count, hasSucceed) {
+            var gaEvent = {
+                'hitType': 'event',
+                'eventCategory': 'ui_save-as-list'
+            };
+
+            gaEvent.eventAction = gaEvent.eventCategory+"_size-"+count;
+            gaEvent.eventLabel = gaEvent.eventAction+"_"+((hasSucceed)?'success':'failure');
+
+            console.log("tracking download event -> ga event:", gaEvent);
+            ga('send', gaEvent);
+        };
+
         Tracker.prototype.trackRouteChangeEvent = function() {
 
             var factory = {};
