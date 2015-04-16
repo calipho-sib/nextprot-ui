@@ -23,7 +23,7 @@ function searchConfig($routeProvider, $locationProvider, $httpProvider) {
         .when('/search/:query', {templateUrl: 'partials/search/result.html'})
         .when('/:entity/search', {templateUrl: 'partials/search/result.html'})
         .when('/:entity/search/:query', {templateUrl: 'partials/search/result.html'});
-};
+}
 
 //
 // implement main application controller
@@ -393,7 +393,7 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
                 $scope.rows = Search.result.rows;
                 if (cb) cb(results);
             });
-    }
+    };
 
 
     var params = _.clone($routeParams);
@@ -436,19 +436,19 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
                 if (found == -1) userProteinList.addElements(user, $routeParams.listId, [docId]);
                 else userProteinList.removeElements(user, $routeParams.listId, [docId]);
             }*/
-    }
+    };
 
 
 
     $scope.isInCart = function (docId) {
         return Cart.isInCart(docId);
-    }
+    };
 
 
     $scope.emptyCart = function () {
         Cart.emptyCart();
         if (!$routeParams.listId) $scope.selectedResults = [];
-    }
+    };
 
 
     $scope.addAllToBasket = function () {
@@ -480,7 +480,7 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
                     flash("alert-info", docs.ids.length + " entries added to clipboard");
                 });
         }
-    }
+    };
 
     function setAsSelected(ids) {
         $scope.selectedResults = [];
@@ -495,7 +495,7 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
         } else {
             exportService.setExportParameters($routeParams);
         }
-    }
+    };
 
     $scope.removeAllFromBasket = function () {
 
@@ -530,7 +530,7 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
                     flash("alert-info", cartSize + " entries removed from clipboard");
                 });
         }
-    }
+    };
 
     $scope.toggleAllToBasket = function () {
 
@@ -544,7 +544,7 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
     $scope.inverseBasketSelection = function () {
 
         alert("not yet implemented");
-    }
+    };
 
 
     $scope.getResultTemplateByEntity = function () {
@@ -556,7 +556,7 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
             default:
                 return 'partials/search/result-proteins.html';
         }
-    }
+    };
 
     $scope.getSortTemplateByEntity = function () {
         switch (Search.params.entity) {
@@ -567,11 +567,11 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
             default:
                 return 'partials/search/sort-proteins.html';
         }
-    }
+    };
 
     $scope.affix = function (selector) {
         $(selector).affix()
-    }
+    };
 
 
 
@@ -586,7 +586,7 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
         } else {
             flash('alert-warning', 'Please login to save a list');
         }
-    }
+    };
 
 
     $scope.saveModal = function () {
@@ -602,7 +602,6 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
             function () {
                 flash('alert-success', "List " + proteinList.name + " successfully created.");
 
-                console.log(Cart.getElements());
                 Tracker.trackSaveAsListEvent(Cart.getElements().length, true);
             }, function(error)  {
                 flash('alert-warning', error.data.message);
@@ -610,6 +609,4 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
             }
         );
     }
-};
-
-})(angular);
+}})(angular);
