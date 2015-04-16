@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('np.version.version-directive', [])
+angular.module('np.version.directive', [])
 
 .directive('npVersion', ['version', function(version) {
 

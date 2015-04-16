@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('np.version', [
-  'np.version.version-directive'
+  'np.version.directive'
 ])
 
 .value('version', '0.1.1')
