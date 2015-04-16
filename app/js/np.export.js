@@ -1,13 +1,13 @@
 (function (angular, undefined) {
     'use strict';
 
-    angular.module('np.export', [])
+    angular.module('np.export', ['np.tracker'])
         .factory('exportService', exportService)
         .controller('ExportCtrl', ExportCtrl);
 
 
-    ExportCtrl.$inject = ['$resource', '$scope', '$routeParams', 'config', 'exportService', 'Search'];
-    function ExportCtrl($resource, $scope, $routeParams, config, exportService, Search) {
+    ExportCtrl.$inject = ['Tracker', '$resource', '$scope', '$routeParams', 'config', 'exportService', 'Search'];
+    function ExportCtrl(Tracker, $resource, $scope, $routeParams, config, exportService, Search) {
 
         var allEntryTemplateValue = null;
         $scope.selectedFormat;
@@ -38,17 +38,7 @@
 
         $scope.gaTrackDownloadEvent = function (closeModal) {
 
-            var gaEvent = {
-                'hitType': 'event',
-                'eventCategory': 'ui_download'
-            };
-
-            gaEvent.eventAction = gaEvent.eventCategory+"_"+$routeParams.entity;
-            gaEvent.eventLabel = gaEvent.eventAction+"_"+$scope.selectedFormat;
-            //SUBPART:gaEvent.eventLabel = gaEvent.eventAction+"_"+$scope.selectedView;
-
-            console.log("tracking download event -> ga event:", gaEvent);
-            ga('send', gaEvent);
+            Tracker.trackDownloadEvent($scope.selectedFormat);
 
             if (closeModal) $scope.dismiss();
         }
