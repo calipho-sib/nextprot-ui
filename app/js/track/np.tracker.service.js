@@ -1,6 +1,6 @@
 'use strict';
 
-var TrackingService = angular.module('np.tracking', []);
+var TrackingService = angular.module('np.tracker', []);
 
 TrackingService.factory('Tracker', [
     '$window',
