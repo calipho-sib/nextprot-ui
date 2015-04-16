@@ -159,11 +159,23 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         return new RouteEventFactory(category, action);
     }
 
-    function SimpleSearchRouteEventFactory(type, query, filter) {
+    function SimpleSearchRouteEventFactory(type, query, filter, silverPlus) {
 
         var delimitor = '_';
 
         var factory = new SearchRouteEventFactory('simple', type, filter);
+
+        var parentAction = factory.action();
+
+        factory.action = function() {
+
+            var action = parentAction;
+
+            if (typeof silverPlus !== 'undefined')
+                action += delimitor + "+silver";
+
+            return action;
+        }
 
         factory.label = function() {
 
@@ -243,7 +255,7 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         var factory = {};
 
         if ("query" in $routeParams) {
-            factory = new SimpleSearchRouteEventFactory($routeParams.entity, $routeParams.query, $routeParams.filter);
+            factory = new SimpleSearchRouteEventFactory($routeParams.entity, $routeParams.query, $routeParams.filter, $routeParams.quality);
         }
         else if ("sparql" in $routeParams) {
             factory = new AdvancedSparqlSearchRouteEventFactory($routeParams.filter);
