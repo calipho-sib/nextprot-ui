@@ -8,6 +8,8 @@ TrackingService.factory('Tracker', [
     '$routeParams',
     function ($window, $location, $routeParams) {
 
+        var separator = '_';
+
         var tracker = {};
 
         tracker.trackPageView = function () {
@@ -18,7 +20,7 @@ TrackingService.factory('Tracker', [
 
             var gaEvent = {
                 'hitType': 'event',
-                'eventCategory': 'ui_routing-'+dest
+                'eventCategory': 'ui'+separator+'routing-'+dest
             };
             console.log("tracking route -> ga event:", gaEvent);
 
@@ -30,11 +32,11 @@ TrackingService.factory('Tracker', [
         tracker.trackDownloadEvent = function (type, selectedFormat, selectedView) {
             var gaEvent = {
                 'hitType': 'event',
-                'eventCategory': 'ui_download'
+                'eventCategory': 'ui'+separator+'download'
             };
 
-            gaEvent.eventAction = gaEvent.eventCategory+"_"+((type != null) ? 'entries':'entry');
-            gaEvent.eventLabel = gaEvent.eventAction + "_" + selectedView+"-"+selectedFormat;
+            gaEvent.eventAction = gaEvent.eventCategory + separator +((type != null) ? 'entries':'entry');
+            gaEvent.eventLabel = gaEvent.eventAction + separator + selectedView+"-"+selectedFormat;
 
             console.log("tracking download event -> ga event:", gaEvent);
             ga('send', gaEvent);
@@ -43,11 +45,11 @@ TrackingService.factory('Tracker', [
         tracker.trackSaveAsListEvent = function (count, hasSucceed) {
             var gaEvent = {
                 'hitType': 'event',
-                'eventCategory': 'ui_save-as-list'
+                'eventCategory': 'ui'+separator+'save-as-list'
             };
 
-            gaEvent.eventAction = gaEvent.eventCategory+"_size-"+count;
-            gaEvent.eventLabel = gaEvent.eventAction+"_"+((hasSucceed)?'success':'failure');
+            gaEvent.eventAction = gaEvent.eventCategory+separator+'size-'+count;
+            gaEvent.eventLabel = gaEvent.eventAction+separator+((hasSucceed)?'success':'failure');
 
             console.log("tracking download event -> ga event:", gaEvent);
             ga('send', gaEvent);
@@ -112,25 +114,23 @@ TrackingService.factory('Tracker', [
 
         function RouteEventFactory(funcCategory, funcAction, funcLabel) {
 
-            var delimitor = '_';
-
             var factory = {};
 
             factory.category = function () {
 
-                return 'ui' + delimitor + funcCategory()
+                return 'ui' + separator + funcCategory()
             };
 
             factory.action = function () {
 
-                return 'ui' + delimitor + funcAction()
+                return 'ui' + separator + funcAction()
             };
 
             if (typeof funcLabel !== 'undefined') {
 
                 factory.label = function () {
 
-                    return 'ui' + delimitor + funcLabel()
+                    return 'ui' + separator + funcLabel()
                 };
             }
 
@@ -147,17 +147,15 @@ TrackingService.factory('Tracker', [
 
         function SearchRouteEventFactory(kind, type, filter) {
 
-            var delimitor = '_';
-
             function category() {
-                return 'search' + delimitor + kind;
+                return 'search' + separator + kind;
             }
 
             function action() {
-                var action = category() + delimitor + type;
+                var action = category() + separator + type;
 
                 if (typeof filter !== 'undefined')
-                    action += delimitor + "filtered";
+                    action += separator + "filtered";
 
                 return action;
             }
@@ -166,8 +164,6 @@ TrackingService.factory('Tracker', [
         }
 
         function SimpleSearchRouteEventFactory(type, query, filter, silverPlus) {
-
-            var delimitor = '_';
 
             var factory = new SearchRouteEventFactory('simple', type, filter);
 
@@ -178,14 +174,14 @@ TrackingService.factory('Tracker', [
                 var action = parentAction;
 
                 if (typeof silverPlus !== 'undefined')
-                    action += delimitor + "gold-and-silver";
+                    action += separator + "gold-and-silver";
 
                 return action;
             }
 
             factory.label = function () {
 
-                return factory.action() + delimitor + query;
+                return factory.action() + separator + query;
             };
 
             return factory;
@@ -198,15 +194,13 @@ TrackingService.factory('Tracker', [
 
         function AdvancedQueryIdSearchRouteEventFactory(type, queryId, filter) {
 
-            var delimitor = '_';
-
             var factory = new SearchRouteEventFactory('advanced', type, filter);
 
             if (typeof queryId !== 'undefined' && type == 'NXQ') {
 
                 factory.label = function () {
 
-                    return factory.action() + delimitor + queryId;
+                    return factory.action() + separator + queryId;
                 };
             }
             return factory;
@@ -214,17 +208,15 @@ TrackingService.factory('Tracker', [
 
         function ListSearchRouteEventFactory(filter) {
 
-            var delimitor = '_';
-
             function category() {
-                return 'search' + delimitor + 'list';
+                return 'search' + separator + 'list';
             }
 
             function action() {
                 var action = category();
 
                 if (typeof filter !== 'undefined')
-                    action += delimitor + "filtered";
+                    action += separator + "filtered";
 
                 return action;
             }
@@ -234,7 +226,7 @@ TrackingService.factory('Tracker', [
             if (typeof filter !== 'undefined') {
                 factory.label = function () {
 
-                    return factory.action() + delimitor + filter;
+                    return factory.action() + separator + filter;
                 };
             }
 
@@ -243,18 +235,37 @@ TrackingService.factory('Tracker', [
 
         function HelpRouteEventFactory(docname) {
 
-            var delimitor = '_';
-
             function category() {
                 return 'help';
             }
 
             function action() {
-                return category() + delimitor + docname;
+                return category() + separator + docname;
             }
 
             return new RouteEventFactory(category, action);
         }
+
+        // The ga() function provides a single access point for everything in the analytics.js library
+        // all tracking calls are made via the ga() function
+        function createAndInitGATracker(propertyId) {
+
+            // Google Analytics
+            // Asynchronously loads the analytics.js library onto this page
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            // Creates a new default tracker object
+            ga('create', propertyId, 'auto');
+        }
+
+        // Setup Universal Analytics Web Tracking (analytics.js)
+        createAndInitGATracker('UA-61448300-1');
+
+        // Sends a first pageview hit for the current page to Google Analytics
+        ga('send', 'pageview');
 
         return tracker;
     }]);
