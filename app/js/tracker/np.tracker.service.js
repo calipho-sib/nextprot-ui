@@ -31,9 +31,10 @@ TrackingService.factory('Tracker', [
                 'hitType': 'event',
                 'eventCategory': 'ui'+separator+'routing-'+dest
             };
-            console.log("tracking route -> ga event:", gaEvent);
 
             if (Object.keys(gaEvent).length>0) {
+
+                console.log("tracking transition route -> ga event:", gaEvent);
                 ga('send', gaEvent);
             }
         };
@@ -118,10 +119,22 @@ TrackingService.factory('Tracker', [
 
                 var event = factory.create();
 
-                console.log("$location:", $location, ", $routeParams:", $routeParams, "event:", event);
-
+                console.log("tracking route change category  event -> ga event:", gaEvent);
                 ga('send', event);
             }
+        };
+
+        tracker.trackContactUsEvent = function(subject) {
+
+            var gaEvent = {
+                'hitType': 'event',
+                'eventCategory': 'ui'+separator+'contact-us'
+            };
+
+            gaEvent.actionCategory = gaEvent.eventCategory+separator+subject;
+
+            console.log("tracking contacting us -> ga event:", gaEvent);
+            ga('send', gaEvent);
         };
 
         function gaEvent(category, action, label) {
@@ -291,8 +304,8 @@ TrackingService.factory('Tracker', [
 
             var trackingId = (trackingProduction != 'NX_TRACKING_PROD') ? productionTrackingId : developTrackingId;
 
-            console.log('tracking ids: develop:', developTrackingId, ', production:', productionTrackingId);
-            console.log('tracking '+trackingId);
+            console.log('Tracking ids: develop:', developTrackingId, ', production:', productionTrackingId);
+            console.log('current tracking:'+trackingId);
 
             return trackingId;
         }
