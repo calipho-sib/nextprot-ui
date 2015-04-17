@@ -6,7 +6,9 @@ TrackingService.factory('Tracker', [
     '$window',
     '$location',
     '$routeParams',
-    function ($window, $location, $routeParams) {
+    'version',
+    'build',
+    function ($window, $location, $routeParams, version, build) {
 
         var separator = '_';
 
@@ -43,16 +45,33 @@ TrackingService.factory('Tracker', [
         };
 
         tracker.trackSaveAsListEvent = function (count, hasSucceed) {
-            var gaEvent = {
-                'hitType': 'event',
-                'eventCategory': 'ui'+separator+'save-as-list'
-            };
 
-            gaEvent.eventAction = gaEvent.eventCategory+separator+'size-'+count;
-            gaEvent.eventLabel = gaEvent.eventAction+separator+((hasSucceed)?'success':'failure');
+            if (!hasSucceed) {
 
-            console.log("tracking download event -> ga event:", gaEvent);
-            ga('send', gaEvent);
+                var exceptionEvent = {
+                    'exDescription': 'could not save '+count+' entries as list',
+                    'exFatal': false,
+                    'appName': 'nextprot-ui',
+                    'appVersion': version
+                };
+
+                if (!isNaN(build))
+                    exceptionEvent.appVersion += "-build."+build;
+
+                console.log("tracking save as list exception -> ga event:", exceptionEvent);
+                ga('send', 'exception', exceptionEvent);
+            } else {
+
+                var gaEvent = {
+                    'hitType': 'event',
+                    'eventCategory': 'ui'+separator+'save-as-list'
+                };
+
+                gaEvent.eventAction = gaEvent.eventCategory+separator+'size-'+count;
+
+                console.log("tracking save as list event -> ga event:", gaEvent);
+                ga('send', gaEvent);
+            }
         };
 
         tracker.trackRouteChangeEvent = function() {

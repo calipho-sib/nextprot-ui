@@ -602,7 +602,7 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
             function () {
                 flash('alert-success', "List " + proteinList.name + " successfully created.");
 
-                Tracker.trackSaveAsListEvent(Cart.getElements().length, true);
+                Tracker.trackSaveAsListEvent(Cart.getElements().length, false);
             }, function(error)  {
                 flash('alert-warning', error.data.message);
                 Tracker.trackSaveAsListEvent(Cart.getElements().length, false);
