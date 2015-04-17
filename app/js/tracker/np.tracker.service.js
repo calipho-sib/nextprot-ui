@@ -104,16 +104,17 @@ TrackingService.factory('Tracker', [
                 // predefined query
                 if (queryId.startsWith("NXQ_")) {
                     type = 'NXQ';
-                    queryId = queryId.split("_")[1];
+                    queryId = 'NXQ_'+queryId.split("_")[1];
+
+                    factory = new AdvancedQueryIdSearchRouteEventFactory(type, queryId, $routeParams.filter);
                 }
                 // private query
-                else
-                    type = 'query';
-
-                factory = new AdvancedQueryIdSearchRouteEventFactory(type, queryId, $routeParams.filter);
+                else {
+                    factory = new ShowListRouteEventFactory('query', $routeParams.filter);
+                }
             }
             else if ("listId" in $routeParams) {
-                factory = new ListSearchRouteEventFactory($routeParams.filter);
+                factory = new ShowListRouteEventFactory('list', $routeParams.filter);
             }
             else if ("article" in $routeParams) {
                 factory = new HelpRouteEventFactory($routeParams.article);
@@ -123,7 +124,7 @@ TrackingService.factory('Tracker', [
 
                 var event = factory.create();
 
-                console.log("tracking route change category  event -> ga event:", gaEvent);
+                console.log("tracking route change category  event -> ga event:", event);
                 ga('send', event);
             }
         };
@@ -140,20 +141,6 @@ TrackingService.factory('Tracker', [
             console.log("tracking contacting us -> ga event:", gaEvent);
             ga('send', gaEvent);
         };
-
-        function gaEvent(category, action, label) {
-
-            var event = {
-                'hitType': 'event',
-                'eventCategory': category,
-                'eventAction': action
-            };
-
-            if (typeof label !== 'undefined')
-                event.eventLabel = label;
-
-            return event;
-        }
 
         function RouteEventFactory(funcCategory, funcAction, funcLabel) {
 
@@ -175,6 +162,20 @@ TrackingService.factory('Tracker', [
 
                     return 'ui' + separator + funcLabel()
                 };
+            }
+
+            function gaEvent(category, action, label) {
+
+                var event = {
+                    'hitType': 'event',
+                    'eventCategory': category,
+                    'eventAction': action
+                };
+
+                if (typeof label !== 'undefined')
+                    event.eventLabel = label;
+
+                return event;
             }
 
             factory.create = function () {
@@ -220,7 +221,7 @@ TrackingService.factory('Tracker', [
                     action += separator + "gold-and-silver";
 
                 return action;
-            }
+            };
 
             factory.label = function () {
 
@@ -249,10 +250,10 @@ TrackingService.factory('Tracker', [
             return factory;
         }
 
-        function ListSearchRouteEventFactory(filter) {
+        function ShowListRouteEventFactory(type, filter) {
 
             function category() {
-                return 'search' + separator + 'list';
+                return 'show' + separator + type;
             }
 
             function action() {
