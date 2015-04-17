@@ -45,8 +45,12 @@ TrackingService.factory('Tracker', [
                 'eventCategory': 'ui'+separator+'download'
             };
 
-            gaEvent.eventAction = gaEvent.eventCategory + separator +((type != null) ? 'entries':'entry');
-            gaEvent.eventLabel = gaEvent.eventAction + separator + selectedView+"-"+selectedFormat;
+            if (typeof selectedFormat !== 'undefined') {
+                gaEvent.eventAction = gaEvent.eventCategory + separator + ((type != null) ? 'entries' : 'entry');
+                gaEvent.eventLabel = gaEvent.eventAction + separator + selectedView + "-" + selectedFormat;
+            } else {
+                gaEvent.eventAction = gaEvent.eventCategory + separator + type;
+            }
 
             console.log("tracking download event -> ga event:", gaEvent);
             ga('send', gaEvent);
