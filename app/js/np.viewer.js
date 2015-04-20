@@ -44,7 +44,7 @@
             }
 
           if($routeParams.gistusr && $routeParams.gistid){
-            $scope.widgetURL = $sce.trustAsResourceUrl("http://bl.ocks.org/" + $routeParams.gistusr + "/raw/" + $routeParams.gistid + "/?nxentry=" +  $routeParams.entry);
+            $scope.widgetURL = $sce.trustAsResourceUrl("https://cdn.rawgit.com/" + $routeParams.gistusr + "/" + $routeParams.gistid + "/raw/index.html?nxentry=" +  $routeParams.entry);
           }else { //nextprot
 
             /* 
@@ -68,8 +68,6 @@
              * np1Params: params to pass to NP1
             */
             var np1Params =  "?np2css=" + np2css + "&np2ori=" +  np2ori;
-
-              console.log($location);
 
               $scope.widgetURL = $sce.trustAsResourceUrl(np1Base + $location.$$path  + np1Params);
           }

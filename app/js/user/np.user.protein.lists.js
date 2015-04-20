@@ -3,7 +3,8 @@
 angular.module('np.user.protein.lists', [
 	'np.user.protein.lists.service',
 	'np.user.protein.lists.ui',
-	'np.flash'
+	'np.flash',
+	'np.tracker'
 ])
 
 //
@@ -24,8 +25,8 @@ angular.module('np.user.protein.lists', [
 
 //
 // Controller
-ListCtrl.$inject=['$resource','$scope','$rootScope','$location','$routeParams','$route','Search','userProteinList','user', 'flash', 'config'];
-function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route, Search, userProteinList, user, flash, config) {
+ListCtrl.$inject=['Tracker', '$resource','$scope','$rootScope','$location','$routeParams','$route','Search','userProteinList','user', 'flash', 'config'];
+function ListCtrl(Tracker, $resource, $scope, $rootScope, $location, $routeParams, $route, Search, userProteinList, user, flash, config) {
 	$scope.userProteinList = userProteinList;
 	$scope.showCombine = false;
 	$scope.combineDisabled = true;
@@ -43,7 +44,6 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 	$scope.loadMyLists = function (){
           user.$promise.then(function(){
 		userProteinList.list(user).$promise.then(function(data) {
-			console.log('get lists')
 			$scope.lists = data;
 			$scope.initCombinationForm();
 		});
@@ -53,6 +53,10 @@ function ListCtrl($resource, $scope, $rootScope, $location, $routeParams, $route
 	$scope.getListExportUrl = function(list){
 		return config.api.API_URL + "/export/lists/" + list.publicId;
 	}
+
+	$scope.gaTrackDownloadList = function() {
+		Tracker.trackDownloadEvent('list');
+	};
 
 	$scope.initCombinationForm = function() {
 

@@ -7,7 +7,8 @@ angular.module('np.search', [
     'np.search.ui',
     'np.search.service',
     'np.cart',
-    'np.user.protein.lists'
+    'np.user.protein.lists',
+    'np.tracker'
 ]).config(searchConfig)
   .controller('SearchCtrl',SearchCtrl)
   .controller('ResultCtrl',ResultCtrl);
@@ -22,12 +23,12 @@ function searchConfig($routeProvider, $locationProvider, $httpProvider) {
         .when('/search/:query', {templateUrl: 'partials/search/result.html'})
         .when('/:entity/search', {templateUrl: 'partials/search/result.html'})
         .when('/:entity/search/:query', {templateUrl: 'partials/search/result.html'});
-};
+}
 
 //
 // implement main application controller
-SearchCtrl.$inject=['$resource','$scope','$rootScope','$location', '$filter', '$routeParams','$route','$window','$timeout','Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService'];
-function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routeParams, $route, $window, $timeout, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService) {
+SearchCtrl.$inject=['Tracker', '$resource','$scope','$rootScope','$location', '$filter', '$routeParams','$route','$window','$timeout','Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService'];
+function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, $routeParams, $route, $window, $timeout, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService) {
 
     // scope from template
     $scope.Search = Search;
@@ -79,8 +80,10 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
             $scope.reset();
             Search.clear();
         }
-    });  
 
+        Tracker.trackPageView();
+        Tracker.trackRouteChangeEvent();
+    });
 
     //
     // load profile on init
@@ -248,11 +251,6 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
         return ($location.path().indexOf(value) > -1) ? ' active  ' : '';
     }
 
-    $scope.didyoumean = function (index) {
-        Search.params.query = Search.result.spellcheck.collations[index].collationQuery;
-        $scope.go();
-    }
-
     $scope.moredetails = function (index) {
 
     }
@@ -353,8 +351,8 @@ function SearchCtrl($resource, $scope, $rootScope, $location, $filter, $routePar
 
 //
 // implement search result controller
-ResultCtrl.$inject=['$scope','$modal', '$route','$routeParams','$filter','$timeout','$location','Search','user','Cart','userProteinList','flash', 'exportService', 'queryRepository'];
-function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash, exportService, queryRepository) {
+ResultCtrl.$inject=['Tracker', '$scope','$modal', '$route','$routeParams','$filter','$timeout','$location','Search','user','Cart','userProteinList','flash', 'exportService', 'queryRepository'];
+function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash, exportService, queryRepository) {
     $scope.Search = Search;
     $scope.Cart = Cart;
     $scope.selectedResults = [];
@@ -390,7 +388,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                 $scope.rows = Search.result.rows;
                 if (cb) cb(results);
             });
-    }
+    };
 
 
     var params = _.clone($routeParams);
@@ -433,19 +431,19 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                 if (found == -1) userProteinList.addElements(user, $routeParams.listId, [docId]);
                 else userProteinList.removeElements(user, $routeParams.listId, [docId]);
             }*/
-    }
+    };
 
 
 
     $scope.isInCart = function (docId) {
         return Cart.isInCart(docId);
-    }
+    };
 
 
     $scope.emptyCart = function () {
         Cart.emptyCart();
         if (!$routeParams.listId) $scope.selectedResults = [];
-    }
+    };
 
 
     $scope.addAllToBasket = function () {
@@ -477,7 +475,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                     flash("alert-info", docs.ids.length + " entries added to clipboard");
                 });
         }
-    }
+    };
 
     function setAsSelected(ids) {
         $scope.selectedResults = [];
@@ -492,7 +490,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         } else {
             exportService.setExportParameters($routeParams);
         }
-    }
+    };
 
     $scope.removeAllFromBasket = function () {
 
@@ -527,7 +525,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
                     flash("alert-info", cartSize + " entries removed from clipboard");
                 });
         }
-    }
+    };
 
     $scope.toggleAllToBasket = function () {
 
@@ -541,7 +539,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
     $scope.inverseBasketSelection = function () {
 
         alert("not yet implemented");
-    }
+    };
 
 
     $scope.getResultTemplateByEntity = function () {
@@ -553,7 +551,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
             default:
                 return 'partials/search/result-proteins.html';
         }
-    }
+    };
 
     $scope.getSortTemplateByEntity = function () {
         switch (Search.params.entity) {
@@ -564,11 +562,11 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
             default:
                 return 'partials/search/sort-proteins.html';
         }
-    }
+    };
 
     $scope.affix = function (selector) {
         $(selector).affix()
-    }
+    };
 
 
 
@@ -583,7 +581,7 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         } else {
             flash('alert-warning', 'Please login to save a list');
         }
-    }
+    };
 
 
     $scope.saveModal = function () {
@@ -598,11 +596,12 @@ function ResultCtrl($scope, $modal, $route, $routeParams, $filter, $location, $t
         userProteinList.create(user, proteinList).$promise.then(
             function () {
                 flash('alert-success', "List " + proteinList.name + " successfully created.");
+
+                Tracker.trackSaveAsListEvent(Cart.getElements().length, true);
             }, function(error)  {
                 flash('alert-warning', error.data.message);
+                Tracker.trackSaveAsListEvent(Cart.getElements().length, false);
             }
         );
     }
-};
-
-})(angular);
+}})(angular);

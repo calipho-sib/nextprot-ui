@@ -2,7 +2,7 @@
     'use strict';
 
 
-    angular.module('np.user.query', [])
+    angular.module('np.user.query', ['np.tracker'])
         .factory('queryRepository', queryRepository)
         .controller('QueryRepositoryCtrl', QueryRepositoryCtrl)
         .run(initQueryModule);
@@ -254,8 +254,8 @@
 
 //
 //
-    QueryRepositoryCtrl.$inject = ['$scope', '$location', '$timeout', '$log','config', 'user', 'queryRepository', 'Search', 'flash']
-    function QueryRepositoryCtrl($scope, $location, $timeout, $log, config, user, queryRepository, Search, flash) {
+    QueryRepositoryCtrl.$inject = ['Tracker', '$scope', '$location', '$timeout', '$log','config', 'user', 'queryRepository', 'Search', 'flash']
+    function QueryRepositoryCtrl(Tracker, $scope, $location, $timeout, $log, config, user, queryRepository, Search, flash) {
 
         // publish data
         $scope.repository = queryRepository.repository;
@@ -284,6 +284,13 @@
                 $scope.loadQueries('tutorial');
             //}
         }
+
+        $scope.didyoumean = function (index) {
+
+            Search.params.query = Search.result.spellcheck.collations[index].query;
+
+            $scope.go();
+        };
 
         $scope.loadQueries = function (category) {
             queryRepository.getTutorialQueries().then(function (queries) {
@@ -363,6 +370,9 @@
             $scope.repository.selectedQuery = false;
         }
 
+        $scope.gaTrackContactUsEvent = function(subject) {
+            Tracker.trackContactUsEvent(subject);
+        }
     }
 
 

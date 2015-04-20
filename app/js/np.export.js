@@ -1,13 +1,13 @@
 (function (angular, undefined) {
     'use strict';
 
-    angular.module('np.export', [])
+    angular.module('np.export', ['np.tracker'])
         .factory('exportService', exportService)
         .controller('ExportCtrl', ExportCtrl);
 
 
-    ExportCtrl.$inject = ['$resource', '$scope', '$routeParams', 'config', 'exportService', 'Search'];
-    function ExportCtrl($resource, $scope, $routeParams, config, exportService, Search) {
+    ExportCtrl.$inject = ['Tracker', '$resource', '$scope', '$routeParams', 'config', 'exportService', 'Search'];
+    function ExportCtrl(Tracker, $resource, $scope, $routeParams, config, exportService, Search) {
 
         var allEntryTemplateValue = null;
         $scope.selectedFormat;
@@ -26,15 +26,22 @@
             $scope.views = exportService.templates[format];
             $scope.selectedView = $scope.views[0];
             allEntryTemplateValue = $scope.views[2]; //TODO make this a bit more clever "full-entry"?
-        }
+        };
 
         $scope.getFormats = function () {
             return Object.keys(exportService.templates);
-        }
+        };
 
         $scope.setSelectedView = function (view) {
             $scope.selectedView = view.replace(new RegExp('^-+', ''), '');
-        }
+        };
+
+        $scope.gaTrackDownloadEvent = function (closeModal) {
+
+            Tracker.trackDownloadEvent($scope.export.exportObjectType, $scope.selectedFormat, $scope.selectedView);
+
+            if (closeModal) $scope.dismiss();
+        };
 
         $scope.getFileExportURL = function () {
 
@@ -75,7 +82,7 @@
                 return exportURL;
             }
             ;
-        }
+        };
 
 
         //initialize with xml

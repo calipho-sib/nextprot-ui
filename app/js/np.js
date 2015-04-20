@@ -19,6 +19,7 @@
         'np.search',
         'np.viewer',
         'np.export',
+        'np.version',
         'ui.codemirror',
         'auth0', 'angular-storage', 'angular-jwt'
     ]).config(configApplication)

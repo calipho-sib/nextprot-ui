@@ -255,7 +255,7 @@ SearchService.factory('Search', [
         // suggest is a quick search
         Search.prototype.suggest = function (query, cb) {
             var params = {};
-            angular.extend(params, defaultUrl, suggestApi, {query: query, entity: this.params.entity});
+            angular.extend(params, defaultUrl, suggestApi, {query: query, entity: this.params.entity, quality: this.params.quality});
 
             $api.search(params, params.query, function (result) {
                 var items = [];

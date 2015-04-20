@@ -411,9 +411,9 @@
                             }
 
 
-                            console.log("selected proteins changed:", selectedProteinList);
+                            /*console.log("selected proteins changed:", selectedProteinList);
                             console.log("found count:", foundProteinCount);
-                            console.log("has checked:", hasChecked, "is indeterminate:", isIndeterminate);
+                            console.log("has checked:", hasChecked, "is indeterminate:", isIndeterminate);*/
 
 
                             // Determine which state to put the checkbox in
