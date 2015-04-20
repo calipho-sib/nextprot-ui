@@ -89,12 +89,13 @@
         <!--  SEARCH BOTTOM ('did you mean' option and toggle search)         -->
         <!--                                                                  -->
         <div class="search-bottom">
-                    <span ng-show="Search.result.spellcheck.collations.length" id="search-didyoumean"><b class="gray">&nbsp;Did you mean:</b>
-                        <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[0].query}}">{{Search.result.spellcheck.collations[0].query}}</a>
-                        <span ng-show="Search.result.spellcheck.collations[1]">,
-                            <a href="{{Search.config.entityMapping[Search.params.entity]}}/search/{{Search.result.spellcheck.collations[1].query}}">{{Search.result.spellcheck.collations[1].query}}</a>
-                        </span>
-                    </span>
+          <span ng-show="Search.result.spellcheck.collations.length" id="search-didyoumean"><b class="gray">
+            &nbsp;Did you mean:</b>
+            <a href="" ng-click="didyoumean(0)">{{Search.result.spellcheck.collations[0].query}}</a>
+            <span ng-show="Search.result.spellcheck.collations[1]">,
+              <a href="" ng-click="didyoumean(1)">{{Search.result.spellcheck.collations[1].query}}</a>
+            </span>
+          </span>
         </div>
 
       </div>

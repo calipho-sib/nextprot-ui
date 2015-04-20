@@ -285,6 +285,13 @@
             //}
         }
 
+        $scope.didyoumean = function (index) {
+
+            Search.params.query = Search.result.spellcheck.collations[index].query;
+
+            $scope.go();
+        };
+
         $scope.loadQueries = function (category) {
             queryRepository.getTutorialQueries().then(function (queries) {
                 $scope.repository.queries = queries;
