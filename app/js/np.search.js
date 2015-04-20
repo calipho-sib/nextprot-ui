@@ -251,11 +251,6 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
         return ($location.path().indexOf(value) > -1) ? ' active  ' : '';
     }
 
-    $scope.didyoumean = function (index) {
-        Search.params.query = Search.result.spellcheck.collations[index].collationQuery;
-        $scope.go();
-    }
-
     $scope.moredetails = function (index) {
 
     }
