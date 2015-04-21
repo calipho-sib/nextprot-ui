@@ -277,15 +277,25 @@
     SearchUI.directive('bsAutocomplete', ['Search', '$timeout', function (Search, $timeout) {
         var items = [];
 
-
         return function (scope, element, attrs) {
-            var lstQuery = ""
+            var promise;
+
             element.typeahead({
-                minLength: 2,
+                //minLength: 2,
                 source: function (query, process) {
-                    Search.suggest(query, function (items) {
-                        return process(items)
-                    });
+
+                    // cancel previous promise if defined
+                    if (promise != undefined)
+                        $timeout.cancel(promise);
+
+                    // make a promise to look up suggestions after a time delay
+                    if (this.$element.val().length>=2) {
+                        promise = $timeout(function () {
+                            Search.suggest(query, function (items) {
+                                return process(items)
+                            })
+                        }, 500);
+                    }
                 },
                 matcher: function (item) {
                     return true;
@@ -297,24 +307,18 @@
                 },
                 highlighter: function (item) {
 
-                    // this.query: insulin rec
-                    // items: receptor, recurrent, receptors, recruitment, receptormediated
-                    // query: insulin\ rec
-                    // result:  insulin <b>rec</b><gray>eptormediated</gray>
-                    var words = this.query.split(' ');
-                    var complete = item.split(words[words.length - 1]);
-                    var query = this.query.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&')
-                    var replaced = this.query.replace(new RegExp("(.*)(" + words[words.length - 1] + ")([^ ]*)", 'ig'), function (m, p1, p2, p3) {
-                        var hi = (complete.length) ? complete[complete.length - 1] : '';
-                        return "<span class='gray'>" + p1 + "</span><span class='gray'>" + p2 + "</span><strong class='gray2'>" + hi + p3 + "</strong>"
-                    })
-
-                    //var s=item.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
-                    //  return '<strong>' + match + '</strong>'
-                    //})
-                    //console.log(r1, "(.*)("+words[words.length-1]+")([^ ]*)")
-
-                    return replaced;
+                    if (this.query.length > 0) {
+                        // this.query: insulin rec
+                        // items: receptor, recurrent, receptors, recruitment, receptormediated
+                        var words = this.query.split(' ');
+                        var complete = item.split(words[words.length - 1]);
+                        var replaced = this.query.replace(new RegExp("(.*)(" + words[words.length - 1] + ")([^ ]*)", 'ig'), function (m, p1, p2, p3) {
+                            var hi = (complete.length) ? complete[complete.length - 1] : '';
+                            return "<span class='gray'>" + p1 + "</span><span class='gray'>" + p2 + "</span><strong class='gray2'>" + hi + p3 + "</strong>"
+                        });
+                        return replaced;
+                    }
+                    return this.query;
                 }
 
             });
@@ -322,18 +326,17 @@
             var typeahead = element.data('typeahead');
             // Fixes #2043: allows minLength of zero to enable show all for typeahead
             typeahead.lookup = function (ev) {
-                var items, words;
+
+                var items;
                 this.query = this.$element.val() || '';
-                words = this.query.split(' ');
 
                 if (this.query.length < this.options.minLength) {
                     return this.shown ? this.hide() : this;
                 }
-                items = $.isFunction(this.source) ? this.source(this.query, $.proxy(this.process, this)) : this.source;
+                items = this.source(this.query, $.proxy(this.process, this));
+
                 return items ? this.process(items) : this;
             };
-
-
         };
     }]);
 
