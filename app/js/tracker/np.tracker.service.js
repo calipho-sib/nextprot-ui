@@ -307,10 +307,9 @@ TrackingService.factory('Tracker', [
 
         function getTrackingId() {
 
-            var trackingId = (trackingProduction != 'NX_TRACKING_PROD') ? productionTrackingId : developTrackingId;
+            var trackingId = (trackingProduction == "true") ? productionTrackingId : developTrackingId;
 
-            console.log('Tracking ids: develop:', developTrackingId, ', production:', productionTrackingId);
-            console.log('current tracking:'+trackingId);
+            console.log('Tracking ids: { develop:', developTrackingId, ', production:', productionTrackingId, ', current tracking:', trackingId, '}');
 
             return trackingId;
         }
