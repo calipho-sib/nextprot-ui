@@ -121,7 +121,7 @@
                 "chromosomal-location",
                 "genomic-mapping",
                 "interaction",
-                "protein-sequence",
+                "isoform",
                 "antibody",
                 "peptide",
                 "srm-peptide-mapping",
