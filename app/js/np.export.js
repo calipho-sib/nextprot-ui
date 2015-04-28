@@ -16,7 +16,6 @@
 
         $scope.export = exportService;
 
-
         $scope.currentSearch = null;
         $scope.currentQuery = null;
         $scope.currentList = null;
@@ -26,6 +25,7 @@
             $scope.views = exportService.templates[format];
             $scope.selectedView = $scope.views[0];
             allEntryTemplateValue = $scope.views[2]; //TODO make this a bit more clever "full-entry"?
+            $scope.isSubPartDisabled = (format == 'fasta') ? true : false;
         };
 
         $scope.getFormats = function () {
@@ -73,7 +73,7 @@
 
             } else { // export one entry
 
-                var exportURL = config.api.API_URL + "/entry"
+                var exportURL = config.api.API_URL + "/entry";
                 exportURL += "/" + $scope.export.exportObjectIdentifier;
                 if ($scope.selectedView !== allEntryTemplateValue) {
                     exportURL += "/" + $scope.selectedView;
@@ -211,9 +211,12 @@
                 "-name",
                 "--family-name"
             ]
+
+            var exportViews =
             this.templates = {
                 "xml": exportViews,
-                "json": exportViews
+                "json": exportViews,
+                "fasta": []
             };
         };
 
