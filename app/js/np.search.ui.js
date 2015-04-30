@@ -282,6 +282,7 @@
 
             element.typeahead({
                 //minLength: 2,
+                autoSelect: false,
                 source: function (query, process) {
 
                     // cancel previous promise if defined
