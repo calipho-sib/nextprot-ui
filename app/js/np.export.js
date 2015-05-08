@@ -210,14 +210,11 @@
                 "---expression-profile",
                 "-name",
                 "--family-name"
-            ]
+            ];
 
-            var exportViews =
             this.templates = {
                 "xml": exportViews,
-                "json": exportViews,
-                "fasta": [],
-                "peff": []
+                "json": exportViews
             };
         };
 
