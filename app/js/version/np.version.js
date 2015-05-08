@@ -4,5 +4,5 @@ angular.module('np.version', [
   'np.version.directive'
 ])
 
-.value('version', '0.1.1')
+.value('version', '0.1.2')
 .value('build', 'NX_BUILD');
