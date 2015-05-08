@@ -18,7 +18,7 @@ TrackingService.factory('Tracker', [
               developTrackingId, productionTrackingId, trackingProduction) {
 
         var separator = '_';
-
+  
         var tracker = {};
 
         tracker.trackPageView = function () {
