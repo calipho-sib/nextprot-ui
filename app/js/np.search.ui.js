@@ -282,6 +282,7 @@
 
             element.typeahead({
                 //minLength: 2,
+                autoSelect: false,
                 source: function (query, process) {
 
                     // cancel previous promise if defined
@@ -306,21 +307,15 @@
                     return Search.params.query;
                 },
                 highlighter: function (item) {
-
                     if (this.query.length > 0) {
                         // this.query: insulin rec
                         // items: receptor, recurrent, receptors, recruitment, receptormediated
                         var words = this.query.split(' ');
-                        var complete = item.split(words[words.length - 1]);
-                        var replaced = this.query.replace(new RegExp("(.*)(" + words[words.length - 1] + ")([^ ]*)", 'ig'), function (m, p1, p2, p3) {
-                            var hi = (complete.length) ? complete[complete.length - 1] : '';
-                            return "<span class='gray'>" + p1 + "</span><span class='gray'>" + p2 + "</span><strong class='gray2'>" + hi + p3 + "</strong>"
-                        });
-                        return replaced;
+                        var endItem= item.slice(words[words.length - 1].length);
+                        return "<span class='gray'>" + this.query + "</span><strong class='gray2'>" + endItem + "</strong>"
                     }
                     return this.query;
                 }
-
             });
             // Bootstrap override
             var typeahead = element.data('typeahead');
