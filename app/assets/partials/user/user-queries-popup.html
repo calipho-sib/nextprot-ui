@@ -75,17 +75,17 @@
                   <i class="gray btn-xs"  ng-class="(query.published && query.isOwner('nextprot') ? 'icon-certificate' : 'icon-globe')"></i>
                 </td>-->
                 <td style="width:85%">
-                    <a title="{{query.description}} {{query.sparql}}" href="proteins/search?mode=advanced&queryId={{query.userQueryId | getUserQueryId }}" ng-click="repository.show=false">{{query.title}}</a>
+                    <a title="{{query.description}} {{query.sparql}}" href="proteins/search?mode=advanced&queryId={{query.publicId}}" ng-click="repository.show=false">{{query.title}}</a>
                     <div class="details-query-popup" ng-show="query.seeDetails">
                         <p><b>Tags: </b>{{query.tags.join(", ")}}</span></p>
                         <p><b>Description: </b>{{query.description}}</p>
                         <p><b>Sparql: </b><i>{{query.sparql}}</i></p>
-                        <p><b>Quey Id: </b>{{query.userQueryId | getUserQueryId}}</span></p>
+                        <p><b>Quey Id: </b>{{query.publicId}}</span></p>
                     </div>
 
                 </td>
                   <!--Show the view button-->
-                  <td style="font-size: 10px" class="bottom:-10">{{query.userQueryId | getUserQueryId}}</td>
+                  <td style="font-size: 10px" class="bottom:-10">{{query.publicId}}</td>
                   <td >
                     <div class="btn-group pull-right">
                         <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="deleteUserQuery(query)"><i class="icon-remove"></i></button>
