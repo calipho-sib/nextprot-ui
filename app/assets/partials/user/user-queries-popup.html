@@ -5,6 +5,7 @@
       <div class="modal-header " ng-show="!repository.selectedQuery">
           <button type="button" class="close" ng-click="repository.show=false">×</button>
 
+
           <!--filter tag-->
           <div class="input-group filter-search  has-feedback">
               <div class="input-group-btn ">
@@ -18,6 +19,8 @@
                   </ul>
               </div><!-- /btn-group -->
               <input type="text" ng-model="filterQuery" placeholder="search in {{(repository.queries | containsTag:repository.filterTag | filter:filterQuery).length}} queries (ex: liver)" class="form-control " style="width:80%">
+              <!-- "Create new" only if there is no query selected -->
+              <button ng-show="!repository.selectedQuery" class="btn btn-default pull-right " style="margin-right: 10px" type="button" ng-click="createNewEmptyQuery();">New Query</button>
           </div>
 
         </div>
@@ -25,41 +28,41 @@
         <!-- HEADER QUERY TITLE  -->
       <div class="modal-header " ng-show="repository.selectedQuery">
 
-          <!-- "Back" button showed only if there is a query selected -->
-          <button ng-show="repository.selectedQuery" class="btn pull-left btn-default back-list" type="button" title="Back to query list" alt="Back to query list"
-                  ng-click="clearSelectedQuery();">
-              <i class="icon-align-justify"></i>
-          </button>
 
-          <button type="button" class="close" ng-click="repository.show=false">×</button>
 
-          <button class="btn btn-default pull-right put-query" type="button" ng-click="applyCurrentQueryForSearch(repository.selectedQuery)"
-                  title="Put query in search bar" alt="Put query in search bar">
-              <i class="icon-share"></i>
-          </button>
+          <div class="input-group col-xs-12">
 
-          <!-- Title when query is readonly -->
-          <h4 ng-show="!repository.selectedQuery.isEditable()">{{repository.selectedQuery.title}}</h4>
+                 <!-- "Back" button showed only if there is a query selected -->
+                  <button ng-show="repository.selectedQuery" class="btn btn-default pull-left  ng-binding"
+                          type="button"
+                          title="Back to query list" alt="Back to query list"
+                          ng-click="clearSelectedQuery();">
+                      <i class="icon-caret-left"></i>
+                  </button>
 
-          <!-- Title when query is editable  -->
-          <input  ng-show="repository.selectedQuery.isEditable()" type="text"
-                  placeholder="Name..." ng-model="repository.selectedQuery.title" focus="" class="form-control">
+                  <!-- Title when query is editable  -->
+                  <input ng-show="repository.selectedQuery.isEditable()" type="text"
+                         placeholder="Give your query a name..." ng-model="repository.selectedQuery.title" focus=""
+                         class="form-control" style="width: 80%">
 
+              <button type="button" class="close" ng-click="repository.show=false">×</button>
+
+          </div>
 
 
 
           <!--
-            <div class="radio">
-          <label><input type="radio" name="visibility"  ng-value="true"  
-                                  ng-model="repository.selectedQuery.published"
-                                  ng-selected="repository.selectedQuery.published"
-                                  title="Show in the community repository">public</label>
-          <label><input type="radio" name="visibility"  ng-value="false"  
-                                  ng-model="repository.selectedQuery.published"
-                                  ng-selected="!repository.selectedQuery.published"
-                                  title="Keep the query in your private repository" >private</label>
-        </div>
-        -->
+        <div class="radio">
+      <label><input type="radio" name="visibility"  ng-value="true"
+                              ng-model="repository.selectedQuery.published"
+                              ng-selected="repository.selectedQuery.published"
+                              title="Show in the community repository">public</label>
+      <label><input type="radio" name="visibility"  ng-value="false"
+                              ng-model="repository.selectedQuery.published"
+                              ng-selected="!repository.selectedQuery.published"
+                              title="Keep the query in your private repository" >private</label>
+    </div>
+    -->
       </div>
 
       <div class="modal-body" >
@@ -126,8 +129,6 @@
 
               <p ng-if="repository.selectedQuery.owner === 'nextprot'">Tags:
                   <span ng-repeat="tag in repository.selectedQuery.tags | orderBy" class="label label-default label-as-badge">{{tag}}</span>
-                  <p class="pull-right"><a target="_blank" ng-click="runQuery(repository.selectedQuery)">Run this query!</a></p>
-
                   <!-- <p ng-show="repository.selectedQuery.owner === 'nextprot'" class="pull-right"><a target="_blank" href="{{repository.selectedQuery.userQueryId | getGitHubUrl}}">Improve this query</a></p>-->
               </p>
 
@@ -144,10 +145,6 @@
         <!-- Create new button -->
         <div class="modal-footer">
 
-          <!-- "Create new" only if there is no query selected -->
-          <button ng-show="!repository.selectedQuery && user.profile.email" class="btn btn-primary pull-right btn-sm" type="button"
-                  ng-click="createNewEmptyQuery();">New
-          </button>
 
           <!-- "Save" button showed only if there is a query selected -->
           <button  ng-show="repository.selectedQuery.isEditable()" class="btn btn-primary pull-right btn-sm" type="button"

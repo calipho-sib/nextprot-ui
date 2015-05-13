@@ -267,6 +267,7 @@
 
         // publish function
         $scope.showRepository = function () {
+            $scope.repository.selectedQuery = null;
             $scope.repository.show = true;
         }
 
@@ -331,17 +332,27 @@
         }
 
         $scope.createNewEmptyQuery = function () {
-            $scope.repository.selectedQuery = user.query.createOne();
+            if(user.isAnonymous()){
+                flash("alert-warning", "Please login to create new queries");
+            }else {
+                $scope.repository.selectedQuery = user.query.createOne();
+           }
         }
 
         $scope.saveSelectedQuery = function () {
-            $scope.repository.selectedQuery.save().$promise.then(function () {
-                flash('alert-info', $scope.repository.selectedQuery.title + ' saved successfully');
-                $scope.loadQueries('tutorial'); //TODO should remove the entry from the list without having to call the api again
-                $scope.repository.selectedQuery = false;
-            }, function(error){
-                flash('alert-warning', error.data.message);
-            });
+            if(!$scope.repository.selectedQuery.title || ($scope.repository.selectedQuery.title.length == 0)){//TODO check this at the level of the API and database
+                flash('alert-warning', 'Please give your query a title');
+           }else {
+
+                $scope.repository.selectedQuery.save().$promise.then(function () {
+                    flash('alert-info', $scope.repository.selectedQuery.title + ' saved successfully');
+                    $scope.loadQueries('tutorial'); //TODO should remove the entry from the list without having to call the api again
+                    $scope.repository.selectedQuery = false;
+                }, function(error){
+                    flash('alert-warning', error.data.message);
+                });
+
+            }
         }
 
         $scope.deleteUserQuery = function (query) {
