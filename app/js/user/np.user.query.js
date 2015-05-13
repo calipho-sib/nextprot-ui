@@ -100,22 +100,19 @@
         //
         // save or create the current instance
         Query.prototype.save = function () {
-            var me = this, params = {id: this.userQueryId};
-
-            // on update
-            if (this.userQueryId) {
-                params.id = this.userQueryId;
-                me.$promise = $dao.queries.update(params, this.payload()).$promise
-            } else {
-                me.$promise = $dao.queries.create(params, this.payload()).$promise
-            }
+            var params = {id: this.userQueryId};
 
             // save this instance
             queryList.put(this.userQueryId, this)
 
-            // TODO me.$promise.then
-            // me.getRepository(Search.config.widgets.repositories.privateRep);
-            return me;
+            // on update
+            if (this.userQueryId) {
+                params.id = this.userQueryId;
+                return $dao.queries.update(params, this.payload())
+            } else {
+                return $dao.queries.create(params, this.payload())
+            }
+
         };
 
         //
@@ -339,9 +336,11 @@
 
         $scope.saveSelectedQuery = function () {
             $scope.repository.selectedQuery.save().$promise.then(function () {
-                flash('alert-info', $scope.repository.selectedQuery.title + 'saved successfully');
+                flash('alert-info', $scope.repository.selectedQuery.title + ' saved successfully');
                 $scope.loadQueries('tutorial'); //TODO should remove the entry from the list without having to call the api again
                 $scope.repository.selectedQuery = false;
+            }, function(error){
+                flash('alert-warning', error.data.message);
             });
         }
 
