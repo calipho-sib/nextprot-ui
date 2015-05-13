@@ -15,8 +15,7 @@
         //
         // data access
         var $dao = {
-            queries: $resource(config.api.API_URL + '/user/me/queries/:id',
-                {username: '@username', id: '@id'}, {
+            queries: $resource(config.api.API_URL + '/user/me/queries/:id', {id: '@id'}, {
                     get: {method: 'GET'},
                     list: {method: 'GET', isArray: true},
                     create: {method: 'POST'},
@@ -88,7 +87,7 @@
         // list queries for this user
         Query.prototype.list = function () {
 
-            var me = this, params = {username: user.profile.username};
+            var me = this, params = {};
             me.$promise = $dao.queries.list(params).$promise
             me.$promise.then(function (data) {
                 queries = data.map(function (q) {
@@ -101,28 +100,25 @@
         //
         // save or create the current instance
         Query.prototype.save = function () {
-            var me = this, params = {username: this.owner, id: this.userQueryId};
-
-            // on update
-            if (this.userQueryId) {
-                params.id = this.userQueryId;
-                me.$promise = $dao.queries.update(params, this.payload()).$promise
-            } else {
-                me.$promise = $dao.queries.create(params, this.payload()).$promise
-            }
+            var params = {id: this.userQueryId};
 
             // save this instance
             queryList.put(this.userQueryId, this)
 
-            // TODO me.$promise.then
-            // me.getRepository(Search.config.widgets.repositories.privateRep);
-            return me;
+            // on update
+            if (this.userQueryId) {
+                params.id = this.userQueryId;
+                return $dao.queries.update(params, this.payload())
+            } else {
+                return $dao.queries.create(params, this.payload())
+            }
+
         };
 
         //
         // delete the current instance
         Query.prototype.delete = function () {
-            var me = this, params = {username: this.owner, id: this.userQueryId};
+            var me = this, params = {id: this.userQueryId};
             me.$promise = $dao.queries.delete(params).$promise
             me.$promise.then(function(){
               queries.every(function(query,i){
@@ -271,6 +267,7 @@
 
         // publish function
         $scope.showRepository = function () {
+            $scope.repository.selectedQuery = null;
             $scope.repository.show = true;
         }
 
@@ -335,15 +332,27 @@
         }
 
         $scope.createNewEmptyQuery = function () {
-            $scope.repository.selectedQuery = user.query.createOne();
+            if(user.isAnonymous()){
+                flash("alert-warning", "Please login to create new queries");
+            }else {
+                $scope.repository.selectedQuery = user.query.createOne();
+           }
         }
 
         $scope.saveSelectedQuery = function () {
-            $scope.repository.selectedQuery.save().$promise.then(function () {
-                flash('alert-info', $scope.repository.selectedQuery.title + 'saved successfully');
-                $scope.loadQueries('tutorial'); //TODO should remove the entry from the list without having to call the api again
-                $scope.repository.selectedQuery = false;
-            });
+            if(!$scope.repository.selectedQuery.title || ($scope.repository.selectedQuery.title.length == 0)){//TODO check this at the level of the API and database
+                flash('alert-warning', 'Please give your query a title');
+           }else {
+
+                $scope.repository.selectedQuery.save().$promise.then(function () {
+                    flash('alert-info', $scope.repository.selectedQuery.title + ' saved successfully');
+                    $scope.loadQueries('tutorial'); //TODO should remove the entry from the list without having to call the api again
+                    $scope.repository.selectedQuery = false;
+                }, function(error){
+                    flash('alert-warning', error.data.message);
+                });
+
+            }
         }
 
         $scope.deleteUserQuery = function (query) {

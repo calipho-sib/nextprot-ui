@@ -41,17 +41,6 @@
 
     }]);
 
-    SearchUI.filter('getUserQueryId', [function () {
-
-        return function (queryId) {
-
-            var s = "000000000" + queryId;
-            var fileName = "NXQ_" + s.substr(s.length - 5);
-            return fileName;
-        };
-
-    }]);
-
     /**
      * Filters for publications
      */
