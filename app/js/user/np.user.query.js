@@ -15,8 +15,7 @@
         //
         // data access
         var $dao = {
-            queries: $resource(config.api.API_URL + '/user/me/queries/:id',
-                {username: '@username', id: '@id'}, {
+            queries: $resource(config.api.API_URL + '/user/me/queries/:id', {id: '@id'}, {
                     get: {method: 'GET'},
                     list: {method: 'GET', isArray: true},
                     create: {method: 'POST'},
@@ -88,7 +87,7 @@
         // list queries for this user
         Query.prototype.list = function () {
 
-            var me = this, params = {username: user.profile.username};
+            var me = this, params = {};
             me.$promise = $dao.queries.list(params).$promise
             me.$promise.then(function (data) {
                 queries = data.map(function (q) {
@@ -101,7 +100,7 @@
         //
         // save or create the current instance
         Query.prototype.save = function () {
-            var me = this, params = {username: this.owner, id: this.userQueryId};
+            var me = this, params = {id: this.userQueryId};
 
             // on update
             if (this.userQueryId) {
@@ -122,7 +121,7 @@
         //
         // delete the current instance
         Query.prototype.delete = function () {
-            var me = this, params = {username: this.owner, id: this.userQueryId};
+            var me = this, params = {id: this.userQueryId};
             me.$promise = $dao.queries.delete(params).$promise
             me.$promise.then(function(){
               queries.every(function(query,i){
