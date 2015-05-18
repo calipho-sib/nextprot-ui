@@ -26,10 +26,12 @@
             </thead>
             <tbody>
             <tr ng-repeat="query in repository.queries | filterMyQueries | filter:filterQuery | orderBy:userQueryId">
-                <td class="col-md-5"><a ng-href="proteins/search?mode=advanced&queryId={{query.publicId}}">{{query.title}}</a></td>
+                <td class="col-md-5"><a ng-href="proteins/search?mode=advanced&queryId={{query.publicId}}">{{query.title}}</a> <a style="font-size: 8px" target="_blank" ng-href="http://snorql.nextprot.org/?query={{query.sparql}}">(snorql)</a> </td>
                 <td class="col-md-5">{{query.description}}</td>
                 <td class="col-md-2" style="width: 100%">
                     <div class="btn-group">
+                        <button class="btn btn-default btn-xs" type="button"
+                                bs-modal="'partials/user/user-queries-save-modal.html'" ng-click="setModalQuery(query, 'edit')"><i class="icon-edit"></i></button>
                         <button class="btn btn-default btn-xs" type="button" ng-click="deleteUserQuery(query)"><i class="icon-remove"></i></button>
                     </div>
                 </td>
@@ -37,4 +39,5 @@
             </tbody>
         </table>
     </div>
+
 </div>

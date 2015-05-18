@@ -245,6 +245,17 @@
             return this.userQueryResource.delete({id: query.userQueryId}).$promise;
         }
 
+        QueryRepository.prototype.saveOrCreate = function (query) {
+            delete query.$promise;
+                if (query.userQueryId) {
+                    return this.userQueryResource.update({id: query.userQueryId}, query).$promise;
+                } else {
+                    return this.userQueryResource.create({}, query).$promise;
+                }
+
+            return this.userQueryResource.delete({id: query.userQueryId}).$promise;
+        }
+
         return new QueryRepository();
     }
 
@@ -305,6 +316,14 @@
           })
         }
 
+
+
+        $scope.setModalQuery = function (query) {
+            $scope.selected = {};
+            angular.extend($scope.selected, query);
+        };
+
+
         $scope.setTags = function () {
             var queries = $scope.repository.queries;
             var tags = [];
@@ -339,15 +358,18 @@
            }
         }
 
-        $scope.saveSelectedQuery = function () {
-            if(!$scope.repository.selectedQuery.title || ($scope.repository.selectedQuery.title.length == 0)){//TODO check this at the level of the API and database
+        $scope.saveSelectedQuery = function (query) {
+
+            var q = query || $scope.repository.selectedQuery;
+            if(!q.title || (q.title.length == 0)){//TODO check this at the level of the API and database
                 flash('alert-warning', 'Please give your query a title');
            }else {
 
-                $scope.repository.selectedQuery.save().$promise.then(function () {
-                    flash('alert-info', $scope.repository.selectedQuery.title + ' saved successfully');
+                queryRepository.saveOrCreate(q).then(function () {
+                    flash('alert-info', q.title + ' saved successfully');
                     $scope.loadQueries('tutorial'); //TODO should remove the entry from the list without having to call the api again
                     $scope.repository.selectedQuery = false;
+                    $('.modal-backdrop').remove();//remove the modal backdrop if everything is fine
                 }, function(error){
                     flash('alert-warning', error.data.message);
                 });

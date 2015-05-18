@@ -1,0 +1,62 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="text-center">Edit Sparql Query</h4>
+        </div>
+        <div class="modal-body">
+
+            <div class="form-group">
+                <label class="" for="inputQueryName">Query title </label>
+
+                <div class="controls">
+                    <input id="inputQueryName" type="text" placeholder="Give your query a name..."
+                           ng-model="selected.title" focus="" class="form-control" style="width: 100%">
+                </div>
+            </div>
+
+            <!-- Sparql -->
+            <div class="form-group">
+                <label class="" for="inputQuerySparql">Sparql </label>
+
+                <div class="controls">
+                    <textarea id="inputQuerySparql" rows="5" ng-model="selected.sparql" style="width: 100%;"/>
+                </div>
+
+            </div>
+
+            <!-- Sparql -->
+            <div class="form-group">
+                <label class="" for="inputQueryDescription">Description </label>
+
+                <div class="controls">
+                    <textarea id="inputQueryDescription" rows="4" ng-model="selected.description" style="width: 100%;"/>
+                </div>
+
+            </div>
+
+        </div>
+        <!--------------------------------------------------------------------------------- -->
+        <!--                 FOOTER                                                         -->
+        <!-------------------------------------------------------------------------------- -->
+
+        <!-- Create new button -->
+        <div class="modal-footer">
+
+
+            <!-- "Save" button showed only if there is a query selected -->
+            <button class="btn btn-primary" type="button"  ng-click="saveSelectedQuery(selected);">Save</button>
+            <button class="btn" ng-click="dismiss()" type="button">Cancel</button>
+
+
+            <p class="pull-left">For help with these queries look at <a target="_blank" href="help/doc/introduction">
+                the
+                model</a> or <a href="mailto:support@nextprot.org" ng-click="gaTrackContactUsEvent('advanced-search')">contact
+                us.</a>
+            </p>
+
+        </div>
+    </div>
+</div>
+</div>
+</div>
