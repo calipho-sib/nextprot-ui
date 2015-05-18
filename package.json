@@ -24,6 +24,7 @@
     "ejs": "*",
     "errorhandler": "1.1.1",
     "express": "4.x.x",
+    "keyword-brunch": "^1.7.7",
     "jade-brunch": "1.8.1",
     "javascript-brunch": "1.7.x",
     "less-brunch": "1.7.x",
