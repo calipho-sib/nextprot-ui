@@ -42,6 +42,16 @@ exports.config =
     templates:
       joinTo: 'js/templates.js'
 
+  keyword:
+    # file filter
+    filePattern: /\.(css|html)$/
+
+    # By default keyword-brunch has these keywords:
+    #     {!version!}, {!name!}, {!date!}, {!timestamp!}
+    # using information from package.json
+    map:
+      distRelease: -> (Date.now())
+
   plugins:
     jade:
       pretty: yes # Adds pretty-indentation whitespaces to output (false by default)
