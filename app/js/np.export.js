@@ -214,7 +214,9 @@
 
             this.templates = {
                 "xml": exportViews,
-                "json": exportViews
+                "json": exportViews,
+                "fasta": [],
+                "peff": []
             };
         };
 
