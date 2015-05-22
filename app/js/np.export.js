@@ -212,7 +212,6 @@
                 "--family-name"
             ]
 
-            var exportViews =
             this.templates = {
                 "xml": exportViews,
                 "json": exportViews,
