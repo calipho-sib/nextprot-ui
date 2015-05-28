@@ -65,7 +65,7 @@
                 <!-- content -->
                 <li class="solrp " ng-repeat="filter in Search.result.filters"
                     ng-class="active(filter.name,'filter')">
-                    <a ng-show="filter.count" class="" ng-click="toggle({filter:filter.name})" href="">{{Search.result.ontology[filter.name]}}
+                    <a ng-show="filter.count" class="" ng-click="updateUrlSearchPart({filter:filter.name})" href="">{{Search.result.ontology[filter.name]}}
                         <span class=""> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&&'icon-remove'"></i>
                     </a>
                 </li>

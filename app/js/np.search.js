@@ -213,7 +213,7 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
         $location.search({})
     }
 
-    $scope.toggle = function (params) {
+    $scope.updateUrlSearchPart = function (params) {
 
         Cart.emptyCart();
 
