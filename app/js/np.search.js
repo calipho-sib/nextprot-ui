@@ -152,12 +152,12 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $windo
         $location.path('/' + params.entity + '/search' + ((Search.params.query) ? '/' + Search.params.query : ''));
     };
 
-    $scope.toggleAdv = function (mode) {
+    $scope.updateUrlSearchPartAdvanced = function (mode) {
         if(mode != $location.search("mode")){
 
             $location.search('query', null);
             $location.search('sparql', null);
-            $scope.toggle(mode);
+            $scope.updateUrlSearchPart(mode);
             if(mode.mode){
                 $location.path('/proteins/search')
             }
@@ -313,7 +313,6 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $windo
     });
 
     $rootScope.locateToReferrer=function() {
-        console.log($location.url(),$scope.referrer);
         $location.url(($scope.referrer)?$scope.referrer:'/');
     }
 }
