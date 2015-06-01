@@ -1,6 +1,5 @@
 (function (angular, undefined) {'use strict';
 
-
 //
 //Define the search module for controllers, services and models
 angular.module('np.search', [
@@ -15,8 +14,8 @@ angular.module('np.search', [
 
 //
 //define routes for simple Search
-searchConfig.$inject=['$routeProvider','$locationProvider','$httpProvider']
-function searchConfig($routeProvider, $locationProvider, $httpProvider) {
+searchConfig.$inject=['$routeProvider']
+function searchConfig($routeProvider) {
     // List of routes of the application
     $routeProvider
         .when('/search', {templateUrl: 'partials/search/result.html'})
@@ -27,8 +26,8 @@ function searchConfig($routeProvider, $locationProvider, $httpProvider) {
 
 //
 // implement main application controller
-SearchCtrl.$inject=['Tracker', '$resource','$scope','$rootScope','$location', '$filter', '$routeParams','$route','$window','$timeout','Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService'];
-function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, $routeParams, $route, $window, $timeout, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService) {
+SearchCtrl.$inject=['Tracker', '$scope','$rootScope','$location', '$routeParams','$window', 'Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService'];
+function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $window, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService) {
 
     // scope from template
     $scope.Search = Search;
@@ -326,8 +325,8 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
 
 //
 // implement search result controller
-ResultCtrl.$inject=['Tracker', '$scope','$modal', '$route','$routeParams','$filter','$timeout','$location','Search','user','Cart','userProteinList','flash', 'exportService', 'queryRepository'];
-function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash, exportService, queryRepository) {
+ResultCtrl.$inject=['Tracker', '$scope','$modal', '$routeParams','Search','user','Cart','userProteinList','flash', 'exportService', 'queryRepository'];
+function ResultCtrl(Tracker, $scope, $modal, $routeParams, Search, user, Cart, userProteinList, flash, exportService, queryRepository) {
     $scope.Search = Search;
     $scope.Cart = Cart;
     $scope.selectedResults = [];
