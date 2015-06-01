@@ -27,10 +27,10 @@
       <div class="search-bar col-xs-9 col-sm-7">
 
         <div class="search-toggle">
-            <input id="simple-search" type="radio" name="editList" ng-checked="!isAdvancedMode()" ng-click="toggleAdv({mode:null})">
+            <input id="simple-search" type="radio" name="editList" ng-checked="!isAdvancedMode()" ng-click="updateUrlSearchPartAdvanced({mode:null})">
             <label for="simple-search" ng-class="{'checked-label':!isAdvancedMode(), 'unchecked-label':isAdvancedMode()}">Simple search</label>
             &nbsp;&nbsp;
-            <input id="advanced-search" type="radio" name="editList" ng-checked="isAdvancedMode()" ng-click="toggleAdv({mode:'advanced'})">
+            <input id="advanced-search" type="radio" name="editList" ng-checked="isAdvancedMode()" ng-click="updateUrlSearchPartAdvanced({mode:'advanced'})">
             <label for="advanced-search" ng-class="{'checked-label':isAdvancedMode(), 'unchecked-label':!isAdvancedMode()}">Advanced search</label>
         </div>
 
