@@ -379,29 +379,26 @@
                     scope: true,
                     restrict: 'A',
                     link: function (scope, element, attrs) {
-                        var selectedProteinList = attrs.selectedProteinList;
 
                         // Watch found proteins for changes
-                        scope.$watch(selectedProteinList, function (selectedProteinList) {
+                        scope.$watch(attrs.foundProteinList, function (foundProteinList) {
                             var hasChecked = false;
                             var isIndeterminate = false;
                             var foundProteinCount = Search.resultCount;
 
                             // some proteins are selected
-                            if (selectedProteinList.length > 0) {
+                            if (foundProteinList.length > 0) {
                                 // some proteins are selected
                                 hasChecked = true;
 
                                 // not all proteins are selected -> indeterminate state
-                                if (selectedProteinList.length < foundProteinCount)
+                                if (foundProteinList.length < foundProteinCount)
                                     isIndeterminate = true;
                             }
 
-
-                            /*console.log("selected proteins changed:", selectedProteinList);
+                            /*console.log("found proteins changed:", foundProteinList);
                             console.log("found count:", foundProteinCount);
                             console.log("has checked:", hasChecked, "is indeterminate:", isIndeterminate);*/
-
 
                             // Determine which state to put the checkbox in
                             if (hasChecked && isIndeterminate) {
