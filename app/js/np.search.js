@@ -14,7 +14,7 @@ angular.module('np.search', [
 
 //
 //define routes for simple Search
-searchConfig.$inject=['$routeProvider']
+searchConfig.$inject=['$routeProvider'];
 function searchConfig($routeProvider) {
     // List of routes of the application
     $routeProvider
@@ -58,14 +58,6 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $windo
         } else if ($routeParams.listId) {
             userProteinList.getListByPublicId($routeParams.listId).then(function (list) {
                 exportService.userList = list;
-
-                /*var button = angular.element('#main-clipboard-button');
-
-                // button is clicked is delayed (waiting for end of $digest progress)
-                $timeout(function() {
-
-                    button.click();
-                })*/
             });
 
         } else if ($routeParams.query){
@@ -114,11 +106,11 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $windo
         user.logout();
         $location.url("/");
         flash('alert-info', "You have successfully logged out!");
-    }
+    };
 
     $scope.setAdvancedUserQuery = function (sparql) {
         $scope.advancedUserQuery = sparql;
-    }
+    };
 
     // interact with the search bar
     $scope.manualPaginate = function (form) {
@@ -131,7 +123,7 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $windo
 
         $scope.params({start:(Search.result.pagination.current - 1)*Search.result.rows}, form);
 
-    }
+    };
 
     // interact with the search bar
     $scope.params = function (params, form) {
@@ -140,28 +132,32 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $windo
         angular.forEach(params, function (v, k) {
             $location.search(k, v);
         });
-    }
+    };
 
     $scope.quality = function (name) {
         Search.params.quality = name;
         $location.search('quality', (name !== 'gold') ? 'gold-and-silver' : null);
-    }
+    };
 
     $scope.entity = function (params) {
-        $location.search('start', null)
-        $location.search('filter', null)
-        $location.search('quality', null)
-        $location.search('sort', null)
-        $location.search('order', null)
+
+        $location.search('start', null);
+        $location.search('filter', null);
+        $location.search('quality', null);
+        $location.search('sort', null);
+        $location.search('order', null);
+        if (Search.params.listId && params.entity != 'proteins') {
+            $location.search('listId', null);
+        }
         $location.path('/' + params.entity + '/search' + ((Search.params.query) ? '/' + Search.params.query : ''));
-    }
+    };
 
     $scope.toggleAdv = function (mode) {
         if(mode != $location.search("mode")){
 
-            $location.search('query', null)
-            $location.search('sparql', null)
-            $scope.toggle(mode)
+            $location.search('query', null);
+            $location.search('sparql', null);
+            $scope.toggle(mode);
             if(mode.mode){
                 $location.path('/proteins/search')
             }
@@ -172,40 +168,40 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $windo
         // }
 
         // $location.search('mode', null).search('sparql',null)
-    }
+    };
 
     $scope.clean = function () {
-        $location.search('engine', null)
-        $location.search('title', null)
-        $location.search('sparql', null)
-        $location.search('list', null)
-        $location.search('rows', null)
-        $location.search('start', null)
-        $location.search('query', null)
-        $location.search('queryId', null)
-        $location.search('filter', null)
-        $location.search('quality', null)
-        $location.search('sort', null)
-        $location.search('order', null)
+        $location.search('engine', null);
+        $location.search('title', null);
+        $location.search('sparql', null);
+        $location.search('list', null);
+        $location.search('rows', null);
+        $location.search('start', null);
+        $location.search('query', null);
+        $location.search('queryId', null);
+        $location.search('filter', null);
+        $location.search('quality', null);
+        $location.search('sort', null);
+        $location.search('order', null);
         $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search');
 
         Search.params.sparql = ""; //This is needed only when the user is in this page proteins/search?mode=advanced and he has typed something and has clean (otherwise it is driven by the url)
-    }
+    };
 
     $scope.reset=function(){
         $location.search({})
-    }
+    };
 
     $scope.updateUrlSearchPart = function (params) {
 
         Cart.emptyCart();
 
-        $location.search('start', null)
+        $location.search('start', null);
         angular.forEach(params, function (v, k) {
             var t = ($location.search()[k] && $location.search()[k] === v) ? null : v;
             $location.search(k, t)
         });
-    }
+    };
 
     $scope.goToUser = function (resourceType) {
 
@@ -221,41 +217,41 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $windo
             }else {
             flash("alert-warning", "Please login to access your " + resourceType + ".")
         }
-    }
+    };
 
     $scope.active = function (value, key) {
         if (key) {
             return ($location.search()[key] === value) ? ' active  ' : '';
         }
         return ($location.path().indexOf(value) > -1) ? ' active  ' : '';
-    }
+    };
 
     $scope.moredetails = function (index) {
 
-    }
+    };
 
     $scope.displaySort=function(){
         //
         // map default visual aspect of sort
         var entity=Search.config.entityMapping[Search.params.entity],
-            defaultSort=Search.config.widgets[entity].sort[Search.params.sort]
+            defaultSort=Search.config.widgets[entity].sort[Search.params.sort];
 
         //
         // sort order can be overrided by user action
         if(Search.config.widgets.sort[Search.params.order]){
-            defaultSort.image=Search.config.widgets.sort[Search.params.order]
+            defaultSort.image=Search.config.widgets.sort[Search.params.order];
             defaultSort.isAsc=(Search.params.order=='asc')
         }
         return defaultSort
-    }
+    };
 
     $scope.isAdvancedMode = function () {
         return Search.params.mode == 'advanced';
-    }
+    };
 
     $scope.isSearchBarVisible=function(){
         return ($location.path()==='/'||$location.path().indexOf('/search')!==-1)
-    }
+    };
 
     $scope.go = function () {
         var url = $location.url();
@@ -270,7 +266,7 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $windo
         // 2) Each time a list content is displayed, the basket (entries selected) should be emptied
         Cart.emptyCart();
 
-        $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search')
+        $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search');
 
         //Advanced mode
         if (Search.params.sparql && Search.params.sparql.length) {
@@ -292,13 +288,13 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $windo
         if ($location.url() === url) {
             $scope.reload();
         }
-    }
+    };
 
     $scope.reload = function () {
         // restart search with last params
         Search.docs($routeParams, function (docs) {
         });
-    }
+    };
 
     $scope.$on('bs.autocomplete.update', function (event, arg) {
         $scope.go();
@@ -317,10 +313,10 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $windo
     });
 
     $rootScope.locateToReferrer=function() {
-        console.log($location.url(),$scope.referrer)
+        console.log($location.url(),$scope.referrer);
         $location.url(($scope.referrer)?$scope.referrer:'/');
     }
-};
+}
 
 
 //
@@ -378,7 +374,7 @@ function ResultCtrl(Tracker, $scope, $modal, $routeParams, Search, user, Cart, u
         else {
             self.search(params)
         }
-    }
+    };
 
     searchRouteParams();
 
