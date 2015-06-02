@@ -6,13 +6,16 @@
         .controller('ExportCtrl', ExportCtrl);
 
 
-    ExportCtrl.$inject = ['Tracker', '$resource', '$scope', '$routeParams', 'config', 'exportService', 'Search'];
-    function ExportCtrl(Tracker, $resource, $scope, $routeParams, config, exportService, Search) {
+    ExportCtrl.$inject = ['Tracker', '$scope', '$routeParams', 'config', 'exportService'];
+    function ExportCtrl(Tracker, $scope, $routeParams, config, exportService) {
 
         var allEntryTemplateValue = null;
-        $scope.selectedFormat;
-        $scope.views;
-        $scope.selectedView;
+        var multiEntryFormats = null;
+        var singleEntryFormats = null;
+
+        $scope.selectedFormat = null;
+        $scope.views = null;
+        $scope.selectedView = null;
 
         $scope.export = exportService;
 
@@ -20,16 +23,32 @@
         $scope.currentQuery = null;
         $scope.currentList = null;
 
+        (function initEntryFormats() {
+
+            multiEntryFormats = Object.keys(exportService.templates);
+            singleEntryFormats = multiEntryFormats.slice(0);
+
+            // removing 'txt' export for single entry: useless to export one accession number line
+            if (!$scope.export.exportObjectType) {
+
+                var index = singleEntryFormats.indexOf('txt');
+                if (index > -1) {
+                    singleEntryFormats.splice(index, 1);
+                }
+            }
+        })();
+
+        $scope.getFormats = function () {
+
+            return (!$scope.export.exportObjectType) ? singleEntryFormats : multiEntryFormats;
+        };
+
         $scope.setSelectedFormat = function (format) {
             $scope.selectedFormat = format;
             $scope.views = exportService.templates[format];
             $scope.selectedView = $scope.views[0];
             allEntryTemplateValue = $scope.views[2]; //TODO make this a bit more clever "full-entry"?
-            $scope.isSubPartHidden = (format == 'fasta' || format == 'peff') ? true : false;
-        };
-
-        $scope.getFormats = function () {
-            return Object.keys(exportService.templates);
+            $scope.isSubPartHidden = (format == 'fasta' || format == 'peff' || format == 'txt');
         };
 
         $scope.setSelectedView = function (view) {
@@ -48,7 +67,7 @@
             //multiple entries
             if ($scope.export.exportObjectType) {
 
-                var exportURL = config.api.API_URL + "/export/entries"
+                var exportURL = config.api.API_URL + "/export/entries";
                 if ($scope.selectedView !== allEntryTemplateValue) {
                     exportURL += "/" + $scope.selectedView;
                 }
@@ -81,20 +100,15 @@
                 exportURL += "." + $scope.selectedFormat;
                 return exportURL;
             }
-            ;
         };
-
 
         //initialize with xml
         $scope.setSelectedFormat("xml");
-
-
     }
 
 
     exportService.$inject = ['$resource', 'config'];
     function exportService($resource, config) {
-
 
         var ExportService = function () {
 
@@ -102,13 +116,12 @@
             this.userList = null;
             this.searchQuery = null;
 
-            this.exportObjectType;
-            this.exportTitle;
-            this.exportObjectIdentifier;
+            this.exportObjectType = null;
+            this.exportTitle = null;
+            this.exportObjectIdentifier = null;
 
 
             //TODO this is a bit ugly, it should request the api (be careful with multiple calls though)
-
             var exportViews = [
                 "accession",
                 "overview",
@@ -215,6 +228,7 @@
             this.templates = {
                 "xml": exportViews,
                 "json": exportViews,
+                "txt": [],
                 "fasta": [],
                 "peff": []
             };
@@ -224,13 +238,13 @@
             this.exportObjectType = null;
             this.exportObjectIdentifier = entry;
             this.exportTitle = "Download entry '" + entry + "'";
-        }
+        };
 
         ExportService.prototype.reset = function () {
             this.userQuery = null;
             this.userList = null;
             this.searchQuery = null;
-        }
+        };
 
 
         ExportService.prototype.setExportParameters = function (params) {
@@ -253,13 +267,8 @@
                 this.exportTitle = "Download entries for sparql query";
             }
 
-        }
+        };
 
-
-        var service = new ExportService();
-        return service;
-
+        return new ExportService();
     }
-
-
 })(angular); //global variable
