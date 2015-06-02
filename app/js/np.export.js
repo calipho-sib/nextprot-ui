@@ -28,7 +28,7 @@
             multiEntryFormats = Object.keys(exportService.templates);
             singleEntryFormats = multiEntryFormats.slice(0);
 
-            // removing 'txt' export for single entry: senseless to export one accession number line
+            // removing 'txt' export for single entry: useless to export one accession number line
             if (!$scope.export.exportObjectType) {
 
                 var index = singleEntryFormats.indexOf('txt');
