@@ -229,8 +229,8 @@
                 "xml": exportViews,
                 "json": exportViews,
                 "txt": [],
-                "fasta": [],
-                "peff": []
+                "fasta": []
+                //"peff": []
             };
         };
 
