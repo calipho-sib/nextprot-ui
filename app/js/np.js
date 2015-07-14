@@ -132,12 +132,12 @@
                 var status = response.status;
                 if (status == 0) {
                     //CAREFUL DO NOT LOG EVERYTHING INTO LOGGYL BECAUSE 1) THERE ARE SENSITIVE INFORMATION token / bearer !  2) We have a limit of 200MB / day
-                    $log.error({status : response.status, message : "connection problem"});
+                    $log.error({status : response.status, message : "connection problem", href : window.location.href});
                     flash('alert-info', "network issue: If the error persists please report to support@nextprot.org");
                     return;
                 }/*else if (status == 400) { //Should be handled by the controller}*/
                 else if ((status == 401) || (status == 403)) {
-                    $log.info("You are not authorized to access the url. Please login or review your privileges. If you think this is a problem, please report to support@nextprot.org.");
+                    $log.info({status : response.status, message : "not authorized", href : window.location.href});
                     flash('alert-danger', "You are not authorized to access the url. Please login or review your privileges. If you think this is a problem, please report to support@nextprot.org.");
                     $location.url("");
                     return;
@@ -149,12 +149,12 @@
                     console.log(response)
                     if (response.message) {
                         flash('alert-warning', response.message);
-                        $log.error({status : response.status, message : response.message});
+                        $log.error({status : response.status, message : response.message, href : window.location.href});
                     } else if (response.data.message) {
                         flash('alert-danger', response.data.message);
-                        $log.error({status : response.status, message : response.data.message});
+                        $log.error({status : response.status, message : response.data.message, href : window.location.href});
                     } else
-                        $log.error({status : response.status, message : "wtf??"});
+                        $log.error({status : response.status, message : "wtf??", href : window.location.href});
                         flash('alert-danger', 'Some error occured' + " " + status + " " + response.message + " please report to support@nextprot.org");
                 }
                 return $q.reject(response);
