@@ -56,6 +56,7 @@
             if ($routeParams.nxview) { // github repository
 
                 var url = "http://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.nxview + "/app/" + $routeParams.nxview + ".html" ;
+                $scope.githubURL = url.replace("cdn.rawgit.com", "github.com").replace("/master/", "/blob/master/");
                 url += "?nxentry=" + $routeParams.entry;
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
 
@@ -72,7 +73,7 @@
                         }
                     }
                 }
-                $scope.githubURL = url.replaceAll("cdn.rawgit.com", "github.com")
+                $scope.githubURL = url.replace("cdn.rawgit.com", "github.com").replace("/" + $routeParams.branch + "/", "/blob/" + $routeParams.branch + "/");
                 url += "?nxentry=" + $routeParams.entry;
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
             } else if ($routeParams.gistusr && $routeParams.gistid) {
