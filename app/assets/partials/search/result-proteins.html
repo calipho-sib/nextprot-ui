@@ -5,7 +5,7 @@
         <!-- PROTEINS SELECTOR -->
         <div class="btn-group" style="vertical-align:top; margin-bottom: 10px; height: 40px">
             <button id="main-clipboard-button" type="button" class="btn btn-default" style="height: 100%; border-top-left-radius: 5px; border-bottom-left-radius: 5px" ng-click="toggleAllToBasket()">
-                <input type="checkbox" indeterminate-checkbox selected-protein-list="Cart.getElements()">
+                <input type="checkbox" indeterminate-checkbox found-protein-list="Cart.getElements()">
             </button>
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="height: 100%; border-radius: initial">
                 <span class="caret"></span>
@@ -17,6 +17,7 @@
                 <!--<li><a href="#" ng-click="inverseBasketSelection()">Inverse</a></li>-->
             </ul>
 
+            <!--<button class="btn btn-default" style="height: 100%; border-left: hidden; border-top-right-radius: 5px; border-bottom-right-radius: 5px" disabled><span class="badge"> {{Search.result.docs.length}}</span></button>-->
             <button class="btn btn-default" style="height: 100%; border-left: hidden; border-top-right-radius: 5px; border-bottom-right-radius: 5px" disabled><span class="badge"> {{Cart.getCartSize()}}</span></button>
 
             <button ng-show="Search.result.params.entity == 'proteins' && Cart.getCartSize()>0" type="button" class="btn btn-link"

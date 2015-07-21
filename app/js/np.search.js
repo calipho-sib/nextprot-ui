@@ -1,6 +1,5 @@
 (function (angular, undefined) {'use strict';
 
-
 //
 //Define the search module for controllers, services and models
 angular.module('np.search', [
@@ -15,8 +14,8 @@ angular.module('np.search', [
 
 //
 //define routes for simple Search
-searchConfig.$inject=['$routeProvider','$locationProvider','$httpProvider']
-function searchConfig($routeProvider, $locationProvider, $httpProvider) {
+searchConfig.$inject=['$routeProvider'];
+function searchConfig($routeProvider) {
     // List of routes of the application
     $routeProvider
         .when('/search', {templateUrl: 'partials/search/result.html'})
@@ -27,8 +26,8 @@ function searchConfig($routeProvider, $locationProvider, $httpProvider) {
 
 //
 // implement main application controller
-SearchCtrl.$inject=['Tracker', '$resource','$scope','$rootScope','$location', '$filter', '$routeParams','$route','$window','$timeout','Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService'];
-function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, $routeParams, $route, $window, $timeout, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService) {
+SearchCtrl.$inject=['Tracker', '$scope','$rootScope','$location', '$routeParams','$window', 'Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService'];
+function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $window, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService) {
 
     // scope from template
     $scope.Search = Search;
@@ -43,7 +42,6 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
         readOnly: false,
         mode: 'sparql'
     };
-
 
     //
     // update entity documentation on path change
@@ -60,14 +58,6 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
         } else if ($routeParams.listId) {
             userProteinList.getListByPublicId($routeParams.listId).then(function (list) {
                 exportService.userList = list;
-
-                var button = angular.element('#main-clipboard-button');
-
-                // button is clicked is delayed (waiting for end of $digest progress)
-                $timeout(function() {
-
-                    button.click();
-                })
             });
 
         } else if ($routeParams.query){
@@ -96,14 +86,6 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
         return page === currentRoute ? 'active' : '';
     };
 
-    /*$scope.cookies = function (session) {
-        Search.cookies(session)
-        $timeout(function () {
-            // must be called 2times??
-            Search.cookies(session)
-        }, 0)
-    }*/
-
     $scope.login = function() {
         var currentUrl = $location.url();
         $location.url("/"); //need to go to context path since the callback is handled only in context path
@@ -124,16 +106,12 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
         user.logout();
         $location.url("/");
         flash('alert-info', "You have successfully logged out!");
-    }
-
-
+    };
 
     $scope.setAdvancedUserQuery = function (sparql) {
         $scope.advancedUserQuery = sparql;
-    }
+    };
 
-
-    //
     // interact with the search bar
     $scope.manualPaginate = function (form) {
 
@@ -145,9 +123,8 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
 
         $scope.params({start:(Search.result.pagination.current - 1)*Search.result.rows}, form);
 
-    }
+    };
 
-    //
     // interact with the search bar
     $scope.params = function (params, form) {
         if (form && !form.$valid)
@@ -155,29 +132,32 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
         angular.forEach(params, function (v, k) {
             $location.search(k, v);
         });
-    }
+    };
 
     $scope.quality = function (name) {
         Search.params.quality = name;
         $location.search('quality', (name !== 'gold') ? 'gold-and-silver' : null);
-    }
-
+    };
 
     $scope.entity = function (params) {
-        $location.search('start', null)
-        $location.search('filter', null)
-        $location.search('quality', null)
-        $location.search('sort', null)
-        $location.search('order', null)
-        $location.path('/' + params.entity + '/search' + ((Search.params.query) ? '/' + Search.params.query : ''));
-    }
 
-    $scope.toggleAdv = function (mode) {
+        $location.search('start', null);
+        $location.search('filter', null);
+        $location.search('quality', null);
+        $location.search('sort', null);
+        $location.search('order', null);
+        if (Search.params.listId && params.entity != 'proteins') {
+            $location.search('listId', null);
+        }
+        $location.path('/' + params.entity + '/search' + ((Search.params.query) ? '/' + Search.params.query : ''));
+    };
+
+    $scope.updateUrlSearchPartAdvanced = function (mode) {
         if(mode != $location.search("mode")){
 
-            $location.search('query', null)
-            $location.search('sparql', null)
-            $scope.toggle(mode)
+            $location.search('query', null);
+            $location.search('sparql', null);
+            $scope.updateUrlSearchPart(mode);
             if(mode.mode){
                 $location.path('/proteins/search')
             }
@@ -188,43 +168,40 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
         // }
 
         // $location.search('mode', null).search('sparql',null)
-    }
+    };
 
     $scope.clean = function () {
-        $location.search('engine', null)
-        $location.search('title', null)
-        $location.search('sparql', null)
-        $location.search('list', null)
-        $location.search('rows', null)
-        $location.search('start', null)
-        $location.search('cart', null)
-        $location.search('query', null)
-        $location.search('queryId', null)
-        $location.search('filter', null)
-        $location.search('quality', null)
-        $location.search('sort', null)
-        $location.search('order', null)
+        $location.search('engine', null);
+        $location.search('title', null);
+        $location.search('sparql', null);
+        $location.search('list', null);
+        $location.search('rows', null);
+        $location.search('start', null);
+        $location.search('query', null);
+        $location.search('queryId', null);
+        $location.search('filter', null);
+        $location.search('quality', null);
+        $location.search('sort', null);
+        $location.search('order', null);
         $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search');
 
         Search.params.sparql = ""; //This is needed only when the user is in this page proteins/search?mode=advanced and he has typed something and has clean (otherwise it is driven by the url)
-    }
+    };
 
     $scope.reset=function(){
         $location.search({})
-    }
+    };
 
-    $scope.toggle = function (params) {
+    $scope.updateUrlSearchPart = function (params) {
 
         Cart.emptyCart();
 
-        $location.search('start', null)
+        $location.search('start', null);
         angular.forEach(params, function (v, k) {
             var t = ($location.search()[k] && $location.search()[k] === v) ? null : v;
             $location.search(k, t)
         });
-    }
-
-
+    };
 
     $scope.goToUser = function (resourceType) {
 
@@ -240,50 +217,47 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
             }else {
             flash("alert-warning", "Please login to access your " + resourceType + ".")
         }
-    }
-
-
+    };
 
     $scope.active = function (value, key) {
         if (key) {
             return ($location.search()[key] === value) ? ' active  ' : '';
         }
         return ($location.path().indexOf(value) > -1) ? ' active  ' : '';
-    }
+    };
 
     $scope.moredetails = function (index) {
 
-    }
+    };
 
     $scope.displaySort=function(){
         //
         // map default visual aspect of sort
         var entity=Search.config.entityMapping[Search.params.entity],
-            defaultSort=Search.config.widgets[entity].sort[Search.params.sort]
+            defaultSort=Search.config.widgets[entity].sort[Search.params.sort];
 
         //
         // sort order can be overrided by user action
         if(Search.config.widgets.sort[Search.params.order]){
-            defaultSort.image=Search.config.widgets.sort[Search.params.order]
+            defaultSort.image=Search.config.widgets.sort[Search.params.order];
             defaultSort.isAsc=(Search.params.order=='asc')
         }
         return defaultSort
-    }
+    };
 
     $scope.isAdvancedMode = function () {
         return Search.params.mode == 'advanced';
-    }
+    };
 
     $scope.isSearchBarVisible=function(){
         return ($location.path()==='/'||$location.path().indexOf('/search')!==-1)
-    }
+    };
 
     $scope.go = function () {
         var url = $location.url();
         $location.search('filter', null);
         $location.search('listId', null);
         $location.search('list', null);
-        $location.search('cart', null);
         $location.search('rows', null);
         $location.search('start', null);
         $location.search('queryId', null);
@@ -292,7 +266,7 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
         // 2) Each time a list content is displayed, the basket (entries selected) should be emptied
         Cart.emptyCart();
 
-        $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search')
+        $location.path('/' + Search.config.entityMapping[Search.params.entity] + '/search');
 
         //Advanced mode
         if (Search.params.sparql && Search.params.sparql.length) {
@@ -314,23 +288,19 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
         if ($location.url() === url) {
             $scope.reload();
         }
-    }
+    };
 
     $scope.reload = function () {
         // restart search with last params
         Search.docs($routeParams, function (docs) {
         });
-    }
-
+    };
 
     $scope.$on('bs.autocomplete.update', function (event, arg) {
         $scope.go();
         $scope.$apply()
     });
 
-
-
-    //
     // use global scope to save the old location as referrer
     $rootScope.$watch( function () {
        return $location.url();
@@ -343,19 +313,19 @@ function SearchCtrl(Tracker, $resource, $scope, $rootScope, $location, $filter, 
     });
 
     $rootScope.locateToReferrer=function() {
-        console.log($location.url(),$scope.referrer)
         $location.url(($scope.referrer)?$scope.referrer:'/');
     }
-};
+}
 
 
 //
 // implement search result controller
-ResultCtrl.$inject=['Tracker', '$scope','$modal', '$route','$routeParams','$filter','$timeout','$location','Search','user','Cart','userProteinList','flash', 'exportService', 'queryRepository'];
-function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $location, $timeout, Search, user, Cart, userProteinList, flash, exportService, queryRepository) {
+ResultCtrl.$inject=['Tracker', '$scope','$modal', '$routeParams','Search','user','Cart','userProteinList','flash', 'exportService', 'queryRepository'];
+function ResultCtrl(Tracker, $scope, $modal, $routeParams, Search, user, Cart, userProteinList, flash, exportService, queryRepository) {
     $scope.Search = Search;
     $scope.Cart = Cart;
     $scope.selectedResults = [];
+
     $scope.showCart = true;
 
     //
@@ -371,80 +341,54 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
 
         Search.docs(params, function (results) {
 
-                params.start = (!$routeParams.start) ? 0 : $routeParams.start;
-                if ($routeParams.listId) {
-                    $scope.showCart = true;
-                    /*_.each(results.docs, function (doc) {
+            params.start = (!$routeParams.start) ? 0 : $routeParams.start;
+            if ($routeParams.listId) {
+                $scope.showCart = true;
+            } else {
+                _.each(results.docs, function (doc) {
+                    if (Cart.inCart(doc.id))
                         $scope.selectedResults[doc.id] = true;
-                    });*/
-                } else {
-                    _.each(results.docs, function (doc) {
-                        if (Cart.inCart(doc.id))
-                            $scope.selectedResults[doc.id] = true;
-                    });
-                }
+                });
+            }
 
-                $scope.start = Search.result.offset >= Search.resultCount ? 0 : Search.result.offset;
-                $scope.rows = Search.result.rows;
-                if (cb) cb(results);
-            });
+            $scope.start = Search.result.offset >= Search.resultCount ? 0 : Search.result.offset;
+            $scope.rows = Search.result.rows;
+            if (cb) cb(results);
+        });
     };
 
+    // private
+    var searchRouteParams = function() {
 
-    var params = _.clone($routeParams);
+        var params = _.clone($routeParams);
 
+        //Set the current owner id, if there is a list
+        if ($routeParams.listId) {
+            user.$promise.then(function () {
 
-    if ($routeParams.cart) {
-        //$scope.showCart = false;
-        delete params.cart;
-        params.accs = Cart.getElements();
-    }
-
-    //
-    //Set the current owner id, if there is a list
-    if ($routeParams.listId) {
-        user.$promise.then(function(){
-            params.listOwner = user.profile.username;
+                params.listOwner = user.profile.username;
+                self.search(params)
+            })
+        }
+        else {
             self.search(params)
-        })
-    }
+        }
+    };
 
-
-    //
-    // run the default search here
-    if (!$routeParams.listId) {
-        self.search(params)
-    }
-
+    searchRouteParams();
 
     $scope.change = function (docId) {
-        var found = Cart.change(docId);
-
-        if ($routeParams.cart) {
-            $route.reload();
-        }
-
-            /*
-            if ($routeParams.listId) {
-                var list = {};
-                list['accs'] = [docId];
-                if (found == -1) userProteinList.addElements(user, $routeParams.listId, [docId]);
-                else userProteinList.removeElements(user, $routeParams.listId, [docId]);
-            }*/
+        Cart.change(docId);
     };
-
-
 
     $scope.isInCart = function (docId) {
         return Cart.isInCart(docId);
     };
 
-
     $scope.emptyCart = function () {
         Cart.emptyCart();
         if (!$routeParams.listId) $scope.selectedResults = [];
     };
-
 
     $scope.addAllToBasket = function () {
 
@@ -454,7 +398,7 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
                 function (result) {
 
                     Cart.setCart(result.accessionNumbers);
-                    setAsSelected(result.accessionNumbers);
+                    selectAll(result.accessionNumbers);
                 },
                 function(error){
                     flash(error);
@@ -471,13 +415,13 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
                     filter: Search.params.filter
                 }, function (docs) {
                     Cart.setCart(docs.ids);
-                    setAsSelected(docs.ids);
+                    selectAll(docs.ids);
                     flash("alert-info", docs.ids.length + " entries added to clipboard");
                 });
         }
     };
 
-    function setAsSelected(ids) {
+    function selectAll(ids) {
         $scope.selectedResults = [];
         _.each(ids, function (id) {
             $scope.selectedResults[id] = true;
@@ -494,8 +438,6 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
 
     $scope.removeAllFromBasket = function () {
 
-        var cartSize = Cart.getCartSize();
-
         if ($routeParams.listId) {
 
             userProteinList.getListByPublicId($routeParams.listId).then(
@@ -507,10 +449,6 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
                 function (error) {
                     flash(error);
                 });
-        } else if ($routeParams.cart) {
-            Cart.emptyCart();
-            $route.reload();
-            // removed for now
         } else {
             Search.getIds(
                 {
@@ -520,9 +458,10 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
                     query: Search.params.query,
                     sparql: Search.params.sparql
                 }, function (docs) {
+                    var size = Cart.getCartSize();
                     Cart.removeFromCart(docs.ids);
                     $scope.selectedResults = [];
-                    flash("alert-info", cartSize + " entries removed from clipboard");
+                    flash("alert-info", size + " entries removed from clipboard");
                 });
         }
     };
@@ -540,7 +479,6 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
 
         alert("not yet implemented");
     };
-
 
     $scope.getResultTemplateByEntity = function () {
         switch (Search.params.entity) {
@@ -568,8 +506,6 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
         $(selector).affix()
     };
 
-
-
     $scope.launchModalList = function (elem, action) {
         if(!user.isAnonymous()){
 
@@ -582,7 +518,6 @@ function ResultCtrl(Tracker, $scope, $modal, $route, $routeParams, $filter, $loc
             flash('alert-warning', 'Please login to save a list');
         }
     };
-
 
     $scope.saveModal = function () {
 
