@@ -55,14 +55,14 @@
 
             if ($routeParams.nxview) { // github repository
 
-                var url = "https://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.nxview + "/app/" + $routeParams.nxview + ".html" ;
+                var url = "https://rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.nxview + "/app/" + $routeParams.nxview + ".html" ;
                 $scope.githubURL = url.replace("cdn.rawgit.com", "github.com").replace("/master/", "/blob/master/");
                 url += "?nxentry=" + $routeParams.entry;
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
 
 
             } else if ($routeParams.repo) { // github repository
-                var url = "https://cdn.rawgit.com/" + $routeParams.repo + "/" + $routeParams.user + "/" + $routeParams.branch + "/" + $routeParams.f1;
+                var url = "https://rawgit.com/" + $routeParams.repo + "/" + $routeParams.user + "/" + $routeParams.branch + "/" + $routeParams.f1;
                 //append if they exist
                 if($routeParams.f2){
                     url += "/" + $routeParams.f2;
@@ -73,11 +73,11 @@
                         }
                     }
                 }
-                $scope.githubURL = url.replace("cdn.rawgit.com", "github.com").replace("/" + $routeParams.branch + "/", "/blob/" + $routeParams.branch + "/");
+                $scope.githubURL = url.replace("rawgit.com", "github.com").replace("/" + $routeParams.branch + "/", "/blob/" + $routeParams.branch + "/");
                 url += "?nxentry=" + $routeParams.entry;
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
             } else if ($routeParams.gistusr && $routeParams.gistid) {
-                $scope.widgetURL = $sce.trustAsResourceUrl("http://cdn.rawgit.com/" + $routeParams.gistusr + "/" + $routeParams.gistid + "/raw/index.html?nxentry=" + $routeParams.entry);
+                $scope.widgetURL = $sce.trustAsResourceUrl("http://rawgit.com/" + $routeParams.gistusr + "/" + $routeParams.gistid + "/raw/index.html?nxentry=" + $routeParams.entry);
             } else { //nextprot
 
                 /*
