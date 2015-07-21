@@ -55,14 +55,14 @@
 
             if ($routeParams.nxview) { // github repository
 
-                var url = "http://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.nxview + "/app/" + $routeParams.nxview + ".html" ;
+                var url = "https://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.nxview + "/app/" + $routeParams.nxview + ".html" ;
                 $scope.githubURL = url.replace("cdn.rawgit.com", "github.com").replace("/master/", "/blob/master/");
                 url += "?nxentry=" + $routeParams.entry;
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
 
 
             } else if ($routeParams.repo) { // github repository
-                var url = "http://cdn.rawgit.com/" + $routeParams.repo + "/" + $routeParams.user + "/" + $routeParams.branch + "/" + $routeParams.f1;
+                var url = "https://cdn.rawgit.com/" + $routeParams.repo + "/" + $routeParams.user + "/" + $routeParams.branch + "/" + $routeParams.f1;
                 //append if they exist
                 if($routeParams.f2){
                     url += "/" + $routeParams.f2;
