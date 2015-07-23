@@ -9,7 +9,8 @@
     viewerConfig.$inject = ['$routeProvider'];
     function viewerConfig($routeProvider) {
 
-        var gv = {templateUrl: '/partials/viewer/viewer-gist.html'};
+        var ev = {templateUrl: '/partials/viewer/entry-viewer.html'};
+        var gv = {templateUrl: '/partials/viewer/global-viewer.html'};
 
         $routeProvider
             .when('/db/term/:db', {templateUrl: '/partials/viewer/viewer-entry-np1.html'})
@@ -17,12 +18,23 @@
             .when('/db/entry/:element/:db', {templateUrl: '/partials/viewer/viewer-entry-np1.html'})
             .when('/db/publication/:db', {templateUrl: '/partials/viewer/viewer-entry-np1.html'})
 
-            .when('/entry/:entry/nextprot-viewers/:nxview', gv)// related to nextprot-viewers repository: https://github.com/calipho-sib/nextprot-viewers
-            .when('/entry/:entry/viewer/:gistusr/:gistid', gv) // related to gists
-            .when('/entry/:entry/:repo/:user/:branch/:f1', gv)
-            .when('/entry/:entry/:repo/:user/:branch/:f1/:f2', gv)
-            .when('/entry/:entry/:repo/:user/:branch/:f1/:f2/:f3', gv)
-            .when('/entry/:entry/:repo/:user/:branch/:f1/:f2/:f3/:f4', gv)
+
+            //GLOBAL VIEWS https://github.com/calipho-sib/nextprot-viewers
+            .when('/view', gv)
+            .when('/view/:gv1', gv)
+            .when('/view/:gv1/:gv2', gv)
+            .when('/view/:gv1/:gv2/:gv3', gv)
+
+            //ENTRY VIEWS
+            .when('/entry/:entry/view/:ev1', ev)
+            .when('/entry/:entry/view/:ev1/:ev2', ev)
+            .when('/entry/:entry/view/:ev1/:ev2/:ev3', ev)
+
+            .when('/entry/:entry/viewer/:gistusr/:gistid', ev) // related to gists
+            .when('/entry/:entry/:repo/:user/:branch/:f1', ev)
+            .when('/entry/:entry/:repo/:user/:branch/:f1/:f2', ev)
+            .when('/entry/:entry/:repo/:user/:branch/:f1/:f2/:f3', ev)
+            .when('/entry/:entry/:repo/:user/:branch/:f1/:f2/:f3/:f4', ev)
             .when('/entry/:entry/:element', {templateUrl: '/partials/viewer/viewer-np1.html'})
             .when('/entry/:entry/', {templateUrl: '/partials/viewer/viewer-entry-np1.html'})
             .when('/term/:termid/', {templateUrl: '/partials/viewer/viewer-term-np1.html'})
@@ -52,14 +64,25 @@
                 $location.path($location.$$path.replace("db/", ""));
             }
 
+            if ($routeParams.ev1) { //Entry view
 
-            if ($routeParams.nxview) { // github repository
+                var url = "https://rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.ev1;
+                if($routeParams.ev2) url += "/" + $routeParams.ev2;
+                if($routeParams.ev3) url += "/" + $routeParams.ev3;
+                url += "/app/index.html" ;
 
-                var url = "https://rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.nxview + "/app/" + $routeParams.nxview + ".html" ;
-                $scope.githubURL = url.replace("cdn.rawgit.com", "github.com").replace("/master/", "/blob/master/");
-                url += "?nxentry=" + $routeParams.entry;
+                $scope.githubURL = url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/");
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
 
+            }else if ($routeParams.gv1) { //Global view
+
+                var url = "https://rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.gv1;
+                if($routeParams.gv2) url += "/" + $routeParams.gv2;
+                if($routeParams.gv3) url += "/" + $routeParams.gv3;
+                url += "/app/index.html" ;
+
+                $scope.githubURL = url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/");
+                $scope.widgetURL = $sce.trustAsResourceUrl(url);
 
             } else if ($routeParams.repo) { // github repository
                 var url = "https://rawgit.com/" + $routeParams.repo + "/" + $routeParams.user + "/" + $routeParams.branch + "/" + $routeParams.f1;
