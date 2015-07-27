@@ -65,7 +65,7 @@
                 doc.ptm_num : '0'}}</a>
                 Sequence length: <a
                     href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.aa_length}}</a>
-                Variants: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.var_num}}</a> <br>
+                Variants: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.var_num &gt; 0 ? doc.var_num : '0'}}</a> <br>
                 Disease: <a class="{{(doc.filters|has:'filterdisease')? '':'inactive'}}"
                             href="http://www.nextprot.org/db/entry/{{doc.id}}/medical">{{(doc.filters|has:'filterdisease')
                 ? 'yes':'no'}}</a>
