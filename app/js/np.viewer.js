@@ -70,8 +70,9 @@
                 if($routeParams.ev2) url += "/" + $routeParams.ev2;
                 if($routeParams.ev3) url += "/" + $routeParams.ev3;
                 url += "/app/index.html" ;
-
                 $scope.githubURL = url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/");
+                url += "?nxentry=" + $routeParams.entry;
+
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
 
             }else if ($routeParams.gv1) { //Global view
@@ -80,8 +81,9 @@
                 if($routeParams.gv2) url += "/" + $routeParams.gv2;
                 if($routeParams.gv3) url += "/" + $routeParams.gv3;
                 url += "/app/index.html" ;
-
                 $scope.githubURL = url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/");
+                url += "?nxentry=" + $routeParams.entry;
+
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
 
             } else if ($routeParams.repo) { // github repository
