@@ -27,7 +27,7 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
         authorities : [],
         username : 'Guest',
         profile:{}
-    }
+    };
 
 
     //See also the refresh token https://github.com/auth0/auth0-angular/blob/master/docs/refresh-token.md
@@ -57,32 +57,39 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
     // create user domain
     var User = function () {
 
-        //
+        //'this' is the 'User' instance
         // init the dao
         this.dao={
            $profile:$resource(config.api.baseUrl + '/user/me', {
                 get: { method: 'GET' }
             })
-        }
+        };
 
         //
         // init user profile
-        this.profile={}
+        this.profile={};
         angular.extend(this.profile,defaultProfile);
-        //
-        // wrap promise to this object
-        this.$promise=$q.when(this)
+        /*
+         The $q.when() method creates a promise that is immediately resolved with the given value
 
-        var me = this;
+         http://stackoverflow.com/questions/16770821/how-does-angular-q-when-work
 
+         Calling $q.when takes a promise or any other type, if it is not a promise then it will wrap it in a
+         promise and call resolve. If you pass a value to it then it is never going to be rejected.
 
+         From the docs:
+         Wraps an object that might be a value or a (3rd party) then-able promise into a $q promise.
+         This is useful when you are dealing with an object that might or might not be a promise,
+         or if the promise comes from a source that can't be trusted.
+         */
+        this.$promise=$q.when(this);
     };
 
     //
     //
     User.prototype.isAnonymous = function () {
         return this.profile.username === 'Guest';
-    }
+    };
 
     //
     // make the always User a promise of the dao usage
@@ -91,9 +98,9 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
          return promise
         },function(){
          return promise
-        })
+        });
       return this
-    }
+    };
 
     User.prototype.copy = function(data) {
         angular.extend(this.profile,defaultProfile, data);
@@ -145,10 +152,10 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
         }, function(error) {
             cb(error)
         });*/
-    }
+    };
 
     User.prototype.logout = function (cb) {
-        this.clear()
+        this.clear();
         auth.signout();
 
         if ($window.location.hostname === "localhost") {
@@ -163,7 +170,7 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
         store.remove('profile');
         store.remove('token');
 
-    }
+    };
 
 
     User.prototype.me = function (cb) {
@@ -192,6 +199,6 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
 UserCtrl.$inject=['$scope','user','flash','config','ipCookie'];
 function UserCtrl($scope, user, flash, config, ipCookie) {
     $scope.user = user;
-};
+}
 
 })(angular);
