@@ -187,21 +187,11 @@
             $log.info('Controller: on `error`');
         });
 
-        $scope.createList = function (listName) {
+        $scope.createList = function () {
             var list = {};
             if ($scope.inputAccessions.length > 0) {
 
-                var accessions = $scope.inputAccessions
-                    .split("\n")
-                    // remove comment lines
-                    .filter(function (el) {
-                        return (el.charAt(0) != '#');
-                    })
-                    // format nextprot accessions
-                    .map(function (el) {
-                        if (el.substr(0, 3) != "NX_") return "NX_" + el;
-                        else return el;
-                    });
+                var accessions = $scope.inputAccessions.split("\n");
 
                 list = {
                     name: $scope.listName,
