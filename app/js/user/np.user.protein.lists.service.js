@@ -39,6 +39,7 @@
             var self = this;
             self.$promise=self.$dao.list({}).$promise;
             self.$promise.then(function (data) {
+                // TODO: weird to refer service that is an instance of Proteins !!!
                 service.lists = data;
             });                
             return self;
@@ -60,7 +61,7 @@
             var self = this;
             self.$promise=self.$dao.delete({id: listId}).$promise;
             return self;
-        }
+        };
 
         Proteins.prototype.getListByPublicId = function (listId) {
             return this.$daoLists.get({id: listId}).$promise;
@@ -90,7 +91,7 @@
                 op: op
             }).$promise;
             return self;
-        }
+        };
 
         Proteins.prototype.addElements = function (user, listName, accs, cb) {
             var self = this;
@@ -99,13 +100,13 @@
                 return self.$dao.fix({
                     action: 'add',
                     username: user.profile.username,
-                    list: listName,
+                    list: listName
                 }, JSON.stringify(accs), function (data) {
                     if (cb) cb(data);
                 });
-            })
+            });
             return this;
-        }
+        };
 
         Proteins.prototype.removeElements = function (user, listName, accs, cb) {
             var self = this;
@@ -118,9 +119,8 @@
                 }, JSON.stringify(accs), function (data) {
                     if (cb) cb(data);
                 });
-            })
-            return this;
-        }
+            });
+        };
         var service = new Proteins();
         return service;
     }
@@ -133,10 +133,10 @@
         var _files = [];
 
         $http.defaults.useXDomain = true;
-        delete $http.defaults.headers.common["X-Requested-With"]
+        delete $http.defaults.headers.common["X-Requested-With"];
 
         var UploadList = function () {
-        }
+        };
         UploadList.prototype.send = function (listId, file, cb) {
             var data = new FormData(),
                 xhr = new XMLHttpRequest(),
@@ -152,7 +152,7 @@
             // When the request has failed.
             xhr.onerror = function (e) {
                 $rootScope.$emit('upload:error', e);
-                console.log('errrr',e)
+                console.log('errrr',e);
                 return deferred.reject(e,xhr)            		
 
             };
@@ -164,15 +164,15 @@
             	if(xhr.readyState===4 &&  xhr.status===200){
             		return deferred.resolve(xhr)            		
             	}
-            }
+            };
 
             // Send to server, where we can then access it with $_FILES['file].
             data.append('file', file, file.name);
             xhr.open('POST', url.replace(':id',listId));
-            xhr.setRequestHeader('Authorization','Bearer ' + auth.idToken)
+            xhr.setRequestHeader('Authorization','Bearer ' + auth.idToken);
             xhr.send(data);
             return deferred.promise;
-        }
+        };
         return new UploadList();
     }
 

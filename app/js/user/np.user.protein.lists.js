@@ -41,14 +41,18 @@ function ListCtrl(Tracker, $resource, $scope, $rootScope, $location, $routeParam
 	}
 
 
-	$scope.loadMyLists = function (){
-          user.$promise.then(function(){
-		userProteinList.list(user).$promise.then(function(data) {
-			$scope.lists = data;
-			$scope.initCombinationForm();
-		});
-          })
-	}
+	$scope.loadMyLists = function () {
+		// why get a promise wrapped around the user object ?
+		// why not create a promise just here ???
+		user.$promise.then(function () {
+			userProteinList.list(user).$promise.then(function (data) {
+				$scope.lists = data;
+				$scope.initCombinationForm();
+			}, function(reason) {
+				alert('Failed: ' + reason);
+			});
+		})
+	};
 
 	$scope.getListExportUrl = function(list){
 		return config.api.API_URL + "/export/lists/" + list.publicId;
@@ -190,7 +194,17 @@ function ListCreateCtrl($q, $resource, $scope, $rootScope, $routeParams, $locati
 	$scope.createList = function (listName) {
 		var list = {}
 		if ($scope.inputAccessions.length > 0) {
-			var accessions = $scope.inputAccessions.split("\n");
+
+			var accessions = $scope.inputAccessions
+				.split("\n")
+				// remove comment lines
+				.filter(function(el) { return (el.charAt(0) != '#'); })
+				// format nextprot accessions
+				.map(function(el) {
+					if (el.substr(0, 3) != "NX_") return "NX_"+el;
+					else return el;
+				});
+
 			list = {
 				name: $scope.listName,
 				description: $scope.listDescription,
