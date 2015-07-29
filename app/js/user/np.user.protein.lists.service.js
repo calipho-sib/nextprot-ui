@@ -9,7 +9,7 @@
 
 //
 // implement the service
-    userProteinList.$inject = ['$resource', 'config','$q'];
+    userProteinList.$inject = ['$resource', 'config', '$q'];
     function userProteinList($resource, config, $q) {
 
         var Proteins = function () {
@@ -37,29 +37,29 @@
 
         Proteins.prototype.list = function (user) {
             var self = this;
-            self.$promise=self.$dao.list({}).$promise;
+            self.$promise = self.$dao.list({}).$promise;
             self.$promise.then(function (data) {
                 // TODO: weird to refer service that is an instance of Proteins !!!
                 service.lists = data;
-            });                
+            });
             return self;
         };
 
         Proteins.prototype.create = function (user, list) {
             var self = this;
-            self.$promise=self.$dao.create({}, list).$promise;
+            self.$promise = self.$dao.create({}, list).$promise;
             return self;
         };
 
         Proteins.prototype.update = function (user, list) {
             var self = this;
-            self.$promise=self.$dao.update({id: list.id}, list).$promise;
+            self.$promise = self.$dao.update({id: list.id}, list).$promise;
             return self;
         };
 
         Proteins.prototype.delete = function (user, listId) {
             var self = this;
-            self.$promise=self.$dao.delete({id: listId}).$promise;
+            self.$promise = self.$dao.delete({id: listId}).$promise;
             return self;
         };
 
@@ -67,21 +67,21 @@
             return this.$daoLists.get({id: listId}).$promise;
         };
 
-/*
-        Proteins.prototype.getByIds = function (user, list, cb) {
-            var self = this;
-            var params = {username: user.profile.username, id: list, action: 'ids'};
-            //TODO remove cb
-            self.$promise=self.$dao.get(params, function (result) {
-                if (cb) cb(result);
-            });
-            return self;
-        }
-*/
+        /*
+         Proteins.prototype.getByIds = function (user, list, cb) {
+         var self = this;
+         var params = {username: user.profile.username, id: list, action: 'ids'};
+         //TODO remove cb
+         self.$promise=self.$dao.get(params, function (result) {
+         if (cb) cb(result);
+         });
+         return self;
+         }
+         */
 
         Proteins.prototype.combine = function (user, list, l1, l2, op) {
             var self = this;
-            self.$promise=self.$dao.get({
+            self.$promise = self.$dao.get({
                 action: 'combine',
                 username: user.profile.username,
                 listname: list.name,
@@ -125,12 +125,9 @@
         return service;
     }
 
-
-//
 // implement the service
-    uploadListService.$inject = ['config', '$q','$http', '$rootScope','user','auth'];
-    function uploadListService(config, $q, $http, $rootScope,user,auth) {
-        var _files = [];
+    uploadListService.$inject = ['config', '$q', '$http', '$rootScope', 'user', 'auth', 'ipCookie'];
+    function uploadListService(config, $q, $http, $rootScope, user, auth, ipCookie) {
 
         $http.defaults.useXDomain = true;
         delete $http.defaults.headers.common["X-Requested-With"];
@@ -140,9 +137,8 @@
         UploadList.prototype.send = function (listId, file, cb) {
             var data = new FormData(),
                 xhr = new XMLHttpRequest(),
-                deferred=$q.defer(),
-	          url=config.api.API_URL + '/user/me/protein-list/:id/upload';
-
+                deferred = $q.defer(),
+                url = config.api.API_URL + '/user/me/lists/:id/upload';
 
             // When the request starts.
             xhr.onloadstart = function () {
@@ -152,24 +148,27 @@
             // When the request has failed.
             xhr.onerror = function (e) {
                 $rootScope.$emit('upload:error', e);
-                console.log('errrr',e);
-                return deferred.reject(e,xhr)            		
+                console.log('errrr', e);
+                return deferred.reject(e, xhr)
 
             };
 
-            xhr.onreadystatechange=function(){
-            	if(xhr.readyState==4 && xhr.status>305){
-            		return deferred.reject(JSON.parse(xhr.responseText))            		
-            	}
-            	if(xhr.readyState===4 &&  xhr.status===200){
-            		return deferred.resolve(xhr)            		
-            	}
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status > 305) {
+                    return deferred.reject(JSON.parse(xhr.responseText))
+                }
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    return deferred.resolve(xhr)
+                }
             };
 
             // Send to server, where we can then access it with $_FILES['file].
             data.append('file', file, file.name);
-            xhr.open('POST', url.replace(':id',listId));
-            xhr.setRequestHeader('Authorization','Bearer ' + auth.idToken);
+            xhr.open('POST', url.replace(':id', listId));
+
+            //xhr.setRequestHeader('Authorization','Bearer ' + auth.idToken);
+            xhr.setRequestHeader('Authorization', 'Bearer ' + ipCookie('nxtoken'));
+
             xhr.send(data);
             return deferred.promise;
         };
