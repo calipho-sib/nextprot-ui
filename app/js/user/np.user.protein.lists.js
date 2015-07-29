@@ -220,18 +220,13 @@
                         flash('alert-info', "List " + $scope.listName + " created.");
                         $scope.files = [];
                         $location.path('/user/protein/lists');
-                    }, function (e) {
-                        if (e.message) {
-                            return flash('alert-warning', e.message)
-                        }
+                    }, function (o) {
+                        flash('alert-warning', "List " + $scope.listName + " not created: "+ o.data.message)
                     })
 
 
-                }, function (data) {
-                    console.log("cb new list error", data);
-                    if (data.error) {
-                        return flash('alert-warning', data.error)
-                    }
+                }, function (o) {
+                    flash('alert-warning', "List " + $scope.listName + " not created: " + o.data.message)
                 });
         }
     }
