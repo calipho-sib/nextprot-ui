@@ -21,11 +21,11 @@
                     create: {method: 'POST'},
                     update: {method: 'PUT'}
                 })
-        }
+        };
 
         //
         // repository of queries (TODO more cache access)
-        var queryList = $cacheFactory('queries'), queries=[]
+        var queryList = $cacheFactory('queries'), queries=[];
 
 
         //
@@ -43,7 +43,7 @@
 
             //
             // wrap promise to this object
-            this.$promise = $q.when(this)
+            this.$promise = $q.when(this);
 
             // save this instance
             queryList.put(this.userQueryId, this)
@@ -54,13 +54,13 @@
         // create a new query for this user
         Query.prototype.createOne = function (init) {
             return new Query(init);
-        }
+        };
 
         //
         // return current queries of this user
         Query.prototype.queries = function () {
             return queries;
-        }
+        };
 
         Query.prototype.payload = function () {
             return {
@@ -72,12 +72,12 @@
                 description: this.description,
                 tags: this.tags
             }
-        }
+        };
         //
         // check is this query is owned by the current user
         Query.prototype.isOwner = Query.prototype.isEditable = function (who) {
             return (this.owner.toLowerCase() == (who || user.profile.username).toLowerCase());
-        }
+        };
 
         //
         // CRUD operations
@@ -93,7 +93,7 @@
                 queries = data.map(function (q) {
                     return me.createOne(q)
                 })
-            })
+            });
             return this;
         };
 
@@ -127,7 +127,7 @@
                   }
                   return true;
               })
-            })
+            });
 
             return me;
         };
@@ -156,13 +156,13 @@
             'public': 'This is the public repository',
             'private': 'This is the private repository',
             'nextprot': 'This is the nextprot repository'
-        }
+        };
 
         var icons = {
             'public': 'icon-globe',
             'private': 'icon-user',
             'tutorial': 'icon-certificate'
-        }
+        };
 
         var QueryRepository = function () {
             //  this.selectedQuery = {};
@@ -193,7 +193,7 @@
                         get: {method: 'GET'},
                         list: {method: 'GET', isArray: true}
                     })
-            }
+            };
 
 
             this.$daoQueries = $resource(config.api.API_URL + '/queries/:id',
@@ -211,16 +211,16 @@
 
         QueryRepository.prototype.getDescription = function (name) {
             return description[this.category];
-        }
+        };
 
         QueryRepository.prototype.getIcon = function (name) {
             return icons[this.category];
-        }
+        };
 
 
         QueryRepository.prototype.getTutorialQueries = function (name) {
             return this.$daoQueries.list().$promise;
-        }
+        };
 
         QueryRepository.prototype.list = function (category) {
             var me = this;
@@ -229,21 +229,21 @@
             this.$promise.then(function (data) {
                 me.queries = data.map(function (q) {
                     return user.query.createOne(q)
-                })
+                });
                 return me.queries
-            })
+            });
             return this
-        }
+        };
 
 
         // new method definitions (by Daniel)
         QueryRepository.prototype.getQueryByPublicId = function (queryId) {
             return this.$daoQueries.get({id: queryId}).$promise;
-        }
+        };
 
         QueryRepository.prototype.deleteUserQuery = function (query) {
             return this.userQueryResource.delete({id: query.userQueryId}).$promise;
-        }
+        };
 
         QueryRepository.prototype.saveOrCreate = function (query) {
             delete query.$promise;
@@ -254,7 +254,7 @@
                 }
 
             return this.userQueryResource.delete({id: query.userQueryId}).$promise;
-        }
+        };
 
         return new QueryRepository();
     }
@@ -270,17 +270,17 @@
 
         $scope.runQuery = function (query) {
             $location.search("sparql", query.sparql);
-        }
+        };
 
         $scope.setFilterTag = function (tag) {
             $scope.repository.filterTag = tag;
-        }
+        };
 
         // publish function
         $scope.showRepository = function () {
             $scope.repository.selectedQuery = null;
             $scope.repository.show = true;
-        }
+        };
 
         // publish function
         $scope.toggleRepository = function () {
@@ -291,7 +291,7 @@
             //if ($scope.repository.show && !$scope.repository.queries.length) {
                 $scope.loadQueries('tutorial');
             //}
-        }
+        };
 
         $scope.didyoumean = function (index) {
 
@@ -305,7 +305,7 @@
                 $scope.repository.queries = queries;
                 $scope.setTags();
             })
-        }
+        };
 
         $scope.loadMyQueries = function () {
           user.$promise.then(function(){
@@ -314,15 +314,12 @@
               })
 
           })
-        }
-
-
+        };
 
         $scope.setModalQuery = function (query) {
             $scope.selected = {};
             angular.extend($scope.selected, query);
         };
-
 
         $scope.setTags = function () {
             var queries = $scope.repository.queries;
@@ -336,19 +333,19 @@
                 )
             });
             angular.copy(tags,$scope.repository.queriesTags);
-        }
+        };
 
 
         $scope.setCurrentQuery = function (query) {
             $scope.repository.selectedQuery = query;
-        }
+        };
 
         $scope.applyCurrentQueryForSearch = function (query) {
             $location.search('sparql', '#' + query.title + "\n" + query.sparql);
             //close after that
             $scope.repository.show = false;
             $scope.repository.selectedQuery = false;
-        }
+        };
 
         $scope.createNewEmptyQuery = function () {
             if(user.isAnonymous()){
@@ -356,7 +353,7 @@
             }else {
                 $scope.repository.selectedQuery = user.query.createOne();
            }
-        }
+        };
 
         $scope.saveSelectedQuery = function (query) {
 
@@ -375,7 +372,7 @@
                 });
 
             }
-        }
+        };
 
         $scope.deleteUserQuery = function (query) {
             if (confirm("Are you sure you want to delete the selected query?")) {
@@ -384,7 +381,7 @@
                     flash('alert-info', query.title + 'query successfully deleted');
                 });
             }
-        }
+        };
 
 
         $scope.doSparqlSearch = function (query) {
@@ -395,15 +392,15 @@
             $location.search("mode", "advanced");
             $location.search("NXQ_ID", query.userQueryId);
 
-        }
+        };
 
         $scope.clearSelectedQuery = function () {
             $scope.repository.selectedQuery = false;
-        }
+        };
 
         $scope.gaTrackContactUsEvent = function(subject) {
             Tracker.trackContactUsEvent(subject);
-        }
+        };
     }
 
 
