@@ -46,6 +46,12 @@
     function ViewerCtrl($resource, $scope, $sce, $routeParams, $location, config) {
         $scope.widgetEntry = null;
         $scope.githubURL = null;
+        $scope.simpleSearchText = "";
+
+        $scope.makeSimpleSearch = function () {
+            $location.search("query", $scope.simpleSearchText);
+            $location.path("proteins/search");
+        }
 
         $scope.activePage = function (page) {
             if ($routeParams.element) {
