@@ -20,7 +20,7 @@
               </div><!-- /btn-group -->
               <input type="text" ng-model="filterQuery" placeholder="search in {{(repository.queries | containsTag:repository.filterTag | filter:filterQuery).length}} queries (ex: liver)" class="form-control " style="width:80%">
               <!-- "Create new" only if there is no query selected -->
-              <button ng-show="!repository.selectedQuery" class="btn btn-default pull-right " style="margin-right: 10px" type="button" ng-click="createNewEmptyQuery();">New Query</button>
+              <button ng-show="!repository.selectedQuery" class="btn btn-default pull-right " style="margin-right: 10px" type="button" ng-click="showNewQueryPanel();">New Query</button>
           </div>
 
         </div>

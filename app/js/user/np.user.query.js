@@ -285,12 +285,19 @@
         // publish function
         $scope.toggleRepository = function () {
             $scope.repository.show = !$scope.repository.show;
+            $scope.repository.selectedQuery = null;
+        };
 
-            //
-            // needs to load queries
-            //if ($scope.repository.show && !$scope.repository.queries.length) {
-                $scope.loadQueries('tutorial');
-            //}
+        // publish function
+        $scope.showNewQuery = function () {
+            $scope.showRepository();
+            $scope.showNewQueryPanel((Search.params.sparql) ? {sparql: Search.params.sparql} : null);
+        };
+
+        // publish function
+        $scope.toggleNewQuery = function () {
+            $scope.toggleRepository();
+            $scope.showNewQueryPanel((Search.params.sparql) ? {sparql: Search.params.sparql} : null);
         };
 
         $scope.didyoumean = function (index) {
@@ -347,11 +354,11 @@
             $scope.repository.selectedQuery = false;
         };
 
-        $scope.createNewEmptyQuery = function () {
+        $scope.showNewQueryPanel = function (data) {
             if(user.isAnonymous()){
                 flash("alert-warning", "Please login to create new queries");
             }else {
-                $scope.repository.selectedQuery = user.query.createOne();
+                $scope.repository.selectedQuery = user.query.createOne(data);
            }
         };
 
