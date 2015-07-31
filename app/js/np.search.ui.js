@@ -412,6 +412,23 @@
                     }
         }
     }]);
+    SearchUI.directive('iframeSetDimensionsOnload', [function(){
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs){
+                element.on('load', function(){
+                    console.log(element);
+                    //console.log(element[0]);
+                    //console.log(element[0].contentWindow);
+                    //console.log(element[0].contentWindow.document);
+                    var iFrameHeight = 1150+'px';
+                    //var iFrameHeight = element[0].contentWindow.document.body.scrollHeight + 'px';
+                    var iFrameWidth = '100%';
+                    element.css('width', iFrameWidth);
+                    element.css('height', iFrameHeight);
+                })
+            }
+        }}]);
 
 })(angular);
 

@@ -188,7 +188,8 @@ a:focus {
 }
 .menu-content a {
     color:#777 !important;
-    padding:5px 10px !important;
+    padding:6px 10px 5px !important;
+    vertical-align: bottom;
 }
 .menu-content a:hover {
     color:#333 !important;
@@ -243,4 +244,17 @@ a:focus {
 @font-face {
     font-family: "HelveticaLight";
     src: url('../font/HelveticaNeue-Light.otf');
+}
+main {
+
+}
+.nomarginshift{
+    margin-left:0px;
+    margin-right:0px;
+}
+.fullHeight{
+    height:80vh;
+}
+.sidemenu{
+    background-color: #E7E7E7;
 }

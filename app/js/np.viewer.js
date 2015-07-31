@@ -54,11 +54,7 @@
         }
 
         $scope.activePage = function (page) {
-            if ($routeParams.element) {
-                if (page === $routeParams.element) return 'active';
-            } else if ($routeParams.gistusr && $routeParams.gistid) {
-                if (page === ($routeParams.gistusr + "/" + $routeParams.gistid)) return 'active';
-            }
+            if ($routeParams.ev1 == page)  return 'active'
             else return '';
         }
 
@@ -139,6 +135,8 @@
 
 
     }
+
+
 
 
 })(angular); //global variable
