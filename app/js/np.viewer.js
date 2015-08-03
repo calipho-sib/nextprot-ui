@@ -46,13 +46,15 @@
     function ViewerCtrl($resource, $scope, $sce, $routeParams, $location, config) {
         $scope.widgetEntry = null;
         $scope.githubURL = null;
+        $scope.simpleSearchText = "";
+
+        $scope.makeSimpleSearch = function () {
+            $location.search("query", $scope.simpleSearchText);
+            $location.path("proteins/search");
+        }
 
         $scope.activePage = function (page) {
-            if ($routeParams.element) {
-                if (page === $routeParams.element) return 'active';
-            } else if ($routeParams.gistusr && $routeParams.gistid) {
-                if (page === ($routeParams.gistusr + "/" + $routeParams.gistid)) return 'active';
-            }
+            if ($routeParams.ev1 == page)  return 'active'
             else return '';
         }
 
@@ -133,6 +135,8 @@
 
 
     }
+
+
 
 
 })(angular); //global variable
