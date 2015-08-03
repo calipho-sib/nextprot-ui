@@ -3,13 +3,14 @@
 
     angular.module('np.viewer', [])
         .config(viewerConfig)
+        .factory('entryProperties', entryProperties)
         .controller('ViewerCtrl', ViewerCtrl)
     ;
 
     viewerConfig.$inject = ['$routeProvider'];
     function viewerConfig($routeProvider) {
 
-        var ev = {templateUrl: '/partials/viewer/entry-viewer.html'};
+        var ev = {templateUrl: '/partials/viewer/entry-viewer.html', resolve: { 'entryProperties':function(entryProperties){  return entryProperties.promise();   } }};
         var gv = {templateUrl: '/partials/viewer/global-viewer.html'};
 
         $routeProvider
@@ -42,11 +43,12 @@
     }
 
 
-    ViewerCtrl.$inject = ['$resource', '$scope', '$sce', '$routeParams', '$location', 'config'];
-    function ViewerCtrl($resource, $scope, $sce, $routeParams, $location, config) {
+    ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'entryProperties'];
+    function ViewerCtrl($scope, $sce, $routeParams, $location, config, entryProperties) {
         $scope.widgetEntry = null;
         $scope.githubURL = null;
         $scope.simpleSearchText = "";
+        $scope.entryProps = entryProperties.currentEntry();
 
         $scope.makeSimpleSearch = function () {
             $location.search("query", $scope.simpleSearchText);
@@ -133,6 +135,29 @@
             }
         });
 
+
+    }
+
+
+    entryProperties.$inject=['$http','config','$route'];
+    function entryProperties($http, config,  $route) {
+
+        var currenEntryProperties = {};
+        var promise = function () {
+            $http.get(config.api.API_URL + '/entry/' + $route.current.params.entry + '/overview.json').success( function (data) {
+                currenEntryProperties.name=data.entry.overview.mainProteinName;
+                currenEntryProperties.genesCount=data.entry.overview.geneNames.length;
+                angular.extend(currenEntryProperties, data.entry.properties);
+            });
+        }
+
+
+        return {
+            promise: promise,
+            currentEntry: function () {
+                return currenEntryProperties;
+            }
+        };
 
     }
 
