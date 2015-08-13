@@ -35,6 +35,10 @@
                 if (index > -1) {
                     singleEntryFormats.splice(index, 1);
                 }
+                index = singleEntryFormats.indexOf('xls');
+                if (index > -1) {
+                    singleEntryFormats.splice(index, 1);
+                }
             }
         })();
 
@@ -48,7 +52,7 @@
             $scope.views = exportService.templates[format];
             $scope.selectedView = $scope.views[0];
             allEntryTemplateValue = $scope.views[2]; //TODO make this a bit more clever "full-entry"?
-            $scope.isSubPartHidden = (format == 'fasta' || format == 'peff' || format == 'txt');
+            $scope.isSubPartHidden = (format == 'fasta' || format == 'peff' || format == 'txt' || format == 'xls');
         };
 
         $scope.setSelectedView = function (view) {
@@ -229,7 +233,8 @@
                 "xml": exportViews,
                 "json": exportViews,
                 "txt": [],
-                "fasta": []
+                "fasta": [],
+                "xls": []
                 //"peff": []
             };
         };
