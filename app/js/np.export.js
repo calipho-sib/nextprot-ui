@@ -52,7 +52,7 @@
             $scope.views = exportService.templates[format];
             $scope.selectedView = $scope.views[0];
             allEntryTemplateValue = $scope.views[2]; //TODO make this a bit more clever "full-entry"?
-            $scope.isSubPartHidden = (format == 'fasta' || format == 'peff' || format == 'txt' || format == 'xls');
+            $scope.isSubPartHidden = (format == 'fasta' || format == 'peff' || format == 'txt');
         };
 
         $scope.setSelectedView = function (view) {
@@ -234,7 +234,7 @@
                 "json": exportViews,
                 "txt": [],
                 "fasta": [],
-                "xls": []
+                "xls": ["proteins","isoform"]
                 //"peff": []
             };
         };
