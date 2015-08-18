@@ -10,15 +10,15 @@
     <div id="collapse1" class="panel-collapse collapse menu-content in">
       <div class="panel-body" style="padding:0px">
         <ul class="nav nav-stacked prot-menu">
-          <li><a href="javascript:void(0)" >Function <i class="icon-wrench"></i></a></li>
-          <li><a href="javascript:void(0)" >Medical  <i class="icon-wrench"></i></a></li>
-          <li><a href="javascript:void(0)" >Expression  <i class="icon-wrench"></i></a></li>
-          <li><a href="javascript:void(0)" >Interactions  <i class="icon-wrench"></i></a></li>
-          <li><a href="javascript:void(0)" >Localisation  <i class="icon-wrench"></i></a></li>
-          <li ng-class="activePage('sequence')"><a href="/entry/{{widgetEntry}}/view/sequence" data-toggle="pill">Sequence</a></li>
-          <li ng-class="activePage('proteomics')"><a href="/entry/{{widgetEntry}}/view/proteomics" data-toggle="pill">Proteomics</a></li>
-          <li ng-class="activePage('structures')"><a href="/entry/{{widgetEntry}}/view/structures" data-toggle="pill">Structures</a></li>
-          <li><a href="javascript:void(0)" data-toggle="pill">Identifiers  <i class="icon-wrench"></i></a></li>
+          <li><a href="/entry/{{widgetEntry}}">Function</a></li>
+          <li ng-class="activePage('medical')"><a href="/entry/{{widgetEntry}}/medical" data-toggle="pill">Medical</a></li>
+          <li ng-class="activePage('expression')"><a href="/entry/{{widgetEntry}}/expression" data-toggle="pill">Expression</a></li>
+          <li ng-class="activePage('interactions')"><a href="/entry/{{widgetEntry}}/interactions" data-toggle="pill">Interactions</a></li>
+          <li ng-class="activePage('localisation')"><a href="/entry/{{widgetEntry}}/localisation" data-toggle="pill">Localisation</a></li>
+          <li ng-class="activePage('sequence')"><a href="/entry/{{widgetEntry}}/view/sequence" data-toggle="pill">Sequence <i class="icon-wrench"></i></a></li>
+          <li ng-class="activePage('proteomics')"><a href="/entry/{{widgetEntry}}/view/proteomics" data-toggle="pill">Proteomics <i class="icon-wrench"></i></a></li>
+          <li ng-class="activePage('structures')"><a href="/entry/{{widgetEntry}}/view/structures" data-toggle="pill">Structures <i class="icon-wrench"></i></a></li>
+          <li ng-class="activePage('identifiers')"><a href="/entry/{{widgetEntry}}/identifiers" data-toggle="pill">Identifiers</a></li>
           <li ng-class="activePage('peptides')"><a href="/entry/{{widgetEntry}}/view/peptides" data-toggle="pill">Peptides</a></li>
         </ul>
       </div>
