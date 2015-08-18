@@ -26,8 +26,8 @@ function searchConfig($routeProvider) {
 
 //
 // implement main application controller
-SearchCtrl.$inject=['Tracker', '$scope','$rootScope','$location', '$routeParams','$window', 'Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService'];
-function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $window, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService) {
+SearchCtrl.$inject=['Tracker', '$scope','$rootScope','$location', '$routeParams','$document', 'Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService', '$log'];
+function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $document, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService, $log) {
 
     // scope from template
     $scope.Search = Search;
@@ -42,6 +42,19 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $windo
         readOnly: false,
         mode: 'sparql'
     };
+
+    function resetDocumentTitle() {
+
+        if($location.path()==='/') {
+            $document[0].title = "neXtProt Search";
+        }
+        else if($location.path()==='/user/protein/lists') {
+            $document[0].title = "neXtProt - My lists";
+        }
+        else if($location.path()==='/user/queries') {
+            $document[0].title = "neXtProt - My queries";
+        }
+    }
 
     //
     // update entity documentation on path change
@@ -65,8 +78,9 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $windo
             $scope.currentSearch = $routeParams.query;
         }
 
-        if($location.path()==='/'){
-            $window.document.title = "neXtProt Search";
+        resetDocumentTitle();
+
+        if($location.path()==='/') {
             $scope.reset();
             Search.clear();
         }
@@ -99,7 +113,7 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $windo
           }
         });
 
-    }
+    };
 
     $scope.logout = function () {
         $scope.reset();

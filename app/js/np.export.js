@@ -35,6 +35,10 @@
                 if (index > -1) {
                     singleEntryFormats.splice(index, 1);
                 }
+                index = singleEntryFormats.indexOf('xls');
+                if (index > -1) {
+                    singleEntryFormats.splice(index, 1);
+                }
             }
         })();
 
@@ -229,7 +233,8 @@
                 "xml": exportViews,
                 "json": exportViews,
                 "txt": [],
-                "fasta": []
+                "fasta": [],
+                "xls": ["proteins","isoform"]
                 //"peff": []
             };
         };
