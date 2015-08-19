@@ -26,11 +26,10 @@
                         <p style="color:grey;font-size:0.8em;font-weight:600;margin-top:5px;margin-bottom: 5px;">
                             REF</p>
                     </div>
-                    <div style="display:inline-block;margin-top:15px; margin-left:30px;vertical-align:top;">
-                        <span class="icon icon-star-empty" aria-hidden="true"
-                              style="padding-left:20px;font-size:2em;"></span>
-                        <span class="icon icon-tag" aria-hidden="true"
-                              style="padding-left:40px;font-size:1.5em;"></span>
+                    <div style="display:inline-block;margin-top:15px; margin-left:30px;vertical-align:top;" >
+                        <a title="see it in a separated window" target="_blank" ng-href="{{widgetURL}}">
+                            <span class="icon icon-resize-full" aria-hidden="true" style="padding-left:40px;font-size:1.5em;"></span>
+                        </a>
                     </div>
                 </div>
                 <div class="col-md-3 pull-right" style="margin-top: 15px;margin-right: 50px; ">
@@ -57,29 +56,3 @@
         </div>
     </div>
 </div>
-
-<!--<ul class="nav nav-list" style="line-height:5px; margin:10px">-->
-    <!--<li class="nav-header ng-binding">Protein</li>-->
-    <!--<li ng-class="activePage('/entry/')"><a href="/entry/{{widgetEntry}}">&nbsp;Function</a></li>-->
-    <!--<li ng-class="activePage('medical')"><a href="/entry/{{widgetEntry}}/medical">&nbsp;Medical</a></li>-->
-    <!--<li ng-class="activePage('expression')"><a href="/entry/{{widgetEntry}}/expression">&nbsp;Expression</a></li>-->
-    <!--<li ng-class="activePage('interactions')"><a href="/entry/{{widgetEntry}}/interactions">&nbsp;Interactions</a></li>-->
-    <!--<li ng-class="activePage('localisation')"><a href="/entry/{{widgetEntry}}/localisation">&nbsp;Localisation</a></li>-->
-    <!--<li ng-class="activePage('sequence')"><a href="/entry/{{widgetEntry}}/view/sequence">&nbsp;Sequence (new)</a></li>-->
-    <!--<li ng-class="activePage('proteomics')"><a href="/entry/{{widgetEntry}}/view/proteomics">&nbsp;Proteomics (new)</a></li>-->
-    <!--<li ng-class="activePage('structures')"><a href="/entry/{{widgetEntry}}/view/structures">&nbsp;Structures (new)</a></li>-->
-    <!--<li ng-class="activePage('identifiers')"><a href="/entry/{{widgetEntry}}/identifiers">&nbsp;Identifiers </a></li>-->
-    <!--<li ng-class="activePage('peptides')"><a href="/entry/{{widgetEntry}}/view/peptides">&nbsp;Peptides (new)</a></li>-->
-
-    <!--<li class="nav-header ng-binding">Gene</li>-->
-    <!--<li ng-class="activePage('exons')"><a href="/entry/{{widgetEntry}}/exons">&nbsp;Exons</a></li>-->
-    <!--<li ng-class="activePage('gene_identifiers')"><a href="/entry/{{widgetEntry}}/gene_identifiers">&nbsp;Identifiers</a></li>-->
-    <!--<li class="nav-header ng-binding">Community viewers</li>-->
-    <!--<li ng-class="activePage('ddtxra/75545ffaa0c6db260a40')"><a href="/entry/{{widgetEntry}}/viewer/ddtxra/75545ffaa0c6db260a40">&nbsp;Secondary structure</a></li>-->
-    <!--<li class="nav-header ng-binding">References</li>-->
-    <!--<li ng-class="activePage('publications')"><a href="/entry/{{widgetEntry}}/publications">&nbsp;Curated publications</a></li>-->
-    <!--<li ng-class="activePage('computed_references')"><a href="/entry/{{widgetEntry}}/computed_references">&nbsp;Additional publications</a></li>-->
-    <!--<li ng-class="activePage('patents')"><a href="/entry/{{widgetEntry}}/patents">&nbsp;Patents</a></li>-->
-    <!--<li ng-class="activePage('submissions')"><a href="/entry/{{widgetEntry}}/submissions">&nbsp;Submissions</a></li>-->
-    <!--<li ng-class="activePage('web')"><a href="/entry/{{widgetEntry}}/web">&nbsp;Web resources</a></li>-->
-<!--</ul>-->

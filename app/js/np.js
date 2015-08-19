@@ -32,7 +32,7 @@
     //var apiBase = "http://localhost:8080/nextprot-api-web"; //default
     var apiBase = "http://dev-api.nextprot.org"; //default
 
-    var np1Base = "http://uat-web1";
+    var np1Base = "https://www.nextprot.org";
 
 
     if (nxEnvironment.indexOf("NX_") == -1) // means an environment has been set, sed command has done some magic tricks

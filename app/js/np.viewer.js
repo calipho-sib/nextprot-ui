@@ -27,6 +27,7 @@
             .when('/view/:gv1/:gv2/:gv3', gv)
 
             //ENTRY VIEWS
+            .when('/entry/:entry/:element', {templateUrl: '/partials/viewer/viewer-entry-np1.html'})
             .when('/entry/:entry/view/:ev1', ev)
             .when('/entry/:entry/view/:ev1/:ev2', ev)
             .when('/entry/:entry/view/:ev1/:ev2/:ev3', ev)
@@ -36,7 +37,6 @@
             .when('/entry/:entry/:repo/:user/:branch/:f1/:f2', ev)
             .when('/entry/:entry/:repo/:user/:branch/:f1/:f2/:f3', ev)
             .when('/entry/:entry/:repo/:user/:branch/:f1/:f2/:f3/:f4', ev)
-            .when('/entry/:entry/:element', {templateUrl: '/partials/viewer/viewer-np1.html'})
             .when('/entry/:entry/', {templateUrl: '/partials/viewer/viewer-entry-np1.html'})
             .when('/term/:termid/', {templateUrl: '/partials/viewer/viewer-term-np1.html'})
 

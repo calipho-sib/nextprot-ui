@@ -42,6 +42,10 @@
                                ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i>
                           Details</a> </span>
 
+                |
+
+                <a ng-href="entry/{{doc.id}}/view/peptides" title="Peptide viewer">new interface</a>
+
                 | <!-- Export entry -->
                 <a bs-modal="'partials/export/export-modal.html'" href="#" title="Export entry"
                    ng-click="setExportParameters(doc.id)"> <i class="icon-download"></i></a>
