@@ -56,7 +56,9 @@
         }
 
         $scope.activePage = function (page) {
-            if ($routeParams.ev1 == page)  return 'active'
+            if ($routeParams.ev1 == page)  return 'active';
+            if ($routeParams.element == page)  return 'active'
+
             else return '';
         }
 
@@ -70,7 +72,8 @@
 
             if ($routeParams.ev1) { //Entry view
 
-                var url = "https://rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.ev1;
+
+                var url = window.location.protocol + "//rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.ev1;
                 if($routeParams.ev2) url += "/" + $routeParams.ev2;
                 if($routeParams.ev3) url += "/" + $routeParams.ev3;
                 url += "/app/index.html" ;

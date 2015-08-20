@@ -258,3 +258,19 @@ main {
 .sidemenu{
     background-color: #E7E7E7;
 }
+
+.entrySummaryBoxes > div {text-align: center;margin-top:15px;margin-left:20px;display: inline-block;}
+
+.entrySummaryBoxes p{
+    color:grey;
+    font-size:0.8em;
+    font-weight:600;
+    margin-top:5px;
+    margin-bottom: 5px;
+}
+
+.entrySummaryBoxes span{color:white;font-weight:900;font-size:13px;}
+
+#entrySummaryIso {background-color:lightgrey;padding:4px 8px;}
+#entrySummaryGene {background-color:#0F8292;padding:4px 3px;}
+#entrySummaryRef {background-color:#CFB915;padding:4px 3px;}
