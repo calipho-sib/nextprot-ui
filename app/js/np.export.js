@@ -52,7 +52,7 @@
             $scope.views = exportService.templates[format];
             $scope.selectedView = $scope.views[0];
             allEntryTemplateValue = $scope.views[2]; //TODO make this a bit more clever "full-entry"?
-            $scope.isSubPartHidden = (format == 'fasta' || format == 'peff' || format == 'txt');
+            $scope.isSubPartHidden = (exportService.templates[format].length == 0);
         };
 
         $scope.setSelectedView = function (view) {
@@ -91,7 +91,6 @@
                 if ($routeParams.order)
                     exportURL += "&order=" + $routeParams.order;
 
-
                 return exportURL;
 
             } else { // export one entry
@@ -111,132 +110,35 @@
     }
 
 
-    exportService.$inject = ['$resource', 'config'];
-    function exportService($resource, config) {
+    exportService.$inject = ['config', '$http', 'flash', '$log'];
+    function exportService(config, $http, flash, $log) {
 
         var ExportService = function () {
 
+            var self = this;
             this.userQuery = null;
             this.userList = null;
-            this.searchQuery = null;
 
             this.exportObjectType = null;
-            this.exportTitle = null;
             this.exportObjectIdentifier = null;
 
+            $http.get(config.api.API_URL+'/export/templates.json')
+                .success(function (result) {
 
-            //TODO this is a bit ugly, it should request the api (be careful with multiple calls though)
-            var exportViews = [
-                "accession",
-                "overview",
-                "full-entry",
-                "annotation",
-                "publication",
-                "xref",
-                "keyword",
-                "identifier",
-                "chromosomal-location",
-                "genomic-mapping",
-                "interaction",
-                "isoform",
-                "antibody",
-                "peptide",
-                "srm-peptide-mapping",
-                "-positional-annotation",
-                "--region",
-                "---compositionally-biased-region",
-                "---repeat",
-                "---short-sequence-motif",
-                "---miscellaneous-region",
-                "---domain",
-                "---zinc-finger-region",
-                "---nucleotide-phosphate-binding-region",
-                "---dna-binding-region",
-                "---interacting-region",
-                "---calcium-binding-region",
-                "---coiled-coil-region",
-                "--non-consecutive-residue",
-                "--variant",
-                "--mutagenesis",
-                "--sequence-conflict",
-                "--ptm",
-                "---ptm-info",
-                "---lipidation-site",
-                "---glycosylation-site",
-                "---disulfide-bond",
-                "---modified-residue",
-                "---selenocysteine",
-                "---cross-link",
-                "--non-terminal-residue",
-                "--variant-info",
-                "--secondary-structure",
-                "---beta-strand",
-                "---helix",
-                "---turn",
-                "--domain-info",
-                "--processing-product",
-                "---peroxisome-transit-peptide",
-                "---mature-protein",
-                "---cleavage-site",
-                "---signal-peptide",
-                "---maturation-peptide",
-                "---initiator-methionine",
-                "---mitochondrial-transit-peptide",
-                "--site",
-                "---miscellaneous-site",
-                "---binding-site",
-                "---metal-binding-site",
-                "---active-site",
-                "--topology",
-                "---topological-domain",
-                "---intramembrane-region",
-                "---transmembrane-region",
-                "--mapping",
-                "---pdb-mapping",
-                "-general-annotation",
-                "--enzyme-classification",
-                "--miscellaneous",
-                "--caution",
-                "--sequence-caution",
-                "--interaction",
-                "---binary-interaction",
-                "---small-molecule-interaction",
-                "---cofactor",
-                "---enzyme-regulation",
-                "---interaction-info",
-                "--keyword",
-                "---uniprot-keyword",
-                "--medical",
-                "---disease",
-                "---allergen",
-                "---pharmaceutical",
-                "--induction",
-                "--function",
-                "---catalytic-activity",
-                "---function-info",
-                "---go-molecular-function",
-                "---pathway",
-                "---go-biological-process",
-                "--cellular-component",
-                "---go-cellular-component",
-                "---subcellular-location",
-                "---subcellular-location-note",
-                "--expression",
-                "---expression-info",
-                "---developmental-stage-info",
-                "---expression-profile",
-                "-name",
-                "--family-name"
-            ];
-
-            this.templates = {
-                "xml": exportViews,
-                "json": exportViews,
-                "txt": [],
-                "fasta": [],
-                "xls": ["proteins","isoform"]
-                //"peff": []
-            };
+                    self.templates = {
+                        "xml": result['xml'],
+                        "json": result['xml'],
+                        "txt": [],
+                        "fasta": [],
+                        "xls": ["proteins","isoform"]
+                        //"peff": []
+                    };
+                })
+                .error(function (data, status) {
+                    var message = status+": cannot access views from '"+config.api.API_URL+"/export/templates.json'";
+                    $log.error(message);
+                    flash("alert-info", message);
+                });
         };
 
         ExportService.prototype.setExportEntry = function (entry) {
@@ -250,7 +152,6 @@
             this.userList = null;
             this.searchQuery = null;
         };
-
 
         ExportService.prototype.setExportParameters = function (params) {
 
