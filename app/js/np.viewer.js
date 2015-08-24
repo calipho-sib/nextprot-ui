@@ -102,7 +102,7 @@
 
             }else if ($routeParams.gv1) { //Global view
 
-                var url = "https://rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.gv1;
+                var url = window.location.protocol + "//rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.gv1;
                 if($routeParams.gv2) url += "/" + $routeParams.gv2;
                 if($routeParams.gv3) url += "/" + $routeParams.gv3;
                 url += "/app/index.html" ;
@@ -113,7 +113,7 @@
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
 
             } else if ($routeParams.repo) { // github repository
-                var url = "https://rawgit.com/" + $routeParams.repo + "/" + $routeParams.user + "/" + $routeParams.branch + "/" + $routeParams.f1;
+                var url = window.location.protocol + "//rawgit.com/" + $routeParams.repo + "/" + $routeParams.user + "/" + $routeParams.branch + "/" + $routeParams.f1;
                 //append if they exist
                 if($routeParams.f2){
                     url += "/" + $routeParams.f2;
@@ -128,7 +128,10 @@
                 url += "?nxentry=" + $routeParams.entry;
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
             } else if ($routeParams.gistusr && $routeParams.gistid) {
-                $scope.widgetURL = $sce.trustAsResourceUrl("http://rawgit.com/" + $routeParams.gistusr + "/" + $routeParams.gistid + "/raw/index.html?nxentry=" + $routeParams.entry);
+                var url = window.location.protocol + "//bl.ocks.org/"  + $routeParams.gistusr + "/raw/" + $routeParams.gistid + "?nxentry=" + $routeParams.entry;
+                $scope.widgetURL = $sce.trustAsResourceUrl(url);
+                $scope.githubURL = window.location.protocol + "//bl.ocks.org/"  + $routeParams.gistusr + $routeParams.gistid;
+                $scope.externalURL = $sce.trustAsResourceUrl(url);
             } else { //nextprot
 
                 $scope.githubURL = null;
