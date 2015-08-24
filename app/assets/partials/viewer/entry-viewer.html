@@ -6,6 +6,7 @@
         <div class="col-md-10" style="height:50px;">
             <div class="row" style="height:inherit;background-color:white;border-bottom: 1px solid #B6B6B6;">
                 <div class="col-md-4 entrySummaryBoxes">
+
                     <div>
                         <span id="entrySummaryIso">{{entryProps.isoformCount}}</span><p>ISO</p>
                     </div>
@@ -46,7 +47,7 @@
             <div ng-include="'partials/viewer/viewer-side-bar.html'"></div>
         </div>
         <div class="col-sm-10" style="height:100%;padding:0px;box-shadow: -1px 0px 2px -1px #888;">
-            <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%" style="border: 0; min-height: 800px; background-color: white"></iframe>
+            <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%" style="border: 0; min-height: 800px; background-color: white; "></iframe>
             <script>iFrameResize({log:false})</script>
         </div>
         <div ng-if="githubURL" class="pull-right" style="margin:10px;">

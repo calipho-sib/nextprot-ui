@@ -71,9 +71,9 @@
                }
            }
 
-            if ($routeParams.ev1 == page)  return 'active';
             if ($routeParams.element == page)  return 'active'
-
+            if ("view/" + $routeParams.ev1 == page)  return 'active';
+            if (("viewer/" + $routeParams.gistusr + "/" + $routeParams.gistid) == page)  return 'active';
 
             else return '';
         }
