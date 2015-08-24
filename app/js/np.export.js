@@ -5,7 +5,6 @@
         .factory('exportService', exportService)
         .controller('ExportCtrl', ExportCtrl);
 
-
     ExportCtrl.$inject = ['Tracker', '$scope', '$routeParams', 'config', 'exportService'];
     function ExportCtrl(Tracker, $scope, $routeParams, config, exportService) {
 
@@ -64,17 +63,17 @@
             if (closeModal) $scope.dismiss();
         };
 
+
+
+
         $scope.getFileExportURL = function () {
 
             //multiple entries
             if ($scope.export.exportObjectType) {
 
                 var exportURL = config.api.API_URL + "/export/entries";
-                if ($scope.selectedView && ($scope.selectedView !== 'full-entry')) {
-                    exportURL += "/" + $scope.selectedView;
-                }
+                exportURL += _addSuffixURLSubPart($scope.selectedView, $scope.selectedFormat);
 
-                exportURL += "." + $scope.selectedFormat;
                 exportURL += "?" + $scope.export.exportObjectType + "=" + window.encodeURIComponent($scope.export.exportObjectIdentifier);
 
                 //TODO
@@ -95,11 +94,9 @@
             } else { // export one entry
 
                 var exportURL = config.api.API_URL + "/entry";
+
                 exportURL += "/" + $scope.export.exportObjectIdentifier;
-                if ($scope.selectedView && ($scope.selectedView !== 'full-entry')) {
-                    exportURL += "/" + $scope.selectedView;
-                }
-                exportURL += "." + $scope.selectedFormat;
+                exportURL += _addSuffixURLSubPart($scope.selectedView, $scope.selectedFormat);
                 return exportURL;
             }
         };
@@ -176,4 +173,18 @@
 
         return new ExportService();
     }
+
+
+
+    // PRIVATE METHODS /////////////////////////////////////////
+    function _addSuffixURLSubPart (subpart, format){
+        var suffix = "";
+        if (subpart && (subpart !== 'full-entry')) {
+            suffix += "/" + subpart;
+        }
+        suffix += "." + format;
+        return suffix;
+    }
+
+
 })(angular); //global variable
