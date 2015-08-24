@@ -246,14 +246,19 @@ a:focus {
     src: url('../font/HelveticaNeue-Light.otf');
 }
 main {
-
 }
+
+#result {
+    min-height: 400px;
+    background-color: #ffffff;
+}
+
 .nomarginshift{
     margin-left:0px;
     margin-right:0px;
 }
 .fullHeight{
-    height:80vh;
+    min-height: 800px;
 }
 .sidemenu{
     background-color: #E7E7E7;
