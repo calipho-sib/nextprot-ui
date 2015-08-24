@@ -96,6 +96,8 @@
                 $scope.githubURL = url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/");
                 url += "?nxentry=" + $routeParams.entry;
 
+                $scope.externalURL = $sce.trustAsResourceUrl(url) + "&inputOption=true";
+
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
 
             }else if ($routeParams.gv1) { //Global view
@@ -106,6 +108,7 @@
                 url += "/app/index.html" ;
                 $scope.githubURL = url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/");
                 url += "?nxentry=" + $routeParams.entry;
+
 
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
 
@@ -151,6 +154,8 @@
                  * np1Params: params to pass to NP1
                  */
                 var np1Params = "?np2css=" + np2css + "&np2ori=" + np2ori;
+
+                $scope.externalURL = np1Base + $location.$$path;
 
                 $scope.widgetURL = $sce.trustAsResourceUrl(np1Base + $location.$$path + np1Params);
             }
