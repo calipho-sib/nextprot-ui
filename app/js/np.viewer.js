@@ -65,7 +65,7 @@
 
         $scope.activePage = function (page) {
 
-           if(angular.equals({'entry': $routeParams.entry},  $routeParams)){
+           if(angular.equals({'entry': $routeParams.entry},  $routeParams)){ // Page function
                if(page === 'function') {
                    return 'active';
                }

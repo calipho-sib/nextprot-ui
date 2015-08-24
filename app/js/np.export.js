@@ -9,7 +9,6 @@
     ExportCtrl.$inject = ['Tracker', '$scope', '$routeParams', 'config', 'exportService'];
     function ExportCtrl(Tracker, $scope, $routeParams, config, exportService) {
 
-        var allEntryTemplateValue = null;
         var multiEntryFormats = null;
         var singleEntryFormats = null;
 
@@ -51,7 +50,6 @@
             $scope.selectedFormat = format;
             $scope.views = exportService.templates[format];
             $scope.selectedView = $scope.views[0];
-            allEntryTemplateValue = $scope.views[2]; //TODO make this a bit more clever "full-entry"?
             $scope.isSubPartHidden = (exportService.templates[format].length == 0);
         };
 
@@ -72,9 +70,10 @@
             if ($scope.export.exportObjectType) {
 
                 var exportURL = config.api.API_URL + "/export/entries";
-                if ($scope.selectedView !== allEntryTemplateValue) {
+                if ($scope.selectedView && ($scope.selectedView !== 'full-entry')) {
                     exportURL += "/" + $scope.selectedView;
                 }
+
                 exportURL += "." + $scope.selectedFormat;
                 exportURL += "?" + $scope.export.exportObjectType + "=" + window.encodeURIComponent($scope.export.exportObjectIdentifier);
 
@@ -97,7 +96,7 @@
 
                 var exportURL = config.api.API_URL + "/entry";
                 exportURL += "/" + $scope.export.exportObjectIdentifier;
-                if ($scope.selectedView !== allEntryTemplateValue) {
+                if ($scope.selectedView && ($scope.selectedView !== 'full-entry')) {
                     exportURL += "/" + $scope.selectedView;
                 }
                 exportURL += "." + $scope.selectedFormat;
