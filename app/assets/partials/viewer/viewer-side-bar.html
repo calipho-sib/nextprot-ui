@@ -10,7 +10,7 @@
     <div id="collapse1" class="panel-collapse -collapse menu-content in">
       <div class="panel-body" style="padding:0px">
         <ul class="nav nav-stacked prot-menu">
-          <li><a href="/entry/{{widgetEntry}}">Function</a></li>
+          <li ng-class="activePage('function')"><a href="/entry/{{widgetEntry}}">Function</a></li>
           <li ng-class="activePage('medical')"><a href="/entry/{{widgetEntry}}/medical">Medical</a></li>
           <li ng-class="activePage('expression')"><a href="/entry/{{widgetEntry}}/expression">Expression</a></li>
           <li ng-class="activePage('interactions')"><a href="/entry/{{widgetEntry}}/interactions">Interactions</a></li>
