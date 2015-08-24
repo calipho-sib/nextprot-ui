@@ -43,12 +43,20 @@
     }
 
 
-    ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'entryProperties'];
-    function ViewerCtrl($scope, $sce, $routeParams, $location, config, entryProperties) {
+    ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$route', '$location', 'config', 'entryProperties', 'exportService'];
+    function ViewerCtrl($scope, $sce, $routeParams, $route, $location, config, entryProperties, exportService) {
+
+        $scope.externalURL = null;
         $scope.widgetEntry = null;
         $scope.githubURL = null;
         $scope.simpleSearchText = "";
         $scope.entryProps = entryProperties.currentEntry();
+
+        $scope.entryProps.entryName = $route.current.params.entry;
+
+        $scope.setExportEntry = function (identifier) {
+                exportService.setExportEntry(identifier);
+        };
 
         $scope.makeSimpleSearch = function () {
             $location.search("query", $scope.simpleSearchText);
@@ -111,6 +119,8 @@
             } else if ($routeParams.gistusr && $routeParams.gistid) {
                 $scope.widgetURL = $sce.trustAsResourceUrl("http://rawgit.com/" + $routeParams.gistusr + "/" + $routeParams.gistid + "/raw/index.html?nxentry=" + $routeParams.entry);
             } else { //nextprot
+
+                $scope.githubURL = null;
 
                 /*
                  np1Base: origin of NP1 http service, read from conf or set to localhost for dev/debug

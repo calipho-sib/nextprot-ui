@@ -26,14 +26,16 @@
                         </span>
                     </div>
                 </div>
+                <!-- Expand in new window -->
                 <div class="pull-right entrySummarylink">
                     <a title="see it in a separated window" target="_blank" ng-href="{{widgetURL}}&inputOption=true" style="color:grey;font-size:18px;">
                         <span class="icon icon-resize-full" aria-hidden="true"></span>
                     </a>
                 </div>
+                <!-- Download entry (pop-up opens) -->
                 <div class="pull-right entrySummarylink">
-                    <a title="see it in a separated window" target="_blank" ng-href="{{githubURL}}" style="color:grey;font-size:18px;">
-                        <span class="icon icon-github" aria-hidden="true"></span>
+                    <a bs-modal="'partials/export/export-modal.html'" href="#" title="Download entry"  ng-click="setExportEntry(widgetEntry)" title="Download entry" target="_blank" ng-href="{{widgetURL}}&inputOption=true" style="color:grey;font-size:18px;">
+                        <span class="icon icon-download" aria-hidden="true"></span>
                     </a>
                 </div>
             </div>
@@ -44,8 +46,13 @@
             <div ng-include="'partials/viewer/viewer-side-bar.html'"></div>
         </div>
         <div class="col-sm-10" style="height:100%;padding:0px;box-shadow: -1px 0px 2px -1px #888;">
-            <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%" style="border: 0"></iframe>
+            <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%" style="border: 0; min-height: 800px; background-color: white"></iframe>
             <script>iFrameResize({log:false})</script>
+        </div>
+        <div class="pull-right" style="margin:10px;">
+            <a title="Powered by GitHub" target="_blank" ng-href="{{githubURL}}&inputOption=true" style="color:grey;font-size: 18px">
+                <span class="icon icon-github" aria-hidden="true"></span>
+            </a>
         </div>
     </div>
 </div>

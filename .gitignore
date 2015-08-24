@@ -91,3 +91,4 @@ eagle.epf
 .idea/vcs.xml
 .idea/workspace.xml
 .idea
+npm-debug.log.*
