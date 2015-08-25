@@ -130,7 +130,7 @@
             } else if ($routeParams.gistusr && $routeParams.gistid) {
                 var url = window.location.protocol + "//bl.ocks.org/"  + $routeParams.gistusr + "/raw/" + $routeParams.gistid + "?nxentry=" + $routeParams.entry;
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
-                $scope.githubURL = window.location.protocol + "//bl.ocks.org/"  + $routeParams.gistusr + $routeParams.gistid;
+                $scope.githubURL = window.location.protocol + "//bl.ocks.org/"  + $routeParams.gistusr + "/" + $routeParams.gistid;
                 $scope.externalURL = $sce.trustAsResourceUrl(url);
             } else { //nextprot
 
