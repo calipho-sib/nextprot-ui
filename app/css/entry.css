@@ -309,3 +309,9 @@ main {
     vertical-align:top;
     margin-right:25px;
 }
+
+.disable-link {
+    font-size: 12px;
+    pointer-events: none;
+    cursor: default;
+}
