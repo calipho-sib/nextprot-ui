@@ -32,164 +32,141 @@
 <body ng-clock="" class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90"
       ng-controller="SearchCtrl" np-background="#main">
 
-<!-- Navbar ================================================== -->
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand navbar-logo" href="/"><img src="/img/np-logo.png">neXtProt Search</a>
+
+<header>
+
+    <div class='row'>
+        <div class="col-md-2">
+            <a href="http://search.nextprot.org/" title="Go to neXtProt home page">
+                <img class="np-logo header-logo" src="img/np-logo.png" alt="neXtProt logo">
+            </a>
         </div>
+        <div class="col-md-8">
+            <h1 id="header-title"><b>neXtProt</b> - Exploring the universe of human proteins</h1>
+        </div>
+        <div class="col-md-2">
+            <a href="http://www.isb-sib.ch/" target="_blank" title="Link to the SIB Swiss Institute of Bioinformatics">
+                <img class="sib-logo header-logo" src="img/sib_logo.gif" alt="SIB Swiss Institute of Bioinformatics">
+            </a>
+        </div>
+    </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="HelpCtrl">
-            <ul class="nav navbar-nav">
 
-                <!-- Ressources -->
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-expanded="false">Resources <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <!-- Learn -->
-                        <li ng-class=""><a href="{{'search' | getNeXtProtUrl}}" ng-click="routingOutside('ui')">Search</a></li>
-                        <li ng-class=""><a href="{{'snorql' | getNeXtProtUrl}}" ng-click="routingOutside('snorql')">Snorql</a></li>
-                        <li ng-class=""><a href="{{'api' | getNeXtProtUrl}}" ng-click="routingOutside('api')">API</a></li>
-                    </ul>
-                </li>
+    <!-- Navbar ================================================== -->
+    <nav class="nav nav-pills" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="HelpCtrl">
+                <ul class="nav navbar-nav">
+
+                    <!-- Ressources -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">Resources <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <!-- Learn -->
+                            <li ng-class=""><a href="{{'search' | getNeXtProtUrl}}" ng-click="routingOutside('ui')">Search</a></li>
+                            <li ng-class=""><a href="{{'snorql' | getNeXtProtUrl}}" ng-click="routingOutside('snorql')">Snorql</a></li>
+                            <li ng-class=""><a href="{{'api' | getNeXtProtUrl}}" ng-click="routingOutside('api')">API</a></li>
+                        </ul>
+                    </li>
 
                     <!-- Help dropdown -->
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                       aria-expanded="false">Help <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <!-- Learn -->
-                        <li ng-class="{'active':isActiveDoc('/help/learn-simple-search')}"><a
-                                href="/help/learn-simple-search">Simple search</a></li>
-                        <li ng-class="{'active':isActiveDoc('/help/learn-advanced-search')}"><a
-                                href="/help/learn-advanced-search">Advanced search</a></li>
-                        <li><a href="#"></a></li>
-                        <li ng-class="{'active':isActiveDoc('/help/search-results')}"><a
-                                href="/help/learn-search-results">Search results</a></li>
-                        <li><a href="#"></a></li>
-                        <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}"><a
-                                ng-href="/help/doc/introduction">RDF help</a></li>
-                        <li><a href="#"></a></li>
-                        <li class="divider"></li>
-                        <li ng-class="{'active':isActiveDoc('/help/learn-protein-lists')}"><a
-                                href="/help/learn-protein-lists">Protein Lists</a></li>
-                        <li class="divider"></li>
-                        <li ng-class="{'active':isActiveDoc('/help/learn-developer-api')}"><a
-                                href="/help/learn-developer-api">Developer API</a></li>
-                       <!--  <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li> -->
-                        <li class="divider"></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">Help <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <!-- Learn -->
+                            <li ng-class="{'active':isActiveDoc('/help/learn-simple-search')}"><a
+                                    href="/help/learn-simple-search">Simple search</a></li>
+                            <li ng-class="{'active':isActiveDoc('/help/learn-advanced-search')}"><a
+                                    href="/help/learn-advanced-search">Advanced search</a></li>
+                            <li><a href="#"></a></li>
+                            <li ng-class="{'active':isActiveDoc('/help/search-results')}"><a
+                                    href="/help/learn-search-results">Search results</a></li>
+                            <li><a href="#"></a></li>
+                            <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}"><a
+                                    ng-href="/help/doc/introduction">RDF help</a></li>
+                            <li><a href="#"></a></li>
+                            <li class="divider"></li>
+                            <li ng-class="{'active':isActiveDoc('/help/learn-protein-lists')}"><a
+                                    href="/help/learn-protein-lists">Protein Lists</a></li>
+                            <li class="divider"></li>
+                            <li ng-class="{'active':isActiveDoc('/help/learn-developer-api')}"><a
+                                    href="/help/learn-developer-api">Developer API</a></li>
+                            <!--  <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li> -->
+                            <li class="divider"></li>
 
-                        <!-- FAQ
-                        <li ng-class="{'active':isActiveDoc('/pages/faq')}"><a href="/pages/faq">FAQ</a></li>
-                        -->
+                            <!-- FAQ
+                            <li ng-class="{'active':isActiveDoc('/pages/faq')}"><a href="/pages/faq">FAQ</a></li>
+                            -->
 
-                        <!-- News -->
-                        <li ng-class="{'active':isActiveDoc('/what-is-new')}"><a
-                                href="/what-is-new">What's new?</a></li>
-                        <!-- Known issues -->
-                        <li ng-class="{'active':isActiveDoc('/known-issues')}"><a
-                                href="/known-issues">Known issues</a></li>
+                            <!-- News -->
+                            <li ng-class="{'active':isActiveDoc('/what-is-new')}"><a
+                                    href="/what-is-new">What's new?</a></li>
+                            <!-- Known issues -->
+                            <li ng-class="{'active':isActiveDoc('/known-issues')}"><a
+                                    href="/known-issues">Known issues</a></li>
 
-                        <!-- Found a bug -->
-                        <li ng-class=""><a target="_blank" href="https://github.com/calipho-sib/nextprot-ui/issues">Found
-                            a bug?<i class="icon-github"></i></a></li>
-                    </ul>
-                </li>
+                            <!-- Found a bug -->
+                            <li ng-class=""><a target="_blank" href="https://github.com/calipho-sib/nextprot-ui/issues">Found
+                                a bug?<i class="icon-github"></i></a></li>
+                        </ul>
+                    </li>
 
-                <li ng-class=""><a href="/about">About</a></li>
-                <li ng-class=""><a href="mailto:support@nextprot.org?subject=[neXtProt%20Search]">Contact us</a></li>
+                    <li ng-class=""><a href="/about">About</a></li>
+                    <li ng-class=""><a href="mailto:support@nextprot.org?subject=[neXtProt%20Search]">Contact us</a></li>
 
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
 
-                <li>
-                    <a title="My lists" ng-click="goToUser('lists')" type="button" class="link"><i class="icon-list-alt"></i></a>
-                </li>
+                    <li>
+                        <a title="My lists" ng-click="goToUser('lists')" type="button" class="link"><i class="icon-list-alt"></i></a>
+                    </li>
 
-                <li>
-                    <a title="My queries" ng-click="goToUser('queries')" type="button" class="link"><i class="icon-star"></i></a>
-                </li>
-
-
-                <!-- login button -->
-                <li ng-if="!user.profile.email">
-                    <a href='' type="button" class="link" ng-click="login()">Login</a>
-                </li>
-
-                <!-- once logged in user resources -->
-                <li class="dropdown" ng-if="user.profile.email" ng-cloak>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.profile.name ||
-                        user.profile.email}}<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <!--<li><a href="/user">My profile</a></li>-->
-                        <li><a href="/user/protein/lists">My protein lists</a></li>
-                        <li><a href="/user/queries">My queries</a></li>
-                        <!-- <li><a href="/user/applications">My applications</a></li>-->
-                        <li class="divider"></li>
-                        <li><a href="#" ng-click="logout()">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
+                    <li>
+                        <a title="My queries" ng-click="goToUser('queries')" type="button" class="link"><i class="icon-star"></i></a>
+                    </li>
 
 
-</nav>
+                    <!-- login button -->
+                    <li ng-if="!user.profile.email">
+                        <a href='' type="button" class="link" ng-click="login()">Login</a>
+                    </li>
 
-<!--
-
-<nav class="navbar navbar-default navbar-fixed-top " role="navigation">
-    <div class="container-fluid">
-      <div class="navbar-header">
-          <div class="navbar-header"><a class="navbar-brand" href="#" ng-click="reset()">neXtProt</a></div>
-            <a class="btn navbar-btn btn-default" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-
-            <div class="collapse navbar-collapse" id="main-menu">
-                <ul class="nav navbar-nav" id="main-menu-left">
-                    <li><a ng-href="#" ng-click="reset()">Home</a></li>
-                    <li><a href="proteins/lists">Lists &amp; Export</a>
-                    </li><li><a href="rdf-help">RDF Help</a>
-                    </li><li><a href="api-info">API Help</a>
-                </li></ul>
-
-                <div class="btn-group pull-right" ng-if="user.isAnonymous()">
-                    <a class="btn dropdown-toggle btn-default btn-sm" data-toggle="dropdown" href="">
-                        {{user.profile.name}}
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="user-profile">Profile</a></li>
-                        <li><a href="user-applications">Applications</a></li>
-                        <li><a href="#" ng-click="logout()">Logout</a></li>
-                    </ul>
-                </div>
-                <div class="btn-group pull-right" /*ng-if="!user.isAnonymous()"*/>
-                    <a class="btn dropdown-toggle btn-default btn-sm" data-toggle="dropdown" href="#" ng-click="login()">
-                        Login
-                    </a>
-                </div>
+                    <!-- once logged in user resources -->
+                    <li class="dropdown" ng-if="user.profile.email" ng-cloak>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.profile.name ||
+                            user.profile.email}}<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <!--<li><a href="/user">My profile</a></li>-->
+                            <li><a href="/user/protein/lists">My protein lists</a></li>
+                            <li><a href="/user/queries">My queries</a></li>
+                            <!-- <li><a href="/user/applications">My applications</a></li>-->
+                            <li class="divider"></li>
+                            <li><a href="#" ng-click="logout()">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
+            <!-- /.navbar-collapse -->
         </div>
-    </div>
-</div>
+        <!-- /.container-fluid -->
+    </nav>
 
--->
+</header>
+
 
 <div ng-show="message" class=" error ng-cloak" ng-cloak>
     <div class="np-alert alert alert-error alert-warning">{{Search.result.error}} {{message}}</div>
@@ -201,8 +178,8 @@
 ================================================== -->
 <div ng-if="isSearchBarVisible()" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
 
-
 <div id="main" class="container-fluid" ng-view="">
+
 </div>
 
 <div ng-include="'partials/footer.html'"></div>

@@ -1,3 +1,8 @@
+body {
+	padding-top: 90px;
+	min-height: 200px;
+}
+
 /* Removes the default 20px margin and creates some padding space for the indicators and controls */
 .carousel {
     margin-bottom: 0;
@@ -23,4 +28,64 @@
 }
 .carousel-indicators .active {
 background: #333333;
+}
+
+/* HEADER */
+header {
+	position: fixed;
+	top: 0;
+	display: inline-block;
+	background: #F7F8FA url("../img/sib_header_bkgd.png") repeat-x scroll left top;
+	height: 90px;
+	width: 100%;
+	color: #787878;
+	z-index: 1000;
+}
+
+#header-title {
+	font-size: 30px;
+	color: #777;
+	text-align: center;
+}
+
+img.header-logo {
+	margin-top: 8px;
+}
+
+img.np-logo {
+	height: 55px;
+	margin-left: 5%;
+}
+
+img.sib-logo {
+	height: 45px;
+	display: block;
+	margin-left: auto;
+	margin-right: 5%;
+}
+/* MENU (override bootstrap)*/
+.navbar-nav > li > a {
+	padding-top: 5px;
+	padding-bottom: 0;
+	color: #787878;
+}
+
+
+/* SECTIONS (commons properties)*/
+.info-section {
+	height: 240px;
+	padding: 0px 40px;
+}
+
+.info-section .section{
+	height: 220px;
+	padding: 10px;
+	margin-bottom: 20px;
+	background-color: white;
+	border: 1px solid #E3E3E3;
+	box-shadow: 0px 2px 5px #BBBBBB;
+}
+
+#main {
+	top: 90px;
 }

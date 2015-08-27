@@ -1,0 +1,21 @@
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: black;
+    height: 30px;
+    line-height: 30px;
+}
+
+footer, footer a, footer a:visited {
+    /*background-color: black;*/
+    color: #787C7C;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #FFF;
+}

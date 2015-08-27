@@ -233,6 +233,12 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
         }
     };
 
+    $scope.goToTop = function() {
+        // Set the location.hash to the id of the element you wish to scroll to.
+        $location.hash('top');
+        $anchorScroll();
+    };
+
     $scope.active = function (value, key) {
         if (key) {
             return ($location.search()[key] === value) ? ' active  ' : '';
