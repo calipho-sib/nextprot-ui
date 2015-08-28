@@ -34,23 +34,16 @@
 
 
 <header>
-
-    <div class='row'>
-        <div class="col-md-2">
-            <a href="http://search.nextprot.org/" title="Go to neXtProt home page">
-                <img class="np-logo header-logo" src="img/np-logo.png" alt="neXtProt logo">
-            </a>
-        </div>
-        <div class="col-md-8">
-            <h1 id="header-title"><b>neXtProt</b> - Exploring the universe of human proteins</h1>
-        </div>
-        <div class="col-md-2">
-            <a href="http://www.isb-sib.ch/" target="_blank" title="Link to the SIB Swiss Institute of Bioinformatics">
-                <img class="sib-logo header-logo" src="img/sib_logo.gif" alt="SIB Swiss Institute of Bioinformatics">
-            </a>
-        </div>
-    </div>
-
+    <!--TODO: change href to be send on www.nextprot.org-->
+    <a href="http://search.nextprot.org/" title="Go to neXtProt home page">
+        <img class="np-logo header-logo" src="img/np-logo.png" alt="neXtProt logo">
+    </a>
+    <h1 id="header-title"><b>neXtProt</b> - Exploring the universe of human proteins</h1>
+    <a href="http://www.isb-sib.ch/" target="_blank"
+       title="Link to the SIB Swiss Institute of Bioinformatics">
+        <img class="sib-logo header-logo" src="img/sib_logo.gif"
+             alt="SIB Swiss Institute of Bioinformatics">
+    </a>
 
     <!-- Navbar ================================================== -->
     <nav class="nav nav-pills" role="navigation">
@@ -64,23 +57,35 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <a class="navbar-brand" href="/"></a>
+
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="HelpCtrl">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"
+                 ng-controller="HelpCtrl">
                 <ul class="nav navbar-nav">
 
-                    <!-- Ressources -->
+                    <!-- Services dropdown -->
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">Resources <span class="caret"></span></a>
+                           aria-expanded="false">Services <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <!-- Learn -->
-                            <li ng-class=""><a href="{{'search' | getNeXtProtUrl}}" ng-click="routingOutside('ui')">Search</a></li>
-                            <li ng-class=""><a href="{{'snorql' | getNeXtProtUrl}}" ng-click="routingOutside('snorql')">Snorql</a></li>
-                            <li ng-class=""><a href="{{'api' | getNeXtProtUrl}}" ng-click="routingOutside('api')">API</a></li>
+                            <li ng-class=""><a href="{{'search' | getNeXtProtUrl}}"
+                                               ng-click="routingOutside('ui')">Search</a></li>
+                            <li ng-class=""><a href="{{'snorql' | getNeXtProtUrl}}"
+                                               ng-click="routingOutside('snorql')">Snorql</a></li>
+                            <li ng-class=""><a href="{{'api' | getNeXtProtUrl}}"
+                                               ng-click="routingOutside('api')">API</a></li>
                         </ul>
                     </li>
+
+                    <!-- Tools (for instance, blast) -->
+                    <!--<li ng-class=""><a href="/tools">Tools</a></li>-->
+
+                    <!-- Download -->
+                    <li ng-class=""><a href="/">Download</a></li>
 
                     <!-- Help dropdown -->
                     <li class="dropdown">
@@ -88,23 +93,29 @@
                            aria-expanded="false">Help <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <!-- Learn -->
-                            <li ng-class="{'active':isActiveDoc('/help/learn-simple-search')}"><a
-                                    href="/help/learn-simple-search">Simple search</a></li>
-                            <li ng-class="{'active':isActiveDoc('/help/learn-advanced-search')}"><a
-                                    href="/help/learn-advanced-search">Advanced search</a></li>
+                            <li ng-class="{'active':isActiveDoc('/help/learn-simple-search')}">
+                                <a href="/help/learn-simple-search">Simple search</a>
+                            </li>
+                            <li ng-class="{'active':isActiveDoc('/help/learn-advanced-search')}">
+                                <a href="/help/learn-advanced-search">Advanced search</a>
+                            </li>
                             <li><a href="#"></a></li>
-                            <li ng-class="{'active':isActiveDoc('/help/search-results')}"><a
-                                    href="/help/learn-search-results">Search results</a></li>
+                            <li ng-class="{'active':isActiveDoc('/help/search-results')}">
+                                <a href="/help/learn-search-results">Search results</a>
+                            </li>
                             <li><a href="#"></a></li>
-                            <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}"><a
-                                    ng-href="/help/doc/introduction">RDF help</a></li>
+                            <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}">
+                                <a ng-href="/help/doc/introduction">RDF help</a>
+                            </li>
                             <li><a href="#"></a></li>
                             <li class="divider"></li>
-                            <li ng-class="{'active':isActiveDoc('/help/learn-protein-lists')}"><a
-                                    href="/help/learn-protein-lists">Protein Lists</a></li>
+                            <li ng-class="{'active':isActiveDoc('/help/learn-protein-lists')}">
+                                <a href="/help/learn-protein-lists">Protein Lists</a>
+                            </li>
                             <li class="divider"></li>
-                            <li ng-class="{'active':isActiveDoc('/help/learn-developer-api')}"><a
-                                    href="/help/learn-developer-api">Developer API</a></li>
+                            <li ng-class="{'active':isActiveDoc('/help/learn-developer-api')}">
+                                <a href="/help/learn-developer-api">Developer API</a>
+                            </li>
                             <!--  <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li> -->
                             <li class="divider"></li>
 
@@ -113,30 +124,41 @@
                             -->
 
                             <!-- News -->
-                            <li ng-class="{'active':isActiveDoc('/what-is-new')}"><a
-                                    href="/what-is-new">What's new?</a></li>
+                            <li ng-class="{'active':isActiveDoc('/what-is-new')}">
+                                <a href="/what-is-new">What's new?</a>
+                            </li>
                             <!-- Known issues -->
-                            <li ng-class="{'active':isActiveDoc('/known-issues')}"><a
-                                    href="/known-issues">Known issues</a></li>
+                            <li ng-class="{'active':isActiveDoc('/known-issues')}">
+                                <a href="/known-issues">Known issues</a>
+                            </li>
 
                             <!-- Found a bug -->
-                            <li ng-class=""><a target="_blank" href="https://github.com/calipho-sib/nextprot-ui/issues">Found
-                                a bug?<i class="icon-github"></i></a></li>
+                            <li ng-class="">
+                                <a target="_blank" href="https://github.com/calipho-sib/nextprot-ui/issues">
+                                    Found a bug?<i class="icon-github"></i></a></li>
                         </ul>
                     </li>
 
-                    <li ng-class=""><a href="/about">About</a></li>
-                    <li ng-class=""><a href="mailto:support@nextprot.org?subject=[neXtProt%20Search]">Contact us</a></li>
+                    <li ng-class="">
+                        <a href="/about">About</a>
+                    </li>
+                    <li ng-class="">
+                        <a href="mailto:support@nextprot.org?subject=[neXtProt%20Search]">Contact</a>
+                    </li>
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
 
                     <li>
-                        <a title="My lists" ng-click="goToUser('lists')" type="button" class="link"><i class="icon-list-alt"></i></a>
+                        <a title="My lists" ng-click="goToUser('lists')" type="button" class="link">
+                            <i class="icon-list-alt"></i>
+                        </a>
                     </li>
 
                     <li>
-                        <a title="My queries" ng-click="goToUser('queries')" type="button" class="link"><i class="icon-star"></i></a>
+                        <a title="My queries" ng-click="goToUser('queries')" type="button" class="link">
+                            <i class="icon-star"></i>
+                        </a>
                     </li>
 
 
@@ -147,8 +169,8 @@
 
                     <!-- once logged in user resources -->
                     <li class="dropdown" ng-if="user.profile.email" ng-cloak>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.profile.name ||
-                            user.profile.email}}<span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            {{user.profile.name || user.profile.email}}<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <!--<li><a href="/user">My profile</a></li>-->
                             <li><a href="/user/protein/lists">My protein lists</a></li>
@@ -167,7 +189,6 @@
 
 </header>
 
-
 <div ng-show="message" class=" error ng-cloak" ng-cloak>
     <div class="np-alert alert alert-error alert-warning">{{Search.result.error}} {{message}}</div>
 </div>
@@ -178,9 +199,7 @@
 ================================================== -->
 <div ng-if="isSearchBarVisible()" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
 
-<div id="main" class="container-fluid" ng-view="">
-
-</div>
+<div id="main" class="container-fluid" ng-view=""></div>
 
 <div ng-include="'partials/footer.html'"></div>
 
