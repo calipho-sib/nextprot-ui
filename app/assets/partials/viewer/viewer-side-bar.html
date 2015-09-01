@@ -10,18 +10,18 @@
     <div id="collapse1" class="panel-collapse -collapse menu-content in">
       <div class="panel-body" style="padding:0px">
         <ul class="nav nav-stacked prot-menu">
-          <li ng-class="activePage('function')"><a class="disable-link" href="/entry/{{widgetEntry}}">Function</a></li>
-          <li ng-class="activePage('medical')"><a class="disable-link" href="/entry/{{widgetEntry}}/medical">Medical</a></li>
-          <li ng-class="activePage('expression')"><a class="disable-link" href="/entry/{{widgetEntry}}/expression">Expression</a></li>
-          <li ng-class="activePage('interactions')"><a class="disable-link" href="/entry/{{widgetEntry}}/interactions">Interactions</a></li>
-          <li ng-class="activePage('localisation')"><a class="disable-link" href="/entry/{{widgetEntry}}/localisation">Localisation</a></li>
-          <li ng-class="activePage('sequence')"><a class="disable-link" href="/entry/{{widgetEntry}}/sequence">Sequence</a></li>
+          <li ng-class="activePage('function')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;" href="/entry/{{widgetEntry}}">Function</a></li>
+          <li ng-class="activePage('medical')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;"href="/entry/{{widgetEntry}}/medical">Medical</a></li>
+          <li ng-class="activePage('expression')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;"href="/entry/{{widgetEntry}}/expression">Expression</a></li>
+          <li ng-class="activePage('interactions')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;"href="/entry/{{widgetEntry}}/interactions">Interactions</a></li>
+          <li ng-class="activePage('localisation')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;"href="/entry/{{widgetEntry}}/localisation">Localisation</a></li>
+          <li ng-class="activePage('sequence')"><a href="/entry/{{widgetEntry}}/view/sequence">Sequence</a></li>
           <!--<li ng-class="activePage('view/sequence')"><a href="/entry/{{widgetEntry}}/view/sequence">Sequence  <i class="icon-wrench"></i></a></li>-->
           <li ng-class="activePage('view/proteomics')"><a href="/entry/{{widgetEntry}}/view/proteomics">Proteomics</a></li>
           <!--<li ng-class="activePage('view/proteomics')"><a href="/entry/{{widgetEntry}}/view/proteomics">Proteomics  <i class="icon-wrench"></i></a></li>-->
           <li ng-class="activePage('view/structures')"><a href="/entry/{{widgetEntry}}/view/structures">Structures</a></li>
           <!--<li ng-class="activePage('view/structures')"><a href="/entry/{{widgetEntry}}/view/structures">Structures  <i class="icon-wrench"></i></a></li>-->
-          <li ng-class="activePage('identifiers')"><a class="disable-link" href="/entry/{{widgetEntry}}/identifiers">Identifiers</a></li>
+          <li ng-class="activePage('identifiers')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;" href="/entry/{{widgetEntry}}/identifiers">Identifiers</a></li>
           <li ng-class="activePage('view/peptides')"><a href="/entry/{{widgetEntry}}/view/peptides">Peptides</a></li>
         </ul>
       </div>
@@ -39,8 +39,8 @@
   <div id="collapse2" class="panel-collapse collapse menu-content">
     <div class="panel-body" style="padding:0px">
       <ul class="nav nav-stacked gene-menu disable-link">
-        <li ng-class="activePage('exons')"><a href="/entry/{{widgetEntry}}/exons">Exons</a></li>
-        <li ng-class="activePage('gene_identifiers')"><a href="/entry/{{widgetEntry}}/gene_identifiers">Identifiers</a></li>
+        <li ng-class="activePage('exons')"><a  style="padding-bottom: 0px !important; color:darkgray !important;"  href="/entry/{{widgetEntry}}/exons">Exons</a></li>
+        <li ng-class="activePage('gene_identifiers')"><a  style="padding-bottom: 0px !important; color:darkgray !important;"  href="/entry/{{widgetEntry}}/gene_identifiers">Identifiers</a></li>
       </ul>
     </div>
   </div>
@@ -55,11 +55,11 @@
   <div id="collapse3" class="panel-collapse collapse menu-content">
     <div class="panel-body" style="padding:0px">
       <ul class="nav nav-stacked ref-menu disable-link">
-        <li ng-class="activePage('publications')"><a href="/entry/{{widgetEntry}}/publications">Curated publications ({{entryProps.referencesCuratedPublicationsCount}})</a></li>
-        <li ng-class="activePage('computed_references')"><a href="/entry/{{widgetEntry}}/computed_references">Additional publications ({{entryProps.referencesAdditionalPublicationsCount}})</a></li>
-        <li ng-class="activePage('patents')"><a href="/entry/{{widgetEntry}}/patents" data-toggle="tab">Patents ({{entryProps.referencesPatentsCount}})</a></li>
-        <li ng-class="activePage('submissions')"><a href="/entry/{{widgetEntry}}/submissions" data-toggle="tab">Submissions ({{entryProps.referencesSubmissionsCount}})</a></li>
-        <li ng-class="activePage('web')"><a href="/entry/{{widgetEntry}}/web" data-toggle="tab">Web resources ({{entryProps.referencesWebResourcesCount}})</a></li>
+        <li ng-class="activePage('publications')"><a style="padding-bottom: 0px !important; color:darkgray !important;"  href="/entry/{{widgetEntry}}/publications">Curated publications ({{entryProps.referencesCuratedPublicationsCount}})</a></li>
+        <li ng-class="activePage('computed_references')"><a style="padding-bottom: 0px !important; color:darkgray !important;"  href="/entry/{{widgetEntry}}/computed_references">Additional publications ({{entryProps.referencesAdditionalPublicationsCount}})</a></li>
+        <li ng-class="activePage('patents')"><a style="padding-bottom: 0px !important; color:darkgray !important;"  href="/entry/{{widgetEntry}}/patents" data-toggle="tab">Patents ({{entryProps.referencesPatentsCount}})</a></li>
+        <li ng-class="activePage('submissions')"><a style="padding-bottom: 0px !important; color:darkgray !important;"  href="/entry/{{widgetEntry}}/submissions" data-toggle="tab">Submissions ({{entryProps.referencesSubmissionsCount}})</a></li>
+        <li ng-class="activePage('web')"><a style="padding-bottom: 0px !important; color:darkgray !important;"  href="/entry/{{widgetEntry}}/web" data-toggle="tab">Web resources ({{entryProps.referencesWebResourcesCount}})</a></li>
       </ul>
     </div>
   </div>
@@ -71,13 +71,14 @@
     <h4 class="panel-title">
       <a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)" data-target="#collapse4">
         <span style="font-size: 28px;">C</span>ommunity
-      </a></h4>
+      </a>
+    </h4>
   </div>
   <div id="collapse4" class="panel-collapse -collapse menu-content">
     <div class="panel-body" style="padding:0px">
       <ul class="nav nav-stacked ref-menu">
-        <li ng-class="activePage('viewer/ddtxra/a3a860b6d0c0e1ab0f76')"><a href="/entry/{{widgetEntry}}/viewer/ddtxra/a3a860b6d0c0e1ab0f76">3D structure<span style="font-size: 8px;">&nbsp;by ddtxra</span></a></li>
-        <li ng-class="activePage('viewer/ddtxra/a1fd0e5613ed6b72ff8f')"><a href="/entry/{{widgetEntry}}/viewer/ddtxra/a1fd0e5613ed6b72ff8f">Protein existence</a></li>
+        <li ng-class="activePage('gist/ddtxra/a3a860b6d0c0e1ab0f76')"><a href="/entry/{{widgetEntry}}/gist/ddtxra/a3a860b6d0c0e1ab0f76">3D structure<span class="pull-right" style="font-size: 10px; margin-top: 8px">&nbsp;by ddtxra</span></a></li>
+        <li ng-class="activePage('gist/ddtxra/a1fd0e5613ed6b72ff8f')"><a href="/entry/{{widgetEntry}}/gist/ddtxra/a1fd0e5613ed6b72ff8f">Protein existence</a></li>
    </ul>
     </div>
   </div>

@@ -10,7 +10,7 @@
     viewerConfig.$inject = ['$routeProvider'];
     function viewerConfig($routeProvider) {
 
-        var ev = {templateUrl: '/partials/viewer/entry-viewer.html', resolve: { 'entryProperties':function(entryProperties){  return entryProperties.promise();   } }};
+        var ev = {templateUrl: '/partials/viewer/entry-viewer.html', resolve: { 'entryProperties': [ 'entryProperties', function (entryProperties){  return entryProperties.promise(); }]}};
         var gv = {templateUrl: '/partials/viewer/global-viewer.html'};
 
         $routeProvider
@@ -33,7 +33,7 @@
             .when('/entry/:entry/view/:ev1/:ev2', ev)
             .when('/entry/:entry/view/:ev1/:ev2/:ev3', ev)
 
-            .when('/entry/:entry/viewer/:gistusr/:gistid', ev) // related to gists
+            .when('/entry/:entry/gist/:gistusr/:gistid', ev) // related to gists
             .when('/entry/:entry/:repo/:user/:branch/:f1', ev)
             .when('/entry/:entry/:repo/:user/:branch/:f1/:f2', ev)
             .when('/entry/:entry/:repo/:user/:branch/:f1/:f2/:f3', ev)
@@ -49,6 +49,7 @@
         $scope.externalURL = null;
         $scope.widgetEntry = null;
         $scope.githubURL = null;
+        $scope.communityMode = false;
         $scope.simpleSearchText = "";
         $scope.entryProps = entryProperties.currentEntry();
 
@@ -73,7 +74,7 @@
 
             if ($routeParams.element == page)  return 'active'
             if ("view/" + $routeParams.ev1 == page)  return 'active';
-            if (("viewer/" + $routeParams.gistusr + "/" + $routeParams.gistid) == page)  return 'active';
+            if (("gist/" + $routeParams.gistusr + "/" + $routeParams.gistid) == page)  return 'active';
 
             else return '';
         }
@@ -128,12 +129,15 @@
                 url += "?nxentry=" + $routeParams.entry;
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
             } else if ($routeParams.gistusr && $routeParams.gistid) {
+
+                $scope.communityMode = true;
                 var url = window.location.protocol + "//bl.ocks.org/"  + $routeParams.gistusr + "/raw/" + $routeParams.gistid + "?nxentry=" + $routeParams.entry;
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
                 $scope.githubURL = window.location.protocol + "//bl.ocks.org/"  + $routeParams.gistusr + "/" + $routeParams.gistid;
                 $scope.externalURL = $sce.trustAsResourceUrl(url);
             } else { //nextprot
 
+                $scope.communityMode = true;
                 $scope.githubURL = null;
 
                 /*
