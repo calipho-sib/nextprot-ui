@@ -10,7 +10,7 @@
     viewerConfig.$inject = ['$routeProvider'];
     function viewerConfig($routeProvider) {
 
-        var ev = {templateUrl: '/partials/viewer/entry-viewer.html', resolve: { 'entryProperties':function(entryProperties){  return entryProperties.promise();   } }};
+        var ev = {templateUrl: '/partials/viewer/entry-viewer.html', resolve: { 'entryProperties': [ 'entryProperties', function (entryProperties){  return entryProperties.promise(); }]}};
         var gv = {templateUrl: '/partials/viewer/global-viewer.html'};
 
         $routeProvider
@@ -27,28 +27,37 @@
             .when('/view/:gv1/:gv2/:gv3', gv)
 
             //ENTRY VIEWS
-            .when('/entry/:entry/:element', {templateUrl: '/partials/viewer/viewer-entry-np1.html'})
+            .when('/entry/:entry/', ev)
+            .when('/entry/:entry/:element', ev)
             .when('/entry/:entry/view/:ev1', ev)
             .when('/entry/:entry/view/:ev1/:ev2', ev)
             .when('/entry/:entry/view/:ev1/:ev2/:ev3', ev)
 
-            .when('/entry/:entry/viewer/:gistusr/:gistid', ev) // related to gists
+            .when('/entry/:entry/gist/:gistusr/:gistid', ev) // related to gists
             .when('/entry/:entry/:repo/:user/:branch/:f1', ev)
             .when('/entry/:entry/:repo/:user/:branch/:f1/:f2', ev)
             .when('/entry/:entry/:repo/:user/:branch/:f1/:f2/:f3', ev)
             .when('/entry/:entry/:repo/:user/:branch/:f1/:f2/:f3/:f4', ev)
-            .when('/entry/:entry/', {templateUrl: '/partials/viewer/viewer-entry-np1.html'})
             .when('/term/:termid/', {templateUrl: '/partials/viewer/viewer-term-np1.html'})
 
     }
 
 
-    ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'entryProperties'];
-    function ViewerCtrl($scope, $sce, $routeParams, $location, config, entryProperties) {
+    ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$route', '$location', 'config', 'entryProperties', 'exportService'];
+    function ViewerCtrl($scope, $sce, $routeParams, $route, $location, config, entryProperties, exportService) {
+
+        $scope.externalURL = null;
         $scope.widgetEntry = null;
         $scope.githubURL = null;
+        $scope.communityMode = false;
         $scope.simpleSearchText = "";
         $scope.entryProps = entryProperties.currentEntry();
+
+        $scope.entryProps.entryName = $route.current.params.entry;
+
+        $scope.setExportEntry = function (identifier) {
+                exportService.setExportEntry(identifier);
+        };
 
         $scope.makeSimpleSearch = function () {
             $location.search("query", $scope.simpleSearchText);
@@ -56,7 +65,17 @@
         }
 
         $scope.activePage = function (page) {
-            if ($routeParams.ev1 == page)  return 'active'
+
+           if(angular.equals({'entry': $routeParams.entry},  $routeParams)){ // Page function
+               if(page === 'function') {
+                   return 'active';
+               }
+           }
+
+            if ($routeParams.element == page)  return 'active'
+            if ("view/" + $routeParams.ev1 == page)  return 'active';
+            if (("gist/" + $routeParams.gistusr + "/" + $routeParams.gistid) == page)  return 'active';
+
             else return '';
         }
 
@@ -70,28 +89,32 @@
 
             if ($routeParams.ev1) { //Entry view
 
-                var url = "https://rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.ev1;
+
+                var url = window.location.protocol + "//rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.ev1;
                 if($routeParams.ev2) url += "/" + $routeParams.ev2;
                 if($routeParams.ev3) url += "/" + $routeParams.ev3;
                 url += "/app/index.html" ;
                 $scope.githubURL = url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/");
                 url += "?nxentry=" + $routeParams.entry;
 
+                $scope.externalURL = $sce.trustAsResourceUrl(url) + "&inputOption=true";
+
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
 
             }else if ($routeParams.gv1) { //Global view
 
-                var url = "https://rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.gv1;
+                var url = window.location.protocol + "//rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.gv1;
                 if($routeParams.gv2) url += "/" + $routeParams.gv2;
                 if($routeParams.gv3) url += "/" + $routeParams.gv3;
                 url += "/app/index.html" ;
                 $scope.githubURL = url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/");
                 url += "?nxentry=" + $routeParams.entry;
 
+
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
 
             } else if ($routeParams.repo) { // github repository
-                var url = "https://rawgit.com/" + $routeParams.repo + "/" + $routeParams.user + "/" + $routeParams.branch + "/" + $routeParams.f1;
+                var url = window.location.protocol + "//rawgit.com/" + $routeParams.repo + "/" + $routeParams.user + "/" + $routeParams.branch + "/" + $routeParams.f1;
                 //append if they exist
                 if($routeParams.f2){
                     url += "/" + $routeParams.f2;
@@ -106,8 +129,16 @@
                 url += "?nxentry=" + $routeParams.entry;
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
             } else if ($routeParams.gistusr && $routeParams.gistid) {
-                $scope.widgetURL = $sce.trustAsResourceUrl("http://rawgit.com/" + $routeParams.gistusr + "/" + $routeParams.gistid + "/raw/index.html?nxentry=" + $routeParams.entry);
+
+                $scope.communityMode = true;
+                var url = window.location.protocol + "//bl.ocks.org/"  + $routeParams.gistusr + "/raw/" + $routeParams.gistid + "?nxentry=" + $routeParams.entry;
+                $scope.widgetURL = $sce.trustAsResourceUrl(url);
+                $scope.githubURL = window.location.protocol + "//bl.ocks.org/"  + $routeParams.gistusr + "/" + $routeParams.gistid;
+                $scope.externalURL = $sce.trustAsResourceUrl(url);
             } else { //nextprot
+
+                $scope.communityMode = true;
+                $scope.githubURL = null;
 
                 /*
                  np1Base: origin of NP1 http service, read from conf or set to localhost for dev/debug
@@ -130,6 +161,8 @@
                  * np1Params: params to pass to NP1
                  */
                 var np1Params = "?np2css=" + np2css + "&np2ori=" + np2ori;
+
+                $scope.externalURL = np1Base + $location.$$path;
 
                 $scope.widgetURL = $sce.trustAsResourceUrl(np1Base + $location.$$path + np1Params);
             }

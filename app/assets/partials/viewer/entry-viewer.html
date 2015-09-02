@@ -1,47 +1,47 @@
 <div ng-controller="ViewerCtrl">
     <div class="row" style="border-top: 1px solid #E7E7E7">
-        <div class="col-md-2"
-             style="background:#777777;height:60px;padding:0px;border-radius:0px;border-bottom: 1px solid #595959;box-shadow: inset 0px -3px 6px -6px #D0D0D0, 0px 3px 6px -6px #757575;">
-            <h4 style="color:#F8F8F8;font-size:1.7em;font-family:HelveticaUltraLight;height:40px;font-weight:500;padding:5px 0px 25px;margin-bottom:15px;text-align: center;letter-spacing:0px;">{{entryProps.name}}</h4>
+        <div id="entrySummaryBoxName" class="col-md-2">
+            <h4 id="entrySummaryName">{{widgetEntry}}</h4>
         </div>
-        <div class="col-md-10" style="height:60px;">
+        <div class="col-md-10" style="height:50px;">
             <div class="row" style="height:inherit;background-color:white;border-bottom: 1px solid #B6B6B6;">
-                <div class="col-md-4">
+                <div class="col-md-2 entrySummaryBoxes">
 
-                    <div style="text-align: center;margin-top:15px;margin-left:20px;display: inline-block;">
-                        <span style="background-color:lightgrey;color:blackgrey;font-weight:900;padding:4px 8px;font-size:13px;">{{entryProps.isoformCount}}</span>
-
-                        <p style="color:grey;font-size:0.8em;font-weight:600;margin-top:5px;margin-bottom: 5px;">
-                            ISO</p>
+                    <div>
+                        <span id="entrySummaryIso">{{entryProps.isoformCount}}</span><p>ISO</p>
                     </div>
-                    <div style="text-align: center;margin-top:15px;margin-left:20px;display: inline-block;">
-                        <span style="background-color:#0F8292;color:white;font-weight:900;padding:4px 8px;font-size:13px;">{{entryProps.genesCount}}</span>
-
-                        <p style="color:grey;font-size:0.8em;font-weight:600;margin-top:5px;margin-bottom: 5px;">
-                            GENE</p>
+                    <div>
+                        <span  id="entrySummaryGene">{{entryProps.genesCount}}</span><p>GENE</p>
                     </div>
-                    <div style="text-align: center;margin-top:15px;margin-left:20px;display: inline-block;">
-                        <span style="background-color:#CFB915;color:white;font-weight:600;padding:5px 3px;font-size:13px;">{{entryProps.referencesCount}}</span>
-
-                        <p style="color:grey;font-size:0.8em;font-weight:600;margin-top:5px;margin-bottom: 5px;">
-                            REF</p>
-                    </div>
-                    <div style="display:inline-block;margin-top:15px; margin-left:30px;vertical-align:top;" >
-                        <a title="see it in a separated window" target="_blank" ng-href="{{widgetURL}}">
-                            <span class="icon icon-resize-full" aria-hidden="true" style="padding-left:40px;font-size:1.5em;"></span>
-                        </a>
+                    <div>
+                        <span id="entrySummaryRef">{{entryProps.referencesCount}}</span><p>REF</p>
                     </div>
                 </div>
-                <div class="col-md-3 pull-right" style="margin-top: 15px;margin-right: 50px; ">
+                <div class="col-md-4" style="margin-top: 16px;margin-right: 0px; ">
+                    <a ng-if="communityMode" href="learn-developer-api#developandcontribute" style="color: #808080;">Learn how to build community viewers </span>&nbsp;<i class="icon-info-sign"></i></a>
+                </div>
+
+                <div class="col-md-4" style="margin-top: 8px;margin-right: 0px; ">
                     <div class="input-group">
                         <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search...">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button" ng-click="makeSimpleSearch()"><i class="icon-search"></i>
-                  Search
-              </button>
-            </span>
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button" ng-click="makeSimpleSearch()"><i class="icon-search"></i>
+                              Search
+                          </button>
+                        </span>
                     </div>
-                    <!-- /input-group -->
+                </div>
+                <!-- Expand in new window -->
+                <div class="pull-right entrySummarylink">
+                    <a title="see it in a separated window" target="_blank" ng-href="{{externalURL}}" style="color:grey;font-size:18px;">
+                        <span class="icon icon-resize-full" aria-hidden="true"></span>
+                    </a>
+                </div>
+                <!-- Download entry (pop-up opens) -->
+                <div class="pull-right entrySummarylink">
+                    <a bs-modal="'partials/export/export-modal.html'" href="#" title="Download entry"  ng-click="setExportEntry(widgetEntry)" title="Download entry" target="_blank" ng-href="{{widgetURL}}&inputOption=true" style="color:grey;font-size:18px;">
+                        <span class="icon icon-download" aria-hidden="true"></span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
             <div ng-include="'partials/viewer/viewer-side-bar.html'"></div>
         </div>
         <div class="col-sm-10" style="height:100%;padding:0px;box-shadow: -1px 0px 2px -1px #888;">
-            <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%" style="border: 0"></iframe>
+            <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%" style="border: 0; min-height: 800px; background-color: white; "></iframe>
             <script>iFrameResize({log:false})</script>
         </div>
     </div>

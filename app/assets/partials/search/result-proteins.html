@@ -34,7 +34,7 @@
             </div>
 
             <div style="display: inline-block; width:80%; vertical-align:top">
-                <a href="https://www.nextprot.org/db/entry/{{doc.id}}">
+                <a href="http://www.nextprot.org/db/entry/{{doc.id}}">
                     <span ng-bind-html="doc.recommended_name"></span>
                     <span ng-show="doc.ec_name">[{{doc.ec_name}}]</span> ({{doc.recommended_gene_names}})
                     [{{doc.id}}]</a>
@@ -42,9 +42,8 @@
                                ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i>
                           Details</a> </span>
 
-                |
-
-                <a ng-href="entry/{{doc.id}}/view/peptides" title="Peptide viewer">new interface</a>
+                | <!-- New interface -->
+                <a href="entry/{{doc.id}}/view/peptides" title="new interface">new viewers</a>
 
                 | <!-- Export entry -->
                 <a bs-modal="'partials/export/export-modal.html'" href="#" title="Export entry"
