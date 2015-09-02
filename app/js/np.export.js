@@ -130,7 +130,7 @@
                         "json": result['xml'],
                         "txt": [],
                         "fasta": [],
-                        "xls": ["proteins","isoform"]
+                        "xls": ["entries","isoforms"]
                         //"peff": []
                     };
                 })
