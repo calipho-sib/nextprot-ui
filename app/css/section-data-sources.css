@@ -1,72 +1,57 @@
-#data-sources-section .section-content, #data-sources-section .section-footer {
-    width: 100%;
-}
-
 #data-sources-section img.source-img, #data-sources-section p {
     position: absolute;
 }
 
 #source-np {
-    top: 33%;
-    left: 40%;
-    height: 31%;
+    top: 29%;
+    left: 43%;
+    height: 32%;
 }
 
 #source-uniprot {
-    top: 20%;
-    left: 22%;
-    height: 11%;
+    top: 65%;
+    left: 37%;
+    height: 16%;
 }
 
 #source-bgee {
-    top: 31%;
-    left: 14%;
-    height: 10%;
-}
-
-#source-peptide-atlas {
-    top: 45%;
-    left: 11%;
+    top: 42%;
+    left: 16%;
     height: 12%;
 }
 
-#source-dkfz {
-    top: 60%;
-    left: 11%;
-    height: 9%;
+#source-peptide-atlas {
+    top: 41%;
+    right: 17%;
+    height: 13%;
 }
 
 #source-hpa {
-    top: 72%;
-    left: 28%;
+    top: 19%;
+    left: 32%;
     height: 5%;
 }
 
 #source-intact {
-    top: 60%;
-    right: 17%;
+    top: 28%;
+    right: 22%;
     height: 11%;
 }
 
 #source-srm-atlas {
-    top: 50%;
-    right: 14%;
-    height: 9%;
+    top: 28%;
+    left: 18%;
+    height: 8.5%;
 }
 
 #source-uniprot-goa {
-    top: 43%;
-    right: 13%;
-}
-
-#source-dyp {
-    top: 31%;
-    right: 14%;
-    height: 9%;
+    top: 60%;
+    right: 18%;
+    font-size: 0.9em;
 }
 
 #source-cosmic {
-    top: 20%;
-    right: 14%;
-    height: 8%;
+    top: 59%;
+    left: 18%;
+    height: 6.5%;
 }

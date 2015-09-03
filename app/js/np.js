@@ -20,6 +20,7 @@
         'np.viewer',
         'np.export',
         'np.version',
+        'np.news',
         'ui.codemirror',
         'auth0', 'angular-storage', 'angular-jwt', 'logglyLogger'
     ]).config(configApplication)
@@ -101,6 +102,8 @@
             //// Help pages
             // Simple pages
             .when('/help/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/page.html'})
+            // News
+            .when('/news/:article', {title: 'news on nextprot', templateUrl: '/partials/doc/news.html'})
             // RDF generalities
             .when('/help/doc/:article', {title: 'help for RDF', templateUrl: '/partials/doc/doc.html'})
             // RDF entities

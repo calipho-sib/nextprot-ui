@@ -34,14 +34,13 @@
 
 
 <header>
-    <!--TODO: change href to be send on www.nextprot.org-->
-    <a href="http://search.nextprot.org/" title="Go to neXtProt home page">
-        <img class="np-logo header-logo" src="img/np-logo.png" alt="neXtProt logo">
-    </a>
-    <h1 id="header-title"><b>neXtProt</b> - Exploring the universe of human proteins</h1>
+    <div id="header-title">
+        <h1><b>neXtProt</b></h1>
+        <h2>Exploring the universe of human proteins</h2>
+    </div>
     <a href="http://www.isb-sib.ch/" target="_blank"
        title="Link to the SIB Swiss Institute of Bioinformatics">
-        <img class="sib-logo header-logo" src="img/sib_logo.gif"
+        <img id="sib-logo" src="img/sib_logo.gif"
              alt="SIB Swiss Institute of Bioinformatics">
     </a>
 
@@ -57,8 +56,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/"></a>
-
+                <a class="navbar-brand navbar-logo" href="/"><img id="np-logo" src="/img/np-logo.png"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -85,7 +83,7 @@
                     <!--<li ng-class=""><a href="/tools">Tools</a></li>-->
 
                     <!-- Download -->
-                    <li ng-class=""><a href="/">Download</a></li>
+                    <li ng-class=""><a href="{{'ftp' | getNeXtProtUrl}}" ng-click="routingOutside('ftp')">Download</a></li>
 
                     <!-- Help dropdown -->
                     <li class="dropdown">

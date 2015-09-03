@@ -38,8 +38,8 @@
 }
 
 .search-row {
-    margin-top: 20%;
-    margin-bottom: 20%;
+    margin-top: 25vh;
+    margin-bottom: 13vh;
 }
 
 .modal-backdrop {
@@ -47,17 +47,16 @@
 }
 
 .search-row.animate {
-    margin-top: 0px;
+    margin-top: 5px;
     padding: 25px 0 10px 0;
     margin-bottom: inherit;
     transition: .2s linear all;
     -webkit-transition: .2s linear all;
     -moz-transition: .2s linear all;
     -o-transition: .2s linear all;
-    background-color:whitesmoke;
 }
 
-.search-row.animate a img{
+.search-row.animate a img {
   display: none;
 }
 
@@ -120,14 +119,14 @@
     width: 250px
 }
 
-.resultparams .affix{
-  top: 90px;
+.resultparams .affix {
+  top: 70px;
 }
-.search-row .affix{
-    padding-top:10px;
-    top: 50px;  
-    background-color: #eee;
 
+.search-row .affix {
+    padding-top:10px;
+    top: 50px;
+    background-color: #eee;
 }
 
 .resultfilters.affix {

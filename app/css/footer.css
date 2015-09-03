@@ -1,11 +1,12 @@
 footer {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     background-color: black;
     height: 25px;
     line-height: 25px;
     font-size: 0.9em;
+    z-index: 1000;
 }
 
 footer, footer a, footer a:visited {
