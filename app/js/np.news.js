@@ -10,19 +10,22 @@
 
         $scope.news = [
             {
-                "title": "HUPO Conference 2015",
-                "publicationDate": 1440453600000,
-                "url": "hupo-conf-2015",
-                "publicationDateFormatted": "2015-08-25"
-            },
-            {
-                "title": "New User Interface For neXtProt",
-                "publicationDate": 1450047600000,
-                "url": "new-gui",
-                "publicationDateFormatted": "2015-12-14"
-            }
+                "title":"Google OAuth Support",
+                "publicationDate":1415142000000,
+                "url":"google-oauth-support",
+                "publicationDateFormatted":"Nov 05, 2014"
+            },{
+                "title":"New User Interface",
+                "publicationDate":1415142000000,
+                "url":"new-user-interface",
+                "publicationDateFormatted":"Nov 05, 2014"
+            },{
+                "title":"test",
+                "publicationDate":1441317600000,
+                "url":"test",
+                "publicationDateFormatted":"Sep 04, 2015"}
         ];
-
+        $scope.news = _.sortBy($scope.news, 'publicationDate').reverse();
 
     }
 

@@ -1,15 +1,20 @@
 
 <div id="news-section" class="section" ng-controller="NewsCtrl">
     <div class="section-header">
-        <h2 class="np-color-pink">News</h2>
-        <!-- TODO Add twitter, facebook? and google+? links -->
+        <h2 class="np-color-pink">
+            News
+            <a class="social-link" title="See @nextprot_news account" target="_blank"
+               href="https://twitter.com/nextprot_news">
+                <img alt="Twitter logo" src="img/twitter.png">
+            </a>
+            <!-- TODO Add facebook? and google+? links -->
+        </h2>
     </div>
     <div class="section-content">
-        <!-- TODO To be manage with GitHub -->
         <ul>
 
             <li ng-repeat="n in news | limitTo:3">
-                <a href="{{n.url}}">{{n.title}}</a>
+                <a href="news/{{n.url}}">{{n.title}}</a>
                 <p>{{n.publicationDateFormatted}}</p>
             </li>
 
@@ -17,6 +22,6 @@
     </div>
     <div class="section-footer">
 
-        <a href="/news">&raquo; News archive</a>
+        <a ng-repeat="n in news | limitTo:1" href="news/{{n.url}}">&raquo; News archive</a>
     </div>
 </div>
