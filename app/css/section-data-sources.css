@@ -10,48 +10,48 @@
 
 #source-uniprot {
     top: 65%;
-    left: 37%;
+    left: 36%;
     height: 16%;
 }
 
 #source-bgee {
-    top: 42%;
+    top: 39%;
     left: 16%;
     height: 12%;
 }
 
 #source-peptide-atlas {
-    top: 41%;
+    top: 53%;
     right: 17%;
     height: 13%;
 }
 
 #source-hpa {
-    top: 19%;
+    top: 17%;
     left: 32%;
     height: 5%;
 }
 
 #source-intact {
-    top: 28%;
-    right: 22%;
+    top: 26%;
+    right: 18%;
     height: 11%;
 }
 
 #source-srm-atlas {
-    top: 28%;
+    top: 26%;
     left: 18%;
     height: 8.5%;
 }
 
 #source-uniprot-goa {
-    top: 60%;
-    right: 18%;
+    top: 43%;
+    right: 15%;
     font-size: 0.9em;
 }
 
 #source-cosmic {
     top: 59%;
-    left: 18%;
+    left: 17%;
     height: 6.5%;
 }
