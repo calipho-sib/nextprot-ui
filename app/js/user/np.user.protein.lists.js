@@ -14,20 +14,18 @@
             '$routeProvider',
             '$locationProvider',
             '$httpProvider',
-            function ($routeProvider, $locationProvider, $httpProvider) {
+            function ($routeProvider) {
                 $routeProvider.when('/user/protein/lists', {templateUrl: 'partials/user/user-protein-lists.html'})
                     .when('/user/protein/lists/create', {templateUrl: 'partials/user/user-protein-lists-create.html'})
             }
         ])
-
-
         .controller('ListCtrl', ListCtrl)
         .controller('ListCreateCtrl', ListCreateCtrl);
 
 //
 // Controller
-    ListCtrl.$inject = ['Tracker', '$resource', '$scope', '$rootScope', '$location', '$routeParams', '$route', 'Search', 'userProteinList', 'user', 'flash', 'config'];
-    function ListCtrl(Tracker, $resource, $scope, $rootScope, $location, $routeParams, $route, Search, userProteinList, user, flash, config) {
+    ListCtrl.$inject = ['Tracker', '$scope', 'userProteinList', 'user', 'flash', 'config'];
+    function ListCtrl(Tracker, $scope, userProteinList, user, flash, config) {
         $scope.userProteinList = userProteinList;
         $scope.showCombine = false;
         $scope.combineDisabled = true;
@@ -171,13 +169,13 @@
         }
     }
 
+    ListCreateCtrl.$inject = ['$q', '$scope', '$rootScope', '$location', 'userProteinList', 'user', 'uploadListService', 'flash', '$log']
+    function ListCreateCtrl($q, $scope, $rootScope, $location, userProteinList, user, uploadListService, flash, $log) {
 
-    ListCreateCtrl.$inject = ['$q', '$resource', '$scope', '$rootScope', '$routeParams', '$location', 'userProteinList', 'user', 'uploadListService', 'flash', '$log']
-    function ListCreateCtrl($q, $resource, $scope, $rootScope, $routeParams, $location, userProteinList, user, uploadListService, flash, $log) {
         $scope.inputAccessions = "";
         $scope.listName = "";
-        $scope.files = [];
 
+        $scope.files = [];
 
         $rootScope.$on('upload:loadstart', function () {
             $log.info('Controller: on `loadstart`');
@@ -188,7 +186,10 @@
         });
 
         $scope.createList = function () {
+
             var list = {};
+
+            // get accessions from text area
             if ($scope.inputAccessions.length > 0) {
 
                 var accessions = $scope.inputAccessions.split("\n");
@@ -208,7 +209,6 @@
 
             userProteinList.create(user, list).$promise
                 .then(function (newList) {
-                    flash('alert-info', "List " + list.name + " created.");
 
                     var promises = [$q.when(true)];
 
@@ -221,14 +221,18 @@
                         $scope.files = [];
                         $location.path('/user/protein/lists');
                     }, function (o) {
-                        flash('alert-warning', "List " + $scope.listName + " not created: "+ o.data.message)
+                        flash('alert-warning', "List " + $scope.listName + " not created: " + o.data.message)
                     })
-
-
                 }, function (o) {
                     flash('alert-warning', "List " + $scope.listName + " not created: " + o.data.message)
-                });
-        }
+                })
+
+        };
+
+        $scope.isCreatable = function () {
+
+            return ($scope.listName != "" && ( $scope.files.length > 0 || $scope.inputAccessions.length > 0 ) );
+        };
     }
 })(angular);
 
