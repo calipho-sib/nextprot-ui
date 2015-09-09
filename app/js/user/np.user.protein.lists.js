@@ -229,6 +229,10 @@
 
         };
 
+        $scope.removeUploadFile = function (index) {
+            $scope.files.splice(index, 1);
+        };
+
         $scope.isCreatable = function () {
 
             return ($scope.listName != "" && ( $scope.files.length > 0 || $scope.inputAccessions.length > 0 ) );
