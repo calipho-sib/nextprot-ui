@@ -60,11 +60,13 @@
         </form>
         <div class="form-group ">
             <blockquote>
-                <span ng-show="files.length"><h4>File to Upload: </h4></span>
+                <span ng-show="files.length"><h4>File(s) to upload: </h4></span>
                 <ul>
-                    <li ng-repeat="file in files">{{file.name}}</li>
+                    <li ng-repeat="file in files">{{file.name}}<span class="btn icon-remove" aria-hidden="false" ng-click="removeUploadFile($index)"></span></li>
                 </ul>
             </blockquote>
         </div>
+
+
     </div>
 </div>
