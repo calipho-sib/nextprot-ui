@@ -3,14 +3,14 @@
 
     angular.module('np.viewer', [])
         .config(viewerConfig)
-        .factory('entryProperties', entryProperties)
+        .factory('viewerService', viewerService)
         .controller('ViewerCtrl', ViewerCtrl)
     ;
 
     viewerConfig.$inject = ['$routeProvider'];
     function viewerConfig($routeProvider) {
 
-        var ev = {templateUrl: '/partials/viewer/entry-viewer.html', resolve: { 'entryProperties': [ 'entryProperties', function (entryProperties){  return entryProperties.promise(); }]}};
+        var ev = {templateUrl: '/partials/viewer/entry-viewer.html'};
         var gv = {templateUrl: '/partials/viewer/global-viewer.html'};
 
         $routeProvider
@@ -43,17 +43,27 @@
     }
 
 
-    ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$route', '$location', 'config', 'entryProperties', 'exportService'];
-    function ViewerCtrl($scope, $sce, $routeParams, $route, $location, config, entryProperties, exportService) {
+    ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService'];
+    function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService) {
 
         $scope.externalURL = null;
         $scope.widgetEntry = null;
         $scope.githubURL = null;
         $scope.communityMode = false;
         $scope.simpleSearchText = "";
-        $scope.entryProps = entryProperties.currentEntry();
 
-        $scope.entryProps.entryName = $route.current.params.entry;
+        $scope.entryProps ={};
+        $scope.entryName = $routeParams.entry;
+
+        $scope.communityViewers = viewerService.getEntryViewers();
+
+        viewerService.getEntryProperties().$promise.then(function (data) {
+            $scope.entryProps.name = data.entry.overview.mainProteinName;
+            $scope.entryProps.genesCount = data.entry.overview.geneNames.length;
+            angular.extend($scope.entryProps, data.entry.properties);
+        });
+
+
 
         $scope.setExportEntry = function (identifier) {
                 exportService.setExportEntry(identifier);
@@ -172,26 +182,27 @@
     }
 
 
-    entryProperties.$inject=['$http','config','$route'];
-    function entryProperties($http, config,  $route) {
+    viewerService.$inject = ['$resource', '$routeParams', 'config'];
+    function viewerService($resource, $routeParams, config) {
 
-        var currenEntryProperties = {};
-        var promise = function () {
-            $http.get(config.api.API_URL + '/entry/' + $route.current.params.entry + '/overview.json').success( function (data) {
-                currenEntryProperties.name=data.entry.overview.mainProteinName;
-                currenEntryProperties.genesCount=data.entry.overview.geneNames.length;
-                angular.extend(currenEntryProperties, data.entry.properties);
-            });
-        }
+        var entryViewersResource = $resource(config.api.API_URL + '/assets/viewers/community-entry-viewers.json', {}, { list : {method : "GET", isArray : true}});
+
+        var entryProperties = $resource(config.api.API_URL + '/entry/' + $routeParams.entry + '/overview.json', {}, {get : {method: "GET"}});
 
 
-        return {
-            promise: promise,
-            currentEntry: function () {
-                return currenEntryProperties;
-            }
+        var ViewerService = function () {
+
         };
 
+        ViewerService.prototype.getEntryViewers = function () {
+            return entryViewersResource.list();
+        }
+
+        ViewerService.prototype.getEntryProperties = function () {
+            return entryProperties.get();
+        }
+
+        return new ViewerService();
     }
 
 

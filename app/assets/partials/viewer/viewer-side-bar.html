@@ -76,10 +76,12 @@
   </div>
   <div id="collapse4" class="panel-collapse -collapse menu-content">
     <div class="panel-body" style="padding:0px">
-      <ul class="nav nav-stacked ref-menu">
-        <li ng-class="activePage('gist/ddtxra/a3a860b6d0c0e1ab0f76')"><a href="/entry/{{widgetEntry}}/gist/ddtxra/a3a860b6d0c0e1ab0f76">3D structure<span class="pull-right" style="font-size: 10px; margin-top: 8px">&nbsp;by ddtxra</span></a></li>
-        <li ng-class="activePage('gist/ddtxra/a1fd0e5613ed6b72ff8f')"><a href="/entry/{{widgetEntry}}/gist/ddtxra/a1fd0e5613ed6b72ff8f">Protein existence</a></li>
-   </ul>
+      <ul class="nav nav-stacked ref-menu" ng-repeat="communityView in communityViewers">
+        <li ng-class="activePage('gist/' + communityView.id)"><a
+                ng-href="/entry/{{widgetEntry}}/{{communityView.type}}/{{communityView.id}}">{{communityView.title}}<span
+                class="pull-right" style="font-size: 10px; margin-top: 8px">&nbsp;by {{communityView.owner}}</span></a>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
