@@ -1,4 +1,54 @@
-<div ng-controller="ViewerCtrl" style="height:82vh;">
-    <iframe id="iframeViewer" ng-src="{{widgetURL}}" style="width: 100%; height: 100%; border: 0"></iframe>
-    <a target="_blank" class="pull-right" ng-href="{{githubURL}}">Powered by <i class="icon-github"></i></span></a>
+<div ng-controller="ViewerCtrl">
+    <div class="row" style="border-top: 1px solid #E7E7E7">
+        <div id="entrySummaryBoxName" class="col-md-2">
+            <h4 id="entrySummaryName">Global view</h4>
+        </div>
+        <div class="col-md-10" style="height:50px;">
+            <div class="row" style="height:inherit;background-color:white;border-bottom: 1px solid #B6B6B6;">
+                <div class="col-md-4" style="margin-top: 16px;margin-right: 0px; ">
+                    <a ng-if="communityMode" href="learn-developer-api#developandcontribute" style="color: #808080;">Learn
+                        how to build community viewers </span>&nbsp;<i class="icon-info-sign"></i></a>
+                </div>
+
+                <div class="col-md-4" style="margin-top: 8px;margin-right: 0px; ">
+                    <div class="input-group">
+                        <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="button" ng-click="makeSimpleSearch()"><i
+                                  class="icon-search"></i>
+                              Search
+                          </button>
+                        </span>
+                    </div>
+                </div>
+                <!-- Expand in new window -->
+                <div class="pull-right entrySummarylink">
+                    <a title="see it in a separated window" target="_blank" ng-href="{{externalURL}}"
+                       style="color:grey;font-size:18px;">
+                        <span class="icon icon-resize-full" aria-hidden="true"></span>
+                    </a>
+                </div>
+                <!-- Download entry (pop-up opens) -->
+                <div class="pull-right entrySummarylink">
+                    <a bs-modal="'partials/export/export-modal.html'" href="#" title="Download entry"
+                       ng-click="setExportEntry(widgetEntry)" title="Download entry" target="_blank"
+                       ng-href="{{widgetURL}}&inputOption=true" style="color:grey;font-size:18px;">
+                        <span class="icon icon-download" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2 nopadding fullHeight sidemenu">
+            <div ng-include="'partials/viewer/viewer-global-side-bar.html'"></div>
+        </div>
+        <div class="col-sm-10" style="height:100%;padding:0px;box-shadow: -1px 0px 2px -1px #888;">
+            <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%"
+                    style="border: 0; min-height: 800px; background-color: white; "></iframe>
+            <!-- another option is to pass an array of trusted domains -->
+            <!-- <script>iFrameResize({log:false, checkOrigin: ['http://rawgit.com', 'https://rawgit.com', 'https://cdn.rawgit.com', 'http://cdn.rawgit.com']})</script> -->
+            <script>iFrameResize({log: false, checkOrigin: false})</script>
+        </div>
+    </div>
 </div>

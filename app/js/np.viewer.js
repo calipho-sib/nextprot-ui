@@ -22,6 +22,8 @@
 
             //GLOBAL VIEWS https://github.com/calipho-sib/nextprot-viewers
             .when('/view', gv)
+            .when('/view/gist/:gistusr/:gistid', gv) // related to gists
+
             .when('/view/:gv1', gv)
             .when('/view/:gv1/:gv2', gv)
             .when('/view/:gv1/:gv2/:gv3', gv)
@@ -55,15 +57,19 @@
         $scope.entryProps ={};
         $scope.entryName = $routeParams.entry;
 
-        $scope.communityViewers = viewerService.getEntryViewers();
+        var entryViewMode = $scope.entryName != undefined;
 
-        viewerService.getEntryProperties().$promise.then(function (data) {
-            $scope.entryProps.name = data.entry.overview.mainProteinName;
-            $scope.entryProps.genesCount = data.entry.overview.geneNames.length;
-            angular.extend($scope.entryProps, data.entry.properties);
-        });
+        if(entryViewMode){
+            $scope.communityViewers = viewerService.getCommunityEntryViewers();
 
-
+            viewerService.getEntryProperties().$promise.then(function (data) {
+                $scope.entryProps.name = data.entry.overview.mainProteinName;
+                $scope.entryProps.genesCount = data.entry.overview.geneNames.length;
+                angular.extend($scope.entryProps, data.entry.properties);
+            });
+        }else {
+            $scope.communityViewers = viewerService.getCommunityGlobalViewers();
+        }
 
         $scope.setExportEntry = function (identifier) {
                 exportService.setExportEntry(identifier);
@@ -138,13 +144,15 @@
                 $scope.githubURL = url.replace("rawgit.com", "github.com").replace("/" + $routeParams.branch + "/", "/blob/" + $routeParams.branch + "/");
                 url += "?nxentry=" + $routeParams.entry;
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
-            } else if ($routeParams.gistusr && $routeParams.gistid) {
+
+            } else if ($routeParams.gistusr && $routeParams.gistid) { //Gist
 
                 $scope.communityMode = true;
                 var url = window.location.protocol + "//bl.ocks.org/"  + $routeParams.gistusr + "/raw/" + $routeParams.gistid + "?nxentry=" + $routeParams.entry;
                 $scope.widgetURL = $sce.trustAsResourceUrl(url);
                 $scope.githubURL = window.location.protocol + "//bl.ocks.org/"  + $routeParams.gistusr + "/" + $routeParams.gistid;
                 $scope.externalURL = $sce.trustAsResourceUrl(url);
+
             } else { //nextprot
 
                 $scope.communityMode = true;
@@ -187,6 +195,8 @@
 
         var entryViewersResource = $resource(config.api.API_URL + '/assets/viewers/community-entry-viewers.json', {}, { list : {method : "GET", isArray : true}});
 
+        var globalViewersResource = $resource(config.api.API_URL + '/assets/viewers/community-global-viewers.json', {}, { list : {method : "GET", isArray : true}});
+
         var entryProperties = $resource(config.api.API_URL + '/entry/' + $routeParams.entry + '/overview.json', {}, {get : {method: "GET"}});
 
 
@@ -194,7 +204,11 @@
 
         };
 
-        ViewerService.prototype.getEntryViewers = function () {
+        ViewerService.prototype.getCommunityGlobalViewers = function () {
+            return globalViewersResource.list();
+        }
+
+        ViewerService.prototype.getCommunityEntryViewers = function () {
             return entryViewersResource.list();
         }
 

@@ -29,8 +29,8 @@
     ///// TODO: fixing; we are breaking the DRY principle and it is really bad (see duplication in nextprot-snorql/app/js/app.config.js) !!!!
     //Environment that should be set from outside //TODO should replace this using GRUNT
     var nxEnvironment = "NX_ENV"; //env can be replaced, by dev, alpha or pro
-    //var apiBase = "http://localhost:8080/nextprot-api-web"; //default
-    var apiBase = "http://dev-api.nextprot.org"; //default
+    var apiBase = "http://localhost:8080/nextprot-api-web"; //default
+    //var apiBase = "http://dev-api.nextprot.org"; //default
 
     var np1Base = "https://www.nextprot.org";
     var np1Base = 'http://uat-web1/';
@@ -55,10 +55,10 @@
 
 
     // init application components
-    runApplication.$inject = ['$log', 'gitHubContent', 'npSettings']
-    function runApplication($log, gitHubContent, npSettings) {
+    runApplication.$inject = ['config', 'gitHubContent', 'npSettings']
+    function runApplication(config, gitHubContent, npSettings) {
         gitHubContent.initialize({
-            helpPath: 'rdfhelp.json',
+            helpPath: config.api.API_URL + '/assets/rdfhelp.json',
             helpTitle: 'Generalities',
             root: 'help', // specify a URI prefix
             githubRepo: '/',
