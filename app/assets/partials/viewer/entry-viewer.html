@@ -52,7 +52,9 @@
         </div>
         <div class="col-sm-10" style="height:100%;padding:0px;box-shadow: -1px 0px 2px -1px #888;">
             <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%" style="border: 0; min-height: 800px; background-color: white; "></iframe>
-            <script>iFrameResize({log:false})</script>
+            <!-- another option is to pass an array of trusted domains -->
+            <!-- <script>iFrameResize({log:false, checkOrigin: ['http://rawgit.com', 'https://rawgit.com', 'https://cdn.rawgit.com', 'http://cdn.rawgit.com']})</script> -->
+            <script>iFrameResize({log:false, checkOrigin: false})</script>
         </div>
     </div>
 </div>
