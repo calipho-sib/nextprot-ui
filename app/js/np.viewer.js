@@ -5,6 +5,7 @@
         .config(viewerConfig)
         .factory('viewerService', viewerService)
         .controller('ViewerCtrl', ViewerCtrl)
+        .service('viewerURLResolver', viewerURLResolver)
     ;
 
     viewerConfig.$inject = ['$routeProvider'];
@@ -36,17 +37,15 @@
             .when('/entry/:entry/view/:ev1/:ev2/:ev3', ev)
 
             .when('/entry/:entry/gist/:gistusr/:gistid', ev) // related to gists
-            .when('/entry/:entry/:repo/:user/:branch/:f1', ev)
-            .when('/entry/:entry/:repo/:user/:branch/:f1/:f2', ev)
-            .when('/entry/:entry/:repo/:user/:branch/:f1/:f2/:f3', ev)
-            .when('/entry/:entry/:repo/:user/:branch/:f1/:f2/:f3/:f4', ev)
+            .when('/entry/:entry/git/:repository/:user/:branch/:gh1', ev)
+            .when('/entry/:entry/git/:repository/:user/:branch/:gh1/:gh2', ev)
             .when('/term/:termid/', {templateUrl: '/partials/viewer/viewer-term-np1.html'})
 
     }
 
 
-    ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService'];
-    function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService) {
+    ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver'];
+    function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
 
         $scope.externalURL = null;
         $scope.widgetEntry = null;
@@ -107,108 +106,21 @@
             }
 
             if ($routeParams.ev1) { //Entry view
-                angular.extend($scope, getScopeParamsForEntryViewers());
+                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
             }else if ($routeParams.gv1) { //Global view
-                angular.extend($scope, getScopeParamsForGlobalViewers());
-
+                angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.gv1, $routeParams.gv2, $routeParams.gv3));
             // COMMUNITY VIEWERS etiher with GitHub or Gist //////////////////////////////////////
             } else if ($routeParams.repo) {
-                angular.extend($scope, getScopeParamsForGitHub()); //GitHub
+                angular.extend($scope, viewerURLResolver.getScopeParamsForGitHubCommunity($routeParams.gh1, $routeParams.gh2, $routeParams.repository, $routeParams.user, $routeParams.branch, $routeParams.entry));
             } else if ($routeParams.gistusr && $routeParams.gistid) { //Gist
-                angular.extend($scope, getScopeParamsForGist());
+                angular.extend($scope, viewerURLResolver.getScopeParamsForGistCommunity($routeParams.gistusr, $routeParams.gistid, $routeParams.entryName));
 
             // GRAILS INTEGRATION
             } else { //deprecated nextprot
-                angular.extend($scope, getScopeParamsForNeXtProtGrails());
+                angular.extend($scope, viewerURLResolver.getScopeParamsForNeXtProtGrails());
             }
         });
 
-
-        var getScopeParamsForEntryViewers = function () {
-
-            var url = window.location.protocol + "//rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.ev1;
-            if($routeParams.ev2) url += "/" + $routeParams.ev2;
-            if($routeParams.ev3) url += "/" + $routeParams.ev3;
-            url += "/app/index.html" ;
-
-            return {
-                "communityMode": false,
-                "githubURL": url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/"),
-                "externalUrl":  $sce.trustAsResourceUrl(url + "?nxentry=" + $routeParams.entry + "&inputOption=true") ,
-                "widgetURL": $sce.trustAsResourceUrl(url + "?nxentry=" + $routeParams.entry + "&inputOption=true")
-            }
-
-        }
-
-        var getScopeParamsForGlobalViewers = function () {
-
-            var url = window.location.protocol + "//rawgit.com/calipho-sib/nextprot-viewers/master/" + $routeParams.gv1;
-            if ($routeParams.gv2) url += "/" + $routeParams.gv2;
-            if ($routeParams.gv3) url += "/" + $routeParams.gv3;
-            url += "/app/index.html";
-
-            return {
-                "communityMode": false,
-                "githubURL": url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/"),
-                "externalUrl": $sce.trustAsResourceUrl(url),
-                "widgetURL": $sce.trustAsResourceUrl(url)
-            }
-
-        }
-
-
-        var getScopeParamsForGitHub = function () {
-
-            var url = window.location.protocol + "//rawgit.com/" + $routeParams.repo + "/" + $routeParams.user + "/" + $routeParams.branch + "/" + $routeParams.f1;
-            //append if they exist
-            if ($routeParams.f2) {
-                url += "/" + $routeParams.f2;
-                if ($routeParams.f3) {
-                    url += "/" + $routeParams.f3;
-                    if ($routeParams.f4) {
-                        url += "/" + $routeParams.f4;
-                    }
-                }
-            }
-
-            return {
-                "communityMode": true,
-                "githubURL": url.replace("rawgit.com", "github.com").replace("/" + $routeParams.branch + "/", "/blob/" + $routeParams.branch + "/"),
-                "externalURL": $sce.trustAsResourceUrl(url),
-                "widgetURL": $sce.trustAsResourceUrl(url + "?nxentry=" + $routeParams.entry)
-            }
-        }
-
-        var getScopeParamsForGist = function () {
-            var _url = window.location.protocol + "//bl.ocks.org/" + $routeParams.gistusr + "/raw/" + $routeParams.gistid + "?nxentry=" + $routeParams.entry;
-            return {
-                "communityMode": true,
-                "githubURL": window.location.protocol + "//bl.ocks.org/" + $routeParams.gistusr + "/" + $routeParams.gistid,
-                "externalURL": $sce.trustAsResourceUrl(_url),
-                "widgetURL": $sce.trustAsResourceUrl(_url)
-            }
-        }
-
-
-        var getScopeParamsForNeXtProtGrails = function () {
-            /* np1Base: origin of NP1 http service, read from conf or set to localhost for dev/debug */
-            //var np1Base = "http://localhost:8080/db/entry/";
-            var np1Base = config.api.NP1_URL + "/db";
-            /* np2css: the css hiding header, footer and navigation items of NP1 page */
-            var np2css = "/db/css/np2css.css"; // NP1 integrated css (same as local)
-            //var np2css = "http://localhost:3000/partials/viewer/np1np2.css"; // UI local css
-            /* np2ori: the origin of the main frame (UI page) used as a base for relative links in iframe*/
-            var np2ori = window.location.origin;
-            /* np1Params: params to pass to NP1 */
-            var np1Params = "?np2css=" + np2css + "&np2ori=" + np2ori;
-
-            return {
-                "communityMode": false,
-                "githubURL": null,
-                "externalURL": np1Base + $location.$$path,
-                "widgetURL": $sce.trustAsResourceUrl(np1Base + $location.$$path + np1Params)
-            }
-        }
 
     }
 
@@ -243,6 +155,96 @@
     }
 
 
+    viewerURLResolver.$inject = ['$sce', 'config'];
+    function viewerURLResolver($sce, config) {
 
 
-})(angular); //global variable
+
+        this.getScopeParamsForEntryViewers = function (ev1, ev2, entryName) {
+
+            var url = window.location.protocol + "//rawgit.com/calipho-sib/nextprot-viewers/master/" + ev1;
+            if(ev2) url += "/" + ev2;
+            url += "/app/index.html" ;
+
+            return {
+                "communityMode": false,
+                "githubURL": url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/"),
+                "externalUrl":  $sce.trustAsResourceUrl(url + "?nxentry=" + entryName + "&inputOption=true") ,
+                "widgetURL": $sce.trustAsResourceUrl(url + "?nxentry=" + entryName)
+            }
+
+        }
+
+        this.getScopeParamsForGlobalViewers = function (gv1, gv2, gv3) {
+
+            var url = window.location.protocol + "//rawgit.com/calipho-sib/nextprot-viewers/master/" + gv1;
+            if (gv2) url += "/" + gv2;
+            if (gv3) url += "/" + gv3;
+            url += "/app/index.html";
+
+            return {
+                "communityMode": false,
+                "githubURL": url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/"),
+                "externalUrl": $sce.trustAsResourceUrl(url),
+                "widgetURL": $sce.trustAsResourceUrl(url)
+            }
+
+        }
+
+
+        this.getScopeParamsForGitHubCommunity = function (gh1, gh2, repository, user, branch, entryName) {
+
+            var url = window.location.protocol + "//rawgit.com/" + repository + "/" + user + "/" + branch + "/" + gh1;
+            if (gh2) { url += "/" + gh2; }
+            var urlSource = url.replace("rawgit.com", "github.com").replace("/" + branch + "/", "/blob/" + branch + "/");
+            if(entryName != undefined) url += "?nxentry=" + entryName;
+
+            return {
+                "communityMode": true,
+                "githubURL": urlSource,
+                "externalURL": $sce.trustAsResourceUrl(url),
+                "widgetURL": $sce.trustAsResourceUrl(url)
+            }
+        }
+
+        this.getScopeParamsForGistCommunity = function (gistUser, gistId, entryName) {
+            var url = window.location.protocol + "//bl.ocks.org/" + gistUser + "/raw/" + gistId;
+            if(entryName != undefined) url += "?nxentry=" + entryName;
+
+            return {
+                "communityMode": true,
+                "githubURL": window.location.protocol + "//bl.ocks.org/" + gistUser + "/" + gistId,
+                "externalURL": $sce.trustAsResourceUrl(url),
+                "widgetURL": $sce.trustAsResourceUrl(url)
+            }
+        }
+
+
+        this.getScopeParamsForNeXtProtGrails = function () {
+            /* np1Base: origin of NP1 http service, read from conf or set to localhost for dev/debug */
+            //var np1Base = "http://localhost:8080/db/entry/";
+            var np1Base = config.api.NP1_URL + "/db";
+            /* np2css: the css hiding header, footer and navigation items of NP1 page */
+            var np2css = "/db/css/np2css.css"; // NP1 integrated css (same as local)
+            //var np2css = "http://localhost:3000/partials/viewer/np1np2.css"; // UI local css
+            /* np2ori: the origin of the main frame (UI page) used as a base for relative links in iframe*/
+            var np2ori = window.location.origin;
+            /* np1Params: params to pass to NP1 */
+            var np1Params = "?np2css=" + np2css + "&np2ori=" + np2ori;
+
+            return {
+                "communityMode": false,
+                "githubURL": null,
+                "externalURL": np1Base + $location.$$path,
+                "widgetURL": $sce.trustAsResourceUrl(np1Base + $location.$$path + np1Params)
+            }
+        }
+
+
+    }
+
+
+
+
+
+    })(angular); //global variable
