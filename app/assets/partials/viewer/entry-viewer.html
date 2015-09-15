@@ -5,43 +5,44 @@
         </div>
         <div class="col-md-10" style="height:50px;">
             <div class="row" style="height:inherit;background-color:white;border-bottom: 1px solid #B6B6B6;">
-                <div class="col-md-2 entrySummaryBoxes">
-
-                    <div>
-                        <span id="entrySummaryIso">{{entryProps.isoformCount}}</span><p>ISO</p>
-                    </div>
-                    <div>
-                        <span  id="entrySummaryGene">{{entryProps.genesCount}}</span><p>GENE</p>
-                    </div>
-                    <div>
-                        <span id="entrySummaryRef">{{entryProps.referencesCount}}</span><p>REF</p>
-                    </div>
+                <div class="col-md-3 entrySummaryBoxes">
+                    <div><span id="entrySummaryIso">{{entryProps.isoformCount}}</span><p>ISO</p></div>
+                    <div><span  id="entrySummaryGene">{{entryProps.genesCount}}</span><p>GENE</p></div>
+                    <div><span id="entrySummaryRef">{{entryProps.referencesCount}}</span><p>REF</p></div>
                 </div>
-                <div class="col-md-4" style="margin-top: 16px;margin-right: 0px; ">
+                <div class="col-md-3" style="margin-top: 16px;margin-right: 0px;">
                     <a ng-if="communityMode" href="learn-developer-api#developandcontribute" style="color: #808080;">Learn how to build community viewers </span>&nbsp;<i class="icon-info-sign"></i></a>
                 </div>
-
                 <div class="col-md-4" style="margin-top: 8px;margin-right: 0px; ">
-                    <div class="input-group">
-                        <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                          <button class="btn btn-default" type="button" ng-click="makeSimpleSearch()"><i class="icon-search"></i>
-                              Search
-                          </button>
-                        </span>
+                    <form ng-submit="makeSimpleSearch()">
+                            <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search an entry...">
+                    </form>
+                </div>
+                <div class="col-md-2">
+                    <div class="pull-right">
+                        <!-- See github url  -->
+                        <div class="entrySummarylink">
+                            <a ng-href="{{githubURL}}" title="See the source code" target="_blank"
+                               style="color:grey;font-size:18px;">
+                                <span class="icon icon-github" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        <!-- Download entry (pop-up opens) -->
+                        <div class="entrySummarylink">
+                            <a bs-modal="'partials/export/export-modal.html'" href="#" title="Download entry"
+                               ng-click="setExportEntry(widgetEntry)" title="Download entry" target="_blank"
+                               ng-href="{{widgetURL}}&inputOption=true" style="color:grey;font-size:18px;">
+                                <span class="icon icon-download" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        <!-- Expand in new window -->
+                        <div class="entrySummarylink">
+                            <a title="see it in a separated window" target="_blank" ng-href="{{externalURL}}"
+                               style="color:grey;font-size:18px;">
+                                <span class="icon icon-resize-full" aria-hidden="true"></span>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <!-- Expand in new window -->
-                <div class="pull-right entrySummarylink">
-                    <a title="see it in a separated window" target="_blank" ng-href="{{externalURL}}" style="color:grey;font-size:18px;">
-                        <span class="icon icon-resize-full" aria-hidden="true"></span>
-                    </a>
-                </div>
-                <!-- Download entry (pop-up opens) -->
-                <div class="pull-right entrySummarylink">
-                    <a bs-modal="'partials/export/export-modal.html'" href="#" title="Download entry"  ng-click="setExportEntry(widgetEntry)" title="Download entry" target="_blank" ng-href="{{widgetURL}}&inputOption=true" style="color:grey;font-size:18px;">
-                        <span class="icon icon-download" aria-hidden="true"></span>
-                    </a>
                 </div>
             </div>
         </div>

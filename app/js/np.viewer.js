@@ -34,7 +34,6 @@
             .when('/entry/:entry/:element', ev)
             .when('/entry/:entry/view/:ev1', ev)
             .when('/entry/:entry/view/:ev1/:ev2', ev)
-            .when('/entry/:entry/view/:ev1/:ev2/:ev3', ev)
 
             .when('/entry/:entry/gist/:gistusr/:gistid', ev) // related to gists
             .when('/entry/:entry/git/:repository/:user/:branch/:gh1', ev)
@@ -59,7 +58,11 @@
         var entryViewMode = $scope.entryName != undefined;
 
         if(entryViewMode){
-            $scope.communityViewers = viewerService.getCommunityEntryViewers();
+
+            viewerService.getCommunityEntryViewers().success(function(data){
+                $scope.communityViewers = data;
+            });
+
             viewerService.getEntryProperties($routeParams.entry).$promise.then(function (data) {
 
                 $scope.entryProps.name = data.entry.overview.mainProteinName;
@@ -69,7 +72,10 @@
             })
 
         }else {
-            $scope.communityViewers = viewerService.getCommunityGlobalViewers();
+
+            viewerService.getCommunityGlobalViewers().success(function(data){
+                $scope.communityViewers = data;
+            });
         }
 
         $scope.setExportEntry = function (identifier) {
@@ -117,7 +123,7 @@
 
             // GRAILS INTEGRATION
             } else { //deprecated nextprot
-                angular.extend($scope, viewerURLResolver.getScopeParamsForNeXtProtGrails());
+                angular.extend($scope, viewerURLResolver.getScopeParamsForNeXtProtGrails($location.$$path));
             }
         });
 
@@ -125,12 +131,14 @@
     }
 
 
-    viewerService.$inject = ['$resource', 'config'];
-    function viewerService($resource, config) {
+    viewerService.$inject = ['$resource', '$http', 'config'];
+    function viewerService($resource, $http, config) {
 
-        var entryViewersResource = $resource(config.api.API_URL + '/assets/viewers/community-entry-viewers.json', {}, { list : {method : "GET", isArray : true}});
+        var rawGitUrlBase = 'https://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/community/';
 
-        var globalViewersResource = $resource(config.api.API_URL + '/assets/viewers/community-global-viewers.json', {}, { list : {method : "GET", isArray : true}});
+        //skips authorization
+        var entryViewersResource = $http({url: rawGitUrlBase + 'community-entry-viewers.json', skipAuthorization : true, method: 'GET'});
+        var globalViewersResource = $http({url: rawGitUrlBase + 'community-global-viewers.json', skipAuthorization : true, method: 'GET'});
 
         var entryProperties = $resource(config.api.API_URL + '/entry/:entryName/overview.json', {entryName: '@entryName'}, {get : {method: "GET"}});
 
@@ -140,11 +148,11 @@
         };
 
         ViewerService.prototype.getCommunityGlobalViewers = function () {
-            return globalViewersResource.list();
+            return globalViewersResource;
         }
 
         ViewerService.prototype.getCommunityEntryViewers = function () {
-            return entryViewersResource.list();
+            return entryViewersResource;
         }
 
         ViewerService.prototype.getEntryProperties = function (entryName) {
@@ -169,7 +177,7 @@
             return {
                 "communityMode": false,
                 "githubURL": url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/"),
-                "externalUrl":  $sce.trustAsResourceUrl(url + "?nxentry=" + entryName + "&inputOption=true") ,
+                "externalURL":  $sce.trustAsResourceUrl(url + "?nxentry=" + entryName + "&inputOption=true") ,
                 "widgetURL": $sce.trustAsResourceUrl(url + "?nxentry=" + entryName)
             }
 
@@ -185,7 +193,7 @@
             return {
                 "communityMode": false,
                 "githubURL": url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/"),
-                "externalUrl": $sce.trustAsResourceUrl(url),
+                "externalURL": $sce.trustAsResourceUrl(url),
                 "widgetURL": $sce.trustAsResourceUrl(url)
             }
 
@@ -220,7 +228,7 @@
         }
 
 
-        this.getScopeParamsForNeXtProtGrails = function () {
+        this.getScopeParamsForNeXtProtGrails = function (path) {
             /* np1Base: origin of NP1 http service, read from conf or set to localhost for dev/debug */
             //var np1Base = "http://localhost:8080/db/entry/";
             var np1Base = config.api.NP1_URL + "/db";
@@ -235,7 +243,7 @@
             return {
                 "communityMode": false,
                 "githubURL": null,
-                "externalURL": np1Base + $location.$$path,
+                "externalURL": np1Base + path,
                 "widgetURL": $sce.trustAsResourceUrl(np1Base + $location.$$path + np1Params)
             }
         }
