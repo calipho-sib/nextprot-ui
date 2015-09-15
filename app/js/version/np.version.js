@@ -1,8 +1,12 @@
 'use strict';
 
 angular.module('np.version', [
-  'np.version.directive'
+    'np.version.directive'
 ])
 
-.value('version', '0.1.6')
-.value('build', 'NX_BUILD');
+.constant('RELEASE_INFOS', {
+    'version': '0.1.6',
+    "isProduction": 'IS_PRODUCTION', // i.e 'true'
+    'build': 'BUILD_NUMBER', // '926'
+    'githash': 'GIT_HASH' // 'e3a1a30'
+});

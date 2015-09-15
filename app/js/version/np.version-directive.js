@@ -1,28 +1,24 @@
 'use strict';
 
 angular.module('np.version.directive', [])
+    .directive('npBuildVersion', ['RELEASE_INFOS', function (RELEASE_INFOS) {
 
-.directive('npVersion', ['version', function(version) {
+      return {
+        restrict: 'AE',
+        replace: true,
+        scope: {},
+        link: function(scope, element) {
 
-  return function(scope, elm, attrs) {
-    elm.text(version);
-  };
-}])
-.directive('npBuild', ['build', function (build) {
+          var content = RELEASE_INFOS.version;
 
-  return function (scope, elm, attrs) {
-    elm.text(build);
-  };
-}])
-.directive('npBuildVersion', ['version', 'build', function (version, build) {
+          if (!isNaN(RELEASE_INFOS.build)) {
 
-  return function (scope, elm, attrs) {
+            content += " (build " + RELEASE_INFOS.build;
+            if (RELEASE_INFOS.isProduction !== 'true') content += "#" + RELEASE_INFOS.githash;
+            content += ")";
+          }
 
-    var content = version;
-
-    if (!isNaN(build))
-      content += " (build "+build+")";
-
-    elm.text(content);
-  };
+          element.text(content);
+        }
+      }
 }]);

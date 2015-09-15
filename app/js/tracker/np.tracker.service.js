@@ -5,17 +5,16 @@ var TrackingService = angular.module('np.tracker', []);
 TrackingService
     .value('developTrackingId', 'UA-61448300-1')
     .value('productionTrackingId', 'UA-61448300-2')
-    .value('trackingProduction', 'NX_TRACKING_PROD');
 
 TrackingService.factory('Tracker', [
     '$window',
     '$location',
     '$routeParams',
-    'version', 'build',
-    'developTrackingId','productionTrackingId','trackingProduction',
+    'RELEASE_INFOS',
+    'developTrackingId','productionTrackingId',
     function ($window, $location, $routeParams,
-              version, build,
-              developTrackingId, productionTrackingId, trackingProduction) {
+              RELEASE_INFOS,
+              developTrackingId, productionTrackingId) {
 
         var separator = '_';
   
@@ -68,7 +67,7 @@ TrackingService.factory('Tracker', [
                 };
 
                 if (!isNaN(build))
-                    exceptionEvent.appVersion += "-build."+build;
+                    exceptionEvent.appVersion += "-build."+RELEASE_INFOS.build;
 
                 console.log("tracking save as list exception -> ga event:", exceptionEvent);
                 ga('send', 'exception', exceptionEvent);
@@ -307,7 +306,7 @@ TrackingService.factory('Tracker', [
 
         function getTrackingId() {
 
-            var trackingId = (trackingProduction == "true") ? productionTrackingId : developTrackingId;
+            var trackingId = (RELEASE_INFOS.isProduction == "true") ? productionTrackingId : developTrackingId;
 
             console.log('Tracking ids: { develop:', developTrackingId, ', production:', productionTrackingId, ', current tracking:', trackingId, '}');
 
