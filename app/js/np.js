@@ -32,12 +32,8 @@
     //var apiBase = "http://localhost:8080/nextprot-api-web"; //default
     var apiBase = "http://dev-api.nextprot.org"; //default
 
-    if(apiBase.indexOf('dev-api.nextprot.org') !== -1){
-        nxEnvironment  = 'dev';
-    }
-
-    var np1Base = "https://www.nextprot.org";
-    var np1Base = 'http://uat-web1/';
+    var np1Base = "https://www.nextprot.org/";
+    //var np1Base = 'http://uat-web1/';
 
 
     if (nxEnvironment.indexOf("NX_") == -1) // means an environment has been set, sed command has done some magic tricks
@@ -48,6 +44,7 @@
             np1Base = 'http://www.nextprot.org';
         }
     }
+
     // main application settings
     App.constant('npSettings', {
         environment: nxEnvironment,

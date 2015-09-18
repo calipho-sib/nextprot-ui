@@ -172,9 +172,11 @@
 
 
         //Setting correct api for viewer
-        var env = npSettings.environment || 'pro';
-        if(npSettings.environment === 'NX_ENV'){ env = 'dev'; }
-
+        var env = npSettings.environment;
+        if(env.indexOf("NX_") !== -1){ // Choose the environemnt for the viewers
+            env = 'dev';
+            //env = 'localhost';
+        }
 
         function concatEnvToUrl (url) {
             var envUrl = "";
