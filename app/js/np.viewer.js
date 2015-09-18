@@ -24,6 +24,9 @@
             //GLOBAL VIEWS https://github.com/calipho-sib/nextprot-viewers
             .when('/view', gv)
             .when('/view/gist/:gistusr/:gistid', gv) // related to gists
+            .when('/view/git/:repository/:user/:branch/:gh1', ev)
+            .when('/view/git/:repository/:user/:branch/:gh1/:gh2', ev)
+            .when('/view/git/:repository/:user/:branch/:gh1/:gh2/:gh3', ev)
 
             .when('/view/:gv1', gv)
             .when('/view/:gv1/:gv2', gv)
@@ -38,6 +41,7 @@
             .when('/entry/:entry/gist/:gistusr/:gistid', ev) // related to gists
             .when('/entry/:entry/git/:repository/:user/:branch/:gh1', ev)
             .when('/entry/:entry/git/:repository/:user/:branch/:gh1/:gh2', ev)
+            .when('/entry/:entry/git/:repository/:user/:branch/:gh1/:gh2/:gh3', ev)
             .when('/term/:termid/', {templateUrl: '/partials/viewer/viewer-term-np1.html'})
 
     }
@@ -116,8 +120,8 @@
             }else if ($routeParams.gv1) { //Global view
                 angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.gv1, $routeParams.gv2, $routeParams.gv3));
             // COMMUNITY VIEWERS etiher with GitHub or Gist //////////////////////////////////////
-            } else if ($routeParams.repo) {
-                angular.extend($scope, viewerURLResolver.getScopeParamsForGitHubCommunity($routeParams.gh1, $routeParams.gh2, $routeParams.repository, $routeParams.user, $routeParams.branch, $routeParams.entry));
+            } else if ($routeParams.repository) {
+                angular.extend($scope, viewerURLResolver.getScopeParamsForGitHubCommunity($routeParams.gh1, $routeParams.gh2, $routeParams.gh3, $routeParams.repository, $routeParams.user, $routeParams.branch, $routeParams.entry));
             } else if ($routeParams.gistusr && $routeParams.gistid) { //Gist
                 angular.extend($scope, viewerURLResolver.getScopeParamsForGistCommunity($routeParams.gistusr, $routeParams.gistid, $routeParams.entryName));
 
@@ -163,10 +167,26 @@
     }
 
 
-    viewerURLResolver.$inject = ['$sce', 'config'];
-    function viewerURLResolver($sce, config) {
+    viewerURLResolver.$inject = ['$sce', '$location', 'config', 'npSettings'];
+    function viewerURLResolver($sce, $location, config, npSettings) {
 
 
+        //Setting correct api for viewer
+        var env = npSettings.environment || 'pro';
+        if(npSettings.environment === 'NX_ENV'){ env = 'dev'; }
+
+
+        function concatEnvToUrl (url) {
+            var envUrl = "";
+            if(env !== 'pro'){
+                if(url.indexOf('?') !== -1){
+                    envUrl = ("&env=" + env);
+                }else {
+                    envUrl = ("?env=" + env);
+                }
+            }
+            return url + envUrl;
+        }
 
         this.getScopeParamsForEntryViewers = function (ev1, ev2, entryName) {
 
@@ -177,8 +197,8 @@
             return {
                 "communityMode": false,
                 "githubURL": url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/"),
-                "externalURL":  $sce.trustAsResourceUrl(url + "?nxentry=" + entryName + "&inputOption=true") ,
-                "widgetURL": $sce.trustAsResourceUrl(url + "?nxentry=" + entryName)
+                "externalURL":  $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + "&inputOption=true")) ,
+                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName))
             }
 
         }
@@ -193,25 +213,27 @@
             return {
                 "communityMode": false,
                 "githubURL": url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/"),
-                "externalURL": $sce.trustAsResourceUrl(url),
-                "widgetURL": $sce.trustAsResourceUrl(url)
+                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
             }
 
         }
 
 
-        this.getScopeParamsForGitHubCommunity = function (gh1, gh2, repository, user, branch, entryName) {
+        this.getScopeParamsForGitHubCommunity = function (gh1, gh2, gh3, repository, user, branch, entryName) {
 
             var url = window.location.protocol + "//rawgit.com/" + repository + "/" + user + "/" + branch + "/" + gh1;
             if (gh2) { url += "/" + gh2; }
+            if (gh3) { url += "/" + gh3; }
+
             var urlSource = url.replace("rawgit.com", "github.com").replace("/" + branch + "/", "/blob/" + branch + "/");
             if(entryName != undefined) url += "?nxentry=" + entryName;
 
             return {
                 "communityMode": true,
                 "githubURL": urlSource,
-                "externalURL": $sce.trustAsResourceUrl(url),
-                "widgetURL": $sce.trustAsResourceUrl(url)
+                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
             }
         }
 
@@ -222,8 +244,8 @@
             return {
                 "communityMode": true,
                 "githubURL": window.location.protocol + "//bl.ocks.org/" + gistUser + "/" + gistId,
-                "externalURL": $sce.trustAsResourceUrl(url),
-                "widgetURL": $sce.trustAsResourceUrl(url)
+                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
             }
         }
 

@@ -32,6 +32,10 @@
     //var apiBase = "http://localhost:8080/nextprot-api-web"; //default
     var apiBase = "http://dev-api.nextprot.org"; //default
 
+    if(apiBase.indexOf('dev-api.nextprot.org') !== -1){
+        nxEnvironment  = 'dev';
+    }
+
     var np1Base = "https://www.nextprot.org";
     var np1Base = 'http://uat-web1/';
 
