@@ -14,7 +14,10 @@
         <ul>
 
             <li ng-repeat="n in news | limitTo:3">
-                <a href="news/{{n.url}}">{{n.title}}</a>
+                <a href="news/{{n.url}}">
+                    <span ng-if="n.title.length > 40">{{n.title.substr(0,37)}}...</span>
+                    <span ng-if="n.title.length <= 40">{{n.title}}</span>
+                </a>
                 <p>{{n.publicationDateFormatted}}</p>
             </li>
 

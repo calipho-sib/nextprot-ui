@@ -3,31 +3,32 @@
 
     angular.module('np.news', [])
         .controller('NewsCtrl', NewsCtrl)
+        .factory('newsService', newsService)
     ;
 
-    NewsCtrl.$inject = ['$scope'];
-    function NewsCtrl($scope) {
+    NewsCtrl.$inject = ['$scope','newsService'];
+    function NewsCtrl($scope, newsService) {
 
-        $scope.news = [
-            {
-                "title":"Google OAuth Support",
-                "publicationDate":1415142000000,
-                "url":"google-oauth-support",
-                "publicationDateFormatted":"Nov 05, 2014"
-            },{
-                "title":"New User Interface",
-                "publicationDate":1415142000000,
-                "url":"new-user-interface",
-                "publicationDateFormatted":"Nov 05, 2014"
-            },{
-                "title":"test",
-                "publicationDate":1441317600000,
-                "url":"test",
-                "publicationDateFormatted":"Sep 04, 2015"}
-        ];
-        $scope.news = _.sortBy($scope.news, 'publicationDate').reverse();
+        newsService.getNews().$promise.then(function(data){
+            $scope.news = _.sortBy(data, 'publicationDate').reverse();
+        });
 
     }
 
+    newsService.$inject = ['$resource', 'config'];
+    function newsService($resource, config) {
+
+        var newsResource = $resource(config.api.API_URL + '/news.json', {}, {get : {method: "GET", isArray:true}});
+
+        var NewsService = function () {
+
+        };
+
+        NewsService.prototype.getNews = function () {
+            return newsResource.get();
+        };
+
+        return new NewsService();
+    }
 
 })(angular); //global variable
