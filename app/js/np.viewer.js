@@ -138,6 +138,8 @@
     viewerService.$inject = ['$resource', '$http', 'config'];
     function viewerService($resource, $http, config) {
 
+
+        //TODO change this to use the API and request a refresh page every hour or so... this cdn is an eternal cache or simply use a tag version
         var rawGitUrlBase = 'https://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/community/';
 
         //skips authorization
@@ -192,13 +194,13 @@
 
         this.getScopeParamsForEntryViewers = function (ev1, ev2, entryName) {
 
-            var url = window.location.protocol + "//rawgit.com/calipho-sib/nextprot-viewers/master/" + ev1;
+            var url = window.location.protocol + "//cdn.rawgit.com/calipho-sib/nextprot-viewers/v0.1.0/" + ev1;
             if(ev2) url += "/" + ev2;
             url += "/app/index.html" ;
 
             return {
                 "communityMode": false,
-                "githubURL": url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/"),
+                "githubURL": url.replace("cdn.rawgit.com", "github.com").replace("/master/", "/blob/master/"),
                 "externalURL":  $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + "&inputOption=true")) ,
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName))
             }
@@ -207,14 +209,14 @@
 
         this.getScopeParamsForGlobalViewers = function (gv1, gv2, gv3) {
 
-            var url = window.location.protocol + "//rawgit.com/calipho-sib/nextprot-viewers/master/" + gv1;
+            var url = window.location.protocol + "//cdn.rawgit.com/calipho-sib/nextprot-viewers/v0.1.0/" + gv1;
             if (gv2) url += "/" + gv2;
             if (gv3) url += "/" + gv3;
             url += "/app/index.html";
 
             return {
                 "communityMode": false,
-                "githubURL": url.replace("rawgit.com", "github.com").replace("/master/", "/blob/master/"),
+                "githubURL": url.replace("cdn.rawgit.com", "github.com").replace("/master/", "/blob/master/"),
                 "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
             }
@@ -224,11 +226,11 @@
 
         this.getScopeParamsForGitHubCommunity = function (gh1, gh2, gh3, repository, user, branch, entryName) {
 
-            var url = window.location.protocol + "//rawgit.com/" + repository + "/" + user + "/" + branch + "/" + gh1;
+            var url = window.location.protocol + "//cdn.rawgit.com/" + repository + "/" + user + "/" + branch + "/" + gh1;
             if (gh2) { url += "/" + gh2; }
             if (gh3) { url += "/" + gh3; }
 
-            var urlSource = url.replace("rawgit.com", "github.com").replace("/" + branch + "/", "/blob/" + branch + "/");
+            var urlSource = url.replace("cdn.rawgit.com", "github.com").replace("/" + branch + "/", "/blob/" + branch + "/");
             if(entryName != undefined) url += "?nxentry=" + entryName;
 
             return {
@@ -240,12 +242,13 @@
         }
 
         this.getScopeParamsForGistCommunity = function (gistUser, gistId, entryName) {
-            var url = window.location.protocol + "//bl.ocks.org/" + gistUser + "/raw/" + gistId;
+            //TODO change this to request the API as well...
+            var url = window.location.protocol + "//rawgit.com/" + gistUser + "/" + gistId + "/raw/index.html";
             if(entryName != undefined) url += "?nxentry=" + entryName;
 
             return {
                 "communityMode": true,
-                "githubURL": window.location.protocol + "//bl.ocks.org/" + gistUser + "/" + gistId,
+                "githubURL": window.location.protocol + "//gist.github.com/" + gistUser + "/" + gistId,
                 "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
             }
