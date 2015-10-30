@@ -1,0 +1,18 @@
+
+#content-page-div table, #stat-page-div table {
+    width: 50%;
+}
+
+span.subtitle {
+    font-size: 92%;
+    color: #666;
+}
+
+#content-page-div ul, #stat-page-div ul {
+    list-style-type: none;
+}
+
+#content-page-div ul li:before, #stat-page-div ul li:before {
+    content: "\00BB \0020";
+    margin-left: -12px;
+}

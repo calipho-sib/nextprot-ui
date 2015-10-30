@@ -1,0 +1,18 @@
+<div id="content-page-div" class="doc-content" ng-controller="ReleaseInfoCtrl">
+
+    <div class="main">
+        <h1>neXtProt release contents</h1>
+        <p>Database release : {{releaseInfo.release.databaseRelease}}</p>
+        <p>Application release : {{releaseInfo.release.apiRelease}}</p>
+
+        <h2>Data statistics</h2>
+        <table class="table">
+            <tbody>
+            <tr ng-repeat="t in releaseInfo.release.tagStatistics">
+                <td>{{t.description.substring(0,1).toUpperCase()+t.description.substring(1)}}</td>
+                <td>{{t.count}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

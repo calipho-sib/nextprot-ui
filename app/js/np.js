@@ -21,6 +21,7 @@
         'np.export',
         'np.version',
         'np.news',
+        'np.release.info',
         'ui.codemirror',
         'auth0', 'angular-storage', 'angular-jwt', 'logglyLogger'
     ]).config(configApplication)
@@ -74,30 +75,13 @@
     // config application $route, $location and $http services.
     configApplication.$inject = ['$routeProvider', '$locationProvider', '$httpProvider', 'authProvider', 'npSettings', 'jwtInterceptorProvider', 'LogglyLoggerProvider'];
     function configApplication($routeProvider, $locationProvider, $httpProvider, authProvider, npSettings, jwtInterceptorProvider, LogglyLoggerProvider) {
-        authProvider.init({
-            clientID: npSettings.auth0_cliendId,
-            callbackURL: npSettings.callback,
-            domain: 'nextprot.auth0.com',
-            icon: 'img/np.png'
-        })
-
-
-        LogglyLoggerProvider.inputToken('8d9a8721-1beb-4e25-a37d-f0ff528cf611');
-
-        jwtInterceptorProvider.tokenGetter = ['ipCookie', function (ipCookie) {
-            // Return the saved token
-            return ipCookie('nxtoken');
-        }];
-        $httpProvider.interceptors.push('jwtInterceptor');
-
-        $httpProvider.interceptors.push('errorInterceptor');
-        $httpProvider.defaults.headers.common.Accept = 'application/json'
-
-
-        // List of routes of the application
         $routeProvider
             // Home page
-            .when('/', {title: 'welcome to nextprot', templateUrl: '/partials/welcome.html'})
+            .when('/', {title: 'welcome to neXtProt', templateUrl: '/partials/welcome.html'})
+            // Content page
+            .when('/release-contents', {title: 'neXtProt release contents', templateUrl: '/partials/release_contents.html'})
+            // Statistics page
+            .when('/release-statistics', {title: 'neXtProt release statistics', templateUrl: '/partials/release_statistics.html'})
             // Pages (in nextprot-docs/pages): about, copyright...
             .when('/:article', {title: 'page', templateUrl: '/partials/doc/page.html'})
             //// Help pages
@@ -111,6 +95,27 @@
             .when('/help/entity/:entity', {title: 'help for RDF', templateUrl: '/partials/doc/help.html'})
             // 404 error page
             .when('/404', {title: '404', templateUrl: '/partials/errors/404.html'})
+            // List of routes of the application
+
+
+        authProvider.init({
+            clientID: npSettings.auth0_cliendId,
+            callbackURL: npSettings.callback,
+            domain: 'nextprot.auth0.com',
+            icon: 'img/np.png'
+        })
+
+        LogglyLoggerProvider.inputToken('8d9a8721-1beb-4e25-a37d-f0ff528cf611');
+        jwtInterceptorProvider.tokenGetter = ['ipCookie', function (ipCookie) {
+            // Return the saved token
+            return ipCookie('nxtoken');
+        }];
+        $httpProvider.interceptors.push('jwtInterceptor');
+
+        $httpProvider.interceptors.push('errorInterceptor');
+
+
+        $httpProvider.defaults.headers.common.Accept = 'application/json'
             // Catch all
             //.otherwise({redirectTo : '/404'});
 

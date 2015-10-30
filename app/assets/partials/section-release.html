@@ -1,7 +1,7 @@
-<div id="release-section" class="section">
+<div id="release-section" class="section" ng-controller="ReleaseInfoCtrl">
     <div class="section-header">
         <!-- TODO Manage release number with API -->
-        <h2 class="np-color-pink">Release 2015-05-01</h2>
+        <h2 class="np-color-pink">Release {{releaseInfo.release.databaseRelease}}</h2>
     </div>
     <div class="section-content">
         <!-- TODO Add Random pie chart between 2 random graphic:
@@ -10,8 +10,11 @@
                 % entries with proteomics, expression coverage, subcell location
             2) the PE graphic for HUPO release
         -->
+        <h3>Protein existence in neXtProt</h3>
+            <img id="release-img" src="img/prot_existence_201510.png"
+                 alt="Protein existence in neXtProt image">
     </div>
     <div class="section-footer">
-        <a href="/help/release-statistics">&raquo; Release statistics</a>
+        <a href="/release-statistics">&raquo; Release statistics</a>
     </div>
 </div>
