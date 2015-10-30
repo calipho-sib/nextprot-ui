@@ -1,69 +1,72 @@
-<div class="row">
-	
-	<style>
-		.fileinput-button 
-		{
-			position: relative;
-			overflow: hidden;
-		}
-		
-		.fileinput-button input 
-		{
-			position: absolute;
-			top: 0;
-			right: 0;
-			margin: 0;
-			opacity: 0;
-			filter: alpha(opacity=0);
-			transform: translate(-300px, 0) scale(4);
-			font-size: 23px;
-			direction: ltr;
-			cursor: pointer;
-		}
-	
-	</style>
-	
-	<div class="col-xs-3 col-sm-2 nopadding" >
-    <div ng-include="'partials/user/user-nav-bar.html'"></div>
-    <div ng-include="'partials/user/user-protein-lists-sidebar.html'" ></div>
-	</div>
-	<div class="col-xs-9 col-sm-10" ng-controller="ListCreateCtrl">
-		<h3>Create a protein list from accession numbers</h3>
-		
-		<label>Enter list of accession numbers: </label>
-		<div class="form-group ">		   
+<div class="row" ng-controller="ListCreateCtrl">
+
+    <style>
+        .fileinput-button {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fileinput-button input {
+            position: absolute;
+            top: 0;
+            right: 0;
+            margin: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            transform: translate(-300px, 0) scale(4);
+            font-size: 23px;
+            direction: ltr;
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="col-xs-3 col-sm-2 nopadding">
+        <div ng-include="'partials/user/user-nav-bar.html'"></div>
+        <div ng-include="'partials/user/user-protein-lists-sidebar.html'"></div>
+    </div>
+
+    <div class="col-xs-9 col-sm-10">
+        <h3>Create a protein list from accession numbers</h3>
+
+        <label>List of accession numbers: </label>
+
+        <div class="form-group ">
 			<textarea rows="5" ng-model="inputAccessions" class="form-control">
 			</textarea>
-		</div>		
-		
+        </div>
 
-		<div class="form-group ">		   
+        <div class="form-group ">
         <span class="btn btn-default fileinput-button btn-block">
          	<i class="icon-plus icon-white"></i> Or select a file to upload
 					<input type="file" multiple ng-model="files" file-change>
         </span>
-		</div>
-		
+        </div>
 
-		<form class="form-inline" role="form">
-		  <div class="form-group col-xs-3 nopadding">
-				<input type="text" placeholder="Eg. my super kinases" ng-model="listName" class="form-control" style="min-width:100%">
-		  </div>
-		  <div class="form-group col-xs-7">
-				<input type="text" placeholder="Ex. a great description ..." ng-model="listDescription" class="form-control" style="min-width:100%">
-		  </div>
-			<button type="button" class="btn btn-primary" ng-click="createList(listName, listDescription)"> Create </button>
-		</form>		
-		<hr/>
-		<div class="form-group ">
-			<blockquote>
-    		<span ng-show="!files.length">No files selected</span>
-    		<span ng-show="files.length"><b>Uploading: </b></span>
-    		<ul>
-        		<li ng-repeat="file in files">{{file.name}}</li>
-    		</ul>
-    	</blockquote>
-		</div>
+        <form class="form-inline" role="form">
 
-	</div>
+            <div class="col-xs-3 nopadding">
+                <!--<label>List name:</label>-->
+                <input type="text" placeholder="eg. my super kinases" ng-model="listName" class="form-control"
+                       style="min-width:100%">
+            </div>
+            <div class="col-xs-7">
+                <!--<label>Description:</label>-->
+                <input type="text" placeholder="eg. a great description ..." ng-model="listDescription"
+                       class="form-control" style="min-width:100%">
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="createList(listName, listDescription)"
+                     ng-disabled="!isCreatable()">Create
+            </button>
+        </form>
+        <div class="form-group ">
+            <blockquote>
+                <span ng-show="files.length"><h4>File(s) to upload: </h4></span>
+                <ul>
+                    <li ng-repeat="file in files">{{file.name}}<span class="btn icon-remove" aria-hidden="false" ng-click="removeUploadFile($index)"></span></li>
+                </ul>
+            </blockquote>
+        </div>
+
+
+    </div>
 </div>

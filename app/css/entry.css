@@ -313,4 +313,6 @@ main {
     font-size: 12px;
     pointer-events: none;
     cursor: default;
+    padding-bottom: 0px !important;
+    color:darkgray !important;
 }

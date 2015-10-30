@@ -1,0 +1,88 @@
+<div class="panel-group nomarginshift" id="accordion-entry">
+  <div class="panel panel-default menu-group" style="margin:0px;">
+    <div class="panel-heading menu-header">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)"  data-target="#collapse1">
+          <!--<img src="../img/iconeProt1Neg.png" alt="prot menu" width="40px" align="middle">-->
+          <span style="margin-left:15px;vertical-align:middle;"><span style="font-size: 28px;">P</span>rotein</span>
+        </a></h4>
+    </div>
+    <div id="collapse1" class="panel-collapse -collapse menu-content in">
+      <div class="panel-body" style="padding:0px">
+        <ul class="nav nav-stacked prot-menu">
+          <li ng-class="activePage('function')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;" href="/entry/{{widgetEntry}}">Function</a></li>
+          <li ng-class="activePage('medical')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;"href="/entry/{{widgetEntry}}/medical">Medical</a></li>
+          <li ng-class="activePage('expression')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;"href="/entry/{{widgetEntry}}/expression">Expression</a></li>
+          <li ng-class="activePage('interactions')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;"href="/entry/{{widgetEntry}}/interactions">Interactions</a></li>
+          <li ng-class="activePage('localisation')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;" href="/entry/{{widgetEntry}}/localisation">Localisation</a></li>
+          <li ng-class="activePage('sequence')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;" href="/entry/{{widgetEntry}}/view/sequence">Sequence</a></li>
+          <!--<li ng-class="activePage('view/sequence')"><a href="/entry/{{widgetEntry}}/view/sequence">Sequence  <i class="icon-wrench"></i></a></li>-->
+          <li ng-class="activePage('view/proteomics')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;" href="/entry/{{widgetEntry}}/view/proteomics">Proteomics</a></li>
+          <!--<li ng-class="activePage('view/proteomics')"><a href="/entry/{{widgetEntry}}/view/proteomics">Proteomics  <i class="icon-wrench"></i></a></li>-->
+          <li ng-class="activePage('view/structures')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;" href="/entry/{{widgetEntry}}/view/structures">Structures</a></li>
+          <!--<li ng-class="activePage('view/structures')"><a href="/entry/{{widgetEntry}}/view/structures">Structures  <i class="icon-wrench"></i></a></li>-->
+          <li ng-class="activePage('identifiers')"><a class="disable-link" style="padding-bottom: 0px !important; color:darkgray !important;" href="/entry/{{widgetEntry}}/identifiers">Identifiers</a></li>
+          <li ng-class="activePage('view/peptides')"><a href="/entry/{{widgetEntry}}/view/peptides">Peptides</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gene -->
+<div class="panel panel-default menu-group " style="margin:0px">
+  <div class="panel-heading menu-header">
+    <h4 class="panel-title">
+      <a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)" data-target="#collapse2">
+        <span style="font-size: 28px;">G</span>ene
+      </a></h4>
+  </div>
+  <div id="collapse2" class="panel-collapse collapse menu-content">
+    <div class="panel-body" style="padding:0px">
+      <ul class="nav nav-stacked gene-menu disable-link">
+        <li ng-class="activePage('exons')"><a  style="padding-bottom: 0px !important; color:darkgray !important;"  href="/entry/{{widgetEntry}}/exons">Exons</a></li>
+        <li ng-class="activePage('gene_identifiers')"><a  style="padding-bottom: 0px !important; color:darkgray !important;"  href="/entry/{{widgetEntry}}/gene_identifiers">Identifiers</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="panel panel-default menu-group" style="margin:0px">
+  <div class="panel-heading menu-header">
+    <h4 class="panel-title">
+      <a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)" data-target="#collapse3">
+        <span style="font-size: 28px;">R</span>eferences
+      </a></h4>
+  </div>
+  <div id="collapse3" class="panel-collapse collapse menu-content">
+    <div class="panel-body" style="padding:0px">
+      <ul class="nav nav-stacked ref-menu disable-link">
+        <li ng-class="activePage('publications')"><a style="padding-bottom: 0px !important; color:darkgray !important;"  href="/entry/{{widgetEntry}}/publications">Curated publications ({{entryProps.referencesCuratedPublicationsCount}})</a></li>
+        <li ng-class="activePage('computed_references')"><a style="padding-bottom: 0px !important; color:darkgray !important;"  href="/entry/{{widgetEntry}}/computed_references">Additional publications ({{entryProps.referencesAdditionalPublicationsCount}})</a></li>
+        <li ng-class="activePage('patents')"><a style="padding-bottom: 0px !important; color:darkgray !important;"  href="/entry/{{widgetEntry}}/patents" data-toggle="tab">Patents ({{entryProps.referencesPatentsCount}})</a></li>
+        <li ng-class="activePage('submissions')"><a style="padding-bottom: 0px !important; color:darkgray !important;"  href="/entry/{{widgetEntry}}/submissions" data-toggle="tab">Submissions ({{entryProps.referencesSubmissionsCount}})</a></li>
+        <li ng-class="activePage('web')"><a style="padding-bottom: 0px !important; color:darkgray !important;"  href="/entry/{{widgetEntry}}/web" data-toggle="tab">Web resources ({{entryProps.referencesWebResourcesCount}})</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Community -->
+<div class="panel panel-default menu-group" style="margin:0px">
+  <div class="panel-heading menu-header">
+    <h4 class="panel-title">
+      <a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)" data-target="#collapse4">
+        <span style="font-size: 28px;">C</span>ommunity
+      </a>
+    </h4>
+  </div>
+  <div id="collapse4" class="panel-collapse -collapse menu-content">
+    <div class="panel-body" style="padding:0px">
+      <ul class="nav nav-stacked ref-menu" ng-repeat="communityView in communityViewers">
+        <li ng-class="activePage('gist/' + communityView.id)"><a
+                ng-href="/entry/{{widgetEntry}}/{{communityView.type}}/{{communityView.id}}">{{communityView.title}}<span
+                class="pull-right" style="font-size: 10px; margin-top: 8px">&nbsp;by {{communityView.owner}}</span></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>

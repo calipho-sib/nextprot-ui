@@ -33,8 +33,8 @@
     //var apiBase = "http://localhost:8080/nextprot-api-web"; //default
     var apiBase = "http://dev-api.nextprot.org"; //default
 
-    var np1Base = "https://www.nextprot.org";
-    var np1Base = 'http://uat-web1/';
+    var np1Base = "https://www.nextprot.org/";
+    //var np1Base = 'http://uat-web1/';
 
 
     if (nxEnvironment.indexOf("NX_") == -1) // means an environment has been set, sed command has done some magic tricks
@@ -45,6 +45,7 @@
             np1Base = 'http://www.nextprot.org';
         }
     }
+
     // main application settings
     App.constant('npSettings', {
         environment: nxEnvironment,
@@ -56,10 +57,10 @@
 
 
     // init application components
-    runApplication.$inject = ['$log', 'gitHubContent', 'npSettings']
-    function runApplication($log, gitHubContent, npSettings) {
+    runApplication.$inject = ['config', 'gitHubContent', 'npSettings']
+    function runApplication(config, gitHubContent, npSettings) {
         gitHubContent.initialize({
-            helpPath: 'rdfhelp.json',
+            helpPath: config.api.API_URL + '/assets/rdfhelp.json',
             helpTitle: 'Generalities',
             root: 'help', // specify a URI prefix
             githubRepo: '/',
@@ -137,7 +138,7 @@
                 if (status == 0) {
                     //CAREFUL DO NOT LOG EVERYTHING INTO LOGGYL BECAUSE 1) THERE ARE SENSITIVE INFORMATION token / bearer !  2) We have a limit of 200MB / day
                     $log.error({status : response.status, message : "connection problem", href : window.location.href});
-                    flash('alert-info', "network issue: If the error persists please report to support@nextprot.org");
+                    //flash('alert-info', "network issue: If the error persists please report to support@nextprot.org");
                     return;
                 }/*else if (status == 400) { //Should be handled by the controller}*/
                 else if ((status == 401) || (status == 403)) {

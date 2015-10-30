@@ -1,0 +1,40 @@
+<div class="panel-group nomarginshift" id="accordion-entry">
+  <div class="panel panel-default menu-group" style="margin:0px;">
+    <div class="panel-heading menu-header">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)"  data-target="#collapse1">
+          <!--<img src="../img/iconeProt1Neg.png" alt="prot menu" width="40px" align="middle">-->
+          <span style="margin-left:15px;vertical-align:middle;"><span style="font-size: 28px;">S</span>tatistics</span>
+        </a></h4>
+    </div>
+    <div id="collapse1" class="panel-collapse -collapse menu-content in">
+      <div class="panel-body" style="padding:0px">
+        <ul class="nav nav-stacked prot-menu">
+          <li ng-class="activePage('/view/statistics/annotations')"><a href="/view/statistics/annotations">Annotation stats</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Community -->
+<div class="panel panel-default menu-group" style="margin:0px">
+  <div class="panel-heading menu-header">
+    <h4 class="panel-title">
+      <a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)" data-target="#collapse4">
+        <span style="font-size: 28px;">C</span>ommunity
+      </a>
+    </h4>
+  </div>
+  <div id="collapse4" class="panel-collapse -collapse menu-content">
+    <div class="panel-body" style="padding:0px">
+      <ul class="nav nav-stacked ref-menu" ng-repeat="communityView in communityViewers">
+        <li ng-class="activePage('gist/' + communityView.id)"><a
+                ng-href="/view/{{communityView.type}}/{{communityView.id}}">{{communityView.title}}<span
+                class="pull-right" style="font-size: 10px; margin-top: 8px">&nbsp;by {{communityView.owner}}</span></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>

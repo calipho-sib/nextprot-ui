@@ -16,11 +16,23 @@ Installation
 ------------
 
 > npm install
+> bower install
 
 Usage
 -----
 
-> node app
+> node app (this creates a build)
+
+Maintenance Javascript Libraries
+-------
+
+> bower list (lists the current bower components and shows the latests)
+> bower install angular#1.4.0 --save (important to set the --save flag to update the bower.json accordingly)
+
+Maintenance node modules
+-------
+
+TODO !
 
 Testing
 -------
@@ -30,9 +42,8 @@ Unit testing `npm run-script` unit Integration testing must start the applicatio
 Deploying
 ---------
 
-before deploying html, check the application base and the api location in index.html <base href="/" /> should be <base href="/protosearch/" />
-
-in app/js/np.config.js the SOLR_SERVER variable should be correct (note this variable will be refactored to API_SERVER)
+nxs-build-and-deploy-spa.sh (dev|alpha|pro) if pro is specified change the version.js
+in pro brunch -P is used (to minimize / uglify the javascript files)
 
 Troubleshooting
 ---------------
