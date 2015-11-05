@@ -1,21 +1,16 @@
 <div id="stat-page-div" class="doc-content" ng-controller="ReleaseInfoCtrl">
-    <div class="main">
-        <h1>neXtProt release contents</h1>
-        <p>Database release : {{releaseInfo.release.databaseRelease}}</p>
-        <p>Application release : {{releaseInfo.release.apiRelease}}</p>
 
-        <h2>Data Release</h2>
+    <div class="main">
+        <h1>neXtProt release statistics</h1>
+        <p>Database release: {{releaseInfo.release.databaseRelease}}</p>
+        <p>Application release: {{releaseInfo.release.apiRelease}}</p>
+
+        <h2>Data statistics</h2>
         <table class="table">
             <tbody>
-            <tr ng-repeat="d in releaseInfo.release.datasources">
-                <td><a href="{{d.url}}">{{d.source}}</a></td>
-                <td>
-                    <ul>
-                        <li><span class="subtitle">DESCRIPTION:</span> {{d.description}}</li>
-                        <li><span class="subtitle">RELEASE:</span> {{d.releaseVersion}}</li>
-                        <li><span class="subtitle">LAST IMPORT:</span> {{d.lastImportDate}}</li>
-                    </ul>
-                </td>
+            <tr ng-repeat="t in releaseInfo.release.tagStatistics">
+                <td>{{t.description.substring(0,1).toUpperCase()+t.description.substring(1)}}</td>
+                <td>{{t.count}}</td>
             </tr>
             </tbody>
         </table>
