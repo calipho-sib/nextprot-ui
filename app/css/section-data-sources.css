@@ -1,57 +1,70 @@
-#data-sources-section img.source-img, #data-sources-section p {
+
+#data-sources-section #datasources {
+    /*background-color: #aaa;*/
+    height: 175px;
+}
+
+#data-sources-section img.source-img,
+#data-sources-section p,
+#source-np {
     position: absolute;
 }
 
 #source-np {
-    top: 29%;
-    left: 43%;
-    height: 32%;
+    top: 43px;
+    left: 74px;
+    width: 63px;
 }
 
-#source-uniprot {
-    top: 66%;
-    left: 36%;
-    height: 16%;
-}
-
-#source-bgee {
-    top: 39%;
-    left: 16%;
-    height: 12%;
-}
-
-#source-peptide-atlas {
-    top: 53%;
-    right: 17%;
-    height: 13%;
+#data-sources-section img.source-img,
+#data-sources-section p {
+    width: auto;
 }
 
 #source-hpa {
-    top: 17%;
-    left: 32%;
-    height: 5%;
-}
-
-#source-intact {
-    top: 26%;
-    right: 18%;
-    height: 11%;
+    top: 7px;
+    left: 28px;
+    height: 15px;
 }
 
 #source-srm-atlas {
-    top: 26%;
-    left: 18%;
-    height: 8.5%;
+    top: 33px;
+    left: 6px;
+    height: 20px;
 }
 
-#source-uniprot-goa {
-    top: 43%;
-    right: 15%;
-    font-size: 0.9em;
+#source-bgee {
+    top: 67px;
+    left: 0;
+    height: 27px;
 }
 
 #source-cosmic {
-    top: 59%;
-    left: 17%;
-    height: 6.5%;
+    top: 124px;
+    left: 5px;
+    height: 15px;
+}
+
+#source-uniprot {
+    bottom: 0;
+    left: 67px;
+    height: 35px;
+}
+
+#source-uniprot-goa {
+    top: 120px;
+    left: 122px;
+    font-size: 0.9em;
+}
+
+#source-peptide-atlas {
+    top: 73px;
+    left: 136px;
+    height: 32px;
+}
+
+#source-intact {
+    top: 32px;
+    left: 142px;
+    height: 27px;
 }
