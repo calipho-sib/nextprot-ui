@@ -1,6 +1,6 @@
 
 #content-page-div table, #stat-page-div table {
-    width: 50%;
+    /*width: 50%;*/
 }
 
 span.subtitle {
@@ -15,4 +15,24 @@ span.subtitle {
 #content-page-div ul li:before, #stat-page-div ul li:before {
     content: "\00BB \0020";
     margin-left: -12px;
+}
+
+.release-row {
+    border-bottom: 1px solid #AAA;
+    padding: 3px;
+}
+
+.category {
+    padding: 3px;
+
+    color: #787878;
+    vertical-align: middle;
+}
+
+.first {
+    border-top: 1px solid #AAA;
+}
+
+.last {
+    border-bottom: none;
 }

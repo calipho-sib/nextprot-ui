@@ -5,19 +5,29 @@
         <p>Application release: {{releaseInfo.release.apiRelease}}</p>
 
         <h2>Data release</h2>
-        <table class="table">
-            <tbody>
-            <tr ng-repeat="d in releaseInfo.release.datasources">
-                <td><a href="{{d.url}}">{{d.source}}</a></td>
-                <td>
-                    <ul>
-                        <li><span class="subtitle">DESCRIPTION:</span> {{d.description}}</li>
-                        <li><span class="subtitle">RELEASE:</span> {{d.releaseVersion}}</li>
-                        <li><span class="subtitle">LAST IMPORT:</span> {{d.lastImportDate}}</li>
-                    </ul>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="row">
+            <div class="col-sm-10">
+                <div class="row release-row" ng-class="{'first':$first}"
+                     ng-repeat="d in releaseInfo.datasources">
+                    <div class="col-sm-3 ">
+                            <a href="{{d.url}}">{{d.source}}</a>
+                    </div>
+                    <div class="col-sm-9 col-sm-offset-0 col-xs-11 col-xs-offset-1">
+                        <div class="row release-row">
+                            <div class="col-sm-4"><span class="subtitle">DESCRIPTION</span></div>
+                            <div class="col-sm-8">{{d.description}}</div>
+                        </div>
+                        <div class="row release-row">
+                            <div class="col-sm-4"><span class="subtitle">RELEASE</span></div>
+                            <div class="col-sm-8">{{d.releaseVersion}}</div>
+                        </div>
+                        <div class="row release-row last">
+                            <div class="col-sm-4"><span class="subtitle">LAST IMPORT</span></div>
+                            <div class="col-sm-8">{{d.lastImportDate}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
