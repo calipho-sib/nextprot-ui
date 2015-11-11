@@ -194,13 +194,13 @@
 
         this.getScopeParamsForEntryViewers = function (ev1, ev2, entryName) {
 
-            var url = window.location.protocol + "//cdn.rawgit.com/calipho-sib/nextprot-viewers/v0.1.0/" + ev1;
+            var url = window.location.origin + "/viewers/" + ev1;
             if(ev2) url += "/" + ev2;
             url += "/app/index.html" ;
 
             return {
                 "communityMode": false,
-                "githubURL": url.replace("cdn.rawgit.com", "github.com").replace("/master/", "/blob/master/"),
+                "githubURL": "https://github.com/calipho-sib/nextprot-viewers/",
                 "externalURL":  $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + "&inputOption=true")) ,
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName))
             }
