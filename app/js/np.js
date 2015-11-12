@@ -66,7 +66,7 @@
             root: 'help', // specify a URI prefix
             githubRepo: '/',
             githubApi:apiBase,
-            githubEditPage : "https://github.com/calipho-sib/nextprot-docs/edit/home-page/",
+            githubEditPage : "https://github.com/calipho-sib/nextprot-docs/edit/master/",
             githubToken : null
         });
     };

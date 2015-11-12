@@ -1,8 +1,28 @@
-.sidebar{
-
+.sidebar {
+  background-color: #C8C8C8;
+  color:#fff;
+  top: 60px;
+  height: 100vh;
+}
+.nav-sidebar li.active,
+.nav-sidebar > li > a:hover {
+  border-left: 5px solid #C50063;
 }
 
-.nav.nav-list li.active a{
-  color:#888;
-  background-color: #EAEAEA;
+.nav-sidebar > li.active > a:hover {
+  border-left: none;
+}
+
+.nav-sidebar > li.active > a,
+.nav-sidebar > li > a:hover {
+  padding-left: 15px;
+}
+.nav-sidebar li.hover {
+  border-left: 5px solid #abb;
+}
+
+.nav-sidebar > li > h5 {
+  text-shadow: none;
+  color: #C50063;
+  font-size: 1em;
 }
