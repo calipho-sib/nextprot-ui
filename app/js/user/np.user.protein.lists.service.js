@@ -125,20 +125,21 @@
         return service;
     }
 
-// implement the service
-    uploadListService.$inject = ['config', '$q', '$http', '$rootScope', 'user', 'auth', 'ipCookie'];
-    function uploadListService(config, $q, $http, $rootScope, user, auth, ipCookie) {
+    uploadListService.$inject = ['config', '$q', '$http', '$rootScope', 'user', 'ipCookie'];
+    function uploadListService(config, $q, $http, $rootScope, user, ipCookie) {
 
         $http.defaults.useXDomain = true;
         delete $http.defaults.headers.common["X-Requested-With"];
 
         var UploadList = function () {
         };
-        UploadList.prototype.send = function (listId, file, cb) {
-            var data = new FormData(),
-                xhr = new XMLHttpRequest(),
-                deferred = $q.defer(),
-                url = config.api.API_URL + '/user/me/lists/:id/upload';
+
+        UploadList.prototype.send = function (listId, file, ignoreNotFoundEntries) {
+
+            var data = new FormData();
+            var xhr = new XMLHttpRequest();
+            var deferred = $q.defer();
+            var url = config.api.API_URL + '/user/me/lists/:id/upload.json';
 
             // When the request starts.
             xhr.onloadstart = function () {
@@ -148,9 +149,8 @@
             // When the request has failed.
             xhr.onerror = function (e) {
                 $rootScope.$emit('upload:error', e);
-                console.log('errrr', e);
+                console.log('error', e);
                 return deferred.reject(e, xhr)
-
             };
 
             xhr.onreadystatechange = function () {
@@ -163,13 +163,13 @@
             };
 
             // Send to server, where we can then access it with $_FILES['file].
-            data.append('file', file, file.name);
+            data.append('file', file);
+            if (ignoreNotFoundEntries) data.append('ignoreNotFoundEntries', ignoreNotFoundEntries);
+
             xhr.open('POST', url.replace(':id', listId));
-
-            //xhr.setRequestHeader('Authorization','Bearer ' + auth.idToken);
             xhr.setRequestHeader('Authorization', 'Bearer ' + ipCookie('nxtoken'));
-
             xhr.send(data);
+
             return deferred.promise;
         };
         return new UploadList();
