@@ -5,11 +5,6 @@ body {
 	background: #EBF1F5 !important;
 }
 
-.disable-link {
-	pointer-events: none;
-	cursor: default;
-	opacity: 0.6;
-}
 
 .np-color-pink {
 	color: #C50063;
