@@ -5,12 +5,12 @@
 
         <div class="row">
             <!-- LEFT PANE -->
-            <div class="col-sm-4 col-lg-3 sidebar">
+            <div class="col-sm-4 col-lg-3 sidebar" id="news-sidebar">
                 <news-toc />
             </div>
 
             <!-- CENTER PANE -->
-            <div ng-include="'html/np-help.doc.html'" ng-controller="DocCtrl"
+            <div ng-include="'html/np-help.doc.html'" ng-controller="DocCtrl" id="news-centre-content"
                  class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3 main"/>
 
         </div>

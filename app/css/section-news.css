@@ -4,3 +4,8 @@ a.social-link img {
     margin-bottom: 3px;
     margin-left: 5px;
 }
+
+#news-sidebar {
+    background-color: #EBF1F5;
+    border: 2px solid #A3D5F7;
+}
