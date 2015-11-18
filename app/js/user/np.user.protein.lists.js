@@ -169,13 +169,10 @@
         }
     }
 
-    ListCreateCtrl.$inject = ['$q', '$scope', '$rootScope', '$location', 'userProteinList', 'user', 'uploadListService', 'flash', '$log']
-    function ListCreateCtrl($q, $scope, $rootScope, $location, userProteinList, user, uploadListService, flash, $log) {
+    ListCreateCtrl.$inject = ['$q', '$scope', '$rootScope',  'userProteinList', 'user', 'uploadListService', 'flash', '$log']
+    function ListCreateCtrl($q, $scope, $rootScope, userProteinList, user, uploadListService, flash, $log) {
 
-        $scope.inputAccessions = "";
-        $scope.listName = "";
-
-        $scope.files = [];
+        clearForm();
 
         $rootScope.$on('upload:loadstart', function () {
             $log.info('Controller: on `loadstart`');
@@ -185,28 +182,42 @@
             $log.info('Controller: on `error`');
         });
 
-        $scope.createList = function () {
+        function clearForm() {
 
-            var list = {};
+            $scope.listName = "";
+            $scope.listDescription = "";
+            $scope.inputAccessions = "";
+            $scope.files = [];
+        }
 
-            // get accessions from text area
-            if ($scope.inputAccessions.length > 0) {
+        function newList(listName, listDesc, accessions) {
 
-                var accessions = $scope.inputAccessions.split("\n");
+            return {
+                name: listName,
+                description: listDesc,
+                accessions: accessions
+            };
+        }
 
-                list = {
-                    name: $scope.listName,
-                    description: $scope.listDescription,
-                    accessions: accessions
-                };
-            } else {
-                list = {
-                    name: $scope.listName,
-                    description: $scope.listDescription,
-                    accessions: []
-                }
-            }
+        function uploadAccessionsFromTextArea(textArea) {
 
+            var accessions = textArea.split("\n");
+            var list = newList($scope.listName, $scope.listDescription, accessions);
+
+            userProteinList.create(user, list).$promise.then(function () {
+
+                flash('alert-info', "List " + $scope.listName + " created.");
+                clearForm();
+            }, function (o) {
+                flash('alert-warning', "List " + $scope.listName + " not created: " + o.data.message);
+            });
+        }
+
+        function uploadAccessionsFromFiles(ignoreNotFoundEntries) {
+
+            var list = newList($scope.listName, $scope.listDescription,[]);
+
+            // create an empty list and then update with accession file content
             userProteinList.create(user, list).$promise
                 .then(function (newList) {
 
@@ -218,15 +229,29 @@
 
                     $q.all(promises).then(function () {
                         flash('alert-info', "List " + $scope.listName + " created.");
-                        $scope.files = [];
-                        $location.path('/user/protein/lists');
+                        clearForm();
                     }, function (o) {
-                        flash('alert-warning', "List " + $scope.listName + " not created: " + o.data.message)
-                    })
-                }, function (o) {
-                    flash('alert-warning', "List " + $scope.listName + " not created: " + o.data.message)
-                })
+                        flash('alert-warning', "List " + $scope.listName + " not created: " + o.message)
+                        userProteinList.delete(user, newList.id);
 
+                        // popup modal
+                        console.log("launch modal...");
+                    });
+
+                }, function (o) {
+                    flash('alert-warning', "List " + $scope.listName + " not created: " + o.message)
+                    userProteinList.delete(user, newList.id);
+                    clearForm();
+                })
+        }
+
+        $scope.createList = function () {
+
+            if ($scope.inputAccessions.length > 0) {
+                uploadAccessionsFromTextArea($scope.inputAccessions);
+            } else {
+                uploadAccessionsFromFiles();
+            }
         };
 
         $scope.removeUploadFile = function (index) {
