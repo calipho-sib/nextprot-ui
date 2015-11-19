@@ -221,20 +221,29 @@
             userProteinList.create(user, list).$promise
                 .then(function (newList) {
 
-                    var promises = [$q.when(true)];
+                    var failures = [];
 
-                    for (var i = $scope.files.length - 1; i >= 0; i--) {
-                        promises.push(uploadListService.send(newList.id, $scope.files[i], ignoreNotFoundEntries));
+                    var promise;
+                    for (var i = 0 ; i < $scope.files.length; i++) {
+
+                        promise = uploadListService.send(newList.id, $scope.files[i], ignoreNotFoundEntries).then(function () {
+                        }, function (o) {
+                            failures.push(o.properties["entriesNotFound"]);
+                        });
                     }
 
-                    $q.all(promises).then(function () {
-                        flash('alert-info', "List " + $scope.listName + " created.");
-                        clearForm();
-                    }, function (o) {
-                        //flash('alert-warning', "List " + $scope.listName + " not created: " + o.message)
-                        userProteinList.delete(user, newList.id);
+                    promise.then(function () {
 
-                        $scope.launchModal(o)
+                        if (failures.length>0) {
+                            userProteinList.delete(user, newList.id);
+
+                            var merged = [].concat.apply([], failures);
+                            $scope.launchModal(merged);
+                        } else {
+
+                            flash('alert-info', "List " + $scope.listName + " created.");
+                            clearForm();
+                        }
                     });
 
                 }, function (o) {
@@ -249,13 +258,13 @@
             uploadAccessionsFromFiles(true);
         };
 
-        $scope.launchModal = function (o) {
+        $scope.launchModal = function (items) {
             if(!user.isAnonymous()){
 
                 $scope.modal = { };
                 angular.extend($scope.modal, {
                     listname: $scope.listName,
-                    items: o.properties["entriesNotFound"]
+                    items: items
                 });
 
                 $modal({scope: $scope.$new(), template: 'partials/user/user-protein-list-creation-warning-modal.html', show: true});
