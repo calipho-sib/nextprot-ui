@@ -199,9 +199,12 @@
             };
         }
 
+        /**
+         * NX_P48730, NX_Q99558
+         */
         function uploadAccessionsFromTextArea(textArea) {
 
-            var accessions = textArea.split("\n");
+            var accessions = textArea.split(/[\s\n,]+/);
             var list = newList($scope.listName, $scope.listDescription, accessions);
 
             userProteinList.create(user, list).$promise.then(function () {
@@ -209,7 +212,17 @@
                 flash('alert-info', "List " + $scope.listName + " created.");
                 clearForm();
             }, function (o) {
-                flash('alert-warning', "List " + $scope.listName + " not created: " + o.data.message);
+
+                var unknownEntries = o.data.properties["entriesNotFound"]
+
+                console.log(unknownEntries);
+
+                var knownAccessions = accessions.filter(function(ac){ return unknownEntries.indexOf(ac) === -1; });
+
+                $scope.inputAccessions = knownAccessions.join("\n");
+
+                $scope.fromFiles = false;
+                $scope.launchModal(unknownEntries);
             });
         }
 
@@ -238,6 +251,7 @@
                             userProteinList.delete(user, newList.id);
 
                             var merged = [].concat.apply([], failures);
+                            $scope.fromFiles = true;
                             $scope.launchModal(merged);
                         } else {
 
@@ -247,7 +261,7 @@
                     });
 
                 }, function (o) {
-                    flash('alert-warning', "List " + $scope.listName + " not created: " + o.message)
+                    flash('alert-warning', "List " + $scope.listName + " not created: " + o.message);
                     userProteinList.delete(user, newList.id);
                     clearForm();
                 })
@@ -255,8 +269,18 @@
 
         $scope.createListAnyway = function () {
 
-            uploadAccessionsFromFiles(true);
-        };
+            if ($scope.fromFiles) {
+                uploadAccessionsFromFiles(true);
+            } else {
+
+                if ($scope.inputAccessions.length > 0) {
+                    uploadAccessionsFromTextArea($scope.inputAccessions);
+                }
+                else {
+                    flash('alert-warning', "List " + $scope.listName + " not created: empty content");
+                }
+            }
+        }
 
         $scope.launchModal = function (items) {
             if(!user.isAnonymous()){
