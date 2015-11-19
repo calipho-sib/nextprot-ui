@@ -1,0 +1,27 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		  	<h4 class="text-center alert alert-warning" role="alert">Warning: unknown entries found in list '{{modal.listname}}'</h4>
+		</div>
+		<div class="modal-body">
+
+			<p>
+				neXtProt could not find the following {{modal.items.length}} accession numbers:
+			</p>
+
+			<div>
+				<ul class="list-group scrollable" style="height: 150px; overflow-y: auto">
+					<li class="list-group-item" ng-repeat="item in modal.items track by $index">{{item}}</li>
+				</ul>
+			</div>
+
+			<div class="alert alert-info" role="alert">Do you want to go on creating the list without these entries anyway?</div>
+		</div>
+
+		<div class="modal-footer">
+			<button id="createListButton" class="btn btn-primary" ng-click="createListAnyway(dismiss())">Proceed</button>
+			<button class="btn" ng-click="cancelListCreation(dismiss())">Cancel</button>
+		</div>
+	</div>
+</div>
