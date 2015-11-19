@@ -139,12 +139,9 @@
     function viewerService($resource, $http, config) {
 
 
-        //TODO change this to use the API and request a refresh page every hour or so... this cdn is an eternal cache or simply use a tag version
-        var rawGitUrlBase = 'https://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/community/';
-
         //skips authorization
-        var entryViewersResource = $http({url: rawGitUrlBase + 'community-entry-viewers.json', skipAuthorization : true, method: 'GET'});
-        var globalViewersResource = $http({url: rawGitUrlBase + 'community-global-viewers.json', skipAuthorization : true, method: 'GET'});
+        var entryViewersResource = $http({url: config.api.API_URL + '/contents/json-config/community-entry-viewers.json', skipAuthorization : true, method: 'GET'});
+        var globalViewersResource = $http({url: config.api.API_URL + 'contents/json-config/community-entry-viewers.json', skipAuthorization : true, method: 'GET'});
 
         var entryProperties = $resource(config.api.API_URL + '/entry/:entryName/overview.json', {entryName: '@entryName'}, {get : {method: "GET"}});
 
