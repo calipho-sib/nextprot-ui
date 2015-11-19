@@ -30,16 +30,38 @@
 
         <label>List of accession numbers: </label>
 
-        <div class="form-group ">
-			<textarea rows="5" ng-model="inputAccessions" class="form-control">
+        <div class="form-group">
+			<textarea rows="5" ng-model="inputAccessions" class="form-control" ng-disabled="files.length>0">
 			</textarea>
         </div>
 
-        <div class="form-group ">
-        <span class="btn btn-default fileinput-button btn-block">
-         	<i class="icon-plus icon-white"></i> Or select a file to upload
-					<input type="file" multiple ng-model="files" file-change>
+        <div class="form-group">
+            <span class="btn btn-default fileinput-button btn-block" ng-disabled="inputAccessions">
+             	<i class="icon-plus icon-white"></i> Or select a file to upload
+					<input type="file" multiple ng-model="files" file-change file-array="files">
         </span>
+        </div>
+
+        <!--
+        <div class="form-group ">
+            <hr/>
+            <span ng-show="files.length"><h4>File(s) to upload</h4></span>
+            <div>
+                <ul class="list-group scrollable" style="height: 100px; overflow-y: auto">
+                    <li class="list-group-item" ng-repeat="file in files">{{file.name}}<span class="btn icon-remove" aria-hidden="false" ng-click="removeUploadFile($index)"></span></li>
+                </ul>
+            </div>
+        </div>
+-->
+        <div class="panel panel-default" ng-if="files.length>0">
+            <div class="panel-heading panel-heading-sm">
+                <h4 class="panel-title">File(s) to upload <span class="badge">{{files.length}}</span></h4>
+            </div>
+            <div class="panel-body panel-body-sm">
+                <ul class="list-group scrollable" style="height: 80px; overflow-y: auto">
+                    <li class="list-group-item" ng-repeat="file in files">{{file.name}}<span class="btn icon-remove" aria-hidden="false" ng-click="removeUploadFile($index)"></span></li>
+                </ul>
+            </div>
         </div>
 
         <form class="form-inline" role="form">
@@ -58,15 +80,5 @@
                      ng-disabled="!isCreatable()">Create
             </button>
         </form>
-        <div class="form-group ">
-            <blockquote>
-                <span ng-show="files.length"><h4>File(s) to upload: </h4></span>
-                <ul>
-                    <li ng-repeat="file in files">{{file.name}}<span class="btn icon-remove" aria-hidden="false" ng-click="removeUploadFile($index)"></span></li>
-                </ul>
-            </blockquote>
-        </div>
-
-
     </div>
 </div>
