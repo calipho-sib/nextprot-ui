@@ -169,8 +169,8 @@
         }
     }
 
-    ListCreateCtrl.$inject = ['$q', '$scope', '$rootScope',  'userProteinList', 'user', 'uploadListService', 'flash', '$log']
-    function ListCreateCtrl($q, $scope, $rootScope, userProteinList, user, uploadListService, flash, $log) {
+    ListCreateCtrl.$inject = ['$q', '$scope', '$rootScope',  'userProteinList', 'user', 'uploadListService', 'flash', '$log','$modal']
+    function ListCreateCtrl($q, $scope, $rootScope, userProteinList, user, uploadListService, flash, $log, $modal) {
 
         clearForm();
 
@@ -224,18 +224,17 @@
                     var promises = [$q.when(true)];
 
                     for (var i = $scope.files.length - 1; i >= 0; i--) {
-                        promises.push(uploadListService.send(newList.id, $scope.files[i]));
+                        promises.push(uploadListService.send(newList.id, $scope.files[i], ignoreNotFoundEntries));
                     }
 
                     $q.all(promises).then(function () {
                         flash('alert-info', "List " + $scope.listName + " created.");
                         clearForm();
                     }, function (o) {
-                        flash('alert-warning', "List " + $scope.listName + " not created: " + o.message)
+                        //flash('alert-warning', "List " + $scope.listName + " not created: " + o.message)
                         userProteinList.delete(user, newList.id);
 
-                        // popup modal
-                        console.log("launch modal...");
+                        $scope.launchModal(o)
                     });
 
                 }, function (o) {
@@ -245,13 +244,39 @@
                 })
         }
 
+        $scope.createListAnyway = function () {
+
+            uploadAccessionsFromFiles(true);
+        };
+
+        $scope.launchModal = function (o) {
+            if(!user.isAnonymous()){
+
+                $scope.modal = { };
+                $scope.selected = {};
+                angular.extend($scope.modal, {
+                    listname: $scope.listName,
+                    items: o.properties["entriesNotFound"]
+                });
+
+                $modal({scope: $scope.$new(), template: 'partials/user/user-protein-list-creation-warning-modal.html', show: true});
+            } else {
+                flash('alert-warning', 'Please login to create a list');
+            }
+        };
+
         $scope.createList = function () {
 
             if ($scope.inputAccessions.length > 0) {
                 uploadAccessionsFromTextArea($scope.inputAccessions);
             } else {
-                uploadAccessionsFromFiles();
+                uploadAccessionsFromFiles(false);
             }
+        };
+
+        $scope.cancelListCreation = function () {
+
+            clearForm();
         };
 
         $scope.removeUploadFile = function (index) {
