@@ -253,7 +253,6 @@
             if(!user.isAnonymous()){
 
                 $scope.modal = { };
-                $scope.selected = {};
                 angular.extend($scope.modal, {
                     listname: $scope.listName,
                     items: o.properties["entriesNotFound"]
@@ -280,7 +279,10 @@
         };
 
         $scope.removeUploadFile = function (index) {
+
             $scope.files.splice(index, 1);
+
+            console.log($scope.files)
         };
 
         $scope.isCreatable = function () {
