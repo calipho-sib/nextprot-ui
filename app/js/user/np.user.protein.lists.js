@@ -37,7 +37,7 @@
         $scope.options = {
             first: $scope.lists,
             second: $scope.lists
-        }
+        };
 
 
         $scope.loadMyLists = function () {
@@ -217,12 +217,10 @@
             userProteinList.create(user, list).$promise.then(function () {
 
                 flash('alert-info', "List " + $scope.listName + " created.");
-                clearForm();
+                $scope.clearForm();
             }, function (o) {
 
                 var unknownEntries = o.data.properties["entriesNotFound"]
-
-                console.log(unknownEntries);
 
                 var knownAccessions = accessions.filter(function(ac){ return unknownEntries.indexOf(ac) === -1; });
 
@@ -285,13 +283,13 @@
                         } else {
 
                             flash('alert-info', "List " + $scope.listName + " created.");
-                            clearForm();
+                            $scope.clearForm();
                         }
                     });
                 }, function (o) {
                     flash('alert-warning', "List " + $scope.listName + " not created: " + o.message);
                     userProteinList.delete(user, newList.id);
-                    clearForm();
+                    $scope.clearForm();
                 })
         }
 
@@ -308,7 +306,7 @@
                     flash('alert-warning', "List " + $scope.listName + " not created: empty content");
                 }
             }
-        }
+        };
 
         $scope.launchModal = function (items) {
             if(!user.isAnonymous()){
@@ -336,7 +334,7 @@
 
         $scope.cancelListCreation = function () {
 
-            clearForm();
+            $scope.clearForm();
         };
 
         $scope.removeUploadFile = function (index) {
