@@ -264,7 +264,7 @@
 
                         // RestErrorResponse objects only
                         resolvedList = resolvedList.filter(function(elt) {
-                            if (elt.hasOwnProperty("properties")) {
+                            if (elt.hasOwnProperty("properties") && elt["properties"].length > 0) {
                                 return elt;
                             }
                         });
