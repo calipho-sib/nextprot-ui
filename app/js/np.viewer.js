@@ -213,8 +213,8 @@
 
         this.getScopeParamsForGitHubCommunity = function (user, repository, entryName) {
 
-            var url = "https://" + user + ".github.io/" + repository;
-            var urlSource = "https://www.github.com/" + user + "/" + repository;
+            var url = "https://" + user + ".github.io/" + repository + "/";
+            var urlSource = "https://www.github.com/" + user + "/" + repository + "/";
             if(entryName != undefined) url += "?nxentry=" + entryName;
 
             return {
