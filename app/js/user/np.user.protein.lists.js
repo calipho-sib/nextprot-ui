@@ -216,7 +216,7 @@
 
             userProteinList.create(user, list).$promise.then(function () {
 
-                flash('alert-info', "List " + $scope.listName + " created.");
+                flash('alert-info', "List '" + $scope.listName + "' created.");
                 $scope.clearForm();
             }, function (o) {
 
@@ -282,12 +282,12 @@
                             $scope.launchModal(merged);
                         } else {
 
-                            flash('alert-info', "List " + $scope.listName + " created.");
+                            flash('alert-info', "List '" + $scope.listName + "' created.");
                             $scope.clearForm();
                         }
                     });
                 }, function (o) {
-                    flash('alert-warning', "List " + $scope.listName + " not created: " + o.message);
+                    flash('alert-warning', "List '" + $scope.listName + "' not created: " + o.message);
                     userProteinList.delete(user, newList.id);
                     $scope.clearForm();
                 })
@@ -303,7 +303,7 @@
                     uploadAccessionsFromTextArea($scope.inputAccessions);
                 }
                 else {
-                    flash('alert-warning', "List " + $scope.listName + " not created: empty content");
+                    flash('alert-warning', "List '" + $scope.listName + "' not created: empty content");
                 }
             }
         };
