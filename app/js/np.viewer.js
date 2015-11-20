@@ -132,7 +132,7 @@
 
         //skips authorization
         var entryViewersResource = $http({url: config.api.API_URL + '/contents/json-config/community-entry-viewers.json', skipAuthorization : true, method: 'GET'});
-        var globalViewersResource = $http({url: config.api.API_URL + 'contents/json-config/community-entry-viewers.json', skipAuthorization : true, method: 'GET'});
+        var globalViewersResource = $http({url: config.api.API_URL + '/contents/json-config/community-global-viewers.json', skipAuthorization : true, method: 'GET'});
 
         var entryProperties = $resource(config.api.API_URL + '/entry/:entryName/overview.json', {entryName: '@entryName'}, {get : {method: "GET"}});
 
