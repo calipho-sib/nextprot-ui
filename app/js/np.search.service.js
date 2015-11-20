@@ -55,7 +55,9 @@ SearchService.factory('Search', [
 
             splitPubAcsPubMedLast(doc);
 
-            doc.year = new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi, "")).getFullYear();
+            // now field year exists in doc, field date doesnt exist anymore
+            //doc.year = new Date(doc.date.replace(/(CET|CEST|EEST|WEEST)/gi, "")).getFullYear();
+
             doc.authors = doc.pretty_authors.split(' | ');
         }
 

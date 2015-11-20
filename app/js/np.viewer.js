@@ -23,10 +23,7 @@
 
             //GLOBAL VIEWS https://github.com/calipho-sib/nextprot-viewers
             .when('/view', gv)
-            .when('/view/gist/:gistusr/:gistid', gv) // related to gists
-            .when('/view/git/:repository/:user/:branch/:gh1', ev)
-            .when('/view/git/:repository/:user/:branch/:gh1/:gh2', ev)
-            .when('/view/git/:repository/:user/:branch/:gh1/:gh2/:gh3', ev)
+            .when('/view/gh/:user/:repository', ev)
 
             .when('/view/:gv1', gv)
             .when('/view/:gv1/:gv2', gv)
@@ -38,10 +35,7 @@
             .when('/entry/:entry/view/:ev1', ev)
             .when('/entry/:entry/view/:ev1/:ev2', ev)
 
-            .when('/entry/:entry/gist/:gistusr/:gistid', ev) // related to gists
-            .when('/entry/:entry/git/:repository/:user/:branch/:gh1', ev)
-            .when('/entry/:entry/git/:repository/:user/:branch/:gh1/:gh2', ev)
-            .when('/entry/:entry/git/:repository/:user/:branch/:gh1/:gh2/:gh3', ev)
+            .when('/entry/:entry/gh/:user/:repository', ev)
             .when('/term/:termid/', {templateUrl: '/partials/viewer/viewer-term-np1.html'})
 
     }
@@ -101,7 +95,7 @@
 
             if ($routeParams.element == page)  return 'active'
             if ("view/" + $routeParams.ev1 == page)  return 'active';
-            if (("gist/" + $routeParams.gistusr + "/" + $routeParams.gistid) == page)  return 'active';
+            if (("gh/" + $routeParams.user + "/" + $routeParams.repository) == page)  return 'active';
 
             else return '';
         }
@@ -119,12 +113,9 @@
                 angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
             }else if ($routeParams.gv1) { //Global view
                 angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.gv1, $routeParams.gv2, $routeParams.gv3));
-            // COMMUNITY VIEWERS etiher with GitHub or Gist //////////////////////////////////////
+            // COMMUNITY VIEWERS etiher with GitHub //////////////////////////////////////
             } else if ($routeParams.repository) {
-                angular.extend($scope, viewerURLResolver.getScopeParamsForGitHubCommunity($routeParams.gh1, $routeParams.gh2, $routeParams.gh3, $routeParams.repository, $routeParams.user, $routeParams.branch, $routeParams.entry));
-            } else if ($routeParams.gistusr && $routeParams.gistid) { //Gist
-                angular.extend($scope, viewerURLResolver.getScopeParamsForGistCommunity($routeParams.gistusr, $routeParams.gistid, $routeParams.entryName));
-
+                angular.extend($scope, viewerURLResolver.getScopeParamsForGitHubCommunity($routeParams.user, $routeParams.repository, $routeParams.entry));
             // GRAILS INTEGRATION
             } else { //deprecated nextprot
                 angular.extend($scope, viewerURLResolver.getScopeParamsForNeXtProtGrails($location.$$path));
@@ -139,15 +130,11 @@
     function viewerService($resource, $http, config) {
 
 
-        //TODO change this to use the API and request a refresh page every hour or so... this cdn is an eternal cache or simply use a tag version
-        var rawGitUrlBase = 'https://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/community/';
-
         //skips authorization
-        var entryViewersResource = $http({url: rawGitUrlBase + 'community-entry-viewers.json', skipAuthorization : true, method: 'GET'});
-        var globalViewersResource = $http({url: rawGitUrlBase + 'community-global-viewers.json', skipAuthorization : true, method: 'GET'});
+        var entryViewersResource = $http({url: config.api.API_URL + '/contents/json-config/community-entry-viewers.json', skipAuthorization : true, method: 'GET'});
+        var globalViewersResource = $http({url: config.api.API_URL + '/contents/json-config/community-global-viewers.json', skipAuthorization : true, method: 'GET'});
 
         var entryProperties = $resource(config.api.API_URL + '/entry/:entryName/overview.json', {entryName: '@entryName'}, {get : {method: "GET"}});
-
 
         var ViewerService = function () {
 
@@ -200,7 +187,7 @@
 
             return {
                 "communityMode": false,
-                "githubURL": "https://github.com/calipho-sib/nextprot-viewers/",
+                "githubURL": "https://github.com/calipho-sib/nextprot-viewers/blob/master/ " + ev1 + "/app/index.html",
                 "externalURL":  $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + "&inputOption=true")) ,
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName))
             }
@@ -209,14 +196,14 @@
 
         this.getScopeParamsForGlobalViewers = function (gv1, gv2, gv3) {
 
-            var url = window.location.protocol + "//cdn.rawgit.com/calipho-sib/nextprot-viewers/v0.1.0/" + gv1;
+            var url = window.location.origin + "/viewers/" + gv1;
             if (gv2) url += "/" + gv2;
             if (gv3) url += "/" + gv3;
             url += "/app/index.html";
 
             return {
                 "communityMode": false,
-                "githubURL": url.replace("cdn.rawgit.com", "github.com").replace("/master/", "/blob/master/"),
+                "githubURL": "https://github.com/calipho-sib/nextprot-viewers/" + gv1,
                 "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
             }
@@ -224,13 +211,10 @@
         }
 
 
-        this.getScopeParamsForGitHubCommunity = function (gh1, gh2, gh3, repository, user, branch, entryName) {
+        this.getScopeParamsForGitHubCommunity = function (user, repository, entryName) {
 
-            var url = window.location.protocol + "//cdn.rawgit.com/" + repository + "/" + user + "/" + branch + "/" + gh1;
-            if (gh2) { url += "/" + gh2; }
-            if (gh3) { url += "/" + gh3; }
-
-            var urlSource = url.replace("cdn.rawgit.com", "github.com").replace("/" + branch + "/", "/blob/" + branch + "/");
+            var url = "https://" + user + ".github.io/" + repository;
+            var urlSource = "https://www.github.com/" + user + "/" + repository;
             if(entryName != undefined) url += "?nxentry=" + entryName;
 
             return {
@@ -240,20 +224,6 @@
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
             }
         }
-
-        this.getScopeParamsForGistCommunity = function (gistUser, gistId, entryName) {
-            //TODO change this to request the API as well...
-            var url = window.location.protocol + "//rawgit.com/" + gistUser + "/" + gistId + "/raw/index.html";
-            if(entryName != undefined) url += "?nxentry=" + entryName;
-
-            return {
-                "communityMode": true,
-                "githubURL": window.location.protocol + "//gist.github.com/" + gistUser + "/" + gistId,
-                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
-                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
-            }
-        }
-
 
         this.getScopeParamsForNeXtProtGrails = function (path) {
             /* np1Base: origin of NP1 http service, read from conf or set to localhost for dev/debug */
@@ -275,11 +245,7 @@
             }
         }
 
-
     }
-
-
-
 
 
     })(angular); //global variable
