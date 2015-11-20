@@ -172,7 +172,22 @@
     ListCreateCtrl.$inject = ['$q', '$scope', '$rootScope',  'userProteinList', 'user', 'uploadListService', 'flash', '$log','$modal']
     function ListCreateCtrl($q, $scope, $rootScope, userProteinList, user, uploadListService, flash, $log, $modal) {
 
-        clearForm();
+        $scope.clearForm = function() {
+
+            $scope.listName = "";
+            $scope.listDescription = "";
+            $scope.inputAccessions = "";
+            $scope.files = [];
+        };
+
+        $scope.isClearable = function() {
+
+            return $scope.listName != "" || $scope.listDescription != "" ||
+            $scope.inputAccessions != "" ||
+            $scope.files.length > 0;
+        };
+
+        $scope.clearForm();
 
         $rootScope.$on('upload:loadstart', function () {
             $log.info('Controller: on `loadstart`');
@@ -181,14 +196,6 @@
         $rootScope.$on('upload:error', function () {
             $log.info('Controller: on `error`');
         });
-
-        function clearForm() {
-
-            $scope.listName = "";
-            $scope.listDescription = "";
-            $scope.inputAccessions = "";
-            $scope.files = [];
-        }
 
         function newList(listName, listDesc, accessions) {
 
@@ -234,23 +241,45 @@
             userProteinList.create(user, list).$promise
                 .then(function (newList) {
 
-                    var failures = [];
+                    var resolvedList = [];
 
-                    var promise;
-                    for (var i = 0 ; i < $scope.files.length; i++) {
-
-                        promise = uploadListService.send(newList.id, $scope.files[i], ignoreNotFoundEntries).then(function () {
-                        }, function (o) {
-                            failures.push(o.properties["entriesNotFound"]);
-                        });
+                    function push(o) {
+                        resolvedList.push(o);
                     }
 
-                    promise.then(function () {
+                    var promises = [$q.when(true)];
 
-                        if (failures.length>0) {
+                    // "send()" now always resolves with a XMLHttpRequest or a RestErrorResponse object for unknown entries
+                    for (var i = $scope.files.length - 1; i >= 0; i--) {
+                        promises.push(uploadListService.send(newList.id, $scope.files[i], ignoreNotFoundEntries).then(push).catch(push));
+                    }
+
+                    /*
+                     * The $q.all function returns a promise for an array of values. When this promise is fulfilled,
+                     * the array contains the fulfillment values of the original promises, in the same order as those promises.
+                     * If one of the given promises is rejected, the returned promise is immediately rejected, not waiting for
+                     * the rest of the batch.
+                     *
+                     * The found solution above is based on http://stackoverflow.com/questions/20563042/angularjs-fail-resilence-on-q-all
+                     */
+                    $q.all(promises).then(function () {
+
+                        // RestErrorResponse objects only
+                        resolvedList = resolvedList.filter(function(elt) {
+                            if (elt.hasOwnProperty("properties")) {
+                                return elt;
+                            }
+                        });
+
+                        if (resolvedList.length>0) {
+
                             userProteinList.delete(user, newList.id);
 
-                            var merged = [].concat.apply([], failures);
+                            var unknownACs = resolvedList.map(function(item) {
+                                return item["properties"]["entriesNotFound"];
+                            });
+
+                            var merged = [].concat.apply([], unknownACs);
                             $scope.fromFiles = true;
                             $scope.launchModal(merged);
                         } else {
@@ -259,7 +288,6 @@
                             clearForm();
                         }
                     });
-
                 }, function (o) {
                     flash('alert-warning', "List " + $scope.listName + " not created: " + o.message);
                     userProteinList.delete(user, newList.id);

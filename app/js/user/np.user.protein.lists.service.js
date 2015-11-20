@@ -138,8 +138,9 @@
 
             var data = new FormData();
             var xhr = new XMLHttpRequest();
-            var deferred = $q.defer();
             var url = config.api.API_URL + '/user/me/lists/:id/upload.json';
+
+            var deferred = $q.defer();
 
             // When the request starts.
             xhr.onloadstart = function () {
@@ -155,7 +156,7 @@
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status > 305) {
-                    return deferred.reject(JSON.parse(xhr.responseText))
+                    return deferred.resolve(JSON.parse(xhr.responseText))
                 }
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     return deferred.resolve(xhr)
