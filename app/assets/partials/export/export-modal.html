@@ -41,8 +41,13 @@
                 <pre><code class="language-html link" data-lang="html"><span class="nt"></span><a target="_blank" href="{{getFileExportURL()}}" ng-click="gaTrackDownloadEvent(false)">{{getFileExportURL()}}</a></span></code></pre>
             </div>
         </div>
+        <div class="alert alert-warning" role="alert" ng-if="selectedFormat != 'txt' && search.resultCount>=500">
+            You're about to download {{search.resultCount}} protein entries.
+            This may take several minutes and produce a large file.
+        </div>
         <div class="modal-footer">
             <a class="btn btn-primary" href="{{getFileExportURL()}}" target="_blank" ng-click="gaTrackDownloadEvent(true)">Download</a>
+            <button class="btn" ng-click="dismiss()">Cancel</button>
         </div>
     </div>
 </div>
