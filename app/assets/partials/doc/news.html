@@ -3,16 +3,26 @@
     <!-- CONTENT -->
     <div class="container-fluid doc-content" ng-init="initHelp()">
 
-        <div class="row">
+        <div class="row" ng-controller="NewsCtrl">
             <!-- LEFT PANE -->
             <div class="col-sm-4 col-lg-3 sidebar" id="news-sidebar">
-                <news-toc />
+
+                <ul class="nav nav-sidebar">
+                    <li><h5>News</h5></li>
+                    <li ng-repeat="n in news" ng-class="{'active':isActiveDoc(n.url)}">
+                        <a ng-href="news/{{n.url}}">{{n.title}}
+                            <span class="date">{{n.publicationDateFormatted}}</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
 
-            <!-- CENTER PANE -->
-            <div ng-include="'html/np-help.doc.html'" ng-controller="DocCtrl" id="news-centre-content"
-                 class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3 main"/>
+            <div class="col-sm-8 col-sm-offset-4 col-lg-9 col-lg-offset-3 main" ng-controller="DocCtrl">
+                <h2>{{articleTitle}}</h2>
+                <!-- CENTER PANE -->
+                <div ng-include="'html/np-help.doc.html'"  id="news-centre-content"/>
 
+            </div >
         </div>
     </div>
 </div><!--/.container-->
