@@ -10,7 +10,7 @@
     function NewsCtrl($scope, newsService) {
 
         newsService.getNews().$promise.then(function(data){
-            $scope.news = _.sortBy(data, 'publicationDate').reverse();
+            $scope.news = data.reverse();
         });
 
     }
