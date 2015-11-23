@@ -5,8 +5,8 @@
         .factory('exportService', exportService)
         .controller('ExportCtrl', ExportCtrl);
 
-    ExportCtrl.$inject = ['Tracker', '$scope', '$routeParams', 'config', 'exportService'];
-    function ExportCtrl(Tracker, $scope, $routeParams, config, exportService) {
+    ExportCtrl.$inject = ['Tracker', '$scope', '$routeParams', 'config', 'exportService', 'Search'];
+    function ExportCtrl(Tracker, $scope, $routeParams, config, exportService, Search) {
 
         var multiEntryFormats = null;
         var singleEntryFormats = null;
@@ -20,6 +20,8 @@
         $scope.currentSearch = null;
         $scope.currentQuery = null;
         $scope.currentList = null;
+
+        $scope.search = Search;
 
         (function initEntryFormats() {
 
@@ -62,9 +64,6 @@
 
             if (closeModal) $scope.dismiss();
         };
-
-
-
 
         $scope.getFileExportURL = function () {
 
