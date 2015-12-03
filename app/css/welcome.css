@@ -44,6 +44,7 @@ header {
 	display: inline-block;
 	background: #F7F8FA url("../img/sib_header_bkgd.png") repeat-x scroll left top;
 	height: 60px;
+	max-height: 60px;
 	width: 100%;
 	color: #787878;
 	z-index: 1000;
@@ -81,6 +82,11 @@ header {
 /* MENU */
 #bs-example-navbar-collapse-1 {
 	padding-right: 0;
+}
+
+/* limiting navbar max height to avoid overlapping on search radio buttons */
+#header-navbar, #header-navbar-container-fluid, #bs-example-navbar-collapse-1 {
+	max-height: 30px;
 }
 
 #bs-example-navbar-collapse-1 .nav > li > a {
