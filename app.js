@@ -38,6 +38,11 @@ if ('development' == env) {
   });
 };
 
+app.get('/viewers/**',function (req, res) {
+    console.log(res);
+  res.redirect('http://dev-search.nextprot.org/' + req.url);
+});
+
 app.get('/',function (req, res) {
 	  res.render('index.html');
 });
