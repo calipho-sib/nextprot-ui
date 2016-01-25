@@ -156,7 +156,6 @@
                  return;
                  } */
                 else if (status >= 500) {
-                    console.log(response)
                     if (response.message) {
                         flash('alert-warning', response.message);
                         $log.error({status : response.status, message : response.message, href : window.location.href});
