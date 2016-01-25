@@ -35,10 +35,10 @@
                 <td class="col-md-1">
                     <div class="btn-group">
                         <a class="pull-left" title="Export list accessions" ng-href="{{getListExportUrl(list)}}" ng-click="gaTrackDownloadList()"><button class="btn btn-default btn-xs"><i class="icon-arrow-down"></i></button></a>
-                        <button class="btn btn-default btn-xs" type="button"
+                        <button title="Edit list informations" class="btn btn-default btn-xs" type="button"
                                 bs-modal="'partials/user/user-protein-lists-modal.html'"
                                 ng-click="launchModal($index, 'edit')"><i class="icon-edit"></i></button>
-                        <button class="btn btn-default btn-xs" type="button" ng-click="delete(list)">
+                        <button title="Delete list" class="btn btn-default btn-xs" type="button" ng-click="delete(list)">
                             <i class="icon-remove"></i>
                         </button>
                     </div>
