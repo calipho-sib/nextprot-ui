@@ -137,7 +137,9 @@ SearchService.factory('Search', [
 
             //
             // result content
-            this.result = {};
+            this.result = {
+                display : "proteins"
+            };
 
             this.resultCount = 0;
 
