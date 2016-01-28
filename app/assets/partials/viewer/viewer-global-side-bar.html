@@ -31,7 +31,7 @@
       <div class="panel-body" style="padding:0px">
         <ul class="nav nav-stacked ref-menu" ng-repeat="cv in communityViewers">
           <li ng-class="activePage('view/gh/' + cv.user + '/' + cv.repository)"><a
-                  ng-href="/entry/{{widgetEntry}}/gh/{{cv.user}}/{{cv.repository}}">{{cv.title}}<span
+                  ng-href="/view/gh/{{cv.user}}/{{cv.repository}}">{{cv.title}}<span
                   class="pull-right" style="font-size: 10px; margin-top: 8px">&nbsp;by {{cv.user}}</span></a>
           </li>
         </ul>
