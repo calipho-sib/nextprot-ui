@@ -43,7 +43,7 @@ angular.module('np.config', []).factory('config', [
                 "sequenceontology": "Sequence ontology",
                 "stage": "Bgee developmental stage",
                 "upcarbohydrate": "UniProt carbohydrate",
-                "upcellline": "neXtProt cell line",
+                "upcellline": "neXtProt Cellosaurus",
                 "updisease": "UniProt disease",
                 "updomain": "UniProt domain",
                 "upfamily": "UniProt family",
