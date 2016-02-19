@@ -150,7 +150,12 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
 
     $scope.quality = function (name) {
         Search.params.quality = name;
-        $location.search('quality', (name !== 'gold') ? 'gold-and-silver' : null);
+
+        var searchObject = $location.search();
+
+        if (searchObject["query"]) {
+            $location.search('quality', (name !== 'gold') ? 'gold-and-silver' : null);
+        }
     };
 
     $scope.entity = function (params) {
@@ -301,6 +306,9 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
         //We are in simple mode
         if(Search.params.query && Search.params.query.length){
             $location.search('query', Search.params.query.trim()).search('sparql',null);
+            if (Search.params.quality === 'gold-and-silver') {
+                $location.search('quality', Search.params.quality);
+            }
         }
 
         //
