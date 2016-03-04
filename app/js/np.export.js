@@ -140,6 +140,7 @@
             this.exportObjectType = null;
             this.exportObjectIdentifier = entry;
             this.exportTitle = "Download entry '" + entry + "'";
+            this.isMultipleEntries = false;
         };
 
         ExportService.prototype.reset = function () {
@@ -168,6 +169,7 @@
                 this.exportTitle = "Download entries for sparql query";
             }
 
+            this.isMultipleEntries = true;
         };
 
         return new ExportService();
