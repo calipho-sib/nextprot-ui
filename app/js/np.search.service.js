@@ -263,8 +263,14 @@ SearchService.factory('Search', [
 
             $api.search(params, params.query, function (result) {
                 var items = [];
-                for (var i = 0; i < result.autocomplete.length; i = i + 2) {
-                    items.push(result.autocomplete[i].name)
+
+                var keys = Object.keys(result.autocompleteSearchResult.autocomplete).reverse();
+
+                for (var i = 0; i < keys.length; i++) {
+                    var names = result.autocompleteSearchResult.autocomplete[keys[i]];
+                    for (var j=0 ; j<names.length ; j++) {
+                        items.push(names[j])
+                    }
                 }
                 if (cb)cb(items)
             })
