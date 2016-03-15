@@ -54,7 +54,7 @@
           <!--                        -->
           <!--  SEARCH TEXT FIELD     quality selection => width:65.812%; without => width:80.8%-->
           <!--                        -->
-          <input ng-show="!isAdvancedMode()" id="search-query" class="form-control" type="text" ng-model="Search.params.query" ng-class="{'search-width-quality':Search.displayGold(),'search-width-no-quality':!Search.displayGold()}" autocomplete="off" bs-autocomplete="Search.suggest">
+          <input ng-show="!isAdvancedMode()" id="search-query" class="form-control" type="text" ng-model="Search.params.query" ng-class="{'search-width-quality':Search.displayGold(),'search-width-no-quality':!Search.displayGold()}" autocomplete="off" bs-autocomplete="Search.suggest" autofocus="false">
 
           <ui-codemirror id="search-query-advanced" ng-if="isAdvancedMode()" ui-codemirror-opts="editorOptions" class="btn-group search-width-advanced" ng-model="Search.params.sparql" ui-refresh="Search.params.sparql"></ui-codemirror>
 

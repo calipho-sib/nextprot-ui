@@ -60,6 +60,8 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     // update entity documentation on path change
     $scope.$on('$routeChangeSuccess', function(event, next, current) {
 
+        console.log("route change...", $routeParams.query);
+
         exportService.reset();
 
         if ($routeParams.queryId) {
@@ -215,7 +217,9 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
 
         Cart.emptyCart();
 
-        $location.search('start', null);
+        // reset 'start' each time filters are selected/unselected
+        $location.search('start', 0);
+
         angular.forEach(params, function (v, k) {
             var t = ($location.search()[k] && $location.search()[k] === v) ? null : v;
             $location.search(k, t)
