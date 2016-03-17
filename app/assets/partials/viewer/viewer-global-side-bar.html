@@ -10,14 +10,32 @@
     <div id="collapse1" class="panel-collapse -collapse menu-content in">
       <div class="panel-body" style="padding:0px">
         <ul class="nav nav-stacked prot-menu">
-          <li ng-class="activePage('/view/statistics/annotations')"><a href="/view/statistics/annotations">Annotations</a></li>
+          <!--<li ng-class="activePage('/view/statistics/annotations')"><a href="/view/statistics/annotations">Annotations</a></li>-->
           <li ng-class="activePage('/view/statistics/protein-existence')"><a href="/view/statistics/protein-existence">Protein existence</a></li>
         </ul>
       </div>
     </div>
   </div>
 
-
+ <!-- Portals -->
+  <div class="panel panel-default menu-group" style="margin:0px">
+    <div class="panel-heading menu-header">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)" data-target="collapse2">
+          <span style="font-size: 28px;">P</span>ortals
+        </a>
+      </h4>
+    </div>
+    <div id="collapse2" class="panel-collapse -collapse menu-content">
+      <div class="panel-body" style="padding:0px">
+        <ul class="nav nav-stacked gene-menu">
+          <li ng-class="activePage('/view/portals/breast-cancer')"><a href="/view/portals/breast-cancer">Breast cancer</a></li>
+          <li ng-class="activePage('/view/portals/sodium-channels')"><a href="/view/portals/sodium-channels">Sodium channels</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
   <!-- Community -->
   <div class="panel panel-default menu-group" style="margin:0px">
     <div class="panel-heading menu-header">
