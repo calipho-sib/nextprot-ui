@@ -1,5 +1,5 @@
 body {
-	padding-top: 70px;
+	padding-top: 50px;
 	padding-bottom: 25px;
 	min-height: 200px;
 	background: #EBF1F5 !important;
@@ -40,15 +40,16 @@ body {
 /* HEADER */
 header {
 	position: fixed;
+    font-family: "Helvetica Neue";
 	top: 0;
 	display: inline-block;
-	background: #F7F8FA url("../img/sib_header_bkgd.png") repeat-x scroll left top;
-	height: 60px;
+	background: white;
+	height: 50px;
 	max-height: 60px;
 	width: 100%;
 	color: #787878;
 	z-index: 1000;
-	font-size: 0.9em;
+	font-size: 1em;
 }
 
 #header-title {
@@ -64,11 +65,13 @@ header {
 		display: none;
 	}
 }
-
+.navbar-logo{
+    padding:10px 10px;
+    top:-1px;
+}
 #np-logo {
-	position: fixed;
 	top: 5px;
-	height: 50px;
+	height: 100%;
 	left: 8px;
 }
 
@@ -77,6 +80,9 @@ header {
 	top: 7px;
 	height: 30px;
 	right: 15px;
+}
+navbar-right{
+    margin-right:30px;
 }
 
 /* MENU */

@@ -32,49 +32,42 @@
 <body ng-clock="" class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90"
       ng-controller="SearchCtrl" np-background="#main">
 
-
 <header>
-    <div id="header-title">
-        <b>neXtProt</b> - Exploring the universe of human proteins
+<!--
+    <div class="hidden-md hidden-sm hidden-xs hidden-lg" style="font-size: 1.7em; font-weight: 100; font-family: Helvetica; background: transparent radial-gradient(ellipse at center center , rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%) repeat scroll 0% 0%;" id="header-title">
+        Exploring the universe of human proteins
     </div>
-    <a href="http://www.isb-sib.ch/" target="_blank"
-       title="Link to the SIB Swiss Institute of Bioinformatics">
-        <img id="sib-logo" src="img/sib_logo.gif"
-             alt="SIB Swiss Institute of Bioinformatics">
+-->
+    <a href="http://www.isb-sib.ch/" target="_blank" title="Link to the SIB Swiss Institute of Bioinformatics">
+        <img id="sib-logo" src="img/sib_logo.gif" alt="SIB Swiss Institute of Bioinformatics">
     </a>
 
     <!-- Navbar ================================================== -->
-    <nav id="header-navbar" class="nav nav-pills" role="navigation">
-        <div id="header-navbar-container-fluid" class="container-fluid">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nextprot-header">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand navbar-logo" href="/"><img id="np-logo" src="/img/np-logo.png"></a>
+                <a class="navbar-brand navbar-logo" href="http://dev-search.nextprot.org/"><img id="np-logo" src="/img/np.png"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"
-                 ng-controller="HelpCtrl">
+            <div class="collapse navbar-collapse ng-scope" id="nextprot-header" ng-controller="HelpCtrl">
                 <ul class="nav navbar-nav">
 
                     <!-- Services dropdown -->
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">Services <span class="caret"></span></a>
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Services <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <!-- Learn -->
-                            <li ng-class=""><a href="{{'search' | getNeXtProtUrl}}"
-                                               ng-click="routingOutside('ui')">Search</a></li>
-                            <li ng-class=""><a href="{{'snorql' | getNeXtProtUrl}}"
-                                               ng-click="routingOutside('snorql')">Snorql</a></li>
-                            <li ng-class=""><a href="{{'api' | getNeXtProtUrl}}"
-                                               ng-click="routingOutside('api')">API</a></li>
+                            <li ng-class=""><a href="http://nx_env-search.nextprot.org/" ng-click="routingOutside('ui')">Search</a></li>
+                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">Snorql</a></li>
+                            <li ng-class=""><a href="http://dev-api.nextprot.org/" ng-click="routingOutside('api')">API</a></li>
                         </ul>
                     </li>
 
@@ -82,12 +75,11 @@
                     <!--<li ng-class=""><a href="/tools">Tools</a></li>-->
 
                     <!-- Download -->
-                    <li ng-class=""><a href="ftp://ftp.nextprot.org" ng-click="routingOutside('ftp')">Download</a></li>
+                    <li ng-class=""><a href="ftp://ftp.nextprot.org/" ng-click="routingOutside('ftp')">Download</a></li>
 
                     <!-- Help dropdown -->
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">Help <span class="caret"></span></a>
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Help <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <!-- Learn -->
                             <li ng-class="{'active':isActiveDoc('/help/learn-simple-search')}">
@@ -137,14 +129,14 @@
                     </li>
 
                     <li ng-class="">
-                        <a href="/about">About</a>
+                        <a href="http://dev-search.nextprot.org/about">About</a>
                     </li>
                     <li ng-class="">
                         <a href="mailto:support@nextprot.org?subject=[neXtProt%20Search]">Contact</a>
                     </li>
 
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" style="margin-right:0px;">
 
                     <li>
                         <a title="My lists" ng-click="goToUser('lists')" type="button" class="link">
@@ -160,23 +152,12 @@
 
 
                     <!-- login button -->
-                    <li ng-if="!user.profile.email">
-                        <a href='' type="button" class="link" ng-click="login()">Login</a>
-                    </li>
+                    <!-- ngIf: !user.profile.email --><li class="ng-scope" ng-if="!user.profile.email">
+                        <a href="" type="button" class="link" ng-click="login()">Login</a>
+                    </li><!-- end ngIf: !user.profile.email -->
 
                     <!-- once logged in user resources -->
-                    <li class="dropdown" ng-if="user.profile.email" ng-cloak>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            {{user.profile.name || user.profile.email}}<span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <!--<li><a href="/user">My profile</a></li>-->
-                            <li><a href="/user/protein/lists">My protein lists</a></li>
-                            <li><a href="/user/queries">My queries</a></li>
-                            <!-- <li><a href="/user/applications">My applications</a></li>-->
-                            <li class="divider"></li>
-                            <li><a href="#" ng-click="logout()">Logout</a></li>
-                        </ul>
-                    </li>
+                    <!-- ngIf: user.profile.email -->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
