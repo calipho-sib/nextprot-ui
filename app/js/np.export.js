@@ -67,15 +67,15 @@
 
         $scope.getFileExportURL = function () {
 
+            var exportURL = config.api.API_URL;
+
             //multiple entries
             if ($scope.export.exportObjectType) {
 
-                var exportURL = config.api.API_URL + "/export/entries";
+                exportURL += "/export/entries";
                 exportURL += _addSuffixURLSubPart($scope.selectedView, $scope.selectedFormat);
-
                 exportURL += "?" + $scope.export.exportObjectType + "=" + window.encodeURIComponent($scope.export.exportObjectIdentifier);
 
-                //TODO
                 if ($routeParams.filter)
                     exportURL += "&filter=" + $routeParams.filter;
 
@@ -88,16 +88,18 @@
                 if ($routeParams.order)
                     exportURL += "&order=" + $routeParams.order;
 
-                return exportURL;
-
             } else { // export one entry
 
-                var exportURL = config.api.API_URL + "/entry";
-
-                exportURL += "/" + $scope.export.exportObjectIdentifier;
-                exportURL += _addSuffixURLSubPart($scope.selectedView, $scope.selectedFormat);
-                return exportURL;
+                if ($scope.selectedView == "full-entry" && $scope.selectedFormat == "xml") {
+                    exportURL += "/export/entries.xml?query=id:"+$scope.export.exportObjectIdentifier;
+                }
+                else {
+                    exportURL += "/entry/" + $scope.export.exportObjectIdentifier;
+                    exportURL += _addSuffixURLSubPart($scope.selectedView, $scope.selectedFormat);
+                }
             }
+
+            return exportURL;
         };
 
         //initialize with xml
@@ -140,6 +142,7 @@
             this.exportObjectType = null;
             this.exportObjectIdentifier = entry;
             this.exportTitle = "Download entry '" + entry + "'";
+            this.isMultipleEntries = false;
         };
 
         ExportService.prototype.reset = function () {
@@ -168,6 +171,7 @@
                 this.exportTitle = "Download entries for sparql query";
             }
 
+            this.isMultipleEntries = true;
         };
 
         return new ExportService();

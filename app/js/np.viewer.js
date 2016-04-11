@@ -23,7 +23,7 @@
 
             //GLOBAL VIEWS https://github.com/calipho-sib/nextprot-viewers
             .when('/view', gv)
-            .when('/view/gh/:user/:repository', ev)
+            .when('/view/gh/:user/:repository', gv)
 
             .when('/view/:gv1', gv)
             .when('/view/:gv1/:gv2', gv)
@@ -93,6 +93,7 @@
                }
            }
 
+            if($location.url() === page) return 'active';
             if ($routeParams.element == page)  return 'active'
             if ("view/" + $routeParams.ev1 == page)  return 'active';
             if (("gh/" + $routeParams.user + "/" + $routeParams.repository) == page)  return 'active';

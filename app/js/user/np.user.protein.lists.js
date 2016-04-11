@@ -340,8 +340,6 @@
         $scope.removeUploadFile = function (index) {
 
             $scope.files.splice(index, 1);
-
-            console.log($scope.files)
         };
 
         $scope.isCreatable = function () {
