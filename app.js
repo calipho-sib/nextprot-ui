@@ -38,6 +38,14 @@ if ('development' == env) {
   });
 };
 
+
+app.get('/db/*',function (req, res) {
+    var redirectURL = req.url.replace("/db", "");
+    console.log("Redirecting " + req.url + " to " + redirectURL);
+    res.redirect(redirectURL);
+});
+
+
 app.get('/',function (req, res) {
 	  res.render('index.html');
 });
