@@ -39,6 +39,22 @@ if ('development' == env) {
 };
 
 
+app.all('/*', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'content-Type,x-requested-with');
+  next();
+});
+
+
+app.get('/db/results/showResults/*',function (req, res) {
+    var np1Host = 'http://localhost:8090';
+    var redirectURL = np1Host + req.url;
+    console.log("Redirecting " + req.url + " to " + redirectURL);
+    res.redirect(redirectURL);
+});
+
+
 app.get('/db/*',function (req, res) {
     var redirectURL = req.url.replace("/db", "");
     console.log("Redirecting " + req.url + " to " + redirectURL);
@@ -55,7 +71,6 @@ app.get('/',function (req, res) {
 // this use is called after all assets requests
 app.use(function (req, res) {
   res.render('index.html');
-  //res.redirect('/#' + req.url);
 });
 
 http.createServer(app).listen(app.get('port'), function () {
