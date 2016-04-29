@@ -13,6 +13,7 @@
 
         var ev = {templateUrl: '/partials/viewer/entry-viewer.html'};
         var tv = {templateUrl: '/partials/viewer/term-viewer.html'};
+        var pv = {templateUrl: '/partials/viewer/publi-viewer.html'};
         var gv = {templateUrl: '/partials/viewer/global-viewer.html'};
 
         $routeProvider
@@ -30,6 +31,9 @@
             .when('/entry/:entry/:element', ev)
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
+            .when('/publication/:pubid',pv)
+            .when('/publication/:pubid/:element',pv)
+
 
             //NP2 ENTRY views 
             .when('/entry/:entry/view/:ev1', ev)
@@ -47,6 +51,7 @@
         $scope.externalURL = null;
         $scope.widgetEntry = null;
         $scope.widgetTerm = null;
+        $scope.widgetPubli = null;        
         $scope.githubURL = null;
         $scope.communityMode = false;
         $scope.simpleSearchText = "";
@@ -54,6 +59,7 @@
         $scope.entryProps ={};
         $scope.entryName = $routeParams.entry;
         $scope.termName = $routeParams.termid;
+        $scope.publiName = $routeParams.pubid;
 
 
         var entryViewMode = $scope.entryName != undefined;
@@ -105,6 +111,12 @@
                }
            }
 
+           if(angular.equals({'pubid': $routeParams.pubid},  $routeParams)){ // Proteins view of publication (default)
+               if(page === 'proteins') {
+                   return 'active';
+               }
+           }
+
             if($location.url() === page) return 'active';
             if ($routeParams.element == page)  return 'active'
             if ("view/" + $routeParams.ev1 == page)  return 'active';
@@ -117,6 +129,7 @@
         $scope.$on('$routeChangeSuccess', function (event, next, current) {
             $scope.widgetEntry = $routeParams.entry;
             $scope.widgetTerm = $routeParams.termid;
+            $scope.widgetPubli = $routeParams.pubid;
 
             if ($routeParams.ev1) { //Entry view
                 angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
