@@ -45,7 +45,7 @@
     }
 
 
-    ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver'];
+    ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', ];
     function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
 
         $scope.externalURL = null;
@@ -61,6 +61,7 @@
         $scope.termName = $routeParams.termid;
         $scope.publiName = $routeParams.pubid;
 
+        console.log("my config" , config);
 
         var entryViewMode = $scope.entryName != undefined;
 
@@ -250,8 +251,7 @@
         this.getScopeParamsForNeXtProtGrails = function (path) {
 
             /* np1Base: origin of NP1 http service, read from conf or set to localhost for dev/debug */
-            var np1Base = "http://localhost:8090/db";
-            //var np1Base = config.api.NP1_URL + "/db";
+            var np1Base=config.api.NP1_URL + "/db";
             /* np2css: the css hiding header, footer and navigation items of NP1 page */
             var np2css = "/db/css/np2css.css"; // NP1 integrated css (same as local)
             //var np2css = "http://localhost:3000/partials/viewer/np1np2.css"; // UI local css
@@ -266,7 +266,6 @@
                 "externalURL": np1Base + path,
                 "widgetURL": $sce.trustAsResourceUrl(np1Base + $location.$$path + np1Params)
             }
-            //console.log(result);
             return result;
 
         }
