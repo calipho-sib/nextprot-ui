@@ -50,14 +50,33 @@ app.all('/*', function(req, res, next) {
 app.get('/db/results/showResults/*',function (req, res) {
     var np1Host = 'http://localhost:8090';
     var redirectURL = np1Host + req.url;
-    console.log("Redirecting " + req.url + " to " + redirectURL);
+    console.log("pattern 1: redirecting " + req.url + " to " + redirectURL);
     res.redirect(redirectURL);
 });
 
 
+app.get('/db/entry/:entry/sequence', function(req,res) {
+    var entry = req.params.entry;
+    var redirectURL = '/entry/' + entry + '/view/sequence';
+    console.log("pattern 2: redirecting " + req.url + " to " + redirectURL);
+    res.redirect(redirectURL);
+});
+app.get('/db/entry/:entry/proteomics', function(req,res) {
+    var entry = req.params.entry;
+    var redirectURL = '/entry/' + entry + '/view/proteomics';
+    console.log("pattern 3: redirecting " + req.url + " to " + redirectURL);
+    res.redirect(redirectURL);
+});
+app.get('/db/entry/:entry/structures', function(req,res) {
+    var entry = req.params.entry;
+    var redirectURL = '/entry/' + entry + '/view/structures';
+    console.log("pattern 4: redirecting " + req.url + " to " + redirectURL);
+    res.redirect(redirectURL);
+});
+
 app.get('/db/*',function (req, res) {
     var redirectURL = req.url.replace("/db", "");
-    console.log("Redirecting " + req.url + " to " + redirectURL);
+    console.log("pattern 5: redirecting " + req.url + " to " + redirectURL);
     res.redirect(redirectURL);
 });
 
