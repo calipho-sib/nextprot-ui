@@ -43,7 +43,7 @@
     if (nxEnvironment.indexOf("NX_") == -1) { // means an environment has been set, sed command has done some magic tricks
         if (nxEnvironment.toLowerCase() === "pro") {
             apiBase = 'https://api.nextprot.org'; // Don't forget https!
-            np1Base = 'http://www.nextprot.org';
+            np1Base = 'https://www.nextprot.org';
 
         } else if (nxEnvironment.toLowerCase() === "dev" || nxEnvironment.toLowerCase() === "alpha" || nxEnvironment.toLowerCase() === "build" ) {
             apiBase = 'http://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
