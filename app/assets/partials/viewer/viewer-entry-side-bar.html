@@ -5,8 +5,8 @@
 -->
 <!-- START Template Navigation/Menu -->
 <ul class="topmenu topmenu-responsive">
-    <li class="active">
-        <a href="javascript:void(0);" data-target="#dashboard" data-toggle="collapse">
+    <li active-section ng-class="{active: hasActive()}">
+        <a class="collapsed" href="javascript:void(0);" data-target="#dashboard" data-toggle="collapse">
             <span class="figure">
                 <img style="width:30px;" src="../img/proteins.png">
               </span>
@@ -14,8 +14,8 @@
             <span class="arrow icon"></span>
         </a>
         <!-- START 2nd Level Menu -->
-        <ul id="dashboard" class=" submenu collapse in">
-                        <li class="submenu-header ellipsis">Protein</li>
+        <ul id="dashboard" class=" submenu collapse">
+            <li class="submenu-header ellipsis">Protein</li>
             <li ng-class="activePage('function')">
                 <a href="/entry/{{widgetEntry}}">
                     <span class="text">Function</span>
@@ -69,7 +69,7 @@
         </ul>
         <!--/ END 2nd Level Menu -->
     </li>
-    <li class="">
+    <li active-section ng-class="{active: hasActive()}">
         <a class="collapsed" href="javascript:void(0);" data-target="#components" data-toggle="collapse">
             <span class="figure">
                 <img style="width:30px;" src="../img/genes.png">
@@ -80,12 +80,12 @@
         <!-- START 2nd Level Menu -->
         <ul id="components" class="submenu collapse ">
             <li class="submenu-header ellipsis">Gene</li>
-            <li ng-class="activePage('exons')">
+            <li ng-class="activePage('view/exons')">
                 <a href="/entry/{{widgetEntry}}/view/exons">
                     <span class="text">Exons</span>
                 </a>
             </li>
-            <li ng-class="activePage('gene_identifiers')">
+            <li ng-class="activePage('view/gene-identifiers')">
                 <a href="/entry/{{widgetEntry}}/view/gene-identifiers">
                     <span class="text">Identifiers</span>
                 </a>
@@ -93,7 +93,7 @@
         </ul>
         <!--/ END 2nd Level Menu -->
     </li>
-    <li class="">
+    <li active-section ng-class="{active: hasActive()}">
         <a class="collapsed" href="javascript:void(0);" data-toggle="collapse" data-target="#page">
             <span class="figure">
                 <i class="icon-list-alt" style="padding-left:7px;color:white;"></i>
@@ -104,7 +104,7 @@
         <!-- START 2nd Level Menu -->
         <ul id="page" class="submenu collapse ">
             <li class="submenu-header ellipsis">Curated publications</li>
-            <li ng-class="activePage('publications')">
+            <li ng-class="activePage('view/publications')">
                 <a href="/entry/{{widgetEntry}}/view/publications">
                     <span class="text">Curated publications</span>
                     <span class="number">
@@ -112,7 +112,7 @@
                     </span>
                 </a>
             </li>
-            <li ng-class="activePage('computed_references')">
+            <li ng-class="activePage('view/computed_references')">
                 <a href="/entry/{{widgetEntry}}/view/computed_references">
                     <span class="text">Additional publications</span>
                     <span class="number">
@@ -120,7 +120,7 @@
                     </span>
                 </a>
             </li>
-            <li ng-class="activePage('patents')">
+            <li ng-class="activePage('view/patents')">
                 <a href="/entry/{{widgetEntry}}/view/patents">
                     <span class="text">Patents</span>
                     <span class="number">
@@ -128,7 +128,7 @@
                     </span>
                 </a>
             </li>
-            <li ng-class="activePage('submissions')">
+            <li ng-class="activePage('view/submissions')">
                 <a href="/entry/{{widgetEntry}}/view/submissions">
                     <span class="text">Submissions</span>
                     <span class="number">
@@ -136,7 +136,7 @@
                     </span>
                 </a>
             </li>
-            <li ng-class="activePage('web')">
+            <li ng-class="activePage('view/web')">
                 <a href="/entry/{{widgetEntry}}/view/web">
                     <span class="text">Web ressources</span>
                     <span class="number">
@@ -146,7 +146,7 @@
             </li>
         </ul>
     </li>
-    <li class="">
+    <li active-section ng-class="{active: hasActive()}">
         <a class="collapsed" href="javascript:void(0);" data-target="#community" data-toggle="collapse">
             <span class="figure">
                 <i class="icon-group" style="padding-left:7px;color:white;"></i>
