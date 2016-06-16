@@ -264,13 +264,12 @@
 // autocomplete with customized bootstrap typeahead
 // https://github.com/twbs/bootstrap/blob/v2.3.2/js/bootstrap-typeahead.js
     SearchUI.directive('bsAutocomplete', ['Search', '$timeout', function (Search, $timeout) {
-        var items = [];
 
         return function (scope, element, attrs) {
             var promise;
 
+            // http://getbootstrap.com/2.3.2/javascript.html#typeahead
             element.typeahead({
-                //minLength: 2,
                 autoSelect: false,
                 source: function (query, process) {
 
@@ -279,7 +278,7 @@
                         $timeout.cancel(promise);
 
                     // make a promise to look up suggestions after a time delay
-                    if (this.$element.val().length>=2) {
+                    if (this.$element.val().length>1) {
                         promise = $timeout(function () {
                             Search.suggest(query, function (items) {
                                 return process(items)
@@ -304,7 +303,8 @@
                         return "<span class='gray'>" + this.query + "</span><strong class='gray2'>" + endItem + "</strong>"
                     }
                     return this.query;
-                }
+                },
+                items: 10
             });
             // Bootstrap override
             var typeahead = element.data('typeahead');
@@ -314,7 +314,7 @@
                 var items;
                 this.query = this.$element.val() || '';
 
-                if (this.query.length < this.options.minLength) {
+                if (this.query.length <= this.options.minLength) {
                     return this.shown ? this.hide() : this;
                 }
                 items = this.source(this.query, $.proxy(this.process, this));

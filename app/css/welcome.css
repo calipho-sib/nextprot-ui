@@ -1,10 +1,15 @@
+
+/*CHANGE FONT TO LATO*/
+body, body header, body .topmenu li a{
+    font-family: "Lato";
+}
 body {
 	padding-top: 50px;
 	padding-bottom: 25px;
 	min-height: 200px;
 	background: #EBF1F5 !important;
+/*    font-family: "Lato" !important;*/
 }
-
 
 .np-color-pink {
 	color: #C50063;

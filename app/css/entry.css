@@ -1,3 +1,6 @@
+body a, body li a, body .topmenu li a{
+    font-family: "Lato";
+}
 .variant {
     stroke: rgba(0, 255, 154, 0.6);
     stroke-width: 1px;

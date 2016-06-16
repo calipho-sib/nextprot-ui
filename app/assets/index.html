@@ -8,6 +8,7 @@
     <meta name="author" content="Calipho Team - SIB - Swiss Institute of Bioinformatics">
     <meta name="fragment" content="!">
     <meta http-equiv="expires" content="0">
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
 
     <!--<base href="/protosearch/" />-->
     <base href="/">
@@ -62,12 +63,33 @@
 
                     <!-- Services dropdown -->
                     <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Services <span class="caret"></span></a>
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tools <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <!-- Learn -->
-                            <li ng-class=""><a href="http://nx_env-search.nextprot.org/" ng-click="routingOutside('ui')">Search</a></li>
-                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">Snorql</a></li>
-                            <li ng-class=""><a href="http://dev-api.nextprot.org/" ng-click="routingOutside('api')">API</a></li>
+                            <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
+                            <li ng-class=""><a href="http://nx_env-search.nextprot.org/" ng-click="routingOutside('ui')">Simple search</a></li>
+                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">Advanced search</a></li>
+                            <li ng-class=""><a href="http://dev-api.nextprot.org/" ng-click="routingOutside('api')">SNORQL search</a></li>
+                            <li class="divider"></li>
+                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">My Lists</a></li>
+                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">My Queries</a></li>
+                            <li class="divider"></li>
+                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">BLAST</a></li>
+                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">Peptide Unicity Checker</a></li>
+                            <li class="divider"></li>
+                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">API</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Portals dropdown -->
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Portals <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <!-- Learn -->
+                            <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
+                            <li ng-class=""><a href="http://nx_env-search.nextprot.org/" ng-click="routingOutside('ui')">Breast cancer</a></li>
+                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">Sodium channels</a></li>
+                            <li ng-class=""><a href="http://dev-api.nextprot.org/" ng-click="routingOutside('api')">Protein kinases</a></li>
                         </ul>
                     </li>
 
@@ -88,13 +110,19 @@
                             <li ng-class="{'active':isActiveDoc('/help/learn-advanced-search')}">
                                 <a href="/help/learn-advanced-search">Advanced search</a>
                             </li>
-                            <li><a href="#"></a></li>
+<!--                            ???-->
+                            <li><a href="#"></a></li> 
                             <li ng-class="{'active':isActiveDoc('/help/search-results')}">
                                 <a href="/help/learn-search-results">Search results</a>
                             </li>
+<!--                            ???-->
+                            <li ng-class="{'active':isActiveDoc('/help/tools')}">
+                                <a href="/help/learn-search-results">Tools</a>
+                            </li>
                             <li><a href="#"></a></li>
-                            <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}">
-                                <a ng-href="/help/doc/introduction">RDF help</a>
+<!--                            <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}">-->
+                            <li ng-class="{'active':isActiveDoc('/help/data-model')}">
+                                <a ng-href="/help/doc/introduction">Data model</a>
                             </li>
                             <li><a href="#"></a></li>
                             <li class="divider"></li>
@@ -102,35 +130,78 @@
                                 <a href="/help/learn-protein-lists">Protein Lists</a>
                             </li>
                             <li class="divider"></li>
+                            <li ng-class="{'active':isActiveDoc('/help/download')}">
+                                <a href="/help/learn-protein-lists">Download</a>
+                            </li>
+                            <li class="divider"></li>
+<!--
                             <li ng-class="{'active':isActiveDoc('/help/learn-developer-api')}">
                                 <a href="/help/learn-programmatic-access">Developer API</a>
                             </li>
+-->
+                            <li ng-class="{'active':isActiveDoc('/help/programmatic-access')}">
+                                <a href="/help/learn-programmatic-access">Developer API</a>
+                            </li>
                             <!--  <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li> -->
-                            <li class="divider"></li>
+<!--                            <li class="divider"></li>-->
 
                             <!-- FAQ
                             <li ng-class="{'active':isActiveDoc('/pages/faq')}"><a href="/pages/faq">FAQ</a></li>
                             -->
 
-                            <!-- News -->
-                            <li ng-class="{'active':isActiveDoc('/what-is-new')}">
-                                <a href="/what-is-new">What's new?</a>
-                            </li>
                             <!-- Known issues -->
+<!--
                             <li ng-class="{'active':isActiveDoc('/known-issues')}">
                                 <a href="/known-issues">Known issues</a>
                             </li>
+-->
 
                             <!-- Found a bug -->
+<!--
                             <li ng-class="">
                                 <a target="_blank" href="https://github.com/calipho-sib/nextprot-ui/issues">
-                                    Found a bug?<i class="icon-github"></i></a></li>
+                                    Found a bug?<i class="icon-github"></i></a>
+                            </li>
+-->
+
+<!--                            <li class="divider"></li>-->
+
+                            <!-- News -->
+<!--
+                            <li ng-class="{'active':isActiveDoc('/what-is-new')}">
+                                <a href="/what-is-new">What's new?</a>
+                            </li>
+-->
+
+                            <!-- Citing neXtProt -->
+<!--
+                            <li ng-class="{'active':isActiveDoc('/citing-nextprot')}">
+                                <a href="/citing-nextprot">Citing neXtProt</a>
+                            </li>
+-->
+
+                        </ul>
+                    </li>
+                    
+                    <!-- About dropdown -->
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">About <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <!-- Learn -->
+                            <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
+                            <li ng-class=""><a href="http://nx_env-search.nextprot.org/" ng-click="routingOutside('ui')">neXtProt concept</a></li>
+                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">Current release</a></li>
+                            <li ng-class=""><a href="http://dev-api.nextprot.org/" ng-click="routingOutside('api')">The human proteome</a></li>
+                            <li ng-class=""><a href="http://dev-api.nextprot.org/" ng-click="routingOutside('api')">News</a></li>
+                            <li ng-class=""><a href="http://dev-api.nextprot.org/" ng-click="routingOutside('api')">Citing neXtProt</a></li>
                         </ul>
                     </li>
 
+<!--
                     <li ng-class="">
                         <a href="http://dev-search.nextprot.org/about">About</a>
                     </li>
+-->
                     <li ng-class="">
                         <a href="mailto:support@nextprot.org?subject=[neXtProt%20Search]">Contact</a>
                     </li>

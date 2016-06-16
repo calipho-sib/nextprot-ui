@@ -6,8 +6,22 @@
         .factory('releaseInfoService', releaseInfoService)
     ;
 
-    ReleaseInfoCtrl.$inject = ['$scope','releaseInfoService'];
-    function ReleaseInfoCtrl($scope, releaseInfoService) {
+    ReleaseInfoCtrl.$inject = ['$scope','releaseInfoService', 'RELEASE_INFOS'];
+    function ReleaseInfoCtrl($scope, releaseInfoService, RELEASE_INFOS) {
+
+        function formatReleaseInfos(releaseInfos) {
+            var content = "v" + releaseInfos.version;
+
+            if (!isNaN(releaseInfos.build)) {
+
+                content += " (build " + releaseInfos.build;
+                if (releaseInfos.isProduction !== 'true') content += "#" + releaseInfos.githash;
+                content += ")";
+            }
+            return content;
+        }
+        $scope.releaseInfosFormatted = formatReleaseInfos(RELEASE_INFOS);
+
         releaseInfoService.getReleaseInfo().$promise.then(function(data){
 
             var index = {

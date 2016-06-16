@@ -254,28 +254,36 @@ SearchService.factory('Search', [
         };
 
 
-        //
-        //
         // suggest is a quick search
         Search.prototype.suggest = function (query, cb) {
             var params = {};
             angular.extend(params, defaultUrl, suggestApi, {query: query, entity: this.params.entity, quality: this.params.quality});
 
             $api.search(params, params.query, function (result) {
-                var items = [];
+                var names = [];
 
-                var keys = Object.keys(result.autocompleteSearchResult.autocomplete).reverse();
+                var autocomplete = result.autocompleteSearchResult.autocomplete;
 
-                for (var i = 0; i < keys.length; i++) {
-                    var names = result.autocompleteSearchResult.autocomplete[keys[i]];
-                    for (var j=0 ; j<names.length ; j++) {
-                        items.push(names[j])
+                // convert object to array
+                var autocompleteReverse = [];
+                for (var name in autocomplete) {
+                    if (autocomplete.hasOwnProperty(name)) {
+                        autocompleteReverse.push({name: name, count: autocomplete[name]});
                     }
                 }
-                if (cb)cb(items)
+                // sort array
+                autocompleteReverse.sort(function(a,b) {
+                    return b.count - a.count;
+                });
+
+                // add the most weighted names first
+                for (var i = 0; i < autocompleteReverse.length; i++) {
+                    names.push(autocompleteReverse[i].name);
+                }
+
+                if (cb) cb(names)
             })
         };
-
 
         //
         //
