@@ -1,7 +1,12 @@
-Nextprot UI
-===========
+# neXtProt - The knowledge resource on human proteins
 
-***CAUTION: Nextprot ui is in early stages of development. Things are likely to change in ways that are not backwards compatible***
+This is a code repository for the SIB - Swiss Institute of Bioinformatics CALIPHO group neXtProt project
+
+See: http://www.nextprot.org/
+
+# neXtProt User Interface (UI)
+
+***CAUTION: neXtProt new UI is in early stages of development. Things are likely to change in ways that are not backwards compatible***
 
 [AngularJS](http://angularjs.org) + [Brunch](http://brunch.io) + [Bootstrap](http://twitter.github.com/bootstrap/)
 
