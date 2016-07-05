@@ -48,6 +48,10 @@
     ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', ];
     function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
 
+        console.log("YAAA" + $routeParams.gold);
+
+        $scope.goldOnly = $routeParams.gold || false;
+
         $scope.externalURL = null;
         $scope.widgetEntry = null;
         $scope.widgetTerm = null;
@@ -61,7 +65,7 @@
         $scope.termName = $routeParams.termid;
         $scope.publiName = $routeParams.pubid;
 
-        console.log("my config" , config);
+        //console.log("my config" , config);
 
         var entryViewMode = $scope.entryName != undefined;
 
@@ -93,6 +97,13 @@
         $scope.makeSimpleSearch = function () {
             $location.search("query", $scope.simpleSearchText);
             $location.path("proteins/search");
+        }
+
+        $scope.toggleGoldOnly = function () {
+            var newValue = $scope.goldOnly;
+            if(newValue == false){
+                $location.search("gold", null);
+            }else $location.search("gold");
         }
 
         $scope.activePage = function (page) {
@@ -133,7 +144,7 @@
             $scope.widgetPubli = $routeParams.pubid;
 
             if ($routeParams.ev1) { //Entry view
-                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
+                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry, $routeParams.gold));
             }else if ($routeParams.gv1) { //Global view
                 angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.gv1, $routeParams.gv2, $routeParams.gv3));
             // COMMUNITY VIEWERS etiher with GitHub //////////////////////////////////////
@@ -202,17 +213,19 @@
             return url + envUrl;
         }
 
-        this.getScopeParamsForEntryViewers = function (ev1, ev2, entryName) {
+        this.getScopeParamsForEntryViewers = function (ev1, ev2, entryName, goldOnly) {
 
             var url = window.location.origin + "/viewers/" + ev1;
             if(ev2) url += "/" + ev2;
             url += "/app/index.html" ;
 
+            var goldOnlyString = (goldOnly === true) ? ("&goldOnly=" + goldOnly) : "";
+
             return {
                 "communityMode": false,
                 "githubURL": "https://github.com/calipho-sib/nextprot-viewers/blob/master/ " + ev1 + "/app/index.html",
-                "externalURL":  $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + "&inputOption=true")) ,
-                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName))
+                "externalURL":  $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + "&inputOption=true" + goldOnlyString)) ,
+                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + goldOnlyString))
             }
 
         }

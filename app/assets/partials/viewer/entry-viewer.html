@@ -13,9 +13,11 @@
                 <div class="col-md-3" style="margin-top: 16px;margin-right: 0px;">
                     <a ng-show="communityMode" href="help/learn-programmatic-access" style="color: #808080;" data-toggle="tooltip" data-placement="top" title="Click and go to section develop / contribute">Community viewers </span>&nbsp;<i class="icon-info-sign"></i></a>
                 </div>
-                <div class="col-md-4" style="margin-top: 8px;margin-right: 0px; ">
-                    <form ng-submit="makeSimpleSearch()">
-                            <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search an entry...">
+                <div class="col-md-4" style="margin-top: 8px;margin-right: 0px;">
+                    <form class="form-inline" ng-submit="makeSimpleSearch()">
+                        <label for="goldOnlyInput" > Gold Only </label>
+                        <input ng-model="goldOnly" id="goldOnlyInput" type="checkbox" data-toggle="toggle" style="display:inline-block" ng-click="toggleGoldOnly()">
+                        <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search an entry..."  style="display:inline-block">
                     </form>
                 </div>
                 <div class="col-md-2">
