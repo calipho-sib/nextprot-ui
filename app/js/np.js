@@ -30,21 +30,24 @@
 
     ///// TODO: fixing; we are breaking the DRY principle and it is really bad (see duplication in nextprot-snorql/app/js/app.config.js) !!!!
     //Environment that should be set from outside //TODO should replace this using GRUNT
-    var nxEnvironment = "NX_ENV"; //env can be replaced, by dev, alpha or pro
-    //var apiBase = "http://localhost:8080/nextprot-api-web"; //default
-    var apiBase = "http://dev-api.nextprot.org"; //default
 
-    var np1Base = "https://www.nextprot.org/";
-    //var np1Base = 'http://uat-web1/';
+    // default environment when environment is not set by some external deployment script
+    var nxEnvironment = "NX_ENV"; //env can be replaced, by dev, alpha or pro by nxs script on deploy
+    var apiBase = "http://dev-api.nextprot.org";               //default for UI developers on MACs
+    var np1Base = 'http://uat-web1';                           //default for UI developers on MACs
+    //var apiBase = "http://localhost:8080/nextprot-api-web";  //default for UI + NP1 + NP2 on localhost
+    //var np1Base = 'http://localhost:8090';                   //default for UI + NP1 + NP2 on localhost
 
 
-    if (nxEnvironment.indexOf("NX_") == -1) // means an environment has been set, sed command has done some magic tricks
-    {
-        apiBase = 'http://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
+    if (nxEnvironment.indexOf("NX_") == -1) { // means an environment has been set, sed command has done some magic tricks
         if (nxEnvironment.toLowerCase() === "pro") {
             apiBase = 'https://api.nextprot.org'; // Don't forget https!
-            np1Base = 'http://www.nextprot.org';
-        }
+            np1Base = 'https://www.nextprot.org';
+
+        } else if (nxEnvironment.toLowerCase() === "dev" || nxEnvironment.toLowerCase() === "alpha" || nxEnvironment.toLowerCase() === "build" ) {
+            apiBase = 'http://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
+            np1Base = 'http://uat-web1';
+        }    
     }
 
     // main application settings
@@ -156,7 +159,6 @@
                  return;
                  } */
                 else if (status >= 500) {
-                    console.log(response)
                     if (response.message) {
                         flash('alert-warning', response.message);
                         $log.error({status : response.status, message : response.message, href : window.location.href});

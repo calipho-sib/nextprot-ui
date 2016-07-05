@@ -34,16 +34,13 @@
             </div>
 
             <div style="display: inline-block; width:80%; vertical-align:top">
-                <a href="http://www.nextprot.org/db/entry/{{doc.id}}">
+                <a href="entry/{{doc.id}}">
                     <span ng-bind-html="doc.recommended_name"></span>
-                    <span ng-show="doc.ec_name">[{{doc.ec_name}}]</span> ({{doc.recommended_gene_names}})
+                    <span ng-show="doc.ec_name">[{{doc.ec_name}}]</span> <span ng-if="doc.recommended_gene_names"> ({{doc.recommended_gene_names}})</span>
                     [{{doc.id}}]</a>
                       <span><a class="btn hide btn-default btn-xs" toggle="#line-{{$index}}"
                                ng-class="{'btn-danger':Search.result.docs[$index].details}"><i class="icon-plus"></i>
                           Details</a> </span>
-
-                | <!-- New interface -->
-                <a href="entry/{{doc.id}}/view/peptides" title="new peptide viewer (under construction)">New peptide viewer (under construction)</a>
 
                 | <!-- Export entry -->
                 <a bs-modal="'partials/export/export-modal.html'" href="#" title="Export entry"
@@ -62,29 +59,29 @@
 
             <div class="gray small" ng-show="!Search.session.summary">
                 Chromosomal location: <a
-                    href="http://www.nextprot.org/db/entry/{{doc.id}}/exons">{{doc.chr_loc}}</a>
-                Isoforms: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.isoform_num}}</a>
-                PTMs: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.ptm_num &gt; 0 ?
+                    href="entry/{{doc.id}}/exons">{{doc.chr_loc}}</a>
+                Isoforms: <a href="entry/{{doc.id}}/view/sequence">{{doc.isoform_num}}</a>
+                PTMs: <a href="entry/{{doc.id}}/view/sequence">{{doc.ptm_num &gt; 0 ?
                 doc.ptm_num : '0'}}</a>
                 Sequence length: <a
-                    href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.aa_length}}</a>
-                Variants: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{doc.var_num &gt; 0 ? doc.var_num : '0'}}</a> <br>
+                    href="entry/{{doc.id}}/view/sequence">{{doc.aa_length}}</a>
+                Variants: <a href="entry/{{doc.id}}/view/sequence">{{doc.var_num &gt; 0 ? doc.var_num : '0'}}</a> <br>
                 Disease: <a class="{{(doc.filters|has:'filterdisease')? '':'inactive'}}"
-                            href="http://www.nextprot.org/db/entry/{{doc.id}}/medical">{{(doc.filters|has:'filterdisease')
+                            href="entry/{{doc.id}}/medical">{{(doc.filters|has:'filterdisease')
                 ? 'yes':'no'}}</a>
                 Expression: <a class="{{(doc.filters|has:'filterexpressionprofile')? '':'inactive'}}"
-                               href="http://www.nextprot.org/db/entry/{{doc.id}}/expression">{{(doc.filters|has:'filterexpressionprofile')
+                               href="entry/{{doc.id}}/expression">{{(doc.filters|has:'filterexpressionprofile')
                 ? 'yes':'no'}}</a>
                 Mutagenesis: <a class="{{(doc.filters|has:'filtermutagenesis')? '':'inactive'}}"
-                                href="http://www.nextprot.org/db/entry/{{doc.id}}/sequence">{{(doc.filters|has:'filtermutagenesis')
+                                href="entry/{{doc.id}}/view/sequence">{{(doc.filters|has:'filtermutagenesis')
                 ? 'yes':'no'}}</a>
                 Proteomics: <a class="{{(doc.filters|has:'filterproteomics')? '':'inactive'}}"
-                               href="http://www.nextprot.org/db/entry/{{doc.id}}/proteomics">{{(doc.filters|has:'filterproteomics')
+                               href="entry/{{doc.id}}/view/proteomics">{{(doc.filters|has:'filterproteomics')
                 ? 'yes':'no'}}</a>
                 Structure: <a class="{{(doc.filters|has:'filterstructure')? '':'inactive'}}"
-                              href="http://www.nextprot.org/db/entry/{{doc.id}}/structures">{{(doc.filters|has:'filterstructure')
+                              href="entry/{{doc.id}}/view/structures">{{(doc.filters|has:'filterstructure')
                 ? 'yes':'no'}}</a>
-                Proteins existence: <a href="http://www.nextprot.org/db/entry/{{doc.id}}/function">{{doc.protein_existence}}</a>
+                Proteins existence: <a href="entry/{{doc.id}}/function">{{doc.protein_existence}}</a>
             </div>
             </div>
         </li>

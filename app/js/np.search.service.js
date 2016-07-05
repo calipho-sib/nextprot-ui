@@ -137,7 +137,9 @@ SearchService.factory('Search', [
 
             //
             // result content
-            this.result = {};
+            this.result = {
+                display : "proteins"
+            };
 
             this.resultCount = 0;
 
@@ -252,22 +254,36 @@ SearchService.factory('Search', [
         };
 
 
-        //
-        //
         // suggest is a quick search
         Search.prototype.suggest = function (query, cb) {
             var params = {};
             angular.extend(params, defaultUrl, suggestApi, {query: query, entity: this.params.entity, quality: this.params.quality});
 
             $api.search(params, params.query, function (result) {
-                var items = [];
-                for (var i = 0; i < result.autocomplete.length; i = i + 2) {
-                    items.push(result.autocomplete[i].name)
+                var names = [];
+
+                var autocomplete = result.autocompleteSearchResult.autocomplete;
+
+                // convert object to array
+                var autocompleteReverse = [];
+                for (var name in autocomplete) {
+                    if (autocomplete.hasOwnProperty(name)) {
+                        autocompleteReverse.push({name: name, count: autocomplete[name]});
+                    }
                 }
-                if (cb)cb(items)
+                // sort array
+                autocompleteReverse.sort(function(a,b) {
+                    return b.count - a.count;
+                });
+
+                // add the most weighted names first
+                for (var i = 0; i < autocompleteReverse.length; i++) {
+                    names.push(autocompleteReverse[i].name);
+                }
+
+                if (cb) cb(names)
             })
         };
-
 
         //
         //
