@@ -1,0 +1,75 @@
+<ul class="topmenu topmenu-responsive">
+    <li class="active">
+        <a class="collapsed onlyMinimized" href="javascript:void(0);" data-target="#scn" data-toggle="collapse">
+            <span class="figure">
+<!--                <span>SCN</span>-->
+                <i class="icon-question-sign" style="font-size:1.5em;color:white;"></i>
+              </span>
+<!--            <span class="text">HELP</span>-->
+<!--            <span class="arrow icon"></span>-->
+        </a>
+        <!-- START 2nd Level Menu -->
+        <ul id="scn" class=" submenu collapse in">
+<!--            <li class="submenu-header ellipsis">Search</li>-->
+            <li ng-class="activePage('/help/learn-simple-search')">
+                <a href="help/learn-simple-search">
+                    <span class="text">Simple search</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/help/learn-advanced-search')">
+                <a href="help/learn-advanced-search">
+                    <span class="text">Advanced search</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/help/learn-search-results')">
+                <a href="help/learn-search-results">
+                    <span class="text">Search results</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/help/learn-tools')">
+                <a href="#">
+                    <span class="text">Tools</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/help/introduction')">
+                <a href="help/introduction">
+                    <span class="text">Data model</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/help/learn-protein-lists')">
+                <a href="help/learn-protein-lists">
+                    <span class="text">Protein lists</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/help/learn-download')">
+                <a href="#">
+                    <span class="text">Download</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/help/learn-programmatic-access')">
+                <a href="help/learn-programmatic-access">
+                    <span class="text">Developer API</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+<!--
+    <li active-section ng-class="{active: hasActive()}">
+        <a class="collapsed" href="javascript:void(0);" data-target="#brca" data-toggle="collapse">
+            <span class="figure">
+                <img style="width:30px;" src="../img/proteins.png">
+              </span>
+            <span class="text">BREAST CANCER</span>
+            <span class="arrow icon"></span>
+        </a>
+        <ul id="brca" class=" submenu collapse">
+            <li class="submenu-header ellipsis">Protein lists</li>
+            <li ng-class="activePage('view/portals/breast-cancer')">
+                <a href="view/portals/breast-cancer">
+                    <span class="text">Protein lists</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+-->
+</ul>

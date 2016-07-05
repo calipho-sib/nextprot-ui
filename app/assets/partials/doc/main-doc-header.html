@@ -1,0 +1,67 @@
+<div class="row" style="border-top: 1px solid #E7E7E7;" ng-class="minMenu ? 'minimizedMenu' : '' ">
+    <div class="col-md-2 responsive-md-screen second-header-left" style="padding:0px;background-color:#21252A;height:50px">
+        <div class="col-xs-2" id="toggle-sidemenu">
+            <a class="btn" href="javascript:void(0);" ng-click="hideMenu = !hideMenu">
+                <span class="icon icon-reorder" aria-hidden="true"></span>
+            </a>
+        </div>
+        <div class="col-sm-12 col-xs-8" id="entrySummaryBoxName">
+            <div id="entrySummaryName">
+                <span class="figure">
+                    <i class="icon-eye-open" style="padding-right:7px;color:white;"></i>
+                    </span>
+                <span class="text">
+                        {{section}}
+                    </span>
+            </div>
+            <ul id="protein-tooltip" class=" submenu">
+                <li class="submenu-header ellipsis">{{section}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-10 responsive-md-screen second-header-right">
+        <div class="row" style="height:inherit;background-color:#FBFCFC;border-bottom: 1px solid #E7E7E7;margin-left:0px;height:50px;">
+            <div class="col-lg-1 pull-left" id="toggle-minimizedMenu">
+                <a class="btn" href="javascript:void(0);" ng-click="minimizeMenu()">
+                    <span class="icon icon-reorder" aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div class="col-lg-4 col-md-4 col-sm-6" style="">
+                <a ng-if="parent" ng-href={{linkToParent}} style="margin:0px;padding:0px;line-height:45px; color:grey;font-size:18px; display:inline-block">{{parent}} <i class="icon icon-chevron-right" aria-hidden="true" style="margin:0px 10px"></i> </a>
+                <h1 style="margin:0px;padding:0px;line-height:45px; font-size:28px;display:inline-block">{{title}}</h1>
+                <!--                    <h1 style="margin:0px;padding:0px;line-height:45px; font-size:28px;">{{title}}</h1>-->
+            </div>
+
+
+
+            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5 pull-right">
+                <div class="pull-right">
+                    <!-- See github url  -->
+                    <div class="entrySummarylink">
+                        <a ng-href="{{githubURL}}" title="See the source code" target="_blank" style="color:grey;font-size:18px;">
+                            <span class="icon icon-github" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- Download entry (pop-up opens) -->
+                    <div class="entrySummarylink">
+                        <a bs-modal="'partials/export/export-modal.html'" href="#" title="Download entry" ng-click="setExportEntry(widgetEntry)" title="Download entry" target="_blank" ng-href="{{widgetURL}}&inputOption=true" style="color:grey;font-size:18px;">
+                            <span class="icon icon-download" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- Expand in new window -->
+                    <div class="entrySummarylink">
+                        <a title="see it in a separated window" target="_blank" ng-href="{{externalURL}}" style="color:grey;font-size:18px;">
+                            <span class="icon icon-resize-full" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-2 col-sm-3 col-xs-12 entry-search" style="text-align:right;">
+                <form ng-submit="makeSimpleSearch()">
+                    <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search an entry...">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

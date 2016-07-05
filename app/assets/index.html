@@ -54,7 +54,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand navbar-logo" href="http://dev-search.nextprot.org/"><img id="np-logo" src="/img/np.png"></a>
+                <a class="navbar-brand navbar-logo" href="/"><img id="np-logo" src="/img/np.png"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -67,17 +67,17 @@
                         <ul class="dropdown-menu" role="menu">
                             <!-- Learn -->
                             <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
-                            <li ng-class=""><a href="http://nx_env-search.nextprot.org/" ng-click="routingOutside('ui')">Simple search</a></li>
-                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">Advanced search</a></li>
-                            <li ng-class=""><a href="http://dev-api.nextprot.org/" ng-click="routingOutside('api')">SNORQL search</a></li>
+                            <li ng-class=""><a href="/" ng-click="routingOutside('ui')">Simple search</a></li>
+                            <li ng-class=""><a href="/proteins/search?mode=advanced&start=0" ng-click="routingOutside('snorql')">Advanced search</a></li>
+                            <li ng-class=""><a href="http://snorql.nextprot.org/" ng-click="routingOutside('api')">SNORQL search</a></li>
                             <li class="divider"></li>
-                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">My Lists</a></li>
-                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">My Queries</a></li>
+                            <li ng-class=""><a ng-click="goToUser('lists')">My Lists</a></li>
+                            <li ng-class=""><a ng-click="goToUser('queries')">My Queries</a></li>
                             <li class="divider"></li>
-                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">BLAST</a></li>
+                            <li ng-class=""><a href="#" ng-click="routingOutside('snorql')">BLAST</a></li>
                             <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">Peptide Unicity Checker</a></li>
                             <li class="divider"></li>
-                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">API</a></li>
+                            <li ng-class=""><a href="http://api.nextprot.org/" ng-click="routingOutside('snorql')">API</a></li>
                         </ul>
                     </li>
                     
@@ -87,8 +87,8 @@
                         <ul class="dropdown-menu" role="menu">
                             <!-- Learn -->
                             <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
-                            <li ng-class=""><a href="http://nx_env-search.nextprot.org/" ng-click="routingOutside('ui')">Breast cancer</a></li>
-                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">Sodium channels</a></li>
+                            <li ng-class=""><a href="./view/portals/breast-cancer">Breast cancer</a></li>
+                            <li ng-class=""><a href="./view/portals/navmut">Sodium channels</a></li>
                             <li ng-class=""><a href="http://dev-api.nextprot.org/" ng-click="routingOutside('api')">Protein kinases</a></li>
                         </ul>
                     </li>
@@ -111,7 +111,7 @@
                                 <a href="/help/learn-advanced-search">Advanced search</a>
                             </li>
 <!--                            ???-->
-                            <li><a href="#"></a></li> 
+<!--                            <li><a href="#"></a></li> -->
                             <li ng-class="{'active':isActiveDoc('/help/search-results')}">
                                 <a href="/help/learn-search-results">Search results</a>
                             </li>
@@ -119,12 +119,12 @@
                             <li ng-class="{'active':isActiveDoc('/help/tools')}">
                                 <a href="/help/learn-search-results">Tools</a>
                             </li>
-                            <li><a href="#"></a></li>
+<!--                            <li><a href="#"></a></li>-->
 <!--                            <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}">-->
-                            <li ng-class="{'active':isActiveDoc('/help/data-model')}">
-                                <a ng-href="/help/doc/introduction">Data model</a>
+                            <li ng-class="{'active':isActiveDoc('/help/introduction')}">
+                                <a ng-href="/help/introduction">Data model</a>
                             </li>
-                            <li><a href="#"></a></li>
+<!--                            <li><a href="#"></a></li>-->
                             <li class="divider"></li>
                             <li ng-class="{'active':isActiveDoc('/help/learn-protein-lists')}">
                                 <a href="/help/learn-protein-lists">Protein Lists</a>
@@ -189,11 +189,11 @@
                         <ul class="dropdown-menu" role="menu">
                             <!-- Learn -->
                             <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
-                            <li ng-class=""><a href="http://nx_env-search.nextprot.org/" ng-click="routingOutside('ui')">neXtProt concept</a></li>
-                            <li ng-class=""><a href="http://nx_env-snorql.nextprot.org/" ng-click="routingOutside('snorql')">Current release</a></li>
-                            <li ng-class=""><a href="http://dev-api.nextprot.org/" ng-click="routingOutside('api')">The human proteome</a></li>
-                            <li ng-class=""><a href="http://dev-api.nextprot.org/" ng-click="routingOutside('api')">News</a></li>
-                            <li ng-class=""><a href="http://dev-api.nextprot.org/" ng-click="routingOutside('api')">Citing neXtProt</a></li>
+                            <li ng-class=""><a href="about/about">neXtProt concept</a></li>
+                            <li ng-class=""><a href="release/contents">Current release</a></li>
+                            <li ng-class=""><a href="#" ng-click="routingOutside('api')">The human proteome</a></li>
+                            <li ng-class=""><a href="news/february-2016-nextprot-release">News</a></li>
+                            <li ng-class=""><a href="about/citing-nextprot">Citing neXtProt</a></li>
                         </ul>
                     </li>
 
@@ -221,11 +221,14 @@
                         </a>
                     </li>
 
-
                     <!-- login button -->
                     <!-- ngIf: !user.profile.email --><li class="ng-scope" ng-if="!user.profile.email">
                         <a href="" type="button" class="link" ng-click="login()">Login</a>
                     </li><!-- end ngIf: !user.profile.email -->
+                    
+                    <li>
+                        <a id="sib-link" href="http://www.sib.swiss"><img id="sib-logo" src="/img/sib.png"></a>
+                    </li>
 
                     <!-- once logged in user resources -->
                     <!-- ngIf: user.profile.email -->

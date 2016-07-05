@@ -1,4 +1,4 @@
-body a, body li a, body .topmenu li a{
+body a, body li a, body .topmenu li a, #entrySummaryName>span{
     font-family: "Lato";
 }
 .variant {
@@ -437,6 +437,14 @@ main {}
     font-family: "Helvetica Neue";
 }
 
+.topmenu li a.onlyMinimized .figure {
+    display:none;
+}
+
+.topmenu li a.onlyMinimized {
+        padding:0px;
+    }
+
 .mainmenu,
 .topmenu {
     margin: 0;
@@ -456,6 +464,22 @@ main {}
 li.active {
     background-color: #252a30;
 }
+
+/*NEWS SPECIFICATIONS*/
+.news-sidebar li.active{
+    background-color:#fbfcfc;
+}
+.topmenu.news-sidebar li.active a{
+    color:#21252a;
+/*    color:#21252a;*/
+}
+.submenu-news{
+    padding-left:10px;
+}
+.news-icon{
+    margin-right:5px;
+}
+
 
 .mainmenu li,
 .topmenu li {
@@ -679,6 +703,15 @@ li a>.number {
     top:11px;
 }
 
+
+/*    Remove special indent for news*/
+/*NEWS SPECIFICATION*/
+.submenu-news>li:after{
+    border:0;
+}
+/*END NEWS SPE*/
+
+
 #protein-tooltip {
     margin: 0px;
 }
@@ -770,6 +803,9 @@ li a>.number {
     }
     .second-header-right {
         height: auto;
+    }
+    .topmenu li a.onlyMinimized .figure {
+        display:block;
     }
     .mainmenu.mainmenu-responsive>li>a>.text,
     .topmenu.topmenu-responsive>li>a>.text,
@@ -917,6 +953,10 @@ li a>.number {
 .minimizedMenu .topmenu.topmenu-responsive>li>a {
     padding: 17.5px 15px;
 }
+
+.minimizedMenu .topmenu li a.onlyMinimized .figure {
+        display:block;
+    }
 
 .minimizedMenu .responsive-md-screen.sidemenu,
 .minimizedMenu .responsive-md-screen.sidemenu,

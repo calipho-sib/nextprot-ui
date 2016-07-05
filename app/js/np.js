@@ -18,6 +18,7 @@
         'np.user.protein.lists',
         'np.search',
         'np.viewer',
+        'np.content',
         'np.export',
         'np.version',
         'np.news',
@@ -89,9 +90,12 @@
             .when('/:article', {title: 'page', templateUrl: '/partials/doc/page.html'})
             //// Help pages
             // Simple pages
-            .when('/help/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/page.html'})
+//            .when('/help/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
+//            .when('/help/doc', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
+
+        //            .when('/help/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/page.html'})
             // News
-            .when('/news/:article', {title: 'news on nextprot', templateUrl: '/partials/doc/news.html'})
+//            .when('/news/:article', {title: 'news on nextprot', templateUrl: '/partials/doc/news.html'})
             // RDF generalities
             .when('/help/doc/:article', {title: 'help for RDF', templateUrl: '/partials/doc/doc.html'})
             // RDF entities

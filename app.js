@@ -39,6 +39,14 @@ if ('development' == env) {
 };
 
 
+//TEMPORARY FOR NEW DESIGN IMPLEMENTATION
+app.get('/viewers/*',function (req, res) {
+    console.log("redirecting viewers");
+    var urlViewers = 'http://dev-search.nextprot.org';
+    var redirectURL = urlViewers + req.url;
+    res.redirect(redirectURL);
+});
+
 app.all('/*', function(req, res, next) {
   res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
@@ -53,6 +61,7 @@ app.get('/db/results/showResults/*',function (req, res) {
     console.log("pattern 1: redirecting " + req.url + " to " + redirectURL);
     res.redirect(redirectURL);
 });
+
 
 
 app.get('/db/entry/:entry/sequence', function(req,res) {

@@ -79,12 +79,11 @@ header {
 	height: 100%;
 	left: 8px;
 }
-
+#sib-link {
+    padding: 10px 5px 10px 10px;
+}
 #sib-logo {
-	position: absolute;
-	top: 7px;
 	height: 30px;
-	right: 15px;
 }
 navbar-right{
     margin-right:30px;
