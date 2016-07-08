@@ -23,7 +23,9 @@
                 <ul id="scn" class="submenu-news collapse in">
                     <li ng-repeat="n in news" ng-class="activePage('/news/n.title')">
                         <a href="news/{{n.url}}">
-                            <span class="text"><span class="news-icon icon-star"></span>{{n.title}}</span>
+                            <span class="text"><span class="news-icon icon-star"></span>
+                                {{n.title}}
+                            </span>
 <!--                            <span class="text">{{n.title}} {{n.publicationDateFormatted}}</span>-->
                         </a>
                     </li>

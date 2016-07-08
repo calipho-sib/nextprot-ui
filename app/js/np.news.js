@@ -10,6 +10,8 @@
     function NewsCtrl($scope, newsService) {
 
         newsService.getNews().$promise.then(function(data){
+            console.log("data NEWS");
+            console.log(data);
             $scope.news = data.reverse();
         });
 
