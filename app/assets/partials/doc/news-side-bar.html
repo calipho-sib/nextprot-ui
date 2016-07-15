@@ -1,13 +1,13 @@
 <ul class="topmenu topmenu-responsive news-sidebar" ng-controller="HelpCtrl">
     <li class="active" ng-controller="NewsCtrl">
-        <a class="collapsed onlyMinimized" href="javascript:void(0);" data-target="#scn" data-toggle="collapse">
-            <span class="figure">
+<!--        <a class="collapsed onlyMinimized" href="javascript:void(0);" data-target="#scn" data-toggle="collapse">-->
+<!--            <span class="figure">-->
 <!--                <span>SCN</span>-->
-                <i class="icon-bookmark" style="font-size:1.5em;color:white;"></i>
-              </span>
+<!--                <i class="fa-bookmark" style="font-size:1.5em;color:white;"></i>-->
+<!--              </span>-->
 <!--            <span class="text">HELP</span>-->
-<!--            <span class="arrow icon"></span>-->
-        </a>
+<!--            <span class="arrow fa"></span>-->
+<!--        </a>-->
 
 <!--        <div id="content" class="" ng-controller="HelpCtrl">-->
 
@@ -21,11 +21,13 @@
 
                 <!--                    <ul class="nav nav-sidebar">-->
                 <ul id="scn" class="submenu-news collapse in">
-                    <li ng-repeat="n in news" ng-class="activePage('/news/n.title')">
+                    <li ng-repeat="n in news" ng-class="activePage('/news/{{n.url}}')">
                         <a href="news/{{n.url}}">
-                            <span class="text"><span class="news-icon icon-star"></span>
-                                {{n.title}}
+                            <span class="minDate"><span class="fa fa-newspaper-o"></span><br><span class="minifiedDate">{{n.minDate}}</span></span>
+                            <span class="text"><span class="fa fa-newspaper-o"></span>
+                                {{n.publicationDateFormatted}}
                             </span>
+                            <div class="news-description">{{n.title}}</div>
 <!--                            <span class="text">{{n.title}} {{n.publicationDateFormatted}}</span>-->
                         </a>
                     </li>

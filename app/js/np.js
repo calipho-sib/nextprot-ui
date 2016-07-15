@@ -27,6 +27,8 @@
         'auth0', 'angular-storage', 'angular-jwt', 'logglyLogger'
     ]).config(configApplication)
         .factory('errorInterceptor', errorInterceptor)
+        .factory('metaService', metaService)
+        .controller('npCtrl', npCtrl)
         .run(runApplication);
 
     ///// TODO: fixing; we are breaking the DRY principle and it is really bad (see duplication in nextprot-snorql/app/js/app.config.js) !!!!
@@ -77,8 +79,8 @@
 
 
     // config application $route, $location and $http services.
-    configApplication.$inject = ['$routeProvider', '$locationProvider', '$httpProvider', 'authProvider', 'npSettings', 'jwtInterceptorProvider', 'LogglyLoggerProvider'];
-    function configApplication($routeProvider, $locationProvider, $httpProvider, authProvider, npSettings, jwtInterceptorProvider, LogglyLoggerProvider) {
+    configApplication.$inject = ['$routeProvider', '$locationProvider', '$httpProvider', 'authProvider', 'npSettings', 'jwtInterceptorProvider', 'LogglyLoggerProvider','$resourceProvider'];
+    function configApplication($routeProvider, $locationProvider, $httpProvider, authProvider, npSettings, jwtInterceptorProvider, LogglyLoggerProvider, $resourceProvider) {
         $routeProvider
             // Home page
             .when('/', {title: 'welcome to neXtProt', templateUrl: '/partials/welcome.html'})
@@ -129,6 +131,8 @@
         // Without serve side support html5 must be disabled.
         $locationProvider.html5Mode(true);
         //$locationProvider.hashPrefix = '!';
+        
+        $resourceProvider.defaults.stripTrailingSlashes = false;
     };
 
 
@@ -177,6 +181,75 @@
             }
         };
     };
+    npCtrl.$inject = ['$scope','$location','$routeParams','metaService'];
+    function npCtrl($scope, $location,$routeParams, metaService) {
+        var that = this;
+        console.log("METATATATAGS");
+        $scope.$on('$locationChangeSuccess', function (event,next, current) {
+            console.log("location IS CHANGING : ");
+            console.log(event);
+            console.log(next);
+            console.log(current);
+            console.log($location.path());
+//            var location = "/about/human-proteome";
+            var location = $location.path();
+            console.log("location");
+            console.log(location);
+            console.log($routeParams);
+//            var path = {path:location};
+            
+            metaService.getMetaTags(location).$promise.then(function(data){
+                console.log("data METATAGS");
+                console.log(data);
+    //            $scope.title = data.title;
+                that.title = data.title;
+//    //            $scope.h1 = data.h1;
+                that.h1 = data.h1;
+//    //            $scope.description = data.description;
+                that.description = data.metaDescription;
+
+    //            data.forEach(function(d){
+    //                var dt = new Date(d.publicationDate);
+    //                var year = dt.getFullYear().toString();
+    //                var month = parseInt(dt.getMonth()) + 1;
+    //                d["minDate"] = month + "/" + dt.getDay() + "/" + year.substring(2);
+    //            })
+    //            $scope.news = data.reverse();
+            });
+            
+        });
+
+    }
+    
+    metaService.$inject = ['$resource','config'];
+    function metaService($resource, config) {
+        
+//        var path = $location.path();
+//        console.log("Factory path ?");
+//        console.log(path);
+        
+        
+//        console.log("path is : ");
+//        console.log(path);
+        console.log(config.api.API_URL);
+        
+        var metaUrl = config.api.API_URL + '/seo/tags';
+        
+//        var metaResource = $resource(metaUrl, {}, {get : {method: "GET", isArray:false}});  
+
+        var MetaService = function () {
+        };
+
+        MetaService.prototype.getMetaTags = function (path) {
+            var url = metaUrl + path;
+            console.log("url for tags");
+            console.log(url);
+            var metaResource = $resource(url, {}, {get : {method: "GET", isArray:false}});
+            return metaResource.get();
+        };
+
+        return new MetaService();
+    }
 
 })(angular);
 

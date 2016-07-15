@@ -31,6 +31,11 @@
         $scope.simpleSearchText = "";
         $scope.title = "";
         $scope.minMenu = false;
+        $scope.hideMenu = false;
+        
+        $scope.switchMenu = function(){
+            $scope.hideMenu = !$scope.hideMenu;
+        }
         
         $scope.minimizeMenu = function(){
             $scope.minMenu = !$scope.minMenu;
@@ -49,7 +54,8 @@
             if ($routeParams.section === "about") return commonPath + "about-side-bar.html";
             if ($routeParams.section === "help") return commonPath + "help-side-bar.html";
             if ($routeParams.section === "news") return commonPath + "news-side-bar.html";
-            if ($routeParams.release) return commonPath + "release-side-bar.html";
+            if ($routeParams.release) return commonPath + "about-side-bar.html";
+//            if ($routeParams.release) return commonPath + "release-side-bar.html";
 //            if ($routeParams.n1) return commonPath + "news-side-bar.html";
         }
         
@@ -78,6 +84,7 @@
 
             if ($routeParams.release) { //Release view
                 angular.extend($scope, contentURLResolver.getScopeParamsForRelease($routeParams.release));
+//                angular.extend($scope, contentURLResolver.getScopeParamsForContent($routeParams.release));
             }
             else if ($routeParams.section === "news") { //Help view
                 
@@ -148,9 +155,11 @@
                 "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
                 "linkToParent":"about/about",
-                "parent": "About",
-                "title": "News",
-                "section": "NEWS"
+                "parent": "ABOUT",
+                "title": "NEWS",
+                "section": "NEWS",
+                "type":"news",
+                "h1":n1
             }
 
         }
@@ -172,10 +181,11 @@
                 "githubURL": pe ? "https://github.com/calipho-sib/nextprot-viewers/blob/master/statistics/protein-existence/app/" : "",
                 "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
-                "linkToParent":"about/about",
-                "parent": "About",
-                "title": release,
-                "section": "RELEASE"
+//                "linkToParent":"about/about",
+//                "parent": "ABOUT",
+                "title": "RELEASE",
+                "section": "ABOUT",
+//                "h1":release
             }
 
         }

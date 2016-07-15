@@ -12,7 +12,7 @@
                 <img style="width:30px;" src="../img/proteins.png">
               </span>
             <span class="text">PROTEIN</span>
-            <span class="arrow icon"></span>
+            <span class="arrow fa"></span>
         </a>
          START 2nd Level Menu 
         <ul id="dashboard" class=" submenu collapse">
@@ -36,38 +36,40 @@
 
 <ul class="topmenu topmenu-responsive">
     <li active-section ng-class="{active: hasActive()}">
-        <a class="collapsed" href="javascript:void(0);" data-target="#scn" data-toggle="collapse">
+        <a class="" href="javascript:void(0);" data-target="#scn" data-toggle="collapse">
             <span class="figure">
                 <span>SCN</span>
 <!--                <img style="width:30px;" src="../img/proteins.png">-->
               </span>
+<!--            <span class="text" style="padding-left:15px;">Sodium Channels</span>-->
             <span class="text" style="padding-left:15px;">SODIUM CHANNELS</span>
-            <span class="arrow icon"></span>
+            <span class="arrow fa"></span>
         </a>
         <!-- START 2nd Level Menu -->
-        <ul id="scn" class=" submenu collapse">
+        <ul id="scn" class=" submenu collapse in">
             <li class="submenu-header ellipsis">Sodium channels</li>
-            <li ng-class="activePage('view/portals/navmut')">
-                <a href="view/portals/navmut">
+            <li ng-class="activePage('portals/navmut')">
+                <a href="portals/navmut">
                     <span class="text">Table</span>
                 </a>
             </li>
         </ul>
     </li>
     <li active-section ng-class="{active: hasActive()}">
-        <a class="collapsed" href="javascript:void(0);" data-target="#brca" data-toggle="collapse">
+        <a class="" href="javascript:void(0);" data-target="#brca" data-toggle="collapse">
             <span class="figure">
-                <span style="margin-left:-5px;">BRCA</span>
+                <span>BRCA</span>
 <!--                <img style="width:30px;" src="../img/proteins.png">-->
               </span>
+<!--            <span class="text" style="padding-left:15px;">Breast Cancer</span>-->
             <span class="text" style="padding-left:15px;">BREAST CANCER</span>
-            <span class="arrow icon"></span>
+            <span class="arrow fa"></span>
         </a>
         <!-- START 2nd Level Menu -->
-        <ul id="brca" class=" submenu collapse">
+        <ul id="brca" class=" submenu collapse in">
             <li class="submenu-header ellipsis">Breast cancer</li>
-            <li ng-class="activePage('view/portals/breast-cancer')">
-                <a href="view/portals/breast-cancer">
+            <li ng-class="activePage('portals/breast-cancer')">
+                <a href="portals/breast-cancer">
                     <span class="text">Table</span>
                 </a>
             </li>
@@ -97,14 +99,14 @@
                     <li ng-class="activePage('localisation')"><a class="disable-link" style="padding-bottom: 0px !important; color:#7e8a99 !important;" href="/entry/{{widgetEntry}}/localisation">Localisation</a></li>
                     <li ng-class="activePage('sequence')"><a class="disable-link" style="padding-bottom: 0px !important; color:#7e8a99 !important;" href="/entry/{{widgetEntry}}/view/sequence">Sequence</a></li>
 -->
-                    <!--<li ng-class="activePage('view/sequence')"><a href="/entry/{{widgetEntry}}/view/sequence">Sequence  <i class="icon-wrench"></i></a></li>-->
+                    <!--<li ng-class="activePage('view/sequence')"><a href="/entry/{{widgetEntry}}/view/sequence">Sequence  <i class="fa-wrench"></i></a></li>-->
 <!--                    <li ng-class="activePage('view/proteomics')"><a class="disable-link" style="padding-bottom: 0px !important; color:#7e8a99 !important;" href="/entry/{{widgetEntry}}/view/proteomics">Proteomics</a></li>
 -->
-                    <!--<li ng-class="activePage('view/proteomics')"><a href="/entry/{{widgetEntry}}/view/proteomics">Proteomics  <i class="icon-wrench"></i></a></li>-->
+                    <!--<li ng-class="activePage('view/proteomics')"><a href="/entry/{{widgetEntry}}/view/proteomics">Proteomics  <i class="fa-wrench"></i></a></li>-->
 <!--                    <li ng-class="activePage('view/structures')"><a class="disable-link" style="padding-bottom: 0px !important; color:#7e8a99 !important;" href="/entry/{{widgetEntry}}/view/structures">Structures</a></li>
 -->
 <!--
-                    <li ng-class="activePage('view/structures')"><a href="/entry/{{widgetEntry}}/view/structures">Structures  <i class="icon-wrench"></i></a></li>
+                    <li ng-class="activePage('view/structures')"><a href="/entry/{{widgetEntry}}/view/structures">Structures  <i class="fa-wrench"></i></a></li>
                     <li ng-class="activePage('identifiers')"><a class="disable-link" style="padding-bottom: 0px !important; color:#7e8a99 !important;" href="/entry/{{widgetEntry}}/identifiers">Identifiers</a></li>
                     <li ng-class="activePage('view/peptides')"><a href="/entry/{{widgetEntry}}/view/peptides">Peptides</a></li>
                 </ul>

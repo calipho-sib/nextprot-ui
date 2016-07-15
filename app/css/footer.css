@@ -11,7 +11,9 @@ footer {
 
 footer, footer a, footer a:visited {
     /*background-color: black;*/
-    color: #787C7C;
+    color: white;
+    font-weight: 300;
+/*    color: #787C7C;*/
 }
 
 footer a {

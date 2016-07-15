@@ -431,6 +431,7 @@ main {}
     font-size: 13px;
     text-decoration: none;
     color: #7e8a99;
+/*    color: #C50063;*/
     outline: 0;
     padding: 6px 25px 6px 15px;
     letter-spacing: .2px;
@@ -464,22 +465,6 @@ main {}
 li.active {
     background-color: #252a30;
 }
-
-/*NEWS SPECIFICATIONS*/
-.news-sidebar li.active{
-    background-color:#fbfcfc;
-}
-.topmenu.news-sidebar li.active a{
-    color:#21252a;
-/*    color:#21252a;*/
-}
-.submenu-news{
-    padding-left:10px;
-}
-.news-icon{
-    margin-right:5px;
-}
-
 
 .mainmenu li,
 .topmenu li {
@@ -631,6 +616,11 @@ li a>.number {
     content: "\f078";
     font-size: 10px;
 }
+/*
+.topmenu>li.active>a>.arrow:before{
+    content: "\f078";
+}
+*/
 
 .right-content {
     padding: 0px;
@@ -661,7 +651,7 @@ li a>.number {
 }
 
 .mainmenu li:after,
-.topmenu li:after {
+.topmenu .submenu li:after {
     position: absolute;
     content: "";
     left: 55px;
@@ -704,12 +694,82 @@ li a>.number {
 }
 
 
+/*NEWS SPECIFICATIONS*/
+.sidemenu.news{
+    background-color:#fbfcfc;
+/*    min-height: 100vh;*/
+}
+.news-sidebar li.active{
+    background-color:#fbfcfc;
+}
+.topmenu.news-sidebar li.active a{
+    color:#21252a;
+/*    color:#21252a;*/
+}
+.submenu-news{
+    padding-left:0px;
+}
+.submenu-news .minDate{
+    display: none;
+}
+.minDate .fa{
+    font-size:20px;
+    padding-left:4px;
+}
+.minDate .minifiedDate{
+    font-size:10px;
+    font-weight: 700;
+}
+
+.submenu-news li .fa {
+    margin-right:5px;
+    transition: all 0.2s;
+}
+.submenu-news .news-description{
+    margin-left: 5px;
+    padding-left: 10px;
+    font-style: italic;
+    font-weight: 300;
+/*    color:#777;*/
+    border-left:2px solid #ccc;
+    transition: all 0.2s;
+}
+
+
 /*    Remove special indent for news*/
 /*NEWS SPECIFICATION*/
 .submenu-news>li:after{
     border:0;
 }
+.topmenu .submenu-news>li a>.text{
+    display: inline-block;
+    font-weight: 700;
+}
+
+/* ON HOVER : */
+.submenu-news>li:hover .fa{
+/*    font-size: 16px;*/
+    color:#C50063;
+}
+.submenu-news>li:hover a>.news-description{
+/*    font-weight: 500;*/
+    border-color: #C50063;
+}
+
+/* WHEN ACTIVE : */
+.submenu-news>li.active a>.text{
+    font-weight: 900;
+}
+.submenu-news>li.active a>.news-description{
+    font-weight: 700;
+    border-color: #C50063;
+}
+.submenu-news>li.active .text .fa{
+    font-size: 16px;
+    color:#C50063;
+}
 /*END NEWS SPE*/
+
 
 
 #protein-tooltip {
@@ -717,7 +777,7 @@ li a>.number {
 }
 
 
-/*media query to display only the icon in the aside menu*/
+/*media query to display only the fa in the aside menu*/
 
 @media (max-width: 768px) {
     #toggle-minimizedMenu {
@@ -780,9 +840,12 @@ li a>.number {
     #entrySummaryName>.figure {
         padding: 0px;
     }
+    
     .mainmenu.mainmenu-responsive>li>a,
     .topmenu.topmenu-responsive>li>a {
-        padding: 17.5px 15px;
+/*        padding: 17.5px 15px;*/
+        padding: 17.5px 0px;
+        text-align: center;
     }
     .responsive-md-screen.sidemenu,
     .responsive-md-screen.sidemenu,
@@ -804,8 +867,9 @@ li a>.number {
     .second-header-right {
         height: auto;
     }
-    .topmenu li a.onlyMinimized .figure {
-        display:block;
+    .topmenu li a>.figure, .topmenu li a.onlyMinimized>.figure {
+        display:table-cell;
+        padding:0px;
     }
     .mainmenu.mainmenu-responsive>li>a>.text,
     .topmenu.topmenu-responsive>li>a>.text,
@@ -923,7 +987,44 @@ li a>.number {
         left: 15px;
     }
     
+/*    NEWS SPECIFICATIONS */
+    
+    .topmenu.topmenu-responsive.news-sidebar>li.active{
+        background-color:#fbfcfc;
+        margin-bottom:25px;
+    }
+
+    .topmenu.topmenu-responsive.news-sidebar>li a{
+        padding: 10px 0px;
+        text-align: center;
+        border-bottom: 1px solid white;
+/*    box-shadow: inset 0px -1px 0px #eee;*/
+    border-top:1px solid #eee;
+    }
+    .topmenu.topmenu-responsive.news-sidebar>li li:first-child a{
+        border-top:none;
+    }
+    
+    .topmenu.topmenu-responsive.news-sidebar>li a:active{
+        box-shadow: inset 1px 0px 5px 1px rgba(0, 0, 0, 0.15);
+        border-bottom:none;
+        padding-bottom:11px;
+    }
+    .topmenu.topmenu-responsive.news-sidebar>li li.active a{
+        color:#C50063;
+    }
 /*    .submenu>li(not)*/
+    .topmenu .submenu-news .minDate{
+        display: inline-block;
+    }
+    .topmenu .submenu-news li>a .text{
+        display: none;
+    }
+    .topmenu .submenu-news li>a .news-description{
+        display: none;
+    }
+    /*NEWS SPECIFICATIONS*/
+
 }
 
 
@@ -951,11 +1052,14 @@ li a>.number {
 
 .minimizedMenu .mainmenu.mainmenu-responsive>li>a,
 .minimizedMenu .topmenu.topmenu-responsive>li>a {
-    padding: 17.5px 15px;
+/*    padding: 17.5px 15px;*/
+    padding: 17.5px 0px;
+    text-align: center;
 }
 
-.minimizedMenu .topmenu li a.onlyMinimized .figure {
-        display:block;
+.minimizedMenu .topmenu>li .figure, .minimizedMenu .topmenu li a.onlyMinimized .figure {
+        display:table-cell;
+        padding:0px;
     }
 
 .minimizedMenu .responsive-md-screen.sidemenu,
@@ -1120,6 +1224,42 @@ li a>.number {
     left: 15px;
 }
 
+/*NEWS SPECIFICATIONS*/
+
+.minimizedMenu .topmenu.topmenu-responsive.news-sidebar>li.active{
+    background-color:#fbfcfc;
+    margin-bottom:25px;
+}
+.minimizedMenu .topmenu.topmenu-responsive.news-sidebar>li a{
+    padding: 10px 0px;
+    text-align: center;
+    border-bottom: 1px solid white;
+/*    box-shadow: inset 0px -1px 0px #eee;*/
+    border-top:1px solid #eee;
+}
+.minimizedMenu .topmenu.topmenu-responsive.news-sidebar>li li:first-child a{
+    border-top:none;
+}
+.minimizedMenu .topmenu.topmenu-responsive.news-sidebar>li a:active{
+    box-shadow: inset 1px 0px 5px 1px rgba(0, 0, 0, 0.15);
+/*    color:#48112d;*/
+    border-bottom:none;
+    padding-bottom:11px;
+}
+.minimizedMenu .topmenu.topmenu-responsive.news-sidebar>li li.active a{
+    color:#C50063;
+}
+
+.minimizedMenu .submenu-news .minDate{
+    display: inline-block;
+}
+.minimizedMenu .submenu-news li>a .text{
+    display: none;
+}
+.minimizedMenu .submenu-news li>a .news-description{
+    display: none;
+}
+
 @media (max-width: 768px) {
     .showM {
         display: block;
@@ -1141,4 +1281,141 @@ li a>.number {
         transition: opacity 1s ease;
     }
 */
+}
+
+
+/****************** TEST NEW DESIGN FOR HELP SIDEBAR WITHOUT BULLET *******************************/
+/*************************************************************************************************/
+
+.helpTest.topmenu li>.submenu li:after, .helpTest #entrySummaryBoxName>.submenu li:after{
+    content:none;
+}
+.helpTest.topmenu li>.submenu:after, #entrySummaryBoxName>.submenu:after{
+    content:none;
+}
+.helpTest.topmenu .submenu{
+    padding:0px;
+}
+.helpTest.topmenu li{
+    border-top:1px solid white;
+    border-bottom:1px solid #eee;
+    position:relative;
+/*    transition: all .7s ease;*/
+}
+.helpTest.topmenu li:first-child{
+    border-top:none;
+/*    transition: all .7s ease;*/
+}
+.helpTest.topmenu .submenu li:before{
+    width:0px;
+/*    transition: all .7s ease;*/
+/*    border-left:10px solid #C50063;*/
+/*    box-sizing:border-box;*/
+/*    border*/
+}
+.helpTest.topmenu .submenu li.active:before { 
+        position:absolute; 
+        width:5px; 
+        padding-top:1px; 
+        left:0; 
+        content: '';
+        top:-1px;
+        background:#C50063; 
+        height:100%;
+        box-sizing: content-box;
+/*        -webkit-transition: all .7s ease;*/
+}
+
+/********************************** TEST NEW DESIGN WITH SIB SPECS *******************************/
+/*************************************************************************************************/
+
+/************************ HEADER ****************************/
+
+header .navbar{
+    background-color:#999999;
+}
+header .navbar .container-fluid{
+/*    background-color:#999999;*/
+}
+header .navbar .navbar-header{
+    margin-left:-15px;
+    width:240px;
+    height:50px;
+    background-color: #f8f8f8;
+    text-align: center;
+/*    background-color: white;*/
+}
+header .navbar-header .navbar-brand{
+    float:none;
+    height: 50px;
+    line-height: 45px;
+/*    margin:0 auto;*/
+    text-align: center;
+/*    box-sizing:padding-box;*/
+}
+header .navbar-header .navbar-brand #np-logo{
+    height:30px;
+    padding-left: 25px;
+}
+header .navbar .nav{
+    padding-left:30px;
+}
+header .navbar .nav > li > a{
+    font-weight: 300;
+    font-size: 16px;
+    color:white;
+    letter-spacing: 0.5px;
+/*    text-shadow:0px -1px 0px #777;*/
+}
+header .navbar .nav > li > a:hover{
+    color:#C50063;
+/*    font-weight: 500;*/
+/*    text-shadow:0px -1px 0px #777;*/
+}
+
+/************************ SIDEBAR ****************************/
+
+#entrySummaryBoxName{
+    background-color:#999999;
+}
+#entrySummaryName .figure i:before ,#entrySummaryName .text {
+    color:black;
+}
+#entrySummaryName .figure{
+    display: table-cell;
+    cursor: pointer;
+}
+/*Replace hamburger icon to chevron and animate it on change : */
+.figure i{
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+}
+.figure i.right{
+    -moz-transform:rotate(-180deg);
+    -webkit-transform:rotate(-180deg);
+    transform:rotate(-180deg);
+}
+.sidemenu{
+    background-color:#bbb;
+}
+.topmenu li a, .topmenu li a>.figure>i:before{
+   color:black; 
+}
+/*use filter for img : */
+.topmenu li a>.figure>img{
+    -webkit-filter: invert(100%); filter: invert(100%);
+}
+.topmenu li.active a{
+   color:#C50063; 
+}
+.minimizedMenu .topmenu li.active a{
+    color:white;
+}
+.topmenu li.active{
+   background-color:#bbb; 
+}
+.topmenu .submenu{
+    background-color:white;
+/*    background-color:white;*/
 }

@@ -72,18 +72,18 @@ angular.module('np.config', []).factory('config', [
 
             widgets: {
                 sort: {
-                    asc: "icon-arrow-up",
-                    desc: "icon-arrow-down"
+                    asc: "fa fa-arrow-up",
+                    desc: "fa fa-arrow-down"
                 },
                 proteins: {
                     sort:{
-                        '':{text:"score",image:"icon-arrow-down", isAsc:false},
-                        'gene':{text:'gene',image:"icon-arrow-up", isAsc:true},
-                        'protein':{text:'protein',image:"icon-arrow-up", isAsc:true},
-                        'family':{text:'family',image:"icon-arrow-up", isAsc:true},
-                        'chromosome':{text:'chr',image:"icon-arrow-up", isAsc:true},
-                        'ac':{text:'ac',image:"icon-arrow-up", isAsc:true},
-                        'length':{text:'len',image:"icon-arrow-up", isAsc:true}
+                        '':{text:"score",image:"fa fa-arrow-down", isAsc:false},
+                        'gene':{text:'gene',image:"fa fa-arrow-up", isAsc:true},
+                        'protein':{text:'protein',image:"fa fa-arrow-up", isAsc:true},
+                        'family':{text:'family',image:"fa fa-arrow-up", isAsc:true},
+                        'chromosome':{text:'chr',image:"fa fa-arrow-up", isAsc:true},
+                        'ac':{text:'ac',image:"fa fa-arrow-up", isAsc:true},
+                        'length':{text:'len',image:"fa fa-arrow-up", isAsc:true}
                     },
                     gold: true,
                     qualityLabel: {
@@ -94,14 +94,14 @@ angular.module('np.config', []).factory('config', [
                 },
                 publications: {
                     sort:{
-                        '':{text:"",image:"icon-arrow-down", isAsc:false}
+                        '':{text:"",image:"fa fa-arrow-down", isAsc:false}
                     },
                     gold: false
                 },
                 terms: {
                     sort:{
-                        '':{text:"score",image:"icon-arrow-down", isAsc:false},
-                        'name':{text:"name",image:"icon-arrow-up", isAsc:true}
+                        '':{text:"score",image:"fa fa-arrow-down", isAsc:false},
+                        'name':{text:"name",image:"fa fa-arrow-up", isAsc:true}
                     },
                     gold: false
                 },
@@ -109,17 +109,17 @@ angular.module('np.config', []).factory('config', [
                     aNextprotRep: { /* 'a' is used to appear first */
                         title: "training",
                         tooltip: "Queries used for example",
-                        icon: "icon-certificate"
+                        icon: "fa fa-certificate"
                     },
                     communityRep: {
                         title: "community",
                         tooltip: "Public repository used to share knowledge in the community",
-                        icon: "icon-globe"
+                        icon: "fa fa-globe"
                     },
                     privateRep: {
                         title: "your private",
                         tooltip: "your private repository",
-                        icon: "icon-user"
+                        icon: "fa fa-user"
                     }
                 }
             },

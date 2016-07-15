@@ -49,7 +49,7 @@
 
             <div class="form-group">
                 <span class="btn btn-default fileinput-button btn-block" ng-disabled="inputAccessions">
-             	    <i class="icon-plus icon-white"></i> Or select a file to upload
+             	    <i class="fa-plus fa-white"></i> Or select a file to upload
 					<input type="file" multiple ng-model="files" file-change accept="text/plain">
                 </span>
             </div>
@@ -60,7 +60,7 @@
                 </div>
                 <div class="panel-body panel-body-sm">
                     <ul class="list-group scrollable" style="height: 150px; overflow-y: auto">
-                        <li class="list-group-item" ng-repeat="file in files">{{file.name}}<span class="btn icon-remove" aria-hidden="false" ng-click="removeUploadFile($index)"></span></li>
+                        <li class="list-group-item" ng-repeat="file in files">{{file.name}}<span class="btn fa-remove" aria-hidden="false" ng-click="removeUploadFile($index)"></span></li>
                     </ul>
                 </div>
             </div>

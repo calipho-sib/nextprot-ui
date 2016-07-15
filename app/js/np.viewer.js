@@ -19,15 +19,19 @@
         $routeProvider
 
             //GLOBAL VIEWS https://github.com/calipho-sib/nextprot-viewers
-            .when('/view/portals/:pn1', {templateUrl: '/partials/viewer/portal-viewer.html'})
+            .when('/portals/:pn1', {templateUrl: '/partials/viewer/portal-viewer.html'})
 //            .when('/help/:help', {templateUrl: '/partials/doc/main-doc.html'})
 
+            .when('/tools/:t1', {templateUrl: '/partials/viewer/global-viewer.html'})
+        
             .when('/view', gv)
             .when('/view/gh/:user/:repository', gv)
 
+            //Global Viewer ? To separate.
             .when('/view/:gv1', gv)
             .when('/view/:gv1/:gv2', gv)
             .when('/view/:gv1/:gv2/:gv3', gv)
+        
 
             //NP1 ENTRY views 
             .when('/entry/:entry/', ev)
@@ -132,7 +136,8 @@
             if($location.url() === page) return 'active';
             if ($routeParams.element == page)  return 'active'
             if ("view/" + $routeParams.ev1 == page)  return 'active';
-            if ("view/portals/" + $routeParams.pn1 === page) return 'active';
+            if ("portals/" + $routeParams.pn1 === page) return 'active';
+            if ("tools/" + $routeParams.t1 === page) return 'active';
             if (("gh/" + $routeParams.user + "/" + $routeParams.repository) == page)  return 'active';
 
             else return '';
@@ -146,13 +151,20 @@
 
             if ($routeParams.ev1) { //Entry view
                 angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
+                
             }else if ($routeParams.gv1) { //Global view
                 angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.gv1, $routeParams.gv2, $routeParams.gv3));
+                
             }else if ($routeParams.pn1) { //Portal view
                 angular.extend($scope, viewerURLResolver.getScopeParamsForPortalViewers($routeParams.pn1));
+                    
+            }else if ($routeParams.t1) { //Tools view
+                angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.t1, "", ""));
+                
             // COMMUNITY VIEWERS etiher with GitHub //////////////////////////////////////
             } else if ($routeParams.repository) {
                 angular.extend($scope, viewerURLResolver.getScopeParamsForGitHubCommunity($routeParams.user, $routeParams.repository, $routeParams.entry));
+                
             // GRAILS INTEGRATION
             } else { //deprecated nextprot
                 angular.extend($scope, viewerURLResolver.getScopeParamsForNeXtProtGrails($location.$$path));
@@ -242,7 +254,8 @@
                 "communityMode": false,
                 "githubURL": "https://github.com/calipho-sib/nextprot-viewers/" + gv1,
                 "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
-                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
+                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "title": gv1
             }
 
         }

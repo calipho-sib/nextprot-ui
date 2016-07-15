@@ -423,7 +423,9 @@
                             var isActive = $(element).has('.active').length;
                             if (isActive) {
                                 var elementCollapsable = $(element).find(".collapse");
-                                $(elementCollapsable).collapse("show");
+                                var elementCollapsing = $(element).find(".collapsed");
+//                                $(elementCollapsable).collapse("show");
+                                $(elementCollapsing).removeClass("collapsed");
                             }
                         
                             return $(element).has('.active').length ? true : false;

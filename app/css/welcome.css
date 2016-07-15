@@ -7,7 +7,10 @@ body {
 	padding-top: 50px;
 	padding-bottom: 25px;
 	min-height: 200px;
-	background: #EBF1F5 !important;
+	background: white !important;
+/*	background: #f9f7f8 !important;*/ red white
+/*	background: #f8f2f5 !important;*/
+/*	background: #EBF1F5 !important;*/
 /*    font-family: "Lato" !important;*/
 }
 
@@ -88,10 +91,14 @@ header {
 navbar-right{
     margin-right:30px;
 }
+.navbar-toggle{
+    padding:6px 12px;
+}
 
 /* MENU */
 #bs-example-navbar-collapse-1 {
 	padding-right: 0;
+    margin:0px;
 }
 
 /* limiting navbar max height to avoid overlapping on search radio buttons */
