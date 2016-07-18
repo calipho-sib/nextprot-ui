@@ -633,25 +633,32 @@ li a>.number {
 
 /*special indent with circle and line*/
 
+.helpTest.topmenu .submenu{
+    padding-left:40px;
+}
+.helpTest.topmenu li{
+    border:none;
+}
 .mainmenu li>.submenu li.active:after,
-.topmenu li>.submenu li.active:after,
+.helpTest.topmenu li>.submenu li.active:after,
 #entrySummaryBoxName>.submenu li.active:after {
     background-color: #c50063;
 }
 
 .mainmenu li>.submenu:after,
-.topmenu li>.submenu:after,
-#entrySummaryBoxName>.submenu:after {
+.helpTest.topmenu li>.submenu:after,
+.helpTest #entrySummaryBoxName>.submenu:after {
     position: absolute;
     content: "";
     left: 32px;
     top: 0;
     bottom: 0;
     border-left: 1px solid #252a30;
+    bottom:10px;
 }
 
 .mainmenu li:after,
-.topmenu .submenu li:after {
+.helpTest.topmenu .submenu li:after {
     position: absolute;
     content: "";
     left: 55px;
@@ -661,18 +668,18 @@ li a>.number {
 }
 
 .mainmenu li:last-child:after,
-.topmenu li:last-child:after {
+.helpTest.topmenu li:last-child:after {
     border: 0;
 }
 
 .mainmenu li.active:after,
-.topmenu li.active:after {
+.helpTest.topmenu li.active:after {
     border-color: transparent;
 }
 
 .mainmenu li>.submenu li:after,
-.topmenu li>.submenu li:after,
-#entrySummaryBoxName>.submenu li:after {
+.helpTest.topmenu li>.submenu li:after,
+.helpTest #entrySummaryBoxName>.submenu li:after {
     z-index: 1;
     width: 8px;
     height: 8px;
@@ -684,13 +691,15 @@ li a>.number {
     -webkit-box-shadow: 0 0 0 2px #181b1f;
     box-shadow: 0 0 0 2px #181b1f;
     
-    
 /*    CHANGEMENT DESIGN*/
     
 /*        top: 13px; */
     
 /*    NEW : */
     top:11px;
+}
+.helpTest.topmenu .submenu li.active:before{
+    content:none;
 }
 
 
@@ -699,7 +708,7 @@ li a>.number {
     background-color:#fbfcfc;
 /*    min-height: 100vh;*/
 }
-.news-sidebar li.active{
+.topmenu.news-sidebar li.active{
     background-color:#fbfcfc;
 }
 .topmenu.news-sidebar li.active a{
@@ -1287,33 +1296,34 @@ li a>.number {
 /****************** TEST NEW DESIGN FOR HELP SIDEBAR WITHOUT BULLET *******************************/
 /*************************************************************************************************/
 
-.helpTest.topmenu li>.submenu li:after, .helpTest #entrySummaryBoxName>.submenu li:after{
+.topmenu li>.submenu li:after, #entrySummaryBoxName>.submenu li:after{
     content:none;
 }
-.helpTest.topmenu li>.submenu:after, #entrySummaryBoxName>.submenu:after{
+.topmenu li>.submenu:after, #entrySummaryBoxName>.submenu:after{
     content:none;
 }
-.helpTest.topmenu .submenu{
+/*??*/
+.topmenu .submenu{
     padding:0px;
 }
-.helpTest.topmenu li{
+.topmenu li{
     border-top:1px solid white;
     border-bottom:1px solid #eee;
     position:relative;
 /*    transition: all .7s ease;*/
 }
-.helpTest.topmenu li:first-child{
+.topmenu li:first-child{
     border-top:none;
 /*    transition: all .7s ease;*/
 }
-.helpTest.topmenu .submenu li:before{
+.topmenu .submenu li:before{
     width:0px;
 /*    transition: all .7s ease;*/
 /*    border-left:10px solid #C50063;*/
 /*    box-sizing:border-box;*/
 /*    border*/
 }
-.helpTest.topmenu .submenu li.active:before { 
+.topmenu .submenu li.active:before { 
         position:absolute; 
         width:5px; 
         padding-top:1px; 
@@ -1325,6 +1335,25 @@ li a>.number {
         box-sizing: content-box;
 /*        -webkit-transition: all .7s ease;*/
 }
+
+/*TEST WITH TRANSPARENT BG*/
+/*
+.topmenu-responsive.topmenu .submenu{
+    background-color:transparent;
+}
+*/
+.topmenu-responsive.topmenu li{
+    border:none;
+}
+/*
+.topmenu-responsive.topmenu .submenu li{
+    border:none;
+}
+.topmenu-responsive.topmenu .submenu li a{
+    color: #555;
+    padding: 0px 25px 0px 45px;
+}
+*/
 
 /********************************** TEST NEW DESIGN WITH SIB SPECS *******************************/
 /*************************************************************************************************/
@@ -1362,7 +1391,7 @@ header .navbar .nav{
 }
 header .navbar .nav > li > a{
     font-weight: 300;
-    font-size: 16px;
+    font-size: 15px;
     color:white;
     letter-spacing: 0.5px;
 /*    text-shadow:0px -1px 0px #777;*/
@@ -1416,6 +1445,18 @@ header .navbar .nav > li > a:hover{
    background-color:#bbb; 
 }
 .topmenu .submenu{
-    background-color:white;
+    background-color:#f8f8f8;
+/*    background-color:white;*/
 /*    background-color:white;*/
 }
+
+
+/****************************************AFFIX******************************************************/
+/*
+.sidemenu.affix{
+    top:50px;
+}
+.sidemenu .topmenu{
+    height:90vh;
+    overflow:scroll;
+}*/

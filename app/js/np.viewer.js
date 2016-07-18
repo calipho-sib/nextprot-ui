@@ -35,7 +35,7 @@
 
             //NP1 ENTRY views 
             .when('/entry/:entry/', ev)
-            .when('/entry/:entry/:element', ev)
+//            .when('/entry/:entry/:element', ev)
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
             .when('/publication/:pubid',pv)
@@ -43,8 +43,8 @@
 
 
             //NP2 ENTRY views 
-            .when('/entry/:entry/view/:ev1', ev)
-            .when('/entry/:entry/view/:ev1/:ev2', ev)
+            .when('/entry/:entry/:ev1', ev)
+            .when('/entry/:entry/:ev1/:ev2', ev)
 
             // NP2
             .when('/entry/:entry/gh/:user/:repository', ev)
@@ -130,12 +130,12 @@
            }
 
             console.log("page");
-//            console.log(page);
+            console.log(page);
 //            console.log($routeParams);
 //            console.log($location);
             if($location.url() === page) return 'active';
             if ($routeParams.element == page)  return 'active'
-            if ("view/" + $routeParams.ev1 == page)  return 'active';
+            if ($routeParams.ev1 == page)  return 'active';
             if ("portals/" + $routeParams.pn1 === page) return 'active';
             if ("tools/" + $routeParams.t1 === page) return 'active';
             if (("gh/" + $routeParams.user + "/" + $routeParams.repository) == page)  return 'active';
@@ -148,9 +148,11 @@
             $scope.widgetEntry = $routeParams.entry;
             $scope.widgetTerm = $routeParams.termid;
             $scope.widgetPubli = $routeParams.pubid;
+            var np2Views = ["sequence","proteomics","structures","peptides"];
 
-            if ($routeParams.ev1) { //Entry view
+            if (np2Views.indexOf($routeParams.ev1) > -1) { //Entry view
                 angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
+//                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
                 
             }else if ($routeParams.gv1) { //Global view
                 angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.gv1, $routeParams.gv2, $routeParams.gv3));

@@ -4,13 +4,13 @@
 
         <a href="/">
             <div class="homepage-brand">
-                <img src="img/np2.png" class="home">
-                <h2 class="home-subtitle">E<img class="np-logo-x" src="img/np-logo.png">ploring the universe of human proteins</h2>
+                <h1><img src="img/np2.png" class="home" alt="neXtProt"></h1>
+                <h2 class="home-subtitle">E<img class="np-logo-x" src="img/np-logo.png" alt="x">ploring the universe of human proteins</h2>
             </div>
         </a>
 
         <form ng-submit="go()" validate="">
-            <div class="col-xs-2 col-sm-3 col-md-3">
+            <div class="col-xs-2 col-sm-3 col-md-3 col-lg-3">
                 <!--                        -->
                 <!--  ENTITY SELECTION      -->
                 <!--                        -->
@@ -29,7 +29,7 @@
                 </div>
                 <!--                        -->
             </div>
-            <div class="search-bar col-xs-9 col-sm-7">
+            <div class="search-bar col-xs-9 col-sm-7 col-md-6 col-lg-6">
 
                 <div class="search-toggle">
                     <input id="simple-search" type="radio" name="editList" ng-checked="!isAdvancedMode()" ng-click="updateUrlSearchPartAdvanced({mode:null})">

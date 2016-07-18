@@ -22,48 +22,48 @@
                     <span class="text">Function</span>
                 </a>
             </li>
-            <li ng-class="activePage('view/medical')">
+            <li ng-class="activePage('medical')">
                 <a href="/entry/{{widgetEntry}}/medical">
                     <span class="text">Medical</span>
                 </a>
             </li>
-            <li ng-class="activePage('/expression')">
+            <li ng-class="activePage('expression')">
                 <a href="/entry/{{widgetEntry}}/expression">
                     <span class="text">Expression</span>
                 </a>
             </li>
-            <li ng-class="activePage('view/interactions')">
+            <li ng-class="activePage('interactions')">
                 <a href="/entry/{{widgetEntry}}/interactions">
                     <span class="text">Interactions</span>
                 </a>
             </li>
-            <li ng-class="activePage('view/localisation')">
+            <li ng-class="activePage('localisation')">
                 <a href="/entry/{{widgetEntry}}/localisation">
                     <span class="text">Localisation</span>
                 </a>
             </li>
-            <li ng-class="activePage('view/sequence')">
-                <a href="/entry/{{widgetEntry}}/view/sequence">
+            <li ng-class="activePage('sequence')">
+                <a href="/entry/{{widgetEntry}}/sequence">
                     <span class="text">Sequence</span>
                 </a>
             </li>
-            <li ng-class="activePage('view/proteomics')">
-                <a href="/entry/{{widgetEntry}}/view/proteomics">
+            <li ng-class="activePage('proteomics')">
+                <a href="/entry/{{widgetEntry}}/proteomics">
                     <span class="text">Proteomics</span>
                 </a>
             </li>
-            <li ng-class="activePage('view/structures')">
-                <a href="/entry/{{widgetEntry}}/view/structures">
+            <li ng-class="activePage('structures')">
+                <a href="/entry/{{widgetEntry}}/structures">
                     <span class="text">Structures</span>
                 </a>
             </li>
-            <li ng-class="activePage('view/identifiers')">
+            <li ng-class="activePage('identifiers')">
                 <a href="/entry/{{widgetEntry}}/identifiers">
                     <span class="text">Identifiers</span>
                 </a>
             </li>
-            <li ng-class="activePage('view/peptides')">
-                <a href="/entry/{{widgetEntry}}/view/peptides">
+            <li ng-class="activePage('peptides')">
+                <a href="/entry/{{widgetEntry}}/peptides">
                     <span class="text">Peptides</span>
                 </a>
             </li>
@@ -81,13 +81,13 @@
         <!-- START 2nd Level Menu -->
         <ul id="components" class="submenu collapse in">
             <li class="submenu-header ellipsis">Gene</li>
-            <li ng-class="activePage('view/exons')">
-                <a href="/entry/{{widgetEntry}}/view/exons">
+            <li ng-class="activePage('exons')">
+                <a href="/entry/{{widgetEntry}}/exons">
                     <span class="text">Exons</span>
                 </a>
             </li>
-            <li ng-class="activePage('view/gene-identifiers')">
-                <a href="/entry/{{widgetEntry}}/view/gene-identifiers">
+            <li ng-class="activePage('gene_identifiers')">
+                <a href="/entry/{{widgetEntry}}/gene_identifiers">
                     <span class="text">Identifiers</span>
                 </a>
             </li>
@@ -105,40 +105,40 @@
         <!-- START 2nd Level Menu -->
         <ul id="page" class="submenu collapse in">
             <li class="submenu-header ellipsis">Curated publications</li>
-            <li ng-class="activePage('view/publications')">
-                <a href="/entry/{{widgetEntry}}/view/publications">
+            <li ng-class="activePage('publications')">
+                <a href="/entry/{{widgetEntry}}/publications">
                     <span class="text">Curated publications</span>
                     <span class="number">
                     <span class="label label-success">29</span>
                     </span>
                 </a>
             </li>
-            <li ng-class="activePage('view/computed_references')">
-                <a href="/entry/{{widgetEntry}}/view/computed_references">
+            <li ng-class="activePage('computed_references')">
+                <a href="/entry/{{widgetEntry}}/computed_references">
                     <span class="text">Additional publications</span>
                     <span class="number">
                     <span class="label label-success">6</span>
                     </span>
                 </a>
             </li>
-            <li ng-class="activePage('view/patents')">
-                <a href="/entry/{{widgetEntry}}/view/patents">
+            <li ng-class="activePage('patents')">
+                <a href="/entry/{{widgetEntry}}/patents">
                     <span class="text">Patents</span>
                     <span class="number">
                     <span class="label label-success">0</span>
                     </span>
                 </a>
             </li>
-            <li ng-class="activePage('view/submissions')">
-                <a href="/entry/{{widgetEntry}}/view/submissions">
+            <li ng-class="activePage('submissions')">
+                <a href="/entry/{{widgetEntry}}/submissions">
                     <span class="text">Submissions</span>
                     <span class="number">
                     <span class="label label-success">6</span>
                     </span>
                 </a>
             </li>
-            <li ng-class="activePage('view/web')">
-                <a href="/entry/{{widgetEntry}}/view/web">
+            <li ng-class="activePage('web')">
+                <a href="/entry/{{widgetEntry}}/web">
                     <span class="text">Web ressources</span>
                     <span class="number">
                     <span class="label label-success">0</span>
@@ -158,13 +158,15 @@
         <!-- START 2nd Level Menu -->
         <ul id="community" class="submenu collapse in">
             <li class="submenu-header ellipsis">Community</li>
+<!--
             <li>
                 <a href="component-sortable.html">
                     <span class="text">Protein existence</span>
                 </a>
             </li>
-            <li>
-                <a href="component-animation.html">
+-->
+            <li ng-class="activePage('gh/Alain-Gateau/Protein-3D-structure')">
+                <a href="/entry/NX_P01308/gh/Alain-Gateau/Protein-3D-structure">
                     <span class="text">3D structure</span>
                 </a>
             </li>

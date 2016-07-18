@@ -39,7 +39,7 @@
 
 .search-row {
 /*    margin-top: 25vh;*/
-    margin-bottom: 10vh;
+    margin-bottom: 11vh;
 }
 
 .modal-backdrop {
@@ -60,17 +60,21 @@
     text-decoration: none;
 }
 .search-row .homepage-brand{
-    margin: 30px auto;
+    margin: 50px auto 60px;
     text-align: center;
 }
+.search-row .homepage-brand h1{
+    margin: 0px;
+}
 .search-row .homepage-brand .home{
-    width:30%;
+    width:22%;
 }
 .search-row .homepage-brand .home-subtitle{
     color:#645e5b;
     text-decoration: none;
     font-weight: 300;
     margin:5px 0px 60px;
+    font-size:1.6em;
 /*    font-size:*/  
 }
 .search-row .homepage-brand .home-subtitle .np-logo-x{
