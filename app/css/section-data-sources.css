@@ -25,46 +25,106 @@
     top: 7px;
     left: 28px;
     height: 15px;
+    transition: 0.2s all ease;
+}
+#source-hpa:hover {
+    top: 7px;
+    left: 20px;
+    height: 17px;
 }
 
 #source-srm-atlas {
     top: 33px;
     left: 6px;
     height: 20px;
+    transition: 0.2s all ease;
+}
+#source-srm-atlas:hover {
+    top: 30px;
+    left: 0px;
+    height: 23px;
 }
 
 #source-bgee {
     top: 67px;
     left: 0;
     height: 27px;
+    transition: 0.2s all ease;
+}
+#source-bgee:hover {
+    top: 67px;
+    left: 0;
+    height: 32px;
 }
 
 #source-cosmic {
-    top: 124px;
-    left: 5px;
+    top: 115px;
+    left: 0px;
     height: 15px;
+    transition: 0.2s all ease;
+}
+#source-cosmic:hover {
+    top: 118px;
+    left: -3px;
+    height: 18px;
 }
 
 #source-uniprot {
-    bottom: 0;
-    left: 67px;
+    bottom: 2px;
+    left: 55px;
     height: 35px;
+    transition: 0.2s all ease;
+}
+#source-uniprot:hover {
+    bottom: 2px;
+    left: 55px;
+    height: 38px;
 }
 
 #source-uniprot-goa {
     top: 120px;
-    left: 122px;
+    left: 132px;
     font-size: 0.9em;
+    transition: 0.2s all ease;
+}
+#source-uniprot-goa:hover {
+    top: 120px;
+    left: 132px;
+    font-size: 1em;
 }
 
 #source-peptide-atlas {
     top: 73px;
     left: 136px;
     height: 32px;
+    transition: 0.2s all ease;
+}
+#source-peptide-atlas:hover {
+    top: 73px;
+    left: 136px;
+    height: 35px;
 }
 
 #source-intact {
     top: 32px;
     left: 142px;
     height: 27px;
+    transition: 0.2s all ease;
+}
+#source-intact:hover {
+    top: 32px;
+    left: 142px;
+    height: 32px;
+}
+/* The animation code */
+@keyframes example {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+#data-sources-section #datasources a{
+    opacity:0;
+    animation-name: example;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
 }

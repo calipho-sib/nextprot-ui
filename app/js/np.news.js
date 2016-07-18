@@ -4,12 +4,21 @@
     angular.module('np.news', [])
         .controller('NewsCtrl', NewsCtrl)
         .factory('newsService', newsService)
+//        .service('shareProperties', shareProperties)
     ;
 
     NewsCtrl.$inject = ['$scope','newsService'];
     function NewsCtrl($scope, newsService) {
 
         newsService.getNews().$promise.then(function(data){
+            console.log("data NEWS");
+            console.log(data);
+            data.forEach(function(d){
+                var dt = new Date(d.publicationDate);
+                var year = dt.getFullYear().toString();
+                var month = parseInt(dt.getMonth()) + 1;
+                d["minDate"] = month + "/" + dt.getDay() + "/" + year.substring(2);
+            })
             $scope.news = data.reverse();
         });
 
@@ -30,5 +39,19 @@
 
         return new NewsService();
     }
+//    function shareProperties(){
+//        var properties = {
+//            'title':''
+//        };
+//
+//        return {
+//            getProperty: function () {
+//                return properties;
+//            },
+//            setProperty: function(value) {
+//                properties.title = value;
+//            }
+//        };
+//    }
 
 })(angular); //global variable

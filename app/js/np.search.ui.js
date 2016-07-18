@@ -413,6 +413,29 @@
         }
     }]);
 
+    
+        SearchUI.directive('activeSection', ['Search', function (Search) {
+                return {
+                    scope: true,
+                    restrict: 'A',
+                    link: function(scope, element){
+                        scope.hasActive = function () {
+                            var isActive = $(element).has('.active').length;
+                            if (isActive) {
+                                var elementCollapsable = $(element).find(".collapse");
+                                var elementCollapsing = $(element).find(".collapsed");
+//                                $(elementCollapsable).collapse("show");
+                                $(elementCollapsing).removeClass("collapsed");
+                            }
+                        
+                            return $(element).has('.active').length ? true : false;
+                        }
+                        
+                    }
+        }
+    }]);
+
+    
 })(angular);
 
 

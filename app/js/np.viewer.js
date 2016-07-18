@@ -19,16 +19,23 @@
         $routeProvider
 
             //GLOBAL VIEWS https://github.com/calipho-sib/nextprot-viewers
+            .when('/portals/:pn1', {templateUrl: '/partials/viewer/portal-viewer.html'})
+//            .when('/help/:help', {templateUrl: '/partials/doc/main-doc.html'})
+
+            .when('/tools/:t1', {templateUrl: '/partials/viewer/global-viewer.html'})
+        
             .when('/view', gv)
             .when('/view/gh/:user/:repository', gv)
 
+            //Global Viewer ? To separate.
             .when('/view/:gv1', gv)
             .when('/view/:gv1/:gv2', gv)
             .when('/view/:gv1/:gv2/:gv3', gv)
+        
 
             //NP1 ENTRY views 
             .when('/entry/:entry/', ev)
-            .when('/entry/:entry/:element', ev)
+//            .when('/entry/:entry/:element', ev)
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
             .when('/publication/:pubid',pv)
@@ -36,8 +43,8 @@
 
 
             //NP2 ENTRY views 
-            .when('/entry/:entry/view/:ev1', ev)
-            .when('/entry/:entry/view/:ev1/:ev2', ev)
+            .when('/entry/:entry/:ev1', ev)
+            .when('/entry/:entry/:ev1/:ev2', ev)
 
             // NP2
             .when('/entry/:entry/gh/:user/:repository', ev)
@@ -48,13 +55,17 @@
     ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', ];
     function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
 
+        $scope.partialName = "partials/doc/page.html";
+        $scope.testt = $routeParams.article;
+
         $scope.externalURL = null;
         $scope.widgetEntry = null;
         $scope.widgetTerm = null;
-        $scope.widgetPubli = null;        
+        $scope.widgetPubli = null;
         $scope.githubURL = null;
         $scope.communityMode = false;
         $scope.simpleSearchText = "";
+        $scope.title = "";
 
         $scope.entryProps ={};
         $scope.entryName = $routeParams.entry;
@@ -118,9 +129,15 @@
                }
            }
 
+            console.log("page");
+            console.log(page);
+//            console.log($routeParams);
+//            console.log($location);
             if($location.url() === page) return 'active';
             if ($routeParams.element == page)  return 'active'
-            if ("view/" + $routeParams.ev1 == page)  return 'active';
+            if ($routeParams.ev1 == page)  return 'active';
+            if ("portals/" + $routeParams.pn1 === page) return 'active';
+            if ("tools/" + $routeParams.t1 === page) return 'active';
             if (("gh/" + $routeParams.user + "/" + $routeParams.repository) == page)  return 'active';
 
             else return '';
@@ -131,14 +148,25 @@
             $scope.widgetEntry = $routeParams.entry;
             $scope.widgetTerm = $routeParams.termid;
             $scope.widgetPubli = $routeParams.pubid;
+            var np2Views = ["sequence","proteomics","structures","peptides"];
 
-            if ($routeParams.ev1) { //Entry view
+            if (np2Views.indexOf($routeParams.ev1) > -1) { //Entry view
                 angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
+//                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
+                
             }else if ($routeParams.gv1) { //Global view
                 angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.gv1, $routeParams.gv2, $routeParams.gv3));
+                
+            }else if ($routeParams.pn1) { //Portal view
+                angular.extend($scope, viewerURLResolver.getScopeParamsForPortalViewers($routeParams.pn1));
+                    
+            }else if ($routeParams.t1) { //Tools view
+                angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.t1, "", ""));
+                
             // COMMUNITY VIEWERS etiher with GitHub //////////////////////////////////////
             } else if ($routeParams.repository) {
                 angular.extend($scope, viewerURLResolver.getScopeParamsForGitHubCommunity($routeParams.user, $routeParams.repository, $routeParams.entry));
+                
             // GRAILS INTEGRATION
             } else { //deprecated nextprot
                 angular.extend($scope, viewerURLResolver.getScopeParamsForNeXtProtGrails($location.$$path));
@@ -228,7 +256,26 @@
                 "communityMode": false,
                 "githubURL": "https://github.com/calipho-sib/nextprot-viewers/" + gv1,
                 "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
-                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
+                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "title": gv1
+            }
+
+        }
+        this.getScopeParamsForPortalViewers = function (pn1) {
+
+            var url = window.location.origin + "/viewers/portals/" + pn1;
+//            if (gv2) url += "/" + gv2;
+//            if (gv3) url += "/" + gv3;
+            url += "/app/index.html";
+            console.log("url");
+            console.log(url);
+
+            return {
+                "communityMode": false,
+                "githubURL": "https://github.com/calipho-sib/nextprot-viewers/portals/" + pn1,
+                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "title": pn1 + " portal"
             }
 
         }

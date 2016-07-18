@@ -1,8 +1,8 @@
 <div id="release-section" class="section" ng-controller="ReleaseInfoCtrl">
     <div class="section-header">
-        <h2 class="np-color-pink">Release {{releaseInfo.databaseRelease}}</h2>
+        <h2 class="np-color-pink"><span class="fa fa-tag"></span>Release {{releaseInfo.databaseRelease}}</h2>
     </div>
-    <div class="section-content">
+    <div class="section-content" ng-controller="hpCtrl">
         <!-- TODO Add Random pie chart between 2 random graphic:
             1) Histogram with a number of % values: % entries with
                 GO function / mol. process, % entries with 3D structure,
@@ -10,15 +10,18 @@
             2) the PE graphic for HUPO release
         -->
         <h3>
-            <a href="/view/statistics/protein-existence" title="Protein existence viewer">
+            <a href="release/protein-existence" title="Protein existence viewer">
             Protein existence in neXtProt</a>
         </h3>
-        <img id="release-img" src="img/prot_existence_201601.png" alt="Protein existence in neXtProt image">
+            <highchart id="hp-chart" config="chartConfig"></highchart>
+<!--        <hc-pie-chart data="pieData">Placeholder for pie chart</hc-pie-chart>-->
+<!--        <img id="release-img" src="img/prot_existence_201601.png" alt="Protein existence in neXtProt image">-->
 
     </div>
     <div class="section-footer">
         <!-- Temporary fix -->
         <!-- <a href="/release-statistics">&raquo; Release statistics</a> -->
-        <a href="https://www.nextprot.org/db/statistics/release?viewas=numbers" target="_blank">&raquo; Release statistics</a>
+        <a class="btn btn-default btn-xs" href="release/statistics" target="_blank">Release statistics</a>
+<!--        <a href="release/statistics" target="_blank">&raquo; Release statistics</a>-->
     </div>
 </div>

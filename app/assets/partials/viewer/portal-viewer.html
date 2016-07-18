@@ -1,34 +1,3 @@
-<!--
-<div ng-controller="ViewerCtrl">
-    <div class="row" style="border-top: 1px solid #E7E7E7">
-        <div id="entrySummaryBoxName" class="col-md-2">
-            <h4 id="entrySummaryName">Global viewers</h4>
-        </div>
-        <div class="col-md-10" style="height:50px;">
-            <div class="row" style="height:inherit;background-color:white;border-bottom: 1px solid #B6B6B6;">
-                 Expand in new window 
-                <div class="pull-right entrySummarylink">
-                    <a title="see it in a separated window" target="_blank" ng-href="{{externalURL}}"
-                       style="color:grey;font-size:18px;">
-                        <span class="fa fa-expand" aria-hidden="true"></span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-2 nopadding fullHeight sidemenu">
-            <div ng-include="'partials/viewer/viewer-global-side-bar.html'"></div>
-        </div>
-        <div class="col-sm-10" style="height:100%;padding:0px;box-shadow: -1px 0px 2px -1px #888;">
-            <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%"
-                    style="border: 0; min-height: 800px; background-color: white; "></iframe>
-            <script>iFrameResize({log: false, checkOrigin: false})</script>
-        </div>
-    </div>
-</div>
--->
-
 <div ng-controller="ViewerCtrl">
     <div class="row" style="border-top: 1px solid #E7E7E7;" ng-class="minMenu ? 'minimizedMenu' : '' ">
         <div class="col-md-2 responsive-md-screen second-header-left" style="padding:0px;background-color:#21252A;height:50px">
@@ -43,11 +12,11 @@
                         <i class="fa fa-chevron-left" ng-class="{'right' : minMenu}"></i>
                     </a>
                     <span class="text">
-                        TOOLS
+                        PORTALS
                     </span>
                 </div>
                 <ul id="protein-tooltip" class=" submenu">
-                    <li class="submenu-header ellipsis">TOOLS</li>
+                    <li class="submenu-header ellipsis">PORTALS</li>
                 </ul>
             </div>
         </div>
@@ -61,13 +30,13 @@
                 </div>
 -->
                 
-                <div class="col-lg-5 col-md-4 col-sm-6" style="">
-                    <h1 style="margin:0px;padding:0px;line-height:45px; font-size:28px;" ng-bind="nm.title"></h1>
+                <div class="col-lg-5 col-md-4 col-sm-6 col-xs-8" style="overflow:hidden;word-break:break-all;white-space:nowrap">
+                    <h1 style="margin:0px;padding:0px;line-height:45px; font-size:28px;">{{nm.title}}</h1>
                 </div>
 
                 
 
-                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5 pull-right">
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 pull-right">
                     <div class="pull-right">
                         <!-- See github url  -->
                         <div class="entrySummarylink">
@@ -92,17 +61,17 @@
                 <div class="col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-2 col-sm-3 col-xs-12 entry-search" style="text-align:right;">
                     <form ng-submit="makeSimpleSearch()">
                         <div class="input-group">
-                        <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search an entry...">
-                        <span class="input-group-addon"><span class="fa fa-search"></span></span>
-                    </div>
+                            <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search an entry...">
+                            <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row body-content" style="background-color: #252A30;" ng-class="minMenu ? 'minimizedMenu' : '' ">
+    <div class="row body-content" style="background-color: #252A30;display:flex;" ng-class="minMenu ? 'minimizedMenu' : '' ">
         <div ng-class="hideMenu ? 'showM' : 'hideM'" class="col-lg-2 responsive-md-screen nopadding fullHeight sidemenu">
-            <div ng-include="'partials/viewer/viewer-global-side-bar.html'"></div>
+            <div ng-include="'partials/viewer/viewer-portal-side-bar.html'"></div>
         </div>
         <div class="col-lg-10 col-xs-12 responsive-md-screen right-content" style="height:100%;">
             <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%" style="border: 0; min-height: 800px; background-color: white; "></iframe>
