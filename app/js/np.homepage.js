@@ -36,10 +36,10 @@
         $scope.chartConfig = {
             options: {
                 chart: {
-                    type: 'pie',
-                    width:250,
-                    marginRight: 100,
-                    marginLeft:50
+                    type: 'pie'
+//                    width:250,
+//                    marginRight: 100,
+//                    marginLeft:50
                 },
                 tooltip: { enabled: false },
                 colors: colors,
@@ -55,37 +55,73 @@
                             },
                             distance:10,
                             padding:5,
-                            softConnector:true,
+                            softConnector:false,
                             enabled: true,
                             color: '#000000',
                             maxStaggerLines:1,                    
                             connectorColor: '#000000',
-                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                            crop:false
+                            useHTML:true,
+                            format: '{point.name}'
 
                         },
                     }
-                }
-            },
-            title: {
-                text: null
+                },
+                series: [{
+                    data: []
+                }]
+                
             },
             series: [{
-                data: [],
-                startAngle: -50
+                    data: [],
+                    startAngle: -50
                 }],
-            width:250
+            
+            title: {
+                text: null
+            }
         };
         //        var chart = $scope.chartConfig.getHighcharts();
         //        chart.exportChart(someExportOptions);
-
+        
+        var pePos = {
+            "evidence_at_protein_level":{
+                x:10,
+                y:300
+            },
+            "evidence_at_transcript_level":{
+                x:0,
+                y:0
+            },
+            "inferred_from_homology":{
+                x:0,
+                y:0
+            },
+            "uncertain":{
+                x:0,
+                y:0
+            },
+            "predicted":{
+                x:0,
+                y:0
+            }
+        }
+//        var hcInstance = chartConfig.getHighCharts();
+        
         peService.getPEInfo().success(function (result) {
             // Sample data for pie chart
             var seriesData = [];
-            result.results.bindings.forEach(function (data) {
+            var peStats = result.results.bindings;
+            peStats.sort(function(a,b){
+                return a.cnt.value > b.cnt.value
+            })
+            console.log("RESULTS PE DATA : ");
+            console.log(peStats);
+            peStats.forEach(function (data, index) {
+                var id = data.pe.value.split("#")[1].toLowerCase();
+                var value = parseInt(data.cnt.value);
                 seriesData.push({
-                    name: data.pe.value.split("#")[1].replace(/_/g, " "),
-                    y: parseInt(data.cnt.value)
+                    "name": "<div class='peLabels' id='" + id +"'>" + data.pe.value.split("#")[1].replace(/_/g, " ") + " ("+value+")</div>",
+                    "y": value
 //                    dataLabels: { style: { fontSize: 20 }}
                 });
             });
@@ -95,7 +131,10 @@
             //            console.log(seriesData.toString());
             //            var str = JSON.stringify(seriesData, null, 4);
             //            console.log(str);
+//            $scope.chartConfig.series[0].data = seriesData;
             $scope.chartConfig.series[0].data = seriesData;
+//            console.log("hcInstance");
+//            console.log(hcInstance);
 
             //            $scope.pieData = seriesData;
             //

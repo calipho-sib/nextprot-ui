@@ -307,6 +307,8 @@ main {}
 
 .sidemenu {
     background-color: #252A30;
+    position:absolute;
+    width: 240px;
     
     /*    CHANGEMENT DESIGN */
     /*    NEW : */
@@ -624,6 +626,7 @@ li a>.number {
 
 .right-content {
     padding: 0px;
+    padding-left: 240px;
 }
 
 .right-content>iframe {
@@ -1224,7 +1227,7 @@ li a>.number {
 
 .minimizedMenu .mainmenu.mainmenu-responsive>li>.submenu>li>a,
 .minimizedMenu .topmenu.topmenu-responsive>li>.submenu>li>a {
-    padding-left: 35px;
+    padding-left: 25px;
     padding-right: 15px;
 }
 
@@ -1439,7 +1442,7 @@ header .navbar .nav > li > a:hover{
    color:#C50063; 
 }
 .minimizedMenu .topmenu li.active a{
-    color:white;
+/*    color:white;*/
 }
 .topmenu li.active{
    background-color:#bbb; 
@@ -1452,11 +1455,11 @@ header .navbar .nav > li > a:hover{
 
 
 /****************************************AFFIX******************************************************/
-/*
+
 .sidemenu.affix{
     top:50px;
 }
-.sidemenu .topmenu{
-    height:90vh;
+.sidemenu{
+    height:100vh;
     overflow:scroll;
-}*/
+}

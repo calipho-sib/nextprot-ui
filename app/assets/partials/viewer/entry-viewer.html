@@ -79,13 +79,14 @@
             </div>
         </div>
     </div>
-    <div class="row body-content" style="background-color: #252A30;display:flex;" ng-class="minMenu ? 'minimizedMenu' : '' ">
-        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="col-lg-2 responsive-md-screen nopadding fullHeight sidemenu">
-<!--        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="col-lg-2 responsive-md-screen nopadding fullHeight sidemenu"  data-spy="affix" data-offset-top="51" style="position:absolute;">-->
+    <div class="row body-content" style="background-color: #bbbbbb;display:flex;" ng-class="minMenu ? 'minimizedMenu' : '' ">
+<!--    <div class="row body-content" style="background-color: #252A30;display:flex;" ng-class="minMenu ? 'minimizedMenu' : '' ">-->
+<!--        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="col-lg-2 responsive-md-screen nopadding fullHeight sidemenu">-->
+        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="responsive-md-screen nopadding fullHeight sidemenu" style="position:absolute;" data-spy="affix" data-offset-top="50">
             <div ng-include="'partials/viewer/viewer-entry-side-bar.html'"></div>
         </div>
-        <div class="col-lg-10 col-xs-12 responsive-md-screen right-content" style="height:100%;">
-<!--        <div class="col-lg-10 col-lg-offset-2 col-xs-12 responsive-md-screen right-content" style="height:100%;">-->
+<!--        <div class="col-lg-10 col-xs-12 responsive-md-screen right-content" style="height:100%;">-->
+        <div class="col-lg-12 col-xs-12 responsive-md-screen right-content" style="height:100%;">
             <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%" style="border: 0; min-height: 800px; background-color: white; "></iframe>
 <!--            <iframe id="iframeViewer" ng-src="http://rawgit.com/calipho-sib/nextprot-viewers/develop/sequence/app/index.html?env=dev" width="100%" style="border: 0; min-height: 800px; background-color: white; "></iframe>-->
             

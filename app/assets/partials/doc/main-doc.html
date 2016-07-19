@@ -1,10 +1,10 @@
 <div ng-controller="ContentCtrl">
     <div ng-include="'partials/doc/main-doc-header.html'"></div>
     <div class="row body-content" style="background-color: #252A30;display:flex;" ng-class="minMenu ? 'minimizedMenu' : '' ">
-        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="col-lg-2 responsive-md-screen nopadding sidemenu {{type}}" style="min-height:90vh">
+        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="responsive-md-screen nopadding sidemenu {{type}}" style="min-height:90vh">
             <div ng-include src="getSideMenuPartial()"></div>
         </div>
-        <div class="col-lg-10 col-xs-12 responsive-md-screen right-content" style="border: 0;background-color: #252A30;">
+        <div class="col-lg-12 col-xs-12 responsive-md-screen right-content" style="border: 0;background-color: #252A30;">
             <!--            <div ng-include="'partials/doc/page.html'"></div>-->
             <!--
             <h1>{{partialName}}</h1>

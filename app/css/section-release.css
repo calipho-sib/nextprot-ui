@@ -2,3 +2,36 @@ img#release-img {
     width: 200px;
     margin-top: 10px;
 }
+.peLabels{
+/*    width:40px;*/
+    font-weight: 900;
+    white-space: normal;
+}
+#evidence_at_protein_level{
+    width:70px;
+    margin-top:-20px;
+}
+#evidence_at_transcript_level{
+    text-align: left;
+    width:120px;
+    margin-left:20px;
+    margin-top:10px;
+}
+#inferred_from_homology{
+    text-align: left;
+    width:80px;
+    margin-top:-5px;
+    margin-left:15px;
+}
+#predicted{
+    text-align: right;
+    width:100px;
+    margin-top:-5px;
+    margin-right:0px;
+}
+#uncertain{
+    text-align: right;
+    width:100px;
+    margin-top:-5px;
+    margin-right:5px;
+}

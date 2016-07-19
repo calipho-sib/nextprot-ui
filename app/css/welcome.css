@@ -214,6 +214,7 @@ div.section-footer a:hover {
     color:white;
     font-weight: 300;
     letter-spacing: 0.1px;
+    text-shadow: none;
     background-color:#C50063;
     border-color: #C50063;
 }
