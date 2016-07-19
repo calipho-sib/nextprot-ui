@@ -75,7 +75,25 @@
                 $scope.communityViewers = data;
             });
 
-            viewerService.getEntryProperties($routeParams.entry).$promise.then(function (data) {
+            if($routeParams.entry.indexOf("-") != -1){
+                var entryNormalized = $routeParams.entry.substring(0, $routeParams.entry.indexOf("-")); 
+            }else {
+                if($routeParams.ev1 === "phenotypes"){
+                    var isoEntry = $routeParams.entry + "-1";
+                    $location.path("/entry/" + isoEntry + "/view/" + $routeParams.ev1);
+                }
+                var entryNormalized = $routeParams.entry;
+            }
+
+            viewerService.getEntryProperties(entryNormalized).$promise.then(function (data) {
+
+                var isoCount =  data.entry.properties.isoformCount;
+                $scope.isoformSelector = [];
+                $scope.isoSelected = $routeParams.entry;
+
+                for(var i=1; i<=isoCount; i++){
+                    $scope.isoformSelector.push(entryNormalized + "-" + i);
+                }
 
                 $scope.entryProps.name = data.entry.overview.mainProteinName;
                 $scope.entryProps.genesCount = data.entry.overview.geneNames.length;

@@ -13,10 +13,16 @@
                 <div class="col-md-3" style="margin-top: 16px;margin-right: 0px;">
                     <a ng-show="communityMode" href="help/learn-programmatic-access" style="color: #808080;" data-toggle="tooltip" data-placement="top" title="Click and go to section develop / contribute">Community viewers </span>&nbsp;<i class="icon-info-sign"></i></a>
                 </div>
-                <div class="col-md-4" style="margin-top: 8px;margin-right: 0px;">
+                <div class="col-md-6" style="margin-top: 8px;margin-right: 0px;">
                     <form class="form-inline" ng-submit="makeSimpleSearch()">
                         <label for="goldOnlyInput" > Gold Only </label>
                         <input ng-model="goldOnly" id="goldOnlyInput" type="checkbox" data-toggle="toggle" style="display:inline-block" ng-click="toggleGoldOnly()">
+                        <div class="dropdown" style="display:inline-block">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{isoSelected}}<span class="caret"></span></button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li ng-repeat="iso in isoformSelector"><a href="#">{{iso}}</a></li>
+                        </ul>
+                        </div>
                         <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search an entry..."  style="display:inline-block">
                     </form>
                 </div>
