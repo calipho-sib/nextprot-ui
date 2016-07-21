@@ -37,7 +37,7 @@
                           type="button"
                           title="Back to query list" alt="Back to query list"
                           ng-click="clearSelectedQuery();">
-                      <i class="fa-caret-left"></i>
+                      <i class="fa fa-chevron-left"></i>
                   </button>
 
                   <!-- Title when query is editable  -->
@@ -91,8 +91,8 @@
                   <td style="font-size: 10px" class="bottom:-10">{{query.publicId}}</td>
                   <td >
                     <div class="btn-group pull-right">
-                        <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="deleteUserQuery(query)"><i class="fa-remove"></i></button>
-                      <button class="btn btn-default btn-xs" type="button" ng-click="query.seeDetails=!query.seeDetails"><i ng-class="!query.seeDetails ? 'fa-eye-open' : 'fa-eye-close'"></i></button>
+                        <button class="btn btn-default btn-xs" type="button" ng-if="query.isEditable()" ng-click="deleteUserQuery(query)"><i class="fa fa-remove"></i></button>
+                      <button class="btn btn-default btn-xs" type="button" ng-click="query.seeDetails=!query.seeDetails"><i ng-class="!query.seeDetails ? 'fa fa-eye' : 'fa fa-eye-slash'"></i></button>
                         <!-- Sparql -->
                     </div>
                   </td>

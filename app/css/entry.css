@@ -5,7 +5,11 @@ body a, body li a, body .topmenu li a, #entrySummaryName>span{
     stroke: rgba(0, 255, 154, 0.6);
     stroke-width: 1px;
 }
-
+/*
+html,body {
+    height:100%;
+}
+*/
 body {
     overflow-y: auto;
 }
@@ -312,7 +316,7 @@ main {}
     
     /*    CHANGEMENT DESIGN */
     /*    NEW : */
-    box-shadow: 0px 1px 20px 2px rgba(0, 0, 0, 0.1);
+/*    box-shadow: 0px 1px 20px 2px rgba(0, 0, 0, 0.1);*/
     z-index: 1;
 }
 
@@ -409,10 +413,15 @@ main {}
 .second-header {
     height: 50px;
 }
+.second-header-left{
+    position:absolute;
+    width:240px;
+    z-index: 10;
+}
 
 .second-header-right {
     height: 50px;
-    padding-left: 0px;
+    padding-left: 240px;
     z-index: 9;
 }
 
@@ -462,10 +471,6 @@ main {}
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-li.active {
-    background-color: #252a30;
 }
 
 .mainmenu li,
@@ -792,8 +797,16 @@ li a>.number {
 /*media query to display only the fa in the aside menu*/
 
 @media (max-width: 768px) {
-    #toggle-minimizedMenu {
-        display: none;
+    header .navbar.navbar-default{
+        background-color: #f8f8f8;
+        color:#333333;
+    }
+    header .navbar.navbar-default .nav > li > a{
+        color:#333;
+    }
+    header .navbar.navbar-default .navbar-header{
+        width:100%;
+        margin:0px;
     }
     
     #toggle-sidemenu {
@@ -802,19 +815,57 @@ li a>.number {
         vertical-align: bottom;
     }
     #toggle-sidemenu a {
+        color: black;
+        border: 1px solid black;
+/*
         color: white;
         border: 1px solid white;
+*/
         margin-top: 7px;
     }
     .entry-search form {
         margin-top: 0px;
         padding-bottom: 10px;
     }
+/*    Second header LEFT : */
     .second-header {
         height: auto;
     }
+    .second-header-left{
+        width:100%;
+        position: relative;
+    }
+    .second-header-left #entrySummaryBoxName{
+        background-color: transparent;
+    }
+    .second-header-left #entrySummaryBoxName #entrySummaryName{
+        text-align:center;
+    }
+    .second-header-left #entrySummaryBoxName .text{
+        color:black;
+        display: inline-block;
+        vertical-align: top;
+    }
+    #toggle-minimizedMenu {
+        display: none;
+    }
+    #entrySummaryBoxName{
+    }
+    #entrySummaryBoxName #entrySummaryName .figure{
+        display: none;
+    }
+    
+/*    Second header RIGHT : */
     .second-header-right {
         height: auto;
+        padding:0px;
+    }
+    .second-header-right .row{
+        margin:0px;
+    }
+    
+    .right-content{
+        padding:0px;
     }
 }
 
@@ -834,6 +885,14 @@ li a>.number {
 /**************** MIN MENU - MEDIA QUERY *********************/
 
 @media (min-width: 768px) and (max-width: 1200px) {
+    
+    header .navbar.navbar-default .navbar-header{
+        width:150px;
+    }
+    
+    header .navbar .nav.navbar-nav{
+        padding-left:0px;
+    }
     #toggle-minimizedMenu {
         display: none;
     }
@@ -879,6 +938,11 @@ li a>.number {
     .second-header-right {
         height: auto;
     }
+    .sidemenu>div>.topmenu{
+        width: 60px;
+        overflow:visible;
+    }
+    
     .topmenu li a>.figure, .topmenu li a.onlyMinimized>.figure {
         display:table-cell;
         padding:0px;
@@ -1085,6 +1149,11 @@ li a>.number {
     transition: all 0.5s;
 */
 }
+.minimizedMenu .sidemenu .topmenu{
+    width: 60px;
+    overflow:visible;
+}
+
 
 .minimizedMenu .responsive-md-screen.right-content,
 .minimizedMenu .responsive-md-screen.second-header-right {
@@ -1431,7 +1500,7 @@ header .navbar .nav > li > a:hover{
 .sidemenu{
     background-color:#bbb;
 }
-.topmenu li a, .topmenu li a>.figure>i:before{
+.topmenu li a, .topmenu li a>.figure>i:before, .topmenu>li.active .figure{
    color:black; 
 }
 /*use filter for img : */
@@ -1455,11 +1524,40 @@ header .navbar .nav > li > a:hover{
 
 
 /****************************************AFFIX******************************************************/
-
-.sidemenu.affix{
+/*
+.sidemenu{
+    top:100px;
+}
+*/
+.sidemenu .topmenu.affix{
     top:50px;
 }
-.sidemenu{
+/*
+.sidemenu .topmenu.affix-bottom{
+    top:50px !important;
+}
+*/
+.sidemenu .topmenu{
+/*    top:50px;*/
+    width:240px;
+/*    height:700px;*/
+/*    overflow:visible;*/
+}
+.sidemenu .topmenu{
     height:100vh;
-    overflow:scroll;
+    z-index:300;
+    overflow: scroll;
+    padding-bottom:100px;
+    box-shadow: 0px 1px 20px 2px rgba(0, 0, 0, 0.1);
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+.sidemenu .topmenu>li:last-child li:last-child{
+/*    padding-bottom:100px;*/
+}
+.body-content{
+    position:relative;
+}
+.sidemenu{
+    height:100%;
 }

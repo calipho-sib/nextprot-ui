@@ -369,7 +369,11 @@
     SearchUI.directive('npAffix', ['$parse', '$timeout', function ($parse, $timeout) {
         return function (scope, element, attr) {
             $timeout(function () {
-                element.affix({offset: attr['npAffix']});
+                element.affix({
+                    offset: {
+                        "top": attr['npAffix']
+                    }
+                });
             }, 0);
         }
     }]);
@@ -434,6 +438,24 @@
                     }
         }
     }]);
+    SearchUI.directive('smallscreen', function($window) {
+      return {
+
+        restrict: 'AE',
+        link: function(s, e, a) {
+          $window.onresize = function(event) {
+            var clientWidth = document.documentElement.clientWidth;
+            if (clientWidth < 768)
+            {
+                $('.minimizedMenu').removeClass('minimizedMenu');
+//              e.removeClass('minimizedMenu');
+            }
+          }
+        }
+
+      }
+
+    });
 
     
 })(angular);

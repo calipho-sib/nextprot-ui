@@ -1,6 +1,6 @@
 <div ng-controller="ContentCtrl">
     <div ng-include="'partials/doc/main-doc-header.html'"></div>
-    <div class="row body-content" style="background-color: #252A30;display:flex;" ng-class="minMenu ? 'minimizedMenu' : '' ">
+    <div class="row body-content" style="background-color: #252A30;display:flex;" ng-class="minMenu ? 'minimizedMenu' : '' " smallscreen>
         <div ng-class="hideMenu ? 'showM' : 'hideM'" class="responsive-md-screen nopadding sidemenu {{type}}" style="min-height:90vh">
             <div ng-include src="getSideMenuPartial()"></div>
         </div>

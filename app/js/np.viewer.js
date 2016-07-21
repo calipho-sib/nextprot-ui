@@ -71,6 +71,7 @@
         $scope.entryName = $routeParams.entry;
         $scope.termName = $routeParams.termid;
         $scope.publiName = $routeParams.pubid;
+        
 
         console.log("my config" , config);
 
@@ -84,6 +85,8 @@
 
             viewerService.getEntryProperties($routeParams.entry).$promise.then(function (data) {
 
+                console.log("PUBLICATIONS DATA");
+                console.log(data);
                 $scope.entryProps.name = data.entry.overview.mainProteinName;
                 $scope.entryProps.genesCount = data.entry.overview.geneNames.length;
                 angular.extend($scope.entryProps, data.entry.properties);
@@ -129,8 +132,6 @@
                }
            }
 
-            console.log("page");
-            console.log(page);
 //            console.log($routeParams);
 //            console.log($location);
             if($location.url() === page) return 'active';

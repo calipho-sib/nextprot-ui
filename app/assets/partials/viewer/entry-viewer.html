@@ -1,6 +1,7 @@
 <div ng-controller="ViewerCtrl">
-    <div class="row" style="border-top: 1px solid #E7E7E7;" ng-class="minMenu ? 'minimizedMenu' : '' ">
-        <div class="col-md-2 responsive-md-screen second-header-left" style="padding:0px;background-color:#21252A;height:50px">
+    <div class="row" style="border-top: 1px solid #E7E7E7;" ng-class="minMenu ? 'minimizedMenu' : '' " smallscreen>
+        <div class="responsive-md-screen second-header-left" style="padding:0px;background-color:#bbb;height:50px">
+<!--        <div class="responsive-md-screen second-header-left" style="padding:0px;background-color:#21252A;height:50px">-->
             <div class="col-xs-2" id="toggle-sidemenu">
                 <a class="btn" href="javascript:void(0);" ng-click="hideMenu = !hideMenu">
                     <span class="fa fa-reorder" aria-hidden="true"></span>
@@ -20,7 +21,7 @@
                 </ul>
             </div>
         </div>
-        <div class="col-lg-10 responsive-md-screen second-header-right">
+        <div class="col-lg-12 responsive-md-screen second-header-right">
             <div class="row" style="height:inherit;background-color:#f8f8f8;border-bottom: 1px solid #E7E7E7;margin-left:0px;">
 <!--
                 <div class="col-lg-1 pull-left" id="toggle-minimizedMenu">
@@ -29,14 +30,21 @@
                     </a>
                 </div>
 -->
-                <div class="col-lg-4 col-md-3 col-sm-3 col-xs-7 entrySummaryBoxes" style="height:48px;">
-                    <div><span class="label" id="entrySummaryIso">{{entryProps.isoformCount}}</span>
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="
+    word-break: break-all;
+    white-space: nowrap;
+    text-overflow: ellipsis;    overflow: scroll;">
+                    <h2 style="margin:0px;padding:0px;line-height:45px; font-size:28px;text-overflow: ellipsis;" ng-bind="nm.title"></h2>
+                </div>
+                
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-7 entrySummaryBoxes" style="height:48px;">
+                    <div><span class="label" id="entrySummaryIso" ng-bind="entryProps.isoformCount"></span>
                         <p>ISO</p>
                     </div>
-                    <div><span class="label" id="entrySummaryGene">{{entryProps.genesCount}}</span>
+                    <div><span class="label" id="entrySummaryGene" ng-bind="entryProps.genesCount"></span>
                         <p>GENE</p>
                     </div>
-                    <div><span class="label" id="entrySummaryRef">{{entryProps.referencesCount}}</span>
+                    <div><span class="label" id="entrySummaryRef" ng-bind="entryProps.referencesCount"></span>
                         <p>REF</p>
                     </div>
                 </div>
@@ -45,8 +53,7 @@
                     <a ng-show="communityMode" href="help/learn-programmatic-access" style="color: #808080;" data-toggle="tooltip" data-placement="top" title="Click and go to section develop / contribute">Community viewers </span>&nbsp;<i class="fa-info-sign"></i></a>
                 </div>
 -->
-
-                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5 pull-right">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-5 pull-right">
                     <div class="pull-right">
                         <!-- See github url  -->
                         <div class="entrySummarylink">
@@ -68,7 +75,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-2 col-sm-6 col-xs-12 entry-search" style="text-align:right;">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 entry-search" style="text-align:right;">
                     <form ng-submit="makeSimpleSearch()">
                         <div class="input-group">
                         <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search an entry...">
@@ -79,10 +86,11 @@
             </div>
         </div>
     </div>
-    <div class="row body-content" style="background-color: #bbbbbb;display:flex;" ng-class="minMenu ? 'minimizedMenu' : '' ">
+    <div class="row body-content" style="background-color: #bbbbbb;" ng-class="minMenu ? 'minimizedMenu' : '' " smallscreen>
 <!--    <div class="row body-content" style="background-color: #252A30;display:flex;" ng-class="minMenu ? 'minimizedMenu' : '' ">-->
 <!--        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="col-lg-2 responsive-md-screen nopadding fullHeight sidemenu">-->
-        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="responsive-md-screen nopadding fullHeight sidemenu" style="position:absolute;" data-spy="affix" data-offset-top="50">
+<!--        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="responsive-md-screen nopadding fullHeight sidemenu" style="position:absolute;">-->
+        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="responsive-md-screen nopadding fullHeight sidemenu" style="position:absolute;">
             <div ng-include="'partials/viewer/viewer-entry-side-bar.html'"></div>
         </div>
 <!--        <div class="col-lg-10 col-xs-12 responsive-md-screen right-content" style="height:100%;">-->
