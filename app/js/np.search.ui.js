@@ -369,7 +369,11 @@
     SearchUI.directive('npAffix', ['$parse', '$timeout', function ($parse, $timeout) {
         return function (scope, element, attr) {
             $timeout(function () {
-                element.affix({offset: attr['npAffix']});
+                element.affix({
+                    offset: {
+                        "top": attr['npAffix']
+                    }
+                });
             }, 0);
         }
     }]);
@@ -413,6 +417,47 @@
         }
     }]);
 
+    
+        SearchUI.directive('activeSection', ['Search', function (Search) {
+                return {
+                    scope: true,
+                    restrict: 'A',
+                    link: function(scope, element){
+                        scope.hasActive = function () {
+                            var isActive = $(element).has('.active').length;
+                            if (isActive) {
+                                var elementCollapsable = $(element).find(".collapse");
+                                var elementCollapsing = $(element).find(".collapsed");
+//                                $(elementCollapsable).collapse("show");
+                                $(elementCollapsing).removeClass("collapsed");
+                            }
+                        
+                            return $(element).has('.active').length ? true : false;
+                        }
+                        
+                    }
+        }
+    }]);
+    SearchUI.directive('smallscreen', function($window) {
+      return {
+
+        restrict: 'AE',
+        link: function(s, e, a) {
+          $window.onresize = function(event) {
+            var clientWidth = document.documentElement.clientWidth;
+            if (clientWidth < 768)
+            {
+                $('.minimizedMenu').removeClass('minimizedMenu');
+//              e.removeClass('minimizedMenu');
+            }
+          }
+        }
+
+      }
+
+    });
+
+    
 })(angular);
 
 

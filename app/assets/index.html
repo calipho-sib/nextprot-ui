@@ -1,18 +1,21 @@
 <!doctype html>
-<html lang="en" ng-app="np" xmlns:flash="">
+<html lang="en" ng-app="np" ng-controller="npCtrl as nm" xmlns:flash="">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="neXtProt,UniProt,Human,Proteins,Proteome,Proteomics">
-    <meta name="description" content="A knowledge platform on human proteins. It strives to be a comprehensive resource that provides a variety of types of information on human proteins.">
-    <meta name="author" content="Calipho Team - SIB - Swiss Institute of Bioinformatics">
+<!--    <meta name="description" content="A knowledge platform on human proteins. It strives to be a comprehensive resource that provides a variety of types of information on human proteins.">-->
+    <meta name="description" content="{{nm.description}}">
+    <meta name="author" content="CALIPHO Team - SIB - Swiss Institute of Bioinformatics">
     <meta name="fragment" content="!">
     <meta http-equiv="expires" content="0">
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
 
     <!--<base href="/protosearch/" />-->
     <base href="/">
 
-    <title>neXtProt - exploring the universe of human proteins</title>
+    <title ng-bind="nm.title"></title>
+<!--    <title>neXtProt - exploring the universe of human proteins</title>-->
 
     <!--[if lte IE 7]>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js"></script>
@@ -32,49 +35,66 @@
 <body ng-clock="" class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90"
       ng-controller="SearchCtrl" np-background="#main">
 
-
 <header>
-    <div id="header-title">
-        <b>neXtProt</b> - Exploring the universe of human proteins
+<!--
+    <div class="hidden-md hidden-sm hidden-xs hidden-lg" style="font-size: 1.7em; font-weight: 100; font-family: Helvetica; background: transparent radial-gradient(ellipse at center center , rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%) repeat scroll 0% 0%;" id="header-title">
+        Exploring the universe of human proteins
     </div>
-    <a href="http://www.isb-sib.ch/" target="_blank"
-       title="Link to the SIB Swiss Institute of Bioinformatics">
-        <img id="sib-logo" src="img/sib_logo.gif"
-             alt="SIB Swiss Institute of Bioinformatics">
+-->
+    <a href="http://www.isb-sib.ch/" target="_blank" title="Link to the SIB Swiss Institute of Bioinformatics">
+        <img id="sib-logo" src="img/sib_logo.gif" alt="SIB Swiss Institute of Bioinformatics">
     </a>
 
     <!-- Navbar ================================================== -->
-    <nav id="header-navbar" class="nav nav-pills" role="navigation">
-        <div id="header-navbar-container-fluid" class="container-fluid">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nextprot-header">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+<!--
+                    <span class="fa-bar"></span>
+                    <span class="fa-bar"></span>
+                    <span class="fa-bar"></span>
+-->
+                    <span class="fa fa-bars"></span>
                 </button>
-                <a class="navbar-brand navbar-logo" href="/"><img id="np-logo" src="/img/np-logo.png"></a>
+                <a class="navbar-brand navbar-logo" href="/"><img id="np-logo" src="/img/np.png"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"
-                 ng-controller="HelpCtrl">
+            <div class="collapse navbar-collapse ng-scope" id="nextprot-header" ng-controller="HelpCtrl">
                 <ul class="nav navbar-nav">
 
                     <!-- Services dropdown -->
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">Services <span class="caret"></span></a>
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tools <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <!-- Learn -->
-                            <li ng-class=""><a href="{{'search' | getNeXtProtUrl}}"
-                                               ng-click="routingOutside('ui')">Search</a></li>
-                            <li ng-class=""><a href="{{'snorql' | getNeXtProtUrl}}"
-                                               ng-click="routingOutside('snorql')">Snorql</a></li>
-                            <li ng-class=""><a href="{{'api' | getNeXtProtUrl}}"
-                                               ng-click="routingOutside('api')">API</a></li>
+                            <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
+                            <li ng-class=""><a href="/proteins/search" ng-click="routingOutside('ui')">Simple search</a></li>
+                            <li ng-class=""><a href="/proteins/search?mode=advanced&start=0" ng-click="routingOutside('snorql')">Advanced search</a></li>
+                            <li ng-class=""><a href="http://snorql.nextprot.org/" ng-click="routingOutside('api')">SNORQL search</a></li>
+                            <li class="divider"></li>
+                            <li ng-class=""><a ng-click="goToUser('lists')">My Lists</a></li>
+                            <li ng-class=""><a ng-click="goToUser('queries')">My Queries</a></li>
+                            <li class="divider"></li>
+                            <li ng-class=""><a href="#" ng-click="routingOutside('snorql')" style="cursor:not-allowed">BLAST</a></li>
+                            <li ng-class=""><a href="/tools/unicity-checker" ng-click="routingOutside('snorql')">Peptide Unicity Checker</a></li>
+                            <li class="divider"></li>
+                            <li ng-class=""><a href="http://api.nextprot.org/" ng-click="routingOutside('snorql')">API</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Portals dropdown -->
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Portals <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <!-- Learn -->
+                            <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
+                            <li ng-class=""><a href="./portals/breast-cancer">Breast cancer</a></li>
+                            <li ng-class=""><a href="./portals/navmut">Sodium channels</a></li>
+<!--                            <li ng-class=""><a href="http://dev-api.nextprot.org/" ng-click="routingOutside('api')">Protein kinases</a></li>-->
                         </ul>
                     </li>
 
@@ -82,111 +102,174 @@
                     <!--<li ng-class=""><a href="/tools">Tools</a></li>-->
 
                     <!-- Download -->
-                    <li ng-class=""><a href="ftp://ftp.nextprot.org" ng-click="routingOutside('ftp')">Download</a></li>
+                    <li ng-class=""><a href="ftp://ftp.nextprot.org/pub/current_release/" ng-click="routingOutside('ftp')">Download</a></li>
 
                     <!-- Help dropdown -->
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                           aria-expanded="false">Help <span class="caret"></span></a>
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Help <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <!-- Learn -->
-                            <li ng-class="{'active':isActiveDoc('/help/learn-simple-search')}">
-                                <a href="/help/learn-simple-search">Simple search</a>
+                            <li ng-class="{'active':isActiveDoc('/help/simple-search')}">
+                                <a href="/help/simple-search">Simple search</a>
                             </li>
-                            <li ng-class="{'active':isActiveDoc('/help/learn-advanced-search')}">
-                                <a href="/help/learn-advanced-search">Advanced search</a>
+                            <li ng-class="{'active':isActiveDoc('/help/advanced-search')}">
+                                <a href="/help/advanced-search">Advanced search</a>
                             </li>
-                            <li><a href="#"></a></li>
+<!--                            ???-->
+<!--                            <li><a href="#"></a></li> -->
                             <li ng-class="{'active':isActiveDoc('/help/search-results')}">
-                                <a href="/help/learn-search-results">Search results</a>
+                                <a href="/help/search-results">Search results</a>
                             </li>
-                            <li><a href="#"></a></li>
-                            <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}">
-                                <a ng-href="/help/doc/introduction">RDF help</a>
+<!--                            ???-->
+                            <li ng-class="{'active':isActiveDoc('/help/tools')}">
+                                <a href="/help/tools">Tools</a>
                             </li>
-                            <li><a href="#"></a></li>
+<!--                            <li><a href="#"></a></li>-->
+<!--                            <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}">-->
+                            <li ng-class="{'active':isActiveDoc('/help/data-model')}">
+                                <a ng-href="/help/data-model">Data model</a>
+                            </li>
+<!--                            <li><a href="#"></a></li>-->
                             <li class="divider"></li>
-                            <li ng-class="{'active':isActiveDoc('/help/learn-protein-lists')}">
-                                <a href="/help/learn-protein-lists">Protein Lists</a>
+                            <li ng-class="{'active':isActiveDoc('/help/protein-lists')}">
+                                <a href="/help/protein-lists">Protein Lists</a>
                             </li>
                             <li class="divider"></li>
+                            <li ng-class="{'active':isActiveDoc('/help/download')}">
+                                <a href="/help/download">Download</a>
+                            </li>
+                            <li class="divider"></li>
+<!--
                             <li ng-class="{'active':isActiveDoc('/help/learn-developer-api')}">
                                 <a href="/help/learn-programmatic-access">Developer API</a>
                             </li>
+-->
+                            <li ng-class="{'active':isActiveDoc('/help/programmatic-access')}">
+                                <a href="/help/programmatic-access">Developer API</a>
+                            </li>
                             <!--  <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li> -->
-                            <li class="divider"></li>
+<!--                            <li class="divider"></li>-->
 
                             <!-- FAQ
                             <li ng-class="{'active':isActiveDoc('/pages/faq')}"><a href="/pages/faq">FAQ</a></li>
                             -->
 
                             <!-- Known issues -->
+<!--
                             <li ng-class="{'active':isActiveDoc('/known-issues')}">
                                 <a href="/known-issues">Known issues</a>
                             </li>
+-->
 
                             <!-- Found a bug -->
+<!--
                             <li ng-class="">
                                 <a target="_blank" href="https://github.com/calipho-sib/nextprot-ui/issues">
-                                    Found a bug?<i class="icon-github"></i></a>
+                                    Found a bug?<i class="fa-github"></i></a>
                             </li>
+-->
 
-                            <li class="divider"></li>
+<!--                            <li class="divider"></li>-->
 
                             <!-- News -->
+<!--
                             <li ng-class="{'active':isActiveDoc('/what-is-new')}">
                                 <a href="/what-is-new">What's new?</a>
                             </li>
+-->
 
                             <!-- Citing neXtProt -->
+<!--
                             <li ng-class="{'active':isActiveDoc('/citing-nextprot')}">
                                 <a href="/citing-nextprot">Citing neXtProt</a>
                             </li>
+-->
 
                         </ul>
                     </li>
-
-                    <li ng-class="">
-                        <a href="/about">About</a>
+                    
+                    <!-- About dropdown -->
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">About <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <!-- Learn -->
+                            <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
+                            <li ng-class="{'active':isActiveDoc('/about/about')}">
+                                <a href="about/about">
+                                    <span class="text">neXtProt concept</span>
+                                </a>
+                            </li>
+<!--                            <li ng-class=""><a href="release/contents">Current release</a></li>-->
+                            <li ng-class="{'active':isActiveDoc('/release/contents')}">
+                                <a href="release/contents">
+                                    <span class="text">Release contents</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'active':isActiveDoc('/release/statistics')}">
+                                <a href="release/statistics">
+                                    <span class="text">Release statistics</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'active':isActiveDoc('/release/protein-existence')}">
+                                <a href="release/protein-existence">
+                                    <span class="text">Protein existence status</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'active':isActiveDoc('/about/human-proteome')}">
+                                <a href="about/human-proteome">
+                                    <span class="text">The human proteome</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'active':isActiveDoc('/about/news/*')}">
+                                <a href="news/february-2016-nextprot-release">
+                                    <span class="text">News</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'active':isActiveDoc('/about/citing-nextprot')}">
+                                <a href="about/citing-nextprot">
+                                    <span class="text">Citing neXtProt</span>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
+
+<!--
+                    <li ng-class="">
+                        <a href="http://dev-search.nextprot.org/about">About</a>
+                    </li>
+-->
                     <li ng-class="">
                         <a href="mailto:support@nextprot.org?subject=[neXtProt%20Search]">Contact</a>
                     </li>
 
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" style="margin-right:0px;">
 
+<!--
                     <li>
                         <a title="My lists" ng-click="goToUser('lists')" type="button" class="link">
-                            <i class="icon-list-alt"></i>
+                            <i class="fa-list-alt"></i>
                         </a>
                     </li>
 
                     <li>
                         <a title="My queries" ng-click="goToUser('queries')" type="button" class="link">
-                            <i class="icon-star"></i>
+                            <i class="fa-star"></i>
                         </a>
                     </li>
-
+-->
 
                     <!-- login button -->
-                    <li ng-if="!user.profile.email">
-                        <a href='' type="button" class="link" ng-click="login()">Login</a>
+                    <!-- ngIf: !user.profile.email --><li class="ng-scope" ng-if="!user.profile.email">
+                        <a href="" type="button" class="link" ng-click="login()">Login</a>
+                    </li><!-- end ngIf: !user.profile.email -->
+                    
+                    <li>
+                        <a id="sib-link" href="http://www.sib.swiss"><img id="sib-logo" src="/img/sib.png"></a>
                     </li>
 
                     <!-- once logged in user resources -->
-                    <li class="dropdown" ng-if="user.profile.email" ng-cloak>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            {{user.profile.name || user.profile.email}}<span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <!--<li><a href="/user">My profile</a></li>-->
-                            <li><a href="/user/protein/lists">My protein lists</a></li>
-                            <li><a href="/user/queries">My queries</a></li>
-                            <!-- <li><a href="/user/applications">My applications</a></li>-->
-                            <li class="divider"></li>
-                            <li><a href="#" ng-click="logout()">Logout</a></li>
-                        </ul>
-                    </li>
+                    <!-- ngIf: user.profile.email -->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

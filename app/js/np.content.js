@@ -1,0 +1,196 @@
+(function (angular, undefined) {
+    'use strict';
+
+    angular.module('np.content', [])
+        .config(contentConfig)
+        .controller('ContentCtrl', ContentCtrl)
+        .service('contentURLResolver', contentURLResolver)
+    ;
+
+    contentConfig.$inject = ['$routeProvider'];
+    function contentConfig($routeProvider) {
+
+        $routeProvider
+            // Simple pages
+            .when('/release/:release', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
+//            .when('/news/:n1', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
+            .when('/:section/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
+
+    }
+
+
+    ContentCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'contentURLResolver', ];
+    function ContentCtrl($scope, $sce, $routeParams, $location, config, exportService, contentURLResolver) {
+
+//        $scope.partialName = "partials/doc/page.html";
+        
+//        $scope.testt = $routeParams.article;
+//        $scope.widgetURL = "";
+        $scope.externalURL = null;      
+        $scope.githubURL = null;
+        $scope.simpleSearchText = "";
+        $scope.title = "";
+        $scope.minMenu = false;
+        $scope.hideMenu = false;
+        
+        $scope.switchMenu = function(){
+            $scope.hideMenu = !$scope.hideMenu;
+        }
+        
+        $scope.minimizeMenu = function(){
+            $scope.minMenu = !$scope.minMenu;
+        }
+
+        console.log("my config" , config);
+
+
+        $scope.makeSimpleSearch = function () {
+            $location.search("query", $scope.simpleSearchText);
+            $location.path("proteins/search");
+        }
+        
+        $scope.getSideMenuPartial = function(){
+            var commonPath = "partials/doc/";
+            if ($routeParams.section === "about") return commonPath + "about-side-bar.html";
+            if ($routeParams.section === "help") return commonPath + "help-side-bar.html";
+            if ($routeParams.section === "news") return commonPath + "news-side-bar.html";
+            if ($routeParams.release) return commonPath + "about-side-bar.html";
+//            if ($routeParams.release) return commonPath + "release-side-bar.html";
+//            if ($routeParams.n1) return commonPath + "news-side-bar.html";
+        }
+        
+        $scope.getContentPartial = function(){
+            if ($routeParams.release === "protein-existence") return "partials/doc/iframe.html";
+            if ($routeParams.release) return "partials/release_"+ $routeParams.release + ".html";
+            if ($routeParams.section === "news") return "partials/doc/news.html";
+//            if ($routeParams.n1) return "partials/doc/news.html";
+            else return "partials/doc/page.html";
+        }
+
+        $scope.activePage = function (page) {
+
+            console.log("page");
+//            console.log(page);
+//            console.log($routeParams);
+//            console.log($location);
+            if($location.url() === page) return 'active';
+            if ($routeParams.element == page)  return 'active';
+
+            else return '';
+        }
+
+        // update entity documentation on path change
+        $scope.$on('$routeChangeSuccess', function (event, next, current) {
+
+            if ($routeParams.release) { //Release view
+                angular.extend($scope, contentURLResolver.getScopeParamsForRelease($routeParams.release));
+//                angular.extend($scope, contentURLResolver.getScopeParamsForContent($routeParams.release));
+            }
+            else if ($routeParams.section === "news") { //Help view
+                
+                console.log("$scope");
+                console.log($scope);
+                angular.extend($scope, contentURLResolver.getScopeParamsForNews($routeParams.article));
+            }
+            else if ($routeParams.article) { //Help view
+                angular.extend($scope, contentURLResolver.getScopeParamsForContent($routeParams.section,$routeParams.article));
+//                angular.extend($scope, contentURLResolver.getScopeParamsForNews($routeParams.article));
+            }
+        });
+    }
+
+    contentURLResolver.$inject = ['$sce', '$location', 'config', 'npSettings'];
+    function contentURLResolver($sce, $location, config, npSettings) {
+
+
+        //Setting correct api for viewer
+        var env = npSettings.environment;
+        if(env.indexOf("NX_") !== -1){ // Choose the environemnt for the viewers
+            env = 'dev';
+            //env = 'localhost';
+        }
+
+        function concatEnvToUrl (url) {
+            var envUrl = "";
+            if(env !== 'pro'){
+                if(url.indexOf('?') !== -1){
+                    envUrl = ("&env=" + env);
+                }else {
+                    envUrl = ("?env=" + env);
+                }
+            }
+            return url + envUrl;
+        }
+
+        this.getScopeParamsForContent = function (section,article) {
+
+            var url = window.location.origin + "/" + section + "/" + article;
+            
+//            url += "/app/index.html";
+            console.log("url");
+            console.log("AZAZAZA");
+            console.log(url);
+
+            return {
+                "communityMode": false,
+//                TO FIX
+                "githubURL": "https://github.com/calipho-sib/" + article,
+                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "title": article,
+                "section": section.toUpperCase()
+            }
+
+        }
+        this.getScopeParamsForNews = function (n1) {
+
+            var url = window.location.origin + "/news/" + n1;
+            
+            console.log("url");
+            console.log(url);
+
+            return {
+                "communityMode": false,
+                "githubURL": "https://github.com/calipho-sib/" + n1,
+                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "linkToParent":"about/about",
+                "parent": "ABOUT",
+                "title": "NEWS",
+                "section": "NEWS",
+                "type":"news",
+                "h1":n1
+            }
+
+        }
+        this.getScopeParamsForRelease = function (release) {
+
+            var url = window.location.origin + "/release/" + release;
+            var pe = (release === "protein-existence");
+            if (pe){
+                url = window.location.origin + "/viewers/" + "statistics/protein-existence/app/index.html?env=dev";
+            }
+            
+//            url += "/app/index.html";
+            console.log("url");
+            console.log(url);
+
+            return {
+                "communityMode": false,
+//                TO FIX
+                "githubURL": pe ? "https://github.com/calipho-sib/nextprot-viewers/blob/master/statistics/protein-existence/app/" : "",
+                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+//                "linkToParent":"about/about",
+//                "parent": "ABOUT",
+                "title": "RELEASE",
+                "section": "ABOUT",
+//                "h1":release
+            }
+
+        }
+
+    }
+
+
+    })(angular); //global variable

@@ -1,0 +1,50 @@
+<ul class="topmenu topmenu-responsive"  np-affix="50">
+    <li class="active">
+        <a class="collapsed onlyMinimized" href="javascript:void(0);" data-target="#scn" data-toggle="collapse">
+            <span class="figure">
+<!--                <span>SCN</span>-->
+                <i class="fa fa-tag" style="font-size:1.5em;color:white;"></i>
+              </span>
+<!--            <span class="text">HELP</span>-->
+<!--            <span class="arrow fa"></span>-->
+        </a>
+        <!-- START 2nd Level Menu -->
+        <ul id="scn" class=" submenu collapse in">
+<!--            <li class="submenu-header ellipsis">Search</li>-->
+            <li ng-class="activePage('/release/contents')">
+                <a href="release/contents">
+                    <span class="text">Contents</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/release/statistics')">
+                <a href="release/statistics">
+                    <span class="text">Statistics</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/release/protein-existence')">
+                <a href="release/protein-existence">
+                    <span class="text">Protein existence</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+<!--
+    <li active-section ng-class="{active: hasActive()}">
+        <a class="collapsed" href="javascript:void(0);" data-target="#brca" data-toggle="collapse">
+            <span class="figure">
+                <img style="width:30px;" src="../img/proteins.png">
+              </span>
+            <span class="text">BREAST CANCER</span>
+            <span class="arrow fa"></span>
+        </a>
+        <ul id="brca" class=" submenu collapse">
+            <li class="submenu-header ellipsis">Protein lists</li>
+            <li ng-class="activePage('view/portals/breast-cancer')">
+                <a href="view/portals/breast-cancer">
+                    <span class="text">Protein lists</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+-->
+</ul>

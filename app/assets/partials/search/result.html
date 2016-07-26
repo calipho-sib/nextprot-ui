@@ -1,7 +1,7 @@
 <div id="result" ng-controller="ResultCtrl" class="row resultparams" style="position:relative">
 
     <!-- RESULT HEADERS -->
-		<nav style="position: absolute;" np-affix="120" class="navbar navbar-fixed-top navbar-default navbar-nextprot-result">
+		<nav style="position: absolute;" np-affix="85" class="navbar navbar-fixed-top navbar-default navbar-nextprot-result">
 		  <div class="container-fluid">
 
 		    	<!-- DISPLAY RESULT INFO -->
@@ -40,7 +40,7 @@
 						<!--					  -->
 						<button ng-show="Search.result.params.entity == 'proteins'" type="button" bs-modal="'partials/export/export-modal.html'"
 								ng-click="setExportParameters()" class="btn btn-link navbar-btn btn-navbar-selected">
-                            <div>Download&nbsp;<i class="icon-download"></i></div>
+                            <div>Download&nbsp;<i class="fa fa-download"></i></div>
                         </button>
 
                         <ul class="nav navbar-nav navbar-right">
@@ -66,7 +66,7 @@
                 <li class="solrp " ng-repeat="filter in Search.result.filters"
                     ng-class="active(filter.name,'filter')">
                     <a ng-show="filter.count" class="" ng-click="updateUrlSearchPart({filter:filter.name})" href="">{{Search.result.ontology[filter.name]}}
-                        <span class=""> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&&'icon-remove'"></i>
+                        <span class=""> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&&'fa-remove'"></i>
                     </a>
                 </li>
                 <input id="filters" class="form-control" type="hidden" ng-model="Search.params.filter"
@@ -85,7 +85,7 @@
 				<li ng-repeat="filter in Search.result.filters"
 					ng-class="active(filter.name,'filter')">
 					{{Search.result.ontology[filter.name]}}
-						<span class=""> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&&'icon-remove'"></i>
+						<span class=""> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&&'fa-remove'"></i>
 
 				</li>
 			</ul>

@@ -1,0 +1,41 @@
+<!--
+<div class="panel-group nomarginshift" id="accordion-entry">
+  <div class="panel panel-default menu-group" style="margin:0px;">
+    <div class="panel-heading menu-header">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="javascript:void(0)"  data-target="#collapse1">
+          <span style="margin-left:15px;vertical-align:middle;"><span style="font-size: 28px;">P</span>ublication</span>
+        </a></h4>
+    </div>
+    <div id="collapse1" class="panel-collapse -collapse menu-content in">
+      <div class="panel-body" style="padding:0px">
+        <ul class="nav nav-stacked prot-menu">
+          <li ng-class="activePage('proteins')"><a style="padding-bottom: 0px !important; color:darkgray !important;" href="/publication/{{widgetPubli}}">Proteins</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+
+<ul class="topmenu topmenu-responsive"  np-affix="50">
+    <li class="active">
+        <a class="collapsed onlyMinimized" href="javascript:void(0);" data-target="#scn" data-toggle="collapse">
+            <span class="figure">
+<!--                <span>SCN</span>-->
+                <i class="fa fa-file-text-o" style="font-size:1.5em;color:white;"></i>
+              </span>
+<!--            <span class="text">HELP</span>-->
+<!--            <span class="arrow fa"></span>-->
+        </a>
+        <!-- START 2nd Level Menu -->
+        <ul id="scn" class=" submenu collapse in">
+<!--            <li class="submenu-header ellipsis">Search</li>-->
+            <li ng-class="activePage('proteins')">
+                <a href="publication/42807865">
+                    <span class="text">Proteins</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>

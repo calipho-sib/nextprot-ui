@@ -38,6 +38,58 @@ if ('development' == env) {
   });
 };
 
+
+//TEMPORARY FOR NEW DESIGN IMPLEMENTATION
+app.get('/viewers/*',function (req, res) {
+    console.log("redirecting viewers");
+    var urlViewers = 'http://dev-search.nextprot.org';
+    var redirectURL = urlViewers + req.url;
+    res.redirect(redirectURL);
+});
+
+app.all('/*', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'content-Type,x-requested-with');
+  next();
+});
+
+
+app.get('/db/results/showResults/*',function (req, res) {
+    var np1Host = 'http://localhost:8090';
+    var redirectURL = np1Host + req.url;
+    console.log("pattern 1: redirecting " + req.url + " to " + redirectURL);
+    res.redirect(redirectURL);
+});
+
+
+
+app.get('/db/entry/:entry/sequence', function(req,res) {
+    var entry = req.params.entry;
+    var redirectURL = '/entry/' + entry + '/view/sequence';
+    console.log("pattern 2: redirecting " + req.url + " to " + redirectURL);
+    res.redirect(redirectURL);
+});
+app.get('/db/entry/:entry/proteomics', function(req,res) {
+    var entry = req.params.entry;
+    var redirectURL = '/entry/' + entry + '/view/proteomics';
+    console.log("pattern 3: redirecting " + req.url + " to " + redirectURL);
+    res.redirect(redirectURL);
+});
+app.get('/db/entry/:entry/structures', function(req,res) {
+    var entry = req.params.entry;
+    var redirectURL = '/entry/' + entry + '/view/structures';
+    console.log("pattern 4: redirecting " + req.url + " to " + redirectURL);
+    res.redirect(redirectURL);
+});
+
+app.get('/db/*',function (req, res) {
+    var redirectURL = req.url.replace("/db", "");
+    console.log("pattern 5: redirecting " + req.url + " to " + redirectURL);
+    res.redirect(redirectURL);
+});
+
+
 app.get('/',function (req, res) {
 	  res.render('index.html');
 });
@@ -47,7 +99,6 @@ app.get('/',function (req, res) {
 // this use is called after all assets requests
 app.use(function (req, res) {
   res.render('index.html');
-  //res.redirect('/#' + req.url);
 });
 
 http.createServer(app).listen(app.get('port'), function () {

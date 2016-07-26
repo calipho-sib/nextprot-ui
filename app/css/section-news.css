@@ -10,3 +10,9 @@ a.social-link img {
     border: 2px solid #A3D5F7;
     z-index: 1;
 }
+#news-section .section-content{
+    margin-top:10px;
+}
+#news-section li{
+    margin-top:10px;
+}

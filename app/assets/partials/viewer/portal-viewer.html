@@ -1,0 +1,86 @@
+<div ng-controller="ViewerCtrl">
+    <div class="row" style="border-top: 1px solid #E7E7E7;" ng-class="minMenu ? 'minimizedMenu' : '' " smallscreen>
+        <div class="responsive-md-screen second-header-left" style="padding:0px;background-color:#bbb;height:50px">
+            <div class="col-xs-2" id="toggle-sidemenu">
+                <a class="btn" href="javascript:void(0);" ng-click="hideMenu = !hideMenu">
+                    <span class="fa fa-reorder" aria-hidden="true"></span>
+                </a>
+            </div>
+            <div class="col-sm-12 col-xs-8" id="entrySummaryBoxName">
+                <div id="entrySummaryName">
+                    <a class="figure" type="button" ng-click="minMenu = !minMenu">
+                        <i class="fa fa-chevron-left" ng-class="{'right' : minMenu}"></i>
+                    </a>
+                    <span class="text">
+                        PORTALS
+                    </span>
+                </div>
+                <ul id="protein-tooltip" class=" submenu">
+                    <li class="submenu-header ellipsis">PORTALS</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-12 responsive-md-screen second-header-right">
+            <div class="row" style="height:inherit;background-color:#f8f8f8;border-bottom: 1px solid #E7E7E7;margin-left:0px;height:50px;">
+<!--
+                <div class="col-lg-1 pull-left" id="toggle-minimizedMenu">
+                    <a class="btn" href="javascript:void(0);" ng-click="minMenu = !minMenu">
+                        <span class="fa fa-reorder" aria-hidden="true"></span>
+                    </a>
+                </div>
+-->
+                
+                <div class="col-lg-5 col-md-4 col-sm-6 col-xs-8" style="overflow:hidden;word-break:break-all;white-space:nowrap">
+                    <h1 style="margin:0px;padding:0px;line-height:45px; font-size:28px;">{{nm.title}}</h1>
+                </div>
+
+                
+
+                <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 pull-right">
+                    <div class="pull-right">
+                        <!-- See github url  -->
+                        <div class="entrySummarylink">
+                            <a ng-href="{{githubURL}}" title="See the source code" target="_blank" style="color:grey;font-size:18px;">
+                                <span class="fa fa-github" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        <!-- Download entry (pop-up opens) -->
+                        <div class="entrySummarylink">
+                            <a bs-modal="'partials/export/export-modal.html'" href="#" title="Download entry" ng-click="setExportEntry(widgetEntry)" title="Download entry" target="_blank" ng-href="{{widgetURL}}&inputOption=true" style="color:grey;font-size:18px;">
+                                <span class="fa fa-download" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        <!-- Expand in new window -->
+                        <div class="entrySummarylink">
+                            <a title="see it in a separated window" target="_blank" ng-href="{{externalURL}}" style="color:grey;font-size:18px;">
+                                <span class="fa fa-expand" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-2 col-sm-3 col-xs-12 entry-search" style="text-align:right;">
+                    <form ng-submit="makeSimpleSearch()">
+                        <div class="input-group">
+                            <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search an entry...">
+                            <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row body-content" style="background-color: #252A30;display:flex;" ng-class="minMenu ? 'minimizedMenu' : '' " smallscreen>
+        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="responsive-md-screen nopadding fullHeight sidemenu">
+            <div ng-include="'partials/viewer/viewer-portal-side-bar.html'"></div>
+        </div>
+        <div class="col-lg-12 col-xs-12 responsive-md-screen right-content" style="height:100%;">
+            <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%" style="border: 0; min-height: 800px; background-color: white; "></iframe>
+            <script>
+                iFrameResize({
+                    log: false,
+                    checkOrigin: false
+                })
+            </script>
+        </div>
+    </div>
+</div>

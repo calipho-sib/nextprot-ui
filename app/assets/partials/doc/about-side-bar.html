@@ -1,0 +1,70 @@
+<ul class="topmenu topmenu-responsive"  np-affix="50">
+    <li class="active">
+        <a class="collapsed onlyMinimized" href="javascript:void(0);" data-target="#scn" data-toggle="collapse">
+            <span class="figure">
+<!--                <span>SCN</span>-->
+                <i class="fa fa-info" style="font-size:1.5em;color:white;"></i>
+              </span>
+<!--            <span class="text">HELP</span>-->
+<!--            <span class="arrow fa"></span>-->
+        </a>
+        <!-- START 2nd Level Menu -->
+        <ul id="scn" class=" submenu collapse in">
+<!--            <li class="submenu-header ellipsis">Search</li>-->
+            <li ng-class="activePage('/about/about')">
+                <a href="about/about">
+                    <span class="text">neXtProt concept</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/release/contents')">
+                <a href="release/contents">
+                    <span class="text">Release contents</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/release/statistics')">
+                <a href="release/statistics">
+                    <span class="text">Release statistics</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/release/protein-existence')">
+                <a href="release/protein-existence">
+                    <span class="text">Protein existence status</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/about/human-proteome')">
+                <a href="about/human-proteome">
+                    <span class="text">The human proteome</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/news/february-2016-nextprot-release')">
+                <a href="news/february-2016-nextprot-release">
+                    <span class="text">News</span>
+                </a>
+            </li>
+            <li ng-class="activePage('/about/citing-nextprot')">
+                <a href="about/citing-nextprot">
+                    <span class="text">Citing neXtProt</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+<!--
+    <li active-section ng-class="{active: hasActive()}">
+        <a class="collapsed" href="javascript:void(0);" data-target="#brca" data-toggle="collapse">
+            <span class="figure">
+                <img style="width:30px;" src="../img/proteins.png">
+              </span>
+            <span class="text">BREAST CANCER</span>
+            <span class="arrow fa"></span>
+        </a>
+        <ul id="brca" class=" submenu collapse">
+            <li class="submenu-header ellipsis">Protein lists</li>
+            <li ng-class="activePage('view/portals/breast-cancer')">
+                <a href="view/portals/breast-cancer">
+                    <span class="text">Protein lists</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+-->
+</ul>

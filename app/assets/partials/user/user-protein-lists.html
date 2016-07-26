@@ -4,13 +4,13 @@
         <div ng-include="'partials/user/user-protein-lists-sidebar.html'"></div>
     </div>
     <div class="col-xs-9 col-sm-10">
-        <h4>My protein lists</h4>
+        <h1>My protein lists</h1>
 
 
         <!--filter-->
         <div class="input-group col-sm-4" style="margin-bottom: 20px;margin-top: 20px;">
             <input type="text"  ng-model="filterUserProteinLists" class="form-control" placeholder="search in your lists">
-            <span class="input-group-addon"><i class="icon-filter"></i></span>
+            <span class="input-group-addon"><i class="fa fa-filter"></i></span>
         </div>
 
         <!--                                 -->
@@ -34,12 +34,12 @@
                 <td class="col-md-1 align-right">{{list.entriesCount}}</td>
                 <td class="col-md-2 align-right">
                     <div class="btn-group">
-                        <a class="pull-left" title="Export list accessions" ng-href="{{getListExportUrl(list)}}" ng-click="gaTrackDownloadList()"><button class="btn btn-default btn-xs"><i class="icon-arrow-down"></i></button></a>
+                        <a class="pull-left" title="Export list accessions" ng-href="{{getListExportUrl(list)}}" ng-click="gaTrackDownloadList()"><button class="btn btn-default btn-xs"><i class="fa fa-arrow-down"></i></button></a>
                         <button title="Edit list informations" class="btn btn-default btn-xs" type="button"
                                 bs-modal="'partials/user/user-protein-lists-modal.html'"
-                                ng-click="launchModal($index, 'edit')"><i class="icon-edit"></i></button>
+                                ng-click="launchModal($index, 'edit')"><i class="fa fa-edit"></i></button>
                         <button title="Delete list" class="btn btn-default btn-xs" type="button" ng-click="delete(list)">
-                            <i class="icon-remove"></i>
+                            <i class="fa fa-remove"></i>
                         </button>
                     </div>
                 </td>
@@ -54,7 +54,7 @@
             <select class="col-xs-2 form-control" ng-model="combination.op" ng-options="i for i in operators"></select>
             <button class="btn"
                     ng-show="combination.op == 'NOT IN' && combination.first != null && combination.second != null"
-                    ng-click="switchCombine()"><i class="icon-resize-horizontal"></i></button>
+                    ng-click="switchCombine()"><i class="fa fa-arrows-h"></i></button>
             <select class="col-xs-3 form-control" ng-model="combination.second"
                     ng-options="i.name for i in options.second" style="min-width:25%"></select>
 

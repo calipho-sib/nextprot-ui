@@ -159,9 +159,9 @@
         };
 
         var icons = {
-            'public': 'icon-globe',
-            'private': 'icon-user',
-            'tutorial': 'icon-certificate'
+            'public': 'fa-globe',
+            'private': 'fa-user',
+            'tutorial': 'fa-certificate'
         };
 
         var QueryRepository = function () {
