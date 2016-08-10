@@ -1473,6 +1473,9 @@ header .navbar .nav > li > a:hover{
 /*    font-weight: 500;*/
 /*    text-shadow:0px -1px 0px #777;*/
 }
+header .navbar .dropdown-menu>.active>a{
+    background-color:#C50063;
+}
 
 /************************ SIDEBAR ****************************/
 

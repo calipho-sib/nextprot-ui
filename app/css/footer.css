@@ -23,3 +23,16 @@ footer a {
 footer a:hover {
     color: #FFF;
 }
+
+.ui-version{
+    cursor:pointer;
+}
+
+.ft-item{
+    border-right:1px solid #777;
+    padding:0px 5px;
+}
+.ft-item:last-child{
+    border-left:0px;
+    border-right:0px;
+}

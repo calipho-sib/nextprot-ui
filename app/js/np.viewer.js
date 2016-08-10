@@ -149,7 +149,8 @@
             $scope.widgetEntry = $routeParams.entry;
             $scope.widgetTerm = $routeParams.termid;
             $scope.widgetPubli = $routeParams.pubid;
-            var np2Views = ["sequence","proteomics","structures","peptides"];
+            var np2Views = ["structures","peptides"];
+//            var np2Views = ["sequence","proteomics","structures","peptides"];
 
             if (np2Views.indexOf($routeParams.ev1) > -1) { //Entry view
                 angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));

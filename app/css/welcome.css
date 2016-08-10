@@ -132,20 +132,22 @@ div.info-section {
 }
 
 div.section {
-	height: 250px;
+	height: 230px;
 /*	padding: 10px 4%;*/
 	background-color: white;
 	border: 1px solid #E3E3E3;
 /*    box-shadow: 0px 2px 2px rgba(0,0,0,0.05);*/
     position:relative;
 /*    border-radius:5px;*/
+    max-width: 300px;
+    margin:0 auto;
 }
 
 .section-header{
     background-color:#eee;
     border-bottom:1px solid #ddd;
     margin-bottom:5px;
-    padding:10px;
+    padding:8px;
 }
 .section-header .fa{
     margin-right:15px;
@@ -161,6 +163,7 @@ div.section-header h2 {
 }
 div.section-content{
     padding:10px;
+    padding-top:5px;
 }
 
 div.section-content, div.section-footer {
@@ -254,10 +257,31 @@ highchart{
 /*    width:100%;*/
     display: block;
     
-    width:300px !important;
-    height:150px !important;
+    max-width:300px;
+    height:150px;
 }
 .highcharts-container{
-    width:300px !important;
+/*
+    width:290px !important;
     height:150px !important;
+*/
 }
+
+@media (min-width: 1600px) {
+    .hp-sections{
+        margin:0px 8.33%;
+    }
+}
+
+/*LOGIN dropdown responsive :*/
+@media (min-width: 950px){
+    .smOnly{
+        display:none !important;
+    }
+}
+@media (max-width: 950px) {
+    .lgOnly{
+        display:none !important;
+    }
+}
+

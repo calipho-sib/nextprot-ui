@@ -12,9 +12,10 @@
 
         $routeProvider
             // Simple pages
-            .when('/release/:release', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
+//            .when('/release/:release', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
 //            .when('/news/:n1', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
-            .when('/:section/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
+//            .when('/about/nextprot', {title: 'about for nextprot', templateUrl: '/partials/doc/main-doc.html'})
+            .when('/:section/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})   
 
     }
 
@@ -26,6 +27,9 @@
         
 //        $scope.testt = $routeParams.article;
 //        $scope.widgetURL = "";
+        
+        var releasePages = ["contents","statistics","protein-existence"];
+        
         $scope.externalURL = null;      
         $scope.githubURL = null;
         $scope.simpleSearchText = "";
@@ -54,25 +58,20 @@
             if ($routeParams.section === "about") return commonPath + "about-side-bar.html";
             if ($routeParams.section === "help") return commonPath + "help-side-bar.html";
             if ($routeParams.section === "news") return commonPath + "news-side-bar.html";
-            if ($routeParams.release) return commonPath + "about-side-bar.html";
+//            if ($routeParams.release) return commonPath + "about-side-bar.html";
 //            if ($routeParams.release) return commonPath + "release-side-bar.html";
 //            if ($routeParams.n1) return commonPath + "news-side-bar.html";
         }
         
         $scope.getContentPartial = function(){
-            if ($routeParams.release === "protein-existence") return "partials/doc/iframe.html";
-            if ($routeParams.release) return "partials/release_"+ $routeParams.release + ".html";
+            if ($routeParams.article === "protein-existence") return "partials/doc/iframe.html";
+            if (releasePages.indexOf($routeParams.article)>-1) return "partials/release_"+ $routeParams.article + ".html";
             if ($routeParams.section === "news") return "partials/doc/news.html";
-//            if ($routeParams.n1) return "partials/doc/news.html";
             else return "partials/doc/page.html";
         }
 
         $scope.activePage = function (page) {
 
-            console.log("page");
-//            console.log(page);
-//            console.log($routeParams);
-//            console.log($location);
             if($location.url() === page) return 'active';
             if ($routeParams.element == page)  return 'active';
 
@@ -82,8 +81,8 @@
         // update entity documentation on path change
         $scope.$on('$routeChangeSuccess', function (event, next, current) {
 
-            if ($routeParams.release) { //Release view
-                angular.extend($scope, contentURLResolver.getScopeParamsForRelease($routeParams.release));
+            if (releasePages.indexOf($routeParams.article)) { //Release view
+                angular.extend($scope, contentURLResolver.getScopeParamsForRelease($routeParams.article));
 //                angular.extend($scope, contentURLResolver.getScopeParamsForContent($routeParams.release));
             }
             else if ($routeParams.section === "news") { //Help view
