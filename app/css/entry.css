@@ -17,6 +17,10 @@ body {
 a:focus {
     outline: 0 !important;
 }
+a.disabled{
+    cursor:not-allowed;
+    opacity:0.5;
+}
 
 .active {
     z-index: 1;
