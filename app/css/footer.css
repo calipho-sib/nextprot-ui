@@ -16,6 +16,10 @@ footer, footer a, footer a:visited {
 /*    color: #787C7C;*/
 }
 
+footer a.ft-item, footer a.ft-item:focus, footer a.ft-item:visited, footer a.ft-item:hover {
+    color:white;
+}
+
 footer a {
     text-decoration: none;
 }
