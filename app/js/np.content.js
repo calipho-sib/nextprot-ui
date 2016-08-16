@@ -81,11 +81,11 @@
         // update entity documentation on path change
         $scope.$on('$routeChangeSuccess', function (event, next, current) {
 
-            if (releasePages.indexOf($routeParams.article)) { //Release view
+            if (releasePages.indexOf($routeParams.article) > -1) { //Release view
                 angular.extend($scope, contentURLResolver.getScopeParamsForRelease($routeParams.article));
 //                angular.extend($scope, contentURLResolver.getScopeParamsForContent($routeParams.release));
             }
-            else if ($routeParams.section === "news") { //Help view
+            else if ($routeParams.section === "news") { //News view
                 
                 console.log("$scope");
                 console.log($scope);
@@ -126,9 +126,6 @@
             var url = window.location.origin + "/" + section + "/" + article;
             
 //            url += "/app/index.html";
-            console.log("url");
-            console.log("AZAZAZA");
-            console.log(url);
 
             return {
                 "communityMode": false,

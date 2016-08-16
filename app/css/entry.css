@@ -643,8 +643,9 @@ li a>.number {
 }
 
 
-/*special indent with circle and line*/
+/*special indent with circle and line BULLET LAYOUT : */
 
+/*
 .helpTest.topmenu .submenu{
     padding-left:40px;
 }
@@ -668,6 +669,8 @@ li a>.number {
     border-left: 1px solid #252a30;
     bottom:10px;
 }
+*/
+/*
 
 .mainmenu li:after,
 .helpTest.topmenu .submenu li:after {
@@ -703,16 +706,12 @@ li a>.number {
     -webkit-box-shadow: 0 0 0 2px #181b1f;
     box-shadow: 0 0 0 2px #181b1f;
     
-/*    CHANGEMENT DESIGN*/
-    
-/*        top: 13px; */
-    
-/*    NEW : */
     top:11px;
 }
 .helpTest.topmenu .submenu li.active:before{
     content:none;
 }
+*/
 
 
 /*NEWS SPECIFICATIONS*/
@@ -1554,7 +1553,7 @@ header .navbar .dropdown-menu>.active>a{
     height:100vh;
     z-index:300;
     overflow: scroll;
-    padding-bottom:100px;
+/*    padding-bottom:100px;*/
     box-shadow: 0px 1px 20px 2px rgba(0, 0, 0, 0.1);
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
@@ -1567,4 +1566,12 @@ header .navbar .dropdown-menu>.active>a{
 }
 .sidemenu{
     height:100%;
+}
+
+/* fix for IE & FF */
+.entry-view .topmenu>li:last-child{
+    padding-bottom:150px;
+}
+.entry-view .topmenu.affix>li:last-child{
+    padding-bottom:100px;
 }
