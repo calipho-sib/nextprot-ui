@@ -314,7 +314,7 @@
             var np1Base=config.api.NP1_URL + "/db";
             /* np2css: the css hiding header, footer and navigation items of NP1 page */
             var np2css = "/db/css/np2css.css"; // NP1 integrated css (same as local)
-            //var np2css = "http://localhost:3000/partials/viewer/np1np2.css"; // UI local css
+//            var np2css = "http://localhost:3000/partials/viewer/np1np2.css"; // UI local css
             /* np2ori: the origin of the main frame (UI page) used as a base for relative links in iframe*/
             var np2ori = window.location.origin;
             /* np1Params: params to pass to NP1 */
