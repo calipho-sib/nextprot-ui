@@ -15,9 +15,11 @@
             console.log(data);
             data.forEach(function(d){
                 var dt = new Date(d.publicationDate);
+                var day = dt.getDate();
                 var year = dt.getFullYear().toString();
                 var month = parseInt(dt.getMonth()) + 1;
-                d["minDate"] = month + "/" + dt.getDay() + "/" + year.substring(2);
+                
+                d["minDate"] = month + "/" + day + "/" + year.substring(2);
             })
             $scope.news = data.reverse();
         });

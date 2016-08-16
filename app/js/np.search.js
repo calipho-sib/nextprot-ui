@@ -279,7 +279,7 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     };
 
     $scope.isSearchBarVisible=function(){
-        return ($location.path()==='/'||$location.path().indexOf('/search')!==-1)
+        return ($location.path()==='/'||$location.path().indexOf('/search')!==-1 && $location.path()!=='/help/search-results')
     };
 
     $scope.go = function () {

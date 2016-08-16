@@ -73,13 +73,13 @@
                             <!-- Learn -->
                             <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
                             <li ng-class=""><a href="/proteins/search" ng-click="routingOutside('ui')">Simple search</a></li>
-                            <li ng-class=""><a href="/proteins/search?mode=advanced&start=0" ng-click="routingOutside('snorql')">Advanced search</a></li>
+                            <li ng-class=""><a href="/proteins/search?mode=advanced" ng-click="routingOutside('snorql')">Advanced search</a></li>
                             <li ng-class=""><a href="http://snorql.nextprot.org/" ng-click="routingOutside('api')">SNORQL search</a></li>
                             <li class="divider"></li>
                             <li ng-class=""><a ng-click="goToUser('lists')">My Lists</a></li>
                             <li ng-class=""><a ng-click="goToUser('queries')">My Queries</a></li>
                             <li class="divider"></li>
-                            <li ng-class=""><a href="#" ng-click="routingOutside('snorql')" style="cursor:not-allowed">BLAST</a></li>
+<!--                            <li ng-class=""><a href="#" ng-click="routingOutside('snorql')" style="cursor:not-allowed">BLAST</a></li>-->
                             <li ng-class=""><a href="/tools/unicity-checker" ng-click="routingOutside('snorql')">Peptide Unicity Checker</a></li>
                             <li class="divider"></li>
                             <li ng-class=""><a href="http://api.nextprot.org/" ng-click="routingOutside('snorql')">API</a></li>
@@ -194,24 +194,24 @@
                         <ul class="dropdown-menu" role="menu">
                             <!-- Learn -->
                             <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
-                            <li ng-class="{'active':isActiveDoc('/about/about')}">
-                                <a href="about/about">
+                            <li ng-class="{'active':isActiveDoc('/about/nextprot')}">
+                                <a href="about/nextprot">
                                     <span class="text">neXtProt concept</span>
                                 </a>
                             </li>
 <!--                            <li ng-class=""><a href="release/contents">Current release</a></li>-->
-                            <li ng-class="{'active':isActiveDoc('/release/contents')}">
-                                <a href="release/contents">
+                            <li ng-class="{'active':isActiveDoc('/about/contents')}">
+                                <a href="about/contents">
                                     <span class="text">Release contents</span>
                                 </a>
                             </li>
-                            <li ng-class="{'active':isActiveDoc('/release/statistics')}">
-                                <a href="release/statistics">
+                            <li ng-class="{'active':isActiveDoc('/about/statistics')}">
+                                <a href="about/statistics">
                                     <span class="text">Release statistics</span>
                                 </a>
                             </li>
-                            <li ng-class="{'active':isActiveDoc('/release/protein-existence')}">
-                                <a href="release/protein-existence">
+                            <li ng-class="{'active':isActiveDoc('/about/protein-existence')}">
+                                <a href="about/protein-existence">
                                     <span class="text">Protein existence status</span>
                                 </a>
                             </li>
@@ -264,12 +264,22 @@
                         <a href="" type="button" class="link" ng-click="login()">Login</a>
                     </li><!-- end ngIf: !user.profile.email -->
                     
+                    <!-- once logged in user resources -->
+                    <!-- ngIf: user.profile.email -->
+                    <li class="dropdown" ng-if="user.profile.email" ng-cloak>
+                            <a href="#" class="dropdown-toggle lgOnly" data-toggle="dropdown">
+                                {{user.profile.name || user.profile.email}}<span class="caret"></span></a>
+                            <ul class="dropdown-menu lgOnly" role="menu">
+                                <li><a href="#" ng-click="logout()">Logout</a></li>
+                            </ul>
+                        <a class="smOnly" href="#" ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                        
+                    </li>
+                    
                     <li>
                         <a id="sib-link" href="http://www.sib.swiss"><img id="sib-logo" src="/img/sib.png"></a>
                     </li>
 
-                    <!-- once logged in user resources -->
-                    <!-- ngIf: user.profile.email -->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

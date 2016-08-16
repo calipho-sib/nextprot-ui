@@ -67,6 +67,11 @@
                     <span class="text">Peptides</span>
                 </a>
             </li>
+            <li ng-class="activePage('phenotypes')">
+                <a href="/entry/{{widgetEntry}}/phenotypes" link-enabled="false" class="disabled">
+                    <span class="text">Phenotypes</span>
+                </a>
+            </li>
         </ul>
         <!--/ END 2nd Level Menu -->
     </li>
@@ -99,13 +104,14 @@
             <span class="figure">
                 <i class="fa fa-list-alt" style="padding-left:7px;color:white;"></i>
               </span>
-            <span class="text">REFERENCES   </span>
+            <span class="text">REFERENCES</span>
             <span class="arrow"></span>
         </a>
         <!-- START 2nd Level Menu -->
         <ul id="page" class="submenu collapse in">
             <li class="submenu-header ellipsis">Curated publications</li>
             <li ng-class="activePage('publications')">
+                <a link-enabled="entryProps.referencesCuratedPublicationsCount > 0" href="/entry/{{widgetEntry}}/publications" ng-class="{disabled: entryProps.referencesCuratedPublicationsCount < 1}">
                 <a href="/entry/{{widgetEntry}}/publications">
                     <span class="text">Curated publications</span>
                     <span class="number">
@@ -114,7 +120,7 @@
                 </a>
             </li>
             <li ng-class="activePage('computed_references')">
-                <a href="/entry/{{widgetEntry}}/computed_references">
+                <a link-enabled="entryProps.referencesAdditionalPublicationsCount > 0" href="/entry/{{widgetEntry}}/computed_references" ng-class="{disabled: entryProps.referencesAdditionalPublicationsCount < 1}">
                     <span class="text">Additional publications</span>
                     <span class="number">
                     <span class="label label-success" ng-bind="entryProps.referencesAdditionalPublicationsCount"></span>
@@ -122,7 +128,7 @@
                 </a>
             </li>
             <li ng-class="activePage('patents')">
-                <a href="/entry/{{widgetEntry}}/patents">
+                <a link-enabled="entryProps.referencesPatentsCount > 0" href="/entry/{{widgetEntry}}/patents" ng-class="{disabled: entryProps.referencesPatentsCount < 1}">
                     <span class="text">Patents</span>
                     <span class="number">
                     <span class="label label-success" ng-bind="entryProps.referencesPatentsCount"></span>
@@ -130,7 +136,7 @@
                 </a>
             </li>
             <li ng-class="activePage('submissions')">
-                <a href="/entry/{{widgetEntry}}/submissions">
+                <a link-enabled="entryProps.referencesSubmissionsCount > 0" href="/entry/{{widgetEntry}}/submissions" ng-class="{disabled: entryProps.referencesSubmissionsCount < 1}">
                     <span class="text">Submissions</span>
                     <span class="number">
                     <span class="label label-success" ng-bind="entryProps.referencesSubmissionsCount"></span>
@@ -138,7 +144,7 @@
                 </a>
             </li>
             <li ng-class="activePage('web')">
-                <a href="/entry/{{widgetEntry}}/web">
+                <a link-enabled="entryProps.referencesWebResourcesCount > 0" href="/entry/{{widgetEntry}}/web" ng-class="{disabled: entryProps.referencesWebResourcesCount < 1}">
                     <span class="text">Web ressources</span>
                     <span class="number">
                     <span class="label label-success" ng-bind="entryProps.referencesWebResourcesCount"></span>
