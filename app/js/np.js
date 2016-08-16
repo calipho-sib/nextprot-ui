@@ -186,23 +186,14 @@
     npCtrl.$inject = ['$scope','$location','$routeParams','metaService'];
     function npCtrl($scope, $location,$routeParams, metaService) {
         var that = this;
-        console.log("METATATATAGS");
         $scope.$on('$locationChangeSuccess', function (event,next, current) {
-            console.log("location IS CHANGING : ");
-            console.log(event);
-            console.log(next);
-            console.log(current);
-            console.log($location.path());
 //            var location = "/about/human-proteome";
             var location = $location.path();
             console.log("location");
             console.log(location);
-            console.log($routeParams);
 //            var path = {path:location};
             
             metaService.getMetaTags(location).$promise.then(function(data){
-                console.log("data METATAGS");
-                console.log(data);
     //            $scope.title = data.title;
                 that.title = data.title;
 //    //            $scope.h1 = data.h1;
@@ -226,13 +217,6 @@
     metaService.$inject = ['$resource','config'];
     function metaService($resource, config) {
         
-//        var path = $location.path();
-//        console.log("Factory path ?");
-//        console.log(path);
-        
-        
-//        console.log("path is : ");
-//        console.log(path);
         console.log(config.api.API_URL);
         
         var metaUrl = config.api.API_URL + '/seo/tags';
@@ -244,8 +228,6 @@
 
         MetaService.prototype.getMetaTags = function (path) {
             var url = metaUrl + path;
-            console.log("url for tags");
-            console.log(url);
             var metaResource = $resource(url, {}, {get : {method: "GET", isArray:false}});
             return metaResource.get();
         };
