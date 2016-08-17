@@ -285,3 +285,24 @@ highchart{
     }
 }
 
+.browser-not-supported p{
+    font-size:16px;
+}
+.browser-not-supported h3{
+    margin:0px;
+    line-height: 150%;
+}
+.browser-not-supported .browserLinks>div{
+    padding:5px;
+}
+.browser-not-supported .browserLinks>div{
+    padding:5px;
+    text-align: center;
+}
+.browser-not-supported .browserLinks>div .caption{
+    padding:5px 0px 0px;
+    
+}
+.browser-not-supported .browserLinks>div p{
+    margin:0px;
+}
