@@ -145,7 +145,7 @@
             </li>
             <li ng-class="activePage('web')">
                 <a link-enabled="entryProps.referencesWebResourcesCount > 0" href="/entry/{{widgetEntry}}/web" ng-class="{disabled: entryProps.referencesWebResourcesCount < 1}">
-                    <span class="text">Web ressources</span>
+                    <span class="text">Web resources</span>
                     <span class="number">
                     <span class="label label-success" ng-bind="entryProps.referencesWebResourcesCount"></span>
                     </span>
@@ -173,7 +173,7 @@
 -->
             <li ng-class="activePage('gh/Alain-Gateau/Protein-3D-structure')">
                 <a href="/entry/NX_P01308/gh/Alain-Gateau/Protein-3D-structure">
-                    <span class="text">3D structure</span>
+                    <span class="text"><span ng-bind="entryProps.geneName"></span> 3D structure</span>
                 </a>
             </li>
         </ul>

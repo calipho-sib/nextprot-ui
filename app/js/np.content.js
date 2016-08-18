@@ -47,9 +47,8 @@
 
         console.log("my config" , config);
 
-
-        $scope.makeSimpleSearch = function () {
-            $location.search("query", $scope.simpleSearchText);
+        $scope.makeSimpleSearch = function (query) {
+            $location.search("query", query);
             $location.path("proteins/search");
         }
         
