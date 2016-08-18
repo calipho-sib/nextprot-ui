@@ -286,7 +286,7 @@
             
             var ieCompatible = [false,"12","13"];
 
-            if (ieCompatible.indexOf(version) === -1){
+            if (version !== false && parseInt(version) < 12){
                 
                 var scope = $scope.$new();
                 scope.version = version;
