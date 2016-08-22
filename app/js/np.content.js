@@ -163,7 +163,7 @@
             var url = window.location.origin + "/release/" + release;
             var pe = (release === "protein-existence");
             if (pe){
-                url = window.location.origin + "/viewers/" + "statistics/protein-existence/app/index.html?env=dev";
+                url = window.location.origin + "/viewers/" + "statistics/protein-existence/app/index.html";
             }
             
 //            url += "/app/index.html";
