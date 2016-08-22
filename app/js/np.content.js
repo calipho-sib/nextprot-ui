@@ -166,6 +166,8 @@
                 url = window.location.origin + "/viewers/" + "statistics/protein-existence/app/index.html";
             }
             
+            var urlWithTitle = pe ? url + "?title=true" : url;
+            
 //            url += "/app/index.html";
             console.log("url");
             console.log(url);
@@ -174,7 +176,7 @@
                 "communityMode": false,
 //                TO FIX
                 "githubURL": pe ? "https://github.com/calipho-sib/nextprot-viewers/blob/master/statistics/protein-existence/app/" : "",
-                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(urlWithTitle)),
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
 //                "linkToParent":"about/about",
 //                "parent": "ABOUT",
