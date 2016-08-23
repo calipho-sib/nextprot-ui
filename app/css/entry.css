@@ -432,6 +432,9 @@ main {}
 .entry-search form {
     margin: 8px 0px 0px;
 }
+.simple-search-btn{
+    background-color:#eee;
+}
 
 #toggle-sidemenu {
     display: none;
