@@ -336,8 +336,11 @@ main {}
 .entrySummaryBoxes > div {
     text-align: center;
     margin-top: 8px;
-    margin-left: 20px;
+    margin-left: 10px;
     display: inline-block;
+}
+.entrySummaryBoxes > div:first-child {
+    margin-left:0px;
 }
 
 .entrySummaryBoxes p {
@@ -375,6 +378,17 @@ main {}
     width: 40px;
 }
 
+@media (min-width: 768px){
+    .entrySummaryBoxes{
+        text-align: right;
+    }
+}
+@media (min-width: 992px)
+    .entrySummaryBoxes{
+        text-align:left;
+    }
+}
+
 .entrySummaryBoxes span {
     color: white;
     font-weight: 900;
@@ -401,6 +415,9 @@ main {}
     margin-top: 13px;
     vertical-align: top;
     margin-right: 15px;
+}
+.entrySummarylink:last-child{
+    margin-right:0px;
 }
 
 .disable-link {
@@ -431,6 +448,7 @@ main {}
 
 .entry-search form {
     margin: 8px 0px 0px;
+    display: inline-block;
 }
 .simple-search-btn{
     background-color:#eee;

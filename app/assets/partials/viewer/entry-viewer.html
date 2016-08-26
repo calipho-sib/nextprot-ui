@@ -30,14 +30,14 @@
                     </a>
                 </div>
 -->
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="
+                <div class="col-lg-4 col-md-4 col-sm-7 col-xs-12" style="
     word-break: break-all;
     white-space: nowrap;
     text-overflow: ellipsis;    overflow: hidden;">
                     <h2 style="margin:0px;padding:0px;line-height:45px; font-size:28px;text-overflow: ellipsis;" ng-bind="nm.h1"></h2>
                 </div>
                 
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-7 entrySummaryBoxes" style="height:48px;">
+                <div class="col-lg-2 col-md-2 col-sm-5 col-xs-7 entrySummaryBoxes" style="height:48px;">
                     <div><span class="label" id="entrySummaryIso" ng-bind="entryProps.isoformCount"></span>
                         <p>ISO</p>
                     </div>
@@ -53,8 +53,12 @@
                     <a ng-show="communityMode" href="help/learn-programmatic-access" style="color: #808080;" data-toggle="tooltip" data-placement="top" title="Click and go to section develop / contribute">Community viewers </span>&nbsp;<i class="fa-info-sign"></i></a>
                 </div>
 -->
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-5 pull-right">
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5 pull-right">
                     <div class="pull-right">
+                        <div class="entrySummarylink">
+                            <label for="goldOnlyInput" > Gold Only </label>
+                             <input ng-model="goldOnly" id="goldOnlyInput" type="checkbox" data-toggle="toggle" style="display:inline-block" ng-click="toggleGoldOnly()">
+                        </div>
                         <!-- See github url  -->
                         <div class="entrySummarylink">
                             <a ng-href="{{githubURL}}" title="See the source code" target="_blank" style="color:grey;font-size:18px;">
@@ -75,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 entry-search" style="text-align:right;">
+                <div class="col-lg-3 col-md-3 col-sm-8 col-xs-12 entry-search" style="text-align:right;">
                     <form ng-submit="makeSimpleSearch()">
                         <div class="input-group">
                         <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search an entry...">

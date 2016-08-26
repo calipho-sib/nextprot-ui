@@ -55,6 +55,9 @@
     ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', ];
     function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
 
+//        console.log("YAAA" + $routeParams.gold);
+        $scope.goldOnly = $routeParams.gold || false;
+        
         $scope.partialName = "partials/doc/page.html";
         $scope.testt = $routeParams.article;
 
@@ -110,6 +113,14 @@
             $location.path("proteins/search");
         }
         
+        $scope.toggleGoldOnly = function () {
+            var newValue = $scope.goldOnly;
+            if(newValue == false){
+                $location.search("gold", null);
+            }else $location.search("gold");
+        }
+
+        
         $scope.hasPublication = function (count, link) {
             return parseInt(count) === 0 ? "#" : link
         }
@@ -154,11 +165,11 @@
             $scope.widgetEntry = $routeParams.entry;
             $scope.widgetTerm = $routeParams.termid;
             $scope.widgetPubli = $routeParams.pubid;
-            var np2Views = ["structures","peptides"];
+            var np2Views = ["structures","phenotypes","peptides"];
 //            var np2Views = ["sequence","proteomics","structures","peptides"];
 
             if (np2Views.indexOf($routeParams.ev1) > -1) { //Entry view
-                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
+                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry, $routeParams.gold));
 //                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
                 
             }else if ($routeParams.gv1) { //Global view
@@ -237,17 +248,19 @@
             return url + envUrl;
         }
 
-        this.getScopeParamsForEntryViewers = function (ev1, ev2, entryName) {
+        this.getScopeParamsForEntryViewers = function (ev1, ev2, entryName, goldOnly) {
 
             var url = window.location.origin + "/viewers/" + ev1;
             if(ev2) url += "/" + ev2;
             url += "/app/index.html" ;
+            
+            var goldOnlyString = (goldOnly === true) ? ("&goldOnly=" + goldOnly) : "";
 
             return {
                 "communityMode": false,
                 "githubURL": "https://github.com/calipho-sib/nextprot-viewers/blob/master/ " + ev1 + "/app/index.html",
-                "externalURL":  $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + "&inputOption=true")) ,
-                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName))
+                "externalURL":  $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + "&inputOption=true&qualitySelector=true" + goldOnlyString)) ,
+                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + goldOnlyString))
             }
 
         }
