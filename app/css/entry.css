@@ -967,6 +967,13 @@ li a>.number {
         overflow:visible;
     }
     
+    .entry-view .sidemenu .topmenu>li:last-child{
+        padding-bottom:0px;
+    }
+    .entry-view .sidemenu .topmenu-responsive>li:last-child{
+        padding-bottom:0px;
+    }
+    
     .topmenu li a>.figure, .topmenu li a.onlyMinimized>.figure {
         display:table-cell;
         padding:0px;
@@ -1176,6 +1183,12 @@ li a>.number {
 .minimizedMenu .sidemenu .topmenu{
     width: 60px;
     overflow:visible;
+}
+.minimizedMenu .sidemenu .topmenu>li:last-child{
+    padding-bottom:0px;
+}
+.minimizedMenu .sidemenu .topmenu-responsive>li:last-child{
+    padding-bottom:0px;
 }
 
 
