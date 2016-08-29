@@ -60,6 +60,8 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     // update entity documentation on path change
     $scope.$on('$routeChangeSuccess', function(event, next, current) {
 
+//        console.log("VALAR MORGHULIS !!!");
+//        console.log("VALAR DOHAERIS !!!");
         console.log("route change...", $routeParams.query);
 
         exportService.reset();
@@ -140,6 +142,39 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
         $scope.params({start:(Search.result.pagination.current - 1)*Search.result.rows}, form);
 
     };
+    
+    $scope.getNextprotUrl = function (input){ 
+        if(config.api.environment === "pro" || config.api.environment === "NX_ENV"){
+            switch(input) {
+                case "api": return "https://api.nextprot.org" ;
+                case "search": return "https://search.nextprot.org" ;
+                case "snorql": return "http://snorql.nextprot.org" ;
+            }
+        }
+        else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
+    }
+    
+//    $scope.getNeXtProtUrl = function(input) {
+//
+//        console.log("tesssssssssssssssssssssssssssssssst");
+//        console.log("tesssssssssssssssssssssssssssssssstt");
+//        console.log("tessssssssssssssssssssssssssssssssttt");
+//        
+////        if(npSettings.environment === "pro"){
+//        if(input === "pro"){
+//            switch(input) {
+//                case "api": return "https://api.nextprot.org" ;
+//                case "search": return "https://search.nextprot.org" ;
+//                case "snorql": return "http://snorql.nextprot.org" ;
+//            }
+//        }
+//
+//        console.log("NX ENVIRONMENT : ");
+//        console.log(input);
+////        console.log(npSettings.environment);
+////        else return "http://"+ npSettings.environment + "-" + input + ".nextprot.org";
+//        else return "http://"+ input + "-" + input + ".nextprot.org";
+//    };
 
     // interact with the search bar
     $scope.params = function (params, form) {
@@ -306,10 +341,15 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
                       search('query',null);
 
         }
-
         //We are in simple mode
         if(Search.params.query && Search.params.query.length){
             $location.search('query', Search.params.query.trim()).search('sparql',null);
+            if (Search.params.quality === 'gold-and-silver') {
+                $location.search('quality', Search.params.quality);
+            }
+        }
+        else if(Search.params.query.length === 0){
+            $location.search('query', "*").search('sparql',null);
             if (Search.params.quality === 'gold-and-silver') {
                 $location.search('quality', Search.params.quality);
             }

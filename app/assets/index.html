@@ -74,7 +74,9 @@
                             <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
                             <li ng-class=""><a href="/proteins/search" ng-click="routingOutside('ui')">Simple search</a></li>
                             <li ng-class=""><a href="/proteins/search?mode=advanced" ng-click="routingOutside('snorql')">Advanced search</a></li>
-                            <li ng-class=""><a href="http://snorql.nextprot.org/" ng-click="routingOutside('api')">SNORQL search</a></li>
+<!--                            <li ng-class=""><a href="http://snorql.nextprot.org/" ng-click="routingOutside('api')">SNORQL search</a></li>-->
+<!--                            <li ng-class=""><a href="#" ng-click="getNextprotUrl('api')">SNORQL search</a></li>-->
+                            <li ng-class=""><a ng-href="{{getNextprotUrl('snorql')}}">SNORQL search</a></li>
                             <li class="divider"></li>
                             <li ng-class=""><a ng-click="goToUser('lists')">My Lists</a></li>
                             <li ng-class=""><a ng-click="goToUser('queries')">My Queries</a></li>
@@ -82,7 +84,7 @@
 <!--                            <li ng-class=""><a href="#" ng-click="routingOutside('snorql')" style="cursor:not-allowed">BLAST</a></li>-->
                             <li ng-class=""><a href="/tools/unicity-checker" ng-click="routingOutside('snorql')">Peptide Unicity Checker</a></li>
                             <li class="divider"></li>
-                            <li ng-class=""><a href="http://api.nextprot.org/" ng-click="routingOutside('snorql')">API</a></li>
+                            <li ng-class=""><a ng-href="{{getNextprotUrl('api')}}">API</a></li>
                         </ul>
                     </li>
                     
