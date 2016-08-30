@@ -144,22 +144,26 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     };
     
     $scope.getNextprotUrl = function (input){
-        console.log("Current nx environment variable : " + config.api.environment);
-        console.log("http://" + config.api.environment + "-" + input + ".nextprot.org");
-        console.log(config.api.environment);
+        var test = config.api.environment;
+        console.log("Current nx environment variable : " + test);
+        console.log("http://" + test + "-" + input + ".nextprot.org");
+        console.log(test);
         
-        if(config.api.environment == "pro" || config.api.environment == "NX_ENV"){
+        if (test === "pro") { console.log("test === pro !!")};
+        if (test === "NX_ENV") { console.log("test === NX_ENV !!")};
+        
+        if(test == "pro" || test == "NX_ENV"){
             console.log("enter the first loop GETNEXTPROTURL");
             console.log("STEP 1");
             console.log(input);
-            console.log(config.api.environment);
+            console.log(test);
             switch(input) {
                 case "api": return "https://zazazaz.org" ;
                 case "search": return "https://qsqsqsqsqsq.org" ;
                 case "snorql": return "http://fdfdfdfdfd.org" ;
             }
         }
-        else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
+        else return "http://" + test + "-" + input + ".nextprot.org";
     }
     
 //    $scope.getNeXtProtUrl = function(input) {
