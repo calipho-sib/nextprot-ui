@@ -70,21 +70,21 @@
     }]);
 
 
-    SearchUI.filter('getNeXtProtUrl', ['config', function (config) {
-        return function (input) {
-
-            if(config.api.environment === "pro"){
-                switch(input) {
-                    case "api": return "https://api.nextprot.org" ;
-                    case "search": return "https://search.nextprot.org" ;
-                    case "snorql": return "http://snorql.nextprot.org" ;
-                }
-            }
-
-            if(input == "api") return config.api.API_URL;
-            else return "http://"+ config.api.environment + "-" + input + ".nextprot.org";
-        };
-    }]);
+//    SearchUI.filter('getNeXtProtUrl', ['config', function (config) {
+//        return function (input) {
+//
+//            if(config.api.environment === "pro"){
+//                switch(input) {
+//                    case "api": return "https://api.nextprot.org" ;
+//                    case "search": return "https://search.nextprot.org" ;
+//                    case "snorql": return "http://snorql.nextprot.org" ;
+//                }
+//            }
+//
+//            if(input == "api") return config.api.API_URL;
+//            else return "http://"+ config.api.environment + "-" + input + ".nextprot.org";
+//        };
+//    }]);
 
     SearchUI.filter('filterMyQueries', ['user', function (user) {
         return function (items) {
