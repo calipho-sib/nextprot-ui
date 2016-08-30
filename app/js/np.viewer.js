@@ -110,6 +110,7 @@
 
         $scope.makeSimpleSearch = function () {
             $location.search("isoform", null);
+            $location.search("gold", null);
             $location.search("query", $scope.simpleSearchText);
             $location.path("proteins/search");
         }
