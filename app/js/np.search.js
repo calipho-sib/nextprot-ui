@@ -325,6 +325,7 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
         $location.search('rows', null);
         $location.search('start', null);
         $location.search('queryId', null);
+        $location.search('isoform', null);
 
         // 1) Each time a new search is run, the basket (entries selected) should be emptied
         // 2) Each time a list content is displayed, the basket (entries selected) should be emptied
