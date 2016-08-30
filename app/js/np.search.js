@@ -153,9 +153,9 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
             console.log(input);
             console.log(config.api.environment);
             switch(input) {
-                case "api": return "https://api.nextprot.org" ;
-                case "search": return "https://search.nextprot.org" ;
-                case "snorql": return "http://snorql.nextprot.org" ;
+                case "api": return "https://zazazaz.org" ;
+                case "search": return "https://qsqsqsqsqsq.org" ;
+                case "snorql": return "http://fdfdfdfdfd.org" ;
             }
         }
         else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
