@@ -148,7 +148,7 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
         console.log("http://" + config.api.environment + "-" + input + ".nextprot.org");
         console.log(config.api.environment);
         
-        if(config.api.environment === "pro" || config.api.environment === "NX_ENV"){
+        if(config.api.environment == "pro" || config.api.environment == "NX_ENV"){
             console.log("enter the first loop GETNEXTPROTURL");
             console.log("STEP 1");
             console.log(input);
