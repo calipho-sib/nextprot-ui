@@ -48,6 +48,9 @@
         if (nxEnvironment.toLowerCase() === "pro") {
             apiBase = 'https://api.nextprot.org'; // Don't forget https!
             np1Base = 'https://www.nextprot.org';
+        else if (nxEnvironment.toLowerCase() === "vit") {
+            apiBase = 'https://vit-api.nextprot.org'; // Don't forget https!
+            np1Base = 'https://old.nextprot.org';
 
         } else if (nxEnvironment.toLowerCase() === "dev" || nxEnvironment.toLowerCase() === "alpha" || nxEnvironment.toLowerCase() === "build") {
             apiBase = 'http://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';

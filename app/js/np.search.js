@@ -144,26 +144,21 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     };
     
     $scope.getNextprotUrl = function (input){
-        var test = config.api.environment;
-        console.log("Current nx environment variable : " + test);
-        console.log("http://" + test + "-" + input + ".nextprot.org");
-        console.log(test);
         
-        if (test === "pro") { console.log("test === pro !!")};
-        if (test === "NX_ENV") { console.log("test === NX_ENV !!")};
-        
-        if(test == "pro" || test == "NX_ENV"){
-            console.log("enter the first loop GETNEXTPROTURL");
-            console.log("STEP 1");
-            console.log(input);
-            console.log(test);
+        if(config.api.environment === "pro"){
             switch(input) {
-                case "api": return "https://zazazaz.org" ;
-                case "search": return "https://qsqsqsqsqsq.org" ;
-                case "snorql": return "http://fdfdfdfdfd.org" ;
+                case "api": return "https://api.nextprot.org" ;
+                case "search": return "https://search.nextprot.org" ;
+                case "snorql": return "http://snorql.nextprot.org" ;
             }
         }
-        else return "http://" + test + "-" + input + ".nextprot.org";
+        else if(config.api.environment === "vit") {
+            switch(input) {
+                case "api": return "https://vit-api.nextprot.org" ;
+                case "search": return "https://vit-search.nextprot.org" ;
+                case "snorql": return "http://vit-snorql.nextprot.org" ;
+            }
+        else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
     }
     
 //    $scope.getNeXtProtUrl = function(input) {
