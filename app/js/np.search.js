@@ -148,6 +148,10 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
         console.log("http://" + config.api.environment + "-" + input + ".nextprot.org");
         
         if(config.api.environment === "pro" || config.api.environment === "NX_ENV"){
+            console.log("enter the first loop GETNEXTPROTURL");
+            console.log("STEP 1");
+            console.log(input);
+            console.log(config.api.environment);
             switch(input) {
                 case "api": return "https://api.nextprot.org" ;
                 case "search": return "https://search.nextprot.org" ;
