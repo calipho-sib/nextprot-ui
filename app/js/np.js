@@ -38,11 +38,13 @@
 
     // default environment when environment is not set by some external deployment script
     var nxEnvironment = "NX_ENV"; //env can be replaced, by dev, alpha or pro by nxs script on deploy
+    // WARNING !!! DO NOT USE NX_ENV ANYWHERE ELSE IN THE PROJECT. A script replace its value by the current environment value just before deployment !
     var apiBase = "http://dev-api.nextprot.org"; //default for UI developers on MACs
     var np1Base = 'http://uat-web1'; //default for UI developers on MACs
     //var apiBase = "http://localhost:8080/nextprot-api-web";  //default for UI + NP1 + NP2 on localhost
     //var np1Base = 'http://localhost:8090';                   //default for UI + NP1 + NP2 on localhost
 
+    
 
     if (nxEnvironment.indexOf("NX_") == -1) { // means an environment has been set, sed command has done some magic tricks
         if (nxEnvironment.toLowerCase() === "pro") {

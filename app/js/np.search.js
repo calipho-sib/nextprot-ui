@@ -158,6 +158,7 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
                 case "search": return "https://vit-search.nextprot.org" ;
                 case "snorql": return "http://vit-snorql.nextprot.org" ;
             }
+        }
         else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
     }
     
