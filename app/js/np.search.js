@@ -144,6 +144,8 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     };
     
     $scope.getNextprotUrl = function (input){ 
+        console.log("Current nx environment variable : " + config.api.environment);
+        
         if(config.api.environment === "pro" || config.api.environment === "NX_ENV"){
             switch(input) {
                 case "api": return "https://api.nextprot.org" ;
