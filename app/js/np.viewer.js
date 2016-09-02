@@ -255,9 +255,9 @@
             if(ev2) url += "/" + ev2;
             url += "/app/index.html" ;
             
-            var isPhenotypeView = ev1 === "phenotypes";
+            var isGoldFilterAvailable = ev1 === "phenotypes" || ev1 === "structures";
             
-            var goldOnlyString = (goldOnly === true) && isPhenotypeView ? ("&goldOnly=" + goldOnly) : "";
+            var goldOnlyString = (goldOnly === true) && isGoldFilterAvailable ? ("&goldOnly=" + goldOnly) : "";
             
 
             return {
@@ -265,7 +265,7 @@
                 "githubURL": "https://github.com/calipho-sib/nextprot-viewers/blob/master/ " + ev1 + "/app/index.html",
                 "externalURL":  $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + "&inputOption=true&qualitySelector=true" + goldOnlyString)) ,
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + goldOnlyString)),
-                "goldOnlyButton": isPhenotypeView
+                "goldOnlyButton": isGoldFilterAvailable
             }
 
         }
