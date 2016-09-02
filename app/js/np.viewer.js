@@ -121,7 +121,6 @@
                 $location.search("gold", null);
             }else $location.search("gold");
         }
-
         
         $scope.hasPublication = function (count, link) {
             return parseInt(count) === 0 ? "#" : link
@@ -256,13 +255,17 @@
             if(ev2) url += "/" + ev2;
             url += "/app/index.html" ;
             
-            var goldOnlyString = (goldOnly === true) ? ("&goldOnly=" + goldOnly) : "";
+            var isPhenotypeView = ev1 === "phenotypes";
+            
+            var goldOnlyString = (goldOnly === true) && isPhenotypeView ? ("&goldOnly=" + goldOnly) : "";
+            
 
             return {
                 "communityMode": false,
                 "githubURL": "https://github.com/calipho-sib/nextprot-viewers/blob/master/ " + ev1 + "/app/index.html",
                 "externalURL":  $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + "&inputOption=true&qualitySelector=true" + goldOnlyString)) ,
-                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + goldOnlyString))
+                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + goldOnlyString)),
+                "goldOnlyButton": isPhenotypeView
             }
 
         }
