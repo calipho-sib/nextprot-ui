@@ -30,6 +30,7 @@
     ]).config(configApplication)
         .factory('errorInterceptor', errorInterceptor)
         .factory('metaService', metaService)
+        .factory('nxBaseUrl', nxBaseUrl)
         .controller('npCtrl', npCtrl)
         .run(runApplication);
 
@@ -363,6 +364,36 @@
         };
 
         return new MetaService();
+    }
+    
+    nxBaseUrl.$inject = ['$resource', 'config'];
+    
+    function nxBaseUrl($resource, config){
+        
+        console.log(config.api.environment); 
+        
+        var nxBaseUrl = function () {};
+        
+        nxBaseUrl.prototype.getDomain = function(input){
+        
+            if(config.api.environment === "pro"){
+                switch(input) {
+                    case "api": return "https://api.nextprot.org" ;
+                    case "search": return "https://search.nextprot.org" ;
+                    case "snorql": return "http://snorql.nextprot.org" ;
+                }
+            }
+            else if(config.api.environment === "vit") {
+                switch(input) {
+                    case "api": return "https://vit-api.nextprot.org" ;
+                    case "search": return "https://vit-search.nextprot.org" ;
+                    case "snorql": return "http://vit-snorql.nextprot.org" ;
+                }
+            }
+            else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
+        }
+        
+        return new nxBaseUrl();
     }
 
 })(angular);

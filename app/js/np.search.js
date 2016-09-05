@@ -26,8 +26,8 @@ function searchConfig($routeProvider) {
 
 //
 // implement main application controller
-SearchCtrl.$inject=['Tracker', '$scope','$rootScope','$location', '$routeParams','$document', 'Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService', '$log'];
-function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $document, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService, $log) {
+SearchCtrl.$inject=['Tracker', '$scope','$rootScope','$location', '$routeParams','$document', 'Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService', '$log', 'nxBaseUrl'];
+function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $document, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService, $log, nxBaseUrl) {
 
     // scope from template
     $scope.Search = Search;
@@ -145,21 +145,23 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     
     $scope.getNextprotUrl = function (input){
         
-        if(config.api.environment === "pro"){
-            switch(input) {
-                case "api": return "https://api.nextprot.org" ;
-                case "search": return "https://search.nextprot.org" ;
-                case "snorql": return "http://snorql.nextprot.org" ;
-            }
-        }
-        else if(config.api.environment === "vit") {
-            switch(input) {
-                case "api": return "https://vit-api.nextprot.org" ;
-                case "search": return "https://vit-search.nextprot.org" ;
-                case "snorql": return "http://vit-snorql.nextprot.org" ;
-            }
-        }
-        else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
+        return nxBaseUrl.getDomain(input);
+        
+//        if(config.api.environment === "pro"){
+//            switch(input) {
+//                case "api": return "https://api.nextprot.org" ;
+//                case "search": return "https://search.nextprot.org" ;
+//                case "snorql": return "http://snorql.nextprot.org" ;
+//            }
+//        }
+//        else if(config.api.environment === "vit") {
+//            switch(input) {
+//                case "api": return "https://vit-api.nextprot.org" ;
+//                case "search": return "https://vit-search.nextprot.org" ;
+//                case "snorql": return "http://vit-snorql.nextprot.org" ;
+//            }
+//        }
+//        else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
     }
     
 //    $scope.getNeXtProtUrl = function(input) {
