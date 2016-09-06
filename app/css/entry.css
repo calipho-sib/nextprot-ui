@@ -445,7 +445,19 @@ main {}
     padding-left: 240px;
     z-index: 9;
 }
-
+.customH1{
+    margin:0px;
+    padding:0px;
+    line-height:45px; 
+    font-size:18px;
+    text-transform: uppercase;
+    color:dimgrey;
+}
+.customH1 .pubId{
+    color:black;
+    font-size:24px;
+    margin-left:5px;
+}
 .entry-search form {
     margin: 8px 0px 0px;
     display: inline-block;
