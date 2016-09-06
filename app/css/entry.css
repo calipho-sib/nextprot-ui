@@ -610,6 +610,14 @@ li a>.number {
     vertical-align: middle;
 }
 
+.portal-view .topmenu li a>.figure{
+    display: none;
+    font-size:14px;
+}
+.portal-view .topmenu li a>.text{
+    padding-left:0px;
+}
+
 .mainmenu li a>.number>.badge,
 .mainmenu li a>.number>.label,
 .topmenu li a>.number>.badge,
@@ -978,6 +986,10 @@ li a>.number {
         display:table-cell;
         padding:0px;
     }
+    .portal-view .topmenu li a>.figure{
+        display: table-cell;
+    }
+    
     .mainmenu.mainmenu-responsive>li>a>.text,
     .topmenu.topmenu-responsive>li>a>.text,
     .topmenu.topmenu-responsive>li>a>.arrow,
@@ -1168,6 +1180,10 @@ li a>.number {
         display:table-cell;
         padding:0px;
     }
+
+.minimizedMenu.portal-view .topmenu li a>.figure{
+    display: table-cell;
+}
 
 .minimizedMenu .responsive-md-screen.sidemenu,
 .minimizedMenu .responsive-md-screen.sidemenu,
