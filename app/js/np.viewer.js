@@ -339,11 +339,24 @@
             /* np1Params: params to pass to NP1 */
             var np1Params = "?np2css=" + np2css + "&np2ori=" + np2ori;
 
+//            console.log("Grails URL : ");
+//            console.log(np1Base);
+//            console.log(path);
+//            console.log(np1Params);
+//            console.log("query strings : ");
+            var queryStrings = $location.search(); 
+//            console.log(queryStrings);
+            var query = "";
+            
+            if (queryStrings.hasOwnProperty("isoform")){
+                query = "&isoform=" + queryStrings["isoform"];
+            }
+            
             var result = {
                 "communityMode": false,
                 "githubURL": null,
-                "externalURL": np1Base + path,
-                "widgetURL": $sce.trustAsResourceUrl(np1Base + path + np1Params)
+                "externalURL": np1Base + path + np1Params + query,
+                "widgetURL": $sce.trustAsResourceUrl(np1Base + path + np1Params + query)
             }
             return result;
 
