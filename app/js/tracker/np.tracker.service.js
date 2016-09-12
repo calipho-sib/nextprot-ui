@@ -4,7 +4,7 @@ var TrackingService = angular.module('np.tracker', []);
 
 TrackingService
     .value('developTrackingId', 'UA-61448300-1')
-    .value('productionTrackingId', 'UA-61448300-2')
+    .value('productionTrackingId', 'UA-17852148-1')
 
 TrackingService.factory('Tracker', [
     '$window',
