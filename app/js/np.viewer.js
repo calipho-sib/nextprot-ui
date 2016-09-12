@@ -117,9 +117,14 @@
         
         $scope.toggleGoldOnly = function () {
             var newValue = $scope.goldOnly;
+            var isoformQuery = $location.search().isoform;
+//            console.log("isoformQuery");
+//            console.log(isoformQuery);
             if(newValue !== false){
-                $location.search("gold", null);
-            }else $location.search("gold");
+                $location.search({"gold": null,
+                                 "isoform": isoformQuery});
+            }else $location.search({"gold":true,
+                                    "isoform":isoformQuery});
         }
         
         $scope.hasPublication = function (count, link) {
