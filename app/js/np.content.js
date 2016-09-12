@@ -15,13 +15,14 @@
 //            .when('/release/:release', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
 //            .when('/news/:n1', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
 //            .when('/about/nextprot', {title: 'about for nextprot', templateUrl: '/partials/doc/main-doc.html'})
+            .when('/:section/', {title: 'nextprot news', templateUrl: '/partials/doc/main-doc.html'})   
             .when('/:section/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})   
 
     }
 
 
-    ContentCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'contentURLResolver', ];
-    function ContentCtrl($scope, $sce, $routeParams, $location, config, exportService, contentURLResolver) {
+    ContentCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'contentURLResolver', 'newsService'];
+    function ContentCtrl($scope, $sce, $routeParams, $location, config, exportService, contentURLResolver, newsService) {
 
 //        $scope.partialName = "partials/doc/page.html";
         
@@ -85,10 +86,19 @@
 //                angular.extend($scope, contentURLResolver.getScopeParamsForContent($routeParams.release));
             }
             else if ($routeParams.section === "news") { //News view
+                if (!$routeParams.article){
+                    console.log("no news article selected, redirecting to latest..");
+                    var latest = newsService.getLatest();
+                    if (!latest) {
+                        newsService.getNews().$promise.then(function(news){
+                            var latest = news[news.length-1].url;
+                            $location.path("news/" + latest).replace();
+                        });
+                    }
+                    else $location.path("news/" + latest).replace();
+                }
                 
-                console.log("$scope");
-                console.log($scope);
-                angular.extend($scope, contentURLResolver.getScopeParamsForNews($routeParams.article));
+                else angular.extend($scope, contentURLResolver.getScopeParamsForNews($routeParams.article));
             }
             else if ($routeParams.article) { //Help view
                 angular.extend($scope, contentURLResolver.getScopeParamsForContent($routeParams.section,$routeParams.article));
