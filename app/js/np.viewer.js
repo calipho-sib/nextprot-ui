@@ -117,7 +117,7 @@
         
         $scope.toggleGoldOnly = function () {
             var newValue = $scope.goldOnly;
-            if(newValue == false){
+            if(newValue !== false){
                 $location.search("gold", null);
             }else $location.search("gold");
         }
