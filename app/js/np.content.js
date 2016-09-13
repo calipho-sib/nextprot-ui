@@ -13,9 +13,10 @@
         $routeProvider
             // Simple pages
 //            .when('/release/:release', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
-//            .when('/news/:n1', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
+//            .when('/news/:news', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
 //            .when('/about/nextprot', {title: 'about for nextprot', templateUrl: '/partials/doc/main-doc.html'})
-            .when('/:section/', {title: 'nextprot news', templateUrl: '/partials/doc/main-doc.html'})   
+//            .when('/:section/', {title: 'nextprot news', templateUrl: '/partials/doc/main-doc.html'})   
+            .when('/news/', {title:'Niews', templateUrl: '/partials/doc/main-doc.html'})
             .when('/:section/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})   
 
     }
@@ -85,7 +86,7 @@
                 angular.extend($scope, contentURLResolver.getScopeParamsForRelease($routeParams.article));
 //                angular.extend($scope, contentURLResolver.getScopeParamsForContent($routeParams.release));
             }
-            else if ($routeParams.section === "news") { //News view
+            else if ($routeParams.section === "news" || $location.path() === "/news/") { //News view
                 if (!$routeParams.article){
                     console.log("no news article selected, redirecting to latest..");
                     var latest = newsService.getLatest();
@@ -95,7 +96,7 @@
                             $location.path("news/" + latest).replace();
                         });
                     }
-                    else $location.path("news/" + latest).replace();
+                    else $location.path("news/" + latest).replace(); 
                 }
                 
                 else angular.extend($scope, contentURLResolver.getScopeParamsForNews($routeParams.article));

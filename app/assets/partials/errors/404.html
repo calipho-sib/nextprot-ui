@@ -14,7 +14,7 @@
                 font-size: 20px;
                 line-height: 1.4;
                 color: #737373;
-                background: #f0f0f0;
+/*                background: #f0f0f0;*/
                 -webkit-text-size-adjust: 100%;
                 -ms-text-size-adjust: 100%;
               
@@ -24,14 +24,19 @@
             input {
                 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             }
+            
+            h1{
+                font-size:9em;
+                font-weight: 300;
+            }
 
-            h1 {
-                margin: 0 10px;
-                font-size: 50px;
+            h2 {
+                margin: 0 10px 40px;
+                font-size: 45px;
                 text-align: center;
             }
 
-            h1 span {
+            h2 span {
                 color: #bbb;
             }
 
@@ -40,12 +45,46 @@
             }
 
             p {
-                margin: 1em 0;
+                margin: 0.8em 0;
+                font-size:16px;
             }
 
             ul {
                 padding: 0 0 0 40px;
                 margin: 1em 0;
+            }
+            .infos_404{
+                display:inline-block;
+                text-align:left;
+            }
+            .infos_404 ul{
+                margin-top:0px;
+            }
+            .infos_404 li{
+                margin-bottom:5px;
+                font-size:16px;
+            }
+            .infos_404_list{
+                margin-bottom:5px;
+            }
+            .separator_404{
+                border-top:1px solid #e5e5e5;
+                border-bottom:1px solid #fff;
+                width:50%;
+            }
+            .separator_404:first-child{
+                margin-bottom:10px;
+            }
+            .separator_404:last-child{
+                margin-top:10px;
+            }
+            
+            .redirection button, .redirection a{
+                margin:5px 15px;
+                border-radius: 3px;
+            }
+            .redirection .fa{
+                margin-right:5px;
             }
 
             /* google search */
@@ -117,14 +156,24 @@
                 border: 0;
             }
         </style>
-        <div class="container" style="padding-top:100px;">
-            <h1>Not found <span>:(</span></h1>
-            <p>Sorry, but the page you were trying to view does not exist.</p>
-            <p>It looks like this was the result of either:</p>
-            <ul>
-                <li>a mistyped address</li>
-                <li>an out-of-date link</li>
-            </ul>
+        <div class="container" style="text-align:center;">
+            <h1>404</h1>
+            <h2>Not found <span>:(</span></h2>
+            <hr class="separator_404">
+            <div class="infos_404">
+                <p>Sorry, but the page you were trying to view does not exist.</p>
+                <p class="infos_404_list">It looks like this was the result of either:</p>
+                <ul>
+                    <li>a mistyped address</li>
+                    <li>an out-of-date link</li>
+                </ul>
+            </div>
+            <hr class="separator_404">
+            <div class="redirection">
+                <button class="btn btn-default btn-lg" back><span class="fa fa-arrow-left"></span>Go back</button>
+                <a class="btn btn-default btn-lg" href="/"><span class="fa fa-home"></span>Home</a>
+                <a class="btn btn-default btn-lg"  href="mailto:support@nextprot.org?subject=[neXtProt%20Search]"><span class="fa fa-envelope"></span>Contact</a>
+            </div>
             <script>
                 var GOOG_FIXURL_LANG = (navigator.language || '').slice(0,2),GOOG_FIXURL_SITE = location.host;
             </script>

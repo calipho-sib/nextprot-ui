@@ -98,6 +98,13 @@
                 title: 'welcome to neXtProt',
                 templateUrl: '/partials/welcome.html'
             })
+        
+            // 404 error page
+            .when('/404', {
+                title: '404',
+                templateUrl: '/partials/errors/404.html'
+            })
+        
             // Content page
             .when('/release-contents', {
                 title: 'neXtProt release contents',
@@ -130,11 +137,6 @@
             .when('/help/entity/:entity', {
                 title: 'help for RDF',
                 templateUrl: '/partials/doc/help.html'
-            })
-            // 404 error page
-            .when('/404', {
-                title: '404',
-                templateUrl: '/partials/errors/404.html'
             })
             // List of routes of the application
 
