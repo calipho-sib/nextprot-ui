@@ -360,7 +360,9 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
             }
         }
         else if(Search.params.query.length === 0){
-            $location.search('query', "*").search('sparql',null);
+            if(Search.params.mode !== 'advanced'){
+                $location.search('query', "*").search('sparql',null);
+            }
             if (Search.params.quality === 'gold-and-silver') {
                 $location.search('quality', Search.params.quality);
             }
