@@ -442,20 +442,31 @@
     });
     
     SearchUI.directive('linkEnabled', function() {
-    return {
-      scope: {
-        enabled: '=linkEnabled'
-      },
-      link: function(scope, element, attrs) {
-        element.bind('click', function(event) {
-          if(!scope.enabled) {
-            event.preventDefault();
+        return {
+          scope: {
+            enabled: '=linkEnabled'
+          },
+          link: function(scope, element, attrs) {
+            element.bind('click', function(event) {
+              if(!scope.enabled) {
+                event.preventDefault();
+              }
+            });   
           }
-        });
-        
-      }
-    };
-  });
+        };
+    });
+    
+    SearchUI.directive('back', ['$window', function($window) {
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs) {
+                elem.bind('click', function () {
+                    $window.history.back();
+                });
+            }
+        };
+    }]);
+    
     
 })(angular);
 

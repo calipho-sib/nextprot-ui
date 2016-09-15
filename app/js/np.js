@@ -98,6 +98,13 @@
                 title: 'welcome to neXtProt',
                 templateUrl: '/partials/welcome.html'
             })
+        
+            // 404 error page
+            .when('/404', {
+                title: '404',
+                templateUrl: '/partials/errors/404.html'
+            })
+        
             // Content page
             .when('/release-contents', {
                 title: 'neXtProt release contents',
@@ -130,11 +137,6 @@
             .when('/help/entity/:entity', {
                 title: 'help for RDF',
                 templateUrl: '/partials/doc/help.html'
-            })
-            // 404 error page
-            .when('/404', {
-                title: '404',
-                templateUrl: '/partials/errors/404.html'
             })
             // List of routes of the application
 
@@ -315,8 +317,9 @@
         $scope.$on('$locationChangeSuccess', function (event, next, current) {
             //            var location = "/about/human-proteome";
             var location = $location.path();
-            console.log("location");
-            console.log(location);
+            
+            that.h1 = "";
+            console.log("location : " + location);
             //            var path = {path:location};
 
             metaService.getMetaTags(location).$promise.then(function (data) {

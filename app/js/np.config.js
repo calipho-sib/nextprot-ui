@@ -12,6 +12,7 @@ angular.module('np.config', []).factory('config', [
         var defaultApi = {
 
             environment: npSettings.environment,
+//            environment: "dev",
             API_URL: npSettings.base,
             NP1_URL: npSettings.np1,
             AUTH_CALLBACK_URL: npSettings.callback,
