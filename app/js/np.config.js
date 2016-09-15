@@ -38,7 +38,7 @@ angular.module('np.config', []).factory('config', [
                 "aanpbiosequenceannotation": "neXtProt annotation",
                 "aanpfamily": "neXtProt family",
                 "aanpmodificationeffect": "neXtProt modification effect",
-                "aanpproteinproperty":"Protein property",
+                "aanpproteinproperty":"neXtProt protein property",
                 "aanptissues": "neXtProt human anatomy",
                 "nonstandardaminoacid": "Non-standard amino acid",
                 "organelle": "Organelle",
