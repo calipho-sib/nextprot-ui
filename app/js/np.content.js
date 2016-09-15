@@ -160,7 +160,7 @@
                 "githubURL": "https://github.com/calipho-sib/" + n1,
                 "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
-                "linkToParent":"about/about",
+                "linkToParent":"about/nextprot",
                 "parent": "ABOUT",
                 "title": "NEWS",
                 "section": "NEWS",
