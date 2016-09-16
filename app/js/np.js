@@ -118,7 +118,7 @@
             // Pages (in nextprot-docs/pages): about, copyright...
             .when('/:article', {
                 title: 'page',
-                templateUrl: '/partials/doc/page.html'
+                templateUrl: '/partials/doc/page-alone.html'
             })
             //// Help pages
             // Simple pages
