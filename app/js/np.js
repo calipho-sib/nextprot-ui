@@ -26,7 +26,7 @@
         'np.news',
         'np.release.info',
         'ui.codemirror',
-        'auth0', 'angular-storage', 'angular-jwt', 'logglyLogger'
+        'auth0', 'angular-storage', 'angular-jwt'
     ]).config(configApplication)
         .factory('errorInterceptor', errorInterceptor)
         .factory('metaService', metaService)
@@ -89,9 +89,9 @@
 
 
     // config application $route, $location and $http services.
-    configApplication.$inject = ['$routeProvider', '$locationProvider', '$httpProvider', 'authProvider', 'npSettings', 'jwtInterceptorProvider', 'LogglyLoggerProvider', '$resourceProvider'];
+    configApplication.$inject = ['$routeProvider', '$locationProvider', '$httpProvider', 'authProvider', 'npSettings', 'jwtInterceptorProvider', '$resourceProvider'];
 
-    function configApplication($routeProvider, $locationProvider, $httpProvider, authProvider, npSettings, jwtInterceptorProvider, LogglyLoggerProvider, $resourceProvider) {
+    function configApplication($routeProvider, $locationProvider, $httpProvider, authProvider, npSettings, jwtInterceptorProvider, $resourceProvider) {
         $routeProvider
         // Home page
             .when('/', {
@@ -148,7 +148,6 @@
             icon: 'img/np.png'
         })
 
-        LogglyLoggerProvider.inputToken('8d9a8721-1beb-4e25-a37d-f0ff528cf611');
         jwtInterceptorProvider.tokenGetter = ['ipCookie', function (ipCookie) {
             // Return the saved token
             return ipCookie('nxtoken');
