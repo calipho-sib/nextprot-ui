@@ -47,11 +47,12 @@
 
     SearchUI.filter('getPubUrl', [function () {
         return function (ac) {
-            if (ac.indexOf(":PubMed") != -1) {
+            if (ac.indexOf("PubMed:") !== -1) {
                 //return "http://www.ncbi.nlm.nih.gov/pubmed?term=" + ac.substring(ac, ac.indexOf(":"));
-                return "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=search&term=" + ac.substring(ac, ac.indexOf(":"));
-            } else if (ac.indexOf(":DOI") != -1) {
-                return "http://dx.doi.org/" + ac.substring(ac, ac.indexOf(":"));
+//                return "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=search&term=" + ac.substring(ac, ac.indexOf(":"));
+                return "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=search&term=" + ac.split(":")[1];
+            } else if (ac.indexOf("DOI:") != -1) {
+                return "http://dx.doi.org/" + ac.split(":")[1];
             }
         }
     }]);
@@ -65,24 +66,7 @@
 
     SearchUI.filter('getPubId', [function () {
         return function (ac) {
-            return ac.substring(0, ac.indexOf(":"));
-        };
-    }]);
-
-
-    SearchUI.filter('getNeXtProtUrl', ['config', function (config) {
-        return function (input) {
-
-            if(config.api.environment === "pro"){
-                switch(input) {
-                    case "api": return "https://api.nextprot.org" ;
-                    case "search": return "https://search.nextprot.org" ;
-                    case "snorql": return "http://snorql.nextprot.org" ;
-                }
-            }
-
-            if(input == "api") return config.api.API_URL;
-            else return "http://"+ config.api.environment + "-" + input + ".nextprot.org";
+            return ac.split(":")[1];
         };
     }]);
 
@@ -456,7 +440,33 @@
       }
 
     });
-
+    
+    SearchUI.directive('linkEnabled', function() {
+        return {
+          scope: {
+            enabled: '=linkEnabled'
+          },
+          link: function(scope, element, attrs) {
+            element.bind('click', function(event) {
+              if(!scope.enabled) {
+                event.preventDefault();
+              }
+            });   
+          }
+        };
+    });
+    
+    SearchUI.directive('back', ['$window', function($window) {
+        return {
+            restrict: 'A',
+            link: function (scope, elem, attrs) {
+                elem.bind('click', function () {
+                    $window.history.back();
+                });
+            }
+        };
+    }]);
+    
     
 })(angular);
 

@@ -15,11 +15,15 @@
             console.log(data);
             data.forEach(function(d){
                 var dt = new Date(d.publicationDate);
+                var day = dt.getDate();
                 var year = dt.getFullYear().toString();
                 var month = parseInt(dt.getMonth()) + 1;
-                d["minDate"] = month + "/" + dt.getDay() + "/" + year.substring(2);
+                
+                d["minDate"] = month + "/" + day + "/" + year.substring(2);
             })
+            newsService.setLatest(data[data.length-1].url);
             $scope.news = data.reverse();
+            
         });
 
     }
@@ -28,14 +32,25 @@
     function newsService($resource, config) {
 
         var newsResource = $resource(config.api.API_URL + '/news.json', {}, {get : {method: "GET", isArray:true}});
+        
+        var news = {
+            latest : ""
+        };
 
         var NewsService = function () {
-
         };
 
         NewsService.prototype.getNews = function () {
             return newsResource.get();
         };
+        
+        NewsService.prototype.setLatest = function (latest) {
+            news.latest = latest;
+        }
+        
+        NewsService.prototype.getLatest = function(){
+            return news.latest;
+        }
 
         return new NewsService();
     }

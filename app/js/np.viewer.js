@@ -55,6 +55,9 @@
     ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', ];
     function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
 
+//        console.log("YAAA" + $routeParams.gold);
+        $scope.goldOnly = $routeParams.gold || false;
+        
         $scope.partialName = "partials/doc/page.html";
         $scope.testt = $routeParams.article;
 
@@ -88,6 +91,7 @@
                 console.log("PUBLICATIONS DATA");
                 console.log(data);
                 $scope.entryProps.name = data.entry.overview.mainProteinName;
+                $scope.entryProps.geneName = data.entry.overview.mainGeneName;
                 $scope.entryProps.genesCount = data.entry.overview.geneNames.length;
                 angular.extend($scope.entryProps, data.entry.properties);
 
@@ -105,8 +109,26 @@
         };
 
         $scope.makeSimpleSearch = function () {
+            $location.search("isoform", null);
+            $location.search("gold", null);
             $location.search("query", $scope.simpleSearchText);
             $location.path("proteins/search");
+        }
+        
+        $scope.toggleGoldOnly = function () {
+            var newValue = $scope.goldOnly;
+            var isoformQuery = $location.search().isoform;
+//            console.log("isoformQuery");
+//            console.log(isoformQuery);
+            if(newValue !== false){
+                $location.search({"gold": null,
+                                 "isoform": isoformQuery});
+            }else $location.search({"gold":true,
+                                    "isoform":isoformQuery});
+        }
+        
+        $scope.hasPublication = function (count, link) {
+            return parseInt(count) === 0 ? "#" : link
         }
 
         $scope.activePage = function (page) {
@@ -149,10 +171,11 @@
             $scope.widgetEntry = $routeParams.entry;
             $scope.widgetTerm = $routeParams.termid;
             $scope.widgetPubli = $routeParams.pubid;
-            var np2Views = ["sequence","proteomics","structures","peptides"];
+            var np2Views = ["phenotypes","peptides"];
+//            var np2Views = ["sequence","proteomics","structures","peptides"];
 
             if (np2Views.indexOf($routeParams.ev1) > -1) { //Entry view
-                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
+                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry, $routeParams.gold));
 //                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
                 
             }else if ($routeParams.gv1) { //Global view
@@ -170,7 +193,7 @@
                 
             // GRAILS INTEGRATION
             } else { //deprecated nextprot
-                angular.extend($scope, viewerURLResolver.getScopeParamsForNeXtProtGrails($location.$$path));
+                angular.extend($scope, viewerURLResolver.getScopeParamsForNeXtProtGrails($location.$$path, $routeParams.element));
             }
         });
 
@@ -231,17 +254,23 @@
             return url + envUrl;
         }
 
-        this.getScopeParamsForEntryViewers = function (ev1, ev2, entryName) {
+        this.getScopeParamsForEntryViewers = function (ev1, ev2, entryName, goldOnly) {
 
             var url = window.location.origin + "/viewers/" + ev1;
             if(ev2) url += "/" + ev2;
             url += "/app/index.html" ;
+            
+            var isGoldFilterAvailable = ev1 === "phenotypes" || ev1 === "structures";
+            
+            var goldOnlyString = (goldOnly === true) && isGoldFilterAvailable ? ("&goldOnly=" + goldOnly) : "";
+            
 
             return {
                 "communityMode": false,
                 "githubURL": "https://github.com/calipho-sib/nextprot-viewers/blob/master/ " + ev1 + "/app/index.html",
-                "externalURL":  $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + "&inputOption=true")) ,
-                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName))
+                "externalURL":  $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + "&inputOption=true&qualitySelector=true" + goldOnlyString)) ,
+                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + goldOnlyString)),
+                "goldOnlyButton": isGoldFilterAvailable
             }
 
         }
@@ -252,11 +281,12 @@
             if (gv2) url += "/" + gv2;
             if (gv3) url += "/" + gv3;
             url += "/app/index.html";
+            var urlWithTitle = url + "?title=true";
 
             return {
                 "communityMode": false,
                 "githubURL": "https://github.com/calipho-sib/nextprot-viewers/" + gv1,
-                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(urlWithTitle)),
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
                 "title": gv1
             }
@@ -270,11 +300,12 @@
             url += "/app/index.html";
             console.log("url");
             console.log(url);
+            var urlWithTitle = url + "?title=true";
 
             return {
                 "communityMode": false,
                 "githubURL": "https://github.com/calipho-sib/nextprot-viewers/portals/" + pn1,
-                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(urlWithTitle)),
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
                 "title": pn1 + " portal"
             }
@@ -296,23 +327,41 @@
             }
         }
 
-        this.getScopeParamsForNeXtProtGrails = function (path) {
+        this.getScopeParamsForNeXtProtGrails = function (path, element) {
 
+//            Redirect for term documentation page
+            if (element === "documentation"){
+                path = path.replace("documentation","document");
+            }
+            
             /* np1Base: origin of NP1 http service, read from conf or set to localhost for dev/debug */
             var np1Base=config.api.NP1_URL + "/db";
             /* np2css: the css hiding header, footer and navigation items of NP1 page */
             var np2css = "/db/css/np2css.css"; // NP1 integrated css (same as local)
-            //var np2css = "http://localhost:3000/partials/viewer/np1np2.css"; // UI local css
+//            var np2css = "http://localhost:3000/partials/viewer/np1np2.css"; // UI local css
             /* np2ori: the origin of the main frame (UI page) used as a base for relative links in iframe*/
             var np2ori = window.location.origin;
             /* np1Params: params to pass to NP1 */
             var np1Params = "?np2css=" + np2css + "&np2ori=" + np2ori;
 
+//            console.log("Grails URL : ");
+//            console.log(np1Base);
+//            console.log(path);
+//            console.log(np1Params);
+//            console.log("query strings : ");
+            var queryStrings = $location.search(); 
+//            console.log(queryStrings);
+            var query = "";
+            
+            if (queryStrings.hasOwnProperty("isoform")){
+                query = "&isoform=" + queryStrings["isoform"];
+            }
+            
             var result = {
                 "communityMode": false,
                 "githubURL": null,
-                "externalURL": np1Base + path,
-                "widgetURL": $sce.trustAsResourceUrl(np1Base + $location.$$path + np1Params)
+                "externalURL": np1Base + path + np1Params + query,
+                "widgetURL": $sce.trustAsResourceUrl(np1Base + path + np1Params + query)
             }
             return result;
 

@@ -30,6 +30,13 @@
     <link rel="stylesheet" href="css/app.css?release={!distRelease!}">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    </script>
 </head>
 
 <body ng-clock="" class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90"
@@ -73,16 +80,18 @@
                             <!-- Learn -->
                             <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
                             <li ng-class=""><a href="/proteins/search" ng-click="routingOutside('ui')">Simple search</a></li>
-                            <li ng-class=""><a href="/proteins/search?mode=advanced&start=0" ng-click="routingOutside('snorql')">Advanced search</a></li>
-                            <li ng-class=""><a href="http://snorql.nextprot.org/" ng-click="routingOutside('api')">SNORQL search</a></li>
+                            <li ng-class=""><a href="/proteins/search?mode=advanced" ng-click="routingOutside('snorql')">Advanced search</a></li>
+<!--                            <li ng-class=""><a href="http://snorql.nextprot.org/" ng-click="routingOutside('api')">SNORQL search</a></li>-->
+<!--                            <li ng-class=""><a href="#" ng-click="getNextprotUrl('api')">SNORQL search</a></li>-->
+                            <li ng-class=""><a ng-href="{{getNextprotUrl('snorql')}}">SNORQL search</a></li>
                             <li class="divider"></li>
                             <li ng-class=""><a ng-click="goToUser('lists')">My Lists</a></li>
                             <li ng-class=""><a ng-click="goToUser('queries')">My Queries</a></li>
                             <li class="divider"></li>
-                            <li ng-class=""><a href="#" ng-click="routingOutside('snorql')" style="cursor:not-allowed">BLAST</a></li>
+<!--                            <li ng-class=""><a href="#" ng-click="routingOutside('snorql')" style="cursor:not-allowed">BLAST</a></li>-->
                             <li ng-class=""><a href="/tools/unicity-checker" ng-click="routingOutside('snorql')">Peptide Unicity Checker</a></li>
                             <li class="divider"></li>
-                            <li ng-class=""><a href="http://api.nextprot.org/" ng-click="routingOutside('snorql')">API</a></li>
+                            <li ng-class=""><a ng-href="{{getNextprotUrl('api')}}">API</a></li>
                         </ul>
                     </li>
                     
@@ -92,8 +101,8 @@
                         <ul class="dropdown-menu" role="menu">
                             <!-- Learn -->
                             <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
-                            <li ng-class=""><a href="./portals/breast-cancer">Breast cancer</a></li>
-                            <li ng-class=""><a href="./portals/navmut">Sodium channels</a></li>
+                            <li ng-class=""><a href="./portals/breast-cancer">Cancer variants portal</a></li>
+                            <li ng-class=""><a href="./portals/navmut">Ion channels variants portal</a></li>
 <!--                            <li ng-class=""><a href="http://dev-api.nextprot.org/" ng-click="routingOutside('api')">Protein kinases</a></li>-->
                         </ul>
                     </li>
@@ -194,25 +203,25 @@
                         <ul class="dropdown-menu" role="menu">
                             <!-- Learn -->
                             <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
-                            <li ng-class="{'active':isActiveDoc('/about/about')}">
-                                <a href="about/about">
+                            <li ng-class="{'active':isActiveDoc('/about/nextprot')}">
+                                <a href="about/nextprot">
                                     <span class="text">neXtProt concept</span>
                                 </a>
                             </li>
 <!--                            <li ng-class=""><a href="release/contents">Current release</a></li>-->
-                            <li ng-class="{'active':isActiveDoc('/release/contents')}">
-                                <a href="release/contents">
+                            <li ng-class="{'active':isActiveDoc('/about/contents')}">
+                                <a href="about/contents">
                                     <span class="text">Release contents</span>
                                 </a>
                             </li>
-                            <li ng-class="{'active':isActiveDoc('/release/statistics')}">
-                                <a href="release/statistics">
+                            <li ng-class="{'active':isActiveDoc('/about/statistics')}">
+                                <a href="about/statistics">
                                     <span class="text">Release statistics</span>
                                 </a>
                             </li>
-                            <li ng-class="{'active':isActiveDoc('/release/protein-existence')}">
-                                <a href="release/protein-existence">
-                                    <span class="text">Protein existence status</span>
+                            <li ng-class="{'active':isActiveDoc('/about/protein-existence')}">
+                                <a href="about/protein-existence">
+                                    <span class="text">Protein existence</span>
                                 </a>
                             </li>
                             <li ng-class="{'active':isActiveDoc('/about/human-proteome')}">
@@ -221,7 +230,7 @@
                                 </a>
                             </li>
                             <li ng-class="{'active':isActiveDoc('/about/news/*')}">
-                                <a href="news/february-2016-nextprot-release">
+                                <a href="news/">
                                     <span class="text">News</span>
                                 </a>
                             </li>
@@ -264,12 +273,22 @@
                         <a href="" type="button" class="link" ng-click="login()">Login</a>
                     </li><!-- end ngIf: !user.profile.email -->
                     
+                    <!-- once logged in user resources -->
+                    <!-- ngIf: user.profile.email -->
+                    <li class="dropdown" ng-if="user.profile.email" ng-cloak>
+                            <a href="#" class="dropdown-toggle lgOnly" data-toggle="dropdown">
+                                {{user.profile.name || user.profile.email}}<span class="caret"></span></a>
+                            <ul class="dropdown-menu lgOnly" role="menu">
+                                <li><a href="#" ng-click="logout()">Logout</a></li>
+                            </ul>
+                        <a class="smOnly" href="#" ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                        
+                    </li>
+                    
                     <li>
                         <a id="sib-link" href="http://www.sib.swiss"><img id="sib-logo" src="/img/sib.png"></a>
                     </li>
 
-                    <!-- once logged in user resources -->
-                    <!-- ngIf: user.profile.email -->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -278,6 +297,8 @@
     </nav>
 
 </header>
+    
+<div ng-init="browserCompatibility()"></div>
 
 <div ng-show="message" class=" error ng-cloak" ng-cloak>
     <div class="np-alert alert alert-error alert-warning">{{Search.result.error}} {{message}}</div>

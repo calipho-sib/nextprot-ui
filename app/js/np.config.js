@@ -12,6 +12,7 @@ angular.module('np.config', []).factory('config', [
         var defaultApi = {
 
             environment: npSettings.environment,
+//            environment: "dev",
             API_URL: npSettings.base,
             NP1_URL: npSettings.np1,
             AUTH_CALLBACK_URL: npSettings.callback,
@@ -37,6 +38,8 @@ angular.module('np.config', []).factory('config', [
                 "ncimetathesaurus": "NCI Metathesaurus",
                 "aanpbiosequenceannotation": "neXtProt annotation",
                 "aanpfamily": "neXtProt family",
+                "aanpmodificationeffect": "neXtProt modification effect",
+                "aanpproteinproperty":"neXtProt protein property",
                 "aanptissues": "neXtProt human anatomy",
                 "nonstandardaminoacid": "Non-standard amino acid",
                 "organelle": "Organelle",
@@ -50,6 +53,7 @@ angular.module('np.config', []).factory('config', [
                 "upkeywords": "UniProt keyword",
                 "upmetal": "neXtProt metal",
                 "uppathways": "UniPathway",
+                "mammalianphenotype":"Mammalian phenotype",
                 "upposttranslationalmodifications": "UniProt post-translational modification",
                 "upsubcellularlocation": "UniProt subcellular location",
                 "upsubcellularorientation": "Uniprot subcellular orientation",

@@ -7,6 +7,22 @@ bodyx {
     border:2px solid red;
 }
 
+/* Custom modification to match np2 layout : */
+body{
+    padding:10px 15px 20px;
+    font-family: "Lato","Helvetica Neue", "Helvetica", sans-serif;
+}
+.margin-right-xx.bold.font-large-xx{
+    font-size:1.8em;
+    font-weight: 300;
+}
+.column .np-content-header.border-bottom-xxx h1{
+    font-size:1.8em;
+    font-weight: 300;
+}
+
+/* End of custom css */
+
 #np-header-first-child {
 	display:none;
 }

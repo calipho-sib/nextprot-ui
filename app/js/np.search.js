@@ -26,8 +26,8 @@ function searchConfig($routeProvider) {
 
 //
 // implement main application controller
-SearchCtrl.$inject=['Tracker', '$scope','$rootScope','$location', '$routeParams','$document', 'Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService', '$log'];
-function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $document, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService, $log) {
+SearchCtrl.$inject=['Tracker', '$scope','$rootScope','$location', '$routeParams','$document', 'Search','Cart','config','user','flash', 'userProteinList', 'queryRepository', 'exportService', '$log', 'nxBaseUrl'];
+function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $document, Search, Cart, config, user, flash, userProteinList, queryRepository, exportService, $log, nxBaseUrl) {
 
     // scope from template
     $scope.Search = Search;
@@ -60,6 +60,8 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     // update entity documentation on path change
     $scope.$on('$routeChangeSuccess', function(event, next, current) {
 
+//        console.log("VALAR MORGHULIS !!!");
+//        console.log("VALAR DOHAERIS !!!");
         console.log("route change...", $routeParams.query);
 
         exportService.reset();
@@ -140,6 +142,49 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
         $scope.params({start:(Search.result.pagination.current - 1)*Search.result.rows}, form);
 
     };
+    
+    $scope.getNextprotUrl = function (input){
+        
+        return nxBaseUrl.getDomain(input);
+        
+//        if(config.api.environment === "pro"){
+//            switch(input) {
+//                case "api": return "https://api.nextprot.org" ;
+//                case "search": return "https://search.nextprot.org" ;
+//                case "snorql": return "http://snorql.nextprot.org" ;
+//            }
+//        }
+//        else if(config.api.environment === "vit") {
+//            switch(input) {
+//                case "api": return "https://vit-api.nextprot.org" ;
+//                case "search": return "https://vit-search.nextprot.org" ;
+//                case "snorql": return "http://vit-snorql.nextprot.org" ;
+//            }
+//        }
+//        else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
+    }
+    
+//    $scope.getNeXtProtUrl = function(input) {
+//
+//        console.log("tesssssssssssssssssssssssssssssssst");
+//        console.log("tesssssssssssssssssssssssssssssssstt");
+//        console.log("tessssssssssssssssssssssssssssssssttt");
+//        
+////        if(npSettings.environment === "pro"){
+//        if(input === "pro"){
+//            switch(input) {
+//                case "api": return "https://api.nextprot.org" ;
+//                case "search": return "https://search.nextprot.org" ;
+//                case "snorql": return "http://snorql.nextprot.org" ;
+//            }
+//        }
+//
+//        console.log("NX ENVIRONMENT : ");
+//        console.log(input);
+////        console.log(npSettings.environment);
+////        else return "http://"+ npSettings.environment + "-" + input + ".nextprot.org";
+//        else return "http://"+ input + "-" + input + ".nextprot.org";
+//    };
 
     // interact with the search bar
     $scope.params = function (params, form) {
@@ -279,7 +324,7 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     };
 
     $scope.isSearchBarVisible=function(){
-        return ($location.path()==='/'||$location.path().indexOf('/search')!==-1)
+        return ($location.path()==='/'||$location.path().indexOf('/search')!==-1 && $location.path()!=='/help/search-results')
     };
 
     $scope.go = function () {
@@ -290,6 +335,7 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
         $location.search('rows', null);
         $location.search('start', null);
         $location.search('queryId', null);
+        $location.search('isoform', null);
 
         // 1) Each time a new search is run, the basket (entries selected) should be emptied
         // 2) Each time a list content is displayed, the basket (entries selected) should be emptied
@@ -306,10 +352,17 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
                       search('query',null);
 
         }
-
         //We are in simple mode
         if(Search.params.query && Search.params.query.length){
             $location.search('query', Search.params.query.trim()).search('sparql',null);
+            if (Search.params.quality === 'gold-and-silver') {
+                $location.search('quality', Search.params.quality);
+            }
+        }
+        else if(Search.params.query.length === 0){
+            if(Search.params.mode !== 'advanced'){
+                $location.search('query', "*").search('sparql',null);
+            }
             if (Search.params.quality === 'gold-and-silver') {
                 $location.search('quality', Search.params.quality);
             }
