@@ -42,7 +42,7 @@ if ('development' == env) {
 //TEMPORARY FOR NEW DESIGN IMPLEMENTATION
 app.get('/viewers/*',function (req, res) {
     console.log("redirecting viewers");
-    var urlViewers = 'http://dev-search.nextprot.org';
+    var urlViewers = 'https://dev-search.nextprot.org';
     var redirectURL = urlViewers + req.url;
     res.redirect(redirectURL);
 });
