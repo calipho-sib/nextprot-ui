@@ -385,11 +385,11 @@
                     case "snorql": return "http://snorql.nextprot.org" ;
                 }
             }
-            else if(config.api.environment === "vit") {
+            else if(config.api.environment === "dev") {
                 switch(input) {
-                    case "api": return "https://vit-api.nextprot.org" ;
-                    case "search": return "https://vit-search.nextprot.org" ;
-                    case "snorql": return "http://vit-snorql.nextprot.org" ;
+                    case "api": return "https://dev-api.nextprot.org" ;
+                    case "search": return "https://dev-search.nextprot.org" ;
+                    case "snorql": return "http://dev-snorql.nextprot.org" ;
                 }
             }
             else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
