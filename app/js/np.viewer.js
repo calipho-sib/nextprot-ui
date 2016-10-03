@@ -171,7 +171,7 @@
             $scope.widgetEntry = $routeParams.entry;
             $scope.widgetTerm = $routeParams.termid;
             $scope.widgetPubli = $routeParams.pubid;
-            var np2Views = ["phenotypes","peptides"];
+            var np2Views = ["phenotypes","peptides", "structures"];
 //            var np2Views = ["sequence","proteomics","structures","peptides"];
 
             if (np2Views.indexOf($routeParams.ev1) > -1) { //Entry view

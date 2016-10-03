@@ -96,12 +96,22 @@
                 <!--                                                                  -->
                 <div class="search-bottom">
                     <span ng-show="Search.result.spellcheck.collations.length" id="search-didyoumean"><b class="gray">
-            &nbsp;Did you mean:</b>
-            <a href="" ng-click="didyoumean(0)">{{Search.result.spellcheck.collations[0].query}}</a>
-            <span ng-show="Search.result.spellcheck.collations[1]">,
-              <a href="" ng-click="didyoumean(1)">{{Search.result.spellcheck.collations[1].query}}</a>
-            </span>
+                        &nbsp;Did you mean:</b>
+                        <a href="" ng-click="didyoumean(0)">{{Search.result.spellcheck.collations[0].query}}</a>
+                        <span ng-show="Search.result.spellcheck.collations[1]">,
+                          <a href="" ng-click="didyoumean(1)">{{Search.result.spellcheck.collations[1].query}}</a>
+                        </span>
                     </span>
+                    
+                <!--                                                                  -->
+                <!--  SEARCH BOTTOM (search examples)                                 -->
+                <!--                                                                  -->
+<!--
+                    <span ng-show="!Search.result.spellcheck.collations.length" id="search-eg"><strong>
+                        &nbsp;e.g : </strong>
+                        <a ng-href="/proteins/search?query=insulin">look for insulin in all fields</a>
+                    </span>
+-->
                 </div>
 
             </div>
