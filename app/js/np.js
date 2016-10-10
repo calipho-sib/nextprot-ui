@@ -40,8 +40,8 @@
     // default environment when environment is not set by some external deployment script
     var nxEnvironment = "NX_ENV"; //env can be replaced, by dev, alpha or pro by nxs script on deploy
     // WARNING !!! DO NOT USE NX_ENV ANYWHERE ELSE IN THE PROJECT. A script replace its value by the current environment value just before deployment !
-    var apiBase = "http://dev-api.nextprot.org"; //default for UI developers on MACs
-    var np1Base = 'http://uat-web1'; //default for UI developers on MACs
+    var apiBase = "https://dev-api.nextprot.org"; //default for UI developers on MACs
+    var np1Base = 'https://uat-web1'; //default for UI developers on MACs
     //var apiBase = "http://localhost:8080/nextprot-api-web";  //default for UI + NP1 + NP2 on localhost
     //var np1Base = 'http://localhost:8090';                   //default for UI + NP1 + NP2 on localhost
 
@@ -52,11 +52,11 @@
             apiBase = 'https://api.nextprot.org'; // Don't forget https!
             np1Base = 'https://old.nextprot.org';
         }
-        else if (nxEnvironment.toLowerCase() === "vit") {
-            apiBase = 'https://vit-api.nextprot.org'; // Don't forget https!
-            np1Base = 'https://old.nextprot.org';
+        else if (nxEnvironment.toLowerCase() === "dev") {
+            apiBase = 'https://dev-api.nextprot.org'; // Don't forget https!
+            np1Base = 'https://uat-web1';
         }
-        else if (nxEnvironment.toLowerCase() === "dev" || nxEnvironment.toLowerCase() === "alpha" || nxEnvironment.toLowerCase() === "build") {
+        else if (nxEnvironment.toLowerCase() === "alpha" || nxEnvironment.toLowerCase() === "build") {
             apiBase = 'http://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
             np1Base = 'http://uat-web1';
         }
@@ -385,11 +385,11 @@
                     case "snorql": return "http://snorql.nextprot.org" ;
                 }
             }
-            else if(config.api.environment === "vit") {
+            else if(config.api.environment === "dev") {
                 switch(input) {
-                    case "api": return "https://vit-api.nextprot.org" ;
-                    case "search": return "https://vit-search.nextprot.org" ;
-                    case "snorql": return "http://vit-snorql.nextprot.org" ;
+                    case "api": return "https://dev-api.nextprot.org" ;
+                    case "search": return "https://dev-search.nextprot.org" ;
+                    case "snorql": return "http://dev-snorql.nextprot.org" ;
                 }
             }
             else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
