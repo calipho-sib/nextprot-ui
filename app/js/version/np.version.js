@@ -1,8 +1,6 @@
 'use strict';
 
-angular.module('np.version', [
-    'np.version.directive'
-])
+angular.module('np.version', [])
 
 .constant('RELEASE_INFOS', {
     'version': '2.2.0',
