@@ -47,8 +47,6 @@
             $scope.minMenu = !$scope.minMenu;
         }
 
-        console.log("my config" , config);
-
         $scope.makeSimpleSearch = function (query) {
             $location.search("query", query);
             $location.path("proteins/search");
@@ -152,9 +150,6 @@
 
             var url = window.location.origin + "/news/" + n1;
             
-            console.log("url");
-            console.log(url);
-
             return {
                 "communityMode": false,
                 "githubURL": "https://github.com/calipho-sib/" + n1,
@@ -180,8 +175,6 @@
             var urlWithTitle = pe ? url + "?title=true" : url;
             
 //            url += "/app/index.html";
-            console.log("url");
-            console.log(url);
 
             return {
                 "communityMode": false,
