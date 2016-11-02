@@ -11,8 +11,8 @@
     function NewsCtrl($scope, newsService) {
 
         newsService.getNews().$promise.then(function(data){
-            console.log("data NEWS");
-            console.log(data);
+            //console.log("data NEWS");
+            //console.log(data);
             data.forEach(function(d){
                 var dt = new Date(d.publicationDate);
                 var day = dt.getDate();

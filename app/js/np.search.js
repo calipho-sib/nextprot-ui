@@ -62,7 +62,7 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
 
 //        console.log("VALAR MORGHULIS !!!");
 //        console.log("VALAR DOHAERIS !!!");
-        console.log("route change...", $routeParams.query);
+        //console.log("route change...", $routeParams.query);
 
         exportService.reset();
 

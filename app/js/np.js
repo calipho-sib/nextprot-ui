@@ -318,7 +318,6 @@
             var location = $location.path();
             
             that.h1 = "";
-            console.log("location : " + location);
             //            var path = {path:location};
 
             metaService.getMetaTags(location).$promise.then(function (data) {
