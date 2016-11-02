@@ -81,30 +81,31 @@
             });
         };
 
-
-        $scope.modalDissmiss = function () {
-
-        };
-
         $scope.switchCombine = function () {
             var temp = $scope.combination.first;
             $scope.combination.first = $scope.combination.second;
             $scope.combination.second = temp;
         };
 
-        $scope.launchModal = function (elem, action) {
+        $scope.launchModal = function (index, action) {
             $scope.selected = {};
             if (action == 'edit') {
-                $scope.selected = $scope.lists[elem];
-                angular.extend($scope.selected, {index: elem});
+
+                $scope.selected["id"] = $scope.lists[index]["id"];
+                $scope.selected["name"] = $scope.lists[index]["name"];
+                $scope.selected["description"] = $scope.lists[index]["description"];
+                $scope.selected["index"] = index;
             }
             angular.extend($scope.modal, {type: action});
+        };
+
+        $scope.modalDissmiss = function () {
+            $scope.selected = {}
         };
 
         $scope.saveModal = function () {
 
             if ($scope.modal.type == 'edit') {
-                angular.extend($scope.lists[$scope.selected.index], $scope.selected);
 
                 var list = {
                     id: $scope.selected.id,
@@ -115,9 +116,20 @@
                 userProteinList.update(user, list).$promise.then(
                     function () {
                         flash("alert-success", list.name + " list was successfully updated");
+
+                        $scope.lists[$scope.selected.index]["name"] = $scope.selected["name"];
+                        $scope.lists[$scope.selected.index]["description"] = $scope.selected["description"];
+                        $scope.lists.sort(function(a, b){
+                            if(a.name.toLowerCase() < b.name.toLowerCase()) return -1;
+                            if(a.name.toLowerCase() > b.name.toLowerCase()) return 1;
+                            return 0;
+                        });
+
+                        $scope.selected = {};
                     },
                     function (error) {
                         flash("alert-warning", error.message);
+                        $scope.selected = {};
                     }
                 )
 
