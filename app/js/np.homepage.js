@@ -114,8 +114,6 @@
             peStats.sort(function(a,b){
                 return a.cnt.value > b.cnt.value
             })
-            console.log("RESULTS PE DATA : ");
-            console.log(peStats);
             peStats.forEach(function (data, index) {
                 var id = data.pe.value.split("#")[1].toLowerCase();
                 var value = parseInt(data.cnt.value);
@@ -127,7 +125,6 @@
             });
 
             //            console.log("PE EXISTENCE : ");
-            console.log(seriesData);
             //            console.log(seriesData.toString());
             //            var str = JSON.stringify(seriesData, null, 4);
             //            console.log(str);

@@ -75,9 +75,6 @@
         $scope.termName = $routeParams.termid;
         $scope.publiName = $routeParams.pubid;
         
-
-        console.log("my config" , config);
-
         var entryViewMode = $scope.entryName != undefined;
 
         if(entryViewMode){
@@ -88,8 +85,8 @@
 
             viewerService.getEntryProperties($routeParams.entry).$promise.then(function (data) {
 
-                console.log("PUBLICATIONS DATA");
-                console.log(data);
+                //console.log("PUBLICATIONS DATA");
+                //console.log(data);
                 $scope.entryProps.name = data.entry.overview.mainProteinName;
                 $scope.entryProps.geneName = data.entry.overview.mainGeneName;
                 $scope.entryProps.genesCount = data.entry.overview.geneNames.length;
@@ -298,8 +295,6 @@
 //            if (gv2) url += "/" + gv2;
 //            if (gv3) url += "/" + gv3;
             url += "/app/index.html";
-            console.log("url");
-            console.log(url);
             var urlWithTitle = url + "?title=true";
 
             return {
