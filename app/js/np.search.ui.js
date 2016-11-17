@@ -427,7 +427,7 @@
                     }
         }
     }]);
-    SearchUI.directive('smallscreen', function($window) {
+    SearchUI.directive('smallscreen', ['$window', function($window) {
       return {
 
         restrict: 'AE',
@@ -444,7 +444,7 @@
 
       }
 
-    });
+    }]);
     
     SearchUI.directive('linkEnabled', function() {
         return {
