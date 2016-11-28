@@ -145,46 +145,26 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     
     $scope.getNextprotUrl = function (input){
         
-        return nxBaseUrl.getDomain(input);
+            var protocol = window.protocol;
+            if(config.api.environment === "pro"){
+                switch(input) {
+                    case "api": return config.api.API_URL ;
+                    case "search": return "https://search.nextprot.org" ;
+                    case "snorql": return "http://snorql.nextprot.org" ;
+                }
+            }
+            //Because dev is HTTPS
+            else if(config.api.environment === "dev" || (config.api.environment.indexOf("NX_") > -1)) {
+                switch(input) {
+                    case "api": return  config.api.API_URL ;
+                    case "search": return "https://dev-search.nextprot.org" ;
+                    case "snorql": return "http://dev-snorql.nextprot.org" ;
+                }
+            }
+            else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
         
-//        if(config.api.environment === "pro"){
-//            switch(input) {
-//                case "api": return "https://api.nextprot.org" ;
-//                case "search": return "https://search.nextprot.org" ;
-//                case "snorql": return "http://snorql.nextprot.org" ;
-//            }
-//        }
-//        else if(config.api.environment === "vit") {
-//            switch(input) {
-//                case "api": return "https://vit-api.nextprot.org" ;
-//                case "search": return "https://vit-search.nextprot.org" ;
-//                case "snorql": return "http://vit-snorql.nextprot.org" ;
-//            }
-//        }
-//        else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
     }
     
-//    $scope.getNeXtProtUrl = function(input) {
-//
-//        console.log("tesssssssssssssssssssssssssssssssst");
-//        console.log("tesssssssssssssssssssssssssssssssstt");
-//        console.log("tessssssssssssssssssssssssssssssssttt");
-//        
-////        if(npSettings.environment === "pro"){
-//        if(input === "pro"){
-//            switch(input) {
-//                case "api": return "https://api.nextprot.org" ;
-//                case "search": return "https://search.nextprot.org" ;
-//                case "snorql": return "http://snorql.nextprot.org" ;
-//            }
-//        }
-//
-//        console.log("NX ENVIRONMENT : ");
-//        console.log(input);
-////        console.log(npSettings.environment);
-////        else return "http://"+ npSettings.environment + "-" + input + ".nextprot.org";
-//        else return "http://"+ input + "-" + input + ".nextprot.org";
-//    };
 
     // interact with the search bar
     $scope.params = function (params, form) {

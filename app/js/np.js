@@ -45,7 +45,6 @@
     //var apiBase = "http://localhost:8080/nextprot-api-web";  //default for UI + NP1 + NP2 on localhost
     //var np1Base = 'http://localhost:8090';                   //default for UI + NP1 + NP2 on localhost
 
-    
 
     if (nxEnvironment.indexOf("NX_") == -1) { // means an environment has been set, sed command has done some magic tricks
         if (nxEnvironment.toLowerCase() === "pro") {
@@ -61,7 +60,7 @@
             np1Base = 'http://uat-web1';
         }
     }
-
+    
     // main application settings
     App.constant('npSettings', {
         environment: nxEnvironment,
@@ -371,22 +370,20 @@
     
     function nxBaseUrl($resource, config){
         
-        console.log(config.api.environment); 
-        
         var nxBaseUrl = function () {};
         
         nxBaseUrl.prototype.getDomain = function(input){
         
             if(config.api.environment === "pro"){
                 switch(input) {
-                    case "api": return "https://api.nextprot.org" ;
+                    case "api": return config.api.API_URL ;
                     case "search": return "https://search.nextprot.org" ;
                     case "snorql": return "http://snorql.nextprot.org" ;
                 }
             }
-            else if(config.api.environment === "dev") {
+            else if(config.api.environment === "dev" || config.api.environment == "NX_ENV") {
                 switch(input) {
-                    case "api": return "https://dev-api.nextprot.org" ;
+                    case "api": return  config.api.API_URL ;
                     case "search": return "https://dev-search.nextprot.org" ;
                     case "snorql": return "http://dev-snorql.nextprot.org" ;
                 }

@@ -46,15 +46,9 @@
                             </a>
                         </div>
 -->
-                        <!-- Download entry (pop-up opens) -->
-                        <div class="entrySummarylink">
-                            <a bs-modal="'partials/export/export-modal.html'" href="#" title="Download entry" ng-click="setExportEntry(widgetEntry)" title="Download entry" target="_blank" ng-href="{{widgetURL}}&inputOption=true" style="color:grey;font-size:18px;">
-                                <span class="fa fa-download" aria-hidden="true"></span>
-                            </a>
-                        </div>
                         <!-- Expand in new window -->
                         <div class="entrySummarylink">
-                            <a title="View in a new window" target="_blank" ng-href="{{externalURL}}" style="color:grey;font-size:18px;">
+                            <a title="View in a new window" rel="nofollow" target="_blank" ng-href="{{externalURL}}" style="color:grey;font-size:18px;">
                                 <span class="fa fa-expand" aria-hidden="true"></span>
                             </a>
                         </div>

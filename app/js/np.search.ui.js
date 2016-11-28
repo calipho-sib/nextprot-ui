@@ -29,6 +29,11 @@
         }
     });
 
+    SearchUI.filter('underscoreless', function () {
+        return function (input) {
+            return input.replace(/_/g, ' ');
+        };
+    });
 
     SearchUI.filter('getGitHubUrl', ['config', function (config) {
 
@@ -422,7 +427,7 @@
                     }
         }
     }]);
-    SearchUI.directive('smallscreen', function($window) {
+    SearchUI.directive('smallscreen', ['$window', function($window) {
       return {
 
         restrict: 'AE',
@@ -439,7 +444,7 @@
 
       }
 
-    });
+    }]);
     
     SearchUI.directive('linkEnabled', function() {
         return {

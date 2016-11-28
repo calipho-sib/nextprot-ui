@@ -36,6 +36,13 @@
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        <!-- SIB Aggregator added on 24th of November asked by Heinz -->
+        ga('create', 'UA-87958702-1', 'auto', 'sibagg', { 'allowLinker': true });
+        ga('sibagg.require', 'linker');
+        ga('sibagg.linker:autoLink', ['expasy.org', 'string-db.org', 'nextprot.org', 'sib.swiss']);
+        ga('sibagg.send', 'pageview');
+
     </script>
 </head>
 
@@ -81,12 +88,10 @@
                             <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
                             <li ng-class=""><a href="/proteins/search" ng-click="routingOutside('ui')">Simple search</a></li>
                             <li ng-class=""><a href="/proteins/search?mode=advanced" ng-click="routingOutside('snorql')">Advanced search</a></li>
-<!--                            <li ng-class=""><a href="http://snorql.nextprot.org/" ng-click="routingOutside('api')">SNORQL search</a></li>-->
-<!--                            <li ng-class=""><a href="#" ng-click="getNextprotUrl('api')">SNORQL search</a></li>-->
                             <li ng-class=""><a ng-href="{{getNextprotUrl('snorql')}}">SNORQL search</a></li>
                             <li class="divider"></li>
-                            <li ng-class=""><a ng-click="goToUser('lists')">My Lists</a></li>
-                            <li ng-class=""><a ng-click="goToUser('queries')">My Queries</a></li>
+                            <li ng-class=""><a rel="nofollow" ng-click="goToUser('lists')">My Lists</a></li>
+                            <li ng-class=""><a rel="nofollow" ng-click="goToUser('queries')">My Queries</a></li>
                             <li class="divider"></li>
 <!--                            <li ng-class=""><a href="#" ng-click="routingOutside('snorql')" style="cursor:not-allowed">BLAST</a></li>-->
                             <li ng-class=""><a href="/tools/unicity-checker" ng-click="routingOutside('snorql')">Peptide Unicity Checker</a></li>
@@ -260,7 +265,7 @@
 
                     <!-- login button -->
                     <!-- ngIf: !user.profile.email --><li class="ng-scope" ng-if="!user.profile.email">
-                        <a href="" type="button" class="link" ng-click="login()">Login</a>
+                        <a rel="nofollow" href="" type="button" class="link" ng-click="login()">Login</a>
                     </li><!-- end ngIf: !user.profile.email -->
                     
                     <!-- once logged in user resources -->
@@ -269,9 +274,9 @@
                             <a href="#" class="dropdown-toggle lgOnly" data-toggle="dropdown">
                                 {{user.profile.name || user.profile.email}}<span class="caret"></span></a>
                             <ul class="dropdown-menu lgOnly" role="menu">
-                                <li><a href="#" ng-click="logout()">Logout</a></li>
+                                <li><a rel="nofollow" href="#" ng-click="logout()">Logout</a></li>
                             </ul>
-                        <a class="smOnly" href="#" ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                        <a rel="nofollow" class="smOnly" href="#" ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
                         
                     </li>
                     
