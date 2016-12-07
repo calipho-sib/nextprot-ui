@@ -11,6 +11,9 @@
     viewerConfig.$inject = ['$routeProvider'];
     function viewerConfig($routeProvider) {
 
+        var efv = {templateUrl: '/partials/viewer/function-page.html'};
+        var ifv = {templateUrl: '/partials/viewer/interactions-page.html'};
+
         var ev = {templateUrl: '/partials/viewer/entry-viewer.html'};
         var tv = {templateUrl: '/partials/viewer/term-viewer.html'};
         var pv = {templateUrl: '/partials/viewer/publi-viewer.html'};
@@ -34,8 +37,10 @@
         
 
             //NP1 ENTRY views 
-            .when('/entry/:entry/', ev)
-//            .when('/entry/:entry/:element', ev)
+            .when('/entry/:entry/', efv)
+            .when('/entry/:entry/function', efv)
+            .when('/entry/:entry/interactions', ifv)
+
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
             .when('/publication/:pubid',pv)
@@ -55,11 +60,11 @@
     ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', ];
     function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
 
-//        console.log("YAAA" + $routeParams.gold);
         $scope.goldOnly = $routeParams.gold || false;
         
         $scope.partialName = "partials/doc/page.html";
         $scope.testt = $routeParams.article;
+        $scope.nxConfig = {};
 
         $scope.externalURL = null;
         $scope.widgetEntry = null;
@@ -135,6 +140,8 @@
 
            if(angular.equals({'entry': $routeParams.entry},  $routeParams)){ // Function view of protein (default)
                if(page === 'function') {
+                   console.warn("WTFFFFFFFF");
+
                    return 'active';
                }
            }
@@ -151,9 +158,16 @@
                }
            }
 
-//            console.log($routeParams);
-//            console.log($location);
-            if($location.url() === page) return 'active';
+            if($location.url() === page) {
+                return 'active';
+            }
+
+            var lastBitOfUrl = $location.url().substr($location.url().lastIndexOf('/') + 1);
+            if(lastBitOfUrl.indexOf(page) != -1) {
+                return 'active';
+            }
+
+
             if ($routeParams.element == page)  return 'active'
             if ($routeParams.ev1 == page)  return 'active';
             if ("portals/" + $routeParams.pn1 === page) return 'active';
@@ -168,6 +182,8 @@
             $scope.widgetEntry = $routeParams.entry;
             $scope.widgetTerm = $routeParams.termid;
             $scope.widgetPubli = $routeParams.pubid;
+
+            $scope.nxConfig.entry = $routeParams.entry;
             var np2Views = ["phenotypes","peptides", "structures"];
 //            var np2Views = ["sequence","proteomics","structures","peptides"];
 

@@ -1,0 +1,12 @@
+<div ng-controller="ViewerCtrl">
+    <div ng-include="'partials/viewer/entry-container.html'"></div>
+    <div class="entry-view row body-content" style="background-color: #bbbbbb;" ng-class="minMenu ? 'minimizedMenu' : '' " smallscreen>
+        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="responsive-md-screen nopadding fullHeight sidemenu" style="position:absolute;">
+            <div ng-include="'partials/viewer/viewer-entry-side-bar.html'"></div>
+        </div>
+        <div class="col-lg-12 col-xs-12 responsive-md-screen right-content" style="height:100%;">
+            <link rel="import" href="webcomponents/bower_components/nextprot-elements/function-view.html">
+            <function-view nx-config={{nxConfig}}/></function-view>
+        </div>
+    </div>
+</div>
