@@ -140,8 +140,8 @@
 
            if(angular.equals({'entry': $routeParams.entry},  $routeParams)){ // Function view of protein (default)
                if(page === 'function') {
-                   console.warn("WTFFFFFFFF");
-
+                   return 'active';
+               }else if(page === 'interactions') {
                    return 'active';
                }
            }
@@ -159,11 +159,6 @@
            }
 
             if($location.url() === page) {
-                return 'active';
-            }
-
-            var lastBitOfUrl = $location.url().substr($location.url().lastIndexOf('/') + 1);
-            if(lastBitOfUrl.indexOf(page) != -1) {
                 return 'active';
             }
 
