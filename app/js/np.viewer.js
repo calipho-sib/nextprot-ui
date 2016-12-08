@@ -6,13 +6,55 @@
         .factory('viewerService', viewerService)
         .controller('ViewerCtrl', ViewerCtrl)
         .service('viewerURLResolver', viewerURLResolver)
-    ;
+        .directive('nextprotElement', nextprotElement)
+
+
+    nextprotElement.$inject = ['$location'];
+    function nextprotElement($location) {
+
+        var nxConfig = {env : 'pro'};
+
+        function link(scope, element, attrs) {
+
+            function getNXElement() {
+
+                var path = $location.$$path;
+                var regexFunctionPage = /^\/entry\/[^\/]+\/?(function)?$/;
+                var regexInteractionsPage = /^\/entry\/.+\/interactions$/;
+
+                if(path.match(regexFunctionPage) != null){
+                    return "function-view"
+                }
+                if(path.match(regexInteractionsPage)  != null){
+                    return "interactions-view"
+                }
+
+            }
+
+            function renderElement(entry) {
+
+                var nxElement = getNXElement();
+                nxConfig.entry = entry;
+
+                element.html('<link rel="import" href="webcomponents/bower_components/nextprot-elements/' + nxElement + '.html">')
+                element.html('<'+ nxElement + ' nx-config=' +  JSON.stringify(nxConfig) + '></>');
+
+            }
+            scope.$watch(attrs.nextprotElement, function(value) {
+                renderElement(value);
+            });
+        }
+
+        return {
+            link: link
+        };
+
+    }
 
     viewerConfig.$inject = ['$routeProvider'];
     function viewerConfig($routeProvider) {
 
-        var efv = {templateUrl: '/partials/viewer/function-page.html'};
-        var ifv = {templateUrl: '/partials/viewer/interactions-page.html'};
+        var nxelementsv = {templateUrl: '/partials/viewer/nextprot-elements-viewer.html'};
 
         var ev = {templateUrl: '/partials/viewer/entry-viewer.html'};
         var tv = {templateUrl: '/partials/viewer/term-viewer.html'};
@@ -37,9 +79,9 @@
         
 
             //NP1 ENTRY views 
-            .when('/entry/:entry/', efv)
-            .when('/entry/:entry/function', efv)
-            .when('/entry/:entry/interactions', ifv)
+            .when('/entry/:entry/', nxelementsv)
+            .when('/entry/:entry/function', nxelementsv)
+            .when('/entry/:entry/interactions', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
