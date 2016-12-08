@@ -157,10 +157,10 @@
             exportService.setExportEntry(identifier);
         };
 
-        $scope.makeSimpleSearch = function () {
+        $scope.makeSimpleSearch = function (text) {
             $location.search("isoform", null);
             $location.search("gold", null);
-            $location.search("query", $scope.simpleSearchText);
+            $location.search("query", text);
             $location.path("proteins/search");
         }
 
