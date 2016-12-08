@@ -38,8 +38,9 @@
                 var nxElement = getNextProtElement();
                 nxConfig.entry = entry;
 
-                element.html('<link rel="import" href="webcomponents/bower_components/nextprot-elements/' + nxElement + '.html">')
-                element.html('<'+ nxElement + ' nx-config=' +  JSON.stringify(nxConfig) + '></>');
+                var html = '<link rel="import" href="webcomponents/bower_components/nextprot-elements/' + nxElement + '.html">';
+                html += '<'+ nxElement + ' nx-config=' +  JSON.stringify(nxConfig) + '></>';
+                element.html(html);
 
             }
             scope.$watch(attrs.nextprotElement, function(value) {
