@@ -9,31 +9,33 @@
         .directive('nextprotElement', nextprotElement)
 
 
-    nextprotElement.$inject = ['$location'];
-    function nextprotElement($location) {
+    nextprotElement.$inject = ['npSettings', '$location'];
+    function nextprotElement(npSettings, $location) {
 
-        var nxConfig = {env : 'pro'};
+        var nxConfig = {env : npSettings.environment};
+
+
+        function getNextProtElement (){
+
+            var path = $location.$$path;
+            var regexFunctionPage = /^\/entry\/[^\/]+\/?(function)?$/;
+            var regexInteractionsPage = /^\/entry\/.+\/interactions$/;
+
+            if(path.match(regexFunctionPage) != null){
+                return "function-view"
+            }
+            if(path.match(regexInteractionsPage)  != null){
+                return "interactions-view"
+            }
+
+        }
 
         function link(scope, element, attrs) {
 
-            function getNXElement() {
-
-                var path = $location.$$path;
-                var regexFunctionPage = /^\/entry\/[^\/]+\/?(function)?$/;
-                var regexInteractionsPage = /^\/entry\/.+\/interactions$/;
-
-                if(path.match(regexFunctionPage) != null){
-                    return "function-view"
-                }
-                if(path.match(regexInteractionsPage)  != null){
-                    return "interactions-view"
-                }
-
-            }
 
             function renderElement(entry) {
 
-                var nxElement = getNXElement();
+                var nxElement = getNextProtElement();
                 nxConfig.entry = entry;
 
                 element.html('<link rel="import" href="webcomponents/bower_components/nextprot-elements/' + nxElement + '.html">')
@@ -106,7 +108,6 @@
         
         $scope.partialName = "partials/doc/page.html";
         $scope.testt = $routeParams.article;
-        $scope.nxConfig = {};
 
         $scope.externalURL = null;
         $scope.widgetEntry = null;
@@ -148,6 +149,10 @@
             });
         }
 
+
+
+
+
         $scope.setExportEntry = function (identifier) {
             exportService.setExportEntry(identifier);
         };
@@ -158,7 +163,7 @@
             $location.search("query", $scope.simpleSearchText);
             $location.path("proteins/search");
         }
-        
+
         $scope.toggleGoldOnly = function () {
             var newValue = $scope.goldOnly;
             var isoformQuery = $location.search().isoform;
@@ -180,27 +185,28 @@
             //console.log(page);
             //console.log($routeParams);
 
-           if(angular.equals({'entry': $routeParams.entry},  $routeParams)){ // Function view of protein (default)
+          if($location.url() === '/entry/' + $routeParams.entry + "/") {
                if(page === 'function') {
                    return 'active';
-               }else if(page === 'interactions') {
-                   return 'active';
                }
            }
 
-           if(angular.equals({'termid': $routeParams.termid},  $routeParams)){ // Proteins view of term (default)
+          if($location.url() === '/term/' + $routeParams.termid + "/") {
                if(page === 'proteins') {
                    return 'active';
                }
            }
 
-           if(angular.equals({'pubid': $routeParams.pubid},  $routeParams)){ // Proteins view of publication (default)
+
+          if($location.url() === '/publication/' + $routeParams.pubid) {
                if(page === 'proteins') {
                    return 'active';
                }
            }
 
-            if($location.url() === page) {
+
+            var urlPage = '/entry/' + $routeParams.entry + "/" + page;
+            if($location.url() === urlPage) {
                 return 'active';
             }
 
@@ -220,7 +226,6 @@
             $scope.widgetTerm = $routeParams.termid;
             $scope.widgetPubli = $routeParams.pubid;
 
-            $scope.nxConfig.entry = $routeParams.entry;
             var np2Views = ["phenotypes","peptides", "structures"];
 //            var np2Views = ["sequence","proteomics","structures","peptides"];
 
