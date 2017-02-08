@@ -59,9 +59,6 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     //
     // update entity documentation on path change
     $scope.$on('$routeChangeSuccess', function(event, next, current) {
-
-//        console.log("VALAR MORGHULIS !!!");
-//        console.log("VALAR DOHAERIS !!!");
         //console.log("route change...", $routeParams.query);
 
         exportService.reset();
@@ -176,11 +173,12 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     };
 
     $scope.quality = function (name) {
+
         Search.params.quality = name;
 
-        var searchObject = $location.search();
+        if (Search.params.query) {
 
-        if (searchObject["query"]) {
+            $location.search("query", Search.params.query);
             $location.search('quality', (name !== 'gold') ? 'gold-and-silver' : null);
         }
     };
