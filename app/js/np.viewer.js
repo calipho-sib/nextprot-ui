@@ -19,13 +19,33 @@
 
             var path = $location.$$path;
             var regexFunctionPage = /^\/entry\/[^\/]+\/?(function)?$/;
+            var regexMedicalPage = /^\/entry\/.+\/medical$/;
             var regexInteractionsPage = /^\/entry\/.+\/interactions$/;
+            var regexLocalisationPage = /^\/entry\/.+\/localisation$/;
+            var regexSequencePage = /^\/entry\/.+\/sequence$/;
+            var regexProteomicsPage = /^\/entry\/.+\/proteomics$/;
+            var regexStructuresPage = /^\/entry\/.+\/structures$/;
 
             if(path.match(regexFunctionPage) != null){
                 return "function-view"
             }
+            if(path.match(regexMedicalPage) != null){
+                return "medical-view"
+            }
             if(path.match(regexInteractionsPage)  != null){
                 return "interactions-view"
+            }
+            if(path.match(regexLocalisationPage)  != null){
+                return "localisation-view"
+            }
+            if(path.match(regexSequencePage)  != null){
+                return "sequence-view"
+            }
+            if(path.match(regexProteomicsPage)  != null){
+                return "proteomics-view"
+            }
+            if(path.match(regexStructuresPage)  != null){
+                return "structures-view"
             }
 
         }
@@ -84,7 +104,12 @@
             //NP1 ENTRY views 
             .when('/entry/:entry/', nxelementsv)
             .when('/entry/:entry/function', nxelementsv)
+            .when('/entry/:entry/medical', nxelementsv)
             .when('/entry/:entry/interactions', nxelementsv)
+            .when('/entry/:entry/localisation', nxelementsv)
+            .when('/entry/:entry/sequence', nxelementsv)
+            .when('/entry/:entry/proteomics', nxelementsv)
+            .when('/entry/:entry/structures', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
