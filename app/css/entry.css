@@ -643,7 +643,7 @@ li a>.number {
     content: "\f078";
 }
 */
-.right-content {
+div.right-content {
     padding: 0px;
     padding-left: 240px;
 }
