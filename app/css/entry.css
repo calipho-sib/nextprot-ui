@@ -441,7 +441,7 @@ main {}
     width: 240px;
     z-index: 10;
 }
-.second-header-right {
+div.second-header-right {
     height: 50px;
     padding-left: 240px;
     z-index: 9;
@@ -643,7 +643,7 @@ li a>.number {
     content: "\f078";
 }
 */
-.right-content {
+div.right-content {
     padding: 0px;
     padding-left: 240px;
 }
@@ -922,7 +922,7 @@ li a>.number {
         padding: 0px 0px 10px;
         text-align: center;
     }
-    
+
     #entrySummaryName {
         padding: 10px 15px 6px 15px;
     }

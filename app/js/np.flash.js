@@ -3,7 +3,8 @@
 
 var flash = angular.module('np.flash', [])
 	.factory('flash', flashImp)
-      .directive('flashMessages', flashMessages); 
+//      .directive('flashMsg', flashMsg)
+        .controller('flashCtrl',flashCtrl); 
 
 
 flashImp.$inject=['$rootScope', '$timeout'];
@@ -16,7 +17,10 @@ function flashImp($rootScope, $timeout) {
     };
 
     var emit = function() {
-    	$rootScope.$emit('flash:message', messages, cleanup);
+        console.log("emitting !!!");
+        console.log(messages);
+        console.log(cleanup);
+    	$rootScope.$emit('flash:ms', messages, cleanup);
     };
 
     $rootScope.$on('$locationChangeSuccess', emit);
@@ -53,30 +57,42 @@ function flashImp($rootScope, $timeout) {
 };
 
 // Mario style (with the template in the js)
-    flashMessages.$inject = [];
-    function flashMessages() {
-        var directive = {restrict: 'EA', replace: true};
-
-        directive.template =
-            '<ul style="position: fixed;top: -2px;left: 15%;right: 15%;z-index:10010;opacity:0.9">' +
-            '<li style="list-style: none " ng-repeat="m in messages">' +
-            '<div  class="flashmsg alert {{m.level}} alert-dismissible" role="alert">' +
-            '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span>' +
-            '<span class="sr-only">Close</span></button>' +
-            '{{m.text}}' +
-            '</div>' +
-            '</li>' +
-            '</ul>';
-
-        directive.controller = ['$scope', '$rootScope', function ($scope, $rootScope) {
-            $rootScope.$on('flash:message', function (_, messages, done) {
-                $scope.messages = messages;
-                done();
-            });
-        }];
-
-        return directive;
-    }
+flashCtrl.$inject = ['$scope','$rootScope','$timeout'];
+function flashCtrl($scope,$rootScope, $timeout){
+    $scope.messageList = [];
+    
+    $rootScope.$on('flash:ms', function (_, messages, done) {
+        console.log("message send !!!", messages);
+        $scope.messageList = messages;
+        done();
+    });
+}
+//    flashMsg.$inject = [];
+//    function flashMsg() {
+//        var directive = {restrict: 'EA', replace: true};
+//
+//        directive.template =
+//            '<ul style="position: fixed;top: -2px;left: 15%;right: 15%;z-index:10010;opacity:0.9">' +
+//            '<li style="list-style: none " ng-repeat="m in messages">' +
+//            '<div  class="flashmsg alert alert-dismissible" role="alert">' +
+//            '<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span>' +
+//            '<span class="sr-only">Close</span></button>' +
+//            '<span ng-bind="m.text"></span>' +
+////            '{{m.text}}ezez' +
+//            '</div>' +
+//            '</li>' +
+//            '</ul>';
+//
+//        directive.controller = ['$scope', '$rootScope', function ($scope, $rootScope) {
+//            $rootScope.$on('flash:msg', function (_, messages, done) {
+//                console.log("message send !!!", messages);
+//                $scope.messages = messages;
+//                done();
+//            });
+//        }];
+//
+//        return directive;
+//    }
 
 
 
