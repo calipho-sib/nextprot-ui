@@ -32,6 +32,7 @@
     "javascript-brunch": "1.7.1",
     "keyword-brunch": "1.7.8",
     "less-brunch": "1.7.2",
+    "parse5": "^3.0.2",
     "stylus-brunch": "1.8.1",
     "uglify-js-brunch": "1.7.7"
   },
