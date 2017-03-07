@@ -14,7 +14,6 @@
 
         var nxConfig = {env : npSettings.environment};
 
-
         function getNextProtElement (){
 
             var path = $location.$$path;
@@ -34,7 +33,7 @@
                 var nxElement = getNextProtElement();
                 nxConfig.entry = entry;
 
-                var html = '<link rel="import" href="webcomponents/bower_components/nextprot-elements/' + nxElement + '.html">';
+                var html = '<link rel="import" href=elements/' + nxElement + '.html>';
                 html += '<'+ nxElement + ' nx-config=' +  JSON.stringify(nxConfig) + '></>';
                 element.html(html);
 
