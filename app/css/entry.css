@@ -644,8 +644,7 @@ li a>.number {
 }
 */
 div.right-content {
-    padding: 0px;
-    padding-left: 240px;
+    padding: 0 0 0 240px;
 }
 .right-content>iframe {
     margin-bottom: -5px;
@@ -876,7 +875,7 @@ div.right-content {
     }
     /*    Second header RIGHT : */
     
-    .second-header-right {
+    div.second-header-right {
         height: auto;
         padding: 0px;
     }
@@ -885,7 +884,7 @@ div.right-content {
         margin: 0px;
     }
     
-    .right-content {
+    div.right-content {
         padding: 0px;
     }
 }
