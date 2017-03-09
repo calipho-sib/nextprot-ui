@@ -6,10 +6,53 @@
         .factory('viewerService', viewerService)
         .controller('ViewerCtrl', ViewerCtrl)
         .service('viewerURLResolver', viewerURLResolver)
-    ;
+        .directive('nextprotElement', nextprotElement)
+
+
+    nextprotElement.$inject = ['npSettings', '$location'];
+    function nextprotElement(npSettings, $location) {
+
+        var nxConfig = {env : npSettings.environment};
+
+        function getNextProtElement (){
+
+            var path = $location.$$path;
+            var regexFunctionPage = /^\/entry\/[^\/]+\/?(function)?$/;
+
+            if(path.match(regexFunctionPage) != null){
+                return "function-view"
+            }
+
+        }
+
+        function link(scope, element, attrs) {
+
+
+            function renderElement(entry) {
+
+                var nxElement = getNextProtElement();
+                nxConfig.entry = entry;
+
+                var html = '<link rel="import" href=elements/' + nxElement + '.html>';
+                html += '<'+ nxElement + ' nx-config=' +  JSON.stringify(nxConfig) + '></>';
+                element.html(html);
+
+            }
+            scope.$watch(attrs.nextprotElement, function(value) {
+                renderElement(value);
+            });
+        }
+
+        return {
+            link: link
+        };
+
+    }
 
     viewerConfig.$inject = ['$routeProvider'];
     function viewerConfig($routeProvider) {
+
+        var nxelementsv = {templateUrl: '/partials/viewer/nextprot-elements-viewer.html'};
 
         var ev = {templateUrl: '/partials/viewer/entry-viewer.html'};
         var tv = {templateUrl: '/partials/viewer/term-viewer.html'};
@@ -34,8 +77,9 @@
         
 
             //NP1 ENTRY views 
-            .when('/entry/:entry/', ev)
-//            .when('/entry/:entry/:element', ev)
+            .when('/entry/:entry/', nxelementsv)
+            .when('/entry/:entry/function', nxelementsv)
+
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
             .when('/publication/:pubid',pv)
@@ -55,7 +99,6 @@
     ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', ];
     function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
 
-//        console.log("YAAA" + $routeParams.gold);
         $scope.goldOnly = $routeParams.gold || false;
         
         $scope.partialName = "partials/doc/page.html";
@@ -101,17 +144,21 @@
             });
         }
 
+
+
+
+
         $scope.setExportEntry = function (identifier) {
             exportService.setExportEntry(identifier);
         };
 
-        $scope.makeSimpleSearch = function () {
+        $scope.makeSimpleSearch = function (text) {
             $location.search("isoform", null);
             $location.search("gold", null);
-            $location.search("query", $scope.simpleSearchText);
+            $location.search("query", text);
             $location.path("proteins/search");
         }
-        
+
         $scope.toggleGoldOnly = function () {
             var newValue = $scope.goldOnly;
             var isoformQuery = $location.search().isoform;
@@ -133,27 +180,32 @@
             //console.log(page);
             //console.log($routeParams);
 
-           if(angular.equals({'entry': $routeParams.entry},  $routeParams)){ // Function view of protein (default)
+          if($location.url() === '/entry/' + $routeParams.entry + "/") {
                if(page === 'function') {
                    return 'active';
                }
            }
 
-           if(angular.equals({'termid': $routeParams.termid},  $routeParams)){ // Proteins view of term (default)
+          if($location.url() === '/term/' + $routeParams.termid + "/") {
                if(page === 'proteins') {
                    return 'active';
                }
            }
 
-           if(angular.equals({'pubid': $routeParams.pubid},  $routeParams)){ // Proteins view of publication (default)
+
+          if($location.url() === '/publication/' + $routeParams.pubid) {
                if(page === 'proteins') {
                    return 'active';
                }
            }
 
-//            console.log($routeParams);
-//            console.log($location);
-            if($location.url() === page) return 'active';
+
+            var urlPage = '/entry/' + $routeParams.entry + "/" + page;
+            if($location.url() === urlPage) {
+                return 'active';
+            }
+
+
             if ($routeParams.element == page)  return 'active'
             if ($routeParams.ev1 == page)  return 'active';
             if ("portals/" + $routeParams.pn1 === page) return 'active';
@@ -168,6 +220,7 @@
             $scope.widgetEntry = $routeParams.entry;
             $scope.widgetTerm = $routeParams.termid;
             $scope.widgetPubli = $routeParams.pubid;
+
             var np2Views = ["phenotypes","peptides", "structures"];
 //            var np2Views = ["sequence","proteomics","structures","peptides"];
 

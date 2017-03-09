@@ -88,6 +88,7 @@ header {
 	top: 5px;
 	height: 100%;
 	left: 8px;
+	display: inline;
 }
 #sib-link {
     padding: 10px 5px 10px 10px;

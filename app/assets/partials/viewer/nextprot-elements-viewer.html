@@ -1,0 +1,14 @@
+<div ng-controller="ViewerCtrl">
+
+
+    <div ng-include="'partials/viewer/entry-container.html'"></div>
+
+    <div class="entry-view row body-content" style="background-color: #bbbbbb;" ng-class="minMenu ? 'minimizedMenu' : '' " smallscreen>
+        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="responsive-md-screen nopadding fullHeight sidemenu" style="position:absolute;">
+            <div ng-include="'partials/viewer/viewer-entry-side-bar.html'"></div>
+        </div>
+        <div class="right-content col-lg-12 col-xs-12 responsive-md-screen" style="height:100%;">
+            <div nextprot-element="widgetEntry"></div>
+        </div>
+    </div>
+</div>

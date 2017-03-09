@@ -179,3 +179,13 @@ a.inactive {
 .details-query-popup {
     font-size:13px;
 }
+
+#entryHeader {
+    margin: 0px;
+    padding: 0px;
+    line-height: 45px;
+    font-size:28px;
+    font-weight: 400;
+    font-family: Lato;
+    text-overflow: ellipsis;
+}

@@ -89,7 +89,6 @@ app.get('/db/*',function (req, res) {
     res.redirect(redirectURL);
 });
 
-
 app.get('/',function (req, res) {
 	  res.render('index.html');
 });
