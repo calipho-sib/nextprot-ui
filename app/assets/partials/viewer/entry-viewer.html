@@ -1,19 +1,82 @@
 <div ng-controller="ViewerCtrl">
-    <div ng-include="'partials/viewer/entry-container.html'"></div>
+    <div class="row" style="border-top: 1px solid #E7E7E7;" ng-class="minMenu ? 'minimizedMenu' : '' " smallscreen>
+        <div class="responsive-md-screen second-header-left" style="padding:0px;background-color:#bbb;height:50px">
+            <!--        <div class="responsive-md-screen second-header-left" style="padding:0px;background-color:#21252A;height:50px">-->
+            <div class="col-xs-2" id="toggle-sidemenu">
+                <a class="btn" href="javascript:void(0);" ng-click="hideMenu = !hideMenu">
+                    <span class="fa fa-reorder" aria-hidden="true"></span>
+                </a>
+            </div>
+            <div class="col-sm-12 col-xs-8" id="entrySummaryBoxName">
+                <div id="entrySummaryName">
+                    <a class="figure" type="button" ng-click="minMenu = !minMenu">
+                        <i class="fa fa-chevron-left" ng-class="{'right' : minMenu}"></i>
+                    </a>
+                    <span class="text">
+                        {{widgetEntry}}
+                    </span>
+                </div>
+                <ul id="protein-tooltip" class=" submenu">
+                    <li class="submenu-header ellipsis">{{widgetEntry}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-12 responsive-md-screen second-header-right">
+            <div class="row" style="height:inherit;background-color:#f8f8f8;border-bottom: 1px solid #E7E7E7;margin-left:0px;">
+                <div class="col-lg-4 col-md-4 col-sm-7 col-xs-12" style="
+    word-break: break-all;
+    white-space: nowrap;
+    text-overflow: ellipsis;    overflow: hidden;">
+                    <h2 style="margin:0px;padding:0px;line-height:45px; font-size:28px;text-overflow: ellipsis;" ng-bind="nm.h1"></h2>
+                </div>
+
+                <div class="col-lg-2 col-md-2 col-sm-5 col-xs-7 entrySummaryBoxes" style="height:48px;">
+                    <div><span class="label" id="entrySummaryGene" ng-bind="entryProps.genesCount"></span>
+                        <p>GENE</p>
+                    </div>
+                    <div><span class="label" id="entrySummaryIso" ng-bind="entryProps.isoformCount"></span>
+                        <p>ISO</p>
+                    </div>
+                    <div><span class="label" id="entrySummaryRef" ng-bind="entryProps.referencesCount"></span>
+                        <p>REF</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5 pull-right">
+                    <div class="pull-right">
+                        <div class="entrySummarylink" ng-if="goldOnlyButton">
+                            <label for="goldOnlyInput" > Gold Only </label>
+                            <input ng-model="goldOnly" id="goldOnlyInput" type="checkbox" data-toggle="toggle" style="display:inline-block" ng-click="toggleGoldOnly()">
+                        </div>
+                        <div class="entrySummarylink">
+                            <a bs-modal="'partials/export/export-modal.html'" href="#" title="Download entry" ng-click="setExportEntry(widgetEntry)" title="Download entry" target="_blank" ng-href="{{widgetURL}}&inputOption=true" style="color:grey;font-size:18px;">
+                                <span class="fa fa-download" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                        <!-- Expand in new window -->
+                        <div class="entrySummarylink">
+                            <a title="View in a new window" rel="nofollow" target="_blank" ng-href="{{externalURL}}" style="color:grey;font-size:18px;">
+                                <span class="fa fa-expand" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-8 col-xs-12 entry-search" style="text-align:right;">
+                    <form ng-submit="makeSimpleSearch(simpleSearchText)">
+                        <div class="input-group">
+                            <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search in neXtProt...">
+                            <span class="input-group-btn"><button class="btn btn-default simple-search-btn" type="submit"><span class="fa fa-search"></span></button></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="entry-view row body-content" style="background-color: #bbbbbb;" ng-class="minMenu ? 'minimizedMenu' : '' " smallscreen>
-<!--    <div class="row body-content" style="background-color: #252A30;display:flex;" ng-class="minMenu ? 'minimizedMenu' : '' ">-->
-<!--        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="col-lg-2 responsive-md-screen nopadding fullHeight sidemenu">-->
-<!--        <div ng-class="hideMenu ? 'showM' : 'hideM'" class="responsive-md-screen nopadding fullHeight sidemenu" style="position:absolute;">-->
         <div ng-class="hideMenu ? 'showM' : 'hideM'" class="responsive-md-screen nopadding fullHeight sidemenu" style="position:absolute;">
             <div ng-include="'partials/viewer/viewer-entry-side-bar.html'"></div>
         </div>
-<!--        <div class="col-lg-10 col-xs-12 responsive-md-screen right-content" style="height:100%;">-->
         <div class="col-lg-12 col-xs-12 responsive-md-screen right-content" style="height:100%;">
             <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%" style="border: 0; min-height: 800px; background-color: white; "></iframe>
-<!--            <iframe id="iframeViewer" ng-src="http://rawgit.com/calipho-sib/nextprot-viewers/develop/sequence/app/index.html?env=dev" width="100%" style="border: 0; min-height: 800px; background-color: white; "></iframe>-->
-            
-            <!-- another option is to pass an array of trusted domains -->
-            <!-- <script>iFrameResize({log:false, checkOrigin: ['http://rawgit.com', 'https://rawgit.com', 'https://cdn.rawgit.com', 'http://cdn.rawgit.com']})</script> -->
             <script>
                 iFrameResize({
                     log: false,
