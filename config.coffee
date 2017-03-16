@@ -23,6 +23,7 @@ exports.config =
           'bower_components/showdown/src/extensions/github.js'
           'bower_components/showdown/src/extensions/table.js',
           'bower_components/showdown/src/extensions/twitter.js'
+          'bower_components/webcomponentsjs/webcomponents-lite.js'
         ]
 
     stylesheets:

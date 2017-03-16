@@ -3,13 +3,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="keywords" content="neXtProt,UniProt,Human,Proteins,Proteome,Proteomics">
+    <meta name="keywords" content="nextprot,UniProt,Human,Proteins,Proteome,Proteomics,protein database,protein knowledgebase,protein resource,human protein,human proteome,cancer variants portal,ion channels variants portal,function,medical,disease,expression,interactions,sequence,isoform,mutation,variant,phenotypes,proteomics,peptide,structure,3D,unicity checker,annotation,biocuration,chromosomes,protein validation,protein-coding genes,post-translational modifications,ptm,data integration,systems biology,genetic variations,RDF data model,SPARQL endpoint,api,rest">
+
 <!--    <meta name="description" content="A knowledge platform on human proteins. It strives to be a comprehensive resource that provides a variety of types of information on human proteins.">-->
     <meta name="description" content="{{nm.description}}">
     <meta name="author" content="CALIPHO Team - SIB - Swiss Institute of Bioinformatics">
     <meta name="fragment" content="!">
     <meta http-equiv="expires" content="0">
     <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+    
+    <link rel="icon" href="./img/np-x.png">
 
     <!--<base href="/protosearch/" />-->
     <base href="/">
@@ -299,7 +302,8 @@
     <div class="np-alert alert alert-error alert-warning">{{Search.result.error}} {{message}}</div>
 </div>
 
-<flash:messages></flash:messages>
+<!--<flash:msg></flash:msg>-->
+<div ng-include="'partials/errors/alert-message.html'"></div>
 
 <!-- Masthead
 ================================================== -->

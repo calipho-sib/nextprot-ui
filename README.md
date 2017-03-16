@@ -20,8 +20,10 @@ Backends
 Installation
 ------------
 
-> npm install
-> bower install
+> npm install   
+> bower install   
+> brunch build   
+> gulp
 
 Usage
 -----
@@ -31,7 +33,7 @@ Usage
 Maintenance Javascript Libraries
 -------
 
-> bower list (lists the current bower components and shows the latests)
+> bower list (lists the current bower components and shows the latests)   
 > bower install angular#1.4.0 --save (important to set the --save flag to update the bower.json accordingly)
 
 Maintenance node modules

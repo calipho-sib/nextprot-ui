@@ -441,7 +441,7 @@ main {}
     width: 240px;
     z-index: 10;
 }
-.second-header-right {
+div.second-header-right {
     height: 50px;
     padding-left: 240px;
     z-index: 9;
@@ -495,6 +495,7 @@ main {}
 .topmenu {
     margin: 0;
     padding: 0;
+    background: #bbb;
 }
 .mainmenu li a>.text,
 .topmenu li a>.text {
@@ -643,9 +644,8 @@ li a>.number {
     content: "\f078";
 }
 */
-.right-content {
-    padding: 0px;
-    padding-left: 240px;
+div.right-content {
+    padding: 0 0 0 240px;
 }
 .right-content>iframe {
     margin-bottom: -5px;
@@ -876,7 +876,7 @@ li a>.number {
     }
     /*    Second header RIGHT : */
     
-    .second-header-right {
+    div.second-header-right {
         height: auto;
         padding: 0px;
     }
@@ -885,7 +885,7 @@ li a>.number {
         margin: 0px;
     }
     
-    .right-content {
+    div.right-content {
         padding: 0px;
     }
 }
@@ -922,7 +922,7 @@ li a>.number {
         padding: 0px 0px 10px;
         text-align: center;
     }
-    
+
     #entrySummaryName {
         padding: 10px 15px 6px 15px;
     }
@@ -1585,7 +1585,7 @@ header .navbar .dropdown-menu>.active>a {
 .sidemenu .topmenu {
     height: 100vh;
     z-index: 300;
-    overflow: scroll;
+    overflow: auto;
     /*    padding-bottom:100px;*/
     
     box-shadow: 0px 1px 20px 2px rgba(0, 0, 0, 0.1);
