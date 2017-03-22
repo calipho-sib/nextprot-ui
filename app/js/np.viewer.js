@@ -49,8 +49,7 @@
                     nxConfig.sequence = scope.sequence;
                 }
 
-                var html = '<link rel="import" href=elements/' + nxElement + '.html>';
-                html += '<'+ nxElement + ' nx-config=' +  JSON.stringify(nxConfig) + '></>';
+                var html = '<'+nxElement+' nx-config='+JSON.stringify(nxConfig)+'></'+nxElement +'>';
                 element.html(html);
 
             }
