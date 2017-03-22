@@ -18,11 +18,15 @@
 
             var path = $location.$$path;
             var regexFunctionPage = /^\/entry\/[^\/]+\/?(function)?$/;
+            var regexBlastPage = /^\/blast\/.+/;
 
             if(path.match(regexFunctionPage) != null){
                 return "function-view"
             }
 
+            if(path.match(regexBlastPage)  != null){
+                return "blast-view"
+            }
         }
 
         function link(scope, element, attrs) {
@@ -32,6 +36,13 @@
 
                 var nxElement = getNextProtElement();
                 nxConfig.entry = entry;
+
+                if (nxElement==="blast-view") {
+                    nxConfig.isoform = scope.isoformName;
+                    nxConfig.begin = scope.seqStart;
+                    nxConfig.end = scope.seqEnd;
+                    nxConfig.sequence = scope.sequence;
+                }
 
                 var html = '<link rel="import" href=elements/' + nxElement + '.html>';
                 html += '<'+ nxElement + ' nx-config=' +  JSON.stringify(nxConfig) + '></>';
@@ -58,6 +69,7 @@
         var tv = {templateUrl: '/partials/viewer/term-viewer.html'};
         var pv = {templateUrl: '/partials/viewer/publi-viewer.html'};
         var gv = {templateUrl: '/partials/viewer/global-viewer.html'};
+        var bv = {templateUrl: '/partials/viewer/blast-viewer.html'};
 
         $routeProvider
 
@@ -74,7 +86,10 @@
             .when('/view/:gv1', gv)
             .when('/view/:gv1/:gv2', gv)
             .when('/view/:gv1/:gv2/:gv3', gv)
-        
+
+            .when('/blast/:isoform/:seqStart/:seqEnd', bv)
+            .when('/blast/:isoform', bv)
+            .when('/blast/sequence/:sequence', bv)
 
             //NP1 ENTRY views 
             .when('/entry/:entry/', nxelementsv)
@@ -117,7 +132,13 @@
         $scope.entryName = $routeParams.entry;
         $scope.termName = $routeParams.termid;
         $scope.publiName = $routeParams.pubid;
-        
+
+        //params for blast search
+        $scope.isoformName = $routeParams.isoform;
+        $scope.sequence = $routeParams.sequence;
+        $scope.seqStart = $routeParams.seqStart;
+        $scope.seqEnd = $routeParams.seqEnd;
+
         var entryViewMode = $scope.entryName != undefined;
 
         if(entryViewMode){

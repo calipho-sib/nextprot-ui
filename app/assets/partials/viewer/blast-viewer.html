@@ -1,0 +1,24 @@
+<div ng-controller="ViewerCtrl">
+    <div class="row" style="border-top: 1px solid #E7E7E7;" ng-class="minMenu ? 'minimizedMenu' : '' " smallscreen>
+        <div class="col-lg-12 responsive-md-screen">
+            <div class="row" style="height:inherit;background-color:#f8f8f8;border-bottom: 1px solid #E7E7E7;margin-left:0px;height:50px;">
+                <div class="col-lg-5 col-md-4 col-sm-6" style="">
+                    <h1 style="margin:0px;padding:0px;line-height:45px; font-size:28px;" ng-bind="nm.h1"></h1>
+                </div>
+                <div class="col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-2 col-sm-3 col-xs-12 entry-search" style="text-align:right;">
+                    <form ng-submit="makeSimpleSearch()">
+                        <div class="input-group">
+                            <input ng-model="simpleSearchText" type="text" class="form-control" placeholder="Search in neXtProt...">
+                            <span class="input-group-btn"><button class="btn btn-default simple-search-btn" type="submit"><span class="fa fa-search"></span></button></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tool-viewer row body-content" ng-class="minMenu ? 'minimizedMenu' : '' " smallscreen>
+        <div class="responsive-md-screen" style="height:100%;">
+            <div nextprot-element="widgetEntry"></div>
+        </div>
+    </div>
+</div>

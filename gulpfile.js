@@ -8,13 +8,23 @@ gulp.task('clean', function(cb) {
 });
 
 gulp.task('vulcanize', function() {
-    return gulp.src('bower_components/nextprot-elements/function-view.html')
+    return gulp.src('./bower_components/nextprot-elements/function-view.html')
         .pipe(vulcanize({
             strip: true,
             inlineScripts: true,
             inlineCss: true
         }))
-        .pipe(gulp.dest('build/elements/'));
+        .pipe(gulp.dest('./build/elements/'));
 });
 
-gulp.task('default', ['clean', 'vulcanize']);
+gulp.task('vulcanize-blast', function() {
+    return gulp.src('./bower_components/nextprot-elements/blast-view.html')
+        .pipe(vulcanize({
+            strip: true,
+            inlineScripts: true,
+            inlineCss: true
+        }))
+        .pipe(gulp.dest('./build/elements/'));
+});
+
+gulp.task('default', ['clean', 'vulcanize', 'vulcanize-blast']);
