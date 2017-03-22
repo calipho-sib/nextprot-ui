@@ -7,8 +7,18 @@ gulp.task('clean', function(cb) {
     del(['./build/elements/**'], cb);
 });
 
-gulp.task('vulcanize', function() {
+gulp.task('vulcanize-function', function() {
     return gulp.src('./bower_components/nextprot-elements/function-view.html')
+        .pipe(vulcanize({
+            strip: true,
+            inlineScripts: true,
+            inlineCss: true
+        }))
+        .pipe(gulp.dest('./build/elements/'));
+});
+
+gulp.task('vulcanize-interactions', function() {
+    return gulp.src('./bower_components/nextprot-elements/interactions-view.html')
         .pipe(vulcanize({
             strip: true,
             inlineScripts: true,
@@ -27,4 +37,4 @@ gulp.task('vulcanize-blast', function() {
         .pipe(gulp.dest('./build/elements/'));
 });
 
-gulp.task('default', ['clean', 'vulcanize', 'vulcanize-blast']);
+gulp.task('default', ['clean', 'vulcanize-function', 'vulcanize-interactions', 'vulcanize-blast']);
