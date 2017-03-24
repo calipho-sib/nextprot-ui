@@ -18,11 +18,16 @@
 
             var path = $location.$$path;
             var regexFunctionPage = /^\/entry\/[^\/]+\/?(function)?$/;
+            var regexMedicalPage = /^\/entry\/[^\/]+\/?(medical)?$/;
             var regexInteractionsPage = /^\/entry\/[^\/]+\/?(interactions)?$/;
             var regexBlastPage = /^\/blast\/.+/;
 
             if(path.match(regexFunctionPage) != null){
                 return "function-view"
+            }
+
+            if(path.match(regexMedicalPage) != null){
+                return "medical-view"
             }
 
             if(path.match(regexInteractionsPage) != null){
@@ -98,6 +103,7 @@
             //NP1 ENTRY views 
             .when('/entry/:entry/', nxelementsv)
             .when('/entry/:entry/function', nxelementsv)
+            .when('/entry/:entry/medical', nxelementsv)
             .when('/entry/:entry/interactions', nxelementsv)
 
             .when('/term/:termid/',tv)
