@@ -1,7 +1,6 @@
 <div ng-controller="ViewerCtrl">
     <div class="row" style="border-top: 1px solid #E7E7E7;" ng-class="minMenu ? 'minimizedMenu' : '' " smallscreen>
         <div class="responsive-md-screen second-header-left" style="padding:0px;background-color:#bbb;height:50px">
-            <!--        <div class="responsive-md-screen second-header-left" style="padding:0px;background-color:#21252A;height:50px">-->
             <div class="col-xs-2" id="toggle-sidemenu">
                 <a class="btn" href="javascript:void(0);" ng-click="hideMenu = !hideMenu">
                     <span class="fa fa-reorder" aria-hidden="true"></span>
@@ -43,7 +42,7 @@
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5 pull-right">
                     <div class="pull-right">
-                        <div class="entrySummarylink" ng-if="goldOnlyButton">
+                        <div class="entrySummarylink">
                             <label for="goldOnlyInput" > Gold Only </label>
                             <input ng-model="goldOnly" id="goldOnlyInput" type="checkbox" data-toggle="toggle" style="display:inline-block" ng-click="toggleGoldOnly()">
                         </div>

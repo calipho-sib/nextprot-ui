@@ -53,10 +53,10 @@
                     nxConfig.end = scope.seqEnd;
                     nxConfig.sequence = scope.sequence;
                 }
-
-                var html = '<'+nxElement+' nx-config='+JSON.stringify(nxConfig)+'></'+nxElement +'>';
+                var goldOnly = scope.goldOnly?'gold-only="true"':'';
+                var html = '<'+nxElement+' nx-config='+JSON.stringify(nxConfig)+' '+goldOnly+'></'+nxElement +'>';
                 element.html(html);
-
+                $location.$$customElement = nxElement;
             }
             scope.$watch(attrs.nextprotElement, function(value) {
                 renderElement(value);
@@ -153,7 +153,6 @@
         var entryViewMode = $scope.entryName != undefined;
 
         if(entryViewMode){
-
             viewerService.getCommunityEntryViewers().success(function(data){
                 $scope.communityViewers = data;
             });
@@ -192,17 +191,21 @@
         }
 
         $scope.toggleGoldOnly = function () {
-            var newValue = $scope.goldOnly;
-            var isoformQuery = $location.search().isoform;
-//            console.log("isoformQuery");
-//            console.log(isoformQuery);
-            if(newValue !== false){
-                $location.search({"gold": null,
-                                 "isoform": isoformQuery});
-            }else $location.search({"gold":true,
-                                    "isoform":isoformQuery});
+            var customElement = document.getElementsByTagName($location.$$customElement)[0];
+            if(customElement) {
+                if($scope.goldOnly) customElement.setAttribute("gold-only", $scope.goldOnly);
+                else customElement.removeAttribute("gold-only");
+            }else {
+                var newValue = $scope.goldOnly;
+                var isoformQuery = $location.search().isoform;
+                if(newValue !== false){
+                    $location.search({"gold": null, "isoform": isoformQuery});
+                }else {
+                    $location.search({"gold":true, "isoform":isoformQuery});
+                }
+            }
         }
-        
+
         $scope.hasPublication = function (count, link) {
             return parseInt(count) === 0 ? "#" : link
         }
