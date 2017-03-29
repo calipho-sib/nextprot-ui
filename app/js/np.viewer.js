@@ -52,16 +52,18 @@
                 var nxElement = getNextProtElement();
                 nxConfig.entry = entry;
 
+                nxConfig.isoform = scope.isoformName;
+                nxConfig.goldOnly = scope.goldOnly;
                 if (nxElement==="blast-view") {
-                    nxConfig.isoform = scope.isoformName;
                     nxConfig.begin = scope.seqStart;
                     nxConfig.end = scope.seqEnd;
                     nxConfig.sequence = scope.sequence;
                 }
-                var goldOnly = scope.goldOnly?'gold-only="true"':'';
-                var html = '<'+nxElement+' nx-config='+JSON.stringify(nxConfig)+' '+goldOnly+'></'+nxElement +'>';
+
+                var html = '<'+nxElement+' nx-config='+JSON.stringify(nxConfig)+'></'+nxElement +'>';
+
                 element.html(html);
-                $location.$$customElement = nxElement;
+                scope.customElement = nxElement;
             }
             scope.$watch(attrs.nextprotElement, function(value) {
                 renderElement(value);
@@ -132,7 +134,8 @@
     function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
 
         $scope.goldOnly = $routeParams.gold || false;
-        
+        $scope.isoformName = $routeParams.isoform;
+
         $scope.partialName = "partials/doc/page.html";
         $scope.testt = $routeParams.article;
 
@@ -197,19 +200,11 @@
         }
 
         $scope.toggleGoldOnly = function () {
-            var customElement = document.getElementsByTagName($location.$$customElement)[0];
-            if(customElement) {
-                if($scope.goldOnly) customElement.setAttribute("gold-only", $scope.goldOnly);
-                else customElement.removeAttribute("gold-only");
-            }else {
-                var newValue = $scope.goldOnly;
                 var isoformQuery = $location.search().isoform;
-                if(newValue !== false){
+                if($scope.goldOnly)
+                    $location.search({"gold": true, "isoform": isoformQuery});
+                else
                     $location.search({"gold": null, "isoform": isoformQuery});
-                }else {
-                    $location.search({"gold":true, "isoform":isoformQuery});
-                }
-            }
         }
 
         $scope.hasPublication = function (count, link) {
