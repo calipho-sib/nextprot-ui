@@ -21,7 +21,7 @@ TrackingService.factory('Tracker', [
         var tracker = {};
 
         tracker.trackPageView = function () {
-            console.log("GA tracking location change : " + $location.url());
+            //console.log("GA tracking location change : " + $location.url());
             $window.ga('send', 'pageview', $location.url());
         };
 
@@ -34,7 +34,7 @@ TrackingService.factory('Tracker', [
 
             if (Object.keys(gaEvent).length>0) {
 
-                console.log("tracking transition route -> ga event:", gaEvent);
+                //console.log("tracking transition route -> ga event:", gaEvent);
                 ga('send', gaEvent);
             }
         };
@@ -52,7 +52,7 @@ TrackingService.factory('Tracker', [
                 gaEvent.eventAction = gaEvent.eventCategory + separator + type;
             }
 
-            console.log("tracking download event -> ga event:", gaEvent);
+            //console.log("tracking download event -> ga event:", gaEvent);
             ga('send', gaEvent);
         };
 
@@ -70,7 +70,7 @@ TrackingService.factory('Tracker', [
                 if (!isNaN(build))
                     exceptionEvent.appVersion += "-build."+RELEASE_INFOS.build;
 
-                console.log("tracking save as list exception -> ga event:", exceptionEvent);
+                //console.log("tracking save as list exception -> ga event:", exceptionEvent);
                 ga('send', 'exception', exceptionEvent);
             } else {
 
@@ -81,7 +81,7 @@ TrackingService.factory('Tracker', [
 
                 gaEvent.eventAction = gaEvent.eventCategory+separator+'size-'+count;
 
-                console.log("tracking save as list event -> ga event:", gaEvent);
+                //console.log("tracking save as list event -> ga event:", gaEvent);
                 ga('send', gaEvent);
             }
         };
