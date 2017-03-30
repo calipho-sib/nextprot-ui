@@ -168,7 +168,7 @@ a.inactive {
     border-color: lightgray;
 }
 
-.label-as-badge {
+.badge-label {
     border-radius: 1em;
     margin-right: 2px;
     background: #ccf;
