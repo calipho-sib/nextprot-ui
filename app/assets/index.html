@@ -326,6 +326,11 @@
 </script>
 <script defer src="js/vendor.js?release={!distRelease!}"></script>
 <script defer src="js/app.js?release={!distRelease!}"></script>
-<link rel="import" href="elements/nextprot-elements.html">
+<script defer>
+    var elementsImport = document.createElement('link');
+    elementsImport.rel = 'import';
+    elementsImport.href = 'elements/nextprot-elements.html';
+    document.getElementsByTagName('body')[0].appendChild(elementsImport);
+</script>
 </body>
 </html>
