@@ -134,6 +134,7 @@
     function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
 
         $scope.goldOnly = $routeParams.gold || false;
+        $scope.goldFilter = $scope.goldOnly ? "?gold":"";
         $scope.isoformName = $routeParams.isoform;
 
         $scope.partialName = "partials/doc/page.html";
@@ -201,10 +202,8 @@
 
         $scope.toggleGoldOnly = function () {
                 var isoformQuery = $location.search().isoform;
-                if($scope.goldOnly)
-                    $location.search({"gold": true, "isoform": isoformQuery});
-                else
-                    $location.search({"gold": null, "isoform": isoformQuery});
+                if($scope.goldOnly) $location.search({"gold": true, "isoform": isoformQuery});
+                else $location.search({"gold": null, "isoform": isoformQuery});
         }
 
         $scope.hasPublication = function (count, link) {
