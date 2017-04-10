@@ -149,15 +149,17 @@
             value = value.substr(0, max);
             if (wordwise) {
                 var lastspace = value.lastIndexOf(' ');
-                if (lastspace != -1) {
-                    value = value.substr(0, lastspace);
+                var lastdot = value.lastIndexOf('.');
+                var lastbreak = lastdot !== -1 ? lastdot+1 : lastspace;
+                if (lastbreak != -1) {
+                    value = value.substr(0, lastbreak);
                 }
             }
 
             return value;
         };
     });
-
+    
     SearchUI.filter('suffix', function () {
         return function (value, max) {
             if (!value) return '';
@@ -167,14 +169,44 @@
             if (value.length <= max) return '';
 
             var head = value.substr(0, max);
-            var lastHeadSpace = head.lastIndexOf(' ');
+            
+            var lastspace = head.lastIndexOf(' ');
+            var lastdot = head.lastIndexOf('.');
+            var lastbreak = lastdot !== -1 ? lastdot+1 : lastspace;
+            
             var tail;
 
-            if (lastHeadSpace != -1) {
-                tail = value.substr(lastHeadSpace+1);
+            if (lastbreak != -1) {
+                tail = value.substr(lastbreak+1);
             }
 
             return tail;
+        };
+    });
+    
+    function capitalizeFirstLetter(string){
+        var dontCapitalize = ["mRNA", "tRNA", "rRNA", "dsDNA", "ssDNA", "siRNA", "snRNA", "ssRNA", "tmRNA",
+                    "dAMP", "dADP", "dATP", "dCMP", "dCDP", "dCTP", "dGMP", "dGDP", "dGTP",
+                    "dTMP", "dTDP", "dTTP", "cAMP", "cGMP", "hnRNP", "snRNP", "bZIP", "cTAGE", "eIF", "mTERF"];
+        for (var dc in dontCapitalize){
+            if(string.startsWith(dontCapitalize[dc])) {
+                return string;
+            }
+        }
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    
+    SearchUI.filter('ConcatAndUpCase', function () {
+        return function (function_array) {
+            var function_string = "";
+            if (function_array){
+                function_string = function_array.map(function(el){
+                    var new_el = el.replace('@@',' ');
+                    if (!new_el.endsWith(".")){new_el+="."};
+                    return capitalizeFirstLetter(new_el);
+                }).join(" ");
+            }
+            return function_string;
         };
     });
 
