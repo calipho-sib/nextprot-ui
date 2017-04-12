@@ -13,17 +13,18 @@ exports.config =
       joinTo:
         'js/app.js': /^app/
         'js/vendor.js': /^(bower_components|vendor\/scripts)/
+        
       order:
         before: [
-          'bower_components/jquery/dist/jquery.js',
-          'bower_components/bootstrap/dist/js/bootstrap.js',
-          'bower_components/angular/angular.js',
-          'bower_components/codemirror/mode/sparql/sparql.js'
-          'bower_components/showdown/src/showdown.js'
-          'bower_components/showdown/src/extensions/github.js'
-          'bower_components/showdown/src/extensions/table.js',
-          'bower_components/showdown/src/extensions/twitter.js'
-          'bower_components/webcomponentsjs/webcomponents-lite.js'
+            'bower_components/webcomponentsjs/webcomponents-lite.min.js',
+            'bower_components/jquery/dist/jquery.js',
+            'bower_components/bootstrap/dist/js/bootstrap.js',
+            'bower_components/angular/angular.js',
+            'bower_components/codemirror/mode/sparql/sparql.js',
+            'bower_components/showdown/src/showdown.js',
+            'bower_components/showdown/src/extensions/github.js',
+            'bower_components/showdown/src/extensions/table.js',
+            'bower_components/showdown/src/extensions/twitter.js'
         ]
 
     stylesheets:
