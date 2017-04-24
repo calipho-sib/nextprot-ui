@@ -44,9 +44,7 @@
                     <div class="pull-right">
                         <div class="entrySummarylink">
                             <label for="goldOnlyInput" > Gold Only </label>
-                            <input ng-model="goldOnly" id="goldOnlyInput" is="iron-input" type="checkbox" bind-value="{{goldOnly}}" data-toggle="toggle" style="display:inline-block" ng-click="toggleGoldOnly()">
-                            <iron-localstorage name="gold-only-storage" value="{{goldOnly}}"></iron-localstorage>
-                            <!--<input ng-model="goldOnly" id="goldOnlyInput" type="checkbox" data-toggle="toggle" style="display:inline-block" ng-click="toggleGoldOnly()">-->
+                            <input ng-model="goldOnly" id="goldOnlyInput" type="checkbox" data-toggle="toggle" style="display:inline-block" ng-click="toggleGoldOnly()">
                         </div>
                         <div class="entrySummarylink">
                             <a bs-modal="'partials/export/export-modal.html'" href="#" title="Download entry" ng-click="setExportEntry(widgetEntry)" title="Download entry" target="_blank" ng-href="{{widgetURL}}&inputOption=true" style="color:grey;font-size:18px;">
