@@ -1,6 +1,5 @@
 <div class="row" style="border-top: 1px solid #E7E7E7;" ng-class="minMenu ? 'minimizedMenu' : '' " smallscreen>
     <div class="responsive-md-screen second-header-left" style="padding:0px;background-color:#bbb;height:50px">
-        <!--        <div class="responsive-md-screen second-header-left" style="padding:0px;background-color:#21252A;height:50px">-->
         <div class="col-xs-2" id="toggle-sidemenu">
             <a class="btn" href="javascript:void(0);" ng-click="hideMenu = !hideMenu">
                 <span class="fa fa-reorder" aria-hidden="true"></span>
@@ -22,13 +21,6 @@
     </div>
     <div class="col-lg-12 responsive-md-screen second-header-right">
         <div class="row" style="height:inherit;background-color:#f8f8f8;border-bottom: 1px solid #E7E7E7;margin-left:0px;">
-            <!--
-                            <div class="col-lg-1 pull-left" id="toggle-minimizedMenu">
-                                <a class="btn" href="javascript:void(0);" ng-click="minMenu = !minMenu">
-                                    <span class="fa fa-reorder" aria-hidden="true"></span>
-                                </a>
-                            </div>
-            -->
             <div class="col-lg-4 col-md-4 col-sm-7 col-xs-12" style="
     word-break: break-all;
     white-space: nowrap;
@@ -47,26 +39,12 @@
                     <p>REF</p>
                 </div>
             </div>
-            <!--
-            <div class="col-md-3" style="margin-top: 16px;margin-right: 0px;">
-                <a ng-show="communityMode" href="help/learn-programmatic-access" style="color: #808080;" data-toggle="tooltip" data-placement="top" title="Click and go to section develop / contribute">Community viewers </span>&nbsp;<i class="fa-info-sign"></i></a>
-            </div>
--->
             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5 pull-right">
                 <div class="pull-right">
                     <div class="entrySummarylink" ng-if="goldOnlyButton">
                         <label for="goldOnlyInput" > Gold Only </label>
                         <input ng-model="goldOnly" id="goldOnlyInput" type="checkbox" data-toggle="toggle" style="display:inline-block" ng-click="toggleGoldOnly()">
                     </div>
-                    <!-- See github url  -->
-                    <!--
-                                            <div class="entrySummarylink">
-                                                <a ng-href="{{githubURL}}" title="See the source code" target="_blank" style="color:grey;font-size:18px;">
-                                                    <span class="fa fa-github" aria-hidden="true"></span>
-                                                </a>
-                                            </div>
-                    -->
-                    <!-- Download entry (pop-up opens) -->
                     <div class="entrySummarylink">
                         <a bs-modal="'partials/export/export-modal.html'" href="#" title="Download entry" ng-click="setExportEntry(widgetEntry)" title="Download entry" target="_blank" ng-href="{{widgetURL}}&inputOption=true" style="color:grey;font-size:18px;">
                             <span class="fa fa-download" aria-hidden="true"></span>

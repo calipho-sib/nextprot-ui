@@ -18,12 +18,12 @@
         <ul id="dashboard" class=" submenu collapse in">
             <li class="submenu-header ellipsis">Protein</li>
             <li ng-class="activePage('function')">
-                <a href="/entry/{{widgetEntry}}">
+                <a href="/entry/{{widgetEntry}}{{goldFilter}}">
                     <span class="text">Function</span>
                 </a>
             </li>
             <li ng-class="activePage('medical')">
-                <a href="/entry/{{widgetEntry}}/medical">
+                <a href="/entry/{{widgetEntry}}/medical{{goldFilter}}">
                     <span class="text">Medical</span>
                 </a>
             </li>
@@ -33,12 +33,12 @@
                 </a>
             </li>
             <li ng-class="activePage('interactions')">
-                <a href="/entry/{{widgetEntry}}/interactions">
+                <a href="/entry/{{widgetEntry}}/interactions{{goldFilter}}">
                     <span class="text">Interactions</span>
                 </a>
             </li>
             <li ng-class="activePage('localisation')">
-                <a href="/entry/{{widgetEntry}}/localisation">
+                <a href="/entry/{{widgetEntry}}/localisation{{goldFilter}}">
                     <span class="text">Localisation</span>
                 </a>
             </li>

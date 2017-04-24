@@ -61,10 +61,10 @@
     "codemirror": "~4.6.0",
     "iframe-resizer": "3.2.0"
   },
-    "overrides": {
-        "webcomponentsjs": {
-            "main": "webcomponents-lite.min.js"
-        }
-    }
+  "overrides": {
+     "webcomponentsjs": {
+         "main": "webcomponents-lite.min.js"
+     }
+  }
 }
 

@@ -57,3 +57,31 @@ exports.config =
 
   # Enable or disable minifying of result js / css files.
   # minify: true
+
+exports.plugins =
+  polymer: {
+    vulcanize: {
+      options: {
+        abspath: "build/elements",
+        stripComments: true
+      }
+    },
+    crisper: {
+      disabled: false,
+      options: {}
+    },
+    paths: {
+      "nextprot-elements.html": {
+        vulcanize: {}
+      }
+    },
+    copyPathsToPublic: {
+      paths: {
+        "build/elements/nextprot-elements.html": [
+          "bower_components/nextprot-elements/nextprot-elements.html"
+        ]
+      },
+      verbosity: 1,
+      onlyChanged: true
+    }
+  }
