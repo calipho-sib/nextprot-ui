@@ -3,35 +3,73 @@ img#release-img {
     margin-top: 10px;
 }
 .peLabels{
-/*    width:40px;*/
-    font-weight: 900;
-    white-space: normal;
+/*    font-weight: 900;*/
+/*    white-space: normal;*/
 }
 #evidence_at_protein_level{
-    width:70px;
-    margin-top:-20px;
+/*    width:70px;*/
+/*    margin-top:-20px;*/
 }
 #evidence_at_transcript_level{
-    text-align: left;
-    width:120px;
-    margin-left:20px;
-    margin-top:10px;
+/*    text-align: right;*/
+/*    width:120px;*/
+/*    margin-left:20px;*/
+/*    margin-top:10px;*/
 }
 #inferred_from_homology{
-    text-align: left;
-    width:80px;
-    margin-top:-5px;
-    margin-left:15px;
+/*    text-align: right;*/
+/*    width:80px;*/
+/*    margin-top:-5px;*/
+/*    margin-left:15px;*/
 }
 #predicted{
-    text-align: right;
-    width:100px;
-    margin-top:-5px;
-    margin-right:0px;
+/*    text-align: right;*/
+/*    width:100px;*/
+/*    margin-top:-5px;*/
+/*    margin-right:0px;*/
 }
 #uncertain{
-    text-align: right;
-    width:100px;
-    margin-top:-5px;
-    margin-right:5px;
+/*    text-align: right;*/
+/*    width:100px;*/
+/*    margin-top:-5px;*/
+/*    margin-right:5px;*/
+}
+#release-chart {
+/*        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+        font-family: "Lato", Helvetica, Arial;
+        font-size:34px;
+        font-weight:500;
+    color:red;
+        position: relative;
+        height: 0;
+        width: 100%;
+        padding: 0;
+        /* padding-bottom will be overwritten by JavaScript later */
+        padding-bottom: 100%;
+    }
+    
+    #release-chart > svg {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+    }
+    
+    path.slice {
+        stroke-width: 2px;
+    }
+    
+    polyline {
+        opacity: .6;
+        stroke: black;
+        stroke-width: 2px;
+        fill: none;
+    }
+.labels{
+    fill:#333;
+}
+.pe_title{
+    text-shadow:1px 1px 1px rgba(0,0,0,0.2);
+    fill:#333;
 }

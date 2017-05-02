@@ -16,7 +16,7 @@
 //            .when('/news/:news', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
 //            .when('/about/nextprot', {title: 'about for nextprot', templateUrl: '/partials/doc/main-doc.html'})
 //            .when('/:section/', {title: 'nextprot news', templateUrl: '/partials/doc/main-doc.html'})   
-            .when('/news/', {title:'Niews', templateUrl: '/partials/doc/main-doc.html'})
+            .when('/news/', {title:'News', templateUrl: '/partials/doc/main-doc.html'})
             .when('/:section/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})   
 
     }
