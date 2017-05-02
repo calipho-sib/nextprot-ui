@@ -57,7 +57,7 @@
 
             <p ng-if="repository.selectedQuery.owner === 'nextprot'">Tags:
                             <span ng-repeat="tag in repository.selectedQuery.tags | orderBy"
-                                  class="label label-default label-as-badge">{{tag}}</span>
+                                  class="label label-default badge-label">{{tag}}</span>
 
             <p class="pull-right"><a target="_blank" ng-click="runQuery(repository.selectedQuery)">Run this
                 query!</a></p>

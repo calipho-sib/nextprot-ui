@@ -17,9 +17,6 @@ function flashImp($rootScope, $timeout) {
     };
 
     var emit = function() {
-        console.log("emitting !!!");
-        console.log(messages);
-        console.log(cleanup);
     	$rootScope.$emit('flash:ms', messages, cleanup);
     };
 
@@ -62,7 +59,6 @@ function flashCtrl($scope,$rootScope, $timeout){
     $scope.messageList = [];
     
     $rootScope.$on('flash:ms', function (_, messages, done) {
-        console.log("message send !!!", messages);
         $scope.messageList = messages;
         done();
     });

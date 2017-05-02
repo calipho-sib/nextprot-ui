@@ -18,11 +18,30 @@
 
             var path = $location.$$path;
             var regexFunctionPage = /^\/entry\/[^\/]+\/?(function)?$/;
+            //var regexMedicalPage = /^\/entry\/[^\/]+\/?(medical)?$/;
+            var regexInteractionsPage = /^\/entry\/[^\/]+\/?(interactions)?$/;
+            //var regexLocalisationPage = /^\/entry\/[^\/]+\/?(localisation)?$/;
+            var regexBlastPage = /^\/blast\/.+/;
 
             if(path.match(regexFunctionPage) != null){
                 return "function-view"
             }
 
+            //if(path.match(regexMedicalPage) != null){
+            //    return "medical-view"
+            //}
+
+            if(path.match(regexInteractionsPage) != null){
+                return "interactions-view"
+            }
+
+            //if(path.match(regexLocalisationPage) != null){
+            //    return "localisation-view"
+            //}
+
+            if(path.match(regexBlastPage)  != null){
+                return "blast-view"
+            }
         }
 
         function link(scope, element, attrs) {
@@ -33,10 +52,18 @@
                 var nxElement = getNextProtElement();
                 nxConfig.entry = entry;
 
-                var html = '<link rel="import" href=elements/' + nxElement + '.html>';
-                html += '<'+ nxElement + ' nx-config=' +  JSON.stringify(nxConfig) + '></>';
-                element.html(html);
+                nxConfig.isoform = scope.isoformName;
+                nxConfig.goldOnly = scope.goldOnly;
+                if (nxElement==="blast-view") {
+                    nxConfig.begin = scope.seqStart;
+                    nxConfig.end = scope.seqEnd;
+                    nxConfig.sequence = scope.sequence;
+                }
 
+                var html = '<'+nxElement+' nx-config='+JSON.stringify(nxConfig)+'></'+nxElement +'>';
+
+                element.html(html);
+                scope.customElement = nxElement;
             }
             scope.$watch(attrs.nextprotElement, function(value) {
                 renderElement(value);
@@ -58,6 +85,7 @@
         var tv = {templateUrl: '/partials/viewer/term-viewer.html'};
         var pv = {templateUrl: '/partials/viewer/publi-viewer.html'};
         var gv = {templateUrl: '/partials/viewer/global-viewer.html'};
+        var bv = {templateUrl: '/partials/viewer/blast-viewer.html'};
 
         $routeProvider
 
@@ -74,11 +102,17 @@
             .when('/view/:gv1', gv)
             .when('/view/:gv1/:gv2', gv)
             .when('/view/:gv1/:gv2/:gv3', gv)
-        
+
+            .when('/blast/:isoform/:seqStart/:seqEnd', bv)
+            .when('/blast/:isoform', bv)
+            .when('/blast/sequence/:sequence', bv)
 
             //NP1 ENTRY views 
             .when('/entry/:entry/', nxelementsv)
             .when('/entry/:entry/function', nxelementsv)
+            //.when('/entry/:entry/medical', nxelementsv)
+            .when('/entry/:entry/interactions', nxelementsv)
+            //.when('/entry/:entry/localisation', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
@@ -100,7 +134,9 @@
     function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
 
         $scope.goldOnly = $routeParams.gold || false;
-        
+        $scope.goldFilter = $scope.goldOnly ? "?gold":"";
+        $scope.isoformName = $routeParams.isoform;
+
         $scope.partialName = "partials/doc/page.html";
         $scope.testt = $routeParams.article;
 
@@ -117,11 +153,16 @@
         $scope.entryName = $routeParams.entry;
         $scope.termName = $routeParams.termid;
         $scope.publiName = $routeParams.pubid;
-        
+
+        //params for blast search
+        $scope.isoformName = $routeParams.isoform;
+        $scope.sequence = $routeParams.sequence;
+        $scope.seqStart = $routeParams.seqStart;
+        $scope.seqEnd = $routeParams.seqEnd;
+
         var entryViewMode = $scope.entryName != undefined;
 
         if(entryViewMode){
-
             viewerService.getCommunityEntryViewers().success(function(data){
                 $scope.communityViewers = data;
             });
@@ -160,17 +201,11 @@
         }
 
         $scope.toggleGoldOnly = function () {
-            var newValue = $scope.goldOnly;
-            var isoformQuery = $location.search().isoform;
-//            console.log("isoformQuery");
-//            console.log(isoformQuery);
-            if(newValue !== false){
-                $location.search({"gold": null,
-                                 "isoform": isoformQuery});
-            }else $location.search({"gold":true,
-                                    "isoform":isoformQuery});
+                var isoformQuery = $location.search().isoform;
+                if((!$scope.customElement && $scope.goldOnly!==false) || ($scope.customElement && !$scope.goldOnly)) $location.search({"gold": null, "isoform": isoformQuery});
+                else $location.search({"gold": true, "isoform": isoformQuery});
         }
-        
+
         $scope.hasPublication = function (count, link) {
             return parseInt(count) === 0 ? "#" : link
         }

@@ -7,7 +7,6 @@
         'ngResource',
         'ngRoute',
         'ngAnimate',
-        'highcharts-ng',
         'ngCookies',
         'ipCookie',
         'npHelp',

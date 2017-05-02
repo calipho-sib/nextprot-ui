@@ -25,7 +25,6 @@
     "del": "^2.2.2",
     "dest": "^0.3.1",
     "ejs": "2.2.2",
-    "errorhandler": "1.1.1",
     "express": "4.11.1",
     "gulp": "^3.9.1",
     "gulp-vulcanize": "^6.1.0",
@@ -37,6 +36,7 @@
     "uglify-js-brunch": "1.7.7"
   },
   "devDependencies": {
+    "errorhandler": "1.1.1",
     "vulcanize": "1.15.3"
   }
 }
