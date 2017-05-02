@@ -18,26 +18,26 @@
 
             var path = $location.$$path;
             var regexFunctionPage = /^\/entry\/[^\/]+\/?(function)?$/;
-            var regexMedicalPage = /^\/entry\/[^\/]+\/?(medical)?$/;
+            //var regexMedicalPage = /^\/entry\/[^\/]+\/?(medical)?$/;
             var regexInteractionsPage = /^\/entry\/[^\/]+\/?(interactions)?$/;
-            var regexLocalisationPage = /^\/entry\/[^\/]+\/?(localisation)?$/;
+            //var regexLocalisationPage = /^\/entry\/[^\/]+\/?(localisation)?$/;
             var regexBlastPage = /^\/blast\/.+/;
 
             if(path.match(regexFunctionPage) != null){
                 return "function-view"
             }
 
-            if(path.match(regexMedicalPage) != null){
-                return "medical-view"
-            }
+            //if(path.match(regexMedicalPage) != null){
+            //    return "medical-view"
+            //}
 
             if(path.match(regexInteractionsPage) != null){
                 return "interactions-view"
             }
 
-            if(path.match(regexLocalisationPage) != null){
-                return "localisation-view"
-            }
+            //if(path.match(regexLocalisationPage) != null){
+            //    return "localisation-view"
+            //}
 
             if(path.match(regexBlastPage)  != null){
                 return "blast-view"
