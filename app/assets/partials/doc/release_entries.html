@@ -1,0 +1,12 @@
+<div id="stat-page-div" class="doc-content" ng-controller="ReleaseInfoCtrl">
+
+    <div class="main">
+        <p>Data release: {{releaseInfo.databaseRelease}}</p>
+        <p>Application release: {{releaseInfosFormatted}}</p>
+
+        <h2>Release entries statistics</h2>
+        <div class="row">
+            <chromosome-list-view></chromosome-list-view>
+        </div>
+    </div>
+</div>

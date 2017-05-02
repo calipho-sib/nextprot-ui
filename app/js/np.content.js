@@ -64,6 +64,7 @@
         
         $scope.getContentPartial = function(){
             if ($routeParams.article === "protein-existence") return "partials/doc/iframe.html";
+            if ($routeParams.article === "entries") return "partials/doc/release_entries.html";
             if (releasePages.indexOf($routeParams.article)>-1) return "partials/release_"+ $routeParams.article + ".html";
             if ($routeParams.section === "news") return "partials/doc/news.html";
             else return "partials/doc/page.html";
