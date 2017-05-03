@@ -23,7 +23,7 @@ Installation
 > npm install   
 > bower install   
 > brunch build   
-> gulp
+> gulp (Gulp was included to run the polymer vulcanize. It is temporary solution, the polymer build procedure should be moved to nextprot-elements. )
 
 Usage
 -----
