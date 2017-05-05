@@ -25,7 +25,7 @@
         'np.news',
         'np.release.info',
         'ui.codemirror',
-        'auth0', 'angular-storage', 'angular-jwt'
+        'auth0', 'angular-storage', 'angular-jwt', 'np.chromosomes'
     ]).config(configApplication)
         .factory('errorInterceptor', errorInterceptor)
         .factory('metaService', metaService)
