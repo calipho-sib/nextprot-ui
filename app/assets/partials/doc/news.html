@@ -1,29 +1,9 @@
-<div id="content" class="" ng-controller="HelpCtrl">
+<div id="content" class="container" ng-controller="chromosomeCtrl">
+    <div class="col-xs-12 col-lg-12  main" style="background-color:white">
+        <h2>{{articleTitle}}</h2>
 
-    <!-- CONTENT -->
-<!--    <div class="container-fluid doc-content" ng-init="initHelp()">-->
+        <!-- CENTER PANE -->
+        <div ng-include="'html/np-help.doc.html'"  id="news-centre-content"/>
 
-            <!-- LEFT PANE -->
-<!--
-            <div class="col-sm-4 col-lg-3 sidebar" id="news-sidebar">
-
-                <ul class="nav nav-sidebar">
-                    <li><h5>News</h5></li>
-                    <li ng-repeat="n in news" ng-class="{'active':isActiveDoc(n.url)}">
-                        <a ng-href="news/{{n.url}}">{{n.title}}
-                            <span class="date">{{n.publicationDateFormatted}}</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
--->
-
-            <div class="col-xs-12 col-lg-12  main" ng-controller="DocCtrl"  style="background-color:white">
-                <h2>{{articleTitle}}</h2>
-                <!-- CENTER PANE -->
-                <div ng-include="'html/np-help.doc.html'"  id="news-centre-content"/>
-
-            </div >
-<!--        </div>-->
-<!--    </div>-->
-</div><!--/.container-->
+    </div >
+</div>
