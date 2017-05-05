@@ -1,51 +1,16 @@
 <ul class="topmenu topmenu-responsive news-sidebar" ng-controller="HelpCtrl">
     <li class="active" ng-controller="NewsCtrl">
-<!--        <a class="collapsed onlyMinimized" href="javascript:void(0);" data-target="#scn" data-toggle="collapse">-->
-<!--            <span class="figure">-->
-<!--                <span>SCN</span>-->
-<!--                <i class="fa-bookmark" style="font-size:1.5em;color:white;"></i>-->
-<!--              </span>-->
-<!--            <span class="text">HELP</span>-->
-<!--            <span class="arrow fa"></span>-->
-<!--        </a>-->
-
-<!--        <div id="content" class="" ng-controller="HelpCtrl">-->
-
-            <!-- CONTENT -->
-            <!--    <div class="container-fluid doc-content" ng-init="initHelp()">-->
-
-<!--            <div class="row" ng-controller="NewsCtrl">-->
-                <!-- LEFT PANE -->
-
-                <!--                <div class="col-sm-4 col-lg-3 sidebar" id="news-sidebar">-->
-
-                <!--                    <ul class="nav nav-sidebar">-->
-                <ul id="scn" class="submenu-news collapse in">
-                    <li ng-repeat="n in news" ng-class="activePage('/news/{{n.url}}')">
-                        <a href="news/{{n.url}}">
-                            <span class="minDate"><span class="fa fa-newspaper-o"></span><br><span class="minifiedDate">{{n.minDate}}</span></span>
-                            <span class="text"><span class="fa fa-newspaper-o"></span>
+        <ul id="scn" class="submenu-news collapse in">
+            <li ng-repeat="n in news" ng-class="activePage('/news/{{n.url}}')">
+                <a href="news/{{n.url}}">
+                    <span class="minDate"><span class="fa fa-newspaper-o"></span><br><span class="minifiedDate">{{n.minDate}}</span></span>
+                    <span class="text"><span class="fa fa-newspaper-o"></span>
                                 {{n.publicationDateFormatted}}
                             </span>
-                            <div class="news-description">{{n.title}}</div>
-<!--                            <span class="text">{{n.title}} {{n.publicationDateFormatted}}</span>-->
-                        </a>
-                    </li>
-                </ul>
-<!--
-                <li  ng-class="{'active':isActiveDoc(n.url)}">
-                    <a ng-href="news/{{n.url}}">{{n.title}}
-                            <span class="date">{{n.publicationDateFormatted}}</span>
-                        </a>
-                </li>
--->
-                <!--                    </ul>-->
-                <!--                </div>-->
-
-<!--
-            </div>
-        </div>
--->
-        
+                    <div class="news-description">{{n.title}}</div>
+                    <!-- <span class="text">{{n.title}} {{n.publicationDateFormatted}}</span> -->
+                </a>
+            </li>
+        </ul>
     </li>
 </ul>
