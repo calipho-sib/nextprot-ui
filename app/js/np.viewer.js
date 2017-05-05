@@ -20,7 +20,7 @@
             var regexFunctionPage = /^\/entry\/[^\/]+\/?(function)?$/;
             var regexMedicalPage = /^\/entry\/[^\/]+\/?(medical)?$/;
             var regexInteractionsPage = /^\/entry\/[^\/]+\/?(interactions)?$/;
-            var regexLocalisationPage = /^\/entry\/[^\/]+\/?(localisation)?$/;
+            var regexLocalizationPage = /^\/entry\/[^\/]+\/?(localization)?$/;
             var regexBlastPage = /^\/blast\/.+/;
 
             if(path.match(regexFunctionPage) != null){
@@ -35,8 +35,8 @@
                 return "interactions-view"
             }
 
-            if(path.match(regexLocalisationPage) != null){
-                return "localisation-view"
+            if(path.match(regexLocalizationPage) != null){
+                return "localization-view"
             }
 
             if(path.match(regexBlastPage)  != null){
@@ -112,7 +112,7 @@
             .when('/entry/:entry/function', nxelementsv)
             .when('/entry/:entry/medical', nxelementsv)
             .when('/entry/:entry/interactions', nxelementsv)
-            .when('/entry/:entry/localisation', nxelementsv)
+            .when('/entry/:entry/localization', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
