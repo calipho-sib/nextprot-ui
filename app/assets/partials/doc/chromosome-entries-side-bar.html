@@ -1,0 +1,13 @@
+<ul class="topmenu topmenu-responsive" ng-controller="chromosomeCtrl">
+    <li class="active">
+        <ul id="entries" class="submenu-news collapse in">
+            <li ng-repeat="c in chromosomeNames" ng-class="'active'">
+                <a href="release-entries/chromosome{{c}}">
+                    <span class="text"><span class="fa fa-newspaper-o"></span>
+                        Chromosome {{c}}
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
