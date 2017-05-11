@@ -1,9 +1,12 @@
 <ul class="topmenu topmenu-responsive" ng-controller="chromosomeCtrl">
     <li class="active">
-        <ul id="entries" class="submenu-news collapse in">
+        <ul id="entries" class="collapse in">
             <li ng-repeat="c in chromosomeNames" ng-class="'active'">
-                <a href="release-entries/chromosome{{c}}">
-                    <span class="text"><span class="fa fa-newspaper-o"></span>
+                <a href="chromosome-entries/{{c}}" ng-click='selectChromosome(c)'>
+                    <span class="figure">
+                        <img style="width:30px;" src="../img/genes.png">
+                    </span>
+                    <span class="text"><span class="fa"></span>
                         Chromosome {{c}}
                     </span>
                 </a>
