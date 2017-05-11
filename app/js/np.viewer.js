@@ -38,8 +38,12 @@
                 return "interactions-view"
             }
 
-            if(path.match(regexLocalizationPage) != null || path.match(regexLocalisationPage) != null){
+            if(path.match(regexLocalizationPage) != null){
                 return "localization-view"
+            }
+
+            if(path.match(regexLocalisationPage) != null){
+                path = path.replace("localisation","localization");
             }
 
             if(path.match(regexBlastPage)  != null){
@@ -116,7 +120,6 @@
             .when('/entry/:entry/medical', nxelementsv)
             .when('/entry/:entry/interactions', nxelementsv)
             .when('/entry/:entry/localization', nxelementsv)
-            .when('/entry/:entry/localisation', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
