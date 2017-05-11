@@ -21,9 +21,6 @@
             var regexMedicalPage = /^\/entry\/[^\/]+\/?(medical)?$/;
             var regexInteractionsPage = /^\/entry\/[^\/]+\/?(interactions)?$/;
             var regexLocalizationPage = /^\/entry\/[^\/]+\/?(localization)?$/;
-            // the regex bellow was introduced to redirect
-            // the old link to a new page (localiSation was changed to localiZation).
-            var regexLocalisationPage = /^\/entry\/[^\/]+\/?(localisation)?$/;
             var regexBlastPage = /^\/blast\/.+/;
 
             if(path.match(regexFunctionPage) != null){
@@ -40,10 +37,6 @@
 
             if(path.match(regexLocalizationPage) != null){
                 return "localization-view"
-            }
-
-            if(path.match(regexLocalisationPage) != null){
-                path = path.replace("localisation","localization");
             }
 
             if(path.match(regexBlastPage)  != null){
