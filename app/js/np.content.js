@@ -11,24 +11,14 @@
     function contentConfig($routeProvider) {
 
         $routeProvider
-            // Simple pages
-//            .when('/release/:release', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
-//            .when('/news/:news', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
-//            .when('/about/nextprot', {title: 'about for nextprot', templateUrl: '/partials/doc/main-doc.html'})
-//            .when('/:section/', {title: 'nextprot news', templateUrl: '/partials/doc/main-doc.html'})   
             .when('/news/', {title:'News', templateUrl: '/partials/doc/main-doc.html'})
-            .when('/:section/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})   
-
+            .when('/chromosome-entries/', {title:'Chromosome entries', templateUrl: '/partials/doc/main-doc.html'})
+            .when('/:section/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
     }
 
 
-    ContentCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'contentURLResolver', 'newsService'];
-    function ContentCtrl($scope, $sce, $routeParams, $location, config, exportService, contentURLResolver, newsService) {
-
-//        $scope.partialName = "partials/doc/page.html";
-        
-//        $scope.testt = $routeParams.article;
-//        $scope.widgetURL = "";
+    ContentCtrl.$inject = ['$scope', '$routeParams', '$location', 'contentURLResolver', 'newsService', 'chromosomeService'];
+    function ContentCtrl($scope, $routeParams, $location, contentURLResolver, newsService, chromosomeService) {
         
         var releasePages = ["contents","statistics","protein-existence"];
         
@@ -53,27 +43,28 @@
         }
         
         $scope.getSideMenuPartial = function(){
+
             var commonPath = "partials/doc/";
             if ($routeParams.section === "about") return commonPath + "about-side-bar.html";
             if ($routeParams.section === "help") return commonPath + "help-side-bar.html";
             if ($routeParams.section === "news") return commonPath + "news-side-bar.html";
-//            if ($routeParams.release) return commonPath + "about-side-bar.html";
-//            if ($routeParams.release) return commonPath + "release-side-bar.html";
-//            if ($routeParams.n1) return commonPath + "news-side-bar.html";
+            if ($routeParams.section === "chromosome-entries") return commonPath + "chromosome-entries-side-bar.html";
         }
         
         $scope.getContentPartial = function(){
+
             if ($routeParams.article === "protein-existence") return "partials/doc/iframe.html";
-            if ($routeParams.article === "entries") return "partials/doc/release_entries.html";
             if (releasePages.indexOf($routeParams.article)>-1) return "partials/release_"+ $routeParams.article + ".html";
             if ($routeParams.section === "news") return "partials/doc/news.html";
+            if ($routeParams.section === "chromosome-entries") return "partials/doc/chromosome-entries.html";
+
             else return "partials/doc/page.html";
         }
 
         $scope.activePage = function (page) {
 
             if($location.url() === page) return 'active';
-            if ($routeParams.element == page)  return 'active';
+            if ($routeParams.element === page)  return 'active';
 
             else return '';
         }
@@ -99,6 +90,15 @@
                 }
                 
                 else angular.extend($scope, contentURLResolver.getScopeParamsForNews($routeParams.article));
+            }
+            else if ($routeParams.section === "chromosome-entries" || $location.path() === "/chromosome-entries/") {
+                if (!$routeParams.article){
+                    $location.path("chromosome-entries/all").replace();
+                }
+                else {
+
+                    angular.extend($scope, contentURLResolver.getScopeParamsForChromosomes($routeParams.article));
+                }
             }
             else if ($routeParams.article) { //Help view
                 angular.extend($scope, contentURLResolver.getScopeParamsForContent($routeParams.section,$routeParams.article));
@@ -191,7 +191,17 @@
             }
 
         }
+        this.getScopeParamsForChromosomes = function (chromosome) {
 
+            return {
+                "chromosome":chromosome,
+                "parent": "ABOUT",
+                "title": "ENTRIES",
+                "section": "ENTRIES",
+                "h1":chromosome
+            }
+
+        };
     }
 
 
