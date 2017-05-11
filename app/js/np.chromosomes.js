@@ -1,21 +1,52 @@
 (function (angular, undefined) {
     'use strict';
 
-    angular.module('np.chromosomes', [])
+    angular.module('np.chromosomes', ['ngRoute'])
         .factory('chromosomeService', chromosomeService)
-        .controller('chromosomeCtrl', chromosomeCtrl);
+        .controller('chromosomeCtrl', chromosomeCtrl)
+        .directive('chromosomeElement', chromosomeElement);
+
+    chromosomeElement.$inject = ['npSettings', 'chromosomeService']
+    function chromosomeElement(npSettings, chromosomeService) {
+
+        var nxConfig = {env : 'build'};
+
+        console.log("selected K", chromosomeService.getSelectedChromosome());
+        //<!-- <chromosome-list-view nx-config='{"env": "build"}'></chromosome-list-view> -->
+        
+        return {
+            restrict: 'E',
+            template: '<chromosome-entry-view nx-config='+JSON.stringify(nxConfig)+' chromosome="Y"></chromosome-entry-view>',
+            replace: true
+        }
+    }
 
     chromosomeCtrl.$inject = ['$scope', 'chromosomeService'];
     function chromosomeCtrl($scope, chromosomeService) {
 
         $scope.chromosomeNames = chromosomeService.getChromosomeNames();
+
+        $scope.selectChromosome = function(chromosome) {
+
+            console.log("selectChromosome", chromosome)
+            chromosomeService.selectChromosome(chromosome);
+
+            $scope.isAllChromosomesSelected = (chromosome === "all");
+        };
+
+        $scope.getSelectedChromosome = function () {
+
+            console.log("get selected chromosome=", chromosomeService.getSelectedChromosome())
+
+            return chromosomeService.getSelectedChromosome();
+        };
     }
 
     chromosomeService.$inject = ['config', '$http'];
     function chromosomeService(config, $http) {
 
         var chromosomes = {
-            selected : "",
+            selected : "all",
             pages : ["all"]
         };
 
@@ -38,9 +69,9 @@
             return chromosomes.pages;
         };
 
-        ChromosomeService.prototype.selectChromosomePage = function (chromosome) {
+        ChromosomeService.prototype.selectChromosome = function (chromosome) {
 
-            if (this.getChromosomeNames().include(chromosome)) {
+            if (this.getChromosomeNames().indexOf(chromosome) >= 0) {
                 chromosomes.selected = chromosome;
             }
             else {
@@ -48,7 +79,7 @@
             }
         };
 
-        ChromosomeService.prototype.getSelectedPage = function() {
+        ChromosomeService.prototype.getSelectedChromosome = function() {
 
             return chromosomes.selected;
         };
