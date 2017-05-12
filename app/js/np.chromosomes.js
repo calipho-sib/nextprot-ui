@@ -4,39 +4,21 @@
     angular.module('np.chromosomes', ['ngRoute'])
         .factory('chromosomeService', chromosomeService)
         .controller('chromosomeCtrl', chromosomeCtrl)
-        .directive('chromosomeElement', chromosomeElement);
-
-    chromosomeElement.$inject = ['npSettings', 'chromosomeService']
-    function chromosomeElement(npSettings, chromosomeService) {
-
-        var nxConfig = {env : 'build'};
-
-        console.log("selected K", chromosomeService.getSelectedChromosome());
-        //<!-- <chromosome-list-view nx-config='{"env": "build"}'></chromosome-list-view> -->
-        
-        return {
-            restrict: 'E',
-            template: '<chromosome-entry-view nx-config='+JSON.stringify(nxConfig)+' chromosome="Y"></chromosome-entry-view>',
-            replace: true
-        }
-    }
 
     chromosomeCtrl.$inject = ['$scope', 'chromosomeService'];
     function chromosomeCtrl($scope, chromosomeService) {
 
         $scope.chromosomeNames = chromosomeService.getChromosomeNames();
+        $scope.selectedChromosome = chromosomeService.getSelectedChromosome();
 
         $scope.selectChromosome = function(chromosome) {
 
-            console.log("selectChromosome", chromosome)
             chromosomeService.selectChromosome(chromosome);
 
             $scope.isAllChromosomesSelected = (chromosome === "all");
         };
 
         $scope.getSelectedChromosome = function () {
-
-            console.log("get selected chromosome=", chromosomeService.getSelectedChromosome())
 
             return chromosomeService.getSelectedChromosome();
         };
