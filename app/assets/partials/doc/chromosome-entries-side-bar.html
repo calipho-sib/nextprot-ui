@@ -1,14 +1,19 @@
-<ul class="topmenu topmenu-responsive" ng-controller="chromosomeCtrl">
+<ul class="topmenu topmenu-responsive news-sidebar" ng-controller="chromosomeCtrl">
     <li class="active">
-        <ul id="entries" class="collapse in">
-            <li ng-repeat="c in chromosomeNames" ng-class="'active'">
-                <a href="chromosome-entries/{{c}}" ng-click='selectChromosome(c)'>
+        <ul id="chrs" class="submenu-chromosomes collapse in">
+            <li ng-repeat="k in chromosomeNames" ng-class="activePage('/chromosome-entries/{{k}}')">
+                <a href="chromosome-entries/{{k}}" ng-click='selectChromosome(k)'>
+                    <span class="minifChr">
+                        <span class="chrFigure">
+                            <img src="../img/genes.png">
+                        </span><br>
+                        <span>{{k}}</span>
+                    </span>
+
                     <span class="figure">
-                        <img style="width:30px;" src="../img/genes.png">
+                        <img src="../img/genes.png">
                     </span>
-                    <span class="text"><span class="fa"></span>
-                        Chromosome {{c}}
-                    </span>
+                    <span class="text">Chromosome {{k}}</span>
                 </a>
             </li>
         </ul>

@@ -5,8 +5,8 @@
         .factory('chromosomeService', chromosomeService)
         .controller('chromosomeCtrl', chromosomeCtrl)
 
-    chromosomeCtrl.$inject = ['$scope', 'chromosomeService'];
-    function chromosomeCtrl($scope, chromosomeService) {
+    chromosomeCtrl.$inject = ['$scope', 'chromosomeService', '$location', '$routeParams'];
+    function chromosomeCtrl($scope, chromosomeService, $location, $routeParams) {
 
         $scope.chromosomeNames = chromosomeService.getChromosomeNames();
         $scope.chromosomeSelection = chromosomeService.getSelectedChromosome();
@@ -27,6 +27,13 @@
 
             return this.chromosomeSelection === 'all';
         };
+
+        $scope.activePage = function (page) {
+
+            if ($location.url() === page) return 'active';
+            else if ($routeParams.element === page)  return 'active';
+            return '';
+        }
     }
 
     chromosomeService.$inject = ['config', '$http'];

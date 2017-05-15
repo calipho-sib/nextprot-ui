@@ -1144,6 +1144,16 @@ div.right-content {
         display: none;
     }
     /*NEWS SPECIFICATIONS*/
+
+
+    /*CHROMOSOMES SPECIFICATIONS*/
+    .submenu-chromosomes li>a .text, .submenu-chromosomes li>a .figure {
+        display: none;
+    }
+    .submenu-chromosomes .minifChr {
+        display: inline-block;
+    }
+    /*CHROMOSOMES SPECIFICATIONS*/
 }
 
 /**************************************************************/
