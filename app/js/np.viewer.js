@@ -236,7 +236,7 @@
 
 
             var urlPage = '/entry/' + $routeParams.entry + "/" + page;
-            if($location.url() === urlPage) {
+            if($location.path() === urlPage) {
                 return 'active';
             }
 
