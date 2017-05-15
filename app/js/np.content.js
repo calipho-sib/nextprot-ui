@@ -196,6 +196,7 @@
             return {
                 "chromosome":chromosome,
                 "parent": "ABOUT",
+                "linkToParent":"about/nextprot",
                 "title": "ENTRIES",
                 "section": "ENTRIES",
                 "h1":chromosome
