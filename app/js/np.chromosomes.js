@@ -9,7 +9,7 @@
     function chromosomeCtrl($scope, chromosomeService) {
 
         $scope.chromosomeNames = chromosomeService.getChromosomeNames();
-        $scope.selectedChromosome = chromosomeService.getSelectedChromosome();
+        $scope.chromosomeSelection = chromosomeService.getSelectedChromosome();
 
         $scope.selectChromosome = function(chromosome) {
 
@@ -21,6 +21,11 @@
         $scope.getSelectedChromosome = function () {
 
             return chromosomeService.getSelectedChromosome();
+        };
+
+        $scope.displayAllChromosomes = function () {
+
+            return this.chromosomeSelection === 'all';
         };
     }
 
@@ -36,12 +41,10 @@
 
             $http.get(config.api.API_URL + '/chromosome-names.json')
                 .success(function (response) {
-                    console.log("response", response);
                     chromosomes.pages = chromosomes.pages.concat(response);
                 })
-                .error(function (data, status) {
+                .catch(function (data, status) {
                     var message = status + ": cannot access list of chromosomes from '" + config.api.API_URL + "/chromosome-names.json'";
-                    $log.error(message);
                     flash("alert-info", message);
                 });
         };

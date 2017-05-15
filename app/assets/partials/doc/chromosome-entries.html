@@ -1,7 +1,7 @@
 <div id="kentries" class="vertical-section-container centered">
     <div class="col-xs-12 col-lg-12  main" ng-controller="chromosomeCtrl" style="background-color:white">
 
-        <chromosome-list-view ng-if="selectedChromosome === 'all'" nx-config='{"env": "build"}'></chromosome-list-view>
-        <chromosome-entry-view ng-if="selectedChromosome !== 'all'" nx-config='{"env": "build"}' chromosome="{{selectedChromosome}}"></chromosome-entry-view>
+        <chromosome-list-view ng-show="displayAllChromosomes()" nx-config='{"env": "build"}'></chromosome-list-view>
+        <chromosome-entry-view ng-hide="displayAllChromosomes()" nx-config='{"env": "build"}' chromosome="{{chromosomeSelection}}"></chromosome-entry-view>
     </div >
 </div>
