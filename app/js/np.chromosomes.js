@@ -2,25 +2,15 @@
     'use strict';
 
     angular.module('np.chromosomes', ['ngRoute'])
-        //.config(chromosomeRouting)
         .factory('chromosomeService', chromosomeService)
         .controller('chromosomeCtrl', chromosomeCtrl);
 
-    /*chromosomeRouting.$inject = ['$routeProvider'];
-    function chromosomeRouting($routeProvider) {
+    chromosomeCtrl.$inject = ['$scope', 'chromosomeService', '$location', '$routeParams', 'npSettings'];
+    function chromosomeCtrl($scope, chromosomeService, $location, $routeParams, npSettings) {
 
-        $routeProvider
-            .when('/chromosome-entries/:chromosome', {
-                title:'Chromosome entries',
-                templateUrl: '/partials/doc/main-doc.html'
-            })
-            .otherwise({
-                redirectTo: '/chromosome-entries/all'
-            })
-    }*/
-
-    chromosomeCtrl.$inject = ['$scope', 'chromosomeService', '$location', '$routeParams'];
-    function chromosomeCtrl($scope, chromosomeService, $location, $routeParams) {
+        $scope.npEnv = {
+            env: npSettings.environment
+        };
 
         $scope.chromosomeNames = chromosomeService.getChromosomeNames();
         $scope.chromosomeSelection = chromosomeService.getSelectedChromosome();
