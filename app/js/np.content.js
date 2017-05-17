@@ -95,6 +95,7 @@
             else if ($routeParams.section === "chromosome-entries" || $location.path() === "/chromosome-entries/") {
                 if (!$routeParams.article){
                     $location.path("chromosome-entries/all").replace();
+                    chromosomeService.selectChromosome("all");
                 }
                 else {
 
