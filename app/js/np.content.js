@@ -46,19 +46,21 @@
 
             var commonPath = "partials/doc/";
             if ($routeParams.section === "about") return commonPath + "about-side-bar.html";
-            if ($routeParams.section === "help") return commonPath + "help-side-bar.html";
-            if ($routeParams.section === "news") return commonPath + "news-side-bar.html";
-            if ($routeParams.section === "chromosome-entries") return commonPath + "chromosome-entries-side-bar.html";
+            else if ($routeParams.section === "help") return commonPath + "help-side-bar.html";
+            else if ($routeParams.section === "news") return commonPath + "news-side-bar.html";
+            else if ($routeParams.section === "chromosome-entries") return commonPath + "chromosome-entries-side-bar.html";
         }
         
         $scope.getContentPartial = function(){
 
             if ($routeParams.article === "protein-existence") return "partials/doc/iframe.html";
-            if (releasePages.indexOf($routeParams.article)>-1) return "partials/release_"+ $routeParams.article + ".html";
-            if ($routeParams.section === "news") return "partials/doc/news.html";
-            if ($routeParams.section === "chromosome-entries") return "partials/doc/chromosome-entries.html";
-
-            else return "partials/doc/page.html";
+            else if (releasePages.indexOf($routeParams.article)>-1) return "partials/release_"+ $routeParams.article + ".html";
+            else if ($routeParams.section === "news") return "partials/doc/news.html";
+            else if ($routeParams.section === "chromosome-entries") return "partials/doc/chromosome-entries.html";
+            else if ($routeParams.section === "help" || $routeParams.article === "nextprot" ||
+                $routeParams.article === "human-proteome" || $routeParams.article === "citing-nextprot") {
+                return "partials/doc/page.html";
+            }
         }
 
         $scope.activePage = function (page) {
@@ -74,7 +76,6 @@
 
             if (releasePages.indexOf($routeParams.article) > -1) { //Release view
                 angular.extend($scope, contentURLResolver.getScopeParamsForRelease($routeParams.article));
-//                angular.extend($scope, contentURLResolver.getScopeParamsForContent($routeParams.release));
             }
             else if ($routeParams.section === "news" || $location.path() === "/news/") { //News view
                 if (!$routeParams.article){
@@ -102,7 +103,6 @@
             }
             else if ($routeParams.article) { //Help view
                 angular.extend($scope, contentURLResolver.getScopeParamsForContent($routeParams.section,$routeParams.article));
-//                angular.extend($scope, contentURLResolver.getScopeParamsForNews($routeParams.article));
             }
         });
     }
