@@ -40,17 +40,12 @@
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-        <!-- SIB Aggregator added on 24th of November asked by Heinz -->
-        ga('create', 'UA-87958702-1', 'auto', 'sibagg', { 'allowLinker': true });
-        ga('sibagg.require', 'linker');
-        ga('sibagg.linker:autoLink', ['expasy.org', 'string-db.org', 'sib.swiss']);
-        ga('sibagg.send', 'pageview');
-
+        <!-- GA events are handled by angular -->
     </script>
 </head>
 
 <body ng-clock="" class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90"
-      ng-controller="SearchCtrl" np-background="#main">
+      ng-controller="SearchCtrl" np-background="#main" typeof="schema:WebPage">
 
 <header>
 <!--
