@@ -1,0 +1,21 @@
+<ul class="topmenu topmenu-responsive news-sidebar" np-affix="50" ng-controller="chromosomeCtrl">
+    <li class="active">
+        <ul id="chrs" class="submenu-chromosomes collapse in">
+            <li ng-repeat="k in chromosomeNames" ng-class="activePage('/chromosome-entries/{{k}}')">
+                <a href="chromosome-entries/{{k}}" ng-click='selectChromosome(k)'>
+                    <span class="minifChr">
+                        <span class="chrFigure">
+                            <img src="../img/genes.png">
+                        </span><br>
+                        <span>{{k}}</span>
+                    </span>
+
+                    <span class="figure">
+                        <img src="../img/genes.png">
+                    </span>
+                    <span class="text">Chromosome {{k}}</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
