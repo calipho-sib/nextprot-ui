@@ -1582,18 +1582,11 @@ header .navbar .dropdown-menu>.active>a {
 
 /*
 .sidemenu .topmenu.affix-bottom{
-    top:50px !important;
-}
-*/
-.sidemenu .topmenu {
-    /*    top:50px;*/
-    
-    width: 240px;
-    /*    height:700px;*/
-    /*    overflow:visible;*/
-}
+    top: 50px !important;
+}*/
 .sidemenu .topmenu {
     height: 100vh;
+    width: 240px;
     z-index: 300;
     overflow: auto;
     /*    padding-bottom:100px;*/
@@ -1603,7 +1596,7 @@ header .navbar .dropdown-menu>.active>a {
     transform: translate3d(0, 0, 0);
 }
 .sidemenu .topmenu>li:last-child li:last-child {
-    /*    padding-bottom:100px;*/
+        padding-bottom:100px;
 }
 .body-content {
     position: relative;
