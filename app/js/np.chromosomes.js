@@ -50,7 +50,7 @@
 
         var ChromosomeService = function() {
 
-            $http.get(config.api.API_URL + '/chromosome-names.json')
+            $http.get(config.api.API_URL + '/chromosomes.json')
                 .success(function (response) {
                     chromosomes.pages = chromosomes.pages.concat(response);
                 })
