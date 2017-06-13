@@ -12,8 +12,8 @@
             env: npSettings.environment
         };
 
-        $scope.chromosomeNames = chromosomeService.getChromosomeNames();
-        $scope.chromosomeSelection = chromosomeService.getSelectedChromosome();
+        $scope.chromosomes = chromosomeService.getChromosomes();
+        $scope.chromosomeSelection = chromosomeService.getSelectedPage();
 
         $scope.selectChromosome = function(chromosome) {
 
@@ -22,9 +22,9 @@
             $scope.isAllChromosomesSelected = (chromosome === "all");
         };
 
-        $scope.getSelectedChromosome = function () {
+        $scope.getSelectedPage = function () {
 
-            return chromosomeService.getSelectedChromosome();
+            return chromosomeService.getSelectedPage();
         };
 
         $scope.displayAllChromosomes = function () {
@@ -44,15 +44,30 @@
     function chromosomeService(config, $http) {
 
         var chromosomes = {
+            names: ["all"],
             selected : "all",
-            pages : ["all"]
+            pages : {
+                "all": {
+                    "url": "all-chromosomes",
+                    "title": "All chromosomes"
+                }
+            }
         };
 
         var ChromosomeService = function() {
 
             $http.get(config.api.API_URL + '/chromosomes.json')
                 .success(function (response) {
-                    chromosomes.pages = chromosomes.pages.concat(response);
+                    chromosomes.names = chromosomes.names.concat(response);
+                    var arrayLength = response.length;
+                    for (var i = 0; i < arrayLength; i++) {
+                        chromosomes.pages[response[i]] = {
+                            "url": "chromosome-"+response[i],
+                            "title": "Chromosome "+response[i]
+                        };
+                    }
+
+                    console.log("CHROMOSOMES", chromosomes)
                 })
                 .catch(function (data, status) {
                     var message = status + ": cannot access list of chromosomes from '" + config.api.API_URL + "/chromosome-names.json'";
@@ -60,14 +75,16 @@
                 });
         };
 
-        ChromosomeService.prototype.getChromosomeNames = function () {
 
-            return chromosomes.pages;
+
+        ChromosomeService.prototype.getChromosomes = function () {
+
+            return chromosomes;
         };
 
         ChromosomeService.prototype.selectChromosome = function (chromosome) {
 
-            if (this.getChromosomeNames().indexOf(chromosome) >= 0) {
+            if (this.getChromosomes().names.indexOf(chromosome) >= 0) {
                 chromosomes.selected = chromosome;
             }
             else {
@@ -75,7 +92,7 @@
             }
         };
 
-        ChromosomeService.prototype.getSelectedChromosome = function() {
+        ChromosomeService.prototype.getSelectedPage = function() {
 
             return chromosomes.selected;
         };
