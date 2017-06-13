@@ -12,7 +12,7 @@
 
         $routeProvider
             .when('/news/', {title:'News', templateUrl: '/partials/doc/main-doc.html'})
-            .when('/chromosome-entries/', {title:'Chromosome entries', templateUrl: '/partials/doc/main-doc.html'})
+            .when('/entries/', {title:'Chromosome entries', templateUrl: '/partials/doc/main-doc.html'})
             .when('/:section/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
     }
 
@@ -48,7 +48,7 @@
             if ($routeParams.section === "about") return commonPath + "about-side-bar.html";
             else if ($routeParams.section === "help") return commonPath + "help-side-bar.html";
             else if ($routeParams.section === "news") return commonPath + "news-side-bar.html";
-            else if ($routeParams.section === "chromosome-entries") return commonPath + "chromosome-entries-side-bar.html";
+            else if ($routeParams.section === "entries") return commonPath + "chromosome-entries-side-bar.html";
         }
         
         $scope.getContentPartial = function(){
@@ -56,7 +56,7 @@
             if ($routeParams.article === "protein-existence") return "partials/doc/iframe.html";
             else if (releasePages.indexOf($routeParams.article)>-1) return "partials/release_"+ $routeParams.article + ".html";
             else if ($routeParams.section === "news") return "partials/doc/news.html";
-            else if ($routeParams.section === "chromosome-entries") return "partials/doc/chromosome-entries.html";
+            else if ($routeParams.section === "entries") return "partials/doc/chromosome-entries.html";
             else if ($routeParams.section === "help" || $routeParams.article === "nextprot" ||
                 $routeParams.article === "human-proteome" || $routeParams.article === "citing-nextprot") {
                 return "partials/doc/page.html";
@@ -92,9 +92,9 @@
                 
                 else angular.extend($scope, contentURLResolver.getScopeParamsForNews($routeParams.article));
             }
-            else if ($routeParams.section === "chromosome-entries" || $location.path() === "/chromosome-entries/") {
+            else if ($routeParams.section === "entries" || $location.path() === "/entries/") {
                 if (!$routeParams.article){
-                    $location.path("chromosome-entries/all").replace();
+                    $location.path("entries/all-chromosomes").replace();
                     chromosomeService.selectChromosome("all");
                 }
                 else {
