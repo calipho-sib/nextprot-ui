@@ -2,7 +2,7 @@
     <li class="active">
         <ul id="chrs" class="submenu-chromosomes collapse in">
             <li ng-repeat="chromosome in chromosomes.names" ng-class="activePage('/entries/{{chromosomes.pages[chromosome].url}}')">
-                <a href="entries/{{chromosomes.pages[chromosome].url}}" ng-click='selectChromosome(chromosome)'>
+                <a href="entries/{{chromosomes.pages[chromosome].url}}">
                     <span class="minifChr">
                         <span class="chrFigure">
                             <img src="../img/genes.png">

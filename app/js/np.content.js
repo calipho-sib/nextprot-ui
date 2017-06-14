@@ -93,12 +93,11 @@
                 else angular.extend($scope, contentURLResolver.getScopeParamsForNews($routeParams.article));
             }
             else if ($routeParams.section === "entries" || $location.path() === "/entries/") {
+
                 if (!$routeParams.article){
                     $location.path("entries/all-chromosomes").replace();
-                    chromosomeService.selectChromosome("all");
                 }
                 else {
-
                     angular.extend($scope, contentURLResolver.getScopeParamsForChromosomes($routeParams.article));
                 }
             }

@@ -5,15 +5,14 @@
         .factory('chromosomeService', chromosomeService)
         .controller('chromosomeCtrl', chromosomeCtrl);
 
-    chromosomeCtrl.$inject = ['$scope', 'chromosomeService', '$location', '$routeParams', 'npSettings'];
-    function chromosomeCtrl($scope, chromosomeService, $location, $routeParams, npSettings) {
+    chromosomeCtrl.$inject = ['$scope', 'chromosomeService', '$location', '$routeParams', 'npSettings','flash'];
+    function chromosomeCtrl($scope, chromosomeService, $location, $routeParams, npSettings, flash) {
 
         $scope.npEnv = {
             env: npSettings.environment
         };
 
         $scope.chromosomes = chromosomeService.getChromosomes();
-        $scope.chromosomeSelection = chromosomeService.getSelectedPage();
 
         $scope.selectChromosome = function(chromosome) {
 
@@ -24,12 +23,26 @@
 
         $scope.getSelectedPage = function () {
 
-            return chromosomeService.getSelectedPage();
+            var sectionAndArticle = $routeParams.article.split("-");
+
+            if (sectionAndArticle[0] === "all") {
+                return "all";
+            }
+
+            if (chromosomeService.getChromosomes().names.indexOf(sectionAndArticle[1]) < 0) {
+
+                var message = "cannot find chromosome "+sectionAndArticle[1];
+                flash("alert-info", message);
+                $location.path("entries/all-chromosomes").replace();
+                return "all";
+            }
+
+            return sectionAndArticle[1];
         };
 
         $scope.displayAllChromosomes = function () {
 
-            return this.chromosomeSelection === 'all';
+            return this.getSelectedPage() === 'all';
         };
 
         $scope.activePage = function (page) {
@@ -40,12 +53,11 @@
         }
     }
 
-    chromosomeService.$inject = ['config', '$http'];
-    function chromosomeService(config, $http) {
+    chromosomeService.$inject = ['config', '$http','flash'];
+    function chromosomeService(config, $http, flash) {
 
         var chromosomes = {
             names: ["all"],
-            selected : "all",
             pages : {
                 "all": {
                     "url": "all-chromosomes",
@@ -66,8 +78,6 @@
                             "title": "Chromosome "+response[i]
                         };
                     }
-
-                    console.log("CHROMOSOMES", chromosomes)
                 })
                 .catch(function (data, status) {
                     var message = status + ": cannot access list of chromosomes from '" + config.api.API_URL + "/chromosome-names.json'";
@@ -75,26 +85,9 @@
                 });
         };
 
-
-
         ChromosomeService.prototype.getChromosomes = function () {
 
             return chromosomes;
-        };
-
-        ChromosomeService.prototype.selectChromosome = function (chromosome) {
-
-            if (this.getChromosomes().names.indexOf(chromosome) >= 0) {
-                chromosomes.selected = chromosome;
-            }
-            else {
-                chromosomes.selected = "all";
-            }
-        };
-
-        ChromosomeService.prototype.getSelectedPage = function() {
-
-            return chromosomes.selected;
         };
 
         return new ChromosomeService();
