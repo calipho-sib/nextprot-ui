@@ -1,11 +1,40 @@
 (function (angular, undefined) {
     'use strict';
 
-    angular.module('np.chromosomes', ['ngRoute'])
-        .factory('chromosomeService', chromosomeService)
+    var module = angular.module('np.chromosomes', ['ngRoute'])
+        .service('chromosomeService', chromosomeService)
         .controller('chromosomeCtrl', chromosomeCtrl);
 
-    chromosomeCtrl.$inject = ['$scope', 'chromosomeService', '$location', '$routeParams', 'npSettings','flash'];
+    module.run(function ($http, config, chromosomeService) {
+        $http.get(config.api.API_URL + '/chromosomes.json')
+            .success(function (response) {
+                var chromosomes = {
+                    names: ["all"],
+                    pages : {
+                        "all": {
+                            "url": "all-chromosomes",
+                            "title": "All chromosomes"
+                        }
+                    }
+                };
+
+                chromosomes.names = chromosomes.names.concat(response);
+                var arrayLength = response.length;
+                for (var i = 0; i < arrayLength; i++) {
+                    chromosomes.pages[response[i]] = {
+                        "url": "chromosome-"+response[i],
+                        "title": "Chromosome "+response[i]
+                    };
+                }
+                chromosomeService.setChromosomes(chromosomes);
+            })
+            .catch(function (data, status) {
+                var message = status + ": cannot access list of chromosomes from '" + config.api.API_URL + "/chromosome-names.json'";
+                flash("alert-info", message);
+            });
+    });
+
+    chromosomeCtrl.$inject = ['$scope', 'chromosomeService', '$location', '$routeParams', 'npSettings', 'flash'];
     function chromosomeCtrl($scope, chromosomeService, $location, $routeParams, npSettings, flash) {
 
         $scope.npEnv = {
@@ -29,7 +58,7 @@
                 return "all";
             }
 
-            if (chromosomeService.getChromosomes().names.indexOf(sectionAndArticle[1]) < 0) {
+            if (!chromosomeService.hasChromosome(sectionAndArticle[1])) {
 
                 var message = "cannot find chromosome "+sectionAndArticle[1];
                 flash("alert-info", message);
@@ -53,43 +82,20 @@
         }
     }
 
-    chromosomeService.$inject = ['config', '$http','flash'];
-    function chromosomeService(config, $http, flash) {
+    function chromosomeService() {
 
-        var chromosomes = {
-            names: ["all"],
-            pages : {
-                "all": {
-                    "url": "all-chromosomes",
-                    "title": "All chromosomes"
-                }
+        var chromosomes = null;
+
+        return {
+            setChromosomes: function(data) {
+                chromosomes = data;
+            },
+            getChromosomes: function () {
+                return chromosomes;
+            },
+            hasChromosome: function(chromosome) {
+                return this.getChromosomes().names.indexOf(chromosome) >= 0;
             }
         };
-
-        var ChromosomeService = function() {
-
-            $http.get(config.api.API_URL + '/chromosomes.json')
-                .success(function (response) {
-                    chromosomes.names = chromosomes.names.concat(response);
-                    var arrayLength = response.length;
-                    for (var i = 0; i < arrayLength; i++) {
-                        chromosomes.pages[response[i]] = {
-                            "url": "chromosome-"+response[i],
-                            "title": "Chromosome "+response[i]
-                        };
-                    }
-                })
-                .catch(function (data, status) {
-                    var message = status + ": cannot access list of chromosomes from '" + config.api.API_URL + "/chromosome-names.json'";
-                    flash("alert-info", message);
-                });
-        };
-
-        ChromosomeService.prototype.getChromosomes = function () {
-
-            return chromosomes;
-        };
-
-        return new ChromosomeService();
     }
 })(angular); //global variable
