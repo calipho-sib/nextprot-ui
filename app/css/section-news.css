@@ -16,3 +16,8 @@ a.social-link img {
 #news-section li{
     margin-top:10px;
 }
+
+.minimizedMenu .sidemenu .topmenu.news-sidebar {
+    width: 60px;
+    overflow: auto;
+}
