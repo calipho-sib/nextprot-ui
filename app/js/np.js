@@ -365,23 +365,27 @@
         var nxBaseUrl = function () {};
         
         nxBaseUrl.prototype.getDomain = function(input){
-        
             if(config.api.environment === "pro"){
                 switch(input) {
                     case "api": return config.api.API_URL ;
                     case "search": return "https://search.nextprot.org" ;
                     case "snorql": return "http://snorql.nextprot.org" ;
+                    case "sparql": return "https://sparql.nextprot.org" ;
                 }
             }
-            else if(config.api.environment === "dev" || config.api.environment == "NX_ENV") {
+            //Because dev is HTTPS
+            else if(config.api.environment === "dev" || (config.api.environment.indexOf("NX_") > -1)) {
                 switch(input) {
                     case "api": return  config.api.API_URL ;
                     case "search": return "https://dev-search.nextprot.org" ;
                     case "snorql": return "http://dev-snorql.nextprot.org" ;
+                    case "sparql": return "https://dev-api.nextprot.org/sparql" ;
                 }
             }
-            else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
-        }
+            else if(input === "sparql") {
+                return "http://" + config.api.environment + "-api.nextprot.org/sparql";
+            }
+            else return "http://" + config.api.environment + "-" + input + ".nextprot.org";        }
         
         return new nxBaseUrl();
     }
