@@ -160,6 +160,9 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
                     case "sparql": return "https://dev-api.nextprot.org/sparql" ;
                 }
             }
+            else if(input === "sparql") {
+                return "http://" + config.api.environment + "-api.nextprot.org/sparql";
+            }
             else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
         
     }
