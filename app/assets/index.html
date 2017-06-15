@@ -86,7 +86,6 @@
                             <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
                             <li ng-class=""><a href="/proteins/search" ng-click="routingOutside('ui')">Simple search</a></li>
                             <li ng-class=""><a href="/proteins/search?mode=advanced" ng-click="routingOutside('snorql')">Advanced search</a></li>
-                            <li ng-class=""><a ng-href="{{getNextprotUrl('snorql')}}">SNORQL search</a></li>
                             <li class="divider"></li>
                             <li ng-class=""><a rel="nofollow" ng-click="goToUser('lists')">My Lists</a></li>
                             <li ng-class=""><a rel="nofollow" ng-click="goToUser('queries')">My Queries</a></li>
@@ -95,6 +94,8 @@
                             <li ng-class=""><a href="/tools/peptide-uniqueness-checker">Peptide uniqueness checker</a></li>
                             <li class="divider"></li>
                             <li ng-class=""><a ng-href="{{getNextprotUrl('api')}}">API</a></li>
+                            <li ng-class=""><a ng-href="{{getNextprotUrl('sparql')}}">SPARQL endpoint</a></li>
+                            <li ng-class=""><a ng-href="{{getNextprotUrl('snorql')}}">SNORQL search</a></li>
                         </ul>
                     </li>
                     
