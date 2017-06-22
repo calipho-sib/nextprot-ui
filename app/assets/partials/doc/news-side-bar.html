@@ -2,12 +2,12 @@
     <li class="active" ng-controller="NewsCtrl">
         <ul id="scn" class="submenu-news collapse in">
             <li ng-repeat="n in news" ng-class="activePage('/news/{{n.url}}')">
-                <a href="news/{{n.url}}">
+                <a typeof="schema:NewsArticle" href="news/{{n.url}}">
                     <span class="minDate"><span class="fa fa-newspaper-o"></span><br><span class="minifiedDate">{{n.minDate}}</span></span>
-                    <span class="text"><span class="fa fa-newspaper-o"></span>
+                    <span property="schema:datePublished" class="text"><span class="fa fa-newspaper-o"></span>
                                 {{n.publicationDateFormatted}}
                             </span>
-                    <div class="news-description">{{n.title}}</div>
+                    <div class="news-description" property="schema:headline">{{n.title}}</div>
                     <!-- <span class="text">{{n.title}} {{n.publicationDateFormatted}}</span> -->
                 </a>
             </li>
