@@ -148,6 +148,7 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
                     case "api": return config.api.API_URL ;
                     case "search": return "https://search.nextprot.org" ;
                     case "snorql": return "http://snorql.nextprot.org" ;
+                    case "sparql": return "https://sparql.nextprot.org" ;
                 }
             }
             //Because dev is HTTPS
@@ -156,7 +157,11 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
                     case "api": return  config.api.API_URL ;
                     case "search": return "https://dev-search.nextprot.org" ;
                     case "snorql": return "http://dev-snorql.nextprot.org" ;
+                    case "sparql": return "https://dev-api.nextprot.org/sparql" ;
                 }
+            }
+            else if(input === "sparql") {
+                return "http://" + config.api.environment + "-api.nextprot.org/sparql";
             }
             else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
         

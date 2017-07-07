@@ -1,0 +1,54 @@
+/* override padding for chromosome-entries view */
+#kentries > div {
+    padding: 10px 20px;
+}
+
+.submenu-chromosomes {
+    padding-left: 0px;
+}
+
+/* override padding for chromosome-entries view */
+.minimizedMenu .submenu-chromosomes li>a .text,
+.minimizedMenu .submenu-chromosomes li>a .figure {
+    display: none;
+}
+
+.minimizedMenu .submenu-chromosomes .minifChr {
+    display: inline-block;
+}
+
+.submenu-chromosomes .minifChr {
+    display: none;
+}
+.minifChr .chrFigure img {
+    width:40px;
+    filter: invert(100%);
+}
+.minifChr .minfChrNum {
+    font-size: 10px;
+    font-weight: 700;
+}
+.submenu-chromosomes img {
+    width:30px;
+}
+
+.submenu-chromosomes>li.active .figure img {
+    font-size: 16px;
+    color: #C50063;
+}
+
+.submenu-chromosomes>li:hover .figure img {
+    font-size: 16px;
+    color: #C50063;
+    padding-left: 1px;
+}
+
+.submenu-chromosomes>li.active .text {
+    font-size: 16px;
+    color: #C50063;
+}
+
+.submenu-chromosomes>li:hover .text {
+    font-size: 16px;
+    color: #C50063;
+}

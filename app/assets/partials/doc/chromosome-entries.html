@@ -1,0 +1,7 @@
+<div id="kentries" class="vertical-section-container centered">
+    <div class="col-xs-12 col-lg-12  main" ng-controller="chromosomeCtrl">
+
+        <chromosome-list-view ng-if="displayAllChromosomes()" nx-config="{{npEnv}}"></chromosome-list-view>
+        <chromosome-entry-view ng-if="!displayAllChromosomes()" nx-config="{{npEnv}}" chromosome="{{getSelectedPage()}}"></chromosome-entry-view>
+    </div >
+</div>

@@ -40,17 +40,12 @@
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-        <!-- SIB Aggregator added on 24th of November asked by Heinz -->
-        ga('create', 'UA-87958702-1', 'auto', 'sibagg', { 'allowLinker': true });
-        ga('sibagg.require', 'linker');
-        ga('sibagg.linker:autoLink', ['expasy.org', 'string-db.org', 'sib.swiss']);
-        ga('sibagg.send', 'pageview');
-
+        <!-- GA events are handled by angular -->
     </script>
 </head>
 
 <body ng-clock="" class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90"
-      ng-controller="SearchCtrl" np-background="#main">
+      ng-controller="SearchCtrl" np-background="#main" typeof="schema:WebPage">
 
 <header>
 <!--
@@ -91,7 +86,6 @@
                             <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
                             <li ng-class=""><a href="/proteins/search" ng-click="routingOutside('ui')">Simple search</a></li>
                             <li ng-class=""><a href="/proteins/search?mode=advanced" ng-click="routingOutside('snorql')">Advanced search</a></li>
-                            <li ng-class=""><a ng-href="{{getNextprotUrl('snorql')}}">SNORQL search</a></li>
                             <li class="divider"></li>
                             <li ng-class=""><a rel="nofollow" ng-click="goToUser('lists')">My Lists</a></li>
                             <li ng-class=""><a rel="nofollow" ng-click="goToUser('queries')">My Queries</a></li>
@@ -99,7 +93,10 @@
 <!--                            <li ng-class=""><a href="#" ng-click="routingOutside('snorql')" style="cursor:not-allowed">BLAST</a></li>-->
                             <li ng-class=""><a href="/tools/peptide-uniqueness-checker">Peptide uniqueness checker</a></li>
                             <li class="divider"></li>
+                            <li class="disabled" style="font-size:12px; margin-left: 10px"><i>Programmatic access</i></li>
                             <li ng-class=""><a ng-href="{{getNextprotUrl('api')}}">API</a></li>
+                            <li ng-class=""><a ng-href="{{getNextprotUrl('sparql')}}">SPARQL endpoint</a></li>
+                            <li ng-class=""><a ng-href="{{getNextprotUrl('snorql')}}">SNORQL search</a></li>
                         </ul>
                     </li>
                     
@@ -220,6 +217,11 @@
                             <li ng-class="{'active':isActiveDoc('/about/statistics')}">
                                 <a href="about/statistics">
                                     <span class="text">Release statistics</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'active':isActiveDoc('/about/entries')}">
+                                <a href="entries">
+                                    <span class="text">Entries by chromosome</span>
                                 </a>
                             </li>
                             <li ng-class="{'active':isActiveDoc('/about/protein-existence')}">

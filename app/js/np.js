@@ -25,7 +25,8 @@
         'np.news',
         'np.release.info',
         'ui.codemirror',
-        'auth0', 'angular-storage', 'angular-jwt'
+        'auth0', 'angular-storage', 'angular-jwt',
+        'np.chromosomes'
     ]).config(configApplication)
         .factory('errorInterceptor', errorInterceptor)
         .factory('metaService', metaService)
@@ -91,7 +92,7 @@
 
     function configApplication($routeProvider, $locationProvider, $httpProvider, authProvider, npSettings, jwtInterceptorProvider, $resourceProvider) {
         $routeProvider
-        // Home page
+            // Home page
             .when('/', {
                 title: 'welcome to neXtProt',
                 templateUrl: '/partials/welcome.html'
@@ -118,16 +119,8 @@
                 title: 'page',
                 templateUrl: '/partials/doc/page-alone.html'
             })
-            //// Help pages
-            // Simple pages
-            //            .when('/help/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
-            //            .when('/help/doc', {title: 'help for nextprot', templateUrl: '/partials/doc/main-doc.html'})
-
-        //            .when('/help/:article', {title: 'help for nextprot', templateUrl: '/partials/doc/page.html'})
-        // News
-        //            .when('/news/:article', {title: 'news on nextprot', templateUrl: '/partials/doc/news.html'})
-        // RDF generalities
-        .when('/help/doc/:article', {
+            // RDF generalities
+            .when('/help/doc/:article', {
                 title: 'help for RDF',
                 templateUrl: '/partials/doc/doc.html'
             })
@@ -135,7 +128,7 @@
             .when('/help/entity/:entity', {
                 title: 'help for RDF',
                 templateUrl: '/partials/doc/help.html'
-            })
+            });
             // List of routes of the application
 
 
@@ -372,23 +365,27 @@
         var nxBaseUrl = function () {};
         
         nxBaseUrl.prototype.getDomain = function(input){
-        
             if(config.api.environment === "pro"){
                 switch(input) {
                     case "api": return config.api.API_URL ;
                     case "search": return "https://search.nextprot.org" ;
                     case "snorql": return "http://snorql.nextprot.org" ;
+                    case "sparql": return "https://sparql.nextprot.org" ;
                 }
             }
-            else if(config.api.environment === "dev" || config.api.environment == "NX_ENV") {
+            //Because dev is HTTPS
+            else if(config.api.environment === "dev" || (config.api.environment.indexOf("NX_") > -1)) {
                 switch(input) {
                     case "api": return  config.api.API_URL ;
                     case "search": return "https://dev-search.nextprot.org" ;
                     case "snorql": return "http://dev-snorql.nextprot.org" ;
+                    case "sparql": return "https://dev-api.nextprot.org/sparql" ;
                 }
             }
-            else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
-        }
+            else if(input === "sparql") {
+                return "http://" + config.api.environment + "-api.nextprot.org/sparql";
+            }
+            else return "http://" + config.api.environment + "-" + input + ".nextprot.org";        }
         
         return new nxBaseUrl();
     }
