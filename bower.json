@@ -19,13 +19,8 @@
     "tests"
   ],
   "overrides": {
-    "showdown": {
-      "main": [
-        "src/showdown.js",
-        "src/extensions/github.js",
-        "src/extensions/table.js",
-        "src/extensions/twitter.js"
-      ]
+    "webcomponentsjs": {
+      "main": "webcomponents-lite.min.js"
     }
   },
   "dependencies": {
@@ -58,12 +53,9 @@
     "bootstrap": "~3.2",
     "jquery": "~2.1",
     "codemirror": "~4.6.0",
-    "iframe-resizer": "3.2.0"
-  },
-  "overrides": {
-     "webcomponentsjs": {
-         "main": "webcomponents-lite.min.js"
-     }
+    "iframe-resizer": "3.2.0",
+    "polymer": "^1.4.0",
+    "iron-flex-layout": "^1.0.0",
+    "webcomponentsjs": "0.7.24"
   }
 }
-
