@@ -259,6 +259,7 @@ a.disabled {
     cursor: pointer;
 }
 
+/*
 .detailed-info {
     display: none;
 }
@@ -266,6 +267,7 @@ a.disabled {
 .detailed-info p {
     margin: 0px !important;
 }
+*/
 
 .evidenceArrow {
     -ms-transform: rotate(180deg);
