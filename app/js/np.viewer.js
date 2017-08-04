@@ -19,6 +19,7 @@
             var path = $location.$$path;
             var regexFunctionPage = /^\/entry\/[^\/]+\/?(function)?$/;
             var regexMedicalPage = /^\/entry\/[^\/]+\/?(medical)?$/;
+            var regexExpressionPage = /^\/entry\/[^\/]+\/?(expression)?$/;
             var regexInteractionsPage = /^\/entry\/[^\/]+\/?(interactions)?$/;
             var regexLocalizationPage = /^\/entry\/[^\/]+\/?(localization)?$/;
             var regexSequencePage = /^\/entry\/[^\/]+\/?(sequence)?$/;
@@ -30,6 +31,10 @@
 
             if(path.match(regexMedicalPage) != null){
                 return "medical-view"
+            }
+
+            if(path.match(regexExpressionPage) != null){
+                return "expression-view"
             }
 
             if(path.match(regexInteractionsPage) != null){
@@ -115,6 +120,7 @@
             .when('/entry/:entry/', nxelementsv)
             .when('/entry/:entry/function', nxelementsv)
             .when('/entry/:entry/medical', nxelementsv)
+            .when('/entry/:entry/expression', nxelementsv)
             .when('/entry/:entry/interactions', nxelementsv)
             .when('/entry/:entry/localization', nxelementsv)
             .when('/entry/:entry/sequence', nxelementsv)
