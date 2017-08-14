@@ -184,7 +184,8 @@
                 //console.log(data);
                 $scope.entryProps.name = data.entry.overview.mainProteinName;
                 $scope.entryProps.geneName = data.entry.overview.mainGeneName;
-                $scope.entryProps.genesCount = data.entry.overview.geneNames.length;
+                $scope.entryProps.genesCount = (data.entry.overview.geneNames) ? data.entry.overview.geneNames.length : 0;
+
                 angular.extend($scope.entryProps, data.entry.properties);
 
             })
