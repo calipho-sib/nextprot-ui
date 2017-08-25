@@ -474,11 +474,13 @@
         //var domain = nxBaseUrl.getDomain("api");
         var url = config.api.API_URL + "/sparql?output=json&query=PREFIX%20%3A%3Chttp%3A%2F%2Fnextprot.org%2Frdf%23%3E%20PREFIX%20annotation%3A%3Chttp%3A%2F%2Fnextprot.org%2Frdf%2Fannotation%2F%3E%20PREFIX%20context%3A%3Chttp%3A%2F%2Fnextprot.org%2Frdf%2Fcontext%2F%3E%20PREFIX%20cv%3A%3Chttp%3A%2F%2Fnextprot.org%2Frdf%2Fterminology%2F%3E%20PREFIX%20db%3A%3Chttp%3A%2F%2Fnextprot.org%2Frdf%2Fdb%2F%3E%20PREFIX%20dc%3A%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Felements%2F1.1%2F%3E%20PREFIX%20dcterms%3A%3Chttp%3A%2F%2Fpurl.org%2Fdc%2Fterms%2F%3E%20PREFIX%20entry%3A%3Chttp%3A%2F%2Fnextprot.org%2Frdf%2Fentry%2F%3E%20PREFIX%20evidence%3A%3Chttp%3A%2F%2Fnextprot.org%2Frdf%2Fevidence%2F%3E%20PREFIX%20foaf%3A%3Chttp%3A%2F%2Fxmlns.com%2Ffoaf%2F0.1%2F%3E%20PREFIX%20gene%3A%3Chttp%3A%2F%2Fnextprot.org%2Frdf%2Fgene%2F%3E%20PREFIX%20identifier%3A%3Chttp%3A%2F%2Fnextprot.org%2Frdf%2Fidentifier%2F%3E%20PREFIX%20isoform%3A%3Chttp%3A%2F%2Fnextprot.org%2Frdf%2Fisoform%2F%3E%20PREFIX%20mo%3A%3Chttp%3A%2F%2Fpurl.org%2Fontology%2Fmo%2F%3E%20PREFIX%20ov%3A%3Chttp%3A%2F%2Fopen.vocab.org%2Fterms%2F%3E%20PREFIX%20owl%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2002%2F07%2Fowl%23%3E%20PREFIX%20publication%3A%3Chttp%3A%2F%2Fnextprot.org%2Frdf%2Fpublication%2F%3E%20PREFIX%20rdf%3A%3Chttp%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%3E%20PREFIX%20rdfs%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%20PREFIX%20sim%3A%3Chttp%3A%2F%2Fpurl.org%2Fontology%2Fsimilarity%2F%3E%20PREFIX%20source%3A%3Chttp%3A%2F%2Fnextprot.org%2Frdf%2Fsource%2F%3E%20PREFIX%20term%3A%3Chttp%3A%2F%2Fnextprot.org%2Frdf%2Fterminology%2F%3E%20PREFIX%20xref%3A%3Chttp%3A%2F%2Fnextprot.org%2Frdf%2Fxref%2F%3E%20PREFIX%20xsd%3A%3Chttp%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%3E%20SELECT%20%3Fpe%20count(%3Fentry)%20as%20%3Fcnt%20WHERE%20%7B%3Fentry%20%3Aexistence%20%3Fpe%7D%20group%20by%20%3Fpe&clientInfo=calipho%20group%20at%20SIB&applicationName=demo%20app%20for%20using%20SPARQL%20with%20protein%20existence";
 
-
         var peResource = $http({
             url: url,
             skipAuthorization: true,
-            method: 'GET'
+            method: 'GET',
+            headers: {
+             "Accept": "application/sparql-results+json"
+            }
         });
 
         var PeService = function () {};
