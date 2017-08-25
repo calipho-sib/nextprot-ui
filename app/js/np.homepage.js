@@ -478,7 +478,10 @@
         var peResource = $http({
             url: url,
             skipAuthorization: true,
-            method: 'GET'
+            method: 'GET',
+            headers: {
+             "Accept": "application/sparql-results+json"
+            }
         });
 
         var PeService = function () {};
