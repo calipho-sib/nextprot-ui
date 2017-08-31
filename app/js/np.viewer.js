@@ -9,8 +9,8 @@
         .directive('nextprotElement', nextprotElement)
 
 
-    nextprotElement.$inject = ['npSettings', '$location'];
-    function nextprotElement(npSettings, $location) {
+    nextprotElement.$inject = ['npSettings', '$location', '$rootScope'];
+    function nextprotElement(npSettings, $location, $rootScope) {
 
         var nxConfig = {env : npSettings.environment};
 
@@ -55,7 +55,6 @@
 
         function link(scope, element, attrs) {
 
-
             function renderElement(entry) {
 
                 var nxElement = getNextProtElement();
@@ -69,12 +68,18 @@
                     nxConfig.sequence = scope.sequence;
                 }
 
-                var html = '<'+nxElement+' nx-config='+JSON.stringify(nxConfig)+'></'+nxElement +'>';
+                var html = '<'+nxElement+' nx-config='+JSON.stringify(nxConfig);
 
+                if (nxElement === "expression-view" && $rootScope.tabularView) {
+                    html += " tabular-view";
+                }
+                html += '></'+nxElement +'>'
                 element.html(html);
+
                 scope.customElement = nxElement;
             }
             scope.$watch(attrs.nextprotElement, function(value) {
+
                 renderElement(value);
             });
         }
@@ -141,8 +146,8 @@
     }
 
 
-    ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', ];
-    function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
+    ViewerCtrl.$inject = ['$rootScope', '$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', ];
+    function ViewerCtrl($rootScope, $scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
 
         $scope.goldOnly = $routeParams.gold || false;
         $scope.goldFilter = $scope.goldOnly ? "?gold":"";
@@ -197,10 +202,6 @@
             });
         }
 
-
-
-
-
         $scope.setExportEntry = function (identifier) {
             exportService.setExportEntry(identifier);
         };
@@ -213,9 +214,22 @@
         }
 
         $scope.toggleGoldOnly = function () {
-                var isoformQuery = $location.search().isoform;
-                if((!$scope.customElement && $scope.goldOnly!==false) || ($scope.customElement && !$scope.goldOnly)) $location.search({"gold": null, "isoform": isoformQuery});
-                else $location.search({"gold": true, "isoform": isoformQuery});
+
+            var tabView = document.getElementById("ontologyContent").hasAttribute("hidden");
+
+            if ($scope.customElement === "expression-view") {
+                // bind this property in the root scope because a new isolated $scope is recreated each time
+                // ViewerCtrl is instanciated when a $location is reset
+                $rootScope.tabularView = tabView;
+            }
+
+            var isoformQuery = $location.search().isoform;
+            if((!$scope.customElement && $scope.goldOnly!==false) || ($scope.customElement && !$scope.goldOnly)) {
+                $location.search({"gold": null, "isoform": isoformQuery});
+            }
+            else {
+                $location.search({"gold": true, "isoform": isoformQuery});
+            }
         }
 
         $scope.hasPublication = function (count, link) {
