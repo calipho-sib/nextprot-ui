@@ -23,6 +23,7 @@
             var regexInteractionsPage = /^\/entry\/[^\/]+\/?(interactions)?$/;
             var regexLocalizationPage = /^\/entry\/[^\/]+\/?(localization)?$/;
             var regexSequencePage = /^\/entry\/[^\/]+\/?(sequence)?$/;
+            var regexStructuresPage = /^\/entry\/[^\/]+\/?(structures)?$/;
             var regexBlastPage = /^\/blast\/.+/;
 
             if(path.match(regexFunctionPage) != null){
@@ -46,6 +47,9 @@
             }
             if(path.match(regexSequencePage) != null){
                 return "sequence-view"
+            }
+            if(path.match(regexStructuresPage) != null){
+                return "structures-view"
             }
 
             if(path.match(regexBlastPage)  != null){
@@ -129,6 +133,7 @@
             .when('/entry/:entry/interactions', nxelementsv)
             .when('/entry/:entry/localization', nxelementsv)
             .when('/entry/:entry/sequence', nxelementsv)
+            .when('/entry/:entry/structures', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
@@ -282,7 +287,7 @@
             $scope.widgetTerm = $routeParams.termid;
             $scope.widgetPubli = $routeParams.pubid;
 
-            var np2Views = ["phenotypes","peptides", "structures"];
+            var np2Views = ["phenotypes","peptides"];
 //            var np2Views = ["sequence","proteomics","structures","peptides"];
 
             if (np2Views.indexOf($routeParams.ev1) > -1) { //Entry view
@@ -371,7 +376,7 @@
             if(ev2) url += "/" + ev2;
             url += "/app/index.html" ;
             
-            var isGoldFilterAvailable = ev1 === "phenotypes" || ev1 === "structures";
+            var isGoldFilterAvailable = ev1 === "phenotypes";
             
             var goldOnlyString = (goldOnly === true) && isGoldFilterAvailable ? ("&goldOnly=" + goldOnly) : "";
             
