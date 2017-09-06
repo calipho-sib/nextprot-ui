@@ -9,8 +9,8 @@
         .directive('nextprotElement', nextprotElement)
 
 
-    nextprotElement.$inject = ['npSettings', '$location'];
-    function nextprotElement(npSettings, $location) {
+    nextprotElement.$inject = ['npSettings', '$location', '$rootScope'];
+    function nextprotElement(npSettings, $location, $rootScope) {
 
         var nxConfig = {env : npSettings.environment};
 
@@ -19,9 +19,11 @@
             var path = $location.$$path;
             var regexFunctionPage = /^\/entry\/[^\/]+\/?(function)?$/;
             var regexMedicalPage = /^\/entry\/[^\/]+\/?(medical)?$/;
+            var regexExpressionPage = /^\/entry\/[^\/]+\/?(expression)?$/;
             var regexInteractionsPage = /^\/entry\/[^\/]+\/?(interactions)?$/;
             var regexLocalizationPage = /^\/entry\/[^\/]+\/?(localization)?$/;
-//            var regexSequencePage = /^\/entry\/[^\/]+\/?(sequence)?$/;
+            var regexSequencePage = /^\/entry\/[^\/]+\/?(sequence)?$/;
+            var regexStructuresPage = /^\/entry\/[^\/]+\/?(structures)?$/;
             var regexBlastPage = /^\/blast\/.+/;
 
             if(path.match(regexFunctionPage) != null){
@@ -32,6 +34,10 @@
                 return "medical-view"
             }
 
+            if(path.match(regexExpressionPage) != null){
+                return "expression-view"
+            }
+
             if(path.match(regexInteractionsPage) != null){
                 return "interactions-view"
             }
@@ -39,9 +45,12 @@
             if(path.match(regexLocalizationPage) != null){
                 return "localization-view"
             }
-//            if(path.match(regexSequencePage) != null){
-//                return "sequence-view"
-//            }
+            if(path.match(regexSequencePage) != null){
+                return "sequence-view"
+            }
+            if(path.match(regexStructuresPage) != null){
+                return "structures-view"
+            }
 
             if(path.match(regexBlastPage)  != null){
                 return "blast-view"
@@ -49,7 +58,6 @@
         }
 
         function link(scope, element, attrs) {
-
 
             function renderElement(entry) {
 
@@ -64,12 +72,18 @@
                     nxConfig.sequence = scope.sequence;
                 }
 
-                var html = '<'+nxElement+' nx-config='+JSON.stringify(nxConfig)+'></'+nxElement +'>';
+                var html = '<'+nxElement+' nx-config='+JSON.stringify(nxConfig);
 
+                if (nxElement === "expression-view" && $rootScope.tabularView) {
+                    html += " tabular-view";
+                }
+                html += '></'+nxElement +'>'
                 element.html(html);
+
                 scope.customElement = nxElement;
             }
             scope.$watch(attrs.nextprotElement, function(value) {
+
                 renderElement(value);
             });
         }
@@ -115,9 +129,11 @@
             .when('/entry/:entry/', nxelementsv)
             .when('/entry/:entry/function', nxelementsv)
             .when('/entry/:entry/medical', nxelementsv)
+            .when('/entry/:entry/expression', nxelementsv)
             .when('/entry/:entry/interactions', nxelementsv)
             .when('/entry/:entry/localization', nxelementsv)
-//            .when('/entry/:entry/sequence', nxelementsv)
+            .when('/entry/:entry/sequence', nxelementsv)
+            .when('/entry/:entry/structures', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
@@ -135,8 +151,8 @@
     }
 
 
-    ViewerCtrl.$inject = ['$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', ];
-    function ViewerCtrl($scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
+    ViewerCtrl.$inject = ['$rootScope', '$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', ];
+    function ViewerCtrl($rootScope, $scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
 
         $scope.goldOnly = $routeParams.gold || false;
         $scope.goldFilter = $scope.goldOnly ? "?gold":"";
@@ -178,7 +194,8 @@
                 //console.log(data);
                 $scope.entryProps.name = data.entry.overview.mainProteinName;
                 $scope.entryProps.geneName = data.entry.overview.mainGeneName;
-                $scope.entryProps.genesCount = data.entry.overview.geneNames.length;
+                $scope.entryProps.genesCount = (data.entry.overview.geneNames) ? data.entry.overview.geneNames.length : 0;
+
                 angular.extend($scope.entryProps, data.entry.properties);
 
             })
@@ -189,10 +206,6 @@
                 $scope.communityViewers = data;
             });
         }
-
-
-
-
 
         $scope.setExportEntry = function (identifier) {
             exportService.setExportEntry(identifier);
@@ -206,9 +219,22 @@
         }
 
         $scope.toggleGoldOnly = function () {
-                var isoformQuery = $location.search().isoform;
-                if((!$scope.customElement && $scope.goldOnly!==false) || ($scope.customElement && !$scope.goldOnly)) $location.search({"gold": null, "isoform": isoformQuery});
-                else $location.search({"gold": true, "isoform": isoformQuery});
+
+            var tabView = document.getElementById("ontologyContent").hasAttribute("hidden");
+
+            if ($scope.customElement === "expression-view") {
+                // bind this property in the root scope because a new isolated $scope is recreated each time
+                // ViewerCtrl is instanciated when a $location is reset
+                $rootScope.tabularView = tabView;
+            }
+
+            var isoformQuery = $location.search().isoform;
+            if((!$scope.customElement && $scope.goldOnly!==false) || ($scope.customElement && !$scope.goldOnly)) {
+                $location.search({"gold": null, "isoform": isoformQuery});
+            }
+            else {
+                $location.search({"gold": true, "isoform": isoformQuery});
+            }
         }
 
         $scope.hasPublication = function (count, link) {
@@ -261,7 +287,7 @@
             $scope.widgetTerm = $routeParams.termid;
             $scope.widgetPubli = $routeParams.pubid;
 
-            var np2Views = ["phenotypes","peptides", "structures"];
+            var np2Views = ["phenotypes","peptides"];
 //            var np2Views = ["sequence","proteomics","structures","peptides"];
 
             if (np2Views.indexOf($routeParams.ev1) > -1) { //Entry view
@@ -350,7 +376,7 @@
             if(ev2) url += "/" + ev2;
             url += "/app/index.html" ;
             
-            var isGoldFilterAvailable = ev1 === "phenotypes" || ev1 === "structures";
+            var isGoldFilterAvailable = ev1 === "phenotypes";
             
             var goldOnlyString = (goldOnly === true) && isGoldFilterAvailable ? ("&goldOnly=" + goldOnly) : "";
             

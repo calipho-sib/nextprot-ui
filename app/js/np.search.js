@@ -310,6 +310,11 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
         return ($location.path()==='/'||$location.path().indexOf('/search')!==-1 && $location.path()!=='/help/search-results')
     };
 
+    $scope.isHomePage=function(){
+
+        return $location.path() === '/';
+    };
+
     $scope.go = function () {
         var url = $location.url();
         $location.search('filter', null);

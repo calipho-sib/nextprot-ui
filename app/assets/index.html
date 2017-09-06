@@ -311,7 +311,7 @@
 ================================================== -->
 <div ng-if="isSearchBarVisible()" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
     
-<div id="hiring">
+<div id="hiring" ng-if="isHomePage()">
     <h1 id="hiring-title"><span>WE ARE HIRING !</span></h1>
 
     <div class="row hiring-content">

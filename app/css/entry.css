@@ -259,6 +259,7 @@ a.disabled {
     cursor: pointer;
 }
 
+/*
 .detailed-info {
     display: none;
 }
@@ -266,6 +267,7 @@ a.disabled {
 .detailed-info p {
     margin: 0px !important;
 }
+*/
 
 .evidenceArrow {
     -ms-transform: rotate(180deg);
@@ -1595,8 +1597,16 @@ header .navbar .dropdown-menu>.active>a {
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
 }
+/*
 .sidemenu .topmenu>li:last-child li:last-child {
         padding-bottom:100px;
+}
+*/
+.sidemenu .submenu-news>li:last-child {
+    padding-bottom: 100px;
+}
+.sidemenu .submenu-chromosomes>li:last-child {
+    padding-bottom: 100px;
 }
 .body-content {
     position: relative;
