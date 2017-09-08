@@ -220,9 +220,9 @@
 
         $scope.toggleGoldOnly = function () {
 
-            var tabView = document.getElementById("ontologyContent").hasAttribute("hidden");
-
             if ($scope.customElement === "expression-view") {
+                //TODO nextprot elements should be loosely coupled with angular. Why does this need to be here? TBD with Fred, Mat and Dan.
+                var tabView = document.getElementById("ontologyContent").hasAttribute("hidden");
                 // bind this property in the root scope because a new isolated $scope is recreated each time
                 // ViewerCtrl is instanciated when a $location is reset
                 $rootScope.tabularView = tabView;
