@@ -25,6 +25,8 @@
             var regexSequencePage = /^\/entry\/[^\/]+\/?(sequence)?$/;
             var regexStructuresPage = /^\/entry\/[^\/]+\/?(structures)?$/;
             var regexBlastPage = /^\/blast\/.+/;
+            var regexProteomicsPage = /^\/entry\/[^\/]+\/?(proteomics)?$/;
+            var regexIdentifiersPage = /^\/entry\/[^\/]+\/?(identifiers)?$/;
 
             if(path.match(regexFunctionPage) != null){
                 return "function-view"
@@ -54,6 +56,14 @@
 
             if(path.match(regexBlastPage)  != null){
                 return "blast-view"
+            }
+
+            if (path.match(regexProteomicsPage) != null){
+                return "proteomics-view"
+            }
+
+            if(path.match(regexIdentifiersPage) != null){
+                return "identifiers-view"
             }
         }
 
@@ -133,7 +143,9 @@
             .when('/entry/:entry/interactions', nxelementsv)
             .when('/entry/:entry/localization', nxelementsv)
             .when('/entry/:entry/sequence', nxelementsv)
+            .when('/entry/:entry/proteomics', nxelementsv)
             .when('/entry/:entry/structures', nxelementsv)
+            .when('/entry/:entry/identifiers', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
