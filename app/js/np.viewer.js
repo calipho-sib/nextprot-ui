@@ -238,23 +238,13 @@
                 // bind this property in the root scope because a new isolated $scope is recreated each time
                 // ViewerCtrl is instanciated when a $location is reset
                 $rootScope.tabularView = tabView;
-
-                // update the gold only attribute (does not change location and rerender the whole element)
-                var element = document.querySelector("expression-view");
-                if (element && element.hasAttribute("nx-config")) {
-                    var nxConfig = JSON.parse(element.getAttribute("nx-config"));
-                    nxConfig.goldOnly = nxConfig.goldOnly !== true;
-                    element.setAttribute("nx-config", JSON.stringify(nxConfig));
-                }
+            }
+            var isoformQuery = $location.search().isoform;
+            if ((!$scope.customElement && $scope.goldOnly !== false) || ($scope.customElement && !$scope.goldOnly)) {
+                $location.search({"gold": null, "isoform": isoformQuery});
             }
             else {
-                var isoformQuery = $location.search().isoform;
-                if ((!$scope.customElement && $scope.goldOnly !== false) || ($scope.customElement && !$scope.goldOnly)) {
-                    $location.search({"gold": null, "isoform": isoformQuery});
-                }
-                else {
-                    $location.search({"gold": true, "isoform": isoformQuery});
-                }
+                $location.search({"gold": true, "isoform": isoformQuery});
             }
         }
 
