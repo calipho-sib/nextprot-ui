@@ -127,8 +127,8 @@
                         "json": result['xml'],
                         "txt": [],
                         "fasta": [],
-                        "xls": ["entries","isoforms"]
-                        //"peff": []
+                        "xls": ["entries","isoforms"],
+                        "peff": []
                     };
                 })
                 .error(function (data, status) {
