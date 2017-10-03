@@ -58,13 +58,13 @@
                 return "blast-view"
             }
 
-            if (path.match(regexProteomicsPage) != null){
+            /*if (path.match(regexProteomicsPage) != null){
                 return "proteomics-view"
             }
 
             if(path.match(regexIdentifiersPage) != null){
                 return "identifiers-view"
-            }
+            }*/
         }
 
         function link(scope, element, attrs) {
@@ -138,9 +138,9 @@
             .when('/entry/:entry/interactions', nxelementsv)
             .when('/entry/:entry/localization', nxelementsv)
             .when('/entry/:entry/sequence', nxelementsv)
-            .when('/entry/:entry/proteomics', nxelementsv)
+            //.when('/entry/:entry/proteomics', nxelementsv)
             .when('/entry/:entry/structures', nxelementsv)
-            .when('/entry/:entry/identifiers', nxelementsv)
+            //.when('/entry/:entry/identifiers', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
