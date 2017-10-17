@@ -58,13 +58,13 @@
                 return "blast-view"
             }
 
-            if (path.match(regexProteomicsPage) != null){
+            /*if (path.match(regexProteomicsPage) != null){
                 return "proteomics-view"
             }
 
             if(path.match(regexIdentifiersPage) != null){
                 return "identifiers-view"
-            }
+            }*/
         }
 
         function link(scope, element, attrs) {
