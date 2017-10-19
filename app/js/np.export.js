@@ -93,6 +93,10 @@
                 if ($scope.selectedView == "full-entry" && $scope.selectedFormat == "xml") {
                     exportURL += "/export/entries.xml?query=id:"+$scope.export.exportObjectIdentifier;
                 }
+                else if ($scope.selectedFormat == "fasta" || $scope.selectedFormat == "peff") {
+                    exportURL += "/export/entry/" + $scope.export.exportObjectIdentifier;
+                    exportURL += _addSuffixURLSubPart($scope.selectedView, $scope.selectedFormat);
+                }
                 else {
                     exportURL += "/entry/" + $scope.export.exportObjectIdentifier;
                     exportURL += _addSuffixURLSubPart($scope.selectedView, $scope.selectedFormat);

@@ -25,6 +25,8 @@
             var regexSequencePage = /^\/entry\/[^\/]+\/?(sequence)?$/;
             var regexStructuresPage = /^\/entry\/[^\/]+\/?(structures)?$/;
             var regexBlastPage = /^\/blast\/.+/;
+            var regexProteomicsPage = /^\/entry\/[^\/]+\/?(proteomics)?$/;
+            var regexIdentifiersPage = /^\/entry\/[^\/]+\/?(identifiers)?$/;
 
             if(path.match(regexFunctionPage) != null){
                 return "function-view"
@@ -55,6 +57,14 @@
             if(path.match(regexBlastPage)  != null){
                 return "blast-view"
             }
+
+            /*if (path.match(regexProteomicsPage) != null){
+                return "proteomics-view"
+            }
+
+            if(path.match(regexIdentifiersPage) != null){
+                return "identifiers-view"
+            }*/
         }
 
         function link(scope, element, attrs) {
@@ -72,12 +82,7 @@
                     nxConfig.sequence = scope.sequence;
                 }
 
-                var html = '<'+nxElement+' nx-config='+JSON.stringify(nxConfig);
-
-                if (nxElement === "expression-view" && $rootScope.tabularView) {
-                    html += " tabular-view";
-                }
-                html += '></'+nxElement +'>'
+                var html = '<'+nxElement+' nx-config='+JSON.stringify(nxConfig) + '></'+nxElement +'>';
                 element.html(html);
 
                 scope.customElement = nxElement;
@@ -133,7 +138,9 @@
             .when('/entry/:entry/interactions', nxelementsv)
             .when('/entry/:entry/localization', nxelementsv)
             .when('/entry/:entry/sequence', nxelementsv)
+            //.when('/entry/:entry/proteomics', nxelementsv)
             .when('/entry/:entry/structures', nxelementsv)
+            //.when('/entry/:entry/identifiers', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
@@ -220,16 +227,15 @@
 
         $scope.toggleGoldOnly = function () {
 
-            var tabView = document.getElementById("ontologyContent").hasAttribute("hidden");
-
-            if ($scope.customElement === "expression-view") {
+            /* if ($scope.customElement === "expression-view") {
+                //TODO nextprot elements should be loosely coupled with angular. Why does this need to be here? TBD with Fred, Mat and Dan.
+                var tabView = document.getElementById("ontologyContent").hasAttribute("hidden");
                 // bind this property in the root scope because a new isolated $scope is recreated each time
                 // ViewerCtrl is instanciated when a $location is reset
                 $rootScope.tabularView = tabView;
-            }
-
+            } */
             var isoformQuery = $location.search().isoform;
-            if((!$scope.customElement && $scope.goldOnly!==false) || ($scope.customElement && !$scope.goldOnly)) {
+            if ((!$scope.customElement && $scope.goldOnly !== false) || ($scope.customElement && !$scope.goldOnly)) {
                 $location.search({"gold": null, "isoform": isoformQuery});
             }
             else {
@@ -286,6 +292,8 @@
             $scope.widgetEntry = $routeParams.entry;
             $scope.widgetTerm = $routeParams.termid;
             $scope.widgetPubli = $routeParams.pubid;
+
+            console.log("change route", $routeParams);
 
             var np2Views = ["phenotypes","peptides"];
 //            var np2Views = ["sequence","proteomics","structures","peptides"];
