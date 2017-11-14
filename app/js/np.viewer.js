@@ -289,35 +289,44 @@
 
         // update entity documentation on path change
         $scope.$on('$routeChangeSuccess', function (event, next, current) {
-            $scope.widgetEntry = $routeParams.entry;
-            $scope.widgetTerm = $routeParams.termid;
-            $scope.widgetPubli = $routeParams.pubid;
 
-            console.log("change route", $routeParams);
+            var path = $location.$$path;
+            var matches = path.match(/\/entry\/([^/]+)\/gene_identifiers/);
+            if (matches !== null) {
 
-            var np2Views = ["phenotypes","peptides"];
-//            var np2Views = ["sequence","proteomics","structures","peptides"];
+                $location.path("/entry/" + matches[1] + "/identifiers")
+            }
+            else {
+                $scope.widgetEntry = $routeParams.entry;
+                $scope.widgetTerm = $routeParams.termid;
+                $scope.widgetPubli = $routeParams.pubid;
 
-            if (np2Views.indexOf($routeParams.ev1) > -1) { //Entry view
-                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry, $routeParams.gold));
-//                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
-                
-            }else if ($routeParams.gv1) { //Global view
-                angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.gv1, $routeParams.gv2, $routeParams.gv3));
-                
-            }else if ($routeParams.pn1) { //Portal view
-                angular.extend($scope, viewerURLResolver.getScopeParamsForPortalViewers($routeParams.pn1));
-                    
-            }else if ($routeParams.t1) { //Tools view
-                angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.t1, "", ""));
-                
-            // COMMUNITY VIEWERS etiher with GitHub //////////////////////////////////////
-            } else if ($routeParams.repository) {
-                angular.extend($scope, viewerURLResolver.getScopeParamsForGitHubCommunity($routeParams.user, $routeParams.repository, $routeParams.entry));
-                
-            // GRAILS INTEGRATION
-            } else { //deprecated nextprot
-                angular.extend($scope, viewerURLResolver.getScopeParamsForNeXtProtGrails($location.$$path, $routeParams.element));
+                console.log("change route", $routeParams);
+
+                var np2Views = ["phenotypes", "peptides"];
+    //            var np2Views = ["sequence","proteomics","structures","peptides"];
+
+                if (np2Views.indexOf($routeParams.ev1) > -1) { //Entry view
+                    angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry, $routeParams.gold));
+    //                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
+
+                } else if ($routeParams.gv1) { //Global view
+                    angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.gv1, $routeParams.gv2, $routeParams.gv3));
+
+                } else if ($routeParams.pn1) { //Portal view
+                    angular.extend($scope, viewerURLResolver.getScopeParamsForPortalViewers($routeParams.pn1));
+
+                } else if ($routeParams.t1) { //Tools view
+                    angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.t1, "", ""));
+
+                    // COMMUNITY VIEWERS etiher with GitHub //////////////////////////////////////
+                } else if ($routeParams.repository) {
+                    angular.extend($scope, viewerURLResolver.getScopeParamsForGitHubCommunity($routeParams.user, $routeParams.repository, $routeParams.entry));
+
+                    // GRAILS INTEGRATION
+                } else { //deprecated nextprot
+                    angular.extend($scope, viewerURLResolver.getScopeParamsForNeXtProtGrails($location.$$path, $routeParams.element));
+                }
             }
         });
 
