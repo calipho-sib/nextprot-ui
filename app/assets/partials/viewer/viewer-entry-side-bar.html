@@ -57,11 +57,6 @@
                     <span class="text">Structures</span>
                 </a>
             </li>
-            <li ng-class="activePage('identifiers')">
-                <a href="/entry/{{widgetEntry}}/identifiers">
-                    <span class="text">Identifiers</span>
-                </a>
-            </li>
             <li ng-class="activePage('peptides')">
                 <a href="/entry/{{widgetEntry}}/peptides">
                     <span class="text">Peptides</span>
@@ -73,27 +68,13 @@
                     <span class="text">Phenotypes</span>
                 </a>
             </li>
-        </ul>
-        <!--/ END 2nd Level Menu -->
-    </li>
-    <li active-section ng-class="{active: hasActive()}">
-        <a class="" href="javascript:void(0);" data-target="#components" data-toggle="collapse">
-            <span class="figure">
-                <img style="width:30px;" src="../img/genes.png">
-              </span>
-            <span class="text">GENE</span>
-            <span class="arrow"></span>
-        </a>
-        <!-- START 2nd Level Menu -->
-        <ul id="components" class="submenu collapse in">
-            <li class="submenu-header ellipsis">Gene</li>
             <li ng-class="activePage('exons')">
                 <a href="/entry/{{widgetEntry}}/exons">
                     <span class="text">Exons</span>
                 </a>
             </li>
-            <li ng-class="activePage('gene_identifiers')">
-                <a href="/entry/{{widgetEntry}}/gene_identifiers">
+            <li ng-class="activePage('identifiers')">
+                <a href="/entry/{{widgetEntry}}/identifiers">
                     <span class="text">Identifiers</span>
                 </a>
             </li>
