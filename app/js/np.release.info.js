@@ -58,6 +58,36 @@
             });
 
             $scope.releaseInfo = index;
+
+            // Replace the publication stats fetched above by the correct ones computed by the new service /publications/stats.json
+            releaseInfoService.getPublicationStats().$promise.then(function(data) {
+                var newStats = [
+                    {
+                        description: "Cited publications",
+                        count: data.numberOfCitedPublications
+                    },
+                    {
+                        description: "Computationally mapped publications",
+                        count: data.numberOfComputationallyMappedPublications
+                    },
+                    {
+                        description: "Large scale publications",
+                        count: data.numberOfLargeScalePublications
+                    },
+                    {
+                        description: "Manually curated publications",
+                        count: data.numberOfCuratedPublications
+                    }
+                ];
+
+                var arrayLength = index.tagStatistics.length;
+                for (var i = 0; i < arrayLength; i++) {
+                    if (index.tagStatistics[i].category === "Publications") {
+                        index.tagStatistics[i].data = newStats;
+                        break;
+                    }
+                }
+            });
         });
     }
 
@@ -69,12 +99,21 @@
             {},
             {get : {method: "GET"}});
 
+        var publicationStatsResource = $resource(
+            config.api.API_URL + '/publications/stats.json',
+            {},
+            {get : {method: "GET"}});
+
         var ReleaseInfoService = function () {
 
         };
 
         ReleaseInfoService.prototype.getReleaseInfo = function () {
             return releaseInfoResource.get();
+        };
+
+        ReleaseInfoService.prototype.getPublicationStats = function () {
+            return publicationStatsResource.get();
         };
 
         return new ReleaseInfoService();
