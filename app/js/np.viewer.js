@@ -51,23 +51,23 @@
                 scope.customElement = "identifiers-view"
             }
             else if(path.match(/^\/entry\/[^\/]+\/publications$/) != null){
-                nxConfig.pubtype = "publications";
+                nxConfig.pubType = "curated";
                 scope.customElement = "publications-view"
             }
             else if(path.match(/^\/entry\/[^\/]+\/computed_references$/) != null){
-                nxConfig.pubtype = "computed";
+                nxConfig.pubType = "additional";
                 scope.customElement = "publications-view"
             }
             else if(path.match(/^\/entry\/[^\/]+\/patents$/) != null){
-                nxConfig.pubtype = "patents";
+                nxConfig.pubType = "patents";
                 scope.customElement = "publications-view"
             }
             else if(path.match(/^\/entry\/[^\/]+\/submissions$/) != null){
-                nxConfig.pubtype = "submissions";
+                nxConfig.pubType = "submissions";
                 scope.customElement = "publications-view"
             }
             else if(path.match(/^\/entry\/[^\/]+\/web$/) != null){
-                nxConfig.pubtype = "web";
+                nxConfig.pubType = "online-resources";
                 scope.customElement = "publications-view"
             }
             else {
@@ -86,7 +86,12 @@
 
                 setNextProtCustomElementName(scope, nxConfig);
 
+                // <publications-view nx-config='{"entry": "NX_Q8WXG9", "env": "build", "pubType": "curated"}'></publications-view>
+                // "curated", "additional", "submissions", "patents", "online-resources"
+
                 element.html('<'+scope.customElement+' nx-config='+JSON.stringify(nxConfig) + '></'+scope.customElement +'>');
+
+                console.log(JSON.stringify(nxConfig));
             }
             scope.$watch(attrs.nextprotElement, function(value) {
 
