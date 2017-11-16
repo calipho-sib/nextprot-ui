@@ -9,61 +9,69 @@
         .directive('nextprotElement', nextprotElement)
 
 
-    nextprotElement.$inject = ['npSettings', '$location', '$rootScope'];
-    function nextprotElement(npSettings, $location, $rootScope) {
+    nextprotElement.$inject = ['npSettings', '$location'];
+    function nextprotElement(npSettings, $location) {
 
-        var nxConfig = {env : npSettings.environment};
-
-        function getNextProtElement (){
+        function setNextProtCustomElementName (scope, nxConfig) {
 
             var path = $location.$$path;
-            var regexFunctionPage = /^\/entry\/[^\/]+\/?(function)?$/;
-            var regexMedicalPage = /^\/entry\/[^\/]+\/?(medical)?$/;
-            var regexExpressionPage = /^\/entry\/[^\/]+\/?(expression)?$/;
-            var regexInteractionsPage = /^\/entry\/[^\/]+\/?(interactions)?$/;
-            var regexLocalizationPage = /^\/entry\/[^\/]+\/?(localization)?$/;
-            var regexSequencePage = /^\/entry\/[^\/]+\/?(sequence)?$/;
-            var regexStructuresPage = /^\/entry\/[^\/]+\/?(structures)?$/;
-            var regexBlastPage = /^\/blast\/.+/;
-            var regexProteomicsPage = /^\/entry\/[^\/]+\/?(proteomics)?$/;
-            var regexIdentifiersPage = /^\/entry\/[^\/]+\/?(identifiers)?$/;
 
-            if(path.match(regexFunctionPage) != null){
-                return "function-view"
+            if(path.match(/^\/entry\/[^\/]+\/(function)?$/) != null){
+                scope.customElement = "function-view"
             }
+            else if(path.match(/^\/entry\/[^\/]+\/medical$/) != null){
+                scope.customElement = "medical-view"
+            }
+            else if(path.match(/^\/entry\/[^\/]+\/expression$/) != null){
+                scope.customElement =  "expression-view"
+            }
+            else if(path.match(/^\/entry\/[^\/]+\/interactions$/) != null){
+                scope.customElement = "interactions-view"
+            }
+            else if(path.match(/^\/entry\/[^\/]+\/localization$/) != null){
+                scope.customElement = "localization-view"
+            }
+            else if(path.match(/^\/entry\/[^\/]+\/sequence$/) != null){
+                scope.customElement = "sequence-view"
+            }
+            else if(path.match(/^\/entry\/[^\/]+\/structures$/) != null){
+                scope.customElement = "structures-view"
+            }
+            else if(path.match(/^\/blast\/.+/)  != null){
+                nxConfig.begin = scope.seqStart;
+                nxConfig.end = scope.seqEnd;
+                nxConfig.sequence = scope.sequence;
 
-            if(path.match(regexMedicalPage) != null){
-                return "medical-view"
+                scope.customElement = "blast-view"
             }
-
-            if(path.match(regexExpressionPage) != null){
-                return "expression-view"
+            else if(path.match(/^\/entry\/[^\/]+\/proteomics$/) != null){
+                scope.customElement = "proteomics-view"
             }
-
-            if(path.match(regexInteractionsPage) != null){
-                return "interactions-view"
+            else if(path.match(/^\/entry\/[^\/]+\/identifiers$/) != null){
+                scope.customElement = "identifiers-view"
             }
-
-            if(path.match(regexLocalizationPage) != null){
-                return "localization-view"
+            else if(path.match(/^\/entry\/[^\/]+\/publications$/) != null){
+                nxConfig.pubtype = "publications";
+                scope.customElement = "publications-view"
             }
-            if(path.match(regexSequencePage) != null){
-                return "sequence-view"
+            else if(path.match(/^\/entry\/[^\/]+\/computed_references$/) != null){
+                nxConfig.pubtype = "computed";
+                scope.customElement = "publications-view"
             }
-            if(path.match(regexStructuresPage) != null){
-                return "structures-view"
+            else if(path.match(/^\/entry\/[^\/]+\/patents$/) != null){
+                nxConfig.pubtype = "patents";
+                scope.customElement = "publications-view"
             }
-
-            if(path.match(regexBlastPage)  != null){
-                return "blast-view"
+            else if(path.match(/^\/entry\/[^\/]+\/submissions$/) != null){
+                nxConfig.pubtype = "submissions";
+                scope.customElement = "publications-view"
             }
-
-            if (path.match(regexProteomicsPage) != null){
-                return "proteomics-view"
+            else if(path.match(/^\/entry\/[^\/]+\/web$/) != null){
+                nxConfig.pubtype = "web";
+                scope.customElement = "publications-view"
             }
-
-            if(path.match(regexIdentifiersPage) != null){
-                return "identifiers-view"
+            else {
+                console.error("could not find a match against "+path);
             }
         }
 
@@ -71,21 +79,14 @@
 
             function renderElement(entry) {
 
-                var nxElement = getNextProtElement();
+                var nxConfig = {env : npSettings.environment};
                 nxConfig.entry = entry;
-
                 nxConfig.isoform = scope.isoformName;
                 nxConfig.goldOnly = scope.goldOnly;
-                if (nxElement==="blast-view") {
-                    nxConfig.begin = scope.seqStart;
-                    nxConfig.end = scope.seqEnd;
-                    nxConfig.sequence = scope.sequence;
-                }
 
-                var html = '<'+nxElement+' nx-config='+JSON.stringify(nxConfig) + '></'+nxElement +'>';
-                element.html(html);
+                setNextProtCustomElementName(scope, nxConfig);
 
-                scope.customElement = nxElement;
+                element.html('<'+scope.customElement+' nx-config='+JSON.stringify(nxConfig) + '></'+scope.customElement +'>');
             }
             scope.$watch(attrs.nextprotElement, function(value) {
 
@@ -141,6 +142,11 @@
             .when('/entry/:entry/proteomics', nxelementsv)
             .when('/entry/:entry/structures', nxelementsv)
             .when('/entry/:entry/identifiers', nxelementsv)
+            .when('/entry/:entry/publications', nxelementsv)
+            .when('/entry/:entry/computed_references', nxelementsv)
+            .when('/entry/:entry/patents', nxelementsv)
+            .when('/entry/:entry/submissions', nxelementsv)
+            .when('/entry/:entry/web', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
