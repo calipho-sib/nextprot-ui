@@ -59,15 +59,15 @@
                 scope.customElement = "publications-view"
             }
             else if(path.match(/^\/entry\/[^\/]+\/patents$/) != null){
-                nxConfig.pubType = "patents";
+                nxConfig.pubType = "patent";
                 scope.customElement = "publications-view"
             }
             else if(path.match(/^\/entry\/[^\/]+\/submissions$/) != null){
-                nxConfig.pubType = "submissions";
+                nxConfig.pubType = "submission";
                 scope.customElement = "publications-view"
             }
             else if(path.match(/^\/entry\/[^\/]+\/web$/) != null){
-                nxConfig.pubType = "online-resources";
+                nxConfig.pubType = "web_resource";
                 scope.customElement = "publications-view"
             }
             else {
