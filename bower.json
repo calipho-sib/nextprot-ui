@@ -43,7 +43,7 @@
     "iframe-resizer": "3.2.0",
     "angular-mocks": "1.2.19",
     "webcomponentsjs": "0.7.24",
-    "nextprot-elements": "https://github.com/calipho-sib/nextprot-elements.git#develop"
+    "nextprot-elements": "https://github.com/calipho-sib/nextprot-elements.git#entry-publications"
   },
   "devDependencies": {
     "angular-mocks": "latest"
@@ -56,6 +56,7 @@
     "iframe-resizer": "3.2.0",
     "polymer": "^1.4.0",
     "iron-flex-layout": "^1.0.0",
-    "webcomponentsjs": "0.7.24"
+    "webcomponentsjs": "0.7.24",
+    "paper-button": "^1.0.0"
   }
 }
