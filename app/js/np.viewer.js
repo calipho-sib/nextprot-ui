@@ -208,16 +208,25 @@
 
             viewerService.getEntryProperties($routeParams.entry).$promise.then(function (data) {
 
-                //console.log("PUBLICATIONS DATA");
-                //console.log(data);
                 $scope.entryProps.name = data.entry.overview.mainProteinName;
                 $scope.entryProps.geneName = data.entry.overview.mainGeneName;
                 $scope.entryProps.genesCount = (data.entry.overview.geneNames) ? data.entry.overview.geneNames.length : 0;
 
                 angular.extend($scope.entryProps, data.entry.properties);
+            });
 
-            })
+            viewerService.getEntryPublicationCounts($routeParams.entry).$promise.then(function (publicationCounts) {
 
+                /*
+                ADDITIONAL:   ...
+                CURATED:      ...
+                PATENT:       ...
+                SUBMISSION:   ...
+                WEB_RESOURCE: ...
+                ALL:          ...
+                 */
+                $scope.entryProps.publicationCounts = publicationCounts;
+            });
         }else {
 
             viewerService.getCommunityGlobalViewers().success(function(data){
@@ -312,14 +321,10 @@
                 $scope.widgetTerm = $routeParams.termid;
                 $scope.widgetPubli = $routeParams.pubid;
 
-                console.log("change route", $routeParams);
-
                 var np2Views = ["phenotypes", "peptides"];
-    //            var np2Views = ["sequence","proteomics","structures","peptides"];
 
                 if (np2Views.indexOf($routeParams.ev1) > -1) { //Entry view
                     angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry, $routeParams.gold));
-    //                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
 
                 } else if ($routeParams.gv1) { //Global view
                     angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.gv1, $routeParams.gv2, $routeParams.gv3));
@@ -329,8 +334,6 @@
 
                 } else if ($routeParams.t1) { //Tools view
                     angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.t1, "", ""));
-
-                    // COMMUNITY VIEWERS etiher with GitHub //////////////////////////////////////
                 } else if ($routeParams.repository) {
                     angular.extend($scope, viewerURLResolver.getScopeParamsForGitHubCommunity($routeParams.user, $routeParams.repository, $routeParams.entry));
 
@@ -354,6 +357,7 @@
         var globalViewersResource = $http({url: config.api.API_URL + '/contents/json-config/community-global-viewers.json', skipAuthorization : true, method: 'GET'});
 
         var entryProperties = $resource(config.api.API_URL + '/entry/:entryName/overview.json', {entryName: '@entryName'}, {get : {method: "GET"}});
+        var entryPublicationCounts = $resource(config.api.API_URL + '/entry-publications/entry/:entryName/count.json', {entryName: '@entryName'}, {get : {method: "GET"}});
 
         var ViewerService = function () {
 
@@ -361,15 +365,19 @@
 
         ViewerService.prototype.getCommunityGlobalViewers = function () {
             return globalViewersResource;
-        }
+        };
 
         ViewerService.prototype.getCommunityEntryViewers = function () {
             return entryViewersResource;
-        }
+        };
 
         ViewerService.prototype.getEntryProperties = function (entryName) {
             return entryProperties.get({entryName:entryName});
-        }
+        };
+
+        ViewerService.prototype.getEntryPublicationCounts = function (entryName) {
+            return entryPublicationCounts.get({entryName:entryName});
+        };
 
         return new ViewerService();
     }
