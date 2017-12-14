@@ -504,7 +504,7 @@
             var query = "";
             
             if (queryStrings.hasOwnProperty("isoform")){
-                query = "&isoform=" + queryStrings["isoform"];
+                query = "&isoforms=" + queryStrings["isoform"];
             }
             
             var result = {
