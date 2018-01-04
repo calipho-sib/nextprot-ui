@@ -147,11 +147,11 @@
 //            .when('/entry/:entry/proteomics', nxelementsv)
             .when('/entry/:entry/structures', nxelementsv)
             .when('/entry/:entry/identifiers', nxelementsv)
-            .when('/entry/:entry/publications', nxelementsv)
-            .when('/entry/:entry/computed_references', nxelementsv)
-            .when('/entry/:entry/patents', nxelementsv)
-            .when('/entry/:entry/submissions', nxelementsv)
-            .when('/entry/:entry/web', nxelementsv)
+            //.when('/entry/:entry/publications', nxelementsv)
+            //.when('/entry/:entry/computed_references', nxelementsv)
+            //.when('/entry/:entry/patents', nxelementsv)
+            //.when('/entry/:entry/submissions', nxelementsv)
+            //.when('/entry/:entry/web', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
@@ -215,18 +215,10 @@
                 angular.extend($scope.entryProps, data.entry.properties);
             });
 
-            viewerService.getEntryPublicationCounts($routeParams.entry).$promise.then(function (publicationCounts) {
+            /*viewerService.getEntryPublicationCounts($routeParams.entry).$promise.then(function (publicationCounts) {
 
-                /*
-                ADDITIONAL:   ...
-                CURATED:      ...
-                PATENT:       ...
-                SUBMISSION:   ...
-                WEB_RESOURCE: ...
-                ALL:          ...
-                 */
                 $scope.entryProps.publicationCounts = publicationCounts;
-            });
+            });*/
         }else {
 
             viewerService.getCommunityGlobalViewers().success(function(data){
