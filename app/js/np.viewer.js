@@ -215,10 +215,10 @@
                 angular.extend($scope.entryProps, data.entry.properties);
             });
 
-            /*viewerService.getEntryPublicationCounts($routeParams.entry).$promise.then(function (publicationCounts) {
+            viewerService.getEntryPublicationCounts($routeParams.entry).$promise.then(function (publicationCounts) {
 
                 $scope.entryProps.publicationCounts = publicationCounts;
-            });*/
+            });
         }else {
 
             viewerService.getCommunityGlobalViewers().success(function(data){
