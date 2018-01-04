@@ -9,83 +9,89 @@
         .directive('nextprotElement', nextprotElement)
 
 
-    nextprotElement.$inject = ['npSettings', '$location', '$rootScope'];
-    function nextprotElement(npSettings, $location, $rootScope) {
+    nextprotElement.$inject = ['npSettings', '$location'];
+    function nextprotElement(npSettings, $location) {
 
-        var nxConfig = {env : npSettings.environment};
-
-        function getNextProtElement (){
+        function setNextProtCustomElementName (scope, nxConfig) {
 
             var path = $location.$$path;
-            var regexFunctionPage = /^\/entry\/[^\/]+\/?(function)?$/;
-            var regexMedicalPage = /^\/entry\/[^\/]+\/?(medical)?$/;
-            var regexExpressionPage = /^\/entry\/[^\/]+\/?(expression)?$/;
-            var regexInteractionsPage = /^\/entry\/[^\/]+\/?(interactions)?$/;
-            var regexLocalizationPage = /^\/entry\/[^\/]+\/?(localization)?$/;
-            var regexSequencePage = /^\/entry\/[^\/]+\/?(sequence)?$/;
-            var regexStructuresPage = /^\/entry\/[^\/]+\/?(structures)?$/;
-            var regexBlastPage = /^\/blast\/.+/;
-            var regexProteomicsPage = /^\/entry\/[^\/]+\/?(proteomics)?$/;
-            var regexIdentifiersPage = /^\/entry\/[^\/]+\/?(identifiers)?$/;
 
-            if(path.match(regexFunctionPage) != null){
-                return "function-view"
+            if(path.match(/^\/entry\/[^\/]+\/(function)?$/) != null){
+                scope.customElement = "function-view"
             }
+            else if(path.match(/^\/entry\/[^\/]+\/medical$/) != null){
+                scope.customElement = "medical-view"
+            }
+            else if(path.match(/^\/entry\/[^\/]+\/expression$/) != null){
+                scope.customElement =  "expression-view"
+            }
+            else if(path.match(/^\/entry\/[^\/]+\/interactions$/) != null){
+                scope.customElement = "interactions-view"
+            }
+            else if(path.match(/^\/entry\/[^\/]+\/localization$/) != null){
+                scope.customElement = "localization-view"
+            }
+            else if(path.match(/^\/entry\/[^\/]+\/sequence$/) != null){
+                scope.customElement = "sequence-view"
+            }
+            else if(path.match(/^\/entry\/[^\/]+\/structures$/) != null){
+                scope.customElement = "structures-view"
+            }
+            else if(path.match(/^\/blast\/.+/)  != null){
+                nxConfig.begin = scope.seqStart;
+                nxConfig.end = scope.seqEnd;
+                nxConfig.sequence = scope.sequence;
 
-            if(path.match(regexMedicalPage) != null){
-                return "medical-view"
+                scope.customElement = "blast-view"
             }
-
-            if(path.match(regexExpressionPage) != null){
-                return "expression-view"
+            else if(path.match(/^\/entry\/[^\/]+\/proteomics$/) != null){
+                scope.customElement = "proteomics-view"
             }
-
-            if(path.match(regexInteractionsPage) != null){
-                return "interactions-view"
+            else if(path.match(/^\/entry\/[^\/]+\/identifiers$/) != null){
+                scope.customElement = "identifiers-view"
             }
-
-            if(path.match(regexLocalizationPage) != null){
-                return "localization-view"
+            else if(path.match(/^\/entry\/[^\/]+\/publications$/) != null){
+                nxConfig.pubType = "curated";
+                scope.customElement = "publications-view"
             }
-            if(path.match(regexSequencePage) != null){
-                return "sequence-view"
+            else if(path.match(/^\/entry\/[^\/]+\/computed_references$/) != null){
+                nxConfig.pubType = "additional";
+                scope.customElement = "publications-view"
             }
-            if(path.match(regexStructuresPage) != null){
-                return "structures-view"
+            else if(path.match(/^\/entry\/[^\/]+\/patents$/) != null){
+                nxConfig.pubType = "patent";
+                scope.customElement = "publications-view"
             }
-
-            if(path.match(regexBlastPage)  != null){
-                return "blast-view"
+            else if(path.match(/^\/entry\/[^\/]+\/submissions$/) != null){
+                nxConfig.pubType = "submission";
+                scope.customElement = "publications-view"
             }
-
-            /*if (path.match(regexProteomicsPage) != null){
-                return "proteomics-view"
+            else if(path.match(/^\/entry\/[^\/]+\/web$/) != null){
+                nxConfig.pubType = "web_resource";
+                scope.customElement = "publications-view"
             }
-
-            if(path.match(regexIdentifiersPage) != null){
-                return "identifiers-view"
-            }*/
+            else {
+                console.error("could not find a match against "+path);
+            }
         }
 
         function link(scope, element, attrs) {
 
             function renderElement(entry) {
 
-                var nxElement = getNextProtElement();
+                var nxConfig = {env : npSettings.environment};
                 nxConfig.entry = entry;
-
                 nxConfig.isoform = scope.isoformName;
                 nxConfig.goldOnly = scope.goldOnly;
-                if (nxElement==="blast-view") {
-                    nxConfig.begin = scope.seqStart;
-                    nxConfig.end = scope.seqEnd;
-                    nxConfig.sequence = scope.sequence;
-                }
 
-                var html = '<'+nxElement+' nx-config='+JSON.stringify(nxConfig) + '></'+nxElement +'>';
-                element.html(html);
+                setNextProtCustomElementName(scope, nxConfig);
 
-                scope.customElement = nxElement;
+                // <publications-view nx-config='{"entry": "NX_Q8WXG9", "env": "build", "pubType": "curated"}'></publications-view>
+                // "curated", "additional", "submissions", "patents", "online-resources"
+
+                element.html('<'+scope.customElement+' nx-config='+JSON.stringify(nxConfig) + '></'+scope.customElement +'>');
+
+                console.log(JSON.stringify(nxConfig));
             }
             scope.$watch(attrs.nextprotElement, function(value) {
 
@@ -138,9 +144,14 @@
             .when('/entry/:entry/interactions', nxelementsv)
             .when('/entry/:entry/localization', nxelementsv)
             .when('/entry/:entry/sequence', nxelementsv)
-            //.when('/entry/:entry/proteomics', nxelementsv)
+//            .when('/entry/:entry/proteomics', nxelementsv)
             .when('/entry/:entry/structures', nxelementsv)
-            //.when('/entry/:entry/identifiers', nxelementsv)
+            .when('/entry/:entry/identifiers', nxelementsv)
+            //.when('/entry/:entry/publications', nxelementsv)
+            //.when('/entry/:entry/computed_references', nxelementsv)
+            //.when('/entry/:entry/patents', nxelementsv)
+            //.when('/entry/:entry/submissions', nxelementsv)
+            //.when('/entry/:entry/web', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
@@ -197,16 +208,17 @@
 
             viewerService.getEntryProperties($routeParams.entry).$promise.then(function (data) {
 
-                //console.log("PUBLICATIONS DATA");
-                //console.log(data);
                 $scope.entryProps.name = data.entry.overview.mainProteinName;
                 $scope.entryProps.geneName = data.entry.overview.mainGeneName;
                 $scope.entryProps.genesCount = (data.entry.overview.geneNames) ? data.entry.overview.geneNames.length : 0;
 
                 angular.extend($scope.entryProps, data.entry.properties);
+            });
 
-            })
+            viewerService.getEntryPublicationCounts($routeParams.entry).$promise.then(function (publicationCounts) {
 
+                $scope.entryProps.publicationCounts = publicationCounts;
+            });
         }else {
 
             viewerService.getCommunityGlobalViewers().success(function(data){
@@ -289,35 +301,38 @@
 
         // update entity documentation on path change
         $scope.$on('$routeChangeSuccess', function (event, next, current) {
-            $scope.widgetEntry = $routeParams.entry;
-            $scope.widgetTerm = $routeParams.termid;
-            $scope.widgetPubli = $routeParams.pubid;
 
-            console.log("change route", $routeParams);
+            var path = $location.$$path;
+            var matches = path.match(/\/entry\/([^/]+)\/gene_identifiers/);
+            if (matches !== null) {
 
-            var np2Views = ["phenotypes","peptides"];
-//            var np2Views = ["sequence","proteomics","structures","peptides"];
+                $location.path("/entry/" + matches[1] + "/identifiers")
+            }
+            else {
+                $scope.widgetEntry = $routeParams.entry;
+                $scope.widgetTerm = $routeParams.termid;
+                $scope.widgetPubli = $routeParams.pubid;
 
-            if (np2Views.indexOf($routeParams.ev1) > -1) { //Entry view
-                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry, $routeParams.gold));
-//                angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry));
-                
-            }else if ($routeParams.gv1) { //Global view
-                angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.gv1, $routeParams.gv2, $routeParams.gv3));
-                
-            }else if ($routeParams.pn1) { //Portal view
-                angular.extend($scope, viewerURLResolver.getScopeParamsForPortalViewers($routeParams.pn1));
-                    
-            }else if ($routeParams.t1) { //Tools view
-                angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.t1, "", ""));
-                
-            // COMMUNITY VIEWERS etiher with GitHub //////////////////////////////////////
-            } else if ($routeParams.repository) {
-                angular.extend($scope, viewerURLResolver.getScopeParamsForGitHubCommunity($routeParams.user, $routeParams.repository, $routeParams.entry));
-                
-            // GRAILS INTEGRATION
-            } else { //deprecated nextprot
-                angular.extend($scope, viewerURLResolver.getScopeParamsForNeXtProtGrails($location.$$path, $routeParams.element));
+                var np2Views = ["phenotypes", "peptides"];
+
+                if (np2Views.indexOf($routeParams.ev1) > -1) { //Entry view
+                    angular.extend($scope, viewerURLResolver.getScopeParamsForEntryViewers($routeParams.ev1, $routeParams.ev2, $routeParams.entry, $routeParams.gold));
+
+                } else if ($routeParams.gv1) { //Global view
+                    angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.gv1, $routeParams.gv2, $routeParams.gv3));
+
+                } else if ($routeParams.pn1) { //Portal view
+                    angular.extend($scope, viewerURLResolver.getScopeParamsForPortalViewers($routeParams.pn1));
+
+                } else if ($routeParams.t1) { //Tools view
+                    angular.extend($scope, viewerURLResolver.getScopeParamsForGlobalViewers($routeParams.t1, "", ""));
+                } else if ($routeParams.repository) {
+                    angular.extend($scope, viewerURLResolver.getScopeParamsForGitHubCommunity($routeParams.user, $routeParams.repository, $routeParams.entry));
+
+                    // GRAILS INTEGRATION
+                } else { //deprecated nextprot
+                    angular.extend($scope, viewerURLResolver.getScopeParamsForNeXtProtGrails($location.$$path, $routeParams.element));
+                }
             }
         });
 
@@ -334,6 +349,7 @@
         var globalViewersResource = $http({url: config.api.API_URL + '/contents/json-config/community-global-viewers.json', skipAuthorization : true, method: 'GET'});
 
         var entryProperties = $resource(config.api.API_URL + '/entry/:entryName/overview.json', {entryName: '@entryName'}, {get : {method: "GET"}});
+        var entryPublicationCounts = $resource(config.api.API_URL + '/entry-publications/entry/:entryName/count.json', {entryName: '@entryName'}, {get : {method: "GET"}});
 
         var ViewerService = function () {
 
@@ -341,15 +357,19 @@
 
         ViewerService.prototype.getCommunityGlobalViewers = function () {
             return globalViewersResource;
-        }
+        };
 
         ViewerService.prototype.getCommunityEntryViewers = function () {
             return entryViewersResource;
-        }
+        };
 
         ViewerService.prototype.getEntryProperties = function (entryName) {
             return entryProperties.get({entryName:entryName});
-        }
+        };
+
+        ViewerService.prototype.getEntryPublicationCounts = function (entryName) {
+            return entryPublicationCounts.get({entryName:entryName});
+        };
 
         return new ViewerService();
     }
@@ -476,7 +496,7 @@
             var query = "";
             
             if (queryStrings.hasOwnProperty("isoform")){
-                query = "&isoform=" + queryStrings["isoform"];
+                query = "&isoforms=" + queryStrings["isoform"];
             }
             
             var result = {

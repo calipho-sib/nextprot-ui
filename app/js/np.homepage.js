@@ -255,25 +255,30 @@
 //        }]
         
         var initialData = [{
-            "desc": "Evidence at protein level (17045)",
+//            "desc": "Evidence at protein level (17045)",
+            "desc": "Evidence at protein level",
             "name": "evidence_at_protein_level",
-            "y": 105
+            "y": 5
         }, {
-            "desc": "Evidence at transcript level (1912)",
+//            "desc": "Evidence at transcript level (1912)",
+            "desc": "Evidence at transcript level",
             "name": "evidence_at_transcript_level",
-            "y": 104
+            "y": 4
         }, {
-            "desc": "Inferred from homology (555)",
+//            "desc": "Inferred from homology (555)",
+            "desc": "Inferred from homology",
             "name": "inferred_from_homology",
-            "y": 103
+            "y": 3
         }, {
-            "desc": "Uncertain (571)",
+//            "desc": "Uncertain (571)",
+            "desc": "Uncertain",
             "name": "uncertain",
-            "y": 102
+            "y": 2
         }, {
-            "desc": "Predicted (96)",
+//            "desc": "Predicted (96)",
+            "desc": "Predicted",
             "name": "predicted",
-            "y": 101
+            "y": 1
         }]
 
         var color = d3.scale.ordinal()
@@ -332,17 +337,28 @@
 
             /* ------- TEXT LABELS -------*/
 
-            var text = svg.select(".labels").selectAll("text")
-                .data(pie(data), key);
+            var textSelection = svg.selectAll(".labelPE");
+            var text = textSelection.data(pie(data), key);
 
-            text.enter()
-                .append("text")
-                .attr("dy", ".35em")
-                .style("letter-spacing","0.5px")
-                .text(function (d) {
-                    return d.data.label;
-                })
-                .call(wrap);
+            
+            if (textSelection.size()){
+                text.text(function (d) {
+                        return d.data.label + " ("+d.data.value+")";
+                    })
+                    .call(wrap);
+            }
+            else{
+                console.log("in else");
+                text.enter()
+                    .append("text")
+                    .attr("class","labelPE")
+                    .attr("dy", ".35em")
+                    .style("letter-spacing","0.5px")
+                    .text(function (d) {
+                        return d.data.label + " ("+d.data.value+")";
+                    })
+                    .call(wrap);
+            }
 
             function wrap(text) {
                 text.each(function () {
@@ -447,7 +463,8 @@
 //                    "y": value
 //                });
                 seriesData.push({
-                    "desc":data.pe.value.split("#")[1].replace(/_/g, " ") + " (" + value + ")",
+//                    "desc":data.pe.value.split("#")[1].replace(/_/g, " ") + " (" + value + ")",
+                    "desc":data.pe.value.split("#")[1].replace(/_/g, " "),
                     "name":id,
                     "y":value
                 })

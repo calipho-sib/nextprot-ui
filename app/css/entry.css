@@ -614,7 +614,6 @@ li a>.number {
     max-width: 35px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 .mainmenu li a>.arrow,
 .topmenu li a>.arrow {
