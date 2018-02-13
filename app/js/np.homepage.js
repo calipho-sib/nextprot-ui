@@ -292,7 +292,6 @@
 
 
         function transformData(dataRelease) {
-            console.log("dataRelease",dataRelease);
             return initialData.map(function(initD){
                 var d = dataRelease.filter(function(dr){return initD.name === dr.name})[0];
                 return {
