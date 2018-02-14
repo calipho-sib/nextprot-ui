@@ -486,16 +486,13 @@
             /* np1Params: params to pass to NP1 */
             var np1Params = "?np2css=" + np2css + "&np2ori=" + np2ori;
 
-//            console.log("Grails URL : ");
-//            console.log(np1Base);
-//            console.log(path);
-//            console.log(np1Params);
-//            console.log("query strings : ");
-            var queryStrings = $location.search(); 
-//            console.log(queryStrings);
+            var queryStrings = $location.search();
             var query = "";
             
-            if (queryStrings.hasOwnProperty("isoform")){
+            if (path.split("/").slice(-1)[0] === "fasta" && queryStrings.hasOwnProperty("isoform")){
+                query = "&isoform=" + queryStrings["isoform"];
+            }
+            else if (queryStrings.hasOwnProperty("isoform")){
                 query = "&isoforms=" + queryStrings["isoform"];
             }
             
