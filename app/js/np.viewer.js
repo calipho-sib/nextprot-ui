@@ -144,7 +144,7 @@
             .when('/entry/:entry/interactions', nxelementsv)
             .when('/entry/:entry/localization', nxelementsv)
             .when('/entry/:entry/sequence', nxelementsv)
-//            .when('/entry/:entry/proteomics', nxelementsv)
+            .when('/entry/:entry/proteomics', nxelementsv)
             .when('/entry/:entry/structures', nxelementsv)
             .when('/entry/:entry/identifiers', nxelementsv)
             //.when('/entry/:entry/publications', nxelementsv)
