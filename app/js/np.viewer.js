@@ -219,6 +219,11 @@
 
                 $scope.entryProps.publicationCounts = publicationCounts;
             });
+
+            viewerService.getEntryStats($routeParams.entry).$promise.then(function (entryStats) {
+
+                $scope.entryProps.isoformCount = entryStats.isoforms;
+            });
         }else {
 
             viewerService.getCommunityGlobalViewers().success(function(data){
@@ -351,6 +356,8 @@
         var entryProperties = $resource(config.api.API_URL + '/entry/:entryName/overview.json', {entryName: '@entryName'}, {get : {method: "GET"}});
         var entryPublicationCounts = $resource(config.api.API_URL + '/entry-publications/entry/:entryName/count.json', {entryName: '@entryName'}, {get : {method: "GET"}});
 
+        var entryStats = $resource(config.api.API_URL + '/entry/:entryName/stats.json', {entryName: '@entryName'}, {get : {method: "GET"}});
+
         var ViewerService = function () {
 
         };
@@ -369,6 +376,10 @@
 
         ViewerService.prototype.getEntryPublicationCounts = function (entryName) {
             return entryPublicationCounts.get({entryName:entryName});
+        };
+
+        ViewerService.prototype.getEntryStats = function (entryName) {
+            return entryStats.get({entryName:entryName});
         };
 
         return new ViewerService();
