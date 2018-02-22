@@ -144,7 +144,7 @@
             .when('/entry/:entry/interactions', nxelementsv)
             .when('/entry/:entry/localization', nxelementsv)
             .when('/entry/:entry/sequence', nxelementsv)
-//            .when('/entry/:entry/proteomics', nxelementsv)
+            .when('/entry/:entry/proteomics', nxelementsv)
             .when('/entry/:entry/structures', nxelementsv)
             .when('/entry/:entry/identifiers', nxelementsv)
             //.when('/entry/:entry/publications', nxelementsv)
@@ -218,6 +218,11 @@
             viewerService.getEntryPublicationCounts($routeParams.entry).$promise.then(function (publicationCounts) {
 
                 $scope.entryProps.publicationCounts = publicationCounts;
+            });
+
+            viewerService.getEntryStats($routeParams.entry).$promise.then(function (entryStats) {
+
+                $scope.entryProps.isoformCount = entryStats.isoforms;
             });
         }else {
 
@@ -351,6 +356,8 @@
         var entryProperties = $resource(config.api.API_URL + '/entry/:entryName/overview.json', {entryName: '@entryName'}, {get : {method: "GET"}});
         var entryPublicationCounts = $resource(config.api.API_URL + '/entry-publications/entry/:entryName/count.json', {entryName: '@entryName'}, {get : {method: "GET"}});
 
+        var entryStats = $resource(config.api.API_URL + '/entry/:entryName/stats.json', {entryName: '@entryName'}, {get : {method: "GET"}});
+
         var ViewerService = function () {
 
         };
@@ -369,6 +376,10 @@
 
         ViewerService.prototype.getEntryPublicationCounts = function (entryName) {
             return entryPublicationCounts.get({entryName:entryName});
+        };
+
+        ViewerService.prototype.getEntryStats = function (entryName) {
+            return entryStats.get({entryName:entryName});
         };
 
         return new ViewerService();
@@ -486,16 +497,13 @@
             /* np1Params: params to pass to NP1 */
             var np1Params = "?np2css=" + np2css + "&np2ori=" + np2ori;
 
-//            console.log("Grails URL : ");
-//            console.log(np1Base);
-//            console.log(path);
-//            console.log(np1Params);
-//            console.log("query strings : ");
-            var queryStrings = $location.search(); 
-//            console.log(queryStrings);
+            var queryStrings = $location.search();
             var query = "";
             
-            if (queryStrings.hasOwnProperty("isoform")){
+            if (path.split("/").slice(-1)[0] === "fasta" && queryStrings.hasOwnProperty("isoform")){
+                query = "&isoform=" + queryStrings["isoform"];
+            }
+            else if (queryStrings.hasOwnProperty("isoform")){
                 query = "&isoforms=" + queryStrings["isoform"];
             }
             

@@ -292,7 +292,8 @@
 
 
         function transformData(dataRelease) {
-            return dataRelease.map(function (d) {
+            return initialData.map(function(initD){
+                var d = dataRelease.filter(function(dr){return initD.name === dr.name})[0];
                 return {
                     label: d.desc,
                     value: d.y
