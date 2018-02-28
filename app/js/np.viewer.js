@@ -86,9 +86,6 @@
 
                 setNextProtCustomElementName(scope, nxConfig);
 
-                // <publications-view nx-config='{"entry": "NX_Q8WXG9", "env": "build", "pubType": "curated"}'></publications-view>
-                // "curated", "additional", "submissions", "patents", "online-resources"
-
                 element.html('<'+scope.customElement+' nx-config='+JSON.stringify(nxConfig) + '></'+scope.customElement +'>');
 
                 console.log(JSON.stringify(nxConfig));
@@ -169,8 +166,8 @@
     }
 
 
-    ViewerCtrl.$inject = ['$rootScope', '$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', ];
-    function ViewerCtrl($rootScope, $scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
+    ViewerCtrl.$inject = ['$rootScope', '$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', 'npSettings'];
+    function ViewerCtrl($rootScope, $scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver, npSettings) {
 
         $scope.goldOnly = $routeParams.gold || false;
         $scope.goldFilter = $scope.goldOnly ? "?gold":"";
@@ -198,6 +195,11 @@
         $scope.sequence = $routeParams.sequence;
         $scope.seqStart = $routeParams.seqStart;
         $scope.seqEnd = $routeParams.seqEnd;
+
+        $scope.nxConfig = {
+            env : npSettings.environment,
+            publicationId: $scope.publiName
+        };
 
         var entryViewMode = $scope.entryName != undefined;
 
