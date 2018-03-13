@@ -455,6 +455,7 @@ div.second-header-right {
     font-size: 18px;
     text-transform: uppercase;
     color: dimgrey;
+    text-align: left;
 }
 .customH1 .pubId {
     color: black;

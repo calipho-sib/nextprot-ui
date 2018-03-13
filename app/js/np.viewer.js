@@ -7,6 +7,7 @@
         .controller('ViewerCtrl', ViewerCtrl)
         .service('viewerURLResolver', viewerURLResolver)
         .directive('nextprotElement', nextprotElement)
+        .directive('publicationElement', publicationElement)
 
 
     nextprotElement.$inject = ['npSettings', '$location'];
@@ -86,9 +87,6 @@
 
                 setNextProtCustomElementName(scope, nxConfig);
 
-                // <publications-view nx-config='{"entry": "NX_Q8WXG9", "env": "build", "pubType": "curated"}'></publications-view>
-                // "curated", "additional", "submissions", "patents", "online-resources"
-
                 element.html('<'+scope.customElement+' nx-config='+JSON.stringify(nxConfig) + '></'+scope.customElement +'>');
 
                 console.log(JSON.stringify(nxConfig));
@@ -102,7 +100,31 @@
         return {
             link: link
         };
+    }
 
+    publicationElement.$inject = ['npSettings'];
+    function publicationElement(npSettings) {
+
+        function link(scope, element, attrs) {
+
+            function renderElement(publiName) {
+
+                var nxConfig = {
+                    env : npSettings.environment,
+                    publicationId : publiName
+                };
+
+                element.html('<publication-with-linked-entries-view'+' nx-config='+JSON.stringify(nxConfig) + '></publication-with-linked-entries-view>');
+            }
+            scope.$watch(attrs.publicationElement, function(value) {
+
+                renderElement(value);
+            });
+        }
+
+        return {
+            link: link
+        };
     }
 
     viewerConfig.$inject = ['$routeProvider'];
@@ -147,17 +169,15 @@
             .when('/entry/:entry/proteomics', nxelementsv)
             .when('/entry/:entry/structures', nxelementsv)
             .when('/entry/:entry/identifiers', nxelementsv)
-            //.when('/entry/:entry/publications', nxelementsv)
-            //.when('/entry/:entry/computed_references', nxelementsv)
-            //.when('/entry/:entry/patents', nxelementsv)
-            //.when('/entry/:entry/submissions', nxelementsv)
-            //.when('/entry/:entry/web', nxelementsv)
+            .when('/entry/:entry/publications', nxelementsv)
+            .when('/entry/:entry/computed_references', nxelementsv)
+            .when('/entry/:entry/patents', nxelementsv)
+            .when('/entry/:entry/submissions', nxelementsv)
+            .when('/entry/:entry/web', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
             .when('/publication/:pubid',pv)
-            .when('/publication/:pubid/:element',pv)
-
 
             //NP2 ENTRY views 
             .when('/entry/:entry/:ev1', ev)
@@ -169,8 +189,8 @@
     }
 
 
-    ViewerCtrl.$inject = ['$rootScope', '$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', ];
-    function ViewerCtrl($rootScope, $scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver) {
+    ViewerCtrl.$inject = ['$rootScope', '$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', 'npSettings'];
+    function ViewerCtrl($rootScope, $scope, $sce, $routeParams, $location, config, exportService,  viewerService, viewerURLResolver, npSettings) {
 
         $scope.goldOnly = $routeParams.gold || false;
         $scope.goldFilter = $scope.goldOnly ? "?gold":"";
@@ -199,7 +219,7 @@
         $scope.seqStart = $routeParams.seqStart;
         $scope.seqEnd = $routeParams.seqEnd;
 
-        var entryViewMode = $scope.entryName != undefined;
+        var entryViewMode = $scope.entryName !== undefined;
 
         if(entryViewMode){
             viewerService.getCommunityEntryViewers().success(function(data){
@@ -240,17 +260,10 @@
             $location.search("gold", null);
             $location.search("query", text);
             $location.path("proteins/search");
-        }
+        };
 
         $scope.toggleGoldOnly = function () {
 
-            /* if ($scope.customElement === "expression-view") {
-                //TODO nextprot elements should be loosely coupled with angular. Why does this need to be here? TBD with Fred, Mat and Dan.
-                var tabView = document.getElementById("ontologyContent").hasAttribute("hidden");
-                // bind this property in the root scope because a new isolated $scope is recreated each time
-                // ViewerCtrl is instanciated when a $location is reset
-                $rootScope.tabularView = tabView;
-            } */
             var isoformQuery = $location.search().isoform;
             if ((!$scope.customElement && $scope.goldOnly !== false) || ($scope.customElement && !$scope.goldOnly)) {
                 $location.search({"gold": null, "isoform": isoformQuery});
@@ -258,16 +271,13 @@
             else {
                 $location.search({"gold": true, "isoform": isoformQuery});
             }
-        }
+        };
 
         $scope.hasPublication = function (count, link) {
             return parseInt(count) === 0 ? "#" : link
-        }
+        };
 
         $scope.activePage = function (page) {
-
-            //console.log(page);
-            //console.log($routeParams);
 
           if($location.url() === '/entry/' + $routeParams.entry + "/") {
                if(page === 'function') {
