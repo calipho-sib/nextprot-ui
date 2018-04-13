@@ -71,6 +71,9 @@
                 nxConfig.pubType = "web_resource";
                 scope.customElement = "publications-view"
             }
+            else if(path.match(/^\/entry\/[^\/]+\/exons/) != null){
+                scope.customElement = "exon-view"
+            }
             else {
                 console.error("could not find a match against "+path);
             }
@@ -174,6 +177,7 @@
             .when('/entry/:entry/patents', nxelementsv)
             .when('/entry/:entry/submissions', nxelementsv)
             .when('/entry/:entry/web', nxelementsv)
+            .when('/entry/:entry/exons', nxelementsv)
 
             .when('/term/:termid/',tv)
             .when('/term/:termid/:element',tv)
