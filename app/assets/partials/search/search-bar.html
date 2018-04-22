@@ -1,20 +1,21 @@
 <div ng-cloak="" ng-controller="QueryRepositoryCtrl" ng-init="loadQueries('tutorial')">
 
     <div class="row search-row animate" np-animate="#main">
+<!--    <div class="row search-row">-->
 
         <a href="/">
-            <div class="homepage-brand">
+            <div class="homepage-brand hidden-xs">
                 <h1><img src="img/np2.png" class="home" alt="neXtProt"></h1>
                 <h2 class="home-subtitle">Exploring the universe of human proteins</h2>
             </div>
         </a>
 
         <form ng-submit="go()" validate="">
-            <div class="col-xs-2 col-sm-3 col-md-3 col-lg-3">
+            <div class="search-type col-xs-12 col-sm-3 col-md-3 col-lg-3">
                 <!--                        -->
                 <!--  ENTITY SELECTION      -->
                 <!--                        -->
-                <div class="btn-group pull-right ">
+                <div class="btn-group">
 
                     <a class="btn dropdown-toggle btn-default" data-toggle="dropdown" href="" id="search-entity" ng-class="{disabled:isAdvancedMode()}">
             {{Search.config.entityMapping[Search.params.entity]}}&nbsp;
@@ -29,7 +30,7 @@
                 </div>
                 <!--                        -->
             </div>
-            <div class="search-bar col-xs-9 col-sm-7 col-md-6 col-lg-6">
+            <div class="search-bar col-xs-12 col-sm-7 col-md-6 col-lg-6">
 
                 <div class="search-toggle">
                     <input id="simple-search" type="radio" name="editList" ng-checked="!isAdvancedMode()" ng-click="updateUrlSearchPartAdvanced({mode:null})">

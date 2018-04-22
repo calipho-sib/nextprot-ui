@@ -140,8 +140,11 @@ div.section {
 /*    box-shadow: 0px 2px 2px rgba(0,0,0,0.05);*/
     position:relative;
 /*    border-radius:5px;*/
-/*    max-width: 300px;*/
+    max-width: 400px;
     margin:0 auto;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+    border: 0px;
+    border-radius: 2px;
 }
 
 .section-header{
@@ -149,6 +152,7 @@ div.section {
     border-bottom:1px solid #ddd;
     margin-bottom:5px;
     padding:8px;
+    border:0px;
 }
 .section-header .fa{
     margin-right:15px;
@@ -209,15 +213,20 @@ div.section-footer a {
 /*    color:black;*/
 /*    border:1px solid #c50063;*/
     width:105px;
-    background-color: #eee;
-    color:#C50063;
+/*    background-color: #eee;*/
+    background-color: #cf3e86;
+/*    color:#C50063;*/
+    color:white;
     transition:0.3s all ease;
-    text-shadow: 0px 1px 0px white;
+/*    text-shadow: 0px 1px 0px white;*/
+    border:0px;
+    border-radius:2px;
+    box-shadow:0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2)
 }
 div.section-footer a:hover {
     color:white;
-    font-weight: 300;
-    letter-spacing: 0.1px;
+/*    font-weight: 300;*/
+/*    letter-spacing: 0.1px;*/
     text-shadow: none;
     background-color:#C50063;
     border-color: #C50063;
@@ -270,7 +279,9 @@ highchart{
 
 @media (min-width: 1600px) {
     .hp-sections{
-        margin:0px 8.33%;
+/*        margin:0px 8.33%;*/
+        width:1600px;
+        margin:0px auto;
     }
 }
 
@@ -308,14 +319,44 @@ highchart{
     margin:0px;
 }
 #hiring{
-    width:30%;
+    width:450px;
     padding:0px;
-    margin:-45px auto 15px;
+    margin:-40px auto 15px;
 /*    min-height:150px;*/
     background-color:white;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     border-radius:5px;
-    min-width:500px;
+}
+#hiring2{
+    width:450px;
+    padding:0px;
+    background-color:#CF3E87;
+    box-shadow:0 2px 10px rgba(0, 0, 0, 0.2);
+    color:white;
+    margin:-40px auto 10px;
+    border-radius: 2px;
+}
+#hiring-title2{
+    padding:5px 10px 0px;
+    font-size:18px;
+    margin:0px;
+    font-weight:300;
+    font-family:'Roboto'
+}
+.hiring-text-container2{
+    padding:0px 0px 5px 10px;
+}
+.hiring-content2{
+    margin:0px;
+    font-weight:300;
+    overflow:hidden;
+}
+.hiring-icon-container2{
+    float:right;
+    text-align:center;
+    margin-right:-8px;
+    margin-top:-5px;
+    color:rgba(0,0,0,0.3);
 }
 
 #hiring-title {
@@ -345,6 +386,7 @@ font-size:24px;
 #hiring-title:before {
   left: 0;
 }
+
 .hiring-content{
     margin:0px;
 }
@@ -375,4 +417,33 @@ font-size:24px;
 .hiring-button:hover{
     text-decoration: none;
     color:white;
+}
+
+#hiring-seemore{
+    color:#eee;
+    text-decoration:none;
+    cursor:pointer;
+}
+#hiring-seemore>div{
+    background-color:rgba(0,0,0,0.1);
+    text-align:center;
+    padding:5px;
+}
+#hiring-seemore>div>span{
+    font-weight:500;
+    font-size:14px;
+}
+#hiring-seemore:hover{
+    color:white;
+}
+#hiring-seemore:hover>div{
+    background-color:rgba(0,0,0,0.12);
+}
+@media (max-width: 768px) {
+	#hiring {
+		width: 100%;
+	}
+	#hiring2 {
+		width: 100%;
+	}
 }
