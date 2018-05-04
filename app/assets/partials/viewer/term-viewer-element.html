@@ -41,15 +41,8 @@
         <div ng-class="hideMenu ? 'showM' : 'hideM'" class="responsive-md-screen nopadding fullHeight sidemenu">
             <div ng-include="'partials/viewer/viewer-term-side-bar.html'"></div>
         </div>
-        <div class="col-lg-12 col-xs-12 responsive-md-screen right-content" style="height:100%;">
-            <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%" style="border: 0; min-height: 800px; background-color: white; "></iframe>
-            <script>
-                iFrameResize({
-                    log: false,
-                    checkOrigin: false
-                })
-            </script>
+        <div class="right-content col-lg-12 col-xs-12 responsive-md-screen" style="height:100%;">
+                <nextprot-element/>
         </div>
     </div>
 </div>
-

@@ -74,6 +74,18 @@
             else if(path.match(/^\/entry\/[^\/]+\/exons/) != null){
                 scope.customElement = "exon-view"
             }
+            else if(path.match(/^\/term\/[^\/]+\/?\/parentGraph\/?/) != null){
+                scope.customElement = "ancestor-graph-view"
+                nxConfig.termAccession = scope.termName
+            }
+            else if(path.match(/^\/term\/[^\/]+\/?\/browser\/?/) != null){
+                scope.customElement = "tree-browser-view"
+                nxConfig.termAccession = scope.termName
+            }
+            else if(path.match(/^\/term\/[^\/]+\/?/) != null){
+                scope.customElement = "term-view"
+                nxConfig.termAccession = scope.termName
+            }
             else {
                 console.error("could not find a match against "+path);
             }
@@ -137,6 +149,7 @@
 
         var ev = {templateUrl: '/partials/viewer/entry-viewer.html'};
         var tv = {templateUrl: '/partials/viewer/term-viewer.html'};
+        var tve = {templateUrl: '/partials/viewer/term-viewer-element.html'};
         var pv = {templateUrl: '/partials/viewer/publi-viewer.html'};
         var gv = {templateUrl: '/partials/viewer/global-viewer.html'};
         var bv = {templateUrl: '/partials/viewer/blast-viewer.html'};
@@ -179,8 +192,8 @@
             .when('/entry/:entry/web', nxelementsv)
             .when('/entry/:entry/exons', nxelementsv)
 
-            .when('/term/:termid/',tv)
-            .when('/term/:termid/:element',tv)
+            .when('/term/:termid/', tve)
+            .when('/term/:termid/:element',tve)
             .when('/publication/:pubid',pv)
 
             //NP2 ENTRY views 
