@@ -78,6 +78,10 @@
                 scope.customElement = "ancestor-graph-view"
                 nxConfig.termAccession = scope.termName
             }
+            else if(path.match(/^\/term\/[^\/]+\/?\/browser\/?/) != null){
+                scope.customElement = "tree-browser-view"
+                nxConfig.termAccession = scope.termName
+            }
             else if(path.match(/^\/term\/[^\/]+\/?/) != null){
                 scope.customElement = "term-view"
                 nxConfig.termAccession = scope.termName
