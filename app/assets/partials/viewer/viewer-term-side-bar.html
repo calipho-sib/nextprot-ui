@@ -41,15 +41,15 @@
             <!--<li ng-class="activePage('documentation')">-->
                 <!--<a href="/term/{{widgetTerm}}/documentation">-->
                     <!--<span class="text">Documentation</span>-->
-                <!--</a>-->
+            <!--</a>-->
             <!--</li>-->
             <li ng-class="activePage('parentGraph')">
-                <a href="/term/{{widgetTerm}}/parentGraph">
+                <a link-enabled="hierarchicTerminology" href="/term/{{widgetTerm}}/parentGraph" ng-class="{disabled: !hierarchicTerminology}">
                     <span class="text">Ancestor graph</span>
                 </a>
             </li>
             <li ng-class="activePage('browser')">
-                <a href="/term/{{widgetTerm}}/browser">
+                <a link-enabled="hierarchicTerminology" href="/term/{{widgetTerm}}/browser" ng-class="{disabled: !hierarchicTerminology}">
                     <span class="text">Tree browser</span>
                 </a>
             </li>

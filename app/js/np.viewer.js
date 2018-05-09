@@ -235,6 +235,7 @@
         $scope.sequence = $routeParams.sequence;
         $scope.seqStart = $routeParams.seqStart;
         $scope.seqEnd = $routeParams.seqEnd;
+        $scope.hierarchicTerminology = viewerService.isHierarchic($scope.termName)
 
         var entryViewMode = $scope.entryName !== undefined;
 
@@ -408,6 +409,29 @@
         ViewerService.prototype.getEntryStats = function (entryName) {
             return entryStats.get({entryName:entryName});
         };
+
+        ViewerService.prototype.isHierarchic = function (termName) {
+            var nonHierarchicTerminology = [
+                {"terminology" : "nextprot-domain-cv", "regex"  : "^DO-.\\d*"},
+                {"terminology" : "nextprot-metal-cv", "regex"  : "^CVME_\\d*"},
+                {"terminology" : "nextprot-protein-property-cv", "regex"  : "^PP:\\d*"},
+                {"terminology" : "nextprot-topology-cv", "regex"  : "^CVTO_\\d*"},
+                {"terminology" : "uniprot-disease-cv", "regex"  : "^DI-\\d*"},
+                {"terminology" : "uniprot-ptm-cv", "regex"  : "^PTM-\\d*"}
+            ]
+
+            for(var i=0; i<nonHierarchicTerminology.length; i++){
+                var terminology = nonHierarchicTerminology[i];
+                var rgx = terminology["regex"];
+                var patt = new RegExp(rgx);
+                if(patt.test(termName)){
+                    return false;
+                }
+            }
+            return true;
+        };
+
+
 
         return new ViewerService();
     }

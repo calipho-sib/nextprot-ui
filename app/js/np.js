@@ -218,7 +218,7 @@
                     } else
                         $log.error({
                             status: response.status,
-                            message: "wtf??",
+                            message: "Some unexpected error occured",
                             href: window.location.href
                         });
                     flash('alert-danger', 'Some error occured' + " " + status + " " + response.message + " please report to support@nextprot.org");
