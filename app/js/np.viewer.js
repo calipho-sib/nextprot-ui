@@ -74,11 +74,11 @@
             else if(path.match(/^\/entry\/[^\/]+\/exons/) != null){
                 scope.customElement = "exon-view"
             }
-            else if(path.match(/^\/term\/[^\/]+\/?\/parentGraph\/?/) != null){
+            else if(path.match(/^\/term\/[^\/]+\/?\/relationship-graph\/?/) != null){
                 scope.customElement = "ancestor-graph-view"
                 nxConfig.termAccession = scope.termName
             }
-            else if(path.match(/^\/term\/[^\/]+\/?\/browser\/?/) != null){
+            else if(path.match(/^\/term\/[^\/]+\/?\/tree-browser\/?/) != null){
                 scope.customElement = "tree-browser-view"
                 nxConfig.termAccession = scope.termName
             }
