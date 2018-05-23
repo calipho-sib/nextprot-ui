@@ -411,13 +411,21 @@
         };
 
         ViewerService.prototype.isHierarchic = function (termName) {
+
+            //Possibly report this code in the API
+            //https://calipho.isb-sib.ch/wiki/display/cal/neXtProt+term+views+specs
             var nonHierarchicTerminology = [
                 {"terminology" : "nextprot-domain-cv", "regex"  : "^DO-.\\d*"},
                 {"terminology" : "nextprot-metal-cv", "regex"  : "^CVME_\\d*"},
                 {"terminology" : "nextprot-protein-property-cv", "regex"  : "^PP:\\d*"},
                 {"terminology" : "nextprot-topology-cv", "regex"  : "^CVTO_\\d*"},
                 {"terminology" : "uniprot-disease-cv", "regex"  : "^DI-\\d*"},
-                {"terminology" : "uniprot-ptm-cv", "regex"  : "^PTM-\\d*"}
+                {"terminology" : "uniprot-ptm-cv", "regex"  : "^PTM-\\d*"},
+                {"terminology" : "non-standard-amino-acid-cv", "regex"  : "^CVAA_\\d*"},
+                {"terminology" : "omim-cv", "regex"  : "^[0-9]{6}$"},
+                {"terminology" : "organelle-cv", "regex"  : "^CVOR_\\d*"},
+                {"terminology" : "sequence-ontology-cv", "regex"  : "^SO:\\d*"},
+                {"terminology" : "uniprot-subcellular-orientation-cv", "regex"  : "^SL-\\d*"}
             ]
 
             for(var i=0; i<nonHierarchicTerminology.length; i++){
