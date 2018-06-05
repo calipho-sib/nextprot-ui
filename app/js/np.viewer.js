@@ -192,8 +192,8 @@
             .when('/entry/:entry/web', nxelementsv)
             .when('/entry/:entry/exons', nxelementsv)
 
-            .when('/term/:termid/', tve)
-            .when('/term/:termid/:element',tve)
+            .when('/term/:termid/', tv)
+            .when('/term/:termid/:element',tv)
             .when('/publication/:pubid',pv)
 
             //NP2 ENTRY views 
