@@ -43,6 +43,8 @@
                     <!--<span class="text">Documentation</span>-->
             <!--</a>-->
             <!--</li>-->
+
+            <!-- TODO: MAKE IT READY FOR PROD
             <li ng-class="activePage('relationship-graph')">
                 <a link-enabled="hierarchicTerminology" href="/term/{{widgetTerm}}/relationship-graph" ng-class="{disabled: !hierarchicTerminology}">
                     <span class="text">Relationship graph</span>
@@ -50,6 +52,22 @@
             </li>
             <li ng-class="activePage('tree-browser')">
                 <a link-enabled="hierarchicTerminology" href="/term/{{widgetTerm}}/tree-browser" ng-class="{disabled: !hierarchicTerminology}">
+                    <span class="text">Tree browser</span>
+                </a>
+            </li>
+-->
+            <li ng-class="activePage('documentation')">
+                <a href="/term/{{widgetTerm}}/documentation">
+                    <span class="text">Documentation</span>
+                </a>
+            </li>
+            <li ng-class="activePage('parentGraph')">
+                <a href="/term/{{widgetTerm}}/parentGraph">
+                    <span class="text">Ancestor graph</span>
+                </a>
+            </li>
+            <li ng-class="activePage('browser')">
+                <a href="/term/{{widgetTerm}}/browser">
                     <span class="text">Tree browser</span>
                 </a>
             </li>
