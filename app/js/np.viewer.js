@@ -71,6 +71,21 @@
                 nxConfig.pubType = "web_resource";
                 scope.customElement = "publications-view"
             }
+            else if(path.match(/^\/entry\/[^\/]+\/exons/) != null){
+                scope.customElement = "exon-view"
+            }
+            else if(path.match(/^\/term\/[^\/]+\/?\/relationship-graph\/?/) != null){
+                scope.customElement = "ancestor-graph-view"
+                nxConfig.termAccession = scope.termName
+            }
+            else if(path.match(/^\/term\/[^\/]+\/?\/tree-browser\/?/) != null){
+                scope.customElement = "tree-browser-view"
+                nxConfig.termAccession = scope.termName
+            }
+            else if(path.match(/^\/term\/[^\/]+\/?/) != null){
+                scope.customElement = "term-view"
+                nxConfig.termAccession = scope.termName
+            }
             else {
                 console.error("could not find a match against "+path);
             }
@@ -134,6 +149,7 @@
 
         var ev = {templateUrl: '/partials/viewer/entry-viewer.html'};
         var tv = {templateUrl: '/partials/viewer/term-viewer.html'};
+        var tve = {templateUrl: '/partials/viewer/term-viewer-element.html'};
         var pv = {templateUrl: '/partials/viewer/publi-viewer.html'};
         var gv = {templateUrl: '/partials/viewer/global-viewer.html'};
         var bv = {templateUrl: '/partials/viewer/blast-viewer.html'};
@@ -174,8 +190,9 @@
             .when('/entry/:entry/patents', nxelementsv)
             .when('/entry/:entry/submissions', nxelementsv)
             .when('/entry/:entry/web', nxelementsv)
+            .when('/entry/:entry/exons', nxelementsv)
 
-            .when('/term/:termid/',tv)
+            .when('/term/:termid/', tv)
             .when('/term/:termid/:element',tv)
             .when('/publication/:pubid',pv)
 
@@ -218,6 +235,7 @@
         $scope.sequence = $routeParams.sequence;
         $scope.seqStart = $routeParams.seqStart;
         $scope.seqEnd = $routeParams.seqEnd;
+        $scope.hierarchicTerminology = viewerService.isHierarchic($scope.termName)
 
         var entryViewMode = $scope.entryName !== undefined;
 
@@ -391,6 +409,37 @@
         ViewerService.prototype.getEntryStats = function (entryName) {
             return entryStats.get({entryName:entryName});
         };
+
+        ViewerService.prototype.isHierarchic = function (termName) {
+
+            //Possibly report this code in the API
+            //https://calipho.isb-sib.ch/wiki/display/cal/neXtProt+term+views+specs
+            var nonHierarchicTerminology = [
+                {"terminology" : "nextprot-domain-cv", "regex"  : "^DO-.\\d*"},
+                {"terminology" : "nextprot-metal-cv", "regex"  : "^CVME_\\d*"},
+                {"terminology" : "nextprot-protein-property-cv", "regex"  : "^PP:\\d*"},
+                {"terminology" : "nextprot-topology-cv", "regex"  : "^CVTO_\\d*"},
+                {"terminology" : "uniprot-disease-cv", "regex"  : "^DI-\\d*"},
+                {"terminology" : "uniprot-ptm-cv", "regex"  : "^PTM-\\d*"},
+                {"terminology" : "non-standard-amino-acid-cv", "regex"  : "^CVAA_\\d*"},
+                {"terminology" : "omim-cv", "regex"  : "^[0-9]{6}$"},
+                {"terminology" : "organelle-cv", "regex"  : "^CVOR_\\d*"},
+                {"terminology" : "sequence-ontology-cv", "regex"  : "^SO:\\d*"},
+                {"terminology" : "uniprot-subcellular-orientation-cv", "regex"  : "^SL-\\d*"}
+            ]
+
+            for(var i=0; i<nonHierarchicTerminology.length; i++){
+                var terminology = nonHierarchicTerminology[i];
+                var rgx = terminology["regex"];
+                var patt = new RegExp(rgx);
+                if(patt.test(termName)){
+                    return false;
+                }
+            }
+            return true;
+        };
+
+
 
         return new ViewerService();
     }
