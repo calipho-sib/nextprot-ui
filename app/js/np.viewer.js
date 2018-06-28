@@ -235,7 +235,10 @@
         $scope.sequence = $routeParams.sequence;
         $scope.seqStart = $routeParams.seqStart;
         $scope.seqEnd = $routeParams.seqEnd;
-        $scope.hierarchicTerminology = viewerService.isHierarchic($scope.termName)
+
+        viewerService.isHierarchic($scope.termName).$promise.then(function (data) {
+            $scope.hierarchicTerminology = data["is-hierarchical-terminology"];
+        });
 
         var entryViewMode = $scope.entryName !== undefined;
 
@@ -368,10 +371,7 @@
                 }
             }
         });
-
-
     }
-
 
     viewerService.$inject = ['$resource', '$http', 'config'];
     function viewerService($resource, $http, config) {
@@ -385,6 +385,8 @@
         var entryPublicationCounts = $resource(config.api.API_URL + '/entry-publications/entry/:entryName/count.json', {entryName: '@entryName'}, {get : {method: "GET"}});
 
         var entryStats = $resource(config.api.API_URL + '/entry/:entryName/stats.json', {entryName: '@entryName'}, {get : {method: "GET"}});
+
+        var isHierarchicalOntology = $resource(config.api.API_URL + '/term/:termName/is-hierarchical-terminology.json', {termName: '@termName'}, {get : {method: "GET"}});
 
         var ViewerService = function () {
 
@@ -411,35 +413,8 @@
         };
 
         ViewerService.prototype.isHierarchic = function (termName) {
-
-            //Possibly report this code in the API
-            //https://calipho.isb-sib.ch/wiki/display/cal/neXtProt+term+views+specs
-            var nonHierarchicTerminology = [
-                {"terminology" : "nextprot-domain-cv", "regex"  : "^DO-.\\d*"},
-                {"terminology" : "nextprot-metal-cv", "regex"  : "^CVME_\\d*"},
-                {"terminology" : "nextprot-protein-property-cv", "regex"  : "^PP:\\d*"},
-                {"terminology" : "nextprot-topology-cv", "regex"  : "^CVTO_\\d*"},
-                {"terminology" : "uniprot-disease-cv", "regex"  : "^DI-\\d*"},
-                {"terminology" : "uniprot-ptm-cv", "regex"  : "^PTM-\\d*"},
-                {"terminology" : "non-standard-amino-acid-cv", "regex"  : "^CVAA_\\d*"},
-                {"terminology" : "omim-cv", "regex"  : "^[0-9]{6}$"},
-                {"terminology" : "organelle-cv", "regex"  : "^CVOR_\\d*"},
-                {"terminology" : "sequence-ontology-cv", "regex"  : "^SO:\\d*"},
-                {"terminology" : "uniprot-subcellular-orientation-cv", "regex"  : "^SL-\\d*"}
-            ]
-
-            for(var i=0; i<nonHierarchicTerminology.length; i++){
-                var terminology = nonHierarchicTerminology[i];
-                var rgx = terminology["regex"];
-                var patt = new RegExp(rgx);
-                if(patt.test(termName)){
-                    return false;
-                }
-            }
-            return true;
+            return isHierarchicalOntology.get({termName:termName});
         };
-
-
 
         return new ViewerService();
     }
