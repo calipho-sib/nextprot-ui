@@ -236,9 +236,13 @@
         $scope.seqStart = $routeParams.seqStart;
         $scope.seqEnd = $routeParams.seqEnd;
 
-        viewerService.isHierarchic($scope.termName).$promise.then(function (data) {
-            $scope.hierarchicTerminology = data["is-hierarchical-terminology"];
-        });
+        if (!viewerService.isHierarchic($scope.termName).$promise
+            .then(function (data) {
+                $scope.hierarchicTerminology = data["is-hierarchical-terminology"];
+            }, function(reason) {
+                console.error("no term data to display", reason);
+                $scope.hierarchicTerminology = false;
+            }));
 
         var entryViewMode = $scope.entryName !== undefined;
 
