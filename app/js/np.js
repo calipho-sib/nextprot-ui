@@ -25,7 +25,9 @@
         'np.news',
         'np.release.info',
         'ui.codemirror',
-        'auth0', 'angular-storage', 'angular-jwt',
+        'angular-storage',
+        'angular-jwt',
+        'auth0.auth0',
         'np.chromosomes'
     ]).config(configApplication)
         .factory('errorInterceptor', errorInterceptor)
@@ -88,9 +90,9 @@
 
 
     // config application $route, $location and $http services.
-    configApplication.$inject = ['$routeProvider', '$locationProvider', '$httpProvider', 'authProvider', 'npSettings', 'jwtInterceptorProvider', '$resourceProvider'];
+    configApplication.$inject = ['$routeProvider', '$locationProvider', '$httpProvider', 'angularAuth0Provider', 'npSettings', 'jwtInterceptorProvider', '$resourceProvider'];
 
-    function configApplication($routeProvider, $locationProvider, $httpProvider, authProvider, npSettings, jwtInterceptorProvider, $resourceProvider) {
+    function configApplication($routeProvider, $locationProvider, $httpProvider,  angularAuth0Provider, npSettings, jwtInterceptorProvider, $resourceProvider) {
         $routeProvider
             // Home page
             .when('/', {
@@ -132,11 +134,15 @@
             // List of routes of the application
 
 
-        authProvider.init({
+        console.log(angularAuth0Provider)
+
+        angularAuth0Provider.init({
             clientID: npSettings.auth0_cliendId,
-            callbackURL: npSettings.callback,
             domain: 'nextprot.auth0.com',
-            icon: 'img/np.png'
+            responseType: 'token id_token',
+            audience: 'https://nextprot.auth0.com/userinfo',
+            redirectUri: npSettings.callback,
+            scope: 'openid'
         })
 
         jwtInterceptorProvider.tokenGetter = ['ipCookie', function (ipCookie) {

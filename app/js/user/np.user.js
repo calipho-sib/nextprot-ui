@@ -18,8 +18,8 @@ angular.module('np.user', [
 
 //
 // implement user factory
-user.$inject=['$resource','$http','config','$timeout','$rootScope','$location','$cookieStore','auth','$q', 'ipCookie', '$window', 'store'];
-function user($resource, $http, config, $timeout, $rootScope, $location, $cookieStore, auth, $q, ipCookie, $window, store) {
+user.$inject=['$resource','$http','config','$timeout','$rootScope','$location','$cookieStore', '$q', 'ipCookie', '$window', 'store'];
+function user($resource, $http, config, $timeout, $rootScope, $location, $cookieStore, $q, ipCookie, $window, store) {
     //
 
     // default user data for anonymous
