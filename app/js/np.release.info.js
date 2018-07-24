@@ -41,7 +41,7 @@
 
         // fetching release data sources
         releaseInfoService.getReleaseDataSources().$promise.then(function(releaseDataSources) {
-            console.log("releaseDataSources", releaseDataSources.dataSources.datasources);
+//            console.log("releaseDataSources", releaseDataSources.dataSources.datasources);
 
             _.each(releaseDataSources.dataSources.datasources, function (ds) {
                 $scope.releaseInfo.datasources.push(ds);

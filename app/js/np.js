@@ -25,7 +25,9 @@
         'np.news',
         'np.release.info',
         'ui.codemirror',
-        'auth0', 'angular-storage', 'angular-jwt',
+        'auth0.lock', 
+        'angular-storage', 
+        'angular-jwt',
         'np.chromosomes'
     ]).config(configApplication)
         .factory('errorInterceptor', errorInterceptor)
@@ -88,9 +90,9 @@
 
 
     // config application $route, $location and $http services.
-    configApplication.$inject = ['$routeProvider', '$locationProvider', '$httpProvider', 'authProvider', 'npSettings', 'jwtInterceptorProvider', '$resourceProvider'];
+    configApplication.$inject = ['$routeProvider', '$locationProvider', '$httpProvider', 'lockProvider', 'npSettings', 'jwtInterceptorProvider', '$resourceProvider'];
 
-    function configApplication($routeProvider, $locationProvider, $httpProvider, authProvider, npSettings, jwtInterceptorProvider, $resourceProvider) {
+    function configApplication($routeProvider, $locationProvider, $httpProvider, lockProvider, npSettings, jwtInterceptorProvider, $resourceProvider) {
         $routeProvider
             // Home page
             .when('/', {
@@ -130,14 +132,33 @@
                 templateUrl: '/partials/doc/help.html'
             });
             // List of routes of the application
-
-
-        authProvider.init({
+        
+        lockProvider.init({
             clientID: npSettings.auth0_cliendId,
-            callbackURL: npSettings.callback,
             domain: 'nextprot.auth0.com',
-            icon: 'img/np.png'
+            options: {
+                autoclose: true,
+                auth: {
+                    responseType: 'token id_token',
+                    audience: 'https://nextprot.auth0.com/userinfo',
+                    redirect: false,
+                    scope: 'openid email name picture'
+                },
+                theme:{
+                    logo:'img/np-x.png',
+                    primaryColor: '#C50063'
+                },
+                languageDictionary:{
+                    title: "Log in"
+                }
+            }
         })
+//        authProvider.init({
+//            clientID: npSettings.auth0_cliendId,
+//            callbackURL: npSettings.callback,
+//            domain: 'nextprot.auth0.com',
+//            icon: 'img/np.png'
+//        })
 
         jwtInterceptorProvider.tokenGetter = ['ipCookie', function (ipCookie) {
             // Return the saved token
@@ -280,8 +301,7 @@
             // Get IE or Edge browser version
             var version = detectIE();
 
-            console.log("BROWSER VERSION IS : ");
-            console.log(version);
+            console.log("BROWSER VERSION IS : ", version);
             
             var ieCompatible = [false,"12","13"];
 

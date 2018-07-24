@@ -349,7 +349,6 @@
                     .call(wrap);
             }
             else{
-                console.log("in else");
                 text.enter()
                     .append("text")
                     .attr("class","labelPE")
