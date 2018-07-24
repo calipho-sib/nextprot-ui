@@ -236,13 +236,15 @@
         $scope.seqStart = $routeParams.seqStart;
         $scope.seqEnd = $routeParams.seqEnd;
 
-        if (!viewerService.isHierarchic($scope.termName).$promise
-            .then(function (data) {
-                $scope.hierarchicTerminology = data["is-hierarchical-terminology"];
-            }, function(reason) {
-                console.error("no term data to display", reason);
-                $scope.hierarchicTerminology = false;
-            }));
+        if ($scope.termName) {
+            viewerService.isHierarchic($scope.termName).$promise
+                .then(function (data) {
+                    $scope.hierarchicTerminology = data["is-hierarchical-terminology"];
+                }, function (reason) {
+                    console.error("no term data to display", reason);
+                    $scope.hierarchicTerminology = false;
+                });
+        }
 
         var entryViewMode = $scope.entryName !== undefined;
 
