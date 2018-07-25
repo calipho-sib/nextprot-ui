@@ -44,7 +44,7 @@
     // WARNING !!! DO NOT USE NX_ENV ANYWHERE ELSE IN THE PROJECT. A script replace its value by the current environment value just before deployment !
     var apiBase = "https://dev-api.nextprot.org"; //default for UI developers on MACs
     var np1Base = 'https://uat-web1'; //default for UI developers on MACs
-    //var apiBase = "http://localhost:8080/nextprot-api-web";  //default for UI + NP1 + NP2 on localhost
+//    var apiBase = "http://localhost:8080/nextprot-api-web";  //default for UI + NP1 + NP2 on localhost
     //var np1Base = 'http://localhost:8090';                   //default for UI + NP1 + NP2 on localhost
 
 
@@ -55,6 +55,10 @@
         }
         else if (nxEnvironment.toLowerCase() === "dev") {
             apiBase = 'https://dev-api.nextprot.org'; // Don't forget https!
+            np1Base = 'https://uat-web1';
+        }
+        else if (nxEnvironment.toLowerCase() === "localhost") {
+            apiBase = "http://localhost:8080/nextprot-api-web";
             np1Base = 'https://uat-web1';
         }
         else if (nxEnvironment.toLowerCase() === "alpha" || nxEnvironment.toLowerCase() === "build") {
