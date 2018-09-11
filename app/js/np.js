@@ -144,8 +144,9 @@
                 autoclose: true,
                 auth: {
                     responseType: 'token id_token',
-                    audience: 'https://nextprot.auth0.com/userinfo',
-                    redirect: false,
+//                    audience: 'https://nextprot.auth0.com/userinfo',
+                    audience: 'https://nextprot.auth0.com/api/v2/',
+                    redirect: false, 
                     scope: 'openid email name picture'
                 },
                 theme:{
@@ -186,9 +187,9 @@
 
 
     // define default behavior for all http request
-    errorInterceptor.$inject = ['$q', '$rootScope', '$log', '$location', 'flash']
+    errorInterceptor.$inject = ['$q', '$rootScope', '$log', '$location', 'flash','$injector']
 
-    function errorInterceptor($q, $rootScope, $log, $location, flash) {
+    function errorInterceptor($q, $rootScope, $log, $location, flash, $injector) {
         return {
             request: function (config) {
                 return config || $q.when(config);
@@ -217,8 +218,10 @@
                         message: "not authorized",
                         href: window.location.href
                     });
-                    flash('alert-danger', "You are not authorized to access the url. Please login or review your privileges. If you think this is a problem, please report to support@nextprot.org.");
-                    $location.url("");
+//                    flash('alert-danger', "You are not authorized to access the url. Please login or review your privileges. If you think this is a problem, please report to support@nextprot.org.");
+                    flash('alert-danger', "You session has expired. Please login again.");
+                    console.log("gonna user logout");
+                    $injector.get('user').logout();
                     return;
                 }
                 /*else if (status == 404) {
