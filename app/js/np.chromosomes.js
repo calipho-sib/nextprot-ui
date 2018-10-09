@@ -1,4 +1,4 @@
-(function (angular, undefined) {
+(function (angular) {
     'use strict';
 
     var module = angular.module('np.chromosomes', ['ngRoute'])
@@ -76,8 +76,9 @@
 
         $scope.activePage = function (page) {
 
-            if ($location.url() === page) return 'active';
-            else if ($routeParams.element === page)  return 'active';
+            if ($location.url() === page || $routeParams.element === page) {
+                return 'active';
+            }
             return '';
         }
     }

@@ -18,8 +18,8 @@ angular.module('np.user', [
 
 //
 // implement user factory
-user.$inject=['$resource','$http','config','$timeout','$rootScope','$location','$cookieStore','auth','$q', 'ipCookie', '$window', 'store'];
-function user($resource, $http, config, $timeout, $rootScope, $location, $cookieStore, auth, $q, ipCookie, $window, store) {
+user.$inject=['$resource','$http','config','$timeout','$rootScope','$location','$cookieStore','lock','$q', 'ipCookie', '$window', 'store'];
+function user($resource, $http, config, $timeout, $rootScope, $location, $cookieStore, lock, $q, ipCookie, $window, store) {
     //
 
     // default user data for anonymous
@@ -113,63 +113,75 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
         return this;
     };
 
+    User.prototype.isAuthenticated = function() {
+      // Check whether the current time is past the
+      // access token's expiry time
+        
+//      console.log("ipcookie of nxprofile",ipCookie('nxprofile'));
+//        
+//      console.log(ipCookie('nxexpiresin'))
+//      console.log(new Date().getTime())
+//          
+          if (this.profile.email) return true;
+          else return false;
+    }
+
 
     User.prototype.login = function (cb) {
         var self=this;
-
-        auth.signin({popup: true, icon:'img/np.png', authParams: {
-                scope: 'openid email name picture'
-            }},
-            function(profile, token) {
+        lock.show();
+        lock.on('authenticated', function(authResult) {
+            lock.getUserInfo(authResult.accessToken, function(error, profile, whatis) {
+                if (error) {
+                  // Handle error
+                  cb(error);
+                }
+                var token = authResult.idToken;
+                var expiresIn = authResult.expiresIn;
                 // Success callback
                 var expirationInDays = 730; // 730 days = 2 years
                 if ($window.location.hostname === "localhost") {
                     ipCookie('nxprofile', profile, { path: '/', expires: expirationInDays });
                     ipCookie('nxtoken', token, { path: '/', expires: expirationInDays });
+                    ipCookie('nxexpiresin', expiresIn, { path: '/', expires: expirationInDays });
                 } else {
                     ipCookie('nxprofile', profile, { path: '/', domain: '.nextprot.org', expires: expirationInDays });
                     ipCookie('nxtoken', token, { path: '/', domain: '.nextprot.org', expires: expirationInDays });
+                    ipCookie('nxexpiresin', expiresIn, { path: '/', domain: '.nextprot.org', expires: expirationInDays });
                 }
                 $location.path('/');
-
-                self.copy(auth.profile);
-                self.username=auth.email;
-                cb()
-
-            }, function(error) {
-            cb(error)
-        });
-
-        /*auth.signin({
-            popup: true,
-            icon:'img/np.png',
-            scope: 'openid email name picture' // This is if you want the full JWT
-        }).then(function() {
-            // Success callback
-            self.copy(auth.profile)
-            self.username=auth.email;
-            cb()
-        }, function(error) {
-            cb(error)
-        });*/
+                
+                self.copy(profile);
+                self.username = profile.email;
+                cb();
+                
+            });
+          });
     };
 
     User.prototype.logout = function (cb) {
         this.clear();
-        auth.signout();
+//        auth.signout();
+        var baseUrl = new $window.URL($location.absUrl()).origin;
+        lock.logout({
+            returnTo:baseUrl
+        });
 
         if ($window.location.hostname === "localhost") {
             ipCookie.remove('nxprofile', { path: '/' });
             ipCookie.remove('nxtoken', { path: '/' });
+            ipCookie.remove('nxexpiresin', { path: '/' });
         } else {
             ipCookie.remove('nxprofile', { path: '/', domain: ".nextprot.org" });
             ipCookie.remove('nxtoken', { path: '/', domain: ".nextprot.org" });
+            ipCookie.remove('nxexpiresin', { path: '/', domain: ".nextprot.org" });
         }
 
         //legacy remove if it exists (should be removed from June 2015)
-        store.remove('profile');
-        store.remove('token');
-
+        store.remove('nxprofile');
+        store.remove('nxtoken');
+        store.remove('nxexpiresin');
+        
     };
 
 

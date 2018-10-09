@@ -25,7 +25,9 @@
         'np.news',
         'np.release.info',
         'ui.codemirror',
-        'auth0', 'angular-storage', 'angular-jwt',
+        'auth0.lock', 
+        'angular-storage', 
+        'angular-jwt',
         'np.chromosomes'
     ]).config(configApplication)
         .factory('errorInterceptor', errorInterceptor)
@@ -42,7 +44,7 @@
     // WARNING !!! DO NOT USE NX_ENV ANYWHERE ELSE IN THE PROJECT. A script replace its value by the current environment value just before deployment !
     var apiBase = "https://dev-api.nextprot.org"; //default for UI developers on MACs
     var np1Base = 'https://uat-web1'; //default for UI developers on MACs
-    //var apiBase = "http://localhost:8080/nextprot-api-web";  //default for UI + NP1 + NP2 on localhost
+//    var apiBase = "http://localhost:8080/nextprot-api-web";  //default for UI + NP1 + NP2 on localhost
     //var np1Base = 'http://localhost:8090';                   //default for UI + NP1 + NP2 on localhost
 
 
@@ -53,6 +55,10 @@
         }
         else if (nxEnvironment.toLowerCase() === "dev") {
             apiBase = 'https://dev-api.nextprot.org'; // Don't forget https!
+            np1Base = 'https://uat-web1';
+        }
+        else if (nxEnvironment.toLowerCase() === "localhost") {
+            apiBase = "http://localhost:8080/nextprot-api-web";
             np1Base = 'https://uat-web1';
         }
         else if (nxEnvironment.toLowerCase() === "alpha" || nxEnvironment.toLowerCase() === "build") {
@@ -88,9 +94,9 @@
 
 
     // config application $route, $location and $http services.
-    configApplication.$inject = ['$routeProvider', '$locationProvider', '$httpProvider', 'authProvider', 'npSettings', 'jwtInterceptorProvider', '$resourceProvider'];
+    configApplication.$inject = ['$routeProvider', '$locationProvider', '$httpProvider', 'lockProvider', 'npSettings', 'jwtInterceptorProvider', '$resourceProvider'];
 
-    function configApplication($routeProvider, $locationProvider, $httpProvider, authProvider, npSettings, jwtInterceptorProvider, $resourceProvider) {
+    function configApplication($routeProvider, $locationProvider, $httpProvider, lockProvider, npSettings, jwtInterceptorProvider, $resourceProvider) {
         $routeProvider
             // Home page
             .when('/', {
@@ -130,14 +136,34 @@
                 templateUrl: '/partials/doc/help.html'
             });
             // List of routes of the application
-
-
-        authProvider.init({
+        
+        lockProvider.init({
             clientID: npSettings.auth0_cliendId,
-            callbackURL: npSettings.callback,
             domain: 'nextprot.auth0.com',
-            icon: 'img/np.png'
+            options: {
+                autoclose: true,
+                auth: {
+                    responseType: 'token id_token',
+//                    audience: 'https://nextprot.auth0.com/userinfo',
+                    audience: 'https://nextprot.auth0.com/api/v2/',
+                    redirect: false, 
+                    scope: 'openid email name picture'
+                },
+                theme:{
+                    logo:'img/np-x.png',
+                    primaryColor: '#C50063'
+                },
+                languageDictionary:{
+                    title: "Log in"
+                }
+            }
         })
+//        authProvider.init({
+//            clientID: npSettings.auth0_cliendId,
+//            callbackURL: npSettings.callback,
+//            domain: 'nextprot.auth0.com',
+//            icon: 'img/np.png'
+//        })
 
         jwtInterceptorProvider.tokenGetter = ['ipCookie', function (ipCookie) {
             // Return the saved token
@@ -161,9 +187,9 @@
 
 
     // define default behavior for all http request
-    errorInterceptor.$inject = ['$q', '$rootScope', '$log', '$location', 'flash']
+    errorInterceptor.$inject = ['$q', '$rootScope', '$log', '$location', 'flash','$injector']
 
-    function errorInterceptor($q, $rootScope, $log, $location, flash) {
+    function errorInterceptor($q, $rootScope, $log, $location, flash, $injector) {
         return {
             request: function (config) {
                 return config || $q.when(config);
@@ -192,8 +218,10 @@
                         message: "not authorized",
                         href: window.location.href
                     });
-                    flash('alert-danger', "You are not authorized to access the url. Please login or review your privileges. If you think this is a problem, please report to support@nextprot.org.");
-                    $location.url("");
+//                    flash('alert-danger', "You are not authorized to access the url. Please login or review your privileges. If you think this is a problem, please report to support@nextprot.org.");
+                    flash('alert-danger', "You session has expired. Please login again.");
+                    console.log("gonna user logout");
+                    $injector.get('user').logout();
                     return;
                 }
                 /*else if (status == 404) {
@@ -280,8 +308,7 @@
             // Get IE or Edge browser version
             var version = detectIE();
 
-            console.log("BROWSER VERSION IS : ");
-            console.log(version);
+            console.log("BROWSER VERSION IS : ", version);
             
             var ieCompatible = [false,"12","13"];
 

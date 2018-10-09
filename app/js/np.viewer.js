@@ -148,7 +148,6 @@
         var nxelementsv = {templateUrl: '/partials/viewer/nextprot-elements-viewer.html'};
 
         var ev = {templateUrl: '/partials/viewer/entry-viewer.html'};
-        var tv = {templateUrl: '/partials/viewer/term-viewer.html'};
         var tve = {templateUrl: '/partials/viewer/term-viewer-element.html'};
         var pv = {templateUrl: '/partials/viewer/publi-viewer.html'};
         var gv = {templateUrl: '/partials/viewer/global-viewer.html'};
@@ -236,13 +235,15 @@
         $scope.seqStart = $routeParams.seqStart;
         $scope.seqEnd = $routeParams.seqEnd;
 
-        if (!viewerService.isHierarchic($scope.termName).$promise
-            .then(function (data) {
-                $scope.hierarchicTerminology = data["is-hierarchical-terminology"];
-            }, function(reason) {
-                console.error("no term data to display", reason);
-                $scope.hierarchicTerminology = false;
-            }));
+        if ($scope.termName) {
+            viewerService.isHierarchic($scope.termName).$promise
+                .then(function (data) {
+                    $scope.hierarchicTerminology = data["is-hierarchical-terminology"];
+                }, function (reason) {
+                    console.error("no term data to display", reason);
+                    $scope.hierarchicTerminology = false;
+                });
+        }
 
         var entryViewMode = $scope.entryName !== undefined;
 
