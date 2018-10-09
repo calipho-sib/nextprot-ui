@@ -1,4 +1,4 @@
-(function (angular, undefined) {
+(function (angular) {
     'use strict';
 
     angular.module('np.homepage', [])
@@ -77,7 +77,7 @@
         var slope = 0.4;
 
         //var svg = d3.select("#yoursvg");
-        var defs = svg_full.select("defs");
+        defs = svg_full.select("defs");
         
         pieColors.forEach(function(c,i){
             var radialGradient = defs
@@ -438,7 +438,6 @@
                     return function (t) {
                         var d2 = interpolate(t);
                         var pos = outerArc.centroid(d2);
-                        var pos2 = arc.centroid(d2);
                         pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
                         return [arcPath.centroid(d2), outerArc.centroid(d2), pos];
                     };

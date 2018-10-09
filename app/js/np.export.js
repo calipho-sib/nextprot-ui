@@ -1,4 +1,4 @@
-(function (angular, undefined) {
+(function (angular) {
     'use strict';
 
     angular.module('np.export', ['np.tracker'])

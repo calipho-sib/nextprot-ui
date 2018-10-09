@@ -142,7 +142,6 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     
     $scope.getNextprotUrl = function (input){
         
-            var protocol = window.protocol;
             if(config.api.environment === "pro"){
                 switch(input) {
                     case "api": return config.api.API_URL ;

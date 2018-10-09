@@ -148,7 +148,6 @@
         var nxelementsv = {templateUrl: '/partials/viewer/nextprot-elements-viewer.html'};
 
         var ev = {templateUrl: '/partials/viewer/entry-viewer.html'};
-        var tv = {templateUrl: '/partials/viewer/term-viewer.html'};
         var tve = {templateUrl: '/partials/viewer/term-viewer-element.html'};
         var pv = {templateUrl: '/partials/viewer/publi-viewer.html'};
         var gv = {templateUrl: '/partials/viewer/global-viewer.html'};
