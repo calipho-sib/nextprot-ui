@@ -79,6 +79,24 @@
             </li>
         </ul>
     </li>
+    <li active-section ng-class="{active: hasActive()}">
+        <a class="" href="javascript:void(0);" data-target="#kinase" data-toggle="collapse">
+            <span class="figure">
+                <span>KINASE</span>
+              </span>
+            <span class="text" style="text-transform:uppercase;">Kinase Variants Portal</span>
+            <span class="arrow fa"></span>
+        </a>
+        <!-- START 2nd Level Menu -->
+        <ul id="kinase" class=" submenu collapse in">
+            <li class="submenu-header ellipsis">Kinase variants portal</li>
+            <li ng-class="activePage('portals/kinase')">
+                <a href="portals/kinase">
+                    <span class="text">Table</span>
+                </a>
+            </li>
+        </ul>
+    </li>
 </ul>
 
 <!--
