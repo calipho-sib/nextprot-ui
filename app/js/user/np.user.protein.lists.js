@@ -41,6 +41,12 @@
 
 
         $scope.loadMyLists = function () {
+
+            if (user.isAnonymous()) {
+                flash("alert-warning", "Please login to access your lists.")
+                return;
+            }
+
             // why get a promise wrapped around the user object ?
             // why not create a promise just here ???
             user.$promise.then(function () {

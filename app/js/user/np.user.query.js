@@ -308,6 +308,12 @@
         };
 
         $scope.loadQueries = function (category) {
+
+            if (user.isAnonymous()) {
+                flash("alert-warning", "Please login to access your queries.")
+                return;
+            }
+
             queryRepository.getTutorialQueries().then(function (queries) {
                 $scope.repository.queries = queries;
                 $scope.setTags();
