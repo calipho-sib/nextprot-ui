@@ -327,8 +327,9 @@
             }
 
             user.$promise.then(function(){
-              user.query.list().$promise.then(function (q) {
-                  $scope.repository.queries = user.query.queries
+              user.query.list().$promise.then(function (queries) {
+                  $scope.repository.queries = queries
+                  $scope.setTags();
               })
 
           })
