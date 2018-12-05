@@ -39,6 +39,9 @@
             second: $scope.lists
         };
 
+        $scope.disabled = function () {
+            return user.isAnonymous();
+        };
 
         $scope.loadMyLists = function () {
 

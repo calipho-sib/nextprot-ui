@@ -268,6 +268,10 @@
         $scope.repository = queryRepository.repository;
         $scope.queryRepository = queryRepository;
 
+        $scope.disabled = function () {
+            return user.isAnonymous();
+        };
+
         $scope.runQuery = function (query) {
             $location.search("sparql", query.sparql);
         };
