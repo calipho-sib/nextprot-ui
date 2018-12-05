@@ -267,6 +267,7 @@
         // publish data
         $scope.repository = queryRepository.repository;
         $scope.queryRepository = queryRepository;
+        $scope.loading = false;
 
         $scope.disabled = function () {
             return user.isAnonymous();
@@ -323,16 +324,21 @@
 
             if (user.isAnonymous()) {
                 flash("alert-warning", "Please login to access your queries.")
-                return;
             }
+            else {
+                $scope.loading = true;
 
-            user.$promise.then(function(){
-              user.query.list().$promise.then(function (queries) {
-                  $scope.repository.queries = queries
-                  $scope.setTags();
-              })
-
-          })
+                user.$promise.then(function () {
+                    user.query.list().$promise.then(function (queries) {
+                        $scope.repository.queries = queries;
+                        $scope.setTags();
+                        $scope.loading = false;
+                    }, function (reason) {
+                        alert('Failed: ' + reason);
+                        $scope.loading = false;
+                    });
+                })
+            }
         };
 
         $scope.setModalQuery = function (query) {

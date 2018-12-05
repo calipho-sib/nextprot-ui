@@ -38,6 +38,7 @@
             first: $scope.lists,
             second: $scope.lists
         };
+        $scope.loading = false;
 
         $scope.disabled = function () {
             return user.isAnonymous();
@@ -47,19 +48,24 @@
 
             if (user.isAnonymous()) {
                 flash("alert-warning", "Please login to access your lists.")
-                return;
             }
+            else {
+                $scope.loading = true;
 
-            // why get a promise wrapped around the user object ?
-            // why not create a promise just here ???
-            user.$promise.then(function () {
-                userProteinList.list(user).$promise.then(function (data) {
-                    $scope.lists = data;
-                    $scope.initCombinationForm();
-                }, function (reason) {
-                    alert('Failed: ' + reason);
-                });
-            })
+                // why get a promise wrapped around the user object ?
+                // why not create a promise just here ???
+                user.$promise.then(function () {
+
+                    userProteinList.list(user).$promise.then(function (data) {
+                        $scope.lists = data;
+                        $scope.initCombinationForm();
+                        $scope.loading = false;
+                    }, function (reason) {
+                        alert('Failed: ' + reason);
+                        $scope.loading = false;
+                    });
+                })
+            }
         };
 
         $scope.getListExportUrl = function (list) {
