@@ -311,12 +311,7 @@
             $scope.go();
         };
 
-        $scope.loadQueries = function (category) {
-
-            if (user.isAnonymous()) {
-                flash("alert-warning", "Please login to access your queries.")
-                return;
-            }
+        $scope.loadTutorialQueries = function () {
 
             queryRepository.getTutorialQueries().then(function (queries) {
                 $scope.repository.queries = queries;
@@ -325,7 +320,13 @@
         };
 
         $scope.loadMyQueries = function () {
-          user.$promise.then(function(){
+
+            if (user.isAnonymous()) {
+                flash("alert-warning", "Please login to access your queries.")
+                return;
+            }
+
+            user.$promise.then(function(){
               user.query.list().$promise.then(function (q) {
                   $scope.repository.queries = user.query.queries
               })
@@ -381,7 +382,7 @@
 
                 queryRepository.saveOrCreate(q).then(function () {
                     flash('alert-info', q.title + ' saved successfully');
-                    $scope.loadQueries('tutorial'); //TODO should remove the entry from the list without having to call the api again
+                    $scope.loadTutorialQueries(); //TODO should remove the entry from the list without having to call the api again
                     $scope.repository.selectedQuery = false;
                     $('.modal-backdrop').remove();//remove the modal backdrop if everything is fine
                 }, function(error){
@@ -394,7 +395,7 @@
         $scope.deleteUserQuery = function (query) {
             if (confirm("Are you sure you want to delete the selected query?")) {
                 queryRepository.deleteUserQuery(query).then(function () {
-                    $scope.loadQueries('tutorial'); //TODO should remove the entry from the list without having to call the api again
+                    $scope.loadTutorialQueries(); //TODO should remove the entry from the list without having to call the api again
                     flash('alert-info', query.title + 'query successfully deleted');
                 });
             }
