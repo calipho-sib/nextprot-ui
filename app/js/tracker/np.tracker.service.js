@@ -5,16 +5,19 @@ var TrackingService = angular.module('np.tracker', []);
 TrackingService
     .value('developTrackingId', 'UA-61448300-1')
     .value('productionTrackingId', 'UA-17852148-1')
+    .value('SITESPEEDSAMPLERATE', 10)
 
 TrackingService.factory('Tracker', [
     '$window',
     '$location',
     '$routeParams',
     'RELEASE_INFOS',
-    'developTrackingId','productionTrackingId',
+    'developTrackingId',
+    'productionTrackingId',
+    'SITESPEEDSAMPLERATE',
     function ($window, $location, $routeParams,
               RELEASE_INFOS,
-              developTrackingId, productionTrackingId) {
+              developTrackingId, productionTrackingId, siteSpeedSampleRate) {
 
         var separator = '_';
   
@@ -292,7 +295,7 @@ TrackingService.factory('Tracker', [
 
         // The ga() function provides a single access point for everything in the analytics.js library
         // all tracking calls are made via the ga() function
-        function createAndInitGATracker(propertyId) {
+        function createAndInitGATracker(propertyId, siteSpeedSampleRate) {
 
 //            THIS WAS MOVED AND HARDCODED INTO THE HEAD OF INDEX.HTML :
                             // Google Analytics
@@ -304,7 +307,9 @@ TrackingService.factory('Tracker', [
 
             console.log("Google analytics tracker initializing..");
             // Creates a new default tracker object
-            ga('create', propertyId, 'auto');
+            // By default GA sends 1% of the views for page load statistics
+            // It is better to set it to 10% for more data
+            ga('create', propertyId, 'auto', { 'siteSpeedSampleRate' : siteSpeedSampleRate});
         }
 
         function getTrackingId() {
@@ -317,7 +322,7 @@ TrackingService.factory('Tracker', [
         }
 
         // Setup Universal Analytics Web Tracking (analytics.js)
-        createAndInitGATracker(getTrackingId());
+        createAndInitGATracker(getTrackingId(), siteSpeedSampleRate);
 
         // Sends a first pageview hit for the current page to Google Analytics
         ga('send', 'pageview');
