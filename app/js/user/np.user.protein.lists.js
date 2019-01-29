@@ -199,6 +199,10 @@
     ListCreateCtrl.$inject = ['$q', '$scope', '$rootScope',  'userProteinList', 'user', 'uploadListService', 'flash', '$log','$modal']
     function ListCreateCtrl($q, $scope, $rootScope, userProteinList, user, uploadListService, flash, $log, $modal) {
 
+        if (user.isAnonymous()) {
+            flash("alert-warning", "Please login to create a new list.")
+        }
+
         $scope.clearForm = function() {
 
             $scope.listName = "";
