@@ -47,7 +47,16 @@ app.get('/viewers/*',function (req, res) {
     res.redirect(redirectURL);
 });
 
+app.all('/*/*/*.html', function(req, res, next) {
+  console.log("All" + req.url);
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'content-Type,x-requested-with');
+  res.redirect(req.url);
+});
+
 app.all('/*', function(req, res, next) {
+  console.log("All" + req.url);
   res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'content-Type,x-requested-with');
@@ -97,10 +106,12 @@ app.get('/',function (req, res) {
 //
 // this use is called after all assets requests
 app.use(function (req, res) {
+  console.log("Rendering index")
   res.render('index.html');
 });
 
 http.createServer(app).listen(app.get('port'), function () {
+  console.log("HERE")
   console.log("Express server listening on port " + app.get('port'));
 });
 
