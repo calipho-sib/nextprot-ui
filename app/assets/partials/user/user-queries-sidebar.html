@@ -1,4 +1,4 @@
-<ul class="nav nav-list" style="margin-top: 10px;">
+<ul class="nav nav-list" style="margin-top: 10px;" ng-controller="QueryRepositoryCtrl">
 	<li class="nav-header">Queries operations</li>
-	<li ><a href="/proteins/search?mode=advanced">Create New Query</a></li>
+	<li><a ng-class="{disabled: disabled()}" ng-href="{{disabled() ? '' : '/proteins/search?mode=advanced'}}">Create New Query</a></li>
 </ul>

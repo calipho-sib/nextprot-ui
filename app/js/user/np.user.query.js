@@ -267,6 +267,11 @@
         // publish data
         $scope.repository = queryRepository.repository;
         $scope.queryRepository = queryRepository;
+        $scope.loading = false;
+
+        $scope.disabled = function () {
+            return user.isAnonymous();
+        };
 
         $scope.runQuery = function (query) {
             $location.search("sparql", query.sparql);
@@ -307,7 +312,8 @@
             $scope.go();
         };
 
-        $scope.loadQueries = function (category) {
+        $scope.loadTutorialQueries = function () {
+
             queryRepository.getTutorialQueries().then(function (queries) {
                 $scope.repository.queries = queries;
                 $scope.setTags();
@@ -315,12 +321,24 @@
         };
 
         $scope.loadMyQueries = function () {
-          user.$promise.then(function(){
-              user.query.list().$promise.then(function (q) {
-                  $scope.repository.queries = user.query.queries
-              })
 
-          })
+            if (user.isAnonymous()) {
+                flash("alert-warning", "Please login to access your queries.")
+            }
+            else {
+                $scope.loading = true;
+
+                user.$promise.then(function () {
+                    user.query.list().$promise.then(function (queries) {
+                        $scope.repository.queries = queries;
+                        $scope.setTags();
+                        $scope.loading = false;
+                    }, function (reason) {
+                        alert('Failed: ' + reason);
+                        $scope.loading = false;
+                    });
+                })
+            }
         };
 
         $scope.setModalQuery = function (query) {
@@ -371,7 +389,7 @@
 
                 queryRepository.saveOrCreate(q).then(function () {
                     flash('alert-info', q.title + ' saved successfully');
-                    $scope.loadQueries('tutorial'); //TODO should remove the entry from the list without having to call the api again
+                    $scope.loadTutorialQueries(); //TODO should remove the entry from the list without having to call the api again
                     $scope.repository.selectedQuery = false;
                     $('.modal-backdrop').remove();//remove the modal backdrop if everything is fine
                 }, function(error){
@@ -384,7 +402,7 @@
         $scope.deleteUserQuery = function (query) {
             if (confirm("Are you sure you want to delete the selected query?")) {
                 queryRepository.deleteUserQuery(query).then(function () {
-                    $scope.loadQueries('tutorial'); //TODO should remove the entry from the list without having to call the api again
+                    $scope.loadTutorialQueries(); //TODO should remove the entry from the list without having to call the api again
                     flash('alert-info', query.title + 'query successfully deleted');
                 });
             }

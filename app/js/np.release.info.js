@@ -73,6 +73,7 @@
         });
 
 
+        /*
         // Replace the publication stats fetched above by the correct ones computed by the new service /publications/stats.json
         releaseInfoService.getPublicationStats().$promise.then(function (data) {
             var newStats = [
@@ -101,7 +102,7 @@
                     break;
                 }
             }
-        });
+        });*/
     }
 
     releaseInfoService.$inject = ['$resource', 'config'];
@@ -122,11 +123,6 @@
             {},
             {get : {method: "GET"}});
 
-        var publicationStatsResource = $resource(
-            config.api.API_URL + '/publications/stats.json',
-            {},
-            {get : {method: "GET"}});
-
         var ReleaseInfoService = function () {
 
         };
@@ -141,10 +137,6 @@
 
         ReleaseInfoService.prototype.getReleaseDataSources = function () {
             return releaseDataSources.get();
-        };
-
-        ReleaseInfoService.prototype.getPublicationStats = function () {
-            return publicationStatsResource.get();
         };
 
         return new ReleaseInfoService();

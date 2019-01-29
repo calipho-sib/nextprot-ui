@@ -1,5 +1,4 @@
-<ul class="nav nav-list" style="margin-top: 10px;">
+<ul class="nav nav-list" style="margin-top: 10px;" ng-controller="ListCtrl">
 	<li class="nav-header">Lists operations</li>
-	<li ng-class="navClass('user/protein/lists/create')"><a href="/user/protein/lists/create">Create New List</a></li>
-	<!-- <li><a href="#">naive tool</a></li> -->
+	<li ng-class="navClass('user/protein/lists/create')"><a ng-class="{disabled: disabled()}" ng-href="{{disabled() ? '' : '/user/protein/lists/create'}}">Create New List</a></li>
 </ul>
