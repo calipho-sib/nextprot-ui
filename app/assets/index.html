@@ -42,6 +42,33 @@
 
         <!-- GA events are handled by angular -->
     </script>
+    <script type="application/ld+json">
+        {
+            "@context": [ { "bs": "http://bioschemas.org/"}, "http://schema.org", {"@base": "http://schema.org"} ],
+            "@type": "DataCatalog",
+            "@id": "https://www.nextprot.org/",
+            "url": "https://www.nextprot.org/",
+            "name": "{{nm.title}}",
+            "description": "{{nm.description}}",
+            "keywords": "nextprot,UniProt,Human,Proteins,Proteome,Proteomics,protein database,protein knowledgebase,protein resource,human protein,human proteome,cancer variants portal,ion channels variants portal,function,medical,disease,expression,interactions,sequence,isoform,mutation,variant,phenotypes,proteomics,peptide,structure,3D,unicity checker,peptide uniqueness checker,annotation,biocuration,chromosomes,protein validation,protein-coding genes,post-translational modifications,ptm,data integration,systems biology,genetic variations,RDF data model,SPARQL endpoint,api,rest",
+            "creator": [
+                 {"@type": "EducationalOrganization", "name": "CALIPHO Team - SIB - Swiss Institute of Bioinformatics"}
+            ],
+            "funder": [
+              {"@type": "NGO", "name": "SIB Swiss Institute of Bioinformatics"},
+              {"@type": "EducationalOrganization", "name": "UNIGE University of Geneva"}
+            ],
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://www.nextprot.org/proteins/search?query={query}",
+              "query-input": "required name=query"
+            },
+            "dataset" : {
+                "distribution": [{"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/", "fileFormat": "FTP"}]
+            },
+            "license": "https://creativecommons.org/licenses/by/4.0/"
+        }
+    </script>
 </head>
 
 <body ng-clock="" class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90"
