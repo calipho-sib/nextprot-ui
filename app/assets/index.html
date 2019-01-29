@@ -63,7 +63,9 @@
               "target": "https://www.nextprot.org/proteins/search?query={query}",
               "query-input": "required name=query"
             },
-            "distribution": [{"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/", "fileFormat": "FTP"}],
+            "dataset" : {
+                "distribution": [{"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/", "fileFormat": "FTP"}]
+            },
             "license": "https://creativecommons.org/licenses/by/4.0/"
         }
     </script>
