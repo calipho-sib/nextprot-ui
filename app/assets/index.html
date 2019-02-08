@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" ng-app="np" ng-controller="npCtrl as nm" xmlns:flash="">
+
 <head>
     <!-- Hotjar Tracking Code for https://www.nextprot.org (https://www.hotjar.com/)
     <script>
@@ -17,20 +18,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="nextprot,UniProt,Human,Proteins,Proteome,Proteomics,protein database,protein knowledgebase,protein resource,human protein,human proteome,cancer variants portal,ion channels variants portal,function,medical,disease,expression,interactions,sequence,isoform,mutation,variant,phenotypes,proteomics,peptide,structure,3D,unicity checker,peptide uniqueness checker,annotation,biocuration,chromosomes,protein validation,protein-coding genes,post-translational modifications,ptm,data integration,systems biology,genetic variations,RDF data model,SPARQL endpoint,api,rest">
 
-<!--    <meta name="description" content="A knowledge platform on human proteins. It strives to be a comprehensive resource that provides a variety of types of information on human proteins.">-->
+    <!--    <meta name="description" content="A knowledge platform on human proteins. It strives to be a comprehensive resource that provides a variety of types of information on human proteins.">-->
     <meta name="description" content="{{nm.description}}">
     <meta name="author" content="CALIPHO Team - SIB - Swiss Institute of Bioinformatics">
     <meta name="fragment" content="!">
     <meta http-equiv="expires" content="0">
     <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
-    
+
     <link rel="icon" href="./img/np-x.png">
 
     <!--<base href="/protosearch/" />-->
     <base href="/">
 
     <title ng-bind="nm.title"></title>
-<!--    <title>neXtProt - exploring the universe of human proteins</title>-->
+    <!--    <title>neXtProt - exploring the universe of human proteins</title>-->
 
     <!--[if lte IE 7]>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js"></script>
@@ -45,228 +46,570 @@
     <link rel="stylesheet" href="css/app.css?release={!distRelease!}">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-        <!-- GA events are handled by angular -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@graph": [
+                {
+                    "@type": "DataCatalog",
+                    "@id": "http://identifiers.org/nextprot/",
+                    "name": "{{nm.title}}",
+                    "description": "{{nm.description}}",
+                    "url": "https://www.nextprot.org/",
+                    "keywords": "nextprot,UniProt,Human,Proteins,Proteome,Proteomics,protein database,protein knowledgebase,protein resource,human protein,human proteome,cancer variants portal,ion channels variants portal,function,medical,disease,expression,interactions,sequence,isoform,mutation,variant,phenotypes,proteomics,peptide,structure,3D,unicity checker,peptide uniqueness checker,annotation,biocuration,chromosomes,protein validation,protein-coding genes,post-translational modifications,ptm,data integration,systems biology,genetic variations,RDF data model,SPARQL endpoint,api,rest",
+                    "thumbnailUrl": "https://www.nextprot.org/img/np-x.png",
+                    "sourceOrganization": {
+                        "@type": "Organization",
+                        "name": "SIB Swiss Institute of Bioinformatics",
+                        "url": "https://www.sib.swiss/",
+                        "logo": "https://www.nextprot.org/img/sib.png"
+                    },
+                    "citation": {
+                        "@type": "ScholarlyArticle",
+                        "headline": "The neXtProt knowledgebase on human proteins: 2017 update.",
+                        "author" : [
+                            {"@type": "Person", "name": "Gaudet P"},
+                            {"@type": "Person", "name": "Michel PA"},
+                            {"@type": "Person", "name": "Zahn-Zabal M"},
+                            {"@type": "Person", "name": "Britan A"},
+                            {"@type": "Person", "name": "Cusin I"},
+                            {"@type": "Person", "name": "Domagalski M"},
+                            {"@type": "Person", "name": "Duek PD"},
+                            {"@type": "Person", "name": "Gateau A"},
+                            {"@type": "Person", "name": "Gleizes A"},
+                            {"@type": "Person", "name": "Hinard V"},
+                            {"@type": "Person", "name": "Rech de Laval V"},
+                            {"@type": "Person", "name": "Lin JJ"},
+                            {"@type": "Person", "name": "Nikitin F"},
+                            {"@type": "Person", "name": "Schaeffer M"},
+                            {"@type": "Person", "name": "Teixeira D"},
+                            {"@type": "Person", "name": "Lane L"},
+                            {"@type": "Person", "name": "Bairoch A"}
+                        ],
+                        "isPartOf": [
+                            {"@type": "Periodical", "name": "Nucleic acids research"},
+                            {"@type": "PublicationVolume", "volumeNumber": "45"},
+                            {"@type": "PublicationIssue", "datePublished": "2017", "issueNumber": "D1"}
+                        ],
+                        "sameAs": [
+                            "https://doi.org/10.1093/nar/gkw1062",
+                            "http://europepmc.org/abstract/MED/27899619",
+                            "https://www.ncbi.nlm.nih.gov/pubmed/27899619",
+                            "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5210547"
+                        ]
+                    },
+                    "dataset": [
+                        {
+                            "@type": "Dataset",
+                            "name": "neXtProt entries",
+                            "description": "The collection of neXtProt entries for human proteins",
+                            "url": "https://www.nextprot.org",
+                            "keywords": "nextprot,Human,Proteins,Proteome,Proteomics,protein database,protein knowledgebase,protein resource,human protein,human proteome,function,medical,disease,expression,interactions,sequence,isoform,mutation,variant,phenotypes,proteomics,peptide,structure,3D,annotation,biocuration,chromosomes,protein validation,protein-coding genes,post-translational modifications,ptm,data integration,systems biology,genetic variations,UniProt",
+                            "distribution": [
+                                {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/xml/nextprot_all.xml.gz", "fileFormat": "XML"},
+                                {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/rdf/", "fileFormat": "RDF"},
+                                {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/peff/nextprot_all.peff.gz", "fileFormat": "PEFF"},
+                                {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/md5/nextprot_sequence_md5.txt", "fileFormat": "MD5"},
+                                {"@type": "DataDownload", "contentUrl": "https://api.nextprot.org/export/entries/all.fasta", "fileFormat": "FASTA"}
+                            ],
+                            "potentialAction": {
+                                "@type": "SearchAction",
+                                "target": "https://www.nextprot.org/proteins/search?query={query}",
+                                "query-input": "required name=query"
+                            },
+                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"}
+                        },
+                        {
+                            "@type": "Dataset",
+                            "name": "Caloha",
+                            "description": "An ontology of human anatomy and human cell types.",
+                            "keywords": "human body, anatomy, ontology, tissues, cell types, organs, developmental stage",
+                            "distribution": {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/caloha.obo", "fileFormat": "OBO"},
+                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"}
+                        },
+                        {
+                            "@type": "Dataset",
+                            "name": "ICEPO",
+                            "description": "An ontology that allows one to annotate the electrophysiological parameters of the voltage-gated class of ion channels.",
+                            "keywords": "ion channels, electrophysiology, ion channel gating, conductance, ion selectivity, activation, inactivation, recovery, deactivation, reopening, closed-state inactivation",
+                            "distribution": {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/icepo.obo", "fileFormat": "OBO"},
+                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
+                            "citation": {
+                                "@type": "ScholarlyArticle",
+                                "headline": "ICEPO: the ion channel electrophysiology ontology.",
+                                "author" : [
+                                    {"@type": "Person", "name": "Hinard V"},
+                                    {"@type": "Person", "name": "Britan A"},
+                                    {"@type": "Person", "name": "Rougier JS"},
+                                    {"@type": "Person", "name": "Bairoch A"},
+                                    {"@type": "Person", "name": "Abriel H"},
+                                    {"@type": "Person", "name": "Gaudet P"}
+                                ],
+                                "isPartOf": [
+                                    {"@type": "Periodical", "name": "Database (Oxford)"},
+                                    {"@type": "PublicationVolume", "volumeNumber": "2016"},
+                                    {"@type": "PublicationIssue", "datePublished": "2016"}
+                                ],
+                                "sameAs": [
+                                    "https://doi.org/10.1093/database/baw017",
+                                    "http://europepmc.org/abstract/MED/27055825",
+                                    "https://www.ncbi.nlm.nih.gov/pubmed/27055825",
+                                    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4823818"
+                                ]
+                            }
+                        },
+                        {
+                            "@type": "Dataset",
+                            "name": "Chromosome reports",
+                            "description": "A set of 26 files, each one listing all the neXtProt entries encoded on a given chromosome (chromosomes 1-22, X, Y, mitochondrial genome (MT), or unknown genomic location), along with their genomic coordinates and a brief summary of the available annotations for each of them.",
+                            "keywords": "human genes, chromosomes, mitochondrial genome, genomic coordinates, chromosomal location, coding strand, protein existence, PE1, PE2, PE3, PE4, PE5",
+                            "distribution": {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/chr_reports/", "fileFormat": "TXT"},
+                                               "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
+                            "citation": {
+                                "@type": "ScholarlyArticle",
+                                "headline": "neXtProt: Organizing Protein Knowledge in the Context of Human Proteome Projects",
+                                "author" : [
+                                    {"@type": "Person", "name": "Gaudet P"},
+                                    {"@type": "Person", "name": "Argoud-Puy G"},
+                                    {"@type": "Person", "name": "Cusin I"},
+                                    {"@type": "Person", "name": "Duek P"},
+                                    {"@type": "Person", "name": "Evalet O"},
+                                    {"@type": "Person", "name": "Gateau A"},  
+                                    {"@type": "Person", "name": "Gleizes A"},
+                                    {"@type": "Person", "name": "Pereira M"},
+                                    {"@type": "Person", "name": "Zahn-Zabal M"},
+                                    {"@type": "Person", "name": "Zwahlen C"},
+                                    {"@type": "Person", "name": "Bairoch A"},
+                                    {"@type": "Person", "name": "Lane L"}
+                                ],
+                                "isPartOf": [
+                                    {"@type": "Periodical", "name": "Journal of proteome research"},
+                                    {"@type": "PublicationVolume", "volumeNumber": "12"},
+                                    {"@type": "PublicationIssue", "datePublished": "2013", "issueNumber": "1"}
+                                ],
+                                "sameAs": [
+                                    "https://doi.org/10.1021/pr300830v",
+                                    "https://www.ncbi.nlm.nih.gov/pubmed/23205526"
+                                ]
+                            }
+                        },
+                        {
+                            "@type": "Dataset",
+                            "name": "Cancer portal",
+                            "description": "Portal which provides information about the functional impact of genetic variants and artificially generated mutants in cancer genes",
+                            "keywords": "BRCA1,Biological database,Cancer,Functional defect assessment,Genetic variants,Molecular phenotypes",
+                            "distribution": {"@type": "DataDownload", "contentUrl": "https://www.nextprot.org/portals/breast-cancer", "fileFormat": "CSV"},
+                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
+                            "citation": {
+                                "@type": "ScholarlyArticle",
+                                "headline": "A new bioinformatics tool to help assess the significance of BRCA1 variants.",
+                                "author" : [
+                                    {"@type": "Person", "name": "Cusin I"},
+                                    {"@type": "Person", "name": "Teixeira D"},
+                                    {"@type": "Person", "name": "Zahn-Zabal M"},
+                                    {"@type": "Person", "name": "Rech de Laval V"},
+                                    {"@type": "Person", "name": "Gleizes A"},
+                                    {"@type": "Person", "name": "Viassolo V"},
+                                    {"@type": "Person", "name": "Chappuis PO"},
+                                    {"@type": "Person", "name": "Hutter P"},
+                                    {"@type": "Person", "name": "Bairoch A"},
+                                    {"@type": "Person", "name": "Gaudet P"}
+                                ],
+                                "isPartOf": [
+                                    {"@type": "Periodical", "name": "Human genomics"},
+                                    {"@type": "PublicationVolume", "volumeNumber": "12"},
+                                    {"@type": "PublicationIssue", "datePublished": "2018", "issueNumber": "1"}
+                                ],
+                                "sameAs": [
+                                    "https://doi.org/10.1186/s40246-018-0168-0",
+                                    "http://europepmc.org/abstract/MED/29996917",
+                                    "https://www.ncbi.nlm.nih.gov/pubmed/29996917",
+                                    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6042458/"
+                                ]
+                            }
+                        },
+                        {
+                            "@type": "Dataset",
+                            "name": "Ion channel portal",
+                            "description": "Portal which provides information about the functional impact of genetic variants and artificially generated mutants in voltage-gated sodium channel genes",
+                            "keywords": "clinical interpretation of variants, databases, genetics variants,pathogenicity,phenotype,voltage-gated sodium channel",
+                            "distribution": {"@type": "DataDownload", "contentUrl": "https://www.nextprot.org/portals/navmut", "fileFormat": "CSV"},
+                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
+                            "citation": {
+                                "@type": "ScholarlyArticle",
+                                "headline": "Annotation of functional impact of voltage-gated sodium channel mutations.",
+                                "author" : [
+                                    {"@type": "Person", "name": "Hinard V"},
+                                    {"@type": "Person", "name": "Britan A"},
+                                    {"@type": "Person", "name": "Schaeffer M"},
+                                    {"@type": "Person", "name": "Zahn-Zabal M"},
+                                    {"@type": "Person", "name": "Thomet U"},
+                                    {"@type": "Person", "name": "Rougier JS"},
+                                    {"@type": "Person", "name": "Bairoch A"},
+                                    {"@type": "Person", "name": "Abriel H"},
+                                    {"@type": "Person", "name": "Gaudet P"}
+                                ],
+                                "isPartOf": [
+                                    {"@type": "Periodical", "name": "Human mutation"},
+                                    {"@type": "PublicationVolume", "volumeNumber": "38"},
+                                    {"@type": "PublicationIssue", "datePublished": "2017", "issueNumber": "5"}
+                                ],
+                                "sameAs": [
+                                    "https://doi.org/10.1002/humu.23191",
+                                    "http://europepmc.org/abstract/MED/28168870",
+                                    "https://www.ncbi.nlm.nih.gov/pubmed/28168870",
+                                    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5413847/"
+                                ]
+                            }
+                        },
+                        {
+                            "@type": "Dataset",
+                            "name": "Protein kinase function portal",
+                            "description": "Portal which provides information about the function of protein kinases",
+                            "keywords": "databases, protein kinase,phosphorylation, protein-protein interactions, biological process, protein function",
+                            "distribution": {"@type": "DataDownload", "contentUrl": "https://www.nextprot.org/portals/kinase-function", "fileFormat": "CSV"},
+                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"}
+                        }    
+                    ]
+                },
+                {
+                    "@type": "SoftwareApplication",
+                    "name": "Peptide uniqueness checker",
+                    "url" : "https://www.nextprot.org/tools/peptide-uniqueness-checker",
+                    "author": {
+                        "@type": "Organization",
+                        "name": "SIB Swiss Institute of Bioinformatics",
+                        "url": "https://www.sib.swiss/",
+                        "logo": "https://www.nextprot.org/img/sib.png"
+                    },
+                    "description" : "The neXtProt peptide uniqueness checker allows scientists to define which peptides can be used to validate the existence of human proteins, i.e. map uniquely versus multiply to human protein sequences taking into account isobaric substitutions, alternative splicing and single amino acid variants.",
+                    "applicationCategory" : "http://schema.org/WebApplication",
+                    "offers": {
+                        "@type" : "Offer",
+                        "price" : "0.00",
+                        "priceCurrency" : "CHF"
+                    },
+                   "license": {"@type": "CreativeWork", "name": "GNU General Public License v2.0", "url": "https://www.gnu.org/licenses/gpl-2.0.fr.html"},
+                   "operatingSystem" : "Unix,Windows,OS X,Android",
+                    "citation": {
+                        "@type": "ScholarlyArticle",
+                        "headline": "The neXtProt peptide uniqueness checker: a tool for the proteomics community.",
+                        "author" : [
+                            {"@type": "Person", "name": "Schaeffer M"},
+                            {"@type": "Person", "name": "Gateau A"},
+                            {"@type": "Person", "name": "Teixeira D"},
+                            {"@type": "Person", "name": "Michel PA"},
+                            {"@type": "Person", "name": "Zahn-Zabal M"},
+                            {"@type": "Person", "name": "Lane L"}
+                        ],
+                        "isPartOf": [
+                            {"@type": "Periodical", "name": "Bioinformatics"},
+                            {"@type": "PublicationVolume", "volumeNumber": "33"},
+                            {"@type": "PublicationIssue", "datePublished": "2017", "issueNumber": "21"}
+                        ],
+                        "sameAs": [
+                            "https://doi.org/10.1093/bioinformatics/btx318",
+                            "http://europepmc.org/abstract/MED/28520855",
+                            "https://www.ncbi.nlm.nih.gov/pubmed/28520855",
+                            "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5860159/"
+                        ]
+                    }
+                },{
+                    "@type": "SoftwareApplication",
+                    "name": "neXtProt Snorql",
+                    "url" : "https://snorql.nextprot.org/",
+                    "author": {
+                        "@type": "Organization",
+                        "name": "SIB Swiss Institute of Bioinformatics",
+                        "url": "https://www.sib.swiss/",
+                        "logo": "https://www.nextprot.org/img/sib.png"
+                    },
+                    "description" : "A web application for using the SPARQL Protocol and RDF Query Language (SPARQL) to access all the neXtProt protein entry data",
+                    "applicationCategory" : "http://schema.org/WebApplication",
+                    "offers": {
+                        "@type" : "Offer",
+                        "price" : "0.00",
+                        "priceCurrency" : "CHF"
+                    },
+                    "license": {"@type": "CreativeWork", "name": "GNU General Public License v2.0", "url": "https://www.gnu.org/licenses/gpl-2.0.fr.html"},
+                    "operatingSystem" : "Unix,Windows,OS X,Android"
+                },{
+                    "@type": "Service",
+                    "name": "neXtProt advanced search",
+                    "url" : "https://www.nextprot.org/proteins/search?mode=advanced",
+                    "provider": {
+                        "@type": "Organization",
+                        "name": "SIB Swiss Institute of Bioinformatics",
+                        "url": "https://www.sib.swiss/",
+                        "logo": "https://www.nextprot.org/img/sib.png"
+                    },
+                    "description" : "A web service for using the SPARQL Protocol and RDF Query Language (SPARQL) to retrieve a list of neXtProt entries based on all the neXtProt protein entry data."
+                },{
+                    "@type": "Service",
+                    "name": "neXtProt list manager",
+                    "url" : "https://www.nextprot.org/proteins/search?mode=advanced",
+                    "provider": {
+                        "@type": "Organization",
+                        "name": "SIB Swiss Institute of Bioinformatics",
+                        "url": "https://www.sib.swiss/",
+                        "logo": "https://www.nextprot.org/img/sib.png"
+                    },
+                    "description" : "A web service for viewing and managing protein lists (a collection of protein entries created by the user)."
+                },{
+                    "@type": "Service",
+                    "name": "neXtProt API",
+                    "description": "The neXtProt API lets you find entities in neXtProt.",
+                    "url": "https://api.nextprot.org",
+                    "provider": {
+                        "@type": "Organization",
+                        "name": "SIB Swiss Institute of Bioinformatics",
+                        "url": "https://www.sib.swiss/",
+                        "logo": "https://www.nextprot.org/img/sib.png"
+                    }
+                },{
+                    "@type": "Service",
+                    "name": "neXtProt SPARQL endpoint",
+                    "description": "The neXtProt SPARQL endpoint is a point of presence on an HTTP network that’s capable of receiving and processing SPARQL Protocol requests.",
+                    "url": "https://sparql.nextprot.org/",
+                    "provider": {
+                        "@type": "Organization",
+                        "name": "SIB Swiss Institute of Bioinformatics",
+                        "url": "https://www.sib.swiss/",
+                        "logo": "https://www.nextprot.org/img/sib.png"
+                    }
+                }
+            ]
+        }
     </script>
 </head>
 
-<body ng-clock="" class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90"
-      ng-controller="SearchCtrl" np-background="#main" typeof="schema:WebPage">
+<body ng-clock="" class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90" ng-controller="SearchCtrl"
+    np-background="#main" typeof="schema:WebPage">
 
-<header>
-<!--
+    <header>
+        <!--
     <div class="hidden-md hidden-sm hidden-xs hidden-lg" style="font-size: 1.7em; font-weight: 100; font-family: Helvetica; background: transparent radial-gradient(ellipse at center center , rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%) repeat scroll 0% 0%;" id="header-title">
         Exploring the universe of human proteins
     </div>
 -->
-    <a href="http://www.isb-sib.ch/" target="_blank" title="Link to the SIB Swiss Institute of Bioinformatics">
-        <img id="sib-logo" src="img/sib_logo.gif" alt="SIB Swiss Institute of Bioinformatics">
-    </a>
+        <a href="http://www.isb-sib.ch/" target="_blank" title="Link to the SIB Swiss Institute of Bioinformatics">
+            <img id="sib-logo" src="img/sib_logo.gif" alt="SIB Swiss Institute of Bioinformatics">
+        </a>
 
-    <!-- Navbar ================================================== -->
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nextprot-header">
-                    <span class="sr-only">Toggle navigation</span>
-<!--
+        <!-- Navbar ================================================== -->
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nextprot-header">
+                        <span class="sr-only">Toggle navigation</span>
+                        <!--
                     <span class="fa-bar"></span>
                     <span class="fa-bar"></span>
                     <span class="fa-bar"></span>
 -->
-                    <span class="fa fa-bars"></span>
-                </button>
-                <a class="navbar-brand navbar-logo" href="/"><img id="np-logo" src="/img/np.png" alt="neXtProt the human protein database, platform and annotation knowledge base"></a>
-            </div>
+                        <span class="fa fa-bars"></span>
+                    </button>
+                    <a class="navbar-brand navbar-logo" href="/"><img id="np-logo" src="/img/np.png" alt="neXtProt the human protein database, platform and annotation knowledge base"></a>
+                </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse ng-scope" id="nextprot-header" ng-controller="HelpCtrl">
-                <ul class="nav navbar-nav">
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse ng-scope" id="nextprot-header" ng-controller="HelpCtrl">
+                    <ul class="nav navbar-nav">
 
-                    <!-- Services dropdown -->
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tools <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <!-- Learn -->
-                            <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
-                            <li ng-class=""><a href="/proteins/search" ng-click="routingOutside('ui')">Simple search</a></li>
-                            <li ng-class=""><a href="/proteins/search?mode=advanced" ng-click="routingOutside('snorql')">Advanced search</a></li>
-                            <li class="divider"></li>
-                            <li ng-class=""><a rel="nofollow" ng-click="goToUser('lists')">My Lists</a></li>
-                            <li ng-class=""><a rel="nofollow" ng-click="goToUser('queries')">My Queries</a></li>
-                            <li class="divider"></li>
-<!--                            <li ng-class=""><a href="#" ng-click="routingOutside('snorql')" style="cursor:not-allowed">BLAST</a></li>-->
-                            <li ng-class=""><a href="/tools/peptide-uniqueness-checker">Peptide uniqueness checker</a></li>
-                            <li class="divider"></li>
-                            <li class="disabled" style="font-size:12px; margin-left: 10px"><i>Programmatic access</i></li>
-                            <li ng-class=""><a ng-href="{{getNextprotUrl('api')}}">API</a></li>
-                            <li ng-class=""><a ng-href="{{getNextprotUrl('sparql')}}">SPARQL endpoint</a></li>
-                            <li ng-class=""><a ng-href="{{getNextprotUrl('snorql')}}">SNORQL search</a></li>
-                        </ul>
-                    </li>
-                    
-                    <!-- Portals dropdown -->
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Portals <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <!-- Learn -->
-                            <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
-                            <li ng-class=""><a href="./portals/breast-cancer">Cancer variants portal</a></li>
-                            <li ng-class=""><a href="./portals/navmut">Ion channels variants portal</a></li>
-                        </ul>
-                    </li>
+                        <!-- Services dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-expanded="false">Tools <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <!-- Learn -->
+                                <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
+                                <li ng-class=""><a href="/proteins/search" ng-click="routingOutside('ui')">Simple
+                                        search</a></li>
+                                <li ng-class=""><a href="/proteins/search?mode=advanced" ng-click="routingOutside('snorql')">Advanced
+                                        search</a></li>
+                                <li class="divider"></li>
+                                <li ng-class=""><a rel="nofollow" ng-click="goToUser('lists')">My Lists</a></li>
+                                <li ng-class=""><a rel="nofollow" ng-click="goToUser('queries')">My Queries</a></li>
+                                <li class="divider"></li>
+                                <!--                            <li ng-class=""><a href="#" ng-click="routingOutside('snorql')" style="cursor:not-allowed">BLAST</a></li>-->
+                                <li ng-class=""><a href="/tools/peptide-uniqueness-checker">Peptide uniqueness checker</a></li>
+                                <li class="divider"></li>
+                                <li class="disabled" style="font-size:12px; margin-left: 10px"><i>Programmatic access</i></li>
+                                <li ng-class=""><a ng-href="{{getNextprotUrl('api')}}">API</a></li>
+                                <li ng-class=""><a ng-href="{{getNextprotUrl('sparql')}}">SPARQL endpoint</a></li>
+                                <li ng-class=""><a ng-href="{{getNextprotUrl('snorql')}}">SNORQL search</a></li>
+                            </ul>
+                        </li>
 
-                    <!-- Tools (for instance, blast) -->
-                    <!--<li ng-class=""><a href="/tools">Tools</a></li>-->
+                        <!-- Portals dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-expanded="false">Portals <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <!-- Learn -->
+                                <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
+                                <li ng-class=""><a href="./portals/navmut">Ion channels variants portal</a></li>
+                                <li ng-class=""><a href="./portals/cancer-variants">Cancer variants portal</a></li>
+                                <li ng-class=""><a href="./portals/kinase-function">Protein kinase function portal</a></li>
+                            </ul>
+                        </li>
 
-                    <!-- Download -->
-                    <li ng-class=""><a href="ftp://ftp.nextprot.org/pub/current_release/" ng-click="routingOutside('ftp')">Download</a></li>
+                        <!-- Tools (for instance, blast) -->
+                        <!--<li ng-class=""><a href="/tools">Tools</a></li>-->
 
-                    <!-- Help dropdown -->
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Help <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <!-- Learn -->
-                            <li ng-class="{'active':isActiveDoc('/help/simple-search')}">
-                                <a href="/help/simple-search">Simple search</a>
-                            </li>
-                            <li ng-class="{'active':isActiveDoc('/help/advanced-search')}">
-                                <a href="/help/advanced-search">Advanced search</a>
-                            </li>
-<!--                            ???-->
-<!--                            <li><a href="#"></a></li> -->
-                            <li ng-class="{'active':isActiveDoc('/help/search-results')}">
-                                <a href="/help/search-results">Search results</a>
-                            </li>
-<!--                            ???-->
-                            <li ng-class="{'active':isActiveDoc('/help/tools')}">
-                                <a href="/help/tools">Tools</a>
-                            </li>
-<!--                            <li><a href="#"></a></li>-->
-<!--                            <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}">-->
-                            <li ng-class="{'active':isActiveDoc('/help/data-model')}">
-                                <a ng-href="/help/data-model">Data model</a>
-                            </li>
-<!--                            <li><a href="#"></a></li>-->
-                            <li class="divider"></li>
-                            <li ng-class="{'active':isActiveDoc('/help/protein-lists')}">
-                                <a href="/help/protein-lists">Protein Lists</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li ng-class="{'active':isActiveDoc('/help/download')}">
-                                <a href="/help/download">Download</a>
-                            </li>
-                            <li class="divider"></li>
+                        <!-- Download -->
+                        <li ng-class=""><a href="ftp://ftp.nextprot.org/pub/current_release/" ng-click="routingOutside('ftp')">Download</a></li>
 
-                            <li ng-class="{'active':isActiveDoc('/help/technical-corner')}">
-                                <a href="/help/technical-corner">Technical corner</a>
-                            </li>
-                            <!--  <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li> -->
-<!--                            <li class="divider"></li>-->
+                        <!-- Help dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-expanded="false">Help <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <!-- Learn -->
+                                <li ng-class="{'active':isActiveDoc('/help/simple-search')}">
+                                    <a href="/help/simple-search">Simple search</a>
+                                </li>
+                                <li ng-class="{'active':isActiveDoc('/help/advanced-search')}">
+                                    <a href="/help/advanced-search">Advanced search</a>
+                                </li>
+                                <!--                            ???-->
+                                <!--                            <li><a href="#"></a></li> -->
+                                <li ng-class="{'active':isActiveDoc('/help/search-results')}">
+                                    <a href="/help/search-results">Search results</a>
+                                </li>
+                                <!--                            ???-->
+                                <li ng-class="{'active':isActiveDoc('/help/tools')}">
+                                    <a href="/help/tools">Tools</a>
+                                </li>
+                                <!--                            <li><a href="#"></a></li>-->
+                                <!--                            <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}">-->
+                                <li ng-class="{'active':isActiveDoc('/help/data-model')}">
+                                    <a ng-href="/help/data-model">Data model</a>
+                                </li>
+                                <!--                            <li><a href="#"></a></li>-->
+                                <li class="divider"></li>
+                                <li ng-class="{'active':isActiveDoc('/help/protein-lists')}">
+                                    <a href="/help/protein-lists">Protein Lists</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li ng-class="{'active':isActiveDoc('/help/download')}">
+                                    <a href="/help/download">Download</a>
+                                </li>
+                                <li class="divider"></li>
 
-                            <!-- FAQ
+                                <li ng-class="{'active':isActiveDoc('/help/technical-corner')}">
+                                    <a href="/help/technical-corner">Technical corner</a>
+                                </li>
+                                <!--  <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li> -->
+                                <!--                            <li class="divider"></li>-->
+
+                                <!-- FAQ
                             <li ng-class="{'active':isActiveDoc('/pages/faq')}"><a href="/pages/faq">FAQ</a></li>
                             -->
 
-                            <!-- Known issues -->
-<!--
+                                <!-- Known issues -->
+                                <!--
                             <li ng-class="{'active':isActiveDoc('/known-issues')}">
                                 <a href="/known-issues">Known issues</a>
                             </li>
 -->
 
-                            <!-- Found a bug -->
-<!--
+                                <!-- Found a bug -->
+                                <!--
                             <li ng-class="">
                                 <a target="_blank" href="https://github.com/calipho-sib/nextprot-ui/issues">
                                     Found a bug?<i class="fa-github"></i></a>
                             </li>
 -->
 
-<!--                            <li class="divider"></li>-->
+                                <!--                            <li class="divider"></li>-->
 
-                            <!-- News -->
-<!--
+                                <!-- News -->
+                                <!--
                             <li ng-class="{'active':isActiveDoc('/what-is-new')}">
                                 <a href="/what-is-new">What's new?</a>
                             </li>
 -->
 
-                            <!-- Citing neXtProt -->
-<!--
+                                <!-- Citing neXtProt -->
+                                <!--
                             <li ng-class="{'active':isActiveDoc('/citing-nextprot')}">
                                 <a href="/citing-nextprot">Citing neXtProt</a>
                             </li>
 -->
 
-                        </ul>
-                    </li>
-                    
-                    <!-- About dropdown -->
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">About <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <!-- Learn -->
-                            <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
-                            <li ng-class="{'active':isActiveDoc('/about/nextprot')}">
-                                <a href="about/nextprot">
-                                    <span class="text">neXtProt concept</span>
-                                </a>
-                            </li>
-<!--                            <li ng-class=""><a href="release/contents">Current release</a></li>-->
-                            <li ng-class="{'active':isActiveDoc('/about/contents')}">
-                                <a href="about/contents">
-                                    <span class="text">Release contents</span>
-                                </a>
-                            </li>
-                            <li ng-class="{'active':isActiveDoc('/about/statistics')}">
-                                <a href="about/statistics">
-                                    <span class="text">Release statistics</span>
-                                </a>
-                            </li>
-                            <li ng-class="{'active':isActiveDoc('/about/entries')}">
-                                <a href="entries">
-                                    <span class="text">Entries by chromosome</span>
-                                </a>
-                            </li>
-                            <li ng-class="{'active':isActiveDoc('/about/protein-existence')}">
-                                <a href="about/protein-existence">
-                                    <span class="text">Protein existence</span>
-                                </a>
-                            </li>
-                            <li ng-class="{'active':isActiveDoc('/about/human-proteome')}">
-                                <a href="about/human-proteome">
-                                    <span class="text">The human proteome</span>
-                                </a>
-                            </li>
-                            <li ng-class="{'active':isActiveDoc('/about/news/*')}">
-                                <a href="news/">
-                                    <span class="text">News</span>
-                                </a>
-                            </li>
-                            <li ng-class="{'active':isActiveDoc('/about/citing-nextprot')}">
-                                <a href="about/citing-nextprot">
-                                    <span class="text">Citing neXtProt</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
 
-                    <li ng-class="">
-                        <a href="mailto:support@nextprot.org?subject=[neXtProt%20Search]">Contact</a>
-                    </li>
+                        <!-- About dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                aria-expanded="false">About <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <!-- Learn -->
+                                <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
+                                <li ng-class="{'active':isActiveDoc('/about/nextprot')}">
+                                    <a href="about/nextprot">
+                                        <span class="text">neXtProt concept</span>
+                                    </a>
+                                </li>
+                                <!--                            <li ng-class=""><a href="release/contents">Current release</a></li>-->
+                                <li ng-class="{'active':isActiveDoc('/about/contents')}">
+                                    <a href="about/contents">
+                                        <span class="text">Release contents</span>
+                                    </a>
+                                </li>
+                                <li ng-class="{'active':isActiveDoc('/about/statistics')}">
+                                    <a href="about/statistics">
+                                        <span class="text">Release statistics</span>
+                                    </a>
+                                </li>
+                                <li ng-class="{'active':isActiveDoc('/about/entries')}">
+                                    <a href="entries">
+                                        <span class="text">Entries by chromosome</span>
+                                    </a>
+                                </li>
+                                <li ng-class="{'active':isActiveDoc('/about/protein-existence')}">
+                                    <a href="about/protein-existence">
+                                        <span class="text">Protein existence</span>
+                                    </a>
+                                </li>
+                                <li ng-class="{'active':isActiveDoc('/about/human-proteome')}">
+                                    <a href="about/human-proteome">
+                                        <span class="text">The human proteome</span>
+                                    </a>
+                                </li>
+                                <li ng-class="{'active':isActiveDoc('/about/news/*')}">
+                                    <a href="news/">
+                                        <span class="text">News</span>
+                                    </a>
+                                </li>
+                                <li ng-class="{'active':isActiveDoc('/about/citing-nextprot')}">
+                                    <a href="about/citing-nextprot">
+                                        <span class="text">Citing neXtProt</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
-                </ul>
-                <ul class="nav navbar-nav navbar-right" style="margin-right:0px;">
+                        <li ng-class="">
+                            <a href="mailto:support@nextprot.org?subject=[neXtProt%20Search]">Contact</a>
+                        </li>
 
-<!--
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right" style="margin-right:0px;">
+
+                        <!--
                     <li>
                         <a title="My lists" ng-click="goToUser('lists')" type="button" class="link">
                             <i class="fa-list-alt"></i>
@@ -280,52 +623,54 @@
                     </li>
 -->
 
-                    <!-- login button -->
-                    <!-- ngIf: !user.profile.email --><li class="ng-scope" ng-if="!user.profile.email">
-                        <a rel="nofollow" href="" type="button" class="link" ng-click="login()">Login</a>
-                    </li><!-- end ngIf: !user.profile.email -->
-                    
-                    <!-- once logged in user resources -->
-                    <!-- ngIf: user.profile.email -->
-<!--                    <li class="dropdown" ng-if="user.profile.email" ng-cloak>-->
-                    <li class="dropdown" ng-if="user.isAuthenticated()" ng-cloak>
+                        <!-- login button -->
+                        <!-- ngIf: !user.profile.email -->
+                        <li class="ng-scope" ng-if="!user.profile.email">
+                            <a rel="nofollow" href="" type="button" class="link" ng-click="login()">Login</a>
+                        </li><!-- end ngIf: !user.profile.email -->
+
+                        <!-- once logged in user resources -->
+                        <!-- ngIf: user.profile.email -->
+                        <!--                    <li class="dropdown" ng-if="user.profile.email" ng-cloak>-->
+                        <li class="dropdown" ng-if="user.isAuthenticated()" ng-cloak>
                             <a href="#" class="dropdown-toggle lgOnly" data-toggle="dropdown">
                                 {{user.profile.name || user.profile.email}}<span class="caret"></span></a>
                             <ul class="dropdown-menu lgOnly" role="menu">
                                 <li><a rel="nofollow" href="#" ng-click="logout()">Logout</a></li>
                             </ul>
-                        <a rel="nofollow" class="smOnly" href="#" ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
-                        
-                    </li>
-                    
-                    <li>
-                        <a id="sib-link" href="http://www.sib.swiss"><img id="sib-logo" src="/img/sib.png"></a>
-                    </li>
+                            <a rel="nofollow" class="smOnly" href="#" ng-click="logout()"><i class="fa fa-sign-out"
+                                    aria-hidden="true"></i></a>
 
-                </ul>
+                        </li>
+
+                        <li>
+                            <a id="sib-link" href="http://www.sib.swiss"><img id="sib-logo" src="/img/sib.png"></a>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
             </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
+            <!-- /.container-fluid -->
+        </nav>
 
-</header>
-    
-<div ng-init="browserCompatibility()"></div>
+    </header>
 
-<div ng-show="message" class=" error ng-cloak" ng-cloak>
-    <div class="np-alert alert alert-error alert-warning">{{Search.result.error}} {{message}}</div>
-</div>
+    <div ng-init="browserCompatibility()"></div>
 
-<!--<flash:msg></flash:msg>-->
-<div ng-include="'partials/errors/alert-message.html'"></div>
+    <div ng-show="message" class=" error ng-cloak" ng-cloak>
+        <div class="np-alert alert alert-error alert-warning">{{Search.result.error}} {{message}}</div>
+    </div>
 
-<!-- Masthead
+    <!--<flash:msg></flash:msg>-->
+    <div ng-include="'partials/errors/alert-message.html'"></div>
+
+    <!-- Masthead
 ================================================== -->
-<div ng-if="isSearchBarVisible()" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
-    
-<!--HIRING BOX - deprecated    -->
-<!--
+    <div ng-if="isSearchBarVisible()" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
+
+    <!--HIRING BOX - deprecated    -->
+    <!--
 <div id="hiring" ng-if="isHomePage()">
     <h1 id="hiring-title"><span>WE ARE HIRING !</span></h1>
 
@@ -342,13 +687,13 @@
     </div>
 </div>
 -->
-<!--
+    <!--
 light blue kuler : 17C6DE
 pink light kuler : CF3E87
 blue customized from kuler blue: 14ADC2
 -->
-    
-<!--
+
+    <!--
     
     <div class="row">
         <div class="col-md-3">
@@ -364,22 +709,23 @@ blue customized from kuler blue: 14ADC2
 -->
 
 
-<div id="main" class="container-fluid" ng-view=""></div>
+    <div id="main" class="container-fluid" ng-view=""></div>
 
-<div ng-include="'partials/footer.html'"></div>
+    <div ng-include="'partials/footer.html'"></div>
 
-<!-- Le javascript
+    <!-- Le javascript
 ================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
+    <!-- Placed at the end of the document so the pages load faster -->
 
-<script type="text/javascript">
-    //
-    // global settings for angular-nexprot-ui-help
-    var npHelpSettings = {
-        baseUrl: 'https://api.nextprot.org'
-    }
-</script>
-<script defer src="js/vendor.js?release={!distRelease!}"></script>
-<script defer src="js/app.js?release={!distRelease!}"></script>
+    <script type="text/javascript">
+        //
+        // global settings for angular-nexprot-ui-help
+        var npHelpSettings = {
+            baseUrl: 'https://api.nextprot.org'
+        }
+    </script>
+    <script defer src="js/vendor.js?release={!distRelease!}"></script>
+    <script defer src="js/app.js?release={!distRelease!}"></script>
 </body>
+
 </html>

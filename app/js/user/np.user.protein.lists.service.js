@@ -37,11 +37,14 @@
 
         Proteins.prototype.list = function (user) {
             var self = this;
-            self.$promise = self.$dao.list({}).$promise;
-            self.$promise.then(function (data) {
-                // TODO: weird to refer service that is an instance of Proteins !!!
-                service.lists = data;
-            });
+            if (user.isAuthenticated()) {
+                self.$promise = self.$dao.list({}).$promise;
+                self.$promise.then(function (data) {
+                    // TODO: weird to refer service that is an instance of Proteins !!!
+                    service.lists = data;
+                });
+            }
+
             return self;
         };
 
