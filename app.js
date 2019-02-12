@@ -32,7 +32,7 @@ if ('development' == env) {
   exec('node_modules/brunch/bin/brunch watch', function callback(error, stdout, stderr) {
     if (error) {
       console.log('An error occurred while attempting to start brunch.\n' +
-                  'Make sure that it is not running in another window.\n');
+        'Make sure that it is not running in another window.\n');
       throw error;
     }
   });
@@ -40,14 +40,14 @@ if ('development' == env) {
 
 
 //TEMPORARY FOR NEW DESIGN IMPLEMENTATION
-app.get('/viewers/*',function (req, res) {
-    console.log("redirecting viewers");
-    var urlViewers = 'https://dev-search.nextprot.org';
-    var redirectURL = urlViewers + req.url;
-    res.redirect(redirectURL);
+app.get('/viewers/*', function (req, res) {
+  console.log("redirecting viewers");
+  var urlViewers = 'https://dev-search.nextprot.org';
+  var redirectURL = urlViewers + req.url;
+  res.redirect(redirectURL);
 });
 
-app.all('/*/*/*.html', function(req, res, next) {
+app.all('/*/*/*.html', function (req, res, next) {
   console.log("All" + req.url);
   res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
@@ -55,7 +55,7 @@ app.all('/*/*/*.html', function(req, res, next) {
   res.redirect(req.url);
 });
 
-app.all('/*', function(req, res, next) {
+app.all('/*', function (req, res, next) {
   console.log("All" + req.url);
   res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
@@ -64,42 +64,42 @@ app.all('/*', function(req, res, next) {
 });
 
 
-app.get('/db/results/showResults/*',function (req, res) {
-    var np1Host = 'http://localhost:8090';
-    var redirectURL = np1Host + req.url;
-    console.log("pattern 1: redirecting " + req.url + " to " + redirectURL);
-    res.redirect(redirectURL);
+app.get('/db/results/showResults/*', function (req, res) {
+  var np1Host = 'http://localhost:8090';
+  var redirectURL = np1Host + req.url;
+  console.log("pattern 1: redirecting " + req.url + " to " + redirectURL);
+  res.redirect(redirectURL);
 });
 
 
 
-app.get('/db/entry/:entry/sequence', function(req,res) {
-    var entry = req.params.entry;
-    var redirectURL = '/entry/' + entry + '/view/sequence';
-    console.log("pattern 2: redirecting " + req.url + " to " + redirectURL);
-    res.redirect(redirectURL);
+app.get('/db/entry/:entry/sequence', function (req, res) {
+  var entry = req.params.entry;
+  var redirectURL = '/entry/' + entry + '/view/sequence';
+  console.log("pattern 2: redirecting " + req.url + " to " + redirectURL);
+  res.redirect(redirectURL);
 });
-app.get('/db/entry/:entry/proteomics', function(req,res) {
-    var entry = req.params.entry;
-    var redirectURL = '/entry/' + entry + '/view/proteomics';
-    console.log("pattern 3: redirecting " + req.url + " to " + redirectURL);
-    res.redirect(redirectURL);
+app.get('/db/entry/:entry/proteomics', function (req, res) {
+  var entry = req.params.entry;
+  var redirectURL = '/entry/' + entry + '/view/proteomics';
+  console.log("pattern 3: redirecting " + req.url + " to " + redirectURL);
+  res.redirect(redirectURL);
 });
-app.get('/db/entry/:entry/structures', function(req,res) {
-    var entry = req.params.entry;
-    var redirectURL = '/entry/' + entry + '/view/structures';
-    console.log("pattern 4: redirecting " + req.url + " to " + redirectURL);
-    res.redirect(redirectURL);
-});
-
-app.get('/db/*',function (req, res) {
-    var redirectURL = req.url.replace("/db", "");
-    console.log("pattern 5: redirecting " + req.url + " to " + redirectURL);
-    res.redirect(redirectURL);
+app.get('/db/entry/:entry/structures', function (req, res) {
+  var entry = req.params.entry;
+  var redirectURL = '/entry/' + entry + '/view/structures';
+  console.log("pattern 4: redirecting " + req.url + " to " + redirectURL);
+  res.redirect(redirectURL);
 });
 
-app.get('/',function (req, res) {
-	  res.render('index.html');
+app.get('/db/*', function (req, res) {
+  var redirectURL = req.url.replace("/db", "");
+  console.log("pattern 5: redirecting " + req.url + " to " + redirectURL);
+  res.redirect(redirectURL);
+});
+
+app.get('/', function (req, res) {
+  res.render('index.html');
 });
 
 

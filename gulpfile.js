@@ -3,11 +3,11 @@ var dest = require('dest');
 var del = require('del');
 var vulcanize = require('gulp-vulcanize');
 
-gulp.task('clean', function(cb) {
+gulp.task('clean', function (cb) {
     del(['./build/elements/**'], cb);
 });
 
-gulp.task('vulcanize', function() {
+gulp.task('vulcanize', function () {
     return gulp.src('./bower_components/nextprot-elements/nextprot-elements.html')
         .pipe(vulcanize({
             strip: true,
@@ -17,8 +17,8 @@ gulp.task('vulcanize', function() {
         .pipe(gulp.dest('./build/elements/'));
 });
 
-gulp.task('vulcanize-polymer-elements', function() {
-    return gulp.src('./app/assets/partials/polymer-elements.html')
+gulp.task('vulcanize-polymer-elements', function () {
+    return gulp.src('./bower_components/nextprot-elements/external-elements.html')
         .pipe(vulcanize({
             strip: true,
             inlineScripts: true,

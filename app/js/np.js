@@ -26,8 +26,8 @@
         'np.news',
         'np.release.info',
         'ui.codemirror',
-        'auth0.lock', 
-        'angular-storage', 
+        'auth0.lock',
+        'angular-storage',
         'angular-jwt',
         'np.chromosomes'
     ]).config(configApplication)
@@ -41,11 +41,11 @@
     //Environment that should be set from outside //TODO should replace this using GRUNT
 
     // default environment when environment is not set by some external deployment script
-    var nxEnvironment = "dev"; //env can be replaced, by dev, alpha or pro by nxs script on deploy
+    var nxEnvironment = "build"; //env can be replaced, by dev, alpha or pro by nxs script on deploy
     // WARNING !!! DO NOT USE NX_ENV ANYWHERE ELSE IN THE PROJECT. A script replace its value by the current environment value just before deployment !
     var apiBase = "https://dev-api.nextprot.org"; //default for UI developers on MACs
     var np1Base = 'https://uat-web1'; //default for UI developers on MACs
-//    var apiBase = "http://localhost:8080/nextprot-api-web";  //default for UI + NP1 + NP2 on localhost
+    //    var apiBase = "http://localhost:8080/nextprot-api-web";  //default for UI + NP1 + NP2 on localhost
     //var np1Base = 'http://localhost:8090';                   //default for UI + NP1 + NP2 on localhost
 
 
@@ -67,7 +67,7 @@
             np1Base = 'http://uat-web1';
         }
     }
-    
+
     // main application settings
     App.constant('npSettings', {
         environment: nxEnvironment,
@@ -104,13 +104,13 @@
                 title: 'welcome to neXtProt',
                 templateUrl: '/partials/welcome.html'
             })
-        
+
             // 404 error page
             .when('/404', {
                 title: '404',
                 templateUrl: '/partials/errors/404.html'
             })
-        
+
             // Content page
             .when('/release-contents', {
                 title: 'neXtProt release contents',
@@ -136,8 +136,8 @@
                 title: 'help for RDF',
                 templateUrl: '/partials/doc/help.html'
             });
-            // List of routes of the application
-        
+        // List of routes of the application
+
         lockProvider.init({
             clientID: npSettings.auth0_cliendId,
             domain: 'nextprot.auth0.com',
@@ -145,26 +145,26 @@
                 autoclose: true,
                 auth: {
                     responseType: 'token id_token',
-//                    audience: 'https://nextprot.auth0.com/userinfo',
+                    //                    audience: 'https://nextprot.auth0.com/userinfo',
                     audience: 'https://nextprot.auth0.com/api/v2/',
-                    redirect: false, 
+                    redirect: false,
                     scope: 'openid email name picture'
                 },
-                theme:{
-                    logo:'img/np-x.png',
+                theme: {
+                    logo: 'img/np-x.png',
                     primaryColor: '#C50063'
                 },
-                languageDictionary:{
+                languageDictionary: {
                     title: "Log in"
                 }
             }
         })
-//        authProvider.init({
-//            clientID: npSettings.auth0_cliendId,
-//            callbackURL: npSettings.callback,
-//            domain: 'nextprot.auth0.com',
-//            icon: 'img/np.png'
-//        })
+        //        authProvider.init({
+        //            clientID: npSettings.auth0_cliendId,
+        //            callbackURL: npSettings.callback,
+        //            domain: 'nextprot.auth0.com',
+        //            icon: 'img/np.png'
+        //        })
 
         jwtInterceptorProvider.tokenGetter = ['ipCookie', function (ipCookie) {
             // Return the saved token
@@ -176,8 +176,8 @@
 
 
         $httpProvider.defaults.headers.common.Accept = 'application/json'
-            // Catch all
-            //.otherwise({redirectTo : '/404'});
+        // Catch all
+        //.otherwise({redirectTo : '/404'});
 
         // Without serve side support html5 must be disabled.
         $locationProvider.html5Mode(true);
@@ -188,7 +188,7 @@
 
 
     // define default behavior for all http request
-    errorInterceptor.$inject = ['$q', '$rootScope', '$log', '$location', 'flash','$injector']
+    errorInterceptor.$inject = ['$q', '$rootScope', '$log', '$location', 'flash', '$injector']
 
     function errorInterceptor($q, $rootScope, $log, $location, flash, $injector) {
         return {
@@ -219,7 +219,7 @@
                         message: "not authorized",
                         href: window.location.href
                     });
-//                    flash('alert-danger', "You are not authorized to access the url. Please login or review your privileges. If you think this is a problem, please report to support@nextprot.org.");
+                    //                    flash('alert-danger', "You are not authorized to access the url. Please login or review your privileges. If you think this is a problem, please report to support@nextprot.org.");
                     flash('alert-danger', "You session has expired. Please login again.");
                     console.log("gonna user logout");
                     $injector.get('user').logout();
@@ -256,11 +256,11 @@
             }
         };
     };
-    npCtrl.$inject = ['$scope', '$location', '$routeParams', 'metaService','$window', '$modal', 'flash'];
+    npCtrl.$inject = ['$scope', '$location', '$routeParams', 'metaService', '$window', '$modal', 'flash'];
 
     function npCtrl($scope, $location, $routeParams, metaService, $window, $modal, flash) {
         var that = this;
-        
+
         /**
          * detect IE
          * returns version of IE or false, if browser is not Internet Explorer
@@ -271,16 +271,16 @@
             // Test values; Uncomment to check result …
 
             // IE 10
-//             ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)';
+            //             ua = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)';
 
             // IE 11
             // ua = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko';
 
             // Edge 12 (Spartan)
-//             ua = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
+            //             ua = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
 
             // Edge 13
-//             ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
+            //             ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
 
             var msie = ua.indexOf('MSIE ');
             if (msie > 0) {
@@ -310,19 +310,19 @@
             var version = detectIE();
 
             console.log("BROWSER VERSION IS : ", version);
-            
-            var ieCompatible = [false,"12","13"];
 
-            if (version !== false && parseInt(version) < 12){
-                
+            var ieCompatible = [false, "12", "13"];
+
+            if (version !== false && parseInt(version) < 12) {
+
                 var scope = $scope.$new();
                 scope.version = version;
                 scope.userAgent = $window.navigator.userAgent;
 
-//                $scope.selected = {};
-//                angular.extend($scope.modal, {
-//                    type: action
-//                });
+                //                $scope.selected = {};
+                //                angular.extend($scope.modal, {
+                //                    type: action
+                //                });
 
                 var ieModal = $modal({
                     scope: scope,
@@ -335,7 +335,7 @@
         $scope.$on('$locationChangeSuccess', function (event, next, current) {
             //            var location = "/about/human-proteome";
             var location = $location.path();
-            
+
             that.h1 = "";
             //            var path = {path:location};
 
@@ -370,7 +370,7 @@
 
         //        var metaResource = $resource(metaUrl, {}, {get : {method: "GET", isArray:false}});  
 
-        var MetaService = function () {};
+        var MetaService = function () { };
 
         MetaService.prototype.getMetaTags = function (path) {
             var url = metaUrl + path;
@@ -385,36 +385,37 @@
 
         return new MetaService();
     }
-    
+
     nxBaseUrl.$inject = ['$resource', 'config'];
-    
-    function nxBaseUrl($resource, config){
-        
-        var nxBaseUrl = function () {};
-        
-        nxBaseUrl.prototype.getDomain = function(input){
-            if(config.api.environment === "pro"){
-                switch(input) {
-                    case "api": return config.api.API_URL ;
-                    case "search": return "https://search.nextprot.org" ;
-                    case "snorql": return "http://snorql.nextprot.org" ;
-                    case "sparql": return "https://sparql.nextprot.org" ;
+
+    function nxBaseUrl($resource, config) {
+
+        var nxBaseUrl = function () { };
+
+        nxBaseUrl.prototype.getDomain = function (input) {
+            if (config.api.environment === "pro") {
+                switch (input) {
+                    case "api": return config.api.API_URL;
+                    case "search": return "https://search.nextprot.org";
+                    case "snorql": return "http://snorql.nextprot.org";
+                    case "sparql": return "https://sparql.nextprot.org";
                 }
             }
             //Because dev is HTTPS
-            else if(config.api.environment === "dev" || (config.api.environment.indexOf("NX_") > -1)) {
-                switch(input) {
-                    case "api": return  config.api.API_URL ;
-                    case "search": return "https://dev-search.nextprot.org" ;
-                    case "snorql": return "http://dev-snorql.nextprot.org" ;
-                    case "sparql": return "https://dev-api.nextprot.org/sparql" ;
+            else if (config.api.environment === "dev" || (config.api.environment.indexOf("NX_") > -1)) {
+                switch (input) {
+                    case "api": return config.api.API_URL;
+                    case "search": return "https://dev-search.nextprot.org";
+                    case "snorql": return "http://dev-snorql.nextprot.org";
+                    case "sparql": return "https://dev-api.nextprot.org/sparql";
                 }
             }
-            else if(input === "sparql") {
+            else if (input === "sparql") {
                 return "http://" + config.api.environment + "-api.nextprot.org/sparql";
             }
-            else return "http://" + config.api.environment + "-" + input + ".nextprot.org";        }
-        
+            else return "http://" + config.api.environment + "-" + input + ".nextprot.org";
+        }
+
         return new nxBaseUrl();
     }
 
