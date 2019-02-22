@@ -63,4 +63,4 @@ gulp.task('compress', ['minify-css'] , () => {
 });
 
 
-gulp.task('default', ['copy-elements', 'build-elements', 'compress']);
+gulp.task('default', ['copy-elements', 'build-elements', 'minify-css']);
