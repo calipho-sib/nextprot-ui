@@ -108,7 +108,6 @@ app.use(function (req, res) {
 });
 
 http.createServer(app).listen(app.get('port'), function () {
-  console.log("HERE")
   console.log("Express server listening on port " + app.get('port'));
 });
 

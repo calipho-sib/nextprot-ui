@@ -58,9 +58,9 @@ gulp.task('minify-css', () => {
 
 gulp.task('compress', ['minify-css'] , () => {
     return gulp.src('build/js/*.js')
-          .pipe(uglify())
+          .pipe(uglify({ mangle: false }))
           .pipe(gulp.dest('./build/js'));
 });
 
 
-gulp.task('default', ['copy-elements', 'build-elements', 'minify-css']);
+gulp.task('default', ['copy-elements', 'build-elements', 'compress']);
