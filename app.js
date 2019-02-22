@@ -48,7 +48,6 @@ app.get('/viewers/*', function (req, res) {
 });
 
 app.all('/*/*/*.html', function (req, res, next) {
-  console.log("All" + req.url);
   res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'content-Type,x-requested-with');
@@ -56,7 +55,6 @@ app.all('/*/*/*.html', function (req, res, next) {
 });
 
 app.all('/*', function (req, res, next) {
-  console.log("All" + req.url);
   res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,HEAD,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'content-Type,x-requested-with');
@@ -106,7 +104,6 @@ app.get('/', function (req, res) {
 //
 // this use is called after all assets requests
 app.use(function (req, res) {
-  console.log("Rendering index")
   res.render('index.html');
 });
 
