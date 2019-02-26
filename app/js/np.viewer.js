@@ -9,39 +9,32 @@
         .directive('nextprotElement', nextprotElement)
         .directive('publicationElement', publicationElement)
 
-    nextprotElement.$inject = ['npSettings', '$location'];
-    function nextprotElement(npSettings, $location) {
+    nextprotElement.$inject = ['npSettings', '$location', 'viewerService'];
+    function nextprotElement(npSettings, $location, viewerService) {
 
         function setNextProtCustomElementName(scope, nxConfig) {
 
             var path = $location.$$path;
-
+            scope.link = viewerService.getEntryElementUrl();
             if (path.match(/^\/entry\/[^\/]+\/(function)?$/) != null) {
-                scope.link = '../../../elements/nextprot-elements/function-view.html';
                 scope.customElement = "function-view";
             }
             else if (path.match(/^\/entry\/[^\/]+\/medical$/) != null) {
-                scope.link = '../../../elements/nextprot-elements/medical-view.html';
                 scope.customElement = "medical-view";
             }
             else if (path.match(/^\/entry\/[^\/]+\/expression$/) != null) {
-                scope.link = '../../../elements/nextprot-elements/expression-view.html';
                 scope.customElement = "expression-view";
             }
             else if (path.match(/^\/entry\/[^\/]+\/interactions$/) != null) {
-                scope.link = '../../../elements/nextprot-elements/interactions-view.html';
                 scope.customElement = "interactions-view";
             }
             else if (path.match(/^\/entry\/[^\/]+\/localization$/) != null) {
-                scope.link = '../../../elements/nextprot-elements/localization-view.html';
                 scope.customElement = "localization-view";
             }
             else if (path.match(/^\/entry\/[^\/]+\/sequence$/) != null) {
-                scope.link = '../../../elements/nextprot-elements/sequence-view.html';
                 scope.customElement = "sequence-view";
             }
             else if (path.match(/^\/entry\/[^\/]+\/structures$/) != null) {
-                scope.link = '../../../elements/nextprot-elements/structures-view.html';
                 scope.customElement = "structures-view";
             }
             else if (path.match(/^\/blast\/.+/) != null) {
@@ -49,53 +42,42 @@
                 nxConfig.end = scope.seqEnd;
                 nxConfig.sequence = scope.sequence;
 
-                scope.link = '../../../elements/nextprot-elements/blast-view.html';
                 scope.customElement = "blast-view"
             }
             else if (path.match(/^\/entry\/[^\/]+\/proteomics$/) != null) {
-                scope.link = '../../../elements/nextprot-elements/proteomics-view.html';
                 scope.customElement = "proteomics-view";
             }
             else if (path.match(/^\/entry\/[^\/]+\/identifiers$/) != null) {
-                scope.link = '../../../elements/nextprot-elements/identifiers-view.html';
                 scope.customElement = "identifiers-view";
             }
             else if (path.match(/^\/entry\/[^\/]+\/publications$/) != null) {
-                scope.link = '../../../elements/nextprot-elements/publications-view.html';
                 nxConfig.pubType = "curated";
                 scope.customElement = "publications-view";
             }
             else if (path.match(/^\/entry\/[^\/]+\/computed_references$/) != null) {
-                scope.link = '../../../elements/nextprot-elements/publications-view.html';                
                 nxConfig.pubType = "additional";
                 scope.customElement = "publications-view";
             }
             else if (path.match(/^\/entry\/[^\/]+\/patents$/) != null) {
-                scope.link = '../../../elements/nextprot-elements/publications-view.html';
                 nxConfig.pubType = "patent";
                 scope.customElement = "publications-view";
             }
             else if (path.match(/^\/entry\/[^\/]+\/submissions$/) != null) {
-                scope.link = '../../../elements/nextprot-elements/publications-view.html';
                 nxConfig.pubType = "submission";
                 scope.customElement = "publications-view";
             }
             else if (path.match(/^\/entry\/[^\/]+\/web$/) != null) {
-                scope.link = '../../../elements/nextprot-elements/publications-view.html';
                 nxConfig.pubType = "web_resource";
                 scope.customElement = "publications-view";
             }
             else if (path.match(/^\/entry\/[^\/]+\/exons/) != null) {
-                scope.link = '../../../elements/nextprot-elements/exon-view.html';
                 scope.customElement = "exon-view"
             }
             else if (path.match(/^\/term\/[^\/]+\/?\/relationship-graph\/?/) != null) {
-                scope.link = '../../../elements/nextprot-elements/ancestor-graph-view.html';
                 scope.customElement = "ancestor-graph-view"
                 nxConfig.termAccession = scope.termName
             }
             else if (path.match(/^\/term\/[^\/]+\/?\/tree-browser\/?/) != null) {
-                scope.link = '../../../elements/nextprot-elements/tree-browser-view.html';
                 scope.customElement = "tree-browser-view"
                 nxConfig.termAccession = scope.termName
             }
@@ -119,11 +101,14 @@
                 nxConfig.goldOnly = scope.goldOnly;
 
                 setNextProtCustomElementName(scope, nxConfig);
-
-                element.html('<link rel="import" href="' + scope.link + '">')
+                var link = document.createElement('link');
+                link.href = scope.link;
+                link.rel = 'import';
+                link.addEventListener('load', function(e) {
+                  console.log('dynamic link loaded', e.target.href);
+                }); 
+                document.head.appendChild(link);
                 element.html('<' + scope.customElement + ' nx-config=' + JSON.stringify(nxConfig) + '></' + scope.customElement + '>');
-
-                console.log(JSON.stringify(nxConfig));
             }
             scope.$watch(attrs.nextprotElement, function (value) {
 
@@ -397,8 +382,8 @@
         });
     }
 
-    viewerService.$inject = ['$resource', '$http', 'config'];
-    function viewerService($resource, $http, config) {
+    viewerService.$inject = ['$resource', '$http', 'config', '$location'];
+    function viewerService($resource, $http, config, $location) {
 
 
         //skips authorization
@@ -438,6 +423,73 @@
 
         ViewerService.prototype.isHierarchic = function (termName) {
             return isHierarchicalOntology.get({ termName: termName });
+        };
+
+        ViewerService.prototype.getEntryElementUrl = function() {
+            var path = $location.$$path;            
+            var url;
+            if (path.match(/^\/entry\/[^\/]+\/(function)?$/) != null) {
+                url = '/elements/nextprot-elements/function-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/medical$/) != null) {
+                url = '/elements/nextprot-elements/medical-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/expression$/) != null) {
+                url = '../elements/nextprot-elements/expression-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/interactions$/) != null) {
+                url = '../elements/nextprot-elements/interactions-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/localization$/) != null) {
+                url = '../elements/nextprot-elements/localization-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/sequence$/) != null) {
+                url = '../elements/nextprot-elements/sequence-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/structures$/) != null) {
+                url = '../elements/nextprot-elements/structures-view.html';
+            }
+            else if (path.match(/^\/blast\/.+/) != null) {
+                url = '../elements/nextprot-elements/blast-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/proteomics$/) != null) {
+                url = '../elements/nextprot-elements/proteomics-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/identifiers$/) != null) {
+                url = '../elements/nextprot-elements/identifiers-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/publications$/) != null) {
+                url = '../elements/nextprot-elements/publications-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/computed_references$/) != null) {
+                url = '../elements/nextprot-elements/publications-view.html';                
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/patents$/) != null) {
+                url = '../elements/nextprot-elements/publications-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/submissions$/) != null) {
+                url = '../elements/nextprot-elements/publications-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/web$/) != null) {
+                url = '../elements/nextprot-elements/publications-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/exons/) != null) {
+                url = '../elements/nextprot-elements/exon-view.html';
+            }
+            else if (path.match(/^\/term\/[^\/]+\/?\/relationship-graph\/?/) != null) {
+                url = '../elements/nextprot-elements/ancestor-graph-view.html';
+            }
+            else if (path.match(/^\/term\/[^\/]+\/?\/tree-browser\/?/) != null) {
+                url = '../elements/nextprot-elements/tree-browser-view.html';
+            }
+            else if (path.match(/^\/term\/[^\/]+\/?/) != null) {
+                url = '../elements/nextprot-elements/term-view.html';
+            }
+            else {
+                return null;
+            }
+
+            return url;
         };
 
         return new ViewerService();
