@@ -93,7 +93,7 @@
         <ul id="page" class="submenu collapse in">
             <li class="submenu-header ellipsis">Curated publications</li>
             <li ng-class="activePage('publications')">
-                <a link-enabled="entryProps.publicationCounts.CURATED > 0" href="/entry/{{widgetEntry}}/publications" ng-class="{disabled: entryProps.publicationCounts.CURATED < 1}">
+                <a ng-show="entryProps.publicationCounts.CURATED > 0" href="/entry/{{widgetEntry}}/publications" ng-class="{disabled: entryProps.publicationCounts.CURATED < 1}">
                 <a href="/entry/{{widgetEntry}}/publications">
                     <span class="text">Curated publications</span>
                     <span class="number">
@@ -103,7 +103,7 @@
                 </a>
             </li>
             <li ng-class="activePage('computed_references')">
-                <a link-enabled="entryProps.publicationCounts.ADDITIONAL > 0" href="/entry/{{widgetEntry}}/computed_references" ng-class="{disabled: entryProps.publicationCounts.ADDITIONAL < 1}">
+                <a ng-show="entryProps.publicationCounts.ADDITIONAL > 0" href="/entry/{{widgetEntry}}/computed_references" ng-class="{disabled: entryProps.publicationCounts.ADDITIONAL < 1}">
                     <span class="text">Additional publications</span>
                     <span class="number">
                     <span class="label label-success" ng-bind="entryProps.publicationCounts.ADDITIONAL"></span>
@@ -111,7 +111,7 @@
                 </a>
             </li>
             <li ng-class="activePage('patents')">
-                <a link-enabled="entryProps.publicationCounts.PATENT > 0" href="/entry/{{widgetEntry}}/patents" ng-class="{disabled: entryProps.publicationCounts.PATENT < 1}">
+                <a ng-show="entryProps.publicationCounts.PATENT > 0" href="/entry/{{widgetEntry}}/patents" ng-class="{disabled: entryProps.publicationCounts.PATENT < 1}">
                     <span class="text">Patents</span>
                     <span class="number">
                     <span class="label label-success" ng-bind="entryProps.publicationCounts.PATENT"></span>
@@ -119,7 +119,7 @@
                 </a>
             </li>
             <li ng-class="activePage('submissions')">
-                <a link-enabled="entryProps.publicationCounts.SUBMISSION > 0" href="/entry/{{widgetEntry}}/submissions" ng-class="{disabled: entryProps.publicationCounts.SUBMISSION < 1}">
+                <a ng-show="entryProps.publicationCounts.SUBMISSION > 0" href="/entry/{{widgetEntry}}/submissions" ng-class="{disabled: entryProps.publicationCounts.SUBMISSION < 1}">
                     <span class="text">Submissions</span>
                     <span class="number">
                     <span class="label label-success" ng-bind="entryProps.publicationCounts.SUBMISSION"></span>
@@ -127,7 +127,7 @@
                 </a>
             </li>
             <li ng-class="activePage('web')">
-                <a link-enabled="entryProps.publicationCounts.WEB_RESOURCE > 0" href="/entry/{{widgetEntry}}/web" ng-class="{disabled: entryProps.publicationCounts.WEB_RESOURCE < 1}">
+                <a ng-show="entryProps.publicationCounts.WEB_RESOURCE > 0" href="/entry/{{widgetEntry}}/web" ng-class="{disabled: entryProps.publicationCounts.WEB_RESOURCE < 1}">
                     <span class="text">Web resources</span>
                     <span class="number">
                     <span class="label label-success" ng-bind="entryProps.publicationCounts.WEB_RESOURCE"></span>
