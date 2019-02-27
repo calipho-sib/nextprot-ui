@@ -121,18 +121,25 @@
         };
     }
 
-    publicationElement.$inject = ['npSettings'];
-    function publicationElement(npSettings) {
+    publicationElement.$inject = ['npSettings', 'viewerService'];
+    function publicationElement(npSettings, viewerService) {
 
         function link(scope, element, attrs) {
 
+            scope.link = viewerService.getEntryElementUrl();
             function renderElement(publiName) {
 
                 var nxConfig = {
                     env: npSettings.environment,
                     publicationId: publiName
                 };
-
+                var link = document.createElement('link');
+                link.href = scope.link;
+                link.rel = 'import';
+                link.addEventListener('load', function(e) {
+                  console.log('dynamic link loaded', e.target.href);
+                }); 
+                document.head.appendChild(link);
                 element.html('<publication-with-linked-entries-view' + ' nx-config=' + JSON.stringify(nxConfig) + '></publication-with-linked-entries-view>');
             }
             scope.$watch(attrs.publicationElement, function (value) {
@@ -460,6 +467,9 @@
             }
             else if (path.match(/^\/entry\/[^\/]+\/publications$/) != null) {
                 url = '../elements/nextprot-elements/publications-view.html';
+            }
+            else if (path.match(/publication\/[^\/]+/) != null) {
+                url = '../elements/nextprot-elements/publication-with-linked-entries-view.html';
             }
             else if (path.match(/^\/entry\/[^\/]+\/computed_references$/) != null) {
                 url = '../elements/nextprot-elements/publications-view.html';                
