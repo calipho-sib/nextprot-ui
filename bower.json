@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "jquery": "~2.1",
+    "jquery-ui": "1.11",
     "bootstrap": "~3",
     "underscore": "~1",
     "angular": "1.3.18",
@@ -43,11 +44,10 @@
     "iframe-resizer": "3.2.0",
     "angular-mocks": "1.2.19",
     "webcomponentsjs": "0.7.24",
-    "nextprot-elements": "https://github.com/calipho-sib/nextprot-elements.git#develop",
+    "nextprot-elements": "https://github.com/calipho-sib/nextprot-elements.git#build_optimization",
     "angular-auth0": "^3.0.1",
     "angular-lock": "^3.0.1",
     "auth0.js": "^9.7.1"
-
   },
   "devDependencies": {
     "angular-mocks": "latest"

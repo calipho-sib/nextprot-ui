@@ -171,6 +171,10 @@ div.section-content{
     padding-top:5px;
 }
 
+div.section-content#logo-section {
+    padding-top: 0px;
+}
+
 div.section-content, div.section-footer {
 	font-size: 0.9em;
 }
