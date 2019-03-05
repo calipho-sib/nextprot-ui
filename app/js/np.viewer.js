@@ -103,10 +103,7 @@
                 setNextProtCustomElementName(scope, nxConfig);
                 var link = document.createElement('link');
                 link.href = scope.link;
-                link.rel = 'import';
-                link.addEventListener('load', function(e) {
-                  console.log('dynamic link loaded', e.target.href);
-                }); 
+                link.rel = 'import'; 
                 document.head.appendChild(link);
                 element.html('<' + scope.customElement + ' nx-config=' + JSON.stringify(nxConfig) + '></' + scope.customElement + '>');
             }
