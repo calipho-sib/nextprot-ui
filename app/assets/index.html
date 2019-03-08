@@ -103,9 +103,9 @@
                             "keywords": "nextprot,Human,Proteins,Proteome,Proteomics,protein database,protein knowledgebase,protein resource,human protein,human proteome,function,medical,disease,expression,interactions,sequence,isoform,mutation,variant,phenotypes,proteomics,peptide,structure,3D,annotation,biocuration,chromosomes,protein validation,protein-coding genes,post-translational modifications,ptm,data integration,systems biology,genetic variations,UniProt",
                             "distribution": [
                                 {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/xml/nextprot_all.xml.gz", "fileFormat": "XML"},
-                                {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/rdf/", "fileFormat": "RDF"},
+                                {"@type": "DataDownload", "fileFormat": "RDF"},
                                 {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/peff/nextprot_all.peff.gz", "fileFormat": "PEFF"},
-                                {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/md5/nextprot_sequence_md5.txt", "fileFormat": "MD5"},
+                                {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/md5/nextprot_sequence_md5.txt", "fileFormat": "TXT"},
                                 {"@type": "DataDownload", "contentUrl": "https://api.nextprot.org/export/entries/all.fasta", "fileFormat": "FASTA"}
                             ],
                             "potentialAction": {
@@ -119,6 +119,7 @@
                             "@type": "Dataset",
                             "name": "Caloha",
                             "description": "An ontology of human anatomy and human cell types.",
+                            "url": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/caloha.obo",
                             "keywords": "human body, anatomy, ontology, tissues, cell types, organs, developmental stage",
                             "distribution": {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/caloha.obo", "fileFormat": "OBO"},
                             "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"}
@@ -127,6 +128,7 @@
                             "@type": "Dataset",
                             "name": "ICEPO",
                             "description": "An ontology that allows one to annotate the electrophysiological parameters of the voltage-gated class of ion channels.",
+                            "url": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/icepo.obo",
                             "keywords": "ion channels, electrophysiology, ion channel gating, conductance, ion selectivity, activation, inactivation, recovery, deactivation, reopening, closed-state inactivation",
                             "distribution": {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/icepo.obo", "fileFormat": "OBO"},
                             "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
@@ -158,8 +160,9 @@
                             "@type": "Dataset",
                             "name": "Chromosome reports",
                             "description": "A set of 26 files, each one listing all the neXtProt entries encoded on a given chromosome (chromosomes 1-22, X, Y, mitochondrial genome (MT), or unknown genomic location), along with their genomic coordinates and a brief summary of the available annotations for each of them.",
+                            "url": "ftp://ftp.nextprot.org/pub/current_release/chr_reports/",
                             "keywords": "human genes, chromosomes, mitochondrial genome, genomic coordinates, chromosomal location, coding strand, protein existence, PE1, PE2, PE3, PE4, PE5",
-                            "distribution": {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/chr_reports/", "fileFormat": "TXT"},
+                            "distribution": {"@type": "DataDownload", "fileFormat": "TXT"},
                                                "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
                             "citation": {
                                 "@type": "ScholarlyArticle",
@@ -193,8 +196,9 @@
                             "@type": "Dataset",
                             "name": "Cancer portal",
                             "description": "Portal which provides information about the functional impact of genetic variants and artificially generated mutants in cancer genes",
+                            "url": "https://www.nextprot.org/portals/breast-cancer",
                             "keywords": "BRCA1,Biological database,Cancer,Functional defect assessment,Genetic variants,Molecular phenotypes",
-                            "distribution": {"@type": "DataDownload", "contentUrl": "https://www.nextprot.org/portals/breast-cancer", "fileFormat": "CSV"},
+                            "distribution": {"@type": "DataDownload", "fileFormat": "CSV"},
                             "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
                             "citation": {
                                 "@type": "ScholarlyArticle",
@@ -228,8 +232,9 @@
                             "@type": "Dataset",
                             "name": "Ion channel portal",
                             "description": "Portal which provides information about the functional impact of genetic variants and artificially generated mutants in voltage-gated sodium channel genes",
+                            "url": "https://www.nextprot.org/portals/navmut",
                             "keywords": "clinical interpretation of variants, databases, genetics variants,pathogenicity,phenotype,voltage-gated sodium channel",
-                            "distribution": {"@type": "DataDownload", "contentUrl": "https://www.nextprot.org/portals/navmut", "fileFormat": "CSV"},
+                            "distribution": {"@type": "DataDownload", "fileFormat": "CSV"},
                             "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
                             "citation": {
                                 "@type": "ScholarlyArticle",
@@ -262,8 +267,9 @@
                             "@type": "Dataset",
                             "name": "Protein kinase function portal",
                             "description": "Portal which provides information about the function of protein kinases",
+                            "url": "https://www.nextprot.org/portals/kinase-function",
                             "keywords": "databases, protein kinase,phosphorylation, protein-protein interactions, biological process, protein function",
-                            "distribution": {"@type": "DataDownload", "contentUrl": "https://www.nextprot.org/portals/kinase-function", "fileFormat": "CSV"},
+                            "distribution": {"@type": "DataDownload", "contentUrl": "https://www.nextprot.org/viewers/portals/kinase-function/app/index.html#", "fileFormat": "CSV"},
                             "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"}
                         }    
                     ]
