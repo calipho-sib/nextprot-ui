@@ -44,13 +44,19 @@
             <!--</a>-->
             <!--</li>-->
             <li ng-class="activePage('relationship-graph')">
-                <a link-enabled="hierarchicTerminology" href="/term/{{widgetTerm}}/relationship-graph" ng-class="{disabled: !hierarchicTerminology}">
+                <a ng-if="hierarchicTerminology" href="/term/{{widgetTerm}}/relationship-graph" ng-class="{disabled: !hierarchicTerminology}">
                     <span class="text">Relationship graph</span>
+                </a>
+                <a ng-if="!hierarchicTerminology" ng-class="{disabled: true}">
+                  <span class="text">Relationship graph</span>
                 </a>
             </li>
             <li ng-class="activePage('tree-browser')">
-                <a link-enabled="hierarchicTerminology" href="/term/{{widgetTerm}}/tree-browser" ng-class="{disabled: !hierarchicTerminology}">
+                <a ng-if="hierarchicTerminology" href="/term/{{widgetTerm}}/tree-browser" ng-class="{disabled: !hierarchicTerminology}">
                     <span class="text">Tree browser</span>
+                </a>
+                <a ng-if="!hierarchicTerminology" ng-class="{disabled: true}">
+                  <span class="text">Tree browser</span>
                 </a>
             </li>
         </ul>
