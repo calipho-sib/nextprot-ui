@@ -6,32 +6,27 @@
         .controller('chromosomeCtrl', chromosomeCtrl);
 
     module.run(function ($http, config, chromosomeService) {
-        $http.get(config.api.API_URL + '/chromosomes.json')
-            .success(function (response) {
-                var chromosomes = {
-                    names: ["all"],
-                    pages : {
-                        "all": {
-                            "url": "all-chromosomes",
-                            "title": "All chromosomes"
-                        }
-                    }
-                };
-
-                chromosomes.names = chromosomes.names.concat(response);
-                var arrayLength = response.length;
-                for (var i = 0; i < arrayLength; i++) {
-                    chromosomes.pages[response[i]] = {
-                        "url": "chromosome-"+response[i],
-                        "title": "Chromosome "+response[i]
-                    };
+        var chromosomeList = [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "X", "Y", "MT", "unknown" ];
+        var chromosomes = {
+            names: ["all"],
+            pages : {
+                "all": {
+                    "url": "all-chromosomes",
+                    "title": "All chromosomes"
                 }
-                chromosomeService.setChromosomes(chromosomes);
-            })
-            .catch(function (data, status) {
-                var message = status + ": cannot access list of chromosomes from '" + config.api.API_URL + "/chromosome-names.json'";
-                flash("alert-info", message);
-            });
+            }
+        }
+        chromosomes.names = chromosomes.names.concat(chromosomeList);
+        var arrayLength = chromosomeList.length;
+        for (var i = 0; i < arrayLength; i++) {
+            chromosomes.pages[chromosomeList[i]] = {
+                "url": "chromosome-"+chromosomeList[i],
+                "title": "Chromosome "+chromosomeList[i]
+            };
+        }
+        chromosomeService.setChromosomes(chromosomes);
+           
+            
     });
 
     chromosomeCtrl.$inject = ['$scope', 'chromosomeService', '$location', '$routeParams', 'npSettings', 'flash'];
