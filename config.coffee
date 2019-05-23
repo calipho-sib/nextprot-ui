@@ -18,6 +18,7 @@ exports.config =
         before: [
             'bower_components/webcomponentsjs/webcomponents-lite.min.js',
             'bower_components/jquery/dist/jquery.js',
+            'bower_components/jquery-ui/jquery-ui.js',
             'bower_components/bootstrap/dist/js/bootstrap.js',
             'bower_components/angular/angular.js',
             'bower_components/codemirror/mode/sparql/sparql.js',
