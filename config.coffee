@@ -2,7 +2,7 @@ exports.config =
   # See docs at http://brunch.readthedocs.org/en/latest/config.html.
   conventions:
     assets:  /^app\/assets\//
-    ignored: /^(bower_components\/bootstrap-less(-themes)?|app\/styles\/overrides|(.*?\/)?[_]\w*)/
+    ignored: [/^(bower_components\/bootstrap-less(-themes)?|app\/styles\/overrides|(.*?\/)?[_]\w*)/,'bower_components/hydrolysis/hydrolysis.js','bower_components/viz.js/viz.js']
   modules:
     definition: false
     wrapper: false
