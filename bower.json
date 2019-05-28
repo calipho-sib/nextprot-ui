@@ -21,9 +21,6 @@
   "overrides": {
     "webcomponentsjs": {
       "main": "webcomponents-lite.min.js"
-    },
-    "auth0-lock":{
-      "main":"build/lock.min.js"
     }
   },
   "dependencies": {
