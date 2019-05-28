@@ -2,7 +2,8 @@ exports.config =
   # See docs at http://brunch.readthedocs.org/en/latest/config.html.
   conventions:
     assets:  /^app\/assets\//
-    ignored: [/^(bower_components\/bootstrap-less(-themes)?|app\/styles\/overrides|(.*?\/)?[_]\w*)/,'bower_components/hydrolysis/hydrolysis.js','bower_components/viz.js/viz.js']
+    ignored: [/^(bower_components\/bootstrap-less(-themes)?|app\/styles\/overrides|(.*?\/)?[_]\w*)/,'bower_components/hydrolysis/hydrolysis.js','bower_components/viz.js/viz.js','bower_components/bootstrap-select/dist/js/bootstrap-select.js','bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js','bower_components/bootstrap-timepicker/js/bootstrap-timepicker.js','bower_components/web-animations-js/web-animations.min.js'
+    ,'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css','bower_components/bootstrap-select/dist/css/bootstrap-select.css','bower_components/bootstrap-select/less/bootstrap-select.less','bower_components/bootstrap/less/bootstrap.less','bower_components/font-awesome/less/font-awesome.less','bower_components/bootstrap/dist/css/bootstrap.css']
   modules:
     definition: false
     wrapper: false
@@ -13,7 +14,6 @@ exports.config =
       joinTo:
         'js/app.js': /^app/
         'js/vendor.js': /^(bower_components|vendor\/scripts)/
-        
       order:
         before: [
             'bower_components/webcomponentsjs/webcomponents-lite.min.js',
@@ -22,7 +22,7 @@ exports.config =
             'bower_components/bootstrap/dist/js/bootstrap.js',
             'bower_components/angular/angular.js',
             'bower_components/codemirror/mode/sparql/sparql.js',
-            'bower_components/showdown/src/showdown.js',
+            'bower_components/showdown/src/showdown.js'
         ]
 
     stylesheets:
