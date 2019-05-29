@@ -118,8 +118,8 @@
         };
     }
 
-    publicationElement.$inject = ['npSettings', 'viewerService'];
-    function publicationElement(npSettings, viewerService) {
+    publicationElement.$inject = ['npSettings', 'viewerService','$location'];
+    function publicationElement(npSettings, viewerService,$location) {
 
         function link(scope, element, attrs) {
 
@@ -137,7 +137,8 @@
                   console.log('dynamic link loaded', e.target.href);
                 }); 
                 document.head.appendChild(link);
-                element.html('<publication-with-linked-entries-view' + ' nx-config=' + JSON.stringify(nxConfig) + '></publication-with-linked-entries-view>');
+                var selectedEntry=$location.$$hash;
+                element.html('<publication-with-linked-entries-view ' + ' nx-config=' + JSON.stringify(nxConfig) + ' selected-entry=' + JSON.stringify(selectedEntry) +  ' ></publication-with-linked-entries-view>');
             }
             scope.$watch(attrs.publicationElement, function (value) {
 
