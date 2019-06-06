@@ -1,7 +1,8 @@
 const gulp = require('gulp');
 const vulcanize = require('gulp-vulcanize');
 const uglify = require('gulp-uglify');
-const htmlmin = require('gulp-htmlmin');
+// const htmlmin = require('gulp-htmlmin');
+const htmlmin = require('gulp-html-minifier');
 const pump = require('pump');
 const dest = require('dest');
 const del = require('del');
@@ -19,7 +20,14 @@ gulp.task('vulcanize', function () {
         .pipe(vulcanize({
             strip: true,
             inlineScripts: true,
-            inlineCss: true
+            inlineCss: true,
+            stripComments : true
+        }))
+        .pipe(htmlmin({
+            // collapseWhitespace: true
+            minifyJS:true,
+            minifyCSS:true,
+            removeComments: true
         }))
         .pipe(gulp.dest('./build/elements/'));
 });
@@ -40,6 +48,12 @@ gulp.task('build-elements', function () {
             strip: true,
             inlineScripts: true,
             inlineCss: true
+        }))
+        .pipe(htmlmin({
+            collapseWhitespace: true,
+            minifyJS:true,
+            minifyCSS:true,
+            removeComments: true
         }))
         .pipe(gulp.dest('./build/elements/'));
 });

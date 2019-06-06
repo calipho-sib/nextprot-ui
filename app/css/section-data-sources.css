@@ -23,13 +23,13 @@
 
 #source-hpa {
     top: 7px;
-    left: 28px;
+    left: 20px;
     height: 15px;
     transition: 0.2s all ease;
 }
 #source-hpa:hover {
     top: 7px;
-    left: 20px;
+    left: 10px;
     height: 17px;
 }
 

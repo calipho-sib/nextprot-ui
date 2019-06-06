@@ -6,7 +6,7 @@
         'ngSanitize',
         'ngResource',
         'ngRoute',
-        'ngAnimate',
+        // 'ngAnimate',
         'ngCookies',
         'ipCookie',
         'npHelp',
