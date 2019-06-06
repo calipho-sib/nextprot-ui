@@ -24,53 +24,10 @@
             return content;
         }
         $scope.releaseInfosFormatted = formatReleaseInfos(RELEASE_INFOS);
+        $scope.releaseInfo = releaseInfoService.getReleaseInfo();
 
-        $scope.releaseInfo = {
-            databaseRelease: "",
-            apiRelease: "",
-            datasources: [],
-            tagStatistics: []
-        };
-
-        // fetching release info versions
-        releaseInfoService.getReleaseInfo().$promise.then(function(releaseInfo) {
-
-            $scope.releaseInfo.databaseRelease = releaseInfo.versions.databaseRelease;
-            $scope.releaseInfo.apiRelease = releaseInfo.versions.apiRelease;
-        });
-
-        // fetching release data sources
-        releaseInfoService.getReleaseDataSources().$promise.then(function(releaseDataSources) {
-//            console.log("releaseDataSources", releaseDataSources.dataSources.datasources);
-
-            _.each(releaseDataSources.dataSources.datasources, function (ds) {
-                $scope.releaseInfo.datasources.push(ds);
-            });
-        });
-
-        // fetching release stats
-        releaseInfoService.getReleaseStats().$promise.then(function(data) {
-
-            _.each(data.releaseStats.tagStatistics, function (ts) {
-                var stat = {
-                    description: ts.description,
-                    count: ts.count
-                };
-
-                var dbSpecies = _.find($scope.releaseInfo.tagStatistics, function (obj) {
-                    return obj.category == ts.categroy
-                });
-                if (dbSpecies) {
-                    dbSpecies.data.push(stat);
-                } else {
-                    $scope.releaseInfo.tagStatistics.push({
-                        category: ts.categroy,
-                        data: [stat]
-                    });
-                }
-
-            });
-        });
+        // fetching release info version
+        
 
 
         /*
@@ -105,8 +62,8 @@
         });*/
     }
 
-    releaseInfoService.$inject = ['$resource', 'config'];
-    function releaseInfoService($resource, config) {
+    releaseInfoService.$inject = [ '$resource', 'config'];
+    function releaseInfoService( $resource, config) {
 
         var releaseInfoResource = $resource(
             config.api.API_URL + '/release-info.json',
@@ -123,21 +80,57 @@
             {},
             {get : {method: "GET"}});
 
-        var ReleaseInfoService = function () {
+        var releaseInfo = {
+            databaseRelease : "",
+            apiRelease: "",
+            dataSources: [],
+            tagStatistics: []
 
+        }
+        var ReleaseInfoService = function () {
+            // Calls the resources and fetch release info
+            releaseInfoResource.get().$promise.then(function(data) {
+                releaseInfo.databaseRelease = data.versions.databaseRelease;
+                releaseInfo.apiRelease = data.versions.apiRelease;
+            });
+
+            // fetching release data sources
+            releaseDataSources.get().$promise.then(function(data) {
+//                console.log("releaseDataSources", releaseDataSources.dataSources.datasources);
+
+                _.each(data.dataSources.datasources, function (ds) {
+                    releaseInfo.dataSources.push(ds);
+                });
+            });
+
+            // fetching release stats
+            releaseStatsResource.get().$promise.then(function(data) {
+
+                _.each(data.releaseStats.tagStatistics, function (ts) {
+                    var stat = {
+                        description: ts.description,
+                        count: ts.count
+                    };
+
+                    var dbSpecies = _.find(releaseInfo.tagStatistics, function (obj) {
+                        return obj.category == ts.categroy
+                    });
+                    if (dbSpecies) {
+                        dbSpecies.data.push(stat);
+                    } else {
+                        releaseInfo.tagStatistics.push({
+                            category: ts.categroy,
+                            data: [stat]
+                        });
+                    }
+
+                });
+            });
         };
 
         ReleaseInfoService.prototype.getReleaseInfo = function () {
-            return releaseInfoResource.get();
-        };
-
-        ReleaseInfoService.prototype.getReleaseStats = function () {
-            return releaseStatsResource.get();
-        };
-
-        ReleaseInfoService.prototype.getReleaseDataSources = function () {
-            return releaseDataSources.get();
-        };
+            return releaseInfo;
+        }
 
         return new ReleaseInfoService();
     }
