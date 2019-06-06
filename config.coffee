@@ -1,3 +1,5 @@
+versionNumber = (Date.now());
+vendorVersionName = "js/vendor_"+versionNumber+".js"
 exports.config =
   # See docs at http://brunch.readthedocs.org/en/latest/config.html.
   conventions:
@@ -13,7 +15,7 @@ exports.config =
     javascripts:
       joinTo:
         'js/app.js': /^app/
-        'js/vendor.js': /^(bower_components|vendor\/scripts)/
+        # 'js/vendor.js': /^(bower_components|vendor\/scripts)/
       order:
         before: [
             'bower_components/webcomponentsjs/webcomponents-lite.min.js',
@@ -50,8 +52,10 @@ exports.config =
     #     {!version!}, {!name!}, {!date!}, {!timestamp!}
     # using information from package.json
     map:
-      distRelease: -> (Date.now())
+      distRelease: -> versionNumber
+      vendorVersion: -> versionNumber
 
 
   # Enable or disable minifying of result js / css files.
   # minify: true
+exports.config.files.javascripts.joinTo[vendorVersionName] = /^(bower_components|vendor\/scripts)/
