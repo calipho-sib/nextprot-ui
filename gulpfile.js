@@ -45,6 +45,7 @@ gulp.task('copy-elements', function () {
 gulp.task('build-elements', function () {
     return gulp.src('./bower_components/nextprot-elements/external-elements.html')
         .pipe(vulcanize({
+            stripExcludes: ['./bower_components/font-roboto/roboto.html'],
             strip: true,
             inlineScripts: true,
             inlineCss: true

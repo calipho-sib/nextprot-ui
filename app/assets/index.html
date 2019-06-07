@@ -23,8 +23,7 @@
     <meta name="author" content="CALIPHO Team - SIB - Swiss Institute of Bioinformatics">
     <meta name="fragment" content="!">
     <meta http-equiv="expires" content="0">
-    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
-    <link href='/elements/external-elements.html' rel='import' type='text/html'>
+    <link href='{!endpoint!}elements/external-elements.html' rel='import' type='text/html'>
     <link rel="icon" href="./img/np-x.png">
 
     <!--<base href="/protosearch/" />-->
@@ -42,8 +41,8 @@
 
     <!--  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:600' rel='stylesheet' type='text/css'>-->
 
-    <link rel="stylesheet" href="css/vendor.css?release={!distRelease!}">
-    <link rel="stylesheet" href="css/app.css?release={!distRelease!}">
+    <link rel="stylesheet" href="{!endpoint!}css/vendor_{!uiVersion!}.css?release={!distRelease!}">
+    <link rel="stylesheet" href="{!endpoint!}css/app_{!uiVersion!}.css?release={!distRelease!}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <script>
@@ -669,7 +668,19 @@
     </div>
 
     <!--<flash:msg></flash:msg>-->
-    <div ng-include="'partials/errors/alert-message.html'"></div>
+    <!-- <div ng-include="'partials/errors/alert-message.html'"> -->
+    <div>
+        <ul ng-controller="flashCtrl" style="position: fixed;top: -2px;left: 15%;right: 15%;z-index:10010;opacity:0.9">
+            <li style="list-style: none " ng-repeat="m in messageList">
+                <div class="flashmsg alert {{m.level}} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span></button>
+                    <span ng-bind="m.text"></span>
+                </div>
+            </li>
+        </ul>
+            
+    </div>
 
     <!-- Masthead
 ================================================== -->
@@ -731,8 +742,11 @@ blue customized from kuler blue: 14ADC2
         }
     </script>
     <!-- <script defer src="https://d2t3grwcyftpfv.cloudfront.net/js/vendor.js?release={!distRelease!}"></script> -->
-    <script defer src="https://d2t3grwcyftpfv.cloudfront.net/js/vendor_{!vendorVersion!}.js?release={!distRelease!}"></script>
-    <script defer src="js/app.js?release={!distRelease!}"></script>
+    <!-- <script defer src="https://d2t3grwcyftpfv.cloudfront.net/js/vendor_{!vendorVersion!}.js?release={!distRelease!}"></script> -->
+    
+    <script defer src="{!endpoint!}js/vendor_{!uiVersion!}.js?release={!distRelease!}"></script>
+    <script defer src="{!endpoint!}js/app_{!uiVersion!}.js?release={!distRelease!}"></script>
+    
 </body>
 
 </html>

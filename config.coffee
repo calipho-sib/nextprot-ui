@@ -1,5 +1,16 @@
+production_environnement = false
+
+# endpoint = if production_environnement then "https://d2t3grwcyftpfv.cloudfront.net/" else ""
+
+endpoint = if production_environnement then "https://d2t3grwcyftpfv.cloudfront.net/" else ""
+css_endpoint = if production_environnement then "https://d2t3grwcyftpfv.cloudfront.net/" else "../"
+
 versionNumber = (Date.now());
-vendorVersionName = "js/vendor_"+versionNumber+".js"
+vendorVersionNameJs = "js/vendor_"+versionNumber+".js"
+appVersionNameJs = "js/app_"+versionNumber+".js"
+vendorVersionNameCss = "css/vendor_"+versionNumber+".css"
+appVersionNameCss = "css/app_"+versionNumber+".css"
+
 exports.config =
   # See docs at http://brunch.readthedocs.org/en/latest/config.html.
   conventions:
@@ -13,9 +24,7 @@ exports.config =
     public: 'build'
   files:
     javascripts:
-      joinTo:
-        'js/app.js': /^app/
-        # 'js/vendor.js': /^(bower_components|vendor\/scripts)/
+      joinTo : {}
       order:
         before: [
             'bower_components/webcomponentsjs/webcomponents-lite.min.js',
@@ -28,9 +37,7 @@ exports.config =
         ]
 
     stylesheets:
-      joinTo:
-        'css/vendor.css': /^(bower_components|vendor\/styles)/
-        'css/app.css': /^app/
+      joinTo: {}
       order:
         before: [
           'bower_components/bootstrap/dist/css/bootstrap.css',
@@ -53,9 +60,15 @@ exports.config =
     # using information from package.json
     map:
       distRelease: -> versionNumber
-      vendorVersion: -> versionNumber
+      uiVersion: -> versionNumber
+      cssEndpoint: -> css_endpoint
+      endpoint: -> endpoint
+
 
 
   # Enable or disable minifying of result js / css files.
   # minify: true
-exports.config.files.javascripts.joinTo[vendorVersionName] = /^(bower_components|vendor\/scripts)/
+exports.config.files.javascripts.joinTo[vendorVersionNameJs] = /^(bower_components|vendor\/scripts)/
+exports.config.files.javascripts.joinTo[appVersionNameJs] = /^app/
+exports.config.files.stylesheets.joinTo[vendorVersionNameCss] = /^(bower_components|vendor\/styles)/
+exports.config.files.stylesheets.joinTo[appVersionNameCss] = /^app/
