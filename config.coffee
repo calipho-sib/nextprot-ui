@@ -7,7 +7,7 @@ css_endpoint = if production_environnement then "https://d2t3grwcyftpfv.cloudfro
 
 versionNumber = (Date.now());
 vendorVersionNameJs = "js/vendor_"+versionNumber+".js"
-appVersionNameJs = "js/app_"+versionNumber+".js"
+appVersionNameJs = "js/app.js"
 vendorVersionNameCss = "css/vendor_"+versionNumber+".css"
 appVersionNameCss = "css/app_"+versionNumber+".css"
 
