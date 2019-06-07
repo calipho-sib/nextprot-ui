@@ -2,7 +2,7 @@ production_environnement = false
 
 # endpoint = if production_environnement then "https://d2t3grwcyftpfv.cloudfront.net/" else ""
 
-endpoint = if production_environnement then "https://d2t3grwcyftpfv.cloudfront.net/" else ""
+endpoint = if production_environnement then "https://d2t3grwcyftpfv.cloudfront.net/" else "/"
 css_endpoint = if production_environnement then "https://d2t3grwcyftpfv.cloudfront.net/" else "../"
 
 versionNumber = (Date.now());
