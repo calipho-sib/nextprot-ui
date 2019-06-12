@@ -1,11 +1,12 @@
-production_environnement = false
+production_environnement = true;
+local_environnement = false;
 
 # endpoint = if production_environnement then "https://d2t3grwcyftpfv.cloudfront.net/" else ""
 
-endpoint = if production_environnement then "https://d2t3grwcyftpfv.cloudfront.net/" else "/"
+endpoint = if production_environnement then "https://d2t3grwcyftpfv.cloudfront.net" else ""
 css_endpoint = if production_environnement then "https://d2t3grwcyftpfv.cloudfront.net/" else "../"
 
-versionNumber = (Date.now());
+versionNumber = if local_environnement then "1" else (Date.now());
 vendorVersionNameJs = "js/vendor_"+versionNumber+".js"
 appVersionNameJs = "js/app.js"
 vendorVersionNameCss = "css/vendor_"+versionNumber+".css"

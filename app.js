@@ -38,7 +38,6 @@ if ('development' == env) {
   });
 };
 
-
 //TEMPORARY FOR NEW DESIGN IMPLEMENTATION
 app.get('/viewers/*', function (req, res) {
   console.log("redirecting viewers");
