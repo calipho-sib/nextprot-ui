@@ -3,7 +3,7 @@
 angular.module('np.version', [])
 
 .constant('RELEASE_INFOS', {
-    'version': '2.22.7',
+    'version': '2.22.8',
     'branch': 'BRANCH_NAME',
     "isProduction": 'IS_PRODUCTION', // i.e 'true'
     'build': 'BUILD_NUMBER', // '926'
