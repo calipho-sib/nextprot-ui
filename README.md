@@ -20,7 +20,7 @@ Backends
 Installation
 ------------
 
-> npm install # node v6.10+ worked with polymer 1.0
+> npm install # node v6.10+ worked with polymer 1.0  
 > bower install   
 > brunch build   
 > gulp (Gulp was included to run the polymer vulcanize. It is temporary solution, the polymer build procedure should be moved to nextprot-elements. )
@@ -32,7 +32,7 @@ Updating nextprot-elements module dependency
 Prerequisites:
 The new version of nextprot-elements must have been pushed on gthub
 
-> ./node_modules/.bin/bower update
+> ./node_modules/.bin/bower update  
 > ./node_modules/.bin/gulp
 > node app
 
