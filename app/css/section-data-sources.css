@@ -58,38 +58,50 @@
 }
 
 #source-cosmic {
-    top: 112px;
+    /* top: 112px;
     left: -5px;
+    height: 15px; */
+    top: 102px;
+    left: -10px;
     height: 15px;
     transition: 0.2s all ease;
 }
 #source-cosmic:hover {
-    top: 112px;
+    /* top: 112px;
     left: -10px;
+    height: 18px; */
+    top: 102px;
+    left: -20px;
     height: 18px;
 }
 
 #source-uniprot {
-    bottom: 4px;
+    /* bottom: 4px;
     left: 0px;
-    height: 35px;
+    height: 35px; */
+    bottom: 20px;
+    left: -5px;
+    height: 30px;
     transition: 0.2s all ease;
 }
 #source-uniprot:hover {
-    bottom: 4px;
+    /* bottom: 4px;
     left: -5px;
-    height: 38px;
+    height: 38px; */
+    bottom: 15px;
+    left: -10px;
+    height: 35px;
 }
 
 #source-uniprot-goa {
-    top: 112px;
-    left: 132px;
+    top: 108px;
+    left: 136px;
     font-size: 0.9em;
     transition: 0.2s all ease;
 }
 #source-uniprot-goa:hover {
-    top: 112px;
-    left: 132px;
+    top: 106px;
+    left: 133px;
     font-size: 1em;
 }
 
@@ -118,15 +130,32 @@
 }
 
 #source-glyconnect {
-    bottom: 5px;
+    /* bottom: 5px;
     left: 132px;
-    height: 35px;
+    height: 35px; */
+    bottom: 15px;
+    left: 140px;
+    height: 30px;
     transition: 0.2s all ease;
 }
 #source-glyconnect:hover {
-    bottom: 5px;
+    /* bottom: 5px;
     left: 132px;
-    height: 38px;
+    height: 38px; */
+    bottom: 12px;
+    left: 137px;
+    height: 35px;
+}
+#source-gnomad {
+    bottom: 15px;
+    left: 70px;
+    height: 20px;
+    transition: 0.2s all ease;
+}
+#source-gnomad:hover {
+    bottom: 10px;
+    left: 65px;
+    height: 25px;
 }
 
 /* The animation code */
