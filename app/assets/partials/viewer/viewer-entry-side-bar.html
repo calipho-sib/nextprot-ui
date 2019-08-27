@@ -175,6 +175,7 @@
         <!-- START 2nd Level Menu -->
         <ul id="community" class="submenu collapse in">
             <li class="submenu-header ellipsis">Community</li>
+
 <!--
             <li>
                 <a href="component-sortable.html">
@@ -182,6 +183,12 @@
                 </a>
             </li>
 -->
+
+            <li ng-class="activePage('gh/zhanglabs/COFACTOR')">
+                <a href="/entry/{{widgetEntry}}/gh/zhanglabs/COFACTOR">
+                    <span class="text"><span ng-bind="entryProps.geneName"></span> I-TASSER/COFACTOR</span>
+                </a>
+            </li>
             <li ng-class="activePage('gh/Alain-Gateau/Protein-3D-structure')">
                 <a href="/entry/{{widgetEntry}}/gh/Alain-Gateau/Protein-3D-structure">
                     <span class="text"><span ng-bind="entryProps.geneName"></span> 3D structure</span>
