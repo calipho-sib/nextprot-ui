@@ -86,7 +86,7 @@
                 scope.customElement = "term-view"
                 nxConfig.termAccession = scope.termName
             }
-            else if (path.match(/^\/tools\/digestion-tool$/) != null) {
+            else if (path.match(/^\/tools\/protein-digestion$/) != null) {
                 scope.customElement = "digestion-overview";
                 // scope.customElement = "medical-view";
             }
@@ -173,7 +173,7 @@
             .when('/portals/:pn1', { templateUrl: '/partials/viewer/portal-viewer.html' })
             //            .when('/help/:help', {templateUrl: '/partials/doc/main-doc.html'})
 
-            .when('/tools/digestion-tool', gve)
+            .when('/tools/protein-digestion', gve)
             .when('/tools/:t1', { templateUrl: '/partials/viewer/global-viewer.html' })
 
             .when('/view', gv)
@@ -500,7 +500,7 @@
             else if (path.match(/^\/term\/[^\/]+\/?/) != null) {
                 url = '../elements/nextprot-elements/term-view.html';
             }
-            else if (path.match(/^\/tools\/digestion-tool$/) != null) {
+            else if (path.match(/^\/tools\/protein-digestion$/) != null) {
                 url = '../elements/nextprot-elements/digestion-overview.html';
                 // url = '../elements/nextprot-elements/medical-view.html';
             }
