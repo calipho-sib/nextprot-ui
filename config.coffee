@@ -1,3 +1,16 @@
+
+####### TO DEVELOP ON LOCAL :
+#production_environnement = false;
+#local_environnement = true;
+
+####### TO PUSH DEV AND ALPHA : 
+#production_environnement = false;
+#local_environnement = false;
+
+####### TO PUSH T0 PROD : 
+#production_environnement = true;
+#local_environnement = false;
+
 production_environnement = false;
 local_environnement = false;
 
