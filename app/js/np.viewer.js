@@ -604,8 +604,11 @@
             return {
                 "communityMode": true,
                 "githubURL": urlSource,
-                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
-                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
+                // "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                // "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
+                // issue with query string in url for community viewers, remove env tag : 
+                "externalURL": $sce.trustAsResourceUrl(url),
+                "widgetURL": $sce.trustAsResourceUrl(url)
             }
         }
 
