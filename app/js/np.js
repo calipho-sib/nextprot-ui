@@ -348,7 +348,11 @@
 
                 metaService.getMetaTags(location).$promise.then(function (data) {
                     that.title = data.title;
-                    that.h1 = data.h1;
+                    if(data.h1 && location.includes("COFACTOR")) {
+                        that.h1 = data.h1.split('-')[0] + "I-TASSER/COFACTOR" 
+                    } else if(data.h1 && location.includes("Protein-3D-structure")){
+                        that.h1 = data.h1.split('-')[0] + "3D structure"                        
+                    }
                     that.description = data.metaDescription;
                 });
             }
