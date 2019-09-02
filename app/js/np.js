@@ -352,6 +352,8 @@
                         that.h1 = data.h1.split('-')[0] + "I-TASSER/COFACTOR" 
                     } else if(data.h1 && location.includes("Protein-3D-structure")){
                         that.h1 = data.h1.split('-')[0] + "3D structure"                        
+                    } else {
+                        that.h1 = data.h1
                     }
                     that.description = data.metaDescription;
                 });
