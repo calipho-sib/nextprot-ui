@@ -1,11 +1,16 @@
 const gulp = require('gulp');
 const vulcanize = require('gulp-vulcanize');
 const uglify = require('gulp-uglify');
-const htmlmin = require('gulp-htmlmin');
+const rename = require('gulp-rename');
+const replace = require('gulp-replace')
+// const htmlmin = require('gulp-htmlmin');
+const htmlmin = require('gulp-html-minifier');
 const pump = require('pump');
 const dest = require('dest');
 const del = require('del');
 const cleanCSS = require('gulp-clean-css');
+const fs = require('fs');
+
 
 var elementsPath = 'build/elements/nextprot-elements';
 var rootPath = 'build';
@@ -19,7 +24,14 @@ gulp.task('vulcanize', function () {
         .pipe(vulcanize({
             strip: true,
             inlineScripts: true,
-            inlineCss: true
+            inlineCss: true,
+            stripComments : true
+        }))
+        .pipe(htmlmin({
+            // collapseWhitespace: true
+            minifyJS:true,
+            minifyCSS:true,
+            removeComments: true
         }))
         .pipe(gulp.dest('./build/elements/'));
 });
@@ -33,16 +45,46 @@ gulp.task('copy-elements', function () {
                             .pipe(dest(elementsPath + '/colorbar'));
     return [elementsTask, biovizTask, colorbarTask];   
 });
-
+function getVendorVersion() {
+    var filename = "";
+    fs.readdirSync('./build/js/').forEach(file => {
+        if ((/^vendor.*.js$/).test(file)){
+            filename = file.split("_")[1].split(".")[0];
+        }
+      });
+    return filename;
+}
 gulp.task('build-elements', function () {
-    return gulp.src('./bower_components/nextprot-elements/external-elements.html')
+    var extElemFileName = getVendorVersion();
+     return gulp.src('./bower_components/nextprot-elements/external-elements.html')
         .pipe(vulcanize({
+            stripExcludes: ['./bower_components/font-roboto/roboto.html'],
             strip: true,
             inlineScripts: true,
             inlineCss: true
         }))
+        .pipe(htmlmin({
+            collapseWhitespace: true,
+            minifyJS:true,
+            minifyCSS:true,
+            removeComments: true
+        }))
+        .pipe(rename('external-elements_'+extElemFileName+'.html'))
         .pipe(gulp.dest('./build/elements/'));
+
+    // var indexReplaceTask = gulp.src(['build/index.html'])
+    //       .pipe(replace('extElemVersion', extElemFileName))
+    //       .pipe(gulp.dest('build/'));
+    // return [buildExtElem, indexReplaceTask]
 });
+
+gulp.task('copy-vendor', () => {
+    return gulp.src('build/css/vendor_*.css')
+        .pipe(rename("vendor_sparql.css"))
+        .pipe(gulp.dest('./build/css/'));
+});
+
+gulp.task('build-app', ['build-elements','copy-vendor']);
 
 gulp.task('minify-css', () => {
     return gulp.src('build/css/*.css')
@@ -65,4 +107,4 @@ gulp.task('copy-bio-viz', function() {
 });
 
 
-gulp.task('default', ['copy-elements', 'build-elements', 'compress']);
+gulp.task('default', ['copy-elements', 'build-app', 'compress']);

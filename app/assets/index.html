@@ -23,8 +23,8 @@
     <meta name="author" content="CALIPHO Team - SIB - Swiss Institute of Bioinformatics">
     <meta name="fragment" content="!">
     <meta http-equiv="expires" content="0">
-    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
-    <link href='/elements/external-elements.html' rel='import' type='text/html'>
+    <!-- <link href='/elements/external-elements_{!uiVersion!}.html' rel='import' type='text/html'> -->
+    <link href='{!endpoint!}/elements/external-elements_{!uiVersion!}.html' rel='import' type='text/html'>
     <link rel="icon" href="./img/np-x.png">
 
     <!--<base href="/protosearch/" />-->
@@ -42,8 +42,8 @@
 
     <!--  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:600' rel='stylesheet' type='text/css'>-->
 
-    <link rel="stylesheet" href="css/vendor.css?release={!distRelease!}">
-    <link rel="stylesheet" href="css/app.css?release={!distRelease!}">
+    <link rel="stylesheet" href="{!endpoint!}/css/vendor_{!uiVersion!}.css?release={!distRelease!}">
+    <link rel="stylesheet" href="{!endpoint!}/css/app_{!uiVersion!}.css?release={!distRelease!}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <script>
@@ -406,10 +406,6 @@
         Exploring the universe of human proteins
     </div>
 -->
-        <a href="http://www.isb-sib.ch/" target="_blank" title="Link to the SIB Swiss Institute of Bioinformatics">
-            <img id="sib-logo" src="img/sib_logo.gif" alt="SIB Swiss Institute of Bioinformatics">
-        </a>
-
         <!-- Navbar ================================================== -->
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container-fluid">
@@ -424,7 +420,12 @@
 -->
                         <span class="fa fa-bars"></span>
                     </button>
-                    <a class="navbar-brand navbar-logo" href="/"><img id="np-logo" src="/img/np.png" alt="neXtProt the human protein database, platform and annotation knowledge base"></a>
+                    <a class="navbar-brand navbar-logo" href="/">
+                        <!-- <img id="np-logo" src="/img/np.png" alt="neXtProt the human protein database, platform and annotation knowledge base"> -->
+                        <!-- <img id="np-logo" class="nximg_np2" alt="neXtProt the human protein database, platform and annotation knowledge base" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAACWAQMAAAASU+gsAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAACBJREFUeNrtwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAB4DCWAAAGI226uAAAAAElFTkSuQmCC"> -->
+                        <img id="np-logo" class="nximg_np2" alt="neXtProt the human protein database, platform and annotation knowledge base" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAACWAQMAAAASU+gsAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAACBJREFUeNrtwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAB4DCWAAAGI226uAAAAAElFTkSuQmCC">
+
+                    </a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -448,6 +449,7 @@
                                 <li class="divider"></li>
                                 <!--                            <li ng-class=""><a href="#" ng-click="routingOutside('snorql')" style="cursor:not-allowed">BLAST</a></li>-->
                                 <li ng-class=""><a href="/tools/peptide-uniqueness-checker">Peptide uniqueness checker</a></li>
+                                <li ng-class=""><a href="/tools/protein-digestion">Protein digestion</a></li>
                                 <li class="divider"></li>
                                 <li class="disabled" style="font-size:12px; margin-left: 10px"><i>Programmatic access</i></li>
                                 <li ng-class=""><a ng-href="{{getNextprotUrl('api')}}">API</a></li>
@@ -495,6 +497,10 @@
                                 <!--                            ???-->
                                 <li ng-class="{'active':isActiveDoc('/help/tools')}">
                                     <a href="/help/tools">Tools</a>
+                                </li>
+                                <!--                            ???-->
+                                <li ng-class="{'active':isActiveDoc('/help/protein-digestion')}">
+                                    <a href="/help/protein-digestion">Protein digestion</a>
                                 </li>
                                 <!--                            <li><a href="#"></a></li>-->
                                 <!--                            <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}">-->
@@ -647,7 +653,10 @@
                                     aria-hidden="true"></i></a>
                         </li>
                         <li>
-                            <a id="sib-link" href="http://www.sib.swiss"><img id="sib-logo" src="/img/sib.png"></a>
+                            <a id="sib-link" href="http://www.sib.swiss">
+                                <!-- <img id="sib-logo" src="/img/sib.png"> -->
+                                <img id="sib-logo" class="nximg_sib" alt="SIB logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARAAAADNAQMAAABKE70TAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAB1JREFUeNrtwQENAAAAwqD3T20PBxQAAAAAAABwZhwHAAHRTBZqAAAAAElFTkSuQmCC">
+                            </a>
                         </li>
 
                     </ul>
@@ -666,7 +675,19 @@
     </div>
 
     <!--<flash:msg></flash:msg>-->
-    <div ng-include="'partials/errors/alert-message.html'"></div>
+    <!-- <div ng-include="'partials/errors/alert-message.html'"> -->
+    <div>
+        <ul ng-controller="flashCtrl" style="position: fixed;top: -2px;left: 15%;right: 15%;z-index:10010;opacity:0.9">
+            <li style="list-style: none " ng-repeat="m in messageList">
+                <div class="flashmsg alert {{m.level}} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span></button>
+                    <span ng-bind="m.text"></span>
+                </div>
+            </li>
+        </ul>
+            
+    </div>
 
     <!-- Masthead
 ================================================== -->
@@ -714,7 +735,23 @@ blue customized from kuler blue: 14ADC2
 
     <div id="main" class="container-fluid" ng-view=""></div>
 
-    <div ng-include="'partials/footer.html'"></div>
+    <footer class="container-fluid small" ng-controller="ReleaseInfoCtrl">
+        <div class="row">
+            <div class="col-lg-12">
+    
+                <div class="col-md-12 text-left">
+                    <a class="ft-item" href="/copyright">&copy; 2011 - {{currentYear}} SIB Swiss Institute of Bioinformatics</a>
+                    <a class="ft-item" href="/legal-disclaimer">Legal disclaimer</a>
+                    <span class="ft-item">Data release {{releaseInfo.databaseRelease}}</span>
+                    <span class="ft-item">Application release {{releaseInfosFormatted}}</span>
+                    <a class="ft-item" href="https://github.com/calipho-sib/" target="_blank">
+                        <span class="fa fa-github" aria-hidden="true"></span> For developers
+                    </a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </footer>
 
     <!-- Le javascript
 ================================================== -->
@@ -727,8 +764,12 @@ blue customized from kuler blue: 14ADC2
             baseUrl: 'https://api.nextprot.org'
         }
     </script>
-    <script defer src="js/vendor.js?release={!distRelease!}"></script>
+    <!-- <script defer src="https://d2t3grwcyftpfv.cloudfront.net/js/vendor.js?release={!distRelease!}"></script> -->
+    <!-- <script defer src="https://d2t3grwcyftpfv.cloudfront.net/js/vendor_{!vendorVersion!}.js?release={!distRelease!}"></script> -->
+    
+    <script defer src="{!endpoint!}/js/vendor_{!uiVersion!}.js?release={!distRelease!}"></script>
     <script defer src="js/app.js?release={!distRelease!}"></script>
+    
 </body>
 
 </html>

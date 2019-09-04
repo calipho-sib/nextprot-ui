@@ -86,6 +86,10 @@
                 scope.customElement = "term-view"
                 nxConfig.termAccession = scope.termName
             }
+            else if (path.match(/^\/tools\/protein-digestion$/) != null) {
+                scope.customElement = "digestion-overview";
+                // scope.customElement = "medical-view";
+            }
             else {
                 console.error("could not find a match against " + path);
             }
@@ -158,6 +162,7 @@
 
         var ev = { templateUrl: '/partials/viewer/entry-viewer.html' };
         var tve = { templateUrl: '/partials/viewer/term-viewer-element.html' };
+        var gve = { templateUrl: '/partials/viewer/global-viewer-element.html' };
         var pv = { templateUrl: '/partials/viewer/publi-viewer.html' };
         var gv = { templateUrl: '/partials/viewer/global-viewer.html' };
         var bv = { templateUrl: '/partials/viewer/blast-viewer.html' };
@@ -168,6 +173,7 @@
             .when('/portals/:pn1', { templateUrl: '/partials/viewer/portal-viewer.html' })
             //            .when('/help/:help', {templateUrl: '/partials/doc/main-doc.html'})
 
+            .when('/tools/protein-digestion', gve)
             .when('/tools/:t1', { templateUrl: '/partials/viewer/global-viewer.html' })
 
             .when('/view', gv)
@@ -314,6 +320,7 @@
 
         $scope.activePage = function (page) {
 
+            
             if ($location.url() === '/entry/' + $routeParams.entry + "/") {
                 if (page === 'function') {
                     return 'active';
@@ -339,11 +346,11 @@
                 return 'active';
             }
 
-
-            if ($routeParams.element == page) return 'active'
+            if ($routeParams.element == page) return 'active';
             if ($routeParams.ev1 == page) return 'active';
             if ("portals/" + $routeParams.pn1 === page) return 'active';
             if ("tools/" + $routeParams.t1 === page) return 'active';
+            if($location.url() === "/" + page) return 'active';
             if (("gh/" + $routeParams.user + "/" + $routeParams.repository) == page) return 'active';
 
             else return '';
@@ -493,6 +500,10 @@
             else if (path.match(/^\/term\/[^\/]+\/?/) != null) {
                 url = '../elements/nextprot-elements/term-view.html';
             }
+            else if (path.match(/^\/tools\/protein-digestion$/) != null) {
+                url = '../elements/nextprot-elements/digestion-overview.html';
+                // url = '../elements/nextprot-elements/medical-view.html';
+            }
             else {
                 return null;
             }
@@ -593,8 +604,11 @@
             return {
                 "communityMode": true,
                 "githubURL": urlSource,
-                "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
-                "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
+                // "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url)),
+                // "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
+                // issue with query string in url for community viewers, remove env tag : 
+                "externalURL": $sce.trustAsResourceUrl(url),
+                "widgetURL": $sce.trustAsResourceUrl(url)
             }
         }
 

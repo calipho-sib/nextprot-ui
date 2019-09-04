@@ -6,7 +6,7 @@
         'ngSanitize',
         'ngResource',
         'ngRoute',
-        'ngAnimate',
+        // 'ngAnimate',
         'ngCookies',
         'ipCookie',
         'npHelp',
@@ -64,7 +64,10 @@
         else if (nxEnvironment.toLowerCase() === "alpha" || nxEnvironment.toLowerCase() === "build") {
             apiBase = 'http://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
             np1Base = 'http://uat-web1';
-        }
+        } else { // By default use the dev env, No need to change for local testing
+            apiBase = 'https://dev-api.nextprot.org'; // Don't forget https!
+            np1Base = 'https://uat-web1';
+        }   
     }
 
     // main application settings
@@ -334,26 +337,27 @@
         $scope.$on('$locationChangeSuccess', function (event, next, current) {
             //            var location = "/about/human-proteome";
             var location = $location.path();
-
             that.h1 = "";
-            //            var path = {path:location};
 
-            metaService.getMetaTags(location).$promise.then(function (data) {
-                //            $scope.title = data.title;
-                that.title = data.title;
-                //    //            $scope.h1 = data.h1;
-                that.h1 = data.h1;
-                //    //            $scope.description = data.description;
-                that.description = data.metaDescription;
+            if(location === "/"){
+                that.title = "neXtProt platform";
+                that.h1 = "Developed by the SIB Swiss Institute of Bioinformatics neXtProt is a comprehensive human-centric discovery platform, offering its users a seamless integration of and navigation through protein-related data.";
+                that.description = "neXtProt platform";
+            }
+            else{
 
-                //            data.forEach(function(d){
-                //                var dt = new Date(d.publicationDate);
-                //                var year = dt.getFullYear().toString();
-                //                var month = parseInt(dt.getMonth()) + 1;
-                //                d["minDate"] = month + "/" + dt.getDay() + "/" + year.substring(2);
-                //            })
-                //            $scope.news = data.reverse();
-            });
+                metaService.getMetaTags(location).$promise.then(function (data) {
+                    that.title = data.title;
+                    if(data.h1 && location.includes("COFACTOR")) {
+                        that.h1 = data.h1.split('-')[0] + "I-TASSER/COFACTOR" 
+                    } else if(data.h1 && location.includes("Protein-3D-structure")){
+                        that.h1 = data.h1.split('-')[0] + "3D structure"                        
+                    } else {
+                        that.h1 = data.h1
+                    }
+                    that.description = data.metaDescription;
+                });
+            }
 
         });
 

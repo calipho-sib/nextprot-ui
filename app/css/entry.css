@@ -1497,7 +1497,8 @@ header .navbar-header .navbar-brand {
 }
 header .navbar-header .navbar-brand #np-logo {
     height: 30px;
-    padding-left: 25px;
+    /* padding-left: 25px; */
+    margin-left:10px;
 }
 header .navbar .nav {
     padding-left: 30px;

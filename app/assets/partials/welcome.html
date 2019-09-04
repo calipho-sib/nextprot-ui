@@ -1,6 +1,205 @@
 <div class='row hp-sections'>
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 info-section" ng-include="'partials/section-getting-started.html'"></div>
+    <!-- <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 info-section" ng-include="'partials/section-getting-started.html'"></div>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 info-section" ng-include="'partials/section-data-sources.html'"></div>
     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 info-section" ng-include="'partials/section-news.html'"></div>
-    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 info-section" ng-include="'partials/section-release.html'"></div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 info-section" ng-include="'partials/section-release.html'"></div> -->
+
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 info-section">
+        <div id="getting-started-section" class="section">
+            <div class="section-header">
+                <h2 class="np-color-pink"><span class="fa fa-play"></span>Getting started</h2>
+            </div>
+            <div class="section-content">
+                <ul>
+                    <li><a href="/about/human-proteome" title="The human proteome">The human proteome</a></li>
+                    <li><a href="/help/simple-search">Simple search</a></li>
+                    <li><a href="/help/advanced-search">Advanced search (SPARQL)</a></li>
+                    <li><a href="/help/tools">Analyze</a>
+                        <p>BLAST, list management, peptide uniqueness checker</p>
+                    </li>
+                    <li><a href="/help/download">Download</a>
+                        <p>XML, FASTA, PEFF</p>
+                    </li>
+                    <li><a href="/help/technical-corner">Technical corner</a>
+                        <p>Viewers, API, SPARQL</p>
+                    </li>
+                </ul>
+            </div>
+            <!-- Init the tooltip -->
+            <script defer>
+                $('[data-toggle="tooltip"]').tooltip();
+            </script>
+        </div>
+
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 info-section">
+        <div id="data-sources-section" class="section">
+            <div class="section-header">
+                <h2 class="np-color-pink"><span class="fa fa-database"></span>Data sources</h2>
+            </div>
+            <div class="section-content" id="logo-section">
+                <div id="datasources">
+                    <!-- <img id="source-np" src="img/np-x.png" alt="neXtProt logo"/> -->
+                    <img id="source-np" class="nximg_np-x" alt="neXtProt logo"
+                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAEJAQMAAADrVfp4AAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAB5JREFUeNrtwQENAAAAwqD3T20ON6AAAAAAAADg0QAa6gABCX/LQQAAAABJRU5ErkJggg==">
+
+
+                    <!-- Links are ordered anticlockwise -->
+
+                    <a href="http://www.proteinatlas.org/" target="_blank">
+                        <!-- <img id="source-hpa" class="source-img" src="img/hpa-logo.png" alt="Human Protein Atlas logo"/> -->
+                        <img id="source-hpa" class="source-img nximg_hpa-logo" alt="Human Protein Atlas logo"
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAApQAAAA4AQMAAAB5QPrDAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAABtJREFUeNrtwTEBAAAAwqD1T20Hb6AAAAAA4DcSYAABEwaAkAAAAABJRU5ErkJggg==">
+                    </a>
+
+                    <a href="http://www.srmatlas.org/" target="_blank">
+                        <!-- <img id="source-srm-atlas" class="source-img" src="img/srm-atlas-logo.png" alt="SRMAtlas logo"/> -->
+                        <img id="source-srm-atlas" class="source-img nximg_srm-atlas-logo" alt=""
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATMAAABbAQMAAAAlRvCeAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAABpJREFUeNrtwYEAAAAAw6D5U5/gBlUBAADANw44AAEWTwxHAAAAAElFTkSuQmCC">
+                    </a>
+
+                    <a href="http://www.bgee.org/" target="_blank">
+                        <!-- <img id="source-bgee" class="source-img" src="img/bgee-logo.png" alt="Bgee logo"/> -->
+                        <img id="source-bgee" class="source-img nximg_bgee-logo" alt="Bgee logo"
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALoAAABLAQMAAAD9Dg8OAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAABdJREFUeNpjYBgFo2AUjIJRMApGARUAAAdTAAGxJTigAAAAAElFTkSuQmCC">
+                    </a>
+
+
+
+                    <a href="http://cancer.sanger.ac.uk/cosmic" target="_blank">
+                        <!-- <img id="source-cosmic" class="source-img" src="img/cosmic-logo.png" alt="COSMIC logo"/> -->
+                        <img id="source-cosmic" class="source-img nximg_cosmic-logo" alt="COSMIC logo"
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUcAAAA8AQMAAADPFeqeAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAABlJREFUeNrtwQENAAAAwqD3T20PBxQAAA8GCdgAAXuUjBsAAAAASUVORK5CYII=">
+                    </a>
+
+                    <a href="http://www.uniprot.org/" target="_blank">
+                        <!-- <img id="source-uniprot" class="source-img" src="img/uniprot-logo.png" alt="UniProt logo"/> -->
+                        <img id="source-uniprot" class="source-img nximg_uniprot-logo" alt="UniProt logo"
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG0AAAAyAQMAAABs7sc3AAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAA9JREFUeNpjYBgFo2CkAAAC7gABKFcFbQAAAABJRU5ErkJggg==">
+                    </a>
+
+                    <a href="http://www.ebi.ac.uk/GOA" target="_blank">
+                        <p id="source-uniprot-goa">UniProt-GOA</p>
+                    </a>
+
+                    <a href="http://www.peptideatlas.org/" target="_blank">
+                        <!-- <img id="source-peptide-atlas" class="source-img" src="img/peptide-atlas-logo.png" alt="PeptideAtlas logo"/> -->
+                        <img id="source-peptide-atlas" class="source-img nximg_peptide-atlas-logo"
+                            alt="PeptideAtlas logo"
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMMAAABiAQMAAADX8fWiAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAABlJREFUeNrtwQENAAAAwqD3T20PBxQAAO8GCfQAAVyHKB0AAAAASUVORK5CYII=">
+                    </a>
+
+
+
+                    <a href="http://www.ebi.ac.uk/intact/" target="_blank">
+                        <!-- <img id="source-intact" class="source-img" src="img/intact-logo.png" alt="IntAct logo"/> -->
+                        <img id="source-intact" class="source-img nximg_intact-logo" alt="IntAct logo"
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQUAAAB3AQMAAAAwxcesAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAABtJREFUeNrtwQENAAAAwqD3T20ON6AAAACALwMPzgABgq0bwAAAAABJRU5ErkJggg==">
+                    </a>
+
+
+                    <a href="https://glyconnect.expasy.org/" target="_blank">
+                        <!-- <img id="source-glyconnect" class="source-img" src="img/glyconnect_logo.png" alt="GlyConnect logo"/> -->
+                        <img id="source-glyconnect" class="source-img nximg_glyconnect-logo" alt="GlyConnect logo"
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHsAAABKAQMAAAChL7k0AAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAABJJREFUeNpjYBgFo2AUjILhDgAE6gAB6B95RAAAAABJRU5ErkJggg==">
+                    </a>
+
+                    <a href="https://gnomad.broadinstitute.org/" target="_blank">
+                        <!-- <img id="source-glyconnect" class="source-img" src="img/glyconnect_logo.png" alt="GlyConnect logo"/> -->
+                        <img id="source-gnomad" class="source-img nximg_gnomad" alt="gnomAD logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAAByAQMAAADTQH4FAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAABtJREFUeNrtwTEBAAAAwqD1T20Hb6AAAAAA+A0RXgABK1LHNQAAAABJRU5ErkJggg==">
+                    </a>
+
+
+                    <!--<a href="https://www.dkfz.de/en/index.html">-->
+                    <!--<img id="source-dkfz" class="source-img" src="img/dkfz-logo.gif" alt="Deutsches Krebsforschungszentrum logo"/>-->
+                    <!--</a>-->
+
+
+                    <!--<a href="http://www.weizmann.ac.il/mcb/UriAlon/DynamProt/">-->
+                    <!--<img id="source-dyp" class="source-img" src="img/dyp-logo.png" alt="Dynamics Proteomics logo"/>-->
+                    <!--</a>-->
+                </div>
+            </div>
+            <div class="section-footer">
+                <!-- Temporary fix -->
+                <!-- <a href="/release-contents">&raquo; Release contents</a>-->
+                <a class="btn btn-default btn-xs" href="about/contents">Release contents</a>
+                <!--        <a href="https://www.nextprot.org/db/statistics/release" target="_blank">&raquo; Release contents</a>-->
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 info-section">
+        <div id="news-section" class="section" ng-controller="NewsCtrl">
+            <div class="section-header">
+                <h2 class="np-color-pink">
+                    <span class="fa fa-newspaper-o"></span>
+                    News
+                    <a title="See @nextprot_news account" target="_blank" href="https://twitter.com/nextprot_news">
+                        <!--                <img alt="Twitter logo" src="img/twitter.png">-->
+                        <span class="fa fa-twitter-square pull-right" style="color:#28a9e0"></span>
+                    </a>
+                    <a class="social-link" title="Follow the neXtProt project in ResearchGate" target="_blank"
+                        href="https://www.researchgate.net/project/neXtProt">
+                        <span class="pull-right">
+                            <!-- <img src="img/research_gate_200x200.png"> -->
+                            <img class="nximg_research-gate-200x200" alt="ResearchGate"
+                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADIAQMAAACXljzdAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAABxJREFUeNrtwYEAAAAAw6D5U1/hAFUBAAAAAHwGFFAAAcRa5isAAAAASUVORK5CYII=">
+                        </span>
+                    </a>
+                    <!-- TODO Add facebook? and google+? links -->
+                </h2>
+            </div>
+            <div class="section-content">
+                <ul>
+
+                    <li ng-repeat="n in news | limitTo:3">
+                        <a href="news/{{n.url}}">
+                            <span ng-if="n.title.length > 40">{{n.title.substr(0,37)}}...</span>
+                            <span ng-if="n.title.length <= 40">{{n.title}}</span>
+                        </a>
+                        <p>{{n.publicationDateFormatted}}</p>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="section-footer">
+
+                <a class="btn btn-default btn-xs" ng-repeat="n in news | limitTo:1" href="news/{{n.url}}">News
+                    archive</a>
+                <!--        <a ng-repeat="n in news | limitTo:1" href="news/{{n.url}}">&raquo; News archive</a>-->
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 info-section">
+        <div id="release-section" class="section" ng-controller="ReleaseInfoCtrl">
+            <div class="section-header">
+                <h2 class="np-color-pink"><span class="fa fa-tag"></span>Release {{releaseInfo.databaseRelease}}</h2>
+            </div>
+            <div class="section-content" ng-controller="hpCtrl">
+                <!-- TODO Add Random pie chart between 2 random graphic:
+                            1) Histogram with a number of % values: % entries with
+                                GO function / mol. process, % entries with 3D structure,
+                                % entries with proteomics, expression coverage, subcell location
+                            2) the PE graphic for HUPO release
+                        -->
+                <h3>
+                    <a href="about/protein-existence" title="Protein existence viewer">
+                        Protein existence in neXtProt</a>
+                </h3>
+                <div id="release-chart"></div>
+                <!--            <div id="hp-chart" style="width:300px;"></div>-->
+                <!--        <hc-pie-chart data="pieData">Placeholder for pie chart</hc-pie-chart>-->
+                <!--        <img id="release-img" src="img/prot_existence_201601.png" alt="Protein existence in neXtProt image">-->
+
+            </div>
+            <div class="section-footer">
+                <!-- Temporary fix -->
+                <!-- <a href="/release-statistics">&raquo; Release statistics</a> -->
+                <a class="btn btn-default btn-xs" href="about/statistics">Release statistics</a>
+                <!--        <a href="release/statistics" target="_blank">&raquo; Release statistics</a>-->
+            </div>
+        </div>
+
+    </div>
 </div>
