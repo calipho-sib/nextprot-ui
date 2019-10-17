@@ -75,6 +75,11 @@
             {},
             {get : {method: "GET"}});
 
+        // var releaseList = $resource(
+        //     config.api.API_URL + '/release-list.json',
+        //     {},
+        //     {get : {method: "GET"}});
+
         var releaseDataSources = $resource(
             config.api.API_URL + '/release-data-sources.json',
             {},
@@ -126,6 +131,8 @@
 
                 });
             });
+            releaseInfo.dates = ["2019", "2018", "2017", "2016", "2015"];
+
         };
 
         ReleaseInfoService.prototype.getReleaseInfo = function () {
