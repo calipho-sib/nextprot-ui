@@ -26,9 +26,9 @@
         $scope.releaseInfosFormatted = formatReleaseInfos(RELEASE_INFOS);
         $scope.releaseInfo = releaseInfoService.getReleaseInfo();
 
-        // fetching release info version
-        
-
+        $scope.toggleDatabaseRelease = function (data) {
+            $scope.releaseInfo = releaseInfoService.getReleaseInfo(data.databaseRelease);
+        };
 
         /*
         // Replace the publication stats fetched above by the correct ones computed by the new service /publications/stats.json
@@ -70,15 +70,6 @@
             {},
             {get : {method: "GET"}});
 
-        var releaseStatsResource = $resource(
-            config.api.API_URL + '/release-stats.json',
-            {},
-            {get : {method: "GET"}});
-
-        // var releaseList = $resource(
-        //     config.api.API_URL + '/release-list.json',
-        //     {},
-        //     {get : {method: "GET"}});
 
         var releaseDataSources = $resource(
             config.api.API_URL + '/release-data-sources.json',
@@ -91,32 +82,53 @@
             dataSources: [],
             tagStatistics: []
 
-        }
+        };
+
         var ReleaseInfoService = function () {
             // Calls the resources and fetch release info
             releaseInfoResource.get().$promise.then(function(data) {
-                releaseInfo.databaseRelease = data.versions.databaseRelease;
                 releaseInfo.apiRelease = data.versions.apiRelease;
             });
 
             // fetching release data sources
             releaseDataSources.get().$promise.then(function(data) {
 //                console.log("releaseDataSources", releaseDataSources.dataSources.datasources);
-
                 _.each(data.dataSources.datasources, function (ds) {
                     releaseInfo.dataSources.push(ds);
                 });
             });
 
-            // fetching release stats
-            releaseStatsResource.get().$promise.then(function(data) {
+            getReleaseStats();
+        };
 
+        ReleaseInfoService.prototype.getReleaseInfo = function (databaseRelease) {
+            getReleaseStats(databaseRelease);
+            return releaseInfo;
+        };
+
+        // fetching release stats
+        function getReleaseStats(databaseRelease) {
+            var releaseStatsURL = '/release-stats.json';
+            if (databaseRelease) {
+                releaseStatsURL = '/release-stats/'+ databaseRelease.replace(/ \(current\)/, "") + '.json'
+            }
+            var releaseStatsResource = $resource(
+                config.api.API_URL + releaseStatsURL,
+                {},
+                {get : {method: "GET"}});
+
+            releaseStatsResource.get().$promise.then(function (data) {
+                releaseInfo.databaseRelease = data.releaseStats.databaseRelease;
+
+                releaseInfo.databaseReleaseList = data.releaseStats.databaseReleaseList.sort().reverse();
+                releaseInfo.databaseReleaseList[0] += " (current)";
+
+                releaseInfo.tagStatistics = [];
                 _.each(data.releaseStats.tagStatistics, function (ts) {
                     var stat = {
                         description: ts.description,
                         count: ts.count
                     };
-
                     var dbSpecies = _.find(releaseInfo.tagStatistics, function (obj) {
                         return obj.category == ts.categroy
                     });
@@ -128,15 +140,8 @@
                             data: [stat]
                         });
                     }
-
                 });
             });
-            releaseInfo.dates = ["2019", "2018", "2017", "2016", "2015"];
-
-        };
-
-        ReleaseInfoService.prototype.getReleaseInfo = function () {
-            return releaseInfo;
         }
 
         return new ReleaseInfoService();

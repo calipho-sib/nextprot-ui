@@ -12,7 +12,9 @@
                 <button class="btn dropdown-toggle btn-default " data-toggle="dropdown">Change release&nbsp;<span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
-                    <li ng-repeat="d in releaseInfo.dates"><a href="" ng-click="params({release:d})">{{d}}</a></li>
+                    <li ng-repeat="r in releaseInfo.databaseReleaseList">
+                        <a ng-click="toggleDatabaseRelease({databaseRelease: r})">{{r}}</a>
+                    </li>
                 </ul>
             </div>
         </div>
