@@ -29,37 +29,6 @@
         $scope.toggleDatabaseRelease = function (data) {
             $scope.releaseInfo = releaseInfoService.getReleaseInfo(data.databaseRelease);
         };
-
-        /*
-        // Replace the publication stats fetched above by the correct ones computed by the new service /publications/stats.json
-        releaseInfoService.getPublicationStats().$promise.then(function (data) {
-            var newStats = [
-                {
-                    description: "Cited publications",
-                    count: data.numberOfCitedPublications
-                },
-                {
-                    description: "Computationally mapped publications",
-                    count: data.numberOfComputationallyMappedPublications
-                },
-                {
-                    description: "Large scale publications",
-                    count: data.numberOfLargeScalePublications
-                },
-                {
-                    description: "Manually curated publications",
-                    count: data.numberOfCuratedPublications
-                }
-            ];
-
-            var arrayLength = $scope.releaseInfo.tagStatistics.length;
-            for (var i = 0; i < arrayLength; i++) {
-                if ($scope.releaseInfo.tagStatistics[i].category === "Publications") {
-                    $scope.releaseInfo.tagStatistics[i].data = newStats;
-                    break;
-                }
-            }
-        });*/
     }
 
     releaseInfoService.$inject = [ '$resource', 'config'];
@@ -70,7 +39,6 @@
             {},
             {get : {method: "GET"}});
 
-
         var releaseDataSources = $resource(
             config.api.API_URL + '/release-data-sources.json',
             {},
@@ -80,8 +48,8 @@
             databaseRelease : "",
             apiRelease: "",
             dataSources: [],
-            tagStatistics: []
-
+            tagStatistics: [],
+            tagQueries: []
         };
 
         var ReleaseInfoService = function () {
@@ -92,7 +60,6 @@
 
             // fetching release data sources
             releaseDataSources.get().$promise.then(function(data) {
-//                console.log("releaseDataSources", releaseDataSources.dataSources.datasources);
                 _.each(data.dataSources.datasources, function (ds) {
                     releaseInfo.dataSources.push(ds);
                 });
@@ -108,9 +75,10 @@
 
         // fetching release stats
         function getReleaseStats(databaseRelease) {
+            let isCurrentRelease = !databaseRelease || databaseRelease.indexOf("current") > 0;
             var releaseStatsURL = '/release-stats.json';
-            if (databaseRelease) {
-                releaseStatsURL = '/release-stats/'+ databaseRelease.replace(/ \(current\)/, "") + '.json'
+            if (!isCurrentRelease) {
+                releaseStatsURL = '/release-stats/' + databaseRelease + '.json'
             }
             var releaseStatsResource = $resource(
                 config.api.API_URL + releaseStatsURL,
@@ -125,10 +93,27 @@
 
                 releaseInfo.tagStatistics = [];
                 _.each(data.releaseStats.tagStatistics, function (ts) {
-                    var stat = {
-                        description: ts.description,
-                        count: ts.count
-                    };
+                    let query;
+                    if (isCurrentRelease) {
+                        _.each(data.releaseStats.tagQueries, function (qt) {
+                            if (qt.tag === ts.tag) {
+                                query = qt.queryId;
+                            }
+                        });
+                    }
+                    var stat;
+                    if (query) {
+                        stat = {
+                            description: ts.description,
+                            count: ts.count,
+                            query: query
+                        };
+                    } else {
+                        stat = {
+                            description: ts.description,
+                            count: ts.count
+                        };
+                    }
                     var dbSpecies = _.find(releaseInfo.tagStatistics, function (obj) {
                         return obj.category == ts.categroy
                     });
