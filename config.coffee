@@ -11,7 +11,7 @@
 #production_environnement = true;
 #local_environnement = false;
 
-production_environnement = true;
+production_environnement = false;
 local_environnement = false;
 
 # endpoint = if production_environnement then "https://d2t3grwcyftpfv.cloudfront.net/" else ""
