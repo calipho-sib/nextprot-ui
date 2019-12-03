@@ -77,6 +77,7 @@
             {get : {method: "GET"}});
 
         var releaseInfo = {
+            currentRelease: "",
             databaseRelease : "",
             apiRelease: "",
             dataSources: [],
@@ -121,6 +122,7 @@
                 releaseInfo.databaseRelease = data.releaseStats.databaseRelease;
 
                 releaseInfo.databaseReleaseList = data.releaseStats.databaseReleaseList.sort().reverse();
+                releaseInfo.currentRelease = releaseInfo.databaseReleaseList[0];
                 releaseInfo.databaseReleaseList[0] += " (current)";
 
                 releaseInfo.tagStatistics = [];
