@@ -475,7 +475,7 @@
                         <!--<li ng-class=""><a href="/tools">Tools</a></li>-->
 
                         <!-- Download -->
-                        <li ng-class=""><a href="ftp://ftp.nextprot.org/pub/current_release/" ng-click="routingOutside('ftp')">Download</a></li>
+                        <li ng-class=""><a href="ftp://ftp.nextprot.org/pub/" ng-click="routingOutside('ftp')">Download</a></li>
 
                         <!-- Help dropdown -->
                         <li class="dropdown">
@@ -694,23 +694,21 @@
     <div ng-if="isSearchBarVisible()" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
 
     <!--HIRING BOX - deprecated    -->
-    <!--
+
 <div id="hiring" ng-if="isHomePage()">
-    <h1 id="hiring-title"><span>WE ARE HIRING !</span></h1>
+    <h1 id="hiring-title"><span>NAR 2020 PAPER</span></h1>
 
     <div class="row hiring-content">
+    <!--        
         <div class="pull-left hiring-icon-container">
             <span class="fa fa-graduation-cap fa-3x"></span>
         </div>
+-->
         <div class="hiring-text-container">
-            <div>We are looking for a post-doctorate</div>
-        </div>
-        <div class="pull-right">
-            <a class="hiring-button pull-right" href="https://apply.refline.ch/499599/0040/pub/1/index.html" target="_blank">SEE OFFER</a>
+            <div>The neXtProt knowledgebase in 2020: data, tools and usability improvements. <a href="https://academic.oup.com/nar/advance-article/doi/10.1093/nar/gkz995/5625540?guestAccessKey=57d5366c-20f0-4a32-96b9-f20c8780442a" target="_blank">Nucleic Acids Research, Database Issue (2020)</a></div>
         </div>
     </div>
 </div>
--->
     <!--
 light blue kuler : 17C6DE
 pink light kuler : CF3E87
@@ -742,7 +740,7 @@ blue customized from kuler blue: 14ADC2
                 <div class="col-md-12 text-left">
                     <a class="ft-item" href="/copyright">&copy; 2011 - {{currentYear}} SIB Swiss Institute of Bioinformatics</a>
                     <a class="ft-item" href="/legal-disclaimer">Legal disclaimer</a>
-                    <span class="ft-item">Data release {{releaseInfo.databaseRelease}}</span>
+                    <span class="ft-item">Data release {{releaseInfo.currentRelease}}</span>
                     <span class="ft-item">Application release {{releaseInfosFormatted}}</span>
                     <a class="ft-item" href="https://github.com/calipho-sib/" target="_blank">
                         <span class="fa fa-github" aria-hidden="true"></span> For developers

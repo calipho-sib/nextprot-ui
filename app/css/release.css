@@ -12,7 +12,7 @@ span.subtitle {
     list-style-type: none;
 }
 
-#content-page-div ul li:before, #stat-page-div ul li:before {
+#content-page-div ul li:before {
     content: "\00BB \0020";
     margin-left: -12px;
 }
