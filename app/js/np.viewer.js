@@ -86,9 +86,10 @@
                 scope.customElement = "term-view"
                 nxConfig.termAccession = scope.termName
             }
-            else if (path.match(/^\/tools\/protein-digestion$/) != null) {
+            else if (path.match(/^\/tools\/protein-digestion(\/(NX_)*.*)?/) != null) {
                 scope.customElement = "digestion-overview";
-                // scope.customElement = "medical-view";
+                // Probably should do a bit of isoform validation
+                nxConfig.isoform = path.substr(path.lastIndexOf('/') + 1);
             }
             else {
                 console.error("could not find a match against " + path);
@@ -174,6 +175,7 @@
             //            .when('/help/:help', {templateUrl: '/partials/doc/main-doc.html'})
 
             .when('/tools/protein-digestion', gve)
+            .when('/tools/protein-digestion/:isoform', gve)
             .when('/tools/:t1', { templateUrl: '/partials/viewer/global-viewer.html' })
 
             .when('/view', gv)
@@ -500,9 +502,8 @@
             else if (path.match(/^\/term\/[^\/]+\/?/) != null) {
                 url = '../elements/nextprot-elements/term-view.html';
             }
-            else if (path.match(/^\/tools\/protein-digestion$/) != null) {
+            else if (path.match(/^\/tools\/protein-digestion(\/(NX_)*.*)?/) != null) {
                 url = '../elements/nextprot-elements/digestion-overview.html';
-                // url = '../elements/nextprot-elements/medical-view.html';
             }
             else {
                 return null;
