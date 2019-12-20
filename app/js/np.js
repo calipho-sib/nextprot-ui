@@ -40,7 +40,7 @@
     //Environment that should be set from outside //TODO should replace this using GRUNT
 
     // default environment when environment is not set by some external deployment script
-    var nxEnvironment = "localhost"; //env can be replaced, by dev, alpha or pro by nxs script on deploy
+    var nxEnvironment = "NX_ENV"; //env can be replaced, by dev, alpha or pro by nxs script on deploy
     // WARNING !!! DO NOT USE NX_ENV ANYWHERE ELSE IN THE PROJECT. A script replace its value by the current environment value just before deployment !
     var apiBase = "https://dev-api.nextprot.org"; //default for UI developers on MACs
     var np1Base = 'https://uat-web1'; //default for UI developers on MACs
