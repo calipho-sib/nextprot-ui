@@ -89,7 +89,9 @@
             else if (path.match(/^\/tools\/protein-digestion(\/(NX_)*.*)?/) != null) {
                 scope.customElement = "digestion-overview";
                 // Probably should do a bit of isoform validation
-                nxConfig.isoform = path.substr(path.lastIndexOf('/') + 1);
+                if(path.search("NX") != -1) {
+                    nxConfig.isoform = path.substr(path.lastIndexOf('/') + 1);
+                }
             }
             else {
                 console.error("could not find a match against " + path);
