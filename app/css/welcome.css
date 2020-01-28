@@ -22,7 +22,7 @@
  
 .nximg_np2, .nximg_cosmic-logo, .nximg_srm-atlas-logo, .nximg_gnomad, .nximg_hpa-logo, 
 .nximg_intact-logo, .nximg_np-x, .nximg_research-gate-200x200, .nximg_peptide-atlas-logo, .nximg_bgee-logo, 
-.nximg_glyconnect-logo, .nximg_uniprot-logo, .nximg_sib
+.nximg_glyconnect-logo, .nximg_uniprot-logo, .nximg_massive-logo, .nximg_sib
 { max-width: 100%; background-size: 100%; background-image: url('{!cssEndpoint!}img/nx_img_sprite3.png'); }
  
 .nximg_np2 { background-position: 0 0%; background-size: 100%; }
@@ -36,6 +36,7 @@
 .nximg_peptide-atlas-logo { background-position: 0 78.684807%; background-size: 256.410256%; }
 .nximg_bgee-logo { background-position: 0 84.769688%; background-size: 268.817204%; }
 .nximg_glyconnect-logo { background-position: 0 90.423163%; background-size: 406.504065%; }
+.nximg_massive-logo { background-position: 0 75.423163%; background-size: 406.504065%; }
 .nximg_uniprot-logo { background-position: 0 94.383662%; background-size: 458.715596%; }
 .nximg_sib { background-position: 0 100%; background-size: 500%; }
 
