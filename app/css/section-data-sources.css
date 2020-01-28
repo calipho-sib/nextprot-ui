@@ -22,15 +22,15 @@
 }
 
 #source-hpa {
-    top: 7px;
-    left: 20px;
-    height: 15px;
+    top: 10px;
+    left: 74px;
+    height: 10px;
     transition: 0.2s all ease;
 }
 #source-hpa:hover {
-    top: 7px;
-    left: 10px;
-    height: 17px;
+    top: 10px;
+    left: 74px;
+    height: 12px;
 }
 
 #source-srm-atlas {
@@ -40,8 +40,8 @@
     transition: 0.2s all ease;
 }
 #source-srm-atlas:hover {
-    top: 27px;
-    left: 0px;
+    top: 30px;
+    left: 4px;
     height: 23px;
 }
 
@@ -155,6 +155,18 @@
 #source-gnomad:hover {
     bottom: 10px;
     left: 65px;
+    height: 25px;
+}
+
+#source-massive {
+    bottom: 145px;
+    left: 13px;
+    height: 20px;
+    transition: 0.2s all ease;
+}
+#source-massive:hover {
+    bottom: 145px;
+    left: 13px;
     height: 25px;
 }
 
