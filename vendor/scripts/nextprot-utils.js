@@ -231,7 +231,7 @@ var NXUtils = {
     getDescription: function (elem, category) {
         if (category === "Peptide" || category === "SRM Peptide") {
             for (var ev in elem.evidences) {
-                if (elem.evidences[ev].resourceDb === "PeptideAtlas" || elem.evidences[ev].resourceDb === "SRMAtlas") {
+                if (elem.evidences[ev].resourceDb === "PeptideAtlas" || elem.evidences[ev].resourceDb === "MassIVE" || elem.evidences[ev].resourceDb === "SRMAtlas") {
                     return elem.evidences[ev].resourceAccession;
                 }
             }
