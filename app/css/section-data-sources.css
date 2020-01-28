@@ -22,39 +22,39 @@
 }
 
 #source-hpa {
-    top: 10px;
+    top: 13px;
     left: 74px;
     height: 10px;
     transition: 0.2s all ease;
 }
 #source-hpa:hover {
-    top: 10px;
+    top: 13px;
     left: 74px;
     height: 12px;
 }
 
 #source-srm-atlas {
-    top: 30px;
-    left: 4px;
+    top: 38px;
+    left: -4px;
     height: 20px;
     transition: 0.2s all ease;
 }
 #source-srm-atlas:hover {
-    top: 30px;
-    left: 4px;
+    top: 38px;
+    left: -4px;
     height: 23px;
 }
 
 #source-bgee {
-    top: 60px;
-    left: 0px;
+    top: 64px;
+    left: -8px;
     height: 27px;
     transition: 0.2s all ease;
 }
 #source-bgee:hover {
-    top: 55px;
-    left: -5px;
-    height: 32px;
+    top: 64px;
+    left: -8px;
+    height: 30px;
 }
 
 #source-cosmic {
@@ -106,14 +106,14 @@
 }
 
 #source-peptide-atlas {
-    top: 64px;
-    left: 136px;
+    top: 66px;
+    left: 150px;
     height: 32px;
     transition: 0.2s all ease;
 }
 #source-peptide-atlas:hover {
-    top: 64px;
-    left: 136px;
+    top: 66px;
+    left: 150px;
     height: 35px;
 }
 
@@ -159,15 +159,15 @@
 }
 
 #source-massive {
-    bottom: 145px;
+    bottom: 143px;
     left: 13px;
-    height: 20px;
+    height: 23px;
     transition: 0.2s all ease;
 }
 #source-massive:hover {
-    bottom: 145px;
+    bottom: 143px;
     left: 13px;
-    height: 25px;
+    height: 28px;
 }
 
 /* The animation code */

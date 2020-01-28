@@ -26,18 +26,18 @@
 { max-width: 100%; background-size: 100%; background-image: url('{!cssEndpoint!}img/nx_img_sprite5.png'); }
  
 .nximg_np2 { background-position: 0 0%; background-size: 100%; }
-.nximg_cosmic-logo { background-position: 0 5.468259%; background-size: 152.905199%; }
-.nximg_srm-atlas-logo { background-position: 0 8.000226%; background-size: 162.86645%; }
-.nximg_gnomad { background-position: 0 11.088906%; background-size: 166.666667%; }
-.nximg_hpa-logo { background-position: 0 15.022581%; background-size: 166.666667%; }
-.nximg_intact-logo { background-position: 0 16.639017%; background-size: 191.570881%; }
-.nximg_np-x { background-position: 0 22.280969%; background-size: 250%; }
+.nximg_cosmic-logo { background-position: 0 10.468259%; background-size: 152.905199%; }
+.nximg_srm-atlas-logo { background-position: 0 15.000226%; background-size: 162.86645%; }
+.nximg_gnomad { background-position: 0 22.088906%; background-size: 166.666667%; }
+.nximg_hpa-logo { background-position: 0 28.422581%; background-size: 166.666667%; }
+.nximg_intact-logo { background-position: 0 32.639017%; background-size: 191.570881%; }
+.nximg_np-x { background-position: 0 45.70969%; background-size: 250%; }
 .nximg_research-gate-200x200 { background-position: 0 139.614169%; background-size: 250%; }
-.nximg_peptide-atlas-logo { background-position: 0 37.89%; background-size: 256.410256%; }
-.nximg_bgee-logo { background-position: 0 143.869688%; background-size: 268.817204%; }
-.nximg_glyconnect-logo { background-position: 0 44.023163%; background-size: 406.504065%; }
-.nximg_massive-logo { background-position: 0 157.6%; background-size: 139.504065%; }
-.nximg_uniprot-logo { background-position: 0 46.383662%; background-size: 458.715596%; }
+.nximg_peptide-atlas-logo { background-position: 0 73.49%; background-size: 256.410256%; }
+.nximg_bgee-logo { background-position: 0 79.4%; background-size: 268.817204%; }
+.nximg_glyconnect-logo { background-position: 0 85.009%; background-size: 395.504065%; }
+.nximg_massive-logo { background-position: 0 99.9%; background-size: 212.504065%; }
+.nximg_uniprot-logo { background-position: 0 88.483662%; background-size: 458.715596%; }
 .nximg_sib { background-position: 0 151.3%; background-size: 500%; }
 
 /* Lato import css */
