@@ -73,7 +73,6 @@
                         "logo": "https://www.nextprot.org/img/sib.png"
                     },
                     "citation": {
-                        "@type": "ScholarlyArticle",
                         "headline": "The neXtProt knowledgebase in 2020: data, tools and usability improvements.",
                         "author" : [
                             {"@type": "Person", "name": "Zahn-Zabal M"},
@@ -87,21 +86,18 @@
                             {"@type": "Person", "name": "Teixeira D"},
                             {"@type": "Person", "name": "Rech de Laval V"},
                             {"@type": "Person", "name": "Samarasinghe K"},
-                            {"@type": "Person", "name": "Bairoch A"}
-                            {"@type": "Person", "name": "Lane L"},
+                            {"@type": "Person", "name": "Bairoch A"},
+                            {"@type": "Person", "name": "Lane L"}
                         ],
                         "isPartOf": [
                             {"@type": "Periodical", "name": "Nucleic acids research"},
-                            {"@type": "PublicationVolume", "volumeNumber": "48"}, 
+                            {"@type": "PublicationVolume", "volumeNumber": "48"},
                             {"@type": "PublicationIssue", "datePublished": "2020", "issueNumber": "D1"}
                         ],
                         "sameAs": [
                             "https://doi.org/10.1093/nar/gkz995",
                             "http://europepmc.org/abstract/MED/31724716",
-                            "https://www.ncbi.nlm.nih.gov/pubmed/31724716" 
-<!-- ADD when have PMCID and precede with comma
-                            "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5210547"
--->
+                            "https://www.ncbi.nlm.nih.gov/pubmed/31724716"
                         ]
                     },
                     "dataset": [
@@ -112,17 +108,37 @@
                             "url": "https://www.nextprot.org",
                             "keywords": "nextprot,Human,Proteins,Proteome,Proteomics,protein database,protein knowledgebase,protein resource,human protein,human proteome,function,medical,disease,expression,interactions,sequence,isoform,mutation,variant,phenotypes,proteomics,peptide,structure,3D,annotation,biocuration,chromosomes,protein validation,protein-coding genes,post-translational modifications,ptm,data integration,systems biology,genetic variations,UniProt",
                             "distribution": [
-                                {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/xml/nextprot_all.xml.gz", "fileFormat": "XML"},
-                                {"@type": "DataDownload", "fileFormat": "RDF"},
-                                {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/peff/nextprot_all.peff.gz", "fileFormat": "PEFF"},
-                                {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/md5/nextprot_sequence_md5.txt", "fileFormat": "TXT"},
-                                {"@type": "DataDownload", "contentUrl": "https://api.nextprot.org/export/entries/all.fasta", "fileFormat": "FASTA"}
+                                {
+                                    "@type": "DataDownload",
+                                    "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/xml/nextprot_all.xml.gz",
+                                    "fileFormat": "XML",
+                                    "encodingFormat": "gzip"
+                                },
+                                {
+                                    "@type": "DataDownload",
+                                    "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/rdf/",
+                                    "fileFormat": "RDF",
+                                    "encodingFormat": "UTF-8"
+                                },
+                                {
+                                    "@type": "DataDownload",
+                                    "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/peff/nextprot_all.peff.gz",
+                                    "fileFormat": "PEFF",
+                                    "encodingFormat": "UTF-8"
+                                },
+                                {
+                                    "@type": "DataDownload",
+                                    "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/md5/nextprot_sequence_md5.txt",
+                                    "fileFormat": "TXT",
+                                    "encodingFormat": "UTF-8"
+                                },
+                                {
+                                    "@type": "DataDownload",
+                                    "contentUrl": "https://api.nextprot.org/export/entries/all.fasta",
+                                    "fileFormat": "FASTA",
+                                    "encodingFormat": "UTF-8"
+                                }
                             ],
-                            "potentialAction": {
-                                "@type": "SearchAction",
-                                "target": "https://www.nextprot.org/proteins/search?query={query}",
-                                "query-input": "required name=query"
-                            },
                             "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"}
                         },
                         {
@@ -131,7 +147,12 @@
                             "description": "An ontology of human anatomy and human cell types.",
                             "url": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/caloha.obo",
                             "keywords": "human body, anatomy, ontology, tissues, cell types, organs, developmental stage",
-                            "distribution": {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/caloha.obo", "fileFormat": "OBO"},
+                            "distribution": {
+                                "@type": "DataDownload",
+                                "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/caloha.obo",
+                                "fileFormat": "OBO",
+                                "encodingFormat": "UTF-8"
+                            },
                             "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"}
                         },
                         {
@@ -140,10 +161,14 @@
                             "description": "An ontology that allows one to annotate the electrophysiological parameters of the voltage-gated class of ion channels.",
                             "url": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/icepo.obo",
                             "keywords": "ion channels, electrophysiology, ion channel gating, conductance, ion selectivity, activation, inactivation, recovery, deactivation, reopening, closed-state inactivation",
-                            "distribution": {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/icepo.obo", "fileFormat": "OBO"},
+                            "distribution": {
+                                "@type": "DataDownload",
+                                "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/icepo.obo",
+                                "fileFormat": "OBO",
+                                "encodingFormat": "UTF-8"
+                            },
                             "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
                             "citation": {
-                                "@type": "ScholarlyArticle",
                                 "headline": "ICEPO: the ion channel electrophysiology ontology.",
                                 "author" : [
                                     {"@type": "Person", "name": "Hinard V"},
@@ -172,10 +197,14 @@
                             "description": "A set of 26 files, each one listing all the neXtProt entries encoded on a given chromosome (chromosomes 1-22, X, Y, mitochondrial genome (MT), or unknown genomic location), along with their genomic coordinates and a brief summary of the available annotations for each of them.",
                             "url": "ftp://ftp.nextprot.org/pub/current_release/chr_reports/",
                             "keywords": "human genes, chromosomes, mitochondrial genome, genomic coordinates, chromosomal location, coding strand, protein existence, PE1, PE2, PE3, PE4, PE5",
-                            "distribution": {"@type": "DataDownload", "fileFormat": "TXT"},
-                                               "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
+                            "distribution": {
+                                "@type": "DataDownload",
+                                "fileFormat": "TXT",
+                                "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/chr_reports/",
+                                "encodingFormat": "UTF-8"
+                            },
+                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
                             "citation": {
-                                "@type": "ScholarlyArticle",
                                 "headline": "neXtProt: Organizing Protein Knowledge in the Context of Human Proteome Projects",
                                 "author" : [
                                     {"@type": "Person", "name": "Gaudet P"},
@@ -183,7 +212,7 @@
                                     {"@type": "Person", "name": "Cusin I"},
                                     {"@type": "Person", "name": "Duek P"},
                                     {"@type": "Person", "name": "Evalet O"},
-                                    {"@type": "Person", "name": "Gateau A"},  
+                                    {"@type": "Person", "name": "Gateau A"},
                                     {"@type": "Person", "name": "Gleizes A"},
                                     {"@type": "Person", "name": "Pereira M"},
                                     {"@type": "Person", "name": "Zahn-Zabal M"},
@@ -206,12 +235,17 @@
                             "@type": "Dataset",
                             "name": "Cancer portal",
                             "description": "Portal which provides information about the functional impact of genetic variants and artificially generated mutants in cancer genes",
-                            "url": "https://www.nextprot.org/portals/breast-cancer",
+                            "url": "https://www.nextprot.org/portals/cancer-variants",
                             "keywords": "BRCA1,Biological database,Cancer,Functional defect assessment,Genetic variants,Molecular phenotypes",
-                            "distribution": {"@type": "DataDownload", "fileFormat": "CSV"},
+                            "distribution": {
+                                "@type": "DataDownload",
+                                "fileFormat": "CSV",
+                                "contentUrl": "https://www.nextprot.org/viewers/portals/cancer-variants/app/index.html#",
+                                "encodingFormat": "UTF-8"
+                            },
+                            "encodingFormat": "UTF-8",
                             "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
                             "citation": {
-                                "@type": "ScholarlyArticle",
                                 "headline": "A new bioinformatics tool to help assess the significance of BRCA1 variants.",
                                 "author" : [
                                     {"@type": "Person", "name": "Cusin I"},
@@ -244,10 +278,14 @@
                             "description": "Portal which provides information about the functional impact of genetic variants and artificially generated mutants in voltage-gated sodium channel genes",
                             "url": "https://www.nextprot.org/portals/navmut",
                             "keywords": "clinical interpretation of variants, databases, genetics variants,pathogenicity,phenotype,voltage-gated sodium channel",
-                            "distribution": {"@type": "DataDownload", "fileFormat": "CSV"},
+                            "distribution": {
+                                "@type": "DataDownload",
+                                "contentUrl": "https://www.nextprot.org/viewers/portals/navmut/app/index.html#",
+                                "encodingFormat": "UTF-8",
+                                "fileFormat": "CSV"
+                            },
                             "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
                             "citation": {
-                                "@type": "ScholarlyArticle",
                                 "headline": "Annotation of functional impact of voltage-gated sodium channel mutations.",
                                 "author" : [
                                     {"@type": "Person", "name": "Hinard V"},
@@ -279,10 +317,27 @@
                             "description": "Portal which provides information about the function of protein kinases",
                             "url": "https://www.nextprot.org/portals/kinase-function",
                             "keywords": "databases, protein kinase,phosphorylation, protein-protein interactions, biological process, protein function",
-                            "distribution": {"@type": "DataDownload", "contentUrl": "https://www.nextprot.org/viewers/portals/kinase-function/app/index.html#", "fileFormat": "CSV"},
+                            "distribution": {
+                                "@type": "DataDownload",
+                                "contentUrl": "https://www.nextprot.org/viewers/portals/kinase-function/app/index.html#",
+                                "fileFormat": "CSV",
+                                "encodingFormat": "UTF-8"
+                            },
                             "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"}
-                        }    
+                        }
                     ]
+                },
+                {
+                    "@context": "https://schema.org",
+                    "@type": "WebSite",
+                    "name": "neXtProt search",
+                    "url": "https://www.nextprot.org/",
+                    "potentialAction": {
+                        "@type": "SearchAction",
+                        "target": "https://www.nextprot.org/proteins/search?query={query}",
+                        "query-input": "required name=query"
+                    }
+
                 },
                 {
                     "@type": "SoftwareApplication",
@@ -296,15 +351,9 @@
                     },
                     "description" : "The neXtProt peptide uniqueness checker allows scientists to define which peptides can be used to validate the existence of human proteins, i.e. map uniquely versus multiply to human protein sequences taking into account isobaric substitutions, alternative splicing and single amino acid variants.",
                     "applicationCategory" : "http://schema.org/WebApplication",
-                    "offers": {
-                        "@type" : "Offer",
-                        "price" : "0.00",
-                        "priceCurrency" : "CHF"
-                    },
-                   "license": {"@type": "CreativeWork", "name": "GNU General Public License v2.0", "url": "https://www.gnu.org/licenses/gpl-2.0.fr.html"},
-                   "operatingSystem" : "Unix,Windows,OS X,Android",
+                    "license": {"@type": "CreativeWork", "name": "GNU General Public License v2.0", "url": "https://www.gnu.org/licenses/gpl-2.0.fr.html"},
+                    "operatingSystem" : "Unix,Windows,OS X,Android",
                     "citation": {
-                        "@type": "ScholarlyArticle",
                         "headline": "The neXtProt peptide uniqueness checker: a tool for the proteomics community.",
                         "author" : [
                             {"@type": "Person", "name": "Schaeffer M"},
@@ -338,11 +387,6 @@
                     },
                     "description" : "A web application for using the SPARQL Protocol and RDF Query Language (SPARQL) to access all the neXtProt protein entry data",
                     "applicationCategory" : "http://schema.org/WebApplication",
-                    "offers": {
-                        "@type" : "Offer",
-                        "price" : "0.00",
-                        "priceCurrency" : "CHF"
-                    },
                     "license": {"@type": "CreativeWork", "name": "GNU General Public License v2.0", "url": "https://www.gnu.org/licenses/gpl-2.0.fr.html"},
                     "operatingSystem" : "Unix,Windows,OS X,Android"
                 },{
