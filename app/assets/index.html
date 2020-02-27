@@ -54,6 +54,20 @@
                 m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
     </script>
+
+    <script type="application/ld+json">{
+        "@context" : [ "https://schema.org/" ],
+        "@type" : "Organization",
+        "url" : "https://www.nextprot.org",
+        "name": "neXtProt",
+        "memberof" : {
+            "@type" : "NGO",
+            "name"  : "SIB Swiss Institute of Bioinformatics",
+            "url"   : "https://sib.swiss/"
+        }
+    }
+    </script>
+
     <script type="application/ld+json">
         {
             "@context": "http://schema.org",
@@ -87,8 +101,8 @@
                             {"@type": "Person", "name": "Teixeira D"},
                             {"@type": "Person", "name": "Rech de Laval V"},
                             {"@type": "Person", "name": "Samarasinghe K"},
-                            {"@type": "Person", "name": "Bairoch A"}
-                            {"@type": "Person", "name": "Lane L"},
+                            {"@type": "Person", "name": "Bairoch A"},
+                            {"@type": "Person", "name": "Lane L"}
                         ],
                         "isPartOf": [
                             {"@type": "Periodical", "name": "Nucleic acids research"},
@@ -692,42 +706,27 @@
     <div ng-if="isSearchBarVisible()" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
 
     <!--HIRING BOX - deprecated    -->
-
-<div id="hiring" ng-if="isHomePage()">
-    <h1 id="hiring-title"><span>NAR 2020 PAPER</span></h1>
-
-    <div class="row hiring-content">
-    <!--        
-        <div class="pull-left hiring-icon-container">
-            <span class="fa fa-graduation-cap fa-3x"></span>
-        </div>
--->
-        <div class="hiring-text-container">
-            <div>The neXtProt knowledgebase in 2020: data, tools and usability improvements. <a href="https://academic.oup.com/nar/advance-article/doi/10.1093/nar/gkz995/5625540?guestAccessKey=57d5366c-20f0-4a32-96b9-f20c8780442a" target="_blank">Nucleic Acids Research, Database Issue (2020)</a></div>
-        </div>
-    </div>
-</div>
     <!--
 light blue kuler : 17C6DE
 pink light kuler : CF3E87
 blue customized from kuler blue: 14ADC2
 -->
 
-    <!--
-    
-    <div class="row">
-        <div class="col-md-3">
-            <div class="hiring-icon-container">
-                <span class="fa fa-graduation-cap fa-3x"></span>
+
+    <div id="hiring" ng-if="isHomePage()">
+        <h1 id="hiring-title"><span>We are hiring!</span></h1>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="hiring-icon-container">
+                    <span class="fa fa-graduation-cap fa-3x"></span>
+                </div>
+            </div>
+            <div class="col-md-9 hiring-text-container">
+                <p>To reinforce our team, we are looking for a:</p>
+                <p><a class="pull-center hiring-button" href="https://apply.refline.ch/499599/0148/pub/1/index.html" target="_blank">Post-doc in protein bioinformatics</a></p>
             </div>
         </div>
-        <div class="col-md-9 hiring-text-container">
-            <p>Get more informations in the following link :</p>
-            <a class="hiring-button pull-right" href="https://apply.refline.ch/499599/0040/pub/1/index.html">SEE OFFER</a>
-        </div>
     </div>
--->
-
 
     <div id="main" class="container-fluid" ng-view=""></div>
 
