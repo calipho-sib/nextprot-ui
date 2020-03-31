@@ -1,6 +1,25 @@
 <div id="content" class="">
     <div class="col-xs-12 col-lg-12  main" ng-controller="DocCtrl"  style="background-color:white">
         <h2>{{articleTitle}}</h2>
+        <div ng-show="articleSharable">
+            <a target="_blank" href="http://twitter.com/share?text={{articleTitle}}&url=http%3A%2F%2Fwww.nextprot.org/news/{{article}}">
+                <!--                <img alt="Twitter logo" src="img/twitter.png">-->
+                <span class="fa fa-twitter-square pull-left" style="color:#28a9e0;font-size: 30px"></span>
+            </a>
+            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.nextprot.org/news/{{article}}">
+                <!--                <img alt="Twitter logo" src="img/twitter.png">-->
+                <span class="fa fa-facebook-square pull-left" style="color:#1645e0;font-size: 30px"></span>
+            </a>
+            <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fwww.nextprot.org/news/{{article}}&title={{articleTitle}}">
+                <!--                <img alt="Twitter logo" src="img/twitter.png">-->
+                <span class="fa fa-linkedin-square pull-left" style="color:#0b6fe0;font-size: 30px"></span>
+            </a>
+            <a target="_blank" href="mailto:?subject={{articleTitle}}&body=https%3A%2F%2Fwww.nextprot.org/news/{{article}}">
+                <!--                <img alt="Twitter logo" src="img/twitter.png">-->
+                <span class="fa fa-envelope-square pull-left" style="color:#0b6fe0;font-size: 30px"></span>
+            </a>
+        </div>
+        <br/><br/>
 
         <!-- CENTER PANE -->
         <div ng-include="'html/np-help.doc.html'"  id="news-centre-content"/>
