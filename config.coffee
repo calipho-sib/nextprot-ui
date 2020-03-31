@@ -25,6 +25,8 @@ appVersionNameJs = "js/app.js"
 vendorVersionNameCss = "css/vendor_"+versionNumber+".css"
 appVersionNameCss = "css/app_"+versionNumber+".css"
 appNameCss = "css/app.css"
+vendorNameCss = "css/vendor.css"
+
 
 exports.config =
   # See docs at http://brunch.readthedocs.org/en/latest/config.html.
@@ -88,3 +90,4 @@ exports.config.files.javascripts.joinTo[appVersionNameJs] = /^app/
 exports.config.files.stylesheets.joinTo[vendorVersionNameCss] = /^(bower_components|vendor\/styles)/
 exports.config.files.stylesheets.joinTo[appVersionNameCss] = /^app/
 exports.config.files.stylesheets.joinTo[appNameCss] = /^app/
+exports.config.files.stylesheets.joinTo[vendorNameCss] = /^app/
