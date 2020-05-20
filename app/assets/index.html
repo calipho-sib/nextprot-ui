@@ -112,10 +112,8 @@
                         "sameAs": [
                             "https://doi.org/10.1093/nar/gkz995",
                             "http://europepmc.org/abstract/MED/31724716",
-                            "https://www.ncbi.nlm.nih.gov/pubmed/31724716" 
-<!-- ADD when have PMCID and precede with comma
+                            "https://www.ncbi.nlm.nih.gov/pubmed/31724716",
                             "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5210547"
--->
                         ]
                     },
                     "dataset": [
@@ -533,44 +531,6 @@
                                 <li ng-class="{'active':isActiveDoc('/help/technical-corner')}">
                                     <a href="/help/technical-corner">Technical corner</a>
                                 </li>
-                                <!--  <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li> -->
-                                <!--                            <li class="divider"></li>-->
-
-                                <!-- FAQ
-                            <li ng-class="{'active':isActiveDoc('/pages/faq')}"><a href="/pages/faq">FAQ</a></li>
-                            -->
-
-                                <!-- Known issues -->
-                                <!--
-                            <li ng-class="{'active':isActiveDoc('/known-issues')}">
-                                <a href="/known-issues">Known issues</a>
-                            </li>
--->
-
-                                <!-- Found a bug -->
-                                <!--
-                            <li ng-class="">
-                                <a target="_blank" href="https://github.com/calipho-sib/nextprot-ui/issues">
-                                    Found a bug?<i class="fa-github"></i></a>
-                            </li>
--->
-
-                                <!--                            <li class="divider"></li>-->
-
-                                <!-- News -->
-                                <!--
-                            <li ng-class="{'active':isActiveDoc('/what-is-new')}">
-                                <a href="/what-is-new">What's new?</a>
-                            </li>
--->
-
-                                <!-- Citing neXtProt -->
-                                <!--
-                            <li ng-class="{'active':isActiveDoc('/citing-nextprot')}">
-                                <a href="/citing-nextprot">Citing neXtProt</a>
-                            </li>
--->
-
                             </ul>
                         </li>
 
@@ -631,21 +591,6 @@
 
                     </ul>
                     <ul class="nav navbar-nav navbar-right" style="margin-right:0px;">
-
-                        <!--
-                    <li>
-                        <a title="My lists" ng-click="goToUser('lists')" type="button" class="link">
-                            <i class="fa-list-alt"></i>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a title="My queries" ng-click="goToUser('queries')" type="button" class="link">
-                            <i class="fa-star"></i>
-                        </a>
-                    </li>
--->
-
                         <!-- login button -->
                         <!-- ngIf: !user.profile.email -->
                         <li class="ng-scope" ng-if="!user.profile.email">
@@ -705,15 +650,7 @@
 ================================================== -->
     <div ng-if="isSearchBarVisible()" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
 
-    <!--HIRING BOX - deprecated    -->
-    <!--
-light blue kuler : 17C6DE
-pink light kuler : CF3E87
-blue customized from kuler blue: 14ADC2
--->
-
-
-    <div id="hiring" ng-if="isHomePage()">
+    <!--<div id="hiring" ng-if="isHomePage()">
         <h1 id="hiring-title"><span>We are hiring!</span></h1>
         <div class="row">
             <div class="col-md-3">
@@ -726,7 +663,7 @@ blue customized from kuler blue: 14ADC2
                 <p><a class="pull-center hiring-button" href="https://apply.refline.ch/499599/0148/pub/1/index.html" target="_blank">Post-doc in protein bioinformatics</a></p>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <div id="main" class="container-fluid" ng-view=""></div>
 
@@ -753,14 +690,10 @@ blue customized from kuler blue: 14ADC2
     <!-- Placed at the end of the document so the pages load faster -->
 
     <script type="text/javascript">
-        //
-        // global settings for angular-nexprot-ui-help
         var npHelpSettings = {
             baseUrl: 'https://api.nextprot.org'
         }
     </script>
-    <!-- <script defer src="https://d2t3grwcyftpfv.cloudfront.net/js/vendor.js?release={!distRelease!}"></script> -->
-    <!-- <script defer src="https://d2t3grwcyftpfv.cloudfront.net/js/vendor_{!vendorVersion!}.js?release={!distRelease!}"></script> -->
     
     <script defer src="{!endpoint!}/js/vendor_{!uiVersion!}.js?release={!distRelease!}"></script>
     <script defer src="js/app.js?release={!distRelease!}"></script>
