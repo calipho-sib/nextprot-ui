@@ -54,6 +54,20 @@
                 m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
     </script>
+
+    <script type="application/ld+json">{
+        "@context" : [ "https://schema.org/" ],
+        "@type" : "Organization",
+        "url" : "https://www.nextprot.org",
+        "name": "neXtProt",
+        "memberof" : {
+            "@type" : "NGO",
+            "name"  : "SIB Swiss Institute of Bioinformatics",
+            "url"   : "https://sib.swiss/"
+        }
+    }
+    </script>
+
     <script type="application/ld+json">
         {
             "@context": "http://schema.org",
@@ -74,35 +88,31 @@
                     },
                     "citation": {
                         "@type": "ScholarlyArticle",
-                        "headline": "The neXtProt knowledgebase on human proteins: 2017 update.",
+                        "headline": "The neXtProt knowledgebase in 2020: data, tools and usability improvements.",
                         "author" : [
-                            {"@type": "Person", "name": "Gaudet P"},
-                            {"@type": "Person", "name": "Michel PA"},
                             {"@type": "Person", "name": "Zahn-Zabal M"},
-                            {"@type": "Person", "name": "Britan A"},
-                            {"@type": "Person", "name": "Cusin I"},
-                            {"@type": "Person", "name": "Domagalski M"},
-                            {"@type": "Person", "name": "Duek PD"},
+                            {"@type": "Person", "name": "Michel PA"},
                             {"@type": "Person", "name": "Gateau A"},
-                            {"@type": "Person", "name": "Gleizes A"},
-                            {"@type": "Person", "name": "Hinard V"},
-                            {"@type": "Person", "name": "Rech de Laval V"},
-                            {"@type": "Person", "name": "Lin JJ"},
                             {"@type": "Person", "name": "Nikitin F"},
                             {"@type": "Person", "name": "Schaeffer M"},
+                            {"@type": "Person", "name": "Audot E"},
+                            {"@type": "Person", "name": "Gaudet P"},
+                            {"@type": "Person", "name": "Duek PD"},
                             {"@type": "Person", "name": "Teixeira D"},
-                            {"@type": "Person", "name": "Lane L"},
-                            {"@type": "Person", "name": "Bairoch A"}
+                            {"@type": "Person", "name": "Rech de Laval V"},
+                            {"@type": "Person", "name": "Samarasinghe K"},
+                            {"@type": "Person", "name": "Bairoch A"},
+                            {"@type": "Person", "name": "Lane L"}
                         ],
                         "isPartOf": [
                             {"@type": "Periodical", "name": "Nucleic acids research"},
-                            {"@type": "PublicationVolume", "volumeNumber": "45"},
-                            {"@type": "PublicationIssue", "datePublished": "2017", "issueNumber": "D1"}
+                            {"@type": "PublicationVolume", "volumeNumber": "48"}, 
+                            {"@type": "PublicationIssue", "datePublished": "2020", "issueNumber": "D1"}
                         ],
                         "sameAs": [
-                            "https://doi.org/10.1093/nar/gkw1062",
-                            "http://europepmc.org/abstract/MED/27899619",
-                            "https://www.ncbi.nlm.nih.gov/pubmed/27899619",
+                            "https://doi.org/10.1093/nar/gkz995",
+                            "http://europepmc.org/abstract/MED/31724716",
+                            "https://www.ncbi.nlm.nih.gov/pubmed/31724716",
                             "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5210547"
                         ]
                     },
@@ -475,7 +485,7 @@
                         <!--<li ng-class=""><a href="/tools">Tools</a></li>-->
 
                         <!-- Download -->
-                        <li ng-class=""><a href="ftp://ftp.nextprot.org/pub/current_release/" ng-click="routingOutside('ftp')">Download</a></li>
+                        <li ng-class=""><a href="ftp://ftp.nextprot.org/pub/" ng-click="routingOutside('ftp')">Download</a></li>
 
                         <!-- Help dropdown -->
                         <li class="dropdown">
@@ -521,44 +531,6 @@
                                 <li ng-class="{'active':isActiveDoc('/help/technical-corner')}">
                                     <a href="/help/technical-corner">Technical corner</a>
                                 </li>
-                                <!--  <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li> -->
-                                <!--                            <li class="divider"></li>-->
-
-                                <!-- FAQ
-                            <li ng-class="{'active':isActiveDoc('/pages/faq')}"><a href="/pages/faq">FAQ</a></li>
-                            -->
-
-                                <!-- Known issues -->
-                                <!--
-                            <li ng-class="{'active':isActiveDoc('/known-issues')}">
-                                <a href="/known-issues">Known issues</a>
-                            </li>
--->
-
-                                <!-- Found a bug -->
-                                <!--
-                            <li ng-class="">
-                                <a target="_blank" href="https://github.com/calipho-sib/nextprot-ui/issues">
-                                    Found a bug?<i class="fa-github"></i></a>
-                            </li>
--->
-
-                                <!--                            <li class="divider"></li>-->
-
-                                <!-- News -->
-                                <!--
-                            <li ng-class="{'active':isActiveDoc('/what-is-new')}">
-                                <a href="/what-is-new">What's new?</a>
-                            </li>
--->
-
-                                <!-- Citing neXtProt -->
-                                <!--
-                            <li ng-class="{'active':isActiveDoc('/citing-nextprot')}">
-                                <a href="/citing-nextprot">Citing neXtProt</a>
-                            </li>
--->
-
                             </ul>
                         </li>
 
@@ -619,21 +591,6 @@
 
                     </ul>
                     <ul class="nav navbar-nav navbar-right" style="margin-right:0px;">
-
-                        <!--
-                    <li>
-                        <a title="My lists" ng-click="goToUser('lists')" type="button" class="link">
-                            <i class="fa-list-alt"></i>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a title="My queries" ng-click="goToUser('queries')" type="button" class="link">
-                            <i class="fa-star"></i>
-                        </a>
-                    </li>
--->
-
                         <!-- login button -->
                         <!-- ngIf: !user.profile.email -->
                         <li class="ng-scope" ng-if="!user.profile.email">
@@ -693,45 +650,20 @@
 ================================================== -->
     <div ng-if="isSearchBarVisible()" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
 
-    <!--HIRING BOX - deprecated    -->
-    <!--
-<div id="hiring" ng-if="isHomePage()">
-    <h1 id="hiring-title"><span>WE ARE HIRING !</span></h1>
-
-    <div class="row hiring-content">
-        <div class="pull-left hiring-icon-container">
-            <span class="fa fa-graduation-cap fa-3x"></span>
-        </div>
-        <div class="hiring-text-container">
-            <div>We are looking for a post-doctorate</div>
-        </div>
-        <div class="pull-right">
-            <a class="hiring-button pull-right" href="https://apply.refline.ch/499599/0040/pub/1/index.html" target="_blank">SEE OFFER</a>
-        </div>
-    </div>
-</div>
--->
-    <!--
-light blue kuler : 17C6DE
-pink light kuler : CF3E87
-blue customized from kuler blue: 14ADC2
--->
-
-    <!--
-    
-    <div class="row">
-        <div class="col-md-3">
-            <div class="hiring-icon-container">
-                <span class="fa fa-graduation-cap fa-3x"></span>
+    <!--<div id="hiring" ng-if="isHomePage()">
+        <h1 id="hiring-title"><span>We are hiring!</span></h1>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="hiring-icon-container">
+                    <span class="fa fa-graduation-cap fa-3x"></span>
+                </div>
+            </div>
+            <div class="col-md-9 hiring-text-container">
+                <p>To reinforce our team, we are looking for a:</p>
+                <p><a class="pull-center hiring-button" href="https://apply.refline.ch/499599/0148/pub/1/index.html" target="_blank">Post-doc in protein bioinformatics</a></p>
             </div>
         </div>
-        <div class="col-md-9 hiring-text-container">
-            <p>Get more informations in the following link :</p>
-            <a class="hiring-button pull-right" href="https://apply.refline.ch/499599/0040/pub/1/index.html">SEE OFFER</a>
-        </div>
-    </div>
--->
-
+    </div>-->
 
     <div id="main" class="container-fluid" ng-view=""></div>
 
@@ -742,7 +674,8 @@ blue customized from kuler blue: 14ADC2
                 <div class="col-md-12 text-left">
                     <a class="ft-item" href="/copyright">&copy; 2011 - {{currentYear}} SIB Swiss Institute of Bioinformatics</a>
                     <a class="ft-item" href="/legal-disclaimer">Legal disclaimer</a>
-                    <span class="ft-item">Data release {{releaseInfo.databaseRelease}}</span>
+                    <span class="ft-item">Data release {{releaseInfo.currentRelease}}</span>
+                    <a class="ft-item" href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Data CC BY 4.0</a>
                     <span class="ft-item">Application release {{releaseInfosFormatted}}</span>
                     <a class="ft-item" href="https://github.com/calipho-sib/" target="_blank">
                         <span class="fa fa-github" aria-hidden="true"></span> For developers
@@ -758,14 +691,10 @@ blue customized from kuler blue: 14ADC2
     <!-- Placed at the end of the document so the pages load faster -->
 
     <script type="text/javascript">
-        //
-        // global settings for angular-nexprot-ui-help
         var npHelpSettings = {
             baseUrl: 'https://api.nextprot.org'
         }
     </script>
-    <!-- <script defer src="https://d2t3grwcyftpfv.cloudfront.net/js/vendor.js?release={!distRelease!}"></script> -->
-    <!-- <script defer src="https://d2t3grwcyftpfv.cloudfront.net/js/vendor_{!vendorVersion!}.js?release={!distRelease!}"></script> -->
     
     <script defer src="{!endpoint!}/js/vendor_{!uiVersion!}.js?release={!distRelease!}"></script>
     <script defer src="js/app.js?release={!distRelease!}"></script>

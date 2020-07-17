@@ -22,74 +22,65 @@
 }
 
 #source-hpa {
-    top: 7px;
-    left: 20px;
-    height: 15px;
+    top: 13px;
+    left: 74px;
+    height: 10px;
     transition: 0.2s all ease;
 }
 #source-hpa:hover {
-    top: 7px;
-    left: 10px;
-    height: 17px;
+    top: 13px;
+    left: 74px;
+    height: 12px;
 }
 
 #source-srm-atlas {
-    top: 30px;
-    left: 4px;
+    top: 66px;
+    left: 145px;
     height: 20px;
     transition: 0.2s all ease;
 }
 #source-srm-atlas:hover {
-    top: 27px;
-    left: 0px;
+    top: 66px;
+    left: 145px;
     height: 23px;
 }
 
 #source-bgee {
-    top: 60px;
-    left: 0px;
+    top: 79px;
+    left: -19px;
     height: 27px;
     transition: 0.2s all ease;
 }
 #source-bgee:hover {
-    top: 55px;
-    left: -5px;
-    height: 32px;
+    top: 79px;
+    left: -19px;
+    height: 30px;
 }
 
 #source-cosmic {
     /* top: 112px;
     left: -5px;
     height: 15px; */
-    top: 102px;
-    left: -10px;
+    top: 113px;
+    left: -21px;
     height: 15px;
     transition: 0.2s all ease;
 }
 #source-cosmic:hover {
-    /* top: 112px;
-    left: -10px;
-    height: 18px; */
-    top: 102px;
-    left: -20px;
+    top: 113px;
+    left: -21px;
     height: 18px;
 }
 
 #source-uniprot {
-    /* bottom: 4px;
-    left: 0px;
-    height: 35px; */
-    bottom: 20px;
+    bottom: 11px;
     left: -5px;
     height: 30px;
     transition: 0.2s all ease;
 }
 #source-uniprot:hover {
-    /* bottom: 4px;
+    bottom: 11px;
     left: -5px;
-    height: 38px; */
-    bottom: 15px;
-    left: -10px;
     height: 35px;
 }
 
@@ -106,14 +97,14 @@
 }
 
 #source-peptide-atlas {
-    top: 64px;
-    left: 136px;
+    top: 15px;
+    left: 1px;
     height: 32px;
     transition: 0.2s all ease;
 }
 #source-peptide-atlas:hover {
-    top: 64px;
-    left: 136px;
+    top: 15px;
+    left: 1px;
     height: 35px;
 }
 
@@ -130,32 +121,38 @@
 }
 
 #source-glyconnect {
-    /* bottom: 5px;
-    left: 132px;
-    height: 35px; */
-    bottom: 15px;
+    bottom: 10px;
     left: 140px;
     height: 30px;
     transition: 0.2s all ease;
 }
 #source-glyconnect:hover {
-    /* bottom: 5px;
-    left: 132px;
-    height: 38px; */
-    bottom: 12px;
-    left: 137px;
+    bottom: 10px;
+    left: 140px;
     height: 35px;
 }
 #source-gnomad {
-    bottom: 15px;
+    bottom: 5px;
     left: 70px;
     height: 20px;
     transition: 0.2s all ease;
 }
 #source-gnomad:hover {
-    bottom: 10px;
-    left: 65px;
+    bottom: 5px;
+    left: 70px;
     height: 25px;
+}
+
+#source-massive {
+    bottom: 101px;
+    left: -23px;
+    height: 23px;
+    transition: 0.2s all ease;
+}
+#source-massive:hover {
+    bottom: 101px;
+    left: -23px;
+    height: 28px;
 }
 
 /* The animation code */
