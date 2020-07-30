@@ -23,7 +23,7 @@
 .nximg_np2, .nximg_cosmic-logo, .nximg_srm-atlas-logo, .nximg_gnomad, .nximg_hpa-logo, 
 .nximg_intact-logo, .nximg_intact-logo, .nximg_np-x, .nximg_research-gate-200x200, .nximg_peptide-atlas-logo, .nximg_bgee-logo,
 .nximg_glyconnect-logo, .nximg_uniprot-logo, .nximg_massive-logo, .nximg_sib
-{ max-width: 100%; background-size: 100%; background-image: url('{!cssEndpoint!}img/nx_img_sprite4.png'); }
+{ max-width: 100%; background-size: 100%; background-image: url('{!cssEndpoint!}img/nx_img_sprite5.png'); }
  
 .nximg_np2 { background-position: 0 -1%; background-size: 100%; }
 .nximg_cosmic-logo { background-position: 0 9.5%; background-size: 152.905199%; }
