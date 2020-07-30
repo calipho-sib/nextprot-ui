@@ -14,6 +14,7 @@
     top: 43px;
     left: 74px;
     width: 63px;
+    height: 77px
 }
 
 #data-sources-section img.source-img,
@@ -34,14 +35,14 @@
 }
 
 #source-srm-atlas {
-    top: 66px;
-    left: 145px;
+    top: 83px;
+    left: 163px;
     height: 20px;
     transition: 0.2s all ease;
 }
 #source-srm-atlas:hover {
-    top: 66px;
-    left: 145px;
+    top: 83px;
+    left: 150px;
     height: 23px;
 }
 
@@ -85,15 +86,14 @@
 }
 
 #source-uniprot-goa {
-    top: 108px;
-    left: 136px;
+    top: 117px;
+    left: 141px;
     font-size: 0.9em;
     transition: 0.2s all ease;
 }
 #source-uniprot-goa:hover {
-    top: 106px;
-    left: 133px;
-    font-size: 1em;
+    top: 117px;
+    left: 135px;
 }
 
 #source-peptide-atlas {
@@ -110,8 +110,8 @@
 
 #source-intact {
     top: 29px;
-    left: 142px;
-    height: 27px;
+    left: 156px;
+    height: 23px;
     transition: 0.2s all ease;
 }
 #source-intact:hover {
@@ -120,15 +120,29 @@
     height: 32px;
 }
 
+#source-enyo {
+    top: 55px;
+    left: 180px;
+    height: 23px;
+    transition: 0.2s all ease;
+}
+
+#source-enyo:hover{
+    top: 55px;
+    left: 165px;
+    height: 32px;
+}
+
+
 #source-glyconnect {
-    bottom: 10px;
-    left: 140px;
+    bottom: 9px;
+    left: 148px;
     height: 30px;
     transition: 0.2s all ease;
 }
 #source-glyconnect:hover {
-    bottom: 10px;
-    left: 140px;
+    bottom: 9px;
+    left: 135px;
     height: 35px;
 }
 #source-gnomad {

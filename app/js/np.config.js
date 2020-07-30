@@ -35,6 +35,7 @@ angular.module('np.config', []).factory('config', [
                 "mim": "MIM",
                 "ncithesaurus": "NCI Thesaurus",
                 "ncimetathesaurus": "NCI Metathesaurus",
+                "psimi": "PSI-MI Molecular Interaction",
                 "aanpbiosequenceannotation": "neXtProt annotation",
                 "aanpfamily": "neXtProt family",
                 "aanpmodificationeffect": "neXtProt modification effect",

@@ -75,8 +75,8 @@
                 {
                     "@type": "DataCatalog",
                     "@id": "http://identifiers.org/nextprot/",
-                    "name": "{{nm.title}}",
-                    "description": "{{nm.description}}",
+                    "name": "neXtProt Data Catalog",
+                    "description": "neXtProt dataset in different data formats",
                     "url": "https://www.nextprot.org/",
                     "keywords": "nextprot,UniProt,Human,Proteins,Proteome,Proteomics,protein database,protein knowledgebase,protein resource,human protein,human proteome,cancer variants portal,ion channels variants portal,function,medical,disease,expression,interactions,sequence,isoform,mutation,variant,phenotypes,proteomics,peptide,structure,3D,unicity checker,peptide uniqueness checker,annotation,biocuration,chromosomes,protein validation,protein-coding genes,post-translational modifications,ptm,data integration,systems biology,genetic variations,RDF data model,SPARQL endpoint,api,rest",
                     "thumbnailUrl": "https://www.nextprot.org/img/np-x.png",
@@ -106,17 +106,21 @@
                         ],
                         "isPartOf": [
                             {"@type": "Periodical", "name": "Nucleic acids research"},
-                            {"@type": "PublicationVolume", "volumeNumber": "48"}, 
+                            {"@type": "PublicationVolume", "volumeNumber": "48"},
                             {"@type": "PublicationIssue", "datePublished": "2020", "issueNumber": "D1"}
                         ],
                         "sameAs": [
                             "https://doi.org/10.1093/nar/gkz995",
                             "http://europepmc.org/abstract/MED/31724716",
-                            "https://www.ncbi.nlm.nih.gov/pubmed/31724716" 
-<!-- ADD when have PMCID and precede with comma
+                            "https://www.ncbi.nlm.nih.gov/pubmed/31724716",
                             "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5210547"
--->
-                        ]
+                        ],
+                        "datePublished" : "2020",
+                        "image" : "https://oup.silverchair-cdn.com/oup/backfile/Content_public/Journal/nar/Issue/48/D1/1/m_cover.gif?Expires=1658492109&Signature=tuMOTlLLi-0VM0hXI5nXDnlOuS6sjofoncg4jb9MEAvOKoSvEpZikjcITt~4kUrJcw8vAkhqCptGqzr~BP4Nehk6Fm6xXBrboTDP3qPR5oJa12tk57mqEiENB0ZJ5s5DGIDZsrz0qRbF17HoFNuIMopyOrPYZtG3IB0lN5A-wGWkynyT3QUQFughD3WwEDUy5nZM3mPGLoj-xwws8hkmIZ7dEUtLpGG8-fgRp-ZBJz~R1~8vsTeHlba6k2HOhaJ2XA2oA-E6uIdaTEuiLAG2N0Hy2-8ni9~tqz-EdneeCKDmYfRJRnymvqEhw6UZdDtvDPMZRKvtf61u5JeycXS8Ag__&Key-Pair-Id=APKAIE5G5CRDK6RD3PGA",
+                        "publisher" : {
+                            "@type" : "Organization",
+                            "name" : "Oxford University Press"
+                        }
                     },
                     "dataset": [
                         {
@@ -155,9 +159,14 @@
                             "url": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/icepo.obo",
                             "keywords": "ion channels, electrophysiology, ion channel gating, conductance, ion selectivity, activation, inactivation, recovery, deactivation, reopening, closed-state inactivation",
                             "distribution": {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/icepo.obo", "fileFormat": "OBO"},
-                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
+                            "license": {
+                                "@type": "CreativeWork",
+                                "name": "Creative Commons CC BY 4.0 Attribution",
+                                "url": "https://creativecommons.org/licenses/by/4.0/"
+                            },
                             "citation": {
-                                "@type": "ScholarlyArticle",
+                                "@type": "CreativeWork",
+                                "name": "ICEPO: the ion channel electrophysiology ontology",
                                 "headline": "ICEPO: the ion channel electrophysiology ontology.",
                                 "author" : [
                                     {"@type": "Person", "name": "Hinard V"},
@@ -177,7 +186,13 @@
                                     "http://europepmc.org/abstract/MED/27055825",
                                     "https://www.ncbi.nlm.nih.gov/pubmed/27055825",
                                     "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4823818"
-                                ]
+                                ],
+                                "datePublished" : "2016-04-06",
+                                "image" : "https://www.ncbi.nlm.nih.gov/corehtml/pmc/pmcgifs/logo-database.gif",
+                                "publisher" : {
+                                    "@type" : "Organization",
+                                    "name" : "Oxford University Press"
+                                }
                             }
                         },
                         {
@@ -187,9 +202,10 @@
                             "url": "ftp://ftp.nextprot.org/pub/current_release/chr_reports/",
                             "keywords": "human genes, chromosomes, mitochondrial genome, genomic coordinates, chromosomal location, coding strand, protein existence, PE1, PE2, PE3, PE4, PE5",
                             "distribution": {"@type": "DataDownload", "fileFormat": "TXT"},
-                                               "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
+                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
                             "citation": {
-                                "@type": "ScholarlyArticle",
+                                "@type": "CreativeWork",
+                                "name": "neXtProt: Organizing Protein Knowledge in the Context of Human Proteome Projects",
                                 "headline": "neXtProt: Organizing Protein Knowledge in the Context of Human Proteome Projects",
                                 "author" : [
                                     {"@type": "Person", "name": "Gaudet P"},
@@ -197,7 +213,7 @@
                                     {"@type": "Person", "name": "Cusin I"},
                                     {"@type": "Person", "name": "Duek P"},
                                     {"@type": "Person", "name": "Evalet O"},
-                                    {"@type": "Person", "name": "Gateau A"},  
+                                    {"@type": "Person", "name": "Gateau A"},
                                     {"@type": "Person", "name": "Gleizes A"},
                                     {"@type": "Person", "name": "Pereira M"},
                                     {"@type": "Person", "name": "Zahn-Zabal M"},
@@ -213,7 +229,13 @@
                                 "sameAs": [
                                     "https://doi.org/10.1021/pr300830v",
                                     "https://www.ncbi.nlm.nih.gov/pubmed/23205526"
-                                ]
+                                ],
+                                "datePublished" : "2013-01-04",
+                                "image" : "https://www.ncbi.nlm.nih.gov/corehtml/pmc/pmcgifs/logo-database.gif",
+                                "publisher" : {
+                                    "@type" : "Organization",
+                                    "name" : "Journal of proteome research"
+                                }
                             }
                         },
                         {
@@ -225,7 +247,8 @@
                             "distribution": {"@type": "DataDownload", "fileFormat": "CSV"},
                             "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
                             "citation": {
-                                "@type": "ScholarlyArticle",
+                                "@type": "CreativeWork",
+                                "name": "A new bioinformatics tool to help assess the significance of BRCA1 variants",
                                 "headline": "A new bioinformatics tool to help assess the significance of BRCA1 variants.",
                                 "author" : [
                                     {"@type": "Person", "name": "Cusin I"},
@@ -249,7 +272,13 @@
                                     "http://europepmc.org/abstract/MED/29996917",
                                     "https://www.ncbi.nlm.nih.gov/pubmed/29996917",
                                     "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6042458/"
-                                ]
+                                ],
+                                "datePublished" : "2018-07-11",
+                                "image" : "https://www.ncbi.nlm.nih.gov/corehtml/pmc/pmcgifs/logo-database.gif",
+                                "publisher" : {
+                                    "@type" : "Organization",
+                                    "name" : "Human Geonomics"
+                                }
                             }
                         },
                         {
@@ -261,7 +290,8 @@
                             "distribution": {"@type": "DataDownload", "fileFormat": "CSV"},
                             "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
                             "citation": {
-                                "@type": "ScholarlyArticle",
+                                "@type": "CreativeWork",
+                                "name": "Annotation of functional impact of voltage-gated sodium channel mutations",
                                 "headline": "Annotation of functional impact of voltage-gated sodium channel mutations.",
                                 "author" : [
                                     {"@type": "Person", "name": "Hinard V"},
@@ -284,7 +314,13 @@
                                     "http://europepmc.org/abstract/MED/28168870",
                                     "https://www.ncbi.nlm.nih.gov/pubmed/28168870",
                                     "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5413847/"
-                                ]
+                                ],
+                                "datePublished" : "2017-02-28",
+                                "image" : "https://www.ncbi.nlm.nih.gov/corehtml/pmc/pmcgifs/logo-database.gif",
+                                "publisher" : {
+                                    "@type" : "Organization",
+                                    "name" : "Human Mutation"
+                                }
                             }
                         },
                         {
@@ -295,7 +331,7 @@
                             "keywords": "databases, protein kinase,phosphorylation, protein-protein interactions, biological process, protein function",
                             "distribution": {"@type": "DataDownload", "contentUrl": "https://www.nextprot.org/viewers/portals/kinase-function/app/index.html#", "fileFormat": "CSV"},
                             "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"}
-                        }    
+                        }
                     ]
                 },
                 {
@@ -315,10 +351,11 @@
                         "price" : "0.00",
                         "priceCurrency" : "CHF"
                     },
-                   "license": {"@type": "CreativeWork", "name": "GNU General Public License v2.0", "url": "https://www.gnu.org/licenses/gpl-2.0.fr.html"},
-                   "operatingSystem" : "Unix,Windows,OS X,Android",
+                    "license": {"@type": "CreativeWork", "name": "GNU General Public License v2.0", "url": "https://www.gnu.org/licenses/gpl-2.0.fr.html"},
+                    "operatingSystem" : "Unix,Windows,OS X,Android",
                     "citation": {
-                        "@type": "ScholarlyArticle",
+                        "@type": "CreativeWork",
+                        "name": "The neXtProt peptide uniqueness checker: a tool for the proteomics community",
                         "headline": "The neXtProt peptide uniqueness checker: a tool for the proteomics community.",
                         "author" : [
                             {"@type": "Person", "name": "Schaeffer M"},
@@ -533,44 +570,6 @@
                                 <li ng-class="{'active':isActiveDoc('/help/technical-corner')}">
                                     <a href="/help/technical-corner">Technical corner</a>
                                 </li>
-                                <!--  <li><a target="_blank" href="http://bl.ocks.org/calipho-sib">Look at our bl.ocks.org</a></li> -->
-                                <!--                            <li class="divider"></li>-->
-
-                                <!-- FAQ
-                            <li ng-class="{'active':isActiveDoc('/pages/faq')}"><a href="/pages/faq">FAQ</a></li>
-                            -->
-
-                                <!-- Known issues -->
-                                <!--
-                            <li ng-class="{'active':isActiveDoc('/known-issues')}">
-                                <a href="/known-issues">Known issues</a>
-                            </li>
--->
-
-                                <!-- Found a bug -->
-                                <!--
-                            <li ng-class="">
-                                <a target="_blank" href="https://github.com/calipho-sib/nextprot-ui/issues">
-                                    Found a bug?<i class="fa-github"></i></a>
-                            </li>
--->
-
-                                <!--                            <li class="divider"></li>-->
-
-                                <!-- News -->
-                                <!--
-                            <li ng-class="{'active':isActiveDoc('/what-is-new')}">
-                                <a href="/what-is-new">What's new?</a>
-                            </li>
--->
-
-                                <!-- Citing neXtProt -->
-                                <!--
-                            <li ng-class="{'active':isActiveDoc('/citing-nextprot')}">
-                                <a href="/citing-nextprot">Citing neXtProt</a>
-                            </li>
--->
-
                             </ul>
                         </li>
 
@@ -631,21 +630,6 @@
 
                     </ul>
                     <ul class="nav navbar-nav navbar-right" style="margin-right:0px;">
-
-                        <!--
-                    <li>
-                        <a title="My lists" ng-click="goToUser('lists')" type="button" class="link">
-                            <i class="fa-list-alt"></i>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a title="My queries" ng-click="goToUser('queries')" type="button" class="link">
-                            <i class="fa-star"></i>
-                        </a>
-                    </li>
--->
-
                         <!-- login button -->
                         <!-- ngIf: !user.profile.email -->
                         <li class="ng-scope" ng-if="!user.profile.email">
@@ -705,25 +689,18 @@
 ================================================== -->
     <div ng-if="isSearchBarVisible()" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
 
-    <!--HIRING BOX - deprecated    -->
-    <!--
-light blue kuler : 17C6DE
-pink light kuler : CF3E87
-blue customized from kuler blue: 14ADC2
--->
-
-
     <div id="hiring" ng-if="isHomePage()">
-        <h1 id="hiring-title"><span>We are hiring!</span></h1>
-        <div class="row">
-            <div class="col-md-3">
+        <h1 id="hiring-title"><span>Learn More on neXtProt!</span></h1>
+        <div class="row" style="text-align: center">
+            <!--<div class="col-md-3">
                 <div class="hiring-icon-container">
                     <span class="fa fa-graduation-cap fa-3x"></span>
                 </div>
-            </div>
-            <div class="col-md-9 hiring-text-container">
-                <p>To reinforce our team, we are looking for a:</p>
-                <p><a class="pull-center hiring-button" href="https://apply.refline.ch/499599/0148/pub/1/index.html" target="_blank">Post-doc in protein bioinformatics</a></p>
+            </div>-->
+            <div class="col-md-12 hiring-text-container">
+                <p>Do you want to take a guided tour of neXtProt? </p>
+                <p>Apply <a href="https://www.sib.swiss/training/course/2020-09-nextprot" target="_blank"><b>here</b></a> to attend the SIB course which will be streamed on September 22.</p>
+
             </div>
         </div>
     </div>
@@ -738,6 +715,7 @@ blue customized from kuler blue: 14ADC2
                     <a class="ft-item" href="/copyright">&copy; 2011 - {{currentYear}} SIB Swiss Institute of Bioinformatics</a>
                     <a class="ft-item" href="/legal-disclaimer">Legal disclaimer</a>
                     <span class="ft-item">Data release {{releaseInfo.currentRelease}}</span>
+                    <a class="ft-item" href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Data CC BY 4.0</a>
                     <span class="ft-item">Application release {{releaseInfosFormatted}}</span>
                     <a class="ft-item" href="https://github.com/calipho-sib/" target="_blank">
                         <span class="fa fa-github" aria-hidden="true"></span> For developers
@@ -753,14 +731,10 @@ blue customized from kuler blue: 14ADC2
     <!-- Placed at the end of the document so the pages load faster -->
 
     <script type="text/javascript">
-        //
-        // global settings for angular-nexprot-ui-help
         var npHelpSettings = {
             baseUrl: 'https://api.nextprot.org'
         }
     </script>
-    <!-- <script defer src="https://d2t3grwcyftpfv.cloudfront.net/js/vendor.js?release={!distRelease!}"></script> -->
-    <!-- <script defer src="https://d2t3grwcyftpfv.cloudfront.net/js/vendor_{!vendorVersion!}.js?release={!distRelease!}"></script> -->
     
     <script defer src="{!endpoint!}/js/vendor_{!uiVersion!}.js?release={!distRelease!}"></script>
     <script defer src="js/app.js?release={!distRelease!}"></script>
