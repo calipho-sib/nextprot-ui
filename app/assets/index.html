@@ -689,20 +689,21 @@
 ================================================== -->
     <div ng-if="isSearchBarVisible()" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
 
-    <!--<div id="hiring" ng-if="isHomePage()">
-        <h1 id="hiring-title"><span>We are hiring!</span></h1>
-        <div class="row">
-            <div class="col-md-3">
+    <div id="hiring" ng-if="isHomePage()">
+        <h1 id="hiring-title"><span>Learn More on neXtProt!</span></h1>
+        <div class="row" style="text-align: center">
+            <!--<div class="col-md-3">
                 <div class="hiring-icon-container">
                     <span class="fa fa-graduation-cap fa-3x"></span>
                 </div>
-            </div>
-            <div class="col-md-9 hiring-text-container">
-                <p>To reinforce our team, we are looking for a:</p>
-                <p><a class="pull-center hiring-button" href="https://apply.refline.ch/499599/0148/pub/1/index.html" target="_blank">Post-doc in protein bioinformatics</a></p>
+            </div>-->
+            <div class="col-md-12 hiring-text-container">
+                <p>Do you want to take a guided tour of neXtProt? </p>
+                <p>Apply <a href="https://www.sib.swiss/training/course/2020-09-nextprot" target="_blank">here</a> to attend the SIB course which will be streamed <b>on September 22</b>.</p>
+
             </div>
         </div>
-    </div>-->
+    </div>
 
     <div id="main" class="container-fluid" ng-view=""></div>
 
