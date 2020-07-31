@@ -99,12 +99,12 @@
 #source-peptide-atlas {
     top: 15px;
     left: 1px;
-    height: 32px;
+    height: 29px;
     transition: 0.2s all ease;
 }
 #source-peptide-atlas:hover {
     top: 15px;
-    left: 1px;
+    left: -15px;
     height: 35px;
 }
 
