@@ -351,7 +351,9 @@
                     if(data.h1 && location.includes("COFACTOR")) {
                         that.h1 = data.h1.split('-')[0] + "I-TASSER/COFACTOR" 
                     } else if(data.h1 && location.includes("Protein-3D-structure")){
-                        that.h1 = data.h1.split('-')[0] + "3D structure"                        
+                        that.h1 = data.h1.split('-')[0] + "3D structure"
+                    } else if(data.h1 && location.includes("SAAVpedia")){
+                        that.h1 = data.h1.split('-')[0] + "SAAVpedia"
                     } else if(data.h1 && location.includes("protein-digestion")){
                         that.h1 = "Protein digestion"
                     } else {
