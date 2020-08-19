@@ -71,7 +71,7 @@
             <div ng-include="'partials/viewer/viewer-entry-side-bar.html'"></div>
         </div>
         <div class="col-lg-12 col-xs-12 responsive-md-screen right-content" style="height:100%;">
-            <div ng-if="communityMode === true">This is a community tool, developed and maintained by the neXtProt community</div>
+            <div class="alert alert-warning noData" style="margin-bottom: 0px" ng-if="communityMode === true">neXtprot is happy to host third-party tools developed by the community. In case of problem, please contact the developers of the tool.</div>
             <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%" style="border: 0; min-height: 800px; background-color: white; "></iframe>
             <script>
                 iFrameResize({
