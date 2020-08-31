@@ -1,33 +1,21 @@
 <!doctype html>
-<html lang="en" ng-app="np" ng-controller="npCtrl as nm" xmlns:flash="">
+<html lang="en" xmlns:flash="">
 
 <head>
-    <!-- Hotjar Tracking Code for https://www.nextprot.org (https://www.hotjar.com/)
-    <script>
-        (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:1080280,hjsv:6};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-    </script>
-    -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="nextprot,UniProt,Human,Proteins,Proteome,Proteomics,protein database,protein knowledgebase,protein resource,human protein,human proteome,cancer variants portal,ion channels variants portal,function,medical,disease,expression,interactions,sequence,isoform,mutation,variant,phenotypes,proteomics,peptide,structure,3D,unicity checker,peptide uniqueness checker,annotation,biocuration,chromosomes,protein validation,protein-coding genes,post-translational modifications,ptm,data integration,systems biology,genetic variations,RDF data model,SPARQL endpoint,api,rest">
 
-    <!--    <meta name="description" content="A knowledge platform on human proteins. It strives to be a comprehensive resource that provides a variety of types of information on human proteins.">-->
     <meta name="description" content="{{nm.description}}">
     <meta name="author" content="CALIPHO Team - SIB - Swiss Institute of Bioinformatics">
     <meta name="fragment" content="!">
     <meta http-equiv="expires" content="0">
-    <!-- <link href='/elements/external-elements_{!uiVersion!}.html' rel='import' type='text/html'> -->
-    <link href='{!endpoint!}/elements/external-elements_{!uiVersion!}.html' rel='import' type='text/html'>
-    <link rel="icon" href="./img/np-x.png">
 
-    <!--<base href="/protosearch/" />-->
+    <link href='{!endpoint!}/elements/external-elements_{!uiVersion!}.html' rel='import' type='text/html'>
+    <link rel="stylesheet" href="{!endpoint!}/css/vendor_{!uiVersion!}.css?release={!distRelease!}">
+    <link rel="stylesheet" href="{!endpoint!}/css/app_{!uiVersion!}.css?release={!distRelease!}">
+
+    <link rel="icon" href="./img/np-x.png">
     <base href="/">
 
     <title ng-bind="nm.title"></title>
@@ -53,20 +41,6 @@
             }, i[r].l = 1 * new Date(); a = s.createElement(o),
                 m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
         })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-    </script>
-
-    <script type="application/ld+json">{
-        "@context" : [ "https://schema.org/" ],
-        "@type" : "Organization",
-        "url" : "https://www.nextprot.org",
-        "name": "neXtProt",
-        "logo" : "https://www.nextprot.org/img/np2.png",
-        "memberof" : {
-            "@type" : "NGO",
-            "name"  : "SIB Swiss Institute of Bioinformatics",
-            "url"   : "https://sib.swiss/"
-        }
-    }
     </script>
 
     <script type="application/ld+json">
@@ -448,300 +422,70 @@
 </head>
 
 <body ng-clock="" class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90" ng-controller="SearchCtrl"
-    np-background="#main" typeof="schema:WebPage">
+      np-background="#main" typeof="schema:WebPage">
 
-    <header>
-        <!--
-    <div class="hidden-md hidden-sm hidden-xs hidden-lg" style="font-size: 1.7em; font-weight: 100; font-family: Helvetica; background: transparent radial-gradient(ellipse at center center , rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%) repeat scroll 0% 0%;" id="header-title">
-        Exploring the universe of human proteins
-    </div>
--->
-        <!-- Navbar ================================================== -->
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nextprot-header">
-                        <span class="sr-only">Toggle navigation</span>
-                        <!--
-                    <span class="fa-bar"></span>
-                    <span class="fa-bar"></span>
-                    <span class="fa-bar"></span>
--->
-                        <span class="fa fa-bars"></span>
-                    </button>
-                    <a class="navbar-brand navbar-logo" href="/">
-                        <!-- <img id="np-logo" src="/img/np.png" alt="neXtProt the human protein database, platform and annotation knowledge base"> -->
-                        <!-- <img id="np-logo" class="nximg_np2" alt="neXtProt the human protein database, platform and annotation knowledge base" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAACWAQMAAAASU+gsAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAACBJREFUeNrtwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAB4DCWAAAGI226uAAAAAElFTkSuQmCC"> -->
-                        <img id="np-logo" class="nximg_np2" alt="neXtProt the human protein database, platform and annotation knowledge base" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAACWAQMAAAASU+gsAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAACBJREFUeNrtwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAB4DCWAAAGI226uAAAAAElFTkSuQmCC">
-
-                    </a>
-                </div>
-
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse ng-scope" id="nextprot-header" ng-controller="HelpCtrl">
-                    <ul class="nav navbar-nav">
-
-                        <!-- Services dropdown -->
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                aria-expanded="false">Tools <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <!-- Learn -->
-                                <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
-                                <li ng-class=""><a href="/proteins/search" ng-click="routingOutside('ui')">Simple
-                                        search</a></li>
-                                <li ng-class=""><a href="/proteins/search?mode=advanced" ng-click="routingOutside('snorql')">Advanced
-                                        search (SPARQL)</a></li>
-                                <li class="divider"></li>
-                                <li ng-class=""><a rel="nofollow" ng-click="goToUser('lists')">My Lists</a></li>
-                                <li ng-class=""><a rel="nofollow" ng-click="goToUser('queries')">My Queries</a></li>
-                                <li class="divider"></li>
-                                <!--                            <li ng-class=""><a href="#" ng-click="routingOutside('snorql')" style="cursor:not-allowed">BLAST</a></li>-->
-                                <li ng-class=""><a href="/tools/peptide-uniqueness-checker">Peptide uniqueness checker</a></li>
-                                <li ng-class=""><a href="/tools/protein-digestion">Protein digestion</a></li>
-                                <li class="divider"></li>
-                                <li class="disabled" style="font-size:12px; margin-left: 10px"><i>Programmatic access</i></li>
-                                <li ng-class=""><a ng-href="{{getNextprotUrl('api')}}">API</a></li>
-                                <li ng-class=""><a ng-href="{{getNextprotUrl('sparql')}}">SPARQL endpoint</a></li>
-                                <li ng-class=""><a ng-href="{{getNextprotUrl('snorql')}}">SNORQL search</a></li>
-                            </ul>
-                        </li>
-
-                        <!-- Portals dropdown -->
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                aria-expanded="false">Portals <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <!-- Learn -->
-                                <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
-                                <li ng-class=""><a href="./portals/navmut">Ion channels variants portal</a></li>
-                                <li ng-class=""><a href="./portals/cancer-variants">Cancer variants portal</a></li>
-                                <li ng-class=""><a href="./portals/kinase-function">Protein kinase function portal</a></li>
-                            </ul>
-                        </li>
-
-                        <!-- Tools (for instance, blast) -->
-                        <!--<li ng-class=""><a href="/tools">Tools</a></li>-->
-
-                        <!-- Download -->
-                        <li ng-class=""><a href="ftp://ftp.nextprot.org/pub/" ng-click="routingOutside('ftp')">Download</a></li>
-
-                        <!-- Help dropdown -->
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                aria-expanded="false">Help <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <!-- Learn -->
-                                <li ng-class="{'active':isActiveDoc('/help/simple-search')}">
-                                    <a href="/help/simple-search">Simple search</a>
-                                </li>
-                                <li ng-class="{'active':isActiveDoc('/help/advanced-search')}">
-                                    <a href="/help/advanced-search">Advanced search (SPARQL)</a>
-                                </li>
-                                <!--                            ???-->
-                                <!--                            <li><a href="#"></a></li> -->
-                                <li ng-class="{'active':isActiveDoc('/help/search-results')}">
-                                    <a href="/help/search-results">Search results</a>
-                                </li>
-                                <!--                            ???-->
-                                <li ng-class="{'active':isActiveDoc('/help/tools')}">
-                                    <a href="/help/tools">Tools</a>
-                                </li>
-                                <!--                            ???-->
-                                <li ng-class="{'active':isActiveDoc('/help/protein-digestion')}">
-                                    <a href="/help/protein-digestion">Protein digestion</a>
-                                </li>
-                                <!--                            <li><a href="#"></a></li>-->
-                                <!--                            <li ng-class="{'active':isActiveDoc('/help/doc/introduction')}">-->
-                                <li ng-class="{'active':isActiveDoc('/help/data-model')}">
-                                    <a ng-href="/help/data-model">Data model</a>
-                                </li>
-                                <!--                            <li><a href="#"></a></li>-->
-                                <li class="divider"></li>
-                                <li ng-class="{'active':isActiveDoc('/help/protein-lists')}">
-                                    <a href="/help/protein-lists">Protein Lists</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li ng-class="{'active':isActiveDoc('/help/download')}">
-                                    <a href="/help/download">Download</a>
-                                </li>
-                                <li class="divider"></li>
-
-                                <li ng-class="{'active':isActiveDoc('/help/technical-corner')}">
-                                    <a href="/help/technical-corner">Technical corner</a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <!-- About dropdown -->
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                aria-expanded="false">About <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <!-- Learn -->
-                                <!-----------------------------  CHANGE ngclick !!!! -------------------------------------->
-                                <li ng-class="{'active':isActiveDoc('/about/nextprot')}">
-                                    <a href="about/nextprot">
-                                        <span class="text">neXtProt concept</span>
-                                    </a>
-                                </li>
-                                <!--                            <li ng-class=""><a href="release/contents">Current release</a></li>-->
-                                <li ng-class="{'active':isActiveDoc('/about/contents')}">
-                                    <a href="about/contents">
-                                        <span class="text">Release contents</span>
-                                    </a>
-                                </li>
-                                <li ng-class="{'active':isActiveDoc('/about/statistics')}">
-                                    <a href="about/statistics">
-                                        <span class="text">Release statistics</span>
-                                    </a>
-                                </li>
-                                <li ng-class="{'active':isActiveDoc('/about/entries')}">
-                                    <a href="entries">
-                                        <span class="text">Entries by chromosome</span>
-                                    </a>
-                                </li>
-                                <li ng-class="{'active':isActiveDoc('/about/protein-existence')}">
-                                    <a href="about/protein-existence">
-                                        <span class="text">Protein existence</span>
-                                    </a>
-                                </li>
-                                <li ng-class="{'active':isActiveDoc('/about/human-proteome')}">
-                                    <a href="about/human-proteome">
-                                        <span class="text">The human proteome</span>
-                                    </a>
-                                </li>
-                                <li ng-class="{'active':isActiveDoc('/about/news/*')}">
-                                    <a href="news/">
-                                        <span class="text">News</span>
-                                    </a>
-                                </li>
-                                <li ng-class="{'active':isActiveDoc('/about/citing-nextprot')}">
-                                    <a href="about/citing-nextprot">
-                                        <span class="text">Citing neXtProt</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li ng-class="">
-                            <a href="mailto:support@nextprot.org?subject=[neXtProt%20Search]">Contact</a>
-                        </li>
-
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right" style="margin-right:0px;">
-                        <!-- login button -->
-                        <!-- ngIf: !user.profile.email -->
-                        <li class="ng-scope" ng-if="!user.profile.email">
-                            <a rel="nofollow" href="" type="button" class="link" ng-click="login()">Login</a>
-                        </li><!-- end ngIf: !user.profile.email -->
-
-                        <!-- once logged in user resources -->
-                        <!-- ngIf: user.profile.email -->
-                        <!--                    <li class="dropdown" ng-if="user.profile.email" ng-cloak>-->
-                        <li class="dropdown" ng-if="user.isAuthenticated()" ng-cloak>
-                            <a href="#" class="dropdown-toggle lgOnly" data-toggle="dropdown">
-                                {{user.profile.name || user.profile.email}}<span class="caret"></span></a>
-                            <ul class="dropdown-menu lgOnly" role="menu">
-                                <li><a rel="nofollow" href="#" ng-click="logout()">Logout</a></li>
-                            </ul>
-                            <a rel="nofollow" class="smOnly" href="#" ng-click="logout()"><i class="fa fa-sign-out"
-                                    aria-hidden="true"></i></a>
-                        </li>
-                        <li>
-                            <a id="sib-link" href="http://www.sib.swiss">
-                                <!-- <img id="sib-logo" src="/img/sib.png"> -->
-                                <img id="sib-logo" class="nximg_sib" alt="SIB logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARAAAADNAQMAAABKE70TAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAB1JREFUeNrtwQENAAAAwqD3T20PBxQAAAAAAABwZhwHAAHRTBZqAAAAAElFTkSuQmCC">
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
-            </div>
-            <!-- /.container-fluid -->
-        </nav>
-
-    </header>
-
-    <div ng-init="browserCompatibility()"></div>
-
-    <div ng-show="message" class=" error ng-cloak" ng-cloak>
-        <div class="np-alert alert alert-error alert-warning">{{Search.result.error}} {{message}}</div>
-    </div>
-
-    <!--<flash:msg></flash:msg>-->
-    <!-- <div ng-include="'partials/errors/alert-message.html'"> -->
-    <div>
-        <ul ng-controller="flashCtrl" style="position: fixed;top: -2px;left: 15%;right: 15%;z-index:10010;opacity:0.9">
-            <li style="list-style: none " ng-repeat="m in messageList">
-                <div class="flashmsg alert {{m.level}} alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span></button>
-                    <span ng-bind="m.text"></span>
-                </div>
-            </li>
-        </ul>
-            
-    </div>
-
-    <!-- Masthead
-================================================== -->
-    <div ng-if="isSearchBarVisible()" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
-
+<header>
     <!--
-    <div id="hiring" ng-if="isHomePage()">
-        <h1 id="hiring-title"><span>Learn More on neXtProt!</span></h1>
-        <div class="row" style="text-align: center">
+<div class="hidden-md hidden-sm hidden-xs hidden-lg" style="font-size: 1.7em; font-weight: 100; font-family: Helvetica; background: transparent radial-gradient(ellipse at center center , rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%) repeat scroll 0% 0%;" id="header-title">
+    Exploring the universe of human proteins
+</div>
+-->
+    <!-- Navbar ================================================== -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="nextprot-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nextprot-header">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="fa fa-bars"></span>
+                </button>
+                <a class="navbar-brand navbar-logo" href="/">
+                    <!-- <img id="np-logo" src="/img/np.png" alt="neXtProt the human protein database, platform and annotation knowledge base"> -->
+                    <!-- <img id="np-logo" class="nximg_np2" alt="neXtProt the human protein database, platform and annotation knowledge base" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAACWAQMAAAASU+gsAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAACBJREFUeNrtwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAB4DCWAAAGI226uAAAAAElFTkSuQmCC"> -->
+                    <img id="np-logo" class="nximg_np2" alt="neXtProt the human protein database, platform and annotation knowledge base" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAACWAQMAAAASU+gsAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAACBJREFUeNrtwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAB4DCWAAAGI226uAAAAAElFTkSuQmCC">
+
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse ng-scope" id="nextprot-header">
+                <ul class="nav navbar-nav"></ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right:0px;">
+
+                    <li>
+                        <a id="sib-link" href="http://www.sib.swiss">
+                            <!-- <img id="sib-logo" src="/img/sib.png"> -->
+                            <img id="sib-logo" class="nximg_sib" alt="SIB logo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARAAAADNAQMAAABKE70TAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAB1JREFUeNrtwQENAAAAwqD3T20PBxQAAAAAAABwZhwHAAHRTBZqAAAAAElFTkSuQmCC">
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <div id="hiring">
+
+        <div class="row" style="text-align: center; top: 250px; position: absolute">
+            <h1><span>neXtProt is experiencing technical problems!</span></h1>
             <div class="col-md-3">
-                <div class="hiring-icon-container">
-                    <span class="fa fa-graduation-cap fa-3x"></span>
-                </div>
             </div>
             <div class="col-md-12 hiring-text-container">
-                <p>Do you want to take a guided tour of neXtProt? </p>
-                <p>Apply <a href="https://www.sib.swiss/training/course/2020-09-nextprot" target="_blank"><b>here</b></a> to attend the SIB course which will be streamed on September 22.</p>
-
+                <p>Some neXtProt pages are currently not responding. </p>
+                <p>We’re aware of the issue and are working on it. Please try again in 24 h. </p>
+                <p>Sorry for any inconvenience caused.</p>
             </div>
         </div>
     </div>
-    -->
+</header>
 
-    <div id="main" class="container-fluid" ng-view=""></div>
 
-    <footer class="container-fluid small" ng-controller="ReleaseInfoCtrl">
-        <div class="row">
-            <div class="col-lg-12">
-    
-                <div class="col-md-12 text-left">
-                    <a class="ft-item" href="/copyright">&copy; 2011 - {{currentYear}} SIB Swiss Institute of Bioinformatics</a>
-                    <a class="ft-item" href="/legal-disclaimer">Legal disclaimer</a>
-                    <span class="ft-item">Data release {{releaseInfo.currentRelease}}</span>
-                    <a class="ft-item" href="https://creativecommons.org/licenses/by/4.0/" target="_blank">Data CC BY 4.0</a>
-                    <span class="ft-item">Application release {{releaseInfosFormatted}}</span>
-                    <a class="ft-item" href="https://github.com/calipho-sib/" target="_blank">
-                        <span class="fa fa-github" aria-hidden="true"></span> For developers
-                    </a>
-                </div>
-            </div>
-        </div>
-        </div>
-    </footer>
 
-    <!-- Le javascript
-================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
 
-    <script type="text/javascript">
-        var npHelpSettings = {
-            baseUrl: 'https://api.nextprot.org'
-        }
-    </script>
-    
-    <script defer src="{!endpoint!}/js/vendor_{!uiVersion!}.js?release={!distRelease!}"></script>
-    <script defer src="js/app.js?release={!distRelease!}"></script>
-    
+
+
+
+
 </body>
 
 </html>
