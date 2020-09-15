@@ -105,7 +105,6 @@
                         filtered.push(item);
                     }
                 });
-
             }
 
             return filtered;
