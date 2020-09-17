@@ -31,7 +31,6 @@
         'np.chromosomes'
     ]).config(configApplication)
         .factory('errorInterceptor', errorInterceptor)
-        .factory('timeoutInterceptor', timeoutInterceptor)
         .factory('metaService', metaService)
         .factory('nxBaseUrl', nxBaseUrl)
         .controller('npCtrl', npCtrl)
@@ -250,25 +249,6 @@
                     flash('alert-danger', 'Some error occured' + " " + status + " " + response.message + " please report to support@nextprot.org");
                 }
                 return $q.reject(response);
-            }
-        };
-    };
-
-    timeoutInterceptor.$inject = ['$q', '$timeout', '$window']
-    function timeoutInterceptor($q, $timeout, $window) {
-        return {
-            request: function(config) {
-                config.timeout = $timeout(function(){
-                    config.timedOut = true
-                    console.log(config)
-                },2000);
-                return config;
-            },
-            responseError :function(rejection) {
-                if(rejection.config.timedOut){
-                    $window.location.href = 'maintainance.html'
-                }
-                return $q.reject(rejection);
             }
         };
     };
