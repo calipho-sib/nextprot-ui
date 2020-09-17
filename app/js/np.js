@@ -31,7 +31,6 @@
         'np.chromosomes'
     ]).config(configApplication)
         .factory('errorInterceptor', errorInterceptor)
-        .factory('timeoutInterceptor', timeoutInterceptor)
         .factory('metaService', metaService)
         .factory('nxBaseUrl', nxBaseUrl)
         .controller('npCtrl', npCtrl)
@@ -177,24 +176,16 @@
 
         $httpProvider.interceptors.push('errorInterceptor');
 
-        $httpProvider.interceptors.push('timeoutInterceptor');
-
-
         $httpProvider.defaults.headers.common.Accept = 'application/json'
-        // Catch all
-        //.otherwise({redirectTo : '/404'});
 
         // Without serve side support html5 must be disabled.
         $locationProvider.html5Mode(true);
-        //$locationProvider.hashPrefix = '!';
-
         $resourceProvider.defaults.stripTrailingSlashes = false;
     };
 
 
     // define default behavior for all http request
     errorInterceptor.$inject = ['$q', '$rootScope', '$log', '$location', 'flash', '$injector']
-
     function errorInterceptor($q, $rootScope, $log, $location, flash, $injector) {
         return {
             request: function (config) {
@@ -262,29 +253,12 @@
         };
     };
 
-    timeoutInterceptor.$inject = ['$q', '$timeout', '$window']
-
-    function timeoutInterceptor($q, $timeout, $window) {
-        return {
-            request: function(config) {
-                config.timeout = $timeout(function(){ config.timedOut = true },5000);
-                return config;
-            },
-            responseError :function(rejection) {
-                if(rejection.config.timeout){
-                    $window.location.href = 'maintainance.html'
-                }
-                return $q.reject(rejection);
-            }
-        };
-    };
-
     npCtrl.$inject = ['$scope', '$location', '$routeParams', 'metaService', '$window', '$modal', 'flash', '$http'];
 
     function npCtrl($scope, $location, $routeParams, metaService, $window, $modal, flash, $http) {
         var that = this;
 
-        $http.get('api.nextprot.org')
+        $http.get('alpha-api.nextprot.org')
             .then(function(response) {
                 console.log(response)
             })
