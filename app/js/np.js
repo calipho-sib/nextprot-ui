@@ -157,7 +157,12 @@
                     primaryColor: '#C50063'
                 },
                 languageDictionary: {
-                    title: "Log in"
+                    title: "Log in",
+                    error : {
+                        login: {
+                            "lock.fallback": "Login unsuccessful. We are working on fixing this issue. Sorry for the inconvenience."
+                        }
+                    }
                 }
             }
         })
