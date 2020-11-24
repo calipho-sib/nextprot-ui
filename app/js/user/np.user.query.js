@@ -14,14 +14,25 @@
     function initQueryModule($resource, config, user, $q, $cacheFactory) {
         //
         // data access
-        var $dao = {
+        var $dao = function(headers) {
+            return {
+                queries: $resource(config.api.API_URL + '/user/me/queries/:id', {id: '@id'}, {
+                        get: {method: 'GET'},
+                        list: {method: 'GET', headers : headers },
+                        create: {method: 'POST'},
+                        update: {method: 'PUT'}
+                })
+            }
+        }
+
+        /*var $dao = {
             queries: $resource(config.api.API_URL + '/user/me/queries/:id', {id: '@id'}, {
                     get: {method: 'GET'},
-                    list: {method: 'GET', isArray: true},
+                    list: {method: 'GET', headers : { Authorization: 'Bearer ' + self.token }},
                     create: {method: 'POST'},
                     update: {method: 'PUT'}
                 })
-        };
+        };*/
 
         //
         // repository of queries (TODO more cache access)
@@ -85,10 +96,13 @@
 
         //
         // list queries for this user
-        Query.prototype.list = function () {
+        Query.prototype.list = function (token) {
 
             var me = this, params = {};
-            me.$promise = $dao.queries.list(params).$promise
+            var header = {
+                Authorization : 'Bearer ' + token
+            }
+            me.$promise = $dao(header).queries.list(params).$promise
             me.$promise.then(function (data) {
                 queries = data.map(function (q) {
                     return me.createOne(q)
@@ -329,7 +343,7 @@
                 $scope.loading = true;
 
                 user.$promise.then(function () {
-                    user.query.list().$promise.then(function (queries) {
+                    user.query.list(user.profile.token).$promise.then(function (queries) {
                         $scope.repository.queries = queries;
                         $scope.setTags();
                         $scope.loading = false;
