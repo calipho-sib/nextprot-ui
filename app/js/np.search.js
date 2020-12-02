@@ -38,7 +38,8 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     $scope.editorOptions = {
         lineWrapping : true,
         lineNumbers: true,
-        autofocus:true,
+        placeholder: 'Put your SPARQL query here',
+        autofocus: true,
         readOnly: false,
         mode: 'sparql'
     };
