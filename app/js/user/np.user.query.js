@@ -17,22 +17,13 @@
         var $dao = function(headers) {
             return {
                 queries: $resource(config.api.API_URL + '/user/me/queries/:id', {id: '@id'}, {
-                        get: {method: 'GET'},
-                        list: {method: 'GET', headers : headers },
-                        create: {method: 'POST'},
-                        update: {method: 'PUT'}
+                        get: {method: 'GET', headers : headers},
+                        list: {method: 'GET', headers : headers, isArray: true },
+                        create: {method: 'POST', headers : headers},
+                        update: {method: 'PUT', headers : headers}
                 })
             }
         }
-
-        /*var $dao = {
-            queries: $resource(config.api.API_URL + '/user/me/queries/:id', {id: '@id'}, {
-                    get: {method: 'GET'},
-                    list: {method: 'GET', headers : { Authorization: 'Bearer ' + self.token }},
-                    create: {method: 'POST'},
-                    update: {method: 'PUT'}
-                })
-        };*/
 
         //
         // repository of queries (TODO more cache access)
@@ -113,8 +104,11 @@
 
         //
         // save or create the current instance
-        Query.prototype.save = function () {
+        Query.prototype.save = function (token) {
             var params = {id: this.userQueryId};
+            var header = {
+                Authorization : 'Bearer ' + token
+            }
 
             // save this instance
             queryList.put(this.userQueryId, this)
@@ -122,18 +116,21 @@
             // on update
             if (this.userQueryId) {
                 params.id = this.userQueryId;
-                return $dao.queries.update(params, this.payload())
+                return $dao(header).queries.update(params, this.payload())
             } else {
-                return $dao.queries.create(params, this.payload())
+                return $dao(header).queries.create(params, this.payload())
             }
 
         };
 
         //
         // delete the current instance
-        Query.prototype.delete = function () {
+        Query.prototype.delete = function (token) {
             var me = this, params = {id: this.userQueryId};
-            me.$promise = $dao.queries.delete(params).$promise
+            var header = {
+                Authorization : 'Bearer ' + token
+            }
+            me.$promise = $dao(header).queries.delete(params).$promise
             me.$promise.then(function(){
               queries.every(function(query,i){
                   if(query.userQueryId===me.userQueryId){
@@ -148,9 +145,12 @@
 
 
         // gets the query instance
-        Query.prototype.get = function (queryId) {
+        Query.prototype.get = function (queryId, token) {
             var self = this;
-            self.$promise=self.$dao.get({id: queryId}).$promise;
+            var header = {
+                Authorization : 'Bearer ' + token
+            }
+            self.$promise=self.$dao(header).get({id: queryId}).$promise;
             return self;
        };
 
@@ -191,13 +191,21 @@
 
             this.queries = {};
 
-            this.userQueryResource = $resource(config.api.API_URL + '/user/me/queries/:id', {}, {
-                    get: {method: 'GET'},
-                    list: {method: 'GET', isArray: true},
-                    create: {method: 'POST'},
-                    update: {method: 'PUT'},
-                    delete: {method: 'DELETE'}
-                });
+            this.userQueryResource = function(token) {
+                let headers = {
+                    Authorization : 'Bearer ' + token
+                }
+
+                return $resource(config.api.API_URL + '/user/me/queries/:id', {},
+                    {
+                        get: {method: 'GET', headers: headers },
+                        list: {method: 'GET', headers: headers, isArray: true },
+                        create: {method: 'POST', headers: headers },
+                        update: {method: 'PUT', headers: headers },
+                        delete: {method: 'DELETE', headers: headers }
+                    });
+            }
+
 
 
 
@@ -256,18 +264,18 @@
         };
 
         QueryRepository.prototype.deleteUserQuery = function (query) {
-            return this.userQueryResource.delete({id: query.userQueryId}).$promise;
+            return this.userQueryResource(user.profile.token).delete({id: query.userQueryId}).$promise;
         };
 
         QueryRepository.prototype.saveOrCreate = function (query) {
             delete query.$promise;
                 if (query.userQueryId) {
-                    return this.userQueryResource.update({id: query.userQueryId}, query).$promise;
+                    return this.userQueryResource(user.profile.token).update({id: query.userQueryId}, query).$promise;
                 } else {
-                    return this.userQueryResource.create({}, query).$promise;
+                    return this.userQueryResource(user.profile.token).create({}, query).$promise;
                 }
 
-            return this.userQueryResource.delete({id: query.userQueryId}).$promise;
+            return this.userQueryResource(user.profile.token).delete({id: query.userQueryId}).$promise;
         };
 
         return new QueryRepository();
@@ -281,6 +289,7 @@
         // publish data
         $scope.repository = queryRepository.repository;
         $scope.queryRepository = queryRepository;
+        $scope.queryRepository.token = user.profile.token;
         $scope.loading = false;
 
         $scope.disabled = function () {

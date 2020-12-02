@@ -65,12 +65,9 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
                         return;
                     }
 
-                    console.log("User not authenticated")
                     const query = $window.location.search;
                     const shouldParseResult = query.includes("code=") && query.includes("state=");
-
                     if (shouldParseResult) {
-                        console.log("> Parsing redirect");
                         try {
                             auth0.handleRedirectCallback()
                                 .then(function(result) {
@@ -81,21 +78,16 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
 
                                     auth0.getUser()
                                         .then(function(userData) {
-                                            console.log(userData)
                                             auth0.getTokenSilently()
                                                 .then(function(token) {
-                                                    console.log(token)
                                                     userData.token = token
                                                     user.copy(userData)
                                                 })
                                         })
-
-                                    console.log("Logged in!");
                                 })
                         } catch (err) {
                             console.log("Error parsing redirect:", err);
                         }
-                        //$window.history.replaceState({}, document.title, "/");
                     }
                 })
 
@@ -103,13 +95,6 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
 
     });
 
-    /*
-    $rootScope.$on('auth0.loginSuccess', function (event,auth) {
-        user.$promise=auth.profile
-        auth.getProfile().then(function(profile){
-         user.copy(profile)
-         })
-    });*/
 
     //
     // create user domain

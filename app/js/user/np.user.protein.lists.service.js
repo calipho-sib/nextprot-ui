@@ -21,14 +21,21 @@
                 });
 
 
-            this.$dao = $resource(config.api.API_URL + '/user/me/lists/:id/:action',
-                {id: '@id', action: '@action'}, {
-                    get: {method: 'GET', isArray: false},
-                    list: {method: 'GET', isArray: true},
-                    create: {method: 'POST'},
-                    update: {method: 'PUT'},
-                    fix: {method: 'PUT'}
-                });
+            this.$dao = function(token) {
+                let headers = {
+                    Authorization : 'Bearer ' + token
+                }
+
+                return $resource(config.api.API_URL + '/user/me/lists/:id/:action',
+                    {id: '@id', action: '@action'},
+                    {
+                        get: {method: 'GET', headers: headers, isArray: false},
+                        list: {method: 'GET', headers: headers, isArray: true},
+                        create: {method: 'POST', headers: headers},
+                        update: {method: 'PUT', headers: headers},
+                        fix: {method: 'PUT', headers: headers}
+                    });
+            }
 
             //
             // wrap promise to this object
@@ -38,7 +45,7 @@
         Proteins.prototype.list = function (user) {
             var self = this;
             if (user.isAuthenticated()) {
-                self.$promise = self.$dao.list({}).$promise;
+                self.$promise = self.$dao(user.profile.token).list({}).$promise;
                 self.$promise.then(function (data) {
                     // TODO: weird to refer service that is an instance of Proteins !!!
                     service.lists = data;
@@ -50,19 +57,19 @@
 
         Proteins.prototype.create = function (user, list) {
             var self = this;
-            self.$promise = self.$dao.create({}, list).$promise;
+            self.$promise = self.$dao(user.profile.token).create({}, list).$promise;
             return self;
         };
 
         Proteins.prototype.update = function (user, list) {
             var self = this;
-            self.$promise = self.$dao.update({id: list.id}, list).$promise;
+            self.$promise = self.$dao(user.profile.token).update({id: list.id}, list).$promise;
             return self;
         };
 
         Proteins.prototype.delete = function (user, listId) {
             var self = this;
-            self.$promise = self.$dao.delete({id: listId}).$promise;
+            self.$promise = self.$dao(user.profile.token).delete({id: listId}).$promise;
             return self;
         };
 
