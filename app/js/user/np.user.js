@@ -20,7 +20,7 @@ angular.module('np.user', [
 // implement user factory
 user.$inject=['$resource','$http','config','$timeout','$rootScope','$location','$cookieStore','lock','$q', 'ipCookie', '$window', 'store'];
 function user($resource, $http, config, $timeout, $rootScope, $location, $cookieStore, lock, $q, ipCookie, $window, store) {
-    //
+
 
     // default user data for anonymous
     var defaultProfile={
@@ -32,26 +32,49 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
 
     //See also the refresh token https://github.com/auth0/auth0-angular/blob/master/docs/refresh-token.md
     $rootScope.$on('$locationChangeStart', function() {
-        if(ipCookie('nxprofile') != null){
-            user.copy(ipCookie('nxprofile'));
-        } else {
-            if ($window.location.hostname === "localhost") {
-                ipCookie.remove('nxprofile', { path: '/' });
-                ipCookie.remove('nxtoken', { path: '/' });
-            } else {
-                ipCookie.remove('nxprofile', { path: '/', domain: ".nextprot.org" });
-                ipCookie.remove('nxtoken', { path: '/', domain: ".nextprot.org" });
-            }
-        }
+
+        createAuth0Client({
+            domain: "nextprot.auth0.com",
+            client_id: "7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW",
+            audience: "https://nextprot.auth0.com/api/v2/"
+        }).then(function(auth0) {
+
+            auth0.isAuthenticated()
+                .then(function(isAuthenticated) {
+                    if (isAuthenticated) {
+                        return;
+                    }
+
+                    const query = $window.location.search;
+                    const shouldParseResult = query.includes("code=") && query.includes("state=");
+                    if (shouldParseResult) {
+                        try {
+                            auth0.handleRedirectCallback()
+                                .then(function(result) {
+                                    console.log(result)
+                                    if (result.appState && result.appState.targetUrl) {
+                                        showContentFromUrl(result.appState.targetUrl);
+                                    }
+
+                                    auth0.getUser()
+                                        .then(function(userData) {
+                                            auth0.getTokenSilently()
+                                                .then(function(token) {
+                                                    userData.token = token
+                                                    user.copy(userData)
+                                                })
+                                        })
+                                })
+                        } catch (err) {
+                            console.log("Error parsing redirect:", err);
+                        }
+                    }
+                })
+
+        });
+
     });
 
-    /*
-    $rootScope.$on('auth0.loginSuccess', function (event,auth) {
-        user.$promise=auth.profile
-        auth.getProfile().then(function(profile){
-         user.copy(profile)
-         })
-    });*/
 
     //
     // create user domain
@@ -105,6 +128,7 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
     User.prototype.copy = function(data) {
         angular.extend(this.profile,defaultProfile, data);
         this.profile.username=this.username=data.email;
+        this.profile.token = data.token;
         return this;
     };
 
@@ -128,60 +152,43 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
 
 
     User.prototype.login = function (cb) {
-        var self=this;
-        lock.show();
-        lock.on('authenticated', function(authResult) {
-            lock.getUserInfo(authResult.accessToken, function(error, profile, whatis) {
-                if (error) {
-                  // Handle error
-                  cb(error);
-                }
-                var token = authResult.idToken;
-                var expiresIn = authResult.expiresIn;
-                // Success callback
-                var expirationInDays = 730; // 730 days = 2 years
-                if ($window.location.hostname === "localhost") {
-                    ipCookie('nxprofile', profile, { path: '/', expires: expirationInDays });
-                    ipCookie('nxtoken', token, { path: '/', expires: expirationInDays });
-                    ipCookie('nxexpiresin', expiresIn, { path: '/', expires: expirationInDays });
-                } else {
-                    ipCookie('nxprofile', profile, { path: '/', domain: '.nextprot.org', expires: expirationInDays });
-                    ipCookie('nxtoken', token, { path: '/', domain: '.nextprot.org', expires: expirationInDays });
-                    ipCookie('nxexpiresin', expiresIn, { path: '/', domain: '.nextprot.org', expires: expirationInDays });
-                }
-                $location.path('/');
-                
-                self.copy(profile);
-                self.username = profile.email;
-                cb();
-                
+        try {
+
+            const options = {
+                redirect_uri: $window.location.origin
+            };
+
+            // Initialize auth0 client
+            var auth0 = null;
+            createAuth0Client({
+                domain: "nextprot.auth0.com",
+                client_id: "7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW",
+                audience: "https://nextprot.auth0.com/api/v2/"
+            }).then(function(auth0response){
+                console.log(auth0response)
+                auth0 = auth0response;
+                console.log(auth0)
+
+                auth0.loginWithRedirect(options);
             });
-          });
+
+        } catch (err) {
+            console.log("Log in failed", err);
+        }
     };
 
     User.prototype.logout = function (cb) {
         this.clear();
-//        auth.signout();
         var baseUrl = new $window.URL($location.absUrl()).origin;
-        lock.logout({
-            returnTo:baseUrl
+        createAuth0Client({
+            domain: "nextprot.auth0.com",
+            client_id: "7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW",
+            audience: "https://nextprot.auth0.com/api/v2/"
+        }).then(function(auth0){
+            auth0.logout({
+                returnTo: baseUrl
+            });
         });
-
-        if ($window.location.hostname === "localhost") {
-            ipCookie.remove('nxprofile', { path: '/' });
-            ipCookie.remove('nxtoken', { path: '/' });
-            ipCookie.remove('nxexpiresin', { path: '/' });
-        } else {
-            ipCookie.remove('nxprofile', { path: '/', domain: ".nextprot.org" });
-            ipCookie.remove('nxtoken', { path: '/', domain: ".nextprot.org" });
-            ipCookie.remove('nxexpiresin', { path: '/', domain: ".nextprot.org" });
-        }
-
-        //legacy remove if it exists (should be removed from June 2015)
-        store.remove('nxprofile');
-        store.remove('nxtoken');
-        store.remove('nxexpiresin');
-        
     };
 
 
@@ -189,6 +196,7 @@ function user($resource, $http, config, $timeout, $rootScope, $location, $cookie
         var self=this;
 
         return this.chain(this.dao.$profile.get( function (data) {
+            console.log(data)
                 if(data.username){
                     return self.copy(data)
                 }
