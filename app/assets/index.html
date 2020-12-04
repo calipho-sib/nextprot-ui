@@ -640,7 +640,7 @@
                         <!-- once logged in user resources -->
                         <!-- ngIf: user.profile.email -->
                         <!--                    <li class="dropdown" ng-if="user.profile.email" ng-cloak>-->
-                        <li class="dropdown" ng-if="user.isAuthenticated()" ng-cloak>
+                        <li class="dropdown" ng-if="user.profile.email" ng-cloak>
                             <a href="#" class="dropdown-toggle lgOnly" data-toggle="dropdown">
                                 {{user.profile.name || user.profile.email}}<span class="caret"></span></a>
                             <ul class="dropdown-menu lgOnly" role="menu">
