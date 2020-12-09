@@ -57,10 +57,6 @@
                         })
                 }
             }
-
-            //})
-
-
         });
 
 
@@ -161,13 +157,6 @@
         };
 
         User.prototype.isAuthenticated = function () {
-            // Check whether the current time is past the
-            // access token's expiry time
-
-//      console.log("ipcookie of nxprofile",ipCookie('nxprofile'));
-//        
-//      console.log(ipCookie('nxexpiresin'))
-//      console.log(new Date().getTime())
             if (this.profile.email) return true;
             else return false;
         }
@@ -218,10 +207,6 @@
                     if (data.username) {
                         return self.copy(data)
                     }
-
-                    //
-                    // the passing token is wrong
-                    //return self.clear()
                 }).$promise
             );
         };
@@ -231,15 +216,9 @@
         return user;
     }
 
-
-    function auth0() {
-
-    }
-
 //
 // implement user controller
     UserCtrl.$inject = ['$scope', 'user', 'flash', 'config', 'ipCookie'];
-
     function UserCtrl($scope, user, flash, config, ipCookie) {
         $scope.user = user;
     }
