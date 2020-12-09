@@ -33,12 +33,29 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     $scope.Search = Search;
     $scope.config = config;
     $scope.user = user;
+
     $scope.export = exportService;
+
+   /* console.log("prof" + JSON.stringify($scope.userProfile))
+    $scope.$watch("userProfile", function(n, o) {
+        console.log("User profile email changed")
+        console.log(JSON.stringify(n))
+        console.log(JSON.stringify(o))
+    }, true)*/
+
+    $scope.$on('profileInited', function(event, data) {
+        console.log("GOT DATAAAAA")
+        console.log(data);
+        $scope.$apply()
+    })
+
+    //user.getProfile()
 
     $scope.editorOptions = {
         lineWrapping : true,
         lineNumbers: true,
-        autofocus:true,
+        placeholder: 'Put your SPARQL query here',
+        autofocus: true,
         readOnly: false,
         mode: 'sparql'
     };
@@ -93,6 +110,10 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
     //
     // load profile on init
     user.me();
+    //user.getProfile()
+
+
+
 
     // $scope.AdvancedQueryService = AdvancedQueryService;
 

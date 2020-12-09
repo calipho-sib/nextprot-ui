@@ -263,14 +263,6 @@
     function npCtrl($scope, $location, $routeParams, metaService, $window, $modal, flash, $http) {
         var that = this;
 
-        $http.get('alpha-api.nextprot.org')
-            .then(function(response) {
-                console.log(response)
-            })
-            .catch(function(error) {
-                console.error(error)
-                return
-            })
         /**
          * detect IE
          * returns version of IE or false, if browser is not Internet Explorer
