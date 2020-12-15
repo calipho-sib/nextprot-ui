@@ -34,27 +34,40 @@
 
         //See also the refresh token https://github.com/auth0/auth0-angular/blob/master/docs/refresh-token.md
         $rootScope.$on('$locationChangeStart', function () {
-            let auth0 = user.getAuthClient();
-            if (auth0) {
 
+            if (ipCookie('nxprofile') != null) {
+                let userData = ipCookie('nxprofile');
+                userData.token = ipCookie('nxtoken');
+                user.copy(userData);
+            } else {
                 const query = $window.location.search;
                 const shouldParseResult = query.includes("code=") && query.includes("state=");
                 if (shouldParseResult) {
-                    auth0.handleRedirectCallback()
-                        .then(function (result) {
-                            if (result.appState && result.appState.targetUrl) {
-                                showContentFromUrl(result.appState.targetUrl);
-                            }
-
-                            auth0.getUser()
-                                .then(function (userData) {
-                                    auth0.getTokenSilently()
-                                        .then(function (token) {
-                                            userData.token = token
-                                            user.copy(userData)
-                                        })
-                                })
-                        })
+                    let auth0 = user.getAuthClient();
+                    if (auth0) {
+                        auth0.handleRedirectCallback()
+                            .then(function (result) {
+                                auth0.getUser()
+                                    .then(function (userData) {
+                                        auth0.getTokenSilently()
+                                            .then(function (token) {
+                                                userData.token = token
+                                                user.copy(userData)
+                                                if ($window.location.hostname === "localhost") {
+                                                    ipCookie('nxprofile', userData, {path: '/'});
+                                                    ipCookie('nxtoken', token, {path: '/'});
+                                                } else {
+                                                    ipCookie('nxprofile', userData, {
+                                                        path: '/',
+                                                        domain: '.nextprot.org'
+                                                    });
+                                                    ipCookie('nxtoken', token, {path: '/', domain: '.nextprot.org'});
+                                                }
+                                                $location.path('/');
+                                            })
+                                    })
+                            });
+                    }
                 }
             }
         });
@@ -83,22 +96,10 @@
                 client_id: "7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW",
                 audience: "https://nextprot.auth0.com/api/v2/"
             }).then(function (auth0) {
-                user.setAuthClient(auth0)
-                user.clear()
-                auth0.isAuthenticated()
-                    .then(function (isAuthenticated) {
-                        if (isAuthenticated) {
-                            auth0.getUser()
-                                .then(function (userData) {
-                                    auth0.getTokenSilently()
-                                        .then(function (token) {
-                                            userData.token = token
-                                            user.copy(userData)
-                                        })
-                                })
-                        }
-                    });
+                user.setAuthClient(auth0);
+                user.clear();
             });
+
 
             /*
              The $q.when() method creates a promise that is immediately resolved with the given value
@@ -142,11 +143,9 @@
         };
 
         User.prototype.copy = function (data) {
-            this.profile = {}
             angular.extend(this.profile, defaultProfile, data);
             this.profile.username = this.username = data.email;
             this.profile.token = data.token;
-            $rootScope.$broadcast('profileInited', this.profile)
             return this;
         };
 
@@ -170,13 +169,13 @@
                 };
 
                 // Initialize auth0 client
-                var auth0 = null;
+                let self = this;
                 createAuth0Client({
                     domain: "nextprot.auth0.com",
                     client_id: "7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW",
                     audience: "https://nextprot.auth0.com/api/v2/"
-                }).then(function (auth0response) {
-                    auth0 = auth0response;
+                }).then(function (auth0) {
+                    self.setAuthClient(auth0);
                     auth0.loginWithRedirect(options);
                 });
 
@@ -188,6 +187,16 @@
         User.prototype.logout = function (cb) {
             this.clear();
             var baseUrl = new $window.URL($location.absUrl()).origin;
+
+            // Remove the cookies
+            if ($window.location.hostname === "localhost") {
+                ipCookie.remove("nxprofile", {path: '/'})
+                ipCookie.remove("nxtoken", {path: '/'})
+            } else {
+                ipCookie.remove("nxprofile", {path: '/', domain: '.nextprot.org'})
+                ipCookie.remove("nxtoken", {path: '/', domain: '.nextprot.org'})
+            }
+
             createAuth0Client({
                 domain: "nextprot.auth0.com",
                 client_id: "7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW",
@@ -219,6 +228,7 @@
 //
 // implement user controller
     UserCtrl.$inject = ['$scope', 'user', 'flash', 'config', 'ipCookie'];
+
     function UserCtrl($scope, user, flash, config, ipCookie) {
         $scope.user = user;
     }

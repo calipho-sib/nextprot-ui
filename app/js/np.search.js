@@ -285,7 +285,7 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
                 $location.url("/user/queries");
             }
 
-            }else {
+        }else {
             flash("alert-warning", "Please login to access your " + resourceType + ".")
         }
     };
