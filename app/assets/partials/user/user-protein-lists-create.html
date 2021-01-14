@@ -27,8 +27,8 @@
 
     <div class="col-xs-8 col-sm-9">
         <div>
-            <h3>Create protein list
-            </h3>
+            <h1>Create protein list
+            </h1>
         </div>
         <form class="form-horizontal">
             <div style="text-align: right">
@@ -49,15 +49,6 @@
             <div class="form-group">
                 <label>List of accession numbers: </label>
 
-                <div class="form-group">
-                    <div style="text-align : center">
-                        <p style="display: inline-block">
-                            <input style="display: inline-block" type="file" multiple ng-model="files" file-change accept="text/plain">
-                        </p>
-                    </div>
-
-                </div>
-
                 <textarea placeholder="Enter a list of entry accession numbers from neXtProt or Uniprot separated with commas, spaces or carriage returns ..." rows="5" ng-model="inputAccessions" class="form-control" ng-disabled="user.isAnonymous() || files.length>0"></textarea>
             </div>
 
@@ -69,6 +60,15 @@
                     <ul class="list-group scrollable" style="height: 150px; overflow-y: auto">
                         <li class="list-group-item" ng-repeat="file in files">{{file.name}}<span class="btn fa fa-remove" aria-hidden="false" ng-click="removeUploadFile($index)"></span></li>
                     </ul>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div style="text-align : center">
+                    <p style="display: inline-block">
+                        Or select from a file to upload
+                        <input style="display: inline-block" type="file" multiple ng-model="files" file-change accept="text/plain">
+                    </p>
                 </div>
             </div>
 
