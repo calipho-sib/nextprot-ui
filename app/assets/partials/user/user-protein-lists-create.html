@@ -31,10 +31,16 @@
             </h3>
         </div>
         <form class="form-horizontal">
+            <div style="text-align: right">
+                <a href="/help/protein-lists" target="_blank" class="btn btn-info">
+                    Help
+                </a>
+            </div>
             <div class="form-group">
                 <label>List name:</label>
                 <input type="text" ng-model="listName" class="form-control" placeholder="eg: my kinases" ng-disabled="user.isAnonymous()">
             </div>
+
             <div class="form-group">
                 <label>Description:</label>
                 <input type="text" ng-model="listDescription" class="form-control" ng-disabled="user.isAnonymous()">
@@ -46,7 +52,6 @@
                 <div class="form-group">
                     <div style="text-align : center">
                         <p style="display: inline-block">
-                            Enter a list below or load your list from file
                             <input style="display: inline-block" type="file" multiple ng-model="files" file-change accept="text/plain">
                         </p>
                     </div>
@@ -55,11 +60,8 @@
 
                 <textarea placeholder="Enter a list of entry accession numbers from neXtProt or Uniprot separated with commas, spaces or carriage returns ..." rows="5" ng-model="inputAccessions" class="form-control" ng-disabled="user.isAnonymous() || files.length>0"></textarea>
                 <div style="text-align:right">
-                    <button type="button" class="btn btn-primary" ng-click="createList(listName, listDescription)" ng-disabled="!isCreatable()">New</button>
+                    <button type="button" class="btn btn-primary" ng-click="createList(listName, listDescription)" ng-disabled="!isCreatable()">Create</button>
                     <button class="btn" ng-click="clearForm()" ng-disabled="!isClearable()">Clear</button>
-                    <a href="/help/protein-lists" target="_blank" class="btn btn-info">
-                        Help
-                    </a>
                 </div>
             </div>
 
