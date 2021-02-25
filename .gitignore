@@ -92,3 +92,5 @@ eagle.epf
 .idea/workspace.xml
 .idea
 npm-debug.log.*
+
+.bowerrc
