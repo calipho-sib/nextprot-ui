@@ -91,7 +91,7 @@
 
         Proteins.prototype.combine = function (user, list, l1, l2, op) {
             var self = this;
-            self.$promise = self.$dao.get({
+            self.$promise = self.$dao(user.profile.token).get({
                 action: 'combine',
                 username: user.profile.username,
                 listname: list.name,
@@ -107,7 +107,7 @@
             var self = this;
             //TODO remove cb and user promise
             user.$promise.then(function () {
-                return self.$dao.fix({
+                return self.$dao(user.profile.token).fix({
                     action: 'add',
                     username: user.profile.username,
                     list: listName
@@ -122,7 +122,7 @@
             var self = this;
             //TODO remove cb and user promise
             return user.$promise.then(function () {
-                return self.$dao.fix({
+                return self.$dao(user.profile.token).fix({
                     action: 'remove',
                     username: user.profile.username,
                     list: listName

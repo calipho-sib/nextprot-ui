@@ -221,6 +221,15 @@ header {
 #sib-logo {
 	height: 30px;
 }
+
+#expasy-link {
+    padding: 16px 10px 10px 10px;
+}
+
+#expasy-logo {
+    width: 50px;
+}
+
 navbar-right{
     margin-right:30px;
 }
