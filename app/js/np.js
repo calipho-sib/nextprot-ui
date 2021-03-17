@@ -62,7 +62,7 @@
             np1Base = 'https://uat-web1';
         }
         else if (nxEnvironment.toLowerCase() === "alpha" || nxEnvironment.toLowerCase() === "build") {
-            apiBase = 'http://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
+            apiBase = 'https://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
             np1Base = 'http://uat-web1';
         } else { // By default use the dev env, No need to change for local testing
             apiBase = 'https://dev-api.nextprot.org'; // Don't forget https!
