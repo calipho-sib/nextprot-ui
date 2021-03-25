@@ -184,7 +184,7 @@ var NXUtils = {
     getLinkForFeature: function (domain, accession, description, type, feature, xrefDict) {
 
         //TOSEE WITH MATHIEU - On 15.02.2018 Daniel has added feature + xrefDict in the signature of this method. Is it still necessary to hardcode some other (resee signature because now fields are redudant)
-        if (type === "SRM Peptide") {
+        if (type === "Peptide" || type === "SRM Peptide") {
             if (description) {
                 if(feature && feature.evidences && (feature.evidences.length > 0) && feature.evidences[0].resourceId && xrefDict){
                     if(xrefDict[feature.evidences[0].resourceId]) {
@@ -196,25 +196,6 @@ var NXUtils = {
                 return ""
             }
             else return "";
-        } else if ( type === "Peptide") {
-            if (description) {
-                if (feature && feature.evidences && (feature.evidences.length > 0) && feature.evidences[0].resourceId && xrefDict) {
-                    var links = [] ;
-                    var resources = [];
-
-                    // Display all the crossrefs which are identifiers, i.e ignore pubmed crossrefs
-                    feature.evidences.forEach(function (evidence) {
-                        var resource = xrefDict[evidence.resourceId];
-                        if (!resources.includes(resource) ) {
-                            if(resource.databaseName === "PeptideAtlas" || resource.databaseName === "MassIVE") {
-                                resources.push(resource);
-                                links.push("<a class='ext-link' href='" + resource.resolvedUrl + "' target='_blank'>" + resource.accession + "</a>");
-                            }
-                        }
-                    });
-                    return links.join("<br/>");
-                }
-            } else return "";
         } else if (type === "Antibody") {
             if(domain) return "<a class='ext-link' href='" + domain + "' target='_blank'>" + accession + "</a>";
 //            if(domain) return "<a class='ext-link' href='" + domain + "'>" + accession + "<span class='fa fa-external-link'></span></a>";
@@ -231,7 +212,7 @@ var NXUtils = {
     getDescription: function (elem, category) {
         if (category === "Peptide" || category === "SRM Peptide") {
             for (var ev in elem.evidences) {
-                if (elem.evidences[ev].resourceDb === "PeptideAtlas" || elem.evidences[ev].resourceDb === "MassIVE" || elem.evidences[ev].resourceDb === "SRMAtlas") {
+                if (elem.evidences[ev].resourceDb === "PeptideAtlas" || elem.evidences[ev].resourceDb === "SRMAtlas") {
                     return elem.evidences[ev].resourceAccession;
                 }
             }
@@ -403,7 +384,7 @@ var NXUtils = {
                                     volume: "",
                                     abstract: "",
                                     context: context,
-                                    mdata:mdata,
+                                    mdata: mdata,
                                     properties: d.properties ? d.properties : null
                                 }
                             }
