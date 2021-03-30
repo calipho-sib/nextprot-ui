@@ -70,11 +70,15 @@
         }   
     }
 
+    // Download URL
+    var downloadURL = "https://"+nxEnvironment+"-download.nextprot.org";
+
     // main application settings
     App.constant('npSettings', {
         environment: nxEnvironment,
         base: apiBase, //API URL
-        np1: np1Base, //NP1 URL
+        np1: np1Base, //NP1 URL,
+        download: downloadURL,
         callback: window.location.origin,
         auth0_cliendId: '7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW'
     })
