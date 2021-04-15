@@ -72,7 +72,7 @@
 
     // Download URL
     var downloadURL;
-    if(nxEnvironment !== pro) {
+    if(nxEnvironment !== "pro") {
         downloadURL = "https://"+nxEnvironment+"-download.nextprot.org";
     } else {
         downloadURL = "https://download.nextprot.org";
