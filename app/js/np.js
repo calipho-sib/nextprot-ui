@@ -62,7 +62,7 @@
             np1Base = 'https://uat-web1';
         }
         else if (nxEnvironment.toLowerCase() === "alpha" || nxEnvironment.toLowerCase() === "build") {
-            apiBase = 'http://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
+            apiBase = 'https://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
             np1Base = 'http://uat-web1';
         } else { // By default use the dev env, No need to change for local testing
             apiBase = 'https://dev-api.nextprot.org'; // Don't forget https!
@@ -70,11 +70,15 @@
         }   
     }
 
+    // Download URL
+    var downloadURL = "https://"+nxEnvironment+"-download.nextprot.org";
+
     // main application settings
     App.constant('npSettings', {
         environment: nxEnvironment,
         base: apiBase, //API URL
-        np1: np1Base, //NP1 URL
+        np1: np1Base, //NP1 URL,
+        download: downloadURL,
         callback: window.location.origin,
         auth0_cliendId: '7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW'
     })
