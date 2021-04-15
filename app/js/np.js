@@ -84,7 +84,7 @@
         environment: nxEnvironment,
         base: apiBase, //API URL
         np1: np1Base, //NP1 URL,
-        download: downloadURL,
+        download: nxEnvironment === "pro" ? "https://download.nextprot.org" : downloadURL,
         callback: window.location.origin,
         auth0_cliendId: '7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW'
     })
