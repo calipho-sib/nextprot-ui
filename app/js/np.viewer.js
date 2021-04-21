@@ -448,11 +448,11 @@
         ViewerService.prototype.getEntryElementUrl = function() {
             var path = $location.$$path;            
             var url;
-            if (path.match(/^\/entry\/[^\/]+\/(function)?$/) != null) {
-                url = '/elements/nextprot-elements/function-view.html';
-            }
-            else if (path.match(/^\/entry\/[^\/]+\/function-predictions$/) != null) {
+            if (path.match(/^\/entry\/[^\/]+\/function-predictions$/) != null) {
                 url = '/elements/nextprot-elements/function-predictions-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/(function)?$/) != null) {
+                url = '/elements/nextprot-elements/function-view.html';
             }
             else if (path.match(/^\/entry\/[^\/]+\/medical$/) != null) {
                 url = '/elements/nextprot-elements/medical-view.html';
