@@ -19,6 +19,9 @@
             if (path.match(/^\/entry\/[^\/]+\/(function)?$/) != null) {
                 scope.customElement = "function-view";
             }
+            else if (path.match(/^\/entry\/[^\/]+\/function-predictions$/) != null) {
+                scope.customElement = "function-predictions-view";
+            }
             else if (path.match(/^\/entry\/[^\/]+\/medical$/) != null) {
                 scope.customElement = "medical-view";
             }
@@ -195,6 +198,7 @@
             //NP1 ENTRY views 
             .when('/entry/:entry/', nxelementsv)
             .when('/entry/:entry/function', nxelementsv)
+            .when('/entry/:entry/function-predictions', nxelementsv)
             .when('/entry/:entry/medical', nxelementsv)
             .when('/entry/:entry/expression', nxelementsv)
             .when('/entry/:entry/interactions', nxelementsv)
@@ -444,7 +448,10 @@
         ViewerService.prototype.getEntryElementUrl = function() {
             var path = $location.$$path;            
             var url;
-            if (path.match(/^\/entry\/[^\/]+\/(function)?$/) != null) {
+            if (path.match(/^\/entry\/[^\/]+\/function-predictions$/) != null) {
+                url = '/elements/nextprot-elements/function-predictions-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/(function)?$/) != null) {
                 url = '/elements/nextprot-elements/function-view.html';
             }
             else if (path.match(/^\/entry\/[^\/]+\/medical$/) != null) {
