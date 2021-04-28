@@ -72,7 +72,7 @@
 
     // Download URL
     var downloadURL;
-    if(nxEnvironment != 'pro') {
+    if(nxEnvironment !== "pro") {
         downloadURL = "https://"+nxEnvironment+"-download.nextprot.org";
     } else {
         downloadURL = "https://download.nextprot.org";
@@ -83,7 +83,7 @@
         environment: nxEnvironment,
         base: apiBase, //API URL
         np1: np1Base, //NP1 URL,
-        download: downloadURL,
+        download: "https://download.nextprot.org",
         callback: window.location.origin,
         auth0_cliendId: '7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW'
     })
