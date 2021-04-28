@@ -71,7 +71,12 @@
     }
 
     // Download URL
-    var downloadURL = "https://"+nxEnvironment+"-download.nextprot.org";
+    var downloadURL;
+    if(nxEnvironment != 'pro') {
+        downloadURL = "https://"+nxEnvironment+"-download.nextprot.org";
+    } else {
+        downloadURL = "https://download.nextprot.org";
+    }
 
     // main application settings
     App.constant('npSettings', {

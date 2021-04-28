@@ -19,6 +19,9 @@
             if (path.match(/^\/entry\/[^\/]+\/(function)?$/) != null) {
                 scope.customElement = "function-view";
             }
+            else if (path.match(/^\/entry\/[^\/]+\/function-predictions$/) != null) {
+                scope.customElement = "function-predictions-view";
+            }
             else if (path.match(/^\/entry\/[^\/]+\/medical$/) != null) {
                 scope.customElement = "medical-view";
             }
@@ -195,6 +198,7 @@
             //NP1 ENTRY views 
             .when('/entry/:entry/', nxelementsv)
             .when('/entry/:entry/function', nxelementsv)
+            .when('/entry/:entry/function-predictions', nxelementsv)
             .when('/entry/:entry/medical', nxelementsv)
             .when('/entry/:entry/expression', nxelementsv)
             .when('/entry/:entry/interactions', nxelementsv)
@@ -289,6 +293,11 @@
 
                 $scope.entryProps.isoformCount = entryStats.isoforms;
             });
+
+            viewerService.getEntryFunctionAnnotations($routeParams.entry).$promise.then(function (functionAnnotations) {
+                let hasAnnotations = functionAnnotations.entry.annotationsByCategory["function-info"].length > 0;
+                $scope.entryProps.hasFunctionAnnotations = hasAnnotations;
+            })
         } else {
 
             viewerService.getCommunityGlobalViewers().success(function (data) {
@@ -413,6 +422,8 @@
 
         var isHierarchicalOntology = $resource(config.api.API_URL + '/term/:termName/is-hierarchical-terminology.json', { termName: '@termName' }, { get: { method: "GET" } });
 
+        var entryFunctionAnnotations = $resource(config.api.API_URL + '/entry/:entryName/function-info.json', { entryName: '@entryName' }, { get: { method: "GET" } });
+
         var ViewerService = function () {
 
         };
@@ -441,10 +452,17 @@
             return isHierarchicalOntology.get({ termName: termName });
         };
 
+        ViewerService.prototype.getEntryFunctionAnnotations = function (entryName) {
+            return entryFunctionAnnotations.get({ entryName: entryName });
+        }
+
         ViewerService.prototype.getEntryElementUrl = function() {
             var path = $location.$$path;            
             var url;
-            if (path.match(/^\/entry\/[^\/]+\/(function)?$/) != null) {
+            if (path.match(/^\/entry\/[^\/]+\/function-predictions$/) != null) {
+                url = '/elements/nextprot-elements/function-predictions-view.html';
+            }
+            else if (path.match(/^\/entry\/[^\/]+\/(function)?$/) != null) {
                 url = '/elements/nextprot-elements/function-view.html';
             }
             else if (path.match(/^\/entry\/[^\/]+\/medical$/) != null) {

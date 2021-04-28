@@ -176,6 +176,14 @@
         <ul id="community" class="submenu collapse in">
             <li class="submenu-header ellipsis">Community</li>
 
+            <li ng-class="activePage('function-predictions')">
+                <a ng-if="!entryProps.hasFunctionAnnotations" href="/entry/{{widgetEntry}}/function-predictions">
+                    <span class="text"><span ng-bind="entryProps.geneName"></span> Function predictions</span>
+                </a>
+                <a ng-if="entryProps.hasFunctionAnnotations" ng-class="{disabled: true}">
+                    <span class="text"><span ng-bind="entryProps.geneName"></span> Function predictions</span>
+                </a>
+            </li>
             <li ng-class="activePage('gh/zhanglabs/COFACTOR')">
                 <a href="/entry/{{widgetEntry}}/gh/zhanglabs/COFACTOR">
                     <span class="text"><span ng-bind="entryProps.geneName"></span> I-TASSER/COFACTOR</span>
