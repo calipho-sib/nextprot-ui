@@ -293,6 +293,11 @@
 
                 $scope.entryProps.isoformCount = entryStats.isoforms;
             });
+
+            viewerService.getEntryFunctionAnnotations($routeParams.entry).$promise.then(function (functionAnnotations) {
+                let hasAnnotations = functionAnnotations.entry.annotationsByCategory["function-info"].length > 0;
+                $scope.entryProps.hasFunctionAnnotations = hasAnnotations;
+            })
         } else {
 
             viewerService.getCommunityGlobalViewers().success(function (data) {
@@ -417,6 +422,8 @@
 
         var isHierarchicalOntology = $resource(config.api.API_URL + '/term/:termName/is-hierarchical-terminology.json', { termName: '@termName' }, { get: { method: "GET" } });
 
+        var entryFunctionAnnotations = $resource(config.api.API_URL + '/entry/:entryName/function-info.json', { entryName: '@entryName' }, { get: { method: "GET" } });
+
         var ViewerService = function () {
 
         };
@@ -444,6 +451,10 @@
         ViewerService.prototype.isHierarchic = function (termName) {
             return isHierarchicalOntology.get({ termName: termName });
         };
+
+        ViewerService.prototype.getEntryFunctionAnnotations = function (entryName) {
+            return entryFunctionAnnotations.get({ entryName: entryName });
+        }
 
         ViewerService.prototype.getEntryElementUrl = function() {
             var path = $location.$$path;            
