@@ -169,8 +169,13 @@
 
             var url = window.location.origin + "/release/" + release;
             var pe = (release === "protein-existence");
+            var chromosome;
             if (pe){
+                chromosome = new URLSearchParams(window.location.search).get("chromosome");
                 url = window.location.origin + "/viewers/" + "statistics/protein-existence/app/index.html";
+                if(chromosome) {
+                    url = url + "?chromosome=" + chromosome.toUpperCase();
+                }
             }
             
             var urlWithTitle = pe ? url + "?title=true" : url;
