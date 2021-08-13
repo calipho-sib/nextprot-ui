@@ -174,7 +174,10 @@
                 chromosome = new URLSearchParams(window.location.search).get("chromosome");
                 url = window.location.origin + "/viewers/" + "statistics/protein-existence/app/index.html";
                 if(chromosome) {
-                    url = url + "?chromosome=" + chromosome.toUpperCase();
+                    if(chromosome == 'x' || chromosome == 'y') {
+                        chromosome = chromosome.toUpperCase();
+                    }
+                    url = url + "?chromosome=" + chromosome
                 }
             }
             
