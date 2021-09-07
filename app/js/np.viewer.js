@@ -575,7 +575,8 @@
                 "githubURL": "https://github.com/calipho-sib/nextprot-viewers/blob/master/ " + ev1 + "/app/index.html",
                 "externalURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + "&inputOption=true&qualitySelector=true" + goldOnlyString)),
                 "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url + "?nxentry=" + entryName + goldOnlyString)),
-                "goldOnlyButton": isGoldFilterAvailable
+                "goldOnlyButton": isGoldFilterAvailable,
+                "iframeHeight" : url.includes("VEP") ? "1500px" : "100%"
             }
 
         }
