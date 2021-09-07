@@ -58,7 +58,7 @@
             else if ($routeParams.section === "news") return "partials/doc/news.html";
             else if ($routeParams.section === "entries") return "partials/doc/chromosome-entries.html";
             else if ($routeParams.section === "help" || $routeParams.article === "nextprot" ||
-                $routeParams.article === "human-proteome" || $routeParams.article === "citing-nextprot") {
+                $routeParams.article === "human-proteome" || $routeParams.article === "citing-nextprot" || $routeParams.article === "functional-proteome-project") {
                 return "partials/doc/page.html";
             }
         }
@@ -150,7 +150,7 @@
         this.getScopeParamsForNews = function (n1) {
 
             var url = window.location.origin + "/news/" + n1;
-            
+
             return {
                 "communityMode": false,
                 "githubURL": "https://github.com/calipho-sib/" + n1,
@@ -174,7 +174,10 @@
                 chromosome = new URLSearchParams(window.location.search).get("chromosome");
                 url = window.location.origin + "/viewers/" + "statistics/protein-existence/app/index.html";
                 if(chromosome) {
-                    url = url + "?chromosome=" + chromosome.toUpperCase();
+                    if(chromosome == 'x' || chromosome == 'y') {
+                        chromosome = chromosome.toUpperCase();
+                    }
+                    url = url + "?chromosome=" + chromosome
                 }
             }
             
