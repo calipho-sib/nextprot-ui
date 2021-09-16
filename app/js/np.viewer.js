@@ -622,9 +622,9 @@
             var urlSource = "https://www.github.com/" + user + "/" + repository + "/";
             if (entryName != undefined) url += "?nxentry=" + entryName;
 
-            var bannerText = "neXtprot is happy to host third-party tools developed by the community. In case of problem, please contact the developers of the tool.";
+            var bannerText = "<p>neXtprot is happy to host third-party tools developed by the community. In case of problem, please contact the developers of the tool.</p>";
             if(url.includes("VEP"))
-                bannerText = "<p>Developed by a community of developers on <a href=\'https:\/\/github.com\/calipho-sib\/feature-viewer\'>GitHub</a>. Please use GitHub to report issues or requests.</p>";
+                bannerText = bannerText + "<p>Developed by a community of developers on <a href=\'https:\/\/github.com\/calipho-sib\/feature-viewer\'>GitHub</a>. Please use GitHub to report issues or requests.</p>";
 
             return {
                 "communityMode": true,
