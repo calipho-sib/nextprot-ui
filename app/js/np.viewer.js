@@ -569,7 +569,6 @@
 
             var goldOnlyString = (goldOnly === true) && isGoldFilterAvailable ? ("&goldOnly=" + goldOnly) : "";
 
-
             return {
                 "communityMode": false,
                 "githubURL": "https://github.com/calipho-sib/nextprot-viewers/blob/master/ " + ev1 + "/app/index.html",
@@ -623,6 +622,10 @@
             var urlSource = "https://www.github.com/" + user + "/" + repository + "/";
             if (entryName != undefined) url += "?nxentry=" + entryName;
 
+            var bannerText = "neXtprot is happy to host third-party tools developed by the community. In case of problem, please contact the developers of the tool.";
+            if(url.includes("VEP"))
+                bannerText = "<p>Developed by a community of developers on <a href=\'https:\/\/github.com\/calipho-sib\/feature-viewer\'>GitHub</a>. Please use GitHub to report issues or requests.</p>";
+
             return {
                 "communityMode": true,
                 "githubURL": urlSource,
@@ -630,7 +633,8 @@
                 // "widgetURL": $sce.trustAsResourceUrl(concatEnvToUrl(url))
                 // issue with query string in url for community viewers, remove env tag : 
                 "externalURL": $sce.trustAsResourceUrl(url),
-                "widgetURL": $sce.trustAsResourceUrl(url)
+                "widgetURL": $sce.trustAsResourceUrl(url),
+                "bannerText" : bannerText
             }
         }
 
