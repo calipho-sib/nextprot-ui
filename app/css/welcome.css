@@ -383,7 +383,7 @@ div.section ul li:before {
 	margin-left: -12px;
 }
 
-div.section p {
+div.section span.section-description {
 	font-size: 0.8em;
 	margin: -3px 0 0 0;
 }
