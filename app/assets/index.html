@@ -593,7 +593,16 @@
                                         <span class="text">neXtProt concept</span>
                                     </a>
                                 </li>
-                                <!--                            <li ng-class=""><a href="release/contents">Current release</a></li>-->
+                                <li ng-class="{'active':isActiveDoc('/about/services')}">
+                                    <a href="about/services">
+                                        <span class="text">Services</span>
+                                    </a>
+                                </li>
+                                <li ng-class="{'active':isActiveDoc('/about/contents')}">
+                                    <a href="about/contents">
+                                        <span class="text">Release contents</span>
+                                    </a>
+                                </li>                                <!--                            <li ng-class=""><a href="release/contents">Current release</a></li>-->
                                 <li ng-class="{'active':isActiveDoc('/about/contents')}">
                                     <a href="about/contents">
                                         <span class="text">Release contents</span>
@@ -711,22 +720,23 @@
 ================================================== -->
     <div ng-if="isSearchBarVisible()" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
 
-<!--    
         <div id="hiring" ng-if="isHomePage()">
-        <h1 id="hiring-title"><span>NAT COMMUN PAPER</span></h1>
-        <div class="row" style="text-align: center">
-            <div class="col-md-3">
+            <h1 id="hiring-title"><span>NEXTPROT SERVICES</span></h1>
+<!--        <div class="row" style="text-align: center"> 
+                <div class="col-md-3">
                 <div class="hiring-icon-container">
                     <span class="fa fa-graduation-cap fa-3x"></span>
                 </div>
             </div>
+-->
             <div class="col-md-12 hiring-text-container">
-                <p>A High-Stringency Blueprint of the Human Proteome</p>
+                <p><b>Interested in one-off services or a long-term collaboration? More <a href="about/services">here</a></b></p>
+<!--            
                 <p><a href="https://rdcu.be/b8Cok" target="_blank"><b>Nature Communications (2020)</b></a></p>
+-->
             </div>
         </div>
-    </div>
- -->   
+    </div>   
 
     <div id="main" class="container-fluid" ng-view=""></div>
 
