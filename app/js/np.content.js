@@ -58,7 +58,8 @@
             else if ($routeParams.section === "news") return "partials/doc/news.html";
             else if ($routeParams.section === "entries") return "partials/doc/chromosome-entries.html";
             else if ($routeParams.section === "help" || $routeParams.article === "nextprot" ||
-                $routeParams.article === "human-proteome" || $routeParams.article === "citing-nextprot" || $routeParams.article === "functional-proteome-project") {
+                $routeParams.article === "human-proteome" || $routeParams.article === "citing-nextprot" ||
+                $routeParams.article === "functional-proteome-project" || $routeParams.article === "services" ) {
                 return "partials/doc/page.html";
             }
         }
