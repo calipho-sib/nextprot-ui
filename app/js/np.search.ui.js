@@ -53,9 +53,8 @@
     SearchUI.filter('getPubUrl', [function () {
         return function (ac) {
             if (ac.indexOf("PubMed:") !== -1) {
-                //return "http://www.ncbi.nlm.nih.gov/pubmed?term=" + ac.substring(ac, ac.indexOf(":"));
-//                return "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=search&term=" + ac.substring(ac, ac.indexOf(":"));
-                return "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=search&term=" + ac.split(":")[1];
+                //return "http://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&cmd=search&term=" + ac.split(":")[1];
+                return " https://www.ncbi.nlm.nih.gov/pubmed/" + ac.split(":")[1];
             } else if (ac.indexOf("DOI:") != -1) {
                 return "http://dx.doi.org/" + ac.split(":")[1];
             }
