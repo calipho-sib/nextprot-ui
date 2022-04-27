@@ -414,7 +414,7 @@ highchart{
 .browser-not-supported .browserLinks>div p{
     margin:0px;
 }
-#hiring{
+#banner{
     width:550px;
     padding:0px;
     margin:-40px auto 15px;
@@ -455,13 +455,13 @@ highchart{
     color:rgba(0,0,0,0.3);
 }
 
-#hiring-title {
+#banner-title {
   position: relative;
   text-align: center;
 margin:0px;
 }
 
-#hiring-title span {
+#banner-title span {
   background: #fff;
   padding: 0 15px;
   position: relative;
@@ -472,7 +472,7 @@ font-size:22px;
     color: gray;
 }
 
-#hiring-title:before {
+#banner-title:before {
   background: #ddd;
   content: "";
   display: block;
@@ -481,14 +481,14 @@ font-size:22px;
     top: 60%;
   width: 100%;
 }
-#hiring-title:before {
+#banner-title:before {
   left: 0;
 }
 
-.hiring-content{
+.banner-content{
     margin:0px;
 }
-.hiring-icon-container{
+.banner-icon-container{
     display:inline-block;
 /*    background-color: #C50063;*/
     padding:10px 8px;
@@ -497,7 +497,7 @@ font-size:22px;
     border-radius:5px;
 /*    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);*/
 }
-.hiring-text-container{
+.banner-text-container{
     float:left;
     padding:15px;
 }
