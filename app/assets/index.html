@@ -715,15 +715,19 @@
 ================================================== -->
     <div ng-if="isSearchBarVisible()" ng-include="'partials/search/search-bar.html'" class="container-fluid"></div>
 
-        <div id="banner" ng-if="isHomePage()">
+    <div id="banner" ng-if="isHomePage()">
+        <h1 id="banner-title"><span>E-LEARNING COURSE</span></h1>
+        <div class="row" style="text-align: center">
+            <div class="col-md-12 banner-text-container">
+                <p><b>New to neXtProt? Try this free 1 hr course (no login required) <a target=_blank href="https://edu.sib.swiss/course/view.php?id=549">here</a></b></p>
+            </div>
+        </div>
+    </div>
 <!--
             <h1 id="banner-title"><span>NEXTPROT SERVICES</span></h1>
             <div class="row" style="text-align: center">                    
                 <div class="col-md-12 banner-text-container">             
-                    <p><b>Interested in one-off services or a long-term collaboration? More <a href="about/services">here</a></b></p>
-                </div>
-            </div>
--->
+                    <p><b>Interested in one-off services or a long-term collaboration? More <a href="about/services">here</a></b></p> -->
 <!--
             <h1 id="banner-title"><span>WE'RE HIRING!</span></h1>
             <div class="row" style="text-align: center">
@@ -744,8 +748,7 @@
                 </div>
             </div>
 -->
-        </div>
-    </div>   
+
 
     <div id="main" class="container-fluid" ng-view=""></div>
 
