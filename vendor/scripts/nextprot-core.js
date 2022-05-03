@@ -443,6 +443,10 @@
                 });
         };
 
+        NextprotClient.prototype.convertToTupleMap = function(data, category, term) {
+            return _convertToTupleMap(data, category, term);
+        }
+
         //node.js compatibility
         if (typeof exports !== 'undefined') {
             exports.Client = NextprotClient;

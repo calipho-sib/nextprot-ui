@@ -12,6 +12,9 @@
     nextprotElement.$inject = ['npSettings', '$location', 'viewerService'];
     function nextprotElement(npSettings, $location, viewerService) {
 
+        var entry = "";
+        var elementReady = false;
+
         function setNextProtCustomElementName(scope, nxConfig) {
 
             var path = $location.$$path;
@@ -110,17 +113,27 @@
                 nxConfig.isoform = scope.isoformName;
                 nxConfig.goldOnly = scope.goldOnly;
 
+                var nxEntryData = scope.entryData;
                 setNextProtCustomElementName(scope, nxConfig);
                 var link = document.createElement('link');
                 link.href = scope.link;
                 link.rel = 'import'; 
                 document.head.appendChild(link);
-                element.html('<' + scope.customElement + ' nx-config=' + JSON.stringify(nxConfig) + '></' + scope.customElement + '>');
+                element.html('<' + scope.customElement + ' nx-config=' + JSON.stringify(nxConfig) + ' nx-entry-data='+ encodeURIComponent(JSON.stringify(nxEntryData)) +' lazy-loading=false></' + scope.customElement + '>');
             }
             scope.$watch(attrs.nextprotElement, function (value) {
+                elementReady = true;
+                entry = value;
 
-                renderElement(value);
             });
+
+            scope.$watch(function() { return viewerService.getEntryData()}, function() {
+                scope.entryData = viewerService.getEntryData();
+                if(scope.entryData.entry ){
+                    renderElement(entry);
+                }
+
+            })
         }
 
         return {
@@ -228,8 +241,8 @@
     }
 
 
-    ViewerCtrl.$inject = ['$rootScope', '$scope', '$sce', '$routeParams', '$location', 'config', 'exportService', 'viewerService', 'viewerURLResolver', 'npSettings'];
-    function ViewerCtrl($rootScope, $scope, $sce, $routeParams, $location, config, exportService, viewerService, viewerURLResolver, npSettings) {
+    ViewerCtrl.$inject = ['$rootScope', '$scope', '$sce', '$routeParams', '$location',  'config', 'exportService', 'viewerService', 'viewerURLResolver', 'npSettings'];
+    function ViewerCtrl($rootScope, $scope, $sce, $routeParams, $location,  config, exportService, viewerService, viewerURLResolver, npSettings) {
 
         $scope.goldOnly = $routeParams.gold || false;
         $scope.goldFilter = $scope.goldOnly ? "?gold" : "";
@@ -258,6 +271,8 @@
         $scope.seqStart = $routeParams.seqStart;
         $scope.seqEnd = $routeParams.seqEnd;
 
+        $scope.entryData = {};
+
         if ($scope.termName) {
             viewerService.isHierarchic($scope.termName).$promise
                 .then(function (data) {
@@ -275,14 +290,14 @@
                 $scope.communityViewers = data;
             });
 
-            viewerService.getEntryProperties($routeParams.entry).$promise.then(function (data) {
+            /*viewerService.getEntryProperties($routeParams.entry).$promise.then(function (data) {
 
                 $scope.entryProps.name = data.entry.overview.mainProteinName;
                 $scope.entryProps.geneName = data.entry.overview.mainGeneName;
                 $scope.entryProps.genesCount = (data.entry.overview.geneNames) ? data.entry.overview.geneNames.length : 0;
 
                 angular.extend($scope.entryProps, data.entry.properties);
-            });
+            });*/
 
             viewerService.getEntryPublicationCounts($routeParams.entry).$promise.then(function (publicationCounts) {
 
@@ -405,10 +420,13 @@
                 }
             }
         });
+
+        $scope.$on($routeParams.entry, viewerService.fetchCommonEntryData($routeParams.entry));
+
     }
 
-    viewerService.$inject = ['$resource', '$http', 'config', '$location'];
-    function viewerService($resource, $http, config, $location) {
+    viewerService.$inject = ['$resource', '$http', '$routeParams', 'config', '$location'];
+    function viewerService($resource, $http, $routeParams, config, $location) {
 
 
         //skips authorization
@@ -424,9 +442,57 @@
 
         var entryFunctionAnnotations = $resource(config.api.API_URL + '/entry/:entryName/function-info.json', { entryName: '@entryName' }, { get: { method: "GET" } });
 
-        var ViewerService = function () {
+        var commonEntryDataConfig = [
+            {
+                name: 'overview',
+                path: '/overview',
+            },
+            {
+                name: 'keywords',
+                path: '/uniprot-keyword'
+            }
+        ];
 
+        var commonEntryData = {};
+
+        var ViewerService = function () {
+            //this.fetchCommonEntryData($routeParams.entry);
         };
+
+        ViewerService.prototype.fetchCommonEntryData = function (entry) {
+            if(commonEntryData && commonEntryData.entry === entry) {
+                return commonEntryData;
+            }
+            console.log("Fetching")
+            commonEntryDataConfig.forEach(function(dataConfig) {
+                let dataResource = $resource(config.api.API_URL + '/entry/:entryName' + dataConfig.path,
+                    { entryName: '@entryName' },
+                    { get: { method: "GET" } });
+
+                dataResource.get({entryName: entry}).$promise
+                    .then(function(data) {
+                        let entryName = data.entry.uniqueName;
+                        let name = dataConfig.name;
+
+                        let existingData = commonEntryData
+                        commonEntryData = {
+                            entry: entryName
+                        }
+                        if(existingData.overview){
+                            commonEntryData.overview = existingData.overview;
+                        }
+
+                        if(existingData.keywords){
+                            commonEntryData.keywords = existingData.keywords;
+                        }
+                        commonEntryData[name] = data.entry;
+                    });
+            })
+        };
+
+        ViewerService.prototype.getEntryData = function () {
+            return commonEntryData;
+        }
 
         ViewerService.prototype.getCommunityGlobalViewers = function () {
             return globalViewersResource;
