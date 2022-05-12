@@ -133,7 +133,7 @@
                     renderElement(entry);
                 }
 
-            })
+            });
         }
 
         return {
@@ -299,20 +299,20 @@
                 angular.extend($scope.entryProps, data.entry.properties);
             });*/
 
-            viewerService.getEntryPublicationCounts($routeParams.entry).$promise.then(function (publicationCounts) {
+            /*viewerService.getEntryPublicationCounts($routeParams.entry).$promise.then(function (publicationCounts) {
 
                 $scope.entryProps.publicationCounts = publicationCounts;
-            });
+            });*/
 
-            viewerService.getEntryStats($routeParams.entry).$promise.then(function (entryStats) {
+            /*viewerService.getEntryStats($routeParams.entry).$promise.then(function (entryStats) {
 
                 $scope.entryProps.isoformCount = entryStats.isoforms;
-            });
+            });*/
 
-            viewerService.getEntryFunctionAnnotations($routeParams.entry).$promise.then(function (functionAnnotations) {
+            /*viewerService.getEntryFunctionAnnotations($routeParams.entry).$promise.then(function (functionAnnotations) {
                 let hasAnnotations = functionAnnotations.entry.annotationsByCategory["function-info"].length > 0;
                 $scope.entryProps.hasFunctionAnnotations = hasAnnotations;
-            })
+            })*/
         } else {
 
             viewerService.getCommunityGlobalViewers().success(function (data) {
@@ -423,6 +423,25 @@
 
         $scope.$on($routeParams.entry, viewerService.fetchCommonEntryData($routeParams.entry));
 
+        $scope.$watch(function() { return viewerService.getEntryMetaData()}, function() {
+            let stats = viewerService.getEntryMetaData().stats;
+            let count = viewerService.getEntryMetaData().count;
+            let functionInfo = viewerService.getEntryMetaData().functionInfo;
+            if(stats){
+                $scope.entryProps.isoformCount = stats;
+            }
+
+            if(count) {
+                $scope.entryProps.publicationCounts = count;
+            }
+
+            if(functionInfo) {
+                let hasAnnotations = functionInfo.entry.annotationsByCategory["function-info"].length > 0;
+                $scope.entryProps.hasFunctionAnnotations = hasAnnotations;
+            }
+
+        });
+
     }
 
     viewerService.$inject = ['$resource', '$http', '$routeParams', 'config', '$location'];
@@ -453,7 +472,27 @@
             }
         ];
 
+        var entryMetaDataConfig = [
+            {
+                name: 'stats',
+                path: '/stats',
+                urlPrefix: '/entry/'
+            },
+            {
+                name: 'count',
+                path: '/count',
+                urlPrefix: '/entry-publications/entry/'
+            },
+            {
+                name: 'functionInfo',
+                path: '/function-info',
+                urlPrefix: '/entry/'
+            }
+        ]
+
         var commonEntryData = {};
+
+        var entryMetaData = {};
 
         var ViewerService = function () {
             //this.fetchCommonEntryData($routeParams.entry);
@@ -463,7 +502,7 @@
             if(commonEntryData && commonEntryData.entry === entry) {
                 return commonEntryData;
             }
-            console.log("Fetching")
+
             commonEntryDataConfig.forEach(function(dataConfig) {
                 let dataResource = $resource(config.api.API_URL + '/entry/:entryName' + dataConfig.path,
                     { entryName: '@entryName' },
@@ -471,7 +510,10 @@
 
                 dataResource.get({entryName: entry}).$promise
                     .then(function(data) {
-                        let entryName = data.entry.uniqueName;
+                        let entryName;
+                        if(data.entry) {
+                            entryName = data.entry.uniqueName;
+                        }
                         let name = dataConfig.name;
 
                         let existingData = commonEntryData
@@ -487,11 +529,35 @@
                         }
                         commonEntryData[name] = data.entry;
                     });
-            })
+            });
+
+            entryMetaDataConfig.forEach(function(dataConfig) {
+                let dataResource = $resource(config.api.API_URL + dataConfig.urlPrefix +  ':entryName' + dataConfig.path,
+                    { entryName: '@entryName' },
+                    { get: { method: "GET" } });
+                dataResource.get({entryName: entry}).$promise
+                    .then(function(data){
+                        let name = dataConfig.name;
+                        let existingData = entryMetaData;
+                        entryMetaData = {};
+                        if(existingData.stats) {
+                            entryMetaData.stats = existingData.stats;
+                        }
+
+                        if(existingData.count) {
+                            entryMetaData.count = existingData.count;
+                        }
+                        entryMetaData[name] = data;
+                    })
+            });
         };
 
         ViewerService.prototype.getEntryData = function () {
             return commonEntryData;
+        }
+
+        ViewerService.prototype.getEntryMetaData = function () {
+            return entryMetaData;
         }
 
         ViewerService.prototype.getCommunityGlobalViewers = function () {
