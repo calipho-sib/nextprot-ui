@@ -119,7 +119,7 @@
                 link.href = scope.link;
                 link.rel = 'import'; 
                 document.head.appendChild(link);
-                element.html('<' + scope.customElement + ' nx-config=' + JSON.stringify(nxConfig) + ' nx-entry-data='+ encodeURIComponent(JSON.stringify(nxEntryData)) +' lazy-loading=false></' + scope.customElement + '>');
+                element.html('<' + scope.customElement + ' nx-config=' + JSON.stringify(nxConfig) + ' nx-entry-data='+ encodeURIComponent(JSON.stringify(nxEntryData)) +' lazy-loading="true"></' + scope.customElement + '>');
             }
             scope.$watch(attrs.nextprotElement, function (value) {
                 elementReady = true;
@@ -423,12 +423,25 @@
 
         $scope.$on($routeParams.entry, viewerService.fetchCommonEntryData($routeParams.entry));
 
+        $scope.$watch(function() { return viewerService.getEntryData()}, function() {
+            let entryData = viewerService.getEntryData();
+            if(entryData.overview) {
+                let overviewData = entryData.overview;
+                $scope.entryProps.name = overviewData.overview.mainProteinName;
+                $scope.entryProps.geneName = overviewData.overview.mainGeneName;
+                $scope.entryProps.genesCount = (overviewData.overview.geneNames) ? overviewData.overview.geneNames.length : 0;
+            }
+
+
+        });
+
+
         $scope.$watch(function() { return viewerService.getEntryMetaData()}, function() {
             let stats = viewerService.getEntryMetaData().stats;
             let count = viewerService.getEntryMetaData().count;
             let functionInfo = viewerService.getEntryMetaData().functionInfo;
             if(stats){
-                $scope.entryProps.isoformCount = stats;
+                $scope.entryProps.isoformCount = stats.isoforms;
             }
 
             if(count) {
