@@ -128,11 +128,23 @@
             });
 
             scope.$watch(function() { return viewerService.getEntryData()}, function() {
-                scope.entryData = viewerService.getEntryData();
-                if(scope.entryData.entry ){
+
+                if(Object.getOwnPropertyNames(scope.entryData).length == 0) {
                     renderElement(entry);
                 }
 
+                scope.entryData = viewerService.getEntryData();
+                if(scope.entryData.entry && scope.entryData.overview && scope.entryData.keywords){
+                    if(scope.currentURL.includes("/medical") || scope.currentURL.includes("/interactions")
+                        || scope.currentURL.includes("/localization") || scope.currentURL.includes("/sequence")
+                        || scope.currentURL.includes("/proteomics") || scope.currentURL.includes("/structure")) {
+                        if(scope.entryData.isoforms) {
+                            renderElement(entry);
+                        }
+                    } else {
+                        renderElement(entry);
+                    }
+                }
             });
         }
 
@@ -251,6 +263,7 @@
         $scope.partialName = "partials/doc/page.html";
         $scope.testt = $routeParams.article;
 
+        $scope.currentURL = "";
         $scope.externalURL = null;
         $scope.widgetEntry = null;
         $scope.widgetTerm = null;
@@ -388,6 +401,7 @@
         $scope.$on('$routeChangeSuccess', function (event, next, current) {
 
             var path = $location.$$path;
+            $scope.currentURL = path;
             var matches = path.match(/\/entry\/([^/]+)\/gene_identifiers/);
             if (matches !== null) {
 
@@ -418,6 +432,12 @@
                 } else { //deprecated nextprot
                     angular.extend($scope, viewerURLResolver.getScopeParamsForNeXtProtGrails($location.$$path, $routeParams.element));
                 }
+            }
+
+            // Loads isoform data if requried
+            if(path.includes('/medical') || path.includes('/localization') || path.includes('/sequence')
+                || path.includes('/structure') || path.includes('/proteomics') || path.includes('/interactions')) {
+                viewerService.fetchIsoformData($routeParams.entry);
             }
         });
 
@@ -485,6 +505,13 @@
             }
         ];
 
+        var IsoformDataConfig = [
+            {
+                name: 'isoforms',
+                path: '/isoform',
+            }
+        ];
+
         var entryMetaDataConfig = [
             {
                 name: 'stats',
@@ -516,6 +543,9 @@
                 return commonEntryData;
             }
 
+            if(commonEntryData.entry && commonEntryData.entry !== entry) {
+                commonEntryData = {};
+            }
             commonEntryDataConfig.forEach(function(dataConfig) {
                 let dataResource = $resource(config.api.API_URL + '/entry/:entryName' + dataConfig.path,
                     { entryName: '@entryName' },
@@ -539,6 +569,10 @@
 
                         if(existingData.keywords){
                             commonEntryData.keywords = existingData.keywords;
+                        }
+
+                        if(existingData.isoforms){
+                            commonEntryData.isoforms = existingData.isoforms;
                         }
                         commonEntryData[name] = data.entry;
                     });
@@ -564,6 +598,49 @@
                     })
             });
         };
+
+        ViewerService.prototype.fetchIsoformData = function (entry) {
+            if(commonEntryData && commonEntryData.entry === entry && commonEntryData.isoforms) {
+                return;
+            }
+
+            // A possible entry/path change, so isform data to be fetched.
+            IsoformDataConfig.forEach(function(dataConfig) {
+                let dataResource = $resource(config.api.API_URL + '/entry/:entryName' + dataConfig.path,
+                    { entryName: '@entryName' },
+                    { get: { method: "GET" } });
+
+                dataResource.get({entryName: entry}).$promise
+                    .then(function(data) {
+                        let entryName;
+                        if(data.entry) {
+                            entryName = data.entry.uniqueName;
+                        }
+                        let name = dataConfig.name;
+
+                        let existingData = commonEntryData
+                        commonEntryData = {
+                            entry: entryName
+                        }
+                        if(existingData.overview){
+                            commonEntryData.overview = existingData.overview;
+                        }
+
+                        if(existingData.keywords){
+                            commonEntryData.keywords = existingData.keywords;
+                        }
+
+                        if(existingData.isoforms){
+                            commonEntryData.isoforms = existingData.isoforms;
+                        }
+
+                        if(existingData.isoformMappings){
+                            commonEntryData.isoformMappings = existingData.isoformMappings;
+                        }
+                        commonEntryData[name] = data.entry;
+                    });
+            });
+        }
 
         ViewerService.prototype.getEntryData = function () {
             return commonEntryData;
