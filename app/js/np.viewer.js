@@ -124,14 +124,16 @@
             scope.$watch(attrs.nextprotElement, function (value) {
                 elementReady = true;
                 entry = value;
-
+                if(scope.currentURL.includes("/term")) {
+                    renderElement(entry);
+                }
             });
 
             scope.$watch(function() { return viewerService.getEntryData()}, function() {
 
-                if(Object.getOwnPropertyNames(scope.entryData).length == 0) {
+                /*if(Object.getOwnPropertyNames(scope.entryData).length == 0) {
                     renderElement(entry);
-                }
+                }*/
 
                 scope.entryData = viewerService.getEntryData();
                 if(scope.entryData.entry && scope.entryData.overview && scope.entryData.keywords){
