@@ -103,7 +103,7 @@
         };
 
         ReleaseInfoService.prototype.getReleaseInfo = function (databaseRelease) {
-            //getReleaseStats(databaseRelease);
+            getReleaseStats(databaseRelease);
             return releaseInfo;
         };
 
