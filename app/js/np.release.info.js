@@ -27,39 +27,9 @@
         $scope.releaseInfo = releaseInfoService.getReleaseInfo();
 
         $scope.toggleDatabaseRelease = function (data) {
-            $scope.releaseInfo = releaseInfoService.getReleaseInfo(data.databaseRelease);
+            releaseInfoService.getReleaseStats(data.databaseRelease);
+            $scope.releaseInfo = releaseInfoService.getReleaseInfo();
         };
-
-        /*
-        // Replace the publication stats fetched above by the correct ones computed by the new service /publications/stats.json
-        releaseInfoService.getPublicationStats().$promise.then(function (data) {
-            var newStats = [
-                {
-                    description: "Cited publications",
-                    count: data.numberOfCitedPublications
-                },
-                {
-                    description: "Computationally mapped publications",
-                    count: data.numberOfComputationallyMappedPublications
-                },
-                {
-                    description: "Large scale publications",
-                    count: data.numberOfLargeScalePublications
-                },
-                {
-                    description: "Manually curated publications",
-                    count: data.numberOfCuratedPublications
-                }
-            ];
-
-            var arrayLength = $scope.releaseInfo.tagStatistics.length;
-            for (var i = 0; i < arrayLength; i++) {
-                if ($scope.releaseInfo.tagStatistics[i].category === "Publications") {
-                    $scope.releaseInfo.tagStatistics[i].data = newStats;
-                    break;
-                }
-            }
-        });*/
     }
 
     releaseInfoService.$inject = [ '$resource', 'config'];
@@ -99,16 +69,19 @@
                 });
             });
 
-            getReleaseStats();
+            this.getReleaseStats();
         };
 
-        ReleaseInfoService.prototype.getReleaseInfo = function (databaseRelease) {
-            getReleaseStats(databaseRelease);
+        ReleaseInfoService.prototype.getReleaseInfo = function () {
             return releaseInfo;
         };
 
         // fetching release stats
-        function getReleaseStats(databaseRelease) {
+        ReleaseInfoService.prototype.getReleaseStats = function getReleaseStats(databaseRelease) {
+            if(releaseInfo.databaseRelease === databaseRelease) {
+                return
+            }
+
             var releaseStatsURL = '/release-stats.json';
             if (databaseRelease) {
                 releaseStatsURL = '/release-stats/'+ databaseRelease.replace(/ \(current\)/, "") + '.json'
