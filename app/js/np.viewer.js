@@ -146,6 +146,8 @@
                     } else {
                         renderElement(entry);
                     }
+                } else if(scope.currentURL.includes("/blast")) {
+                    renderElement(entry);
                 }
             });
         }
