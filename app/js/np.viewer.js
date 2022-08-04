@@ -124,7 +124,7 @@
             scope.$watch(attrs.nextprotElement, function (value) {
                 elementReady = true;
                 entry = value;
-                if(scope.currentURL.includes("/term")) {
+                if(scope.currentURL.includes("/term") || scope.currentURL.includes("/tools")) {
                     renderElement(entry);
                 }
             });
@@ -146,7 +146,7 @@
                     } else {
                         renderElement(entry);
                     }
-                } else if(scope.currentURL.includes("/blast")) {
+                } else if(scope.currentURL.includes("/blast") || scope.currentURL.includes("/tools")) {
                     renderElement(entry);
                 }
             });
