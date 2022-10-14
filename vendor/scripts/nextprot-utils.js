@@ -601,7 +601,7 @@ var NXViewerUtils = {
 
                 // For peptides, highlight peptides based on unicity
                 if(meta.name === 'Peptide' || metadata.name === 'SRM Peptide') {
-                    meta.showDescriptionRect = true;
+                    meta.showDescriptionRect = false;
                     let unicity = annotation.unicity;
                     console.log(annotation.id+ " " + unicity +" " + name)
                     if (unicity) {
@@ -610,21 +610,21 @@ var NXViewerUtils = {
                                 x: annotation.start ? annotation.start : 1,
                                 y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
                                 color: '#DFF0D8',
-                                highlightText: 'Unique'
+                                highlightText: annotation.description + '<br/>Unique'
                             });
                         } else if (unicity === 'pseudo-unique') {
                             meta.highlight.push({
                                 x: annotation.start ? annotation.start : 1,
                                 y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
                                 color: '#c6e9dc',
-                                highlightText: 'Pseudo-unique'
+                                highlightText: annotation.description + '<br/>Pseudo-unique'
                             });
                         } else if (unicity === 'not unique') {
                             meta.highlight.push({
                                 x: annotation.start ? annotation.start : 1,
                                 y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
                                 color: '#d9edf7',
-                                highlightText: 'Not unique'
+                                highlightText: annotation.description + '<br/>Not unique'
                             });
                         }
                     }
