@@ -609,7 +609,7 @@ var NXViewerUtils = {
                             meta.highlight.push({
                                 x: annotation.start ? annotation.start : 1,
                                 y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
-                                color: '#DFF0D8',
+                                color: '#dff0d8',
                                 highlightText: annotation.description + '<br/>Unique'
                             });
                         } else if (unicity === 'pseudo-unique') {
