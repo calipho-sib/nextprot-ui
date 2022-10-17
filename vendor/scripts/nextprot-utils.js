@@ -609,21 +609,21 @@ var NXViewerUtils = {
                             meta.highlight.push({
                                 x: annotation.start ? annotation.start : 1,
                                 y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
-                                color: '#dff0d8',
+                                color: "#2AD466",
                                 highlightText: annotation.description + '<br/>Unique'
                             });
                         } else if (unicity === 'pseudo-unique') {
                             meta.highlight.push({
                                 x: annotation.start ? annotation.start : 1,
                                 y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
-                                color: '#c6e9dc',
+                                color: '#61D389',
                                 highlightText: annotation.description + '<br/>Pseudo-unique'
                             });
                         } else if (unicity === 'not unique') {
                             meta.highlight.push({
                                 x: annotation.start ? annotation.start : 1,
                                 y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
-                                color: '#d9edf7',
+                                color: '#00B3E4',
                                 highlightText: annotation.description + '<br/>Not unique'
                             });
                         }
