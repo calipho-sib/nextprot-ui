@@ -69,7 +69,10 @@ angular.module('np.config', []).factory('config', [
                 "filterproteomics": "Proteomics",
                 "filterstructure": "3D structure",
                 "filtermutagenesis": "Mutagenesis",
-                "filterdisease": "Disease"
+                "filterdisease": "Disease",
+
+                /* neXtProt ICEPO */
+                "icepo" : "neXtProt ICEPO"
             },
 
 
