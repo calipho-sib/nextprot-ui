@@ -119,21 +119,19 @@
                 link.href = scope.link;
                 link.rel = 'import'; 
                 document.head.appendChild(link);
-                element.html('<' + scope.customElement + ' nx-config=' + JSON.stringify(nxConfig) + ' nx-entry-data='+ encodeURIComponent(JSON.stringify(nxEntryData)) +' lazy-loading="true"></' + scope.customElement + '>');
+                element.html('<' + scope.customElement + ' nx-config=' + JSON.stringify(nxConfig) + '></' + scope.customElement + '>');
             }
             scope.$watch(attrs.nextprotElement, function (value) {
                 elementReady = true;
                 entry = value;
-                if(scope.currentURL.includes("/term") || scope.currentURL.includes("/tools") ) {
-                    renderElement(entry);
-                }
+                renderElement(entry);
             });
 
-            scope.$watch(function() { return viewerService.getEntryData()}, function() {
+            /*scope.$watch(function() { return viewerService.getEntryData()}, function() {
 
-                /*if(Object.getOwnPropertyNames(scope.entryData).length == 0) {
+                if(Object.getOwnPropertyNames(scope.entryData).length == 0) {
                     renderElement(entry);
-                }*/
+                }
 
                 scope.entryData = viewerService.getEntryData();
                 if(scope.entryData.entry && scope.entryData.overview && scope.entryData.keywords){
@@ -149,7 +147,7 @@
                 } else if(scope.currentURL.includes("/blast") || scope.currentURL.includes("/tools")) {
                     renderElement(entry);
                 }
-            });
+            });*/
         }
 
         return {
@@ -439,25 +437,23 @@
             }
 
             // Loads isoform data if requried
-            if(path.includes('/medical') || path.includes('/localization') || path.includes('/sequence')
+            /*if(path.includes('/medical') || path.includes('/localization') || path.includes('/sequence')
                 || path.includes('/structure') || path.includes('/proteomics') || path.includes('/interactions')) {
                 viewerService.fetchIsoformData($routeParams.entry);
-            }
+            }*/
         });
 
-        $scope.$on($routeParams.entry, viewerService.fetchCommonEntryData($routeParams.entry));
+        //$scope.$on($routeParams.entry, viewerService.fetchCommonEntryData($routeParams.entry));
 
-        $scope.$watch(function() { return viewerService.getEntryData()}, function() {
-            let entryData = viewerService.getEntryData();
+        /*$scope.$watch(function() { return viewerService.getEntryData()}, function() {
+           let entryData = viewerService.getEntryData();
             if(entryData.overview) {
                 let overviewData = entryData.overview;
                 $scope.entryProps.name = overviewData.overview.mainProteinName;
                 $scope.entryProps.geneName = overviewData.overview.mainGeneName;
                 $scope.entryProps.genesCount = (overviewData.overview.geneNames) ? overviewData.overview.geneNames.length : 0;
             }
-
-
-        });
+        });*/
 
 
         $scope.$watch(function() { return viewerService.getEntryMetaData()}, function() {
