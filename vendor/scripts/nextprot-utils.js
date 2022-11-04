@@ -588,13 +588,46 @@ var NXViewerUtils = {
         var result = {};
         for (name in annotations) {
             var meta = jQuery.extend({}, metadata);
-            meta.data = annotations[name].map(function (annotation) {
-                return {
+            meta.data = [];
+            meta.highlight= [];
+                annotations[name].forEach(function (annotation) {
+                meta.data.push({
                     x: annotation.start ? annotation.start : 1,
                     y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
                     id: annotation.id,
                     category: annotation.category,
                     description: NXUtils.setNotInBold(annotation.description) // tooltip description
+                });
+
+                // For peptides, highlight peptides based on unicity
+                if(meta.name === 'Peptide' || metadata.name === 'SRM Peptide') {
+                    meta.showDescriptionRect = false;
+                    let unicity = annotation.unicity;
+                    console.log(annotation.id+ " " + unicity +" " + name)
+                    if (unicity) {
+                        if (unicity === 'unique') {
+                            meta.highlight.push({
+                                x: annotation.start ? annotation.start : 1,
+                                y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
+                                color: "#b3e1d1",
+                                highlightText: annotation.description + '<br/>Unique'
+                            });
+                        } else if (unicity === 'pseudo-unique') {
+                            meta.highlight.push({
+                                x: annotation.start ? annotation.start : 1,
+                                y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
+                                color: '#d6e9c6',
+                                highlightText: annotation.description + '<br/>Pseudo-unique'
+                            });
+                        } else if (unicity === 'not unique') {
+                            meta.highlight.push({
+                                x: annotation.start ? annotation.start : 1,
+                                y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
+                                color: '#D9EDF7',
+                                highlightText: annotation.description + '<br/>Not unique'
+                            });
+                        }
+                    }
                 }
             });
             result[name] = meta;
