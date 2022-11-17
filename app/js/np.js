@@ -40,7 +40,7 @@
     //Environment that should be set from outside //TODO should replace this using GRUNT
 
     // default environment when environment is not set by some external deployment script
-    var nxEnvironment = "alpha"; //env can be replaced, by dev, alpha or pro by nxs script on deploy
+    var nxEnvironment = "NX_ENV"; //env can be replaced, by dev, alpha or pro by nxs script on deploy
     // WARNING !!! DO NOT USE NX_ENV ANYWHERE ELSE IN THE PROJECT. A script replace its value by the current environment value just before deployment !
     var apiBase = "https://dev-api.nextprot.org"; //default for UI developers on MACs
     var np1Base = 'https://uat-web1'; //default for UI developers on MACs
@@ -64,7 +64,11 @@
         else if (nxEnvironment.toLowerCase() === "alpha" || nxEnvironment.toLowerCase() === "build") {
             apiBase = 'https://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
             np1Base = 'http://uat-web1';
-        } else { // By default use the dev env, No need to change for local testing
+        } else if (nxEnvironment.toLowerCase() === "cn") {
+            apiBase = 'https://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
+        }
+
+        else { // By default use the dev env, No need to change for local testing
             apiBase = 'https://dev-api.nextprot.org'; // Don't forget https!
             np1Base = 'https://uat-web1';
         }   
