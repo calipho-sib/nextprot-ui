@@ -305,29 +305,29 @@
                 $scope.communityViewers = data;
             });
 
-            /*viewerService.getEntryProperties($routeParams.entry).$promise.then(function (data) {
+            viewerService.getEntryProperties($routeParams.entry).$promise.then(function (data) {
 
                 $scope.entryProps.name = data.entry.overview.mainProteinName;
                 $scope.entryProps.geneName = data.entry.overview.mainGeneName;
                 $scope.entryProps.genesCount = (data.entry.overview.geneNames) ? data.entry.overview.geneNames.length : 0;
 
                 angular.extend($scope.entryProps, data.entry.properties);
-            });*/
+            });
 
-            /*viewerService.getEntryPublicationCounts($routeParams.entry).$promise.then(function (publicationCounts) {
+            viewerService.getEntryPublicationCounts($routeParams.entry).$promise.then(function (publicationCounts) {
 
                 $scope.entryProps.publicationCounts = publicationCounts;
-            });*/
+            });
 
-            /*viewerService.getEntryStats($routeParams.entry).$promise.then(function (entryStats) {
+            viewerService.getEntryStats($routeParams.entry).$promise.then(function (entryStats) {
 
                 $scope.entryProps.isoformCount = entryStats.isoforms;
-            });*/
+            });
 
-            /*viewerService.getEntryFunctionAnnotations($routeParams.entry).$promise.then(function (functionAnnotations) {
+            viewerService.getEntryFunctionAnnotations($routeParams.entry).$promise.then(function (functionAnnotations) {
                 let hasAnnotations = functionAnnotations.entry.annotationsByCategory["function-info"].length > 0;
                 $scope.entryProps.hasFunctionAnnotations = hasAnnotations;
-            })*/
+            })
         } else {
 
             viewerService.getCommunityGlobalViewers().success(function (data) {
