@@ -325,7 +325,10 @@
             });
 
             viewerService.getEntryFunctionAnnotations($routeParams.entry).$promise.then(function (functionAnnotations) {
-                let hasAnnotations = functionAnnotations.entry.annotationsByCategory["function-info"].length > 0;
+                var hasAnnotations = false;
+                if(functionAnnotations.entry.annotationsByCategory["function-info"]) {
+                    hasAnnotations = functionAnnotations.entry.annotationsByCategory["function-info"].length > 0;
+                }
                 $scope.entryProps.hasFunctionAnnotations = hasAnnotations;
             })
         } else {
