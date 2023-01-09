@@ -330,7 +330,7 @@
                     hasAnnotations = functionAnnotations.entry.annotationsByCategory["function-info"].length > 0;
                 }
                 $scope.entryProps.hasFunctionAnnotations = hasAnnotations;
-            })
+            });
         } else {
 
             viewerService.getCommunityGlobalViewers().success(function (data) {
