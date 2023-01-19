@@ -44,7 +44,7 @@
     "iframe-resizer": "3.2.0",
     "angular-mocks": "1.2.19",
     "webcomponentsjs": "0.7.24",
-    "nextprot-elements": "https://github.com/calipho-sib/nextprot-elements.git#develop",
+    "nextprot-elements": "https://github.com/calipho-sib/nextprot-elements.git#feat/refactor-with-new-feature-viewer",
     "auth0-lock" : "11.16.2",
     "angular-auth0": "^3.0.1",
     "angular-lock": "^3.0.1",
