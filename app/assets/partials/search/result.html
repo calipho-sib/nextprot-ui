@@ -84,9 +84,9 @@
 				<!-- content -->
 				<li ng-repeat="filter in Search.result.filters"
 					ng-class="active(filter.name,'filter')">
-					{{Search.result.ontology[filter.name]}}
+					<a ng-show="filter.count" class="" ng-click="updateUrlSearchPart({filter:filter.name})" href="">{{Search.result.ontology[filter.name]}}
 						<span class=""> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&&'fa-remove'" class="fa"></i>
-
+					</a>
 				</li>
 			</ul>
         </div>
