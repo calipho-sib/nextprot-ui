@@ -283,8 +283,8 @@
 
 //
 //
-    QueryRepositoryCtrl.$inject = ['Tracker', '$scope', '$location', '$timeout', '$log','config', 'user', 'queryRepository', 'Search', 'flash']
-    function QueryRepositoryCtrl(Tracker, $scope, $location, $timeout, $log, config, user, queryRepository, Search, flash) {
+    QueryRepositoryCtrl.$inject = ['Tracker', '$scope', '$location', '$timeout', '$log', '$window', 'config', 'user', 'queryRepository', 'Search', 'flash']
+    function QueryRepositoryCtrl(Tracker, $scope, $location, $timeout, $log, $window, config, user, queryRepository, Search, flash) {
 
         // publish data
         $scope.repository = queryRepository.repository;
@@ -327,6 +327,10 @@
             $scope.toggleRepository();
             $scope.showNewQueryPanel((Search.params.sparql) ? {sparql: Search.params.sparql} : null);
         };
+
+        $scope.openW3CSPARQL = function () {
+            $window.open("https://www.w3.org/TR/sparql11-query/", "_blank")
+        }
 
         $scope.didyoumean = function (index) {
 
