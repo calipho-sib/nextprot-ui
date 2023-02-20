@@ -80,13 +80,14 @@
 			</ul>
 			<ul ng-show="Search.params.listId" class="list-unstyled">
 				<!-- header -->
-				<li><h5 class="lead">Content</h5></li>
+				<li><h5 class="lead">Filters</h5></li>
+				<li>For proteins with:</li>
 				<!-- content -->
 				<li ng-repeat="filter in Search.result.filters"
 					ng-class="active(filter.name,'filter')">
-					{{Search.result.ontology[filter.name]}}
+					<a ng-show="filter.count" class="" ng-click="updateUrlSearchPart({filter:filter.name})" href="">{{Search.result.ontology[filter.name]}}
 						<span class=""> ({{filter.count }})</span> <i ng-class="active(filter.name,'filter')&&'fa-remove'" class="fa"></i>
-
+					</a>
 				</li>
 			</ul>
         </div>
