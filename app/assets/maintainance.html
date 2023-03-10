@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en" xmlns:flash="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="nextprot,UniProt,Human,Proteins,Proteome,Proteomics,protein database,protein knowledgebase,protein resource,human protein,human proteome,cancer variants portal,ion channels variants portal,function,medical,disease,expression,interactions,sequence,isoform,mutation,variant,phenotypes,proteomics,peptide,structure,3D,unicity checker,peptide uniqueness checker,annotation,biocuration,chromosomes,protein validation,protein-coding genes,post-translational modifications,ptm,data integration,systems biology,genetic variations,RDF data model,SPARQL endpoint,api,rest">
+
+    <meta name="description" content="{{nm.description}}">
+    <meta name="author" content="CALIPHO Team - SIB - Swiss Institute of Bioinformatics">
+    <meta name="fragment" content="!">
+    <meta http-equiv="expires" content="0">
+
+    <link href='{!endpoint!}/elements/external-elements_{!uiVersion!}.html' rel='import' type='text/html'>
+    <link rel="stylesheet" href="{!endpoint!}/css/vendor_{!uiVersion!}.css?release={!distRelease!}">
+    <link rel="stylesheet" href="{!endpoint!}/css/app_{!uiVersion!}.css?release={!distRelease!}">
+
+    <link rel="icon" href="./img/np-x.png">
+    <base href="/">
+
+    <title ng-bind="nm.title"></title>
+    <!--    <title>neXtProt - exploring the universe of human proteins</title>-->
+
+    <!--[if lte IE 7]>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js"></script>
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!--  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:600' rel='stylesheet' type='text/css'>-->
+
+    <link rel="stylesheet" href="{!endpoint!}/css/vendor_{!uiVersion!}.css?release={!distRelease!}">
+    <link rel="stylesheet" href="{!endpoint!}/css/app_{!uiVersion!}.css?release={!distRelease!}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    </script>
+
+    <script type="application/ld+json">
+        {
+            "@context": "http://schema.org",
+            "@graph": [
+                {
+                    "@type": "DataCatalog",
+                    "@id": "http://identifiers.org/nextprot/",
+                    "name": "neXtProt Data Catalog",
+                    "description": "neXtProt dataset in different data formats",
+                    "url": "https://www.nextprot.org/",
+                    "keywords": "nextprot,UniProt,Human,Proteins,Proteome,Proteomics,protein database,protein knowledgebase,protein resource,human protein,human proteome,cancer variants portal,ion channels variants portal,function,medical,disease,expression,interactions,sequence,isoform,mutation,variant,phenotypes,proteomics,peptide,structure,3D,unicity checker,peptide uniqueness checker,annotation,biocuration,chromosomes,protein validation,protein-coding genes,post-translational modifications,ptm,data integration,systems biology,genetic variations,RDF data model,SPARQL endpoint,api,rest",
+                    "thumbnailUrl": "https://www.nextprot.org/img/np-x.png",
+                    "sourceOrganization": {
+                        "@type": "Organization",
+                        "name": "SIB Swiss Institute of Bioinformatics",
+                        "url": "https://www.sib.swiss/",
+                        "logo": "https://www.nextprot.org/img/sib.png"
+                    },
+                    "citation": {
+                        "@type": "ScholarlyArticle",
+                        "headline": "The neXtProt knowledgebase in 2020: data, tools and usability improvements.",
+                        "author" : [
+                            {"@type": "Person", "name": "Zahn-Zabal M"},
+                            {"@type": "Person", "name": "Michel PA"},
+                            {"@type": "Person", "name": "Gateau A"},
+                            {"@type": "Person", "name": "Nikitin F"},
+                            {"@type": "Person", "name": "Schaeffer M"},
+                            {"@type": "Person", "name": "Audot E"},
+                            {"@type": "Person", "name": "Gaudet P"},
+                            {"@type": "Person", "name": "Duek PD"},
+                            {"@type": "Person", "name": "Teixeira D"},
+                            {"@type": "Person", "name": "Rech de Laval V"},
+                            {"@type": "Person", "name": "Samarasinghe K"},
+                            {"@type": "Person", "name": "Bairoch A"},
+                            {"@type": "Person", "name": "Lane L"}
+                        ],
+                        "isPartOf": [
+                            {"@type": "Periodical", "name": "Nucleic acids research"},
+                            {"@type": "PublicationVolume", "volumeNumber": "48"},
+                            {"@type": "PublicationIssue", "datePublished": "2020", "issueNumber": "D1"}
+                        ],
+                        "sameAs": [
+                            "https://doi.org/10.1093/nar/gkz995",
+                            "http://europepmc.org/abstract/MED/31724716",
+                            "https://www.ncbi.nlm.nih.gov/pubmed/31724716",
+                            "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5210547"
+                        ],
+                        "datePublished" : "2020",
+                        "image" : "https://oup.silverchair-cdn.com/oup/backfile/Content_public/Journal/nar/Issue/48/D1/1/m_cover.gif?Expires=1658492109&Signature=tuMOTlLLi-0VM0hXI5nXDnlOuS6sjofoncg4jb9MEAvOKoSvEpZikjcITt~4kUrJcw8vAkhqCptGqzr~BP4Nehk6Fm6xXBrboTDP3qPR5oJa12tk57mqEiENB0ZJ5s5DGIDZsrz0qRbF17HoFNuIMopyOrPYZtG3IB0lN5A-wGWkynyT3QUQFughD3WwEDUy5nZM3mPGLoj-xwws8hkmIZ7dEUtLpGG8-fgRp-ZBJz~R1~8vsTeHlba6k2HOhaJ2XA2oA-E6uIdaTEuiLAG2N0Hy2-8ni9~tqz-EdneeCKDmYfRJRnymvqEhw6UZdDtvDPMZRKvtf61u5JeycXS8Ag__&Key-Pair-Id=APKAIE5G5CRDK6RD3PGA",
+                        "publisher" : {
+                            "@type" : "Organization",
+                            "name" : "Oxford University Press"
+                        }
+                    },
+                    "dataset": [
+                        {
+                            "@type": "Dataset",
+                            "name": "neXtProt entries",
+                            "description": "The collection of neXtProt entries for human proteins",
+                            "url": "https://www.nextprot.org",
+                            "keywords": "nextprot,Human,Proteins,Proteome,Proteomics,protein database,protein knowledgebase,protein resource,human protein,human proteome,function,medical,disease,expression,interactions,sequence,isoform,mutation,variant,phenotypes,proteomics,peptide,structure,3D,annotation,biocuration,chromosomes,protein validation,protein-coding genes,post-translational modifications,ptm,data integration,systems biology,genetic variations,UniProt",
+                            "distribution": [
+                                {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/xml/nextprot_all.xml.gz", "fileFormat": "XML"},
+                                {"@type": "DataDownload", "fileFormat": "RDF"},
+                                {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/peff/nextprot_all.peff.gz", "fileFormat": "PEFF"},
+                                {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/md5/nextprot_sequence_md5.txt", "fileFormat": "TXT"},
+                                {"@type": "DataDownload", "contentUrl": "https://api.nextprot.org/export/entries/all.fasta", "fileFormat": "FASTA"}
+                            ],
+                            "potentialAction": {
+                                "@type": "SearchAction",
+                                "target": "https://www.nextprot.org/proteins/search?query={query}",
+                                "query-input": "required name=query"
+                            },
+                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"}
+                        },
+                        {
+                            "@type": "Dataset",
+                            "name": "Caloha",
+                            "description": "An ontology of human anatomy and human cell types.",
+                            "url": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/caloha.obo",
+                            "keywords": "human body, anatomy, ontology, tissues, cell types, organs, developmental stage",
+                            "distribution": {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/caloha.obo", "fileFormat": "OBO"},
+                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"}
+                        },
+                        {
+                            "@type": "Dataset",
+                            "name": "ICEPO",
+                            "description": "An ontology that allows one to annotate the electrophysiological parameters of the voltage-gated class of ion channels.",
+                            "url": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/icepo.obo",
+                            "keywords": "ion channels, electrophysiology, ion channel gating, conductance, ion selectivity, activation, inactivation, recovery, deactivation, reopening, closed-state inactivation",
+                            "distribution": {"@type": "DataDownload", "contentUrl": "ftp://ftp.nextprot.org/pub/current_release/controlled_vocabularies/icepo.obo", "fileFormat": "OBO"},
+                            "license": {
+                                "@type": "CreativeWork",
+                                "name": "Creative Commons CC BY 4.0 Attribution",
+                                "url": "https://creativecommons.org/licenses/by/4.0/"
+                            },
+                            "citation": {
+                                "@type": "CreativeWork",
+                                "name": "ICEPO: the ion channel electrophysiology ontology",
+                                "headline": "ICEPO: the ion channel electrophysiology ontology.",
+                                "author" : [
+                                    {"@type": "Person", "name": "Hinard V"},
+                                    {"@type": "Person", "name": "Britan A"},
+                                    {"@type": "Person", "name": "Rougier JS"},
+                                    {"@type": "Person", "name": "Bairoch A"},
+                                    {"@type": "Person", "name": "Abriel H"},
+                                    {"@type": "Person", "name": "Gaudet P"}
+                                ],
+                                "isPartOf": [
+                                    {"@type": "Periodical", "name": "Database (Oxford)"},
+                                    {"@type": "PublicationVolume", "volumeNumber": "2016"},
+                                    {"@type": "PublicationIssue", "datePublished": "2016"}
+                                ],
+                                "sameAs": [
+                                    "https://doi.org/10.1093/database/baw017",
+                                    "http://europepmc.org/abstract/MED/27055825",
+                                    "https://www.ncbi.nlm.nih.gov/pubmed/27055825",
+                                    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4823818"
+                                ],
+                                "datePublished" : "2016-04-06",
+                                "image" : "https://www.ncbi.nlm.nih.gov/corehtml/pmc/pmcgifs/logo-database.gif",
+                                "publisher" : {
+                                    "@type" : "Organization",
+                                    "name" : "Oxford University Press"
+                                }
+                            }
+                        },
+                        {
+                            "@type": "Dataset",
+                            "name": "Chromosome reports",
+                            "description": "A set of 26 files, each one listing all the neXtProt entries encoded on a given chromosome (chromosomes 1-22, X, Y, mitochondrial genome (MT), or unknown genomic location), along with their genomic coordinates and a brief summary of the available annotations for each of them.",
+                            "url": "ftp://ftp.nextprot.org/pub/current_release/chr_reports/",
+                            "keywords": "human genes, chromosomes, mitochondrial genome, genomic coordinates, chromosomal location, coding strand, protein existence, PE1, PE2, PE3, PE4, PE5",
+                            "distribution": {"@type": "DataDownload", "fileFormat": "TXT"},
+                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
+                            "citation": {
+                                "@type": "CreativeWork",
+                                "name": "neXtProt: Organizing Protein Knowledge in the Context of Human Proteome Projects",
+                                "headline": "neXtProt: Organizing Protein Knowledge in the Context of Human Proteome Projects",
+                                "author" : [
+                                    {"@type": "Person", "name": "Gaudet P"},
+                                    {"@type": "Person", "name": "Argoud-Puy G"},
+                                    {"@type": "Person", "name": "Cusin I"},
+                                    {"@type": "Person", "name": "Duek P"},
+                                    {"@type": "Person", "name": "Evalet O"},
+                                    {"@type": "Person", "name": "Gateau A"},
+                                    {"@type": "Person", "name": "Gleizes A"},
+                                    {"@type": "Person", "name": "Pereira M"},
+                                    {"@type": "Person", "name": "Zahn-Zabal M"},
+                                    {"@type": "Person", "name": "Zwahlen C"},
+                                    {"@type": "Person", "name": "Bairoch A"},
+                                    {"@type": "Person", "name": "Lane L"}
+                                ],
+                                "isPartOf": [
+                                    {"@type": "Periodical", "name": "Journal of proteome research"},
+                                    {"@type": "PublicationVolume", "volumeNumber": "12"},
+                                    {"@type": "PublicationIssue", "datePublished": "2013", "issueNumber": "1"}
+                                ],
+                                "sameAs": [
+                                    "https://doi.org/10.1021/pr300830v",
+                                    "https://www.ncbi.nlm.nih.gov/pubmed/23205526"
+                                ],
+                                "datePublished" : "2013-01-04",
+                                "image" : "https://www.ncbi.nlm.nih.gov/corehtml/pmc/pmcgifs/logo-database.gif",
+                                "publisher" : {
+                                    "@type" : "Organization",
+                                    "name" : "Journal of proteome research"
+                                }
+                            }
+                        },
+                        {
+                            "@type": "Dataset",
+                            "name": "Cancer portal",
+                            "description": "Portal which provides information about the functional impact of genetic variants and artificially generated mutants in cancer genes",
+                            "url": "https://www.nextprot.org/portals/breast-cancer",
+                            "keywords": "BRCA1,Biological database,Cancer,Functional defect assessment,Genetic variants,Molecular phenotypes",
+                            "distribution": {"@type": "DataDownload", "fileFormat": "CSV"},
+                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
+                            "citation": {
+                                "@type": "CreativeWork",
+                                "name": "A new bioinformatics tool to help assess the significance of BRCA1 variants",
+                                "headline": "A new bioinformatics tool to help assess the significance of BRCA1 variants.",
+                                "author" : [
+                                    {"@type": "Person", "name": "Cusin I"},
+                                    {"@type": "Person", "name": "Teixeira D"},
+                                    {"@type": "Person", "name": "Zahn-Zabal M"},
+                                    {"@type": "Person", "name": "Rech de Laval V"},
+                                    {"@type": "Person", "name": "Gleizes A"},
+                                    {"@type": "Person", "name": "Viassolo V"},
+                                    {"@type": "Person", "name": "Chappuis PO"},
+                                    {"@type": "Person", "name": "Hutter P"},
+                                    {"@type": "Person", "name": "Bairoch A"},
+                                    {"@type": "Person", "name": "Gaudet P"}
+                                ],
+                                "isPartOf": [
+                                    {"@type": "Periodical", "name": "Human genomics"},
+                                    {"@type": "PublicationVolume", "volumeNumber": "12"},
+                                    {"@type": "PublicationIssue", "datePublished": "2018", "issueNumber": "1"}
+                                ],
+                                "sameAs": [
+                                    "https://doi.org/10.1186/s40246-018-0168-0",
+                                    "http://europepmc.org/abstract/MED/29996917",
+                                    "https://www.ncbi.nlm.nih.gov/pubmed/29996917",
+                                    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6042458/"
+                                ],
+                                "datePublished" : "2018-07-11",
+                                "image" : "https://www.ncbi.nlm.nih.gov/corehtml/pmc/pmcgifs/logo-database.gif",
+                                "publisher" : {
+                                    "@type" : "Organization",
+                                    "name" : "Human Geonomics"
+                                }
+                            }
+                        },
+                        {
+                            "@type": "Dataset",
+                            "name": "Ion channel portal",
+                            "description": "Portal which provides information about the functional impact of genetic variants and artificially generated mutants in voltage-gated sodium channel genes",
+                            "url": "https://www.nextprot.org/portals/navmut",
+                            "keywords": "clinical interpretation of variants, databases, genetics variants,pathogenicity,phenotype,voltage-gated sodium channel",
+                            "distribution": {"@type": "DataDownload", "fileFormat": "CSV"},
+                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"},
+                            "citation": {
+                                "@type": "CreativeWork",
+                                "name": "Annotation of functional impact of voltage-gated sodium channel mutations",
+                                "headline": "Annotation of functional impact of voltage-gated sodium channel mutations.",
+                                "author" : [
+                                    {"@type": "Person", "name": "Hinard V"},
+                                    {"@type": "Person", "name": "Britan A"},
+                                    {"@type": "Person", "name": "Schaeffer M"},
+                                    {"@type": "Person", "name": "Zahn-Zabal M"},
+                                    {"@type": "Person", "name": "Thomet U"},
+                                    {"@type": "Person", "name": "Rougier JS"},
+                                    {"@type": "Person", "name": "Bairoch A"},
+                                    {"@type": "Person", "name": "Abriel H"},
+                                    {"@type": "Person", "name": "Gaudet P"}
+                                ],
+                                "isPartOf": [
+                                    {"@type": "Periodical", "name": "Human mutation"},
+                                    {"@type": "PublicationVolume", "volumeNumber": "38"},
+                                    {"@type": "PublicationIssue", "datePublished": "2017", "issueNumber": "5"}
+                                ],
+                                "sameAs": [
+                                    "https://doi.org/10.1002/humu.23191",
+                                    "http://europepmc.org/abstract/MED/28168870",
+                                    "https://www.ncbi.nlm.nih.gov/pubmed/28168870",
+                                    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5413847/"
+                                ],
+                                "datePublished" : "2017-02-28",
+                                "image" : "https://www.ncbi.nlm.nih.gov/corehtml/pmc/pmcgifs/logo-database.gif",
+                                "publisher" : {
+                                    "@type" : "Organization",
+                                    "name" : "Human Mutation"
+                                }
+                            }
+                        },
+                        {
+                            "@type": "Dataset",
+                            "name": "Protein kinase function portal",
+                            "description": "Portal which provides information about the function of protein kinases",
+                            "url": "https://www.nextprot.org/portals/kinase-function",
+                            "keywords": "databases, protein kinase,phosphorylation, protein-protein interactions, biological process, protein function",
+                            "distribution": {"@type": "DataDownload", "contentUrl": "https://www.nextprot.org/viewers/portals/kinase-function/app/index.html#", "fileFormat": "CSV"},
+                            "license": {"@type": "CreativeWork", "name": "Creative Commons CC BY 4.0 Attribution", "url": "https://creativecommons.org/licenses/by/4.0/"}
+                        }
+                    ]
+                },
+                {
+                    "@type": "SoftwareApplication",
+                    "name": "Peptide uniqueness checker",
+                    "url" : "https://www.nextprot.org/tools/peptide-uniqueness-checker",
+                    "author": {
+                        "@type": "Organization",
+                        "name": "SIB Swiss Institute of Bioinformatics",
+                        "url": "https://www.sib.swiss/",
+                        "logo": "https://www.nextprot.org/img/sib.png"
+                    },
+                    "description" : "The neXtProt peptide uniqueness checker allows scientists to define which peptides can be used to validate the existence of human proteins, i.e. map uniquely versus multiply to human protein sequences taking into account isobaric substitutions, alternative splicing and single amino acid variants.",
+                    "applicationCategory" : "http://schema.org/WebApplication",
+                    "offers": {
+                        "@type" : "Offer",
+                        "price" : "0.00",
+                        "priceCurrency" : "CHF"
+                    },
+                    "license": {"@type": "CreativeWork", "name": "GNU General Public License v2.0", "url": "https://www.gnu.org/licenses/gpl-2.0.fr.html"},
+                    "operatingSystem" : "Unix,Windows,OS X,Android",
+                    "citation": {
+                        "@type": "CreativeWork",
+                        "name": "The neXtProt peptide uniqueness checker: a tool for the proteomics community",
+                        "headline": "The neXtProt peptide uniqueness checker: a tool for the proteomics community.",
+                        "author" : [
+                            {"@type": "Person", "name": "Schaeffer M"},
+                            {"@type": "Person", "name": "Gateau A"},
+                            {"@type": "Person", "name": "Teixeira D"},
+                            {"@type": "Person", "name": "Michel PA"},
+                            {"@type": "Person", "name": "Zahn-Zabal M"},
+                            {"@type": "Person", "name": "Lane L"}
+                        ],
+                        "isPartOf": [
+                            {"@type": "Periodical", "name": "Bioinformatics"},
+                            {"@type": "PublicationVolume", "volumeNumber": "33"},
+                            {"@type": "PublicationIssue", "datePublished": "2017", "issueNumber": "21"}
+                        ],
+                        "sameAs": [
+                            "https://doi.org/10.1093/bioinformatics/btx318",
+                            "http://europepmc.org/abstract/MED/28520855",
+                            "https://www.ncbi.nlm.nih.gov/pubmed/28520855",
+                            "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5860159/"
+                        ]
+                    }
+                },{
+                    "@type": "SoftwareApplication",
+                    "name": "neXtProt SNORQL",
+                    "url" : "https://snorql.nextprot.org/",
+                    "author": {
+                        "@type": "Organization",
+                        "name": "SIB Swiss Institute of Bioinformatics",
+                        "url": "https://www.sib.swiss/",
+                        "logo": "https://www.nextprot.org/img/sib.png"
+                    },
+                    "description" : "A web application for using the SPARQL Protocol and RDF Query Language (SPARQL) to access all the neXtProt protein entry data",
+                    "applicationCategory" : "http://schema.org/WebApplication",
+                    "offers": {
+                        "@type" : "Offer",
+                        "price" : "0.00",
+                        "priceCurrency" : "CHF"
+                    },
+                    "license": {"@type": "CreativeWork", "name": "GNU General Public License v2.0", "url": "https://www.gnu.org/licenses/gpl-2.0.fr.html"},
+                    "operatingSystem" : "Unix,Windows,OS X,Android"
+                },{
+                    "@type": "Service",
+                    "name": "neXtProt advanced search (SPARQL)",
+                    "url" : "https://www.nextprot.org/proteins/search?mode=advanced",
+                    "provider": {
+                        "@type": "Organization",
+                        "name": "SIB Swiss Institute of Bioinformatics",
+                        "url": "https://www.sib.swiss/",
+                        "logo": "https://www.nextprot.org/img/sib.png"
+                    },
+                    "description" : "A web service for using the SPARQL Protocol and RDF Query Language (SPARQL) to retrieve a list of neXtProt entries based on all the neXtProt protein entry data."
+                },{
+                    "@type": "Service",
+                    "name": "neXtProt list manager",
+                    "url" : "https://www.nextprot.org/proteins/search?mode=advanced",
+                    "provider": {
+                        "@type": "Organization",
+                        "name": "SIB Swiss Institute of Bioinformatics",
+                        "url": "https://www.sib.swiss/",
+                        "logo": "https://www.nextprot.org/img/sib.png"
+                    },
+                    "description" : "A web service for viewing and managing protein lists (a collection of protein entries created by the user)."
+                },{
+                    "@type": "Service",
+                    "name": "neXtProt API",
+                    "description": "The neXtProt API lets you find entities in neXtProt.",
+                    "url": "https://api.nextprot.org",
+                    "provider": {
+                        "@type": "Organization",
+                        "name": "SIB Swiss Institute of Bioinformatics",
+                        "url": "https://www.sib.swiss/",
+                        "logo": "https://www.nextprot.org/img/sib.png"
+                    }
+                },{
+                    "@type": "Service",
+                    "name": "neXtProt SPARQL endpoint",
+                    "description": "The neXtProt SPARQL endpoint is a point of presence on an HTTP network that’s capable of receiving and processing SPARQL Protocol requests.",
+                    "url": "https://sparql.nextprot.org/",
+                    "provider": {
+                        "@type": "Organization",
+                        "name": "SIB Swiss Institute of Bioinformatics",
+                        "url": "https://www.sib.swiss/",
+                        "logo": "https://www.nextprot.org/img/sib.png"
+                    }
+                }
+            ]
+        }
+    </script>
+</head>
+
+<body ng-clock="" class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90" ng-controller="SearchCtrl"
+      np-background="#main" typeof="schema:WebPage">
+
+<header>
+    <!--
+<div class="hidden-md hidden-sm hidden-xs hidden-lg" style="font-size: 1.7em; font-weight: 100; font-family: Helvetica; background: transparent radial-gradient(ellipse at center center , rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%) repeat scroll 0% 0%;" id="header-title">
+    Exploring the universe of human proteins
+</div>
+-->
+    <!-- Navbar ================================================== -->
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="nextprot-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#nextprot-header">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="fa fa-bars"></span>
+                </button>
+                <a class="navbar-brand navbar-logo" href="/">
+                    <img id="np-logo" alt="neXtProt the human protein database, platform and annotation knowledge base"
+                         src="data:image/png;base64,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">
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse ng-scope" id="nextprot-header">
+                <ul class="nav navbar-nav"></ul>
+                <ul class="nav navbar-nav navbar-right" style="margin-right:0px;">
+
+                    <li>
+                        <a id="sib-link" href="http://www.sib.swiss">
+                            <!-- <img id="sib-logo" src="/img/sib.png"> -->
+                            <img id="sib-logo" alt="SIB logo"
+                                 src="data:image/png;base64,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">
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <div id="hiring">
+
+        <div class="row" style="text-align: center; top: 250px; position: absolute">
+            <h1><span>neXtProt is experiencing technical problems!</span></h1>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-12 hiring-text-container">
+                <p>Some neXtProt pages are currently not responding. </p>
+                <p>We’re aware of the issue and are working on it. Please try again in 24 h. </p>
+                <p>Sorry for any inconvenience caused.</p>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+
+
+
+
+
+</body>
+
+</html>

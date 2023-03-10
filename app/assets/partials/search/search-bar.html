@@ -7,7 +7,7 @@
             <div class="homepage-brand hidden-xs">
                 <h1>
                     <!-- <img src="img/np2.png" class="home" alt="neXtProt"> -->
-                    <img class="home nximg_np2" alt="neXtProt" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAACWAQMAAAASU+gsAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAACBJREFUeNrtwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAB4DCWAAAGI226uAAAAAElFTkSuQmCC">
+                    <img alt="neXtProt" src="{!endpoint!}/img/np2.png">
 
                 </h1>
                 <h2 class="home-subtitle">Exploring the universe of human proteins</h2>
@@ -81,6 +81,9 @@
                         </button>
                         <button title="Create advanced query" id="search-create" class="btn btn-circle gray btn-default btn-xs btn-search" type="button" ng-click="showNewQuery()" ng-show="isAdvancedMode()" style="margin-left: -80px; position: absolute; top: 7px;z-index:10">
                             <i class="fa fa-plus"></i>
+                        </button>
+                        <button id="search-info" class="btn btn-circle blue btn-default btn-xs btn-search" type="button" ng-click="openW3CSPARQL()" ng-show="isAdvancedMode()" style="margin-left: -104px; position: absolute; top: 7px;z-index:10">
+                            <i class="fa fa-question-circle "></i>
                         </button>
 
                         <!--                        -->

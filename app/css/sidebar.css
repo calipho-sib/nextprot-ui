@@ -26,3 +26,9 @@
   color: #C50063;
   font-size: 1em;
 }
+
+.inactive {
+  color: #ccc;
+  pointer-events: none;
+  cursor: default;
+}

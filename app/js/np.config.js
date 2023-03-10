@@ -35,6 +35,7 @@ angular.module('np.config', []).factory('config', [
                 "mim": "MIM",
                 "ncithesaurus": "NCI Thesaurus",
                 "ncimetathesaurus": "NCI Metathesaurus",
+                "psimi": "PSI-MI Molecular Interaction",
                 "aanpbiosequenceannotation": "neXtProt annotation",
                 "aanpfamily": "neXtProt family",
                 "aanpmodificationeffect": "neXtProt modification effect",
@@ -68,7 +69,10 @@ angular.module('np.config', []).factory('config', [
                 "filterproteomics": "Proteomics",
                 "filterstructure": "3D structure",
                 "filtermutagenesis": "Mutagenesis",
-                "filterdisease": "Disease"
+                "filterdisease": "Disease",
+
+                /* neXtProt ICEPO */
+                "icepo" : "neXtProt ICEPO"
             },
 
 

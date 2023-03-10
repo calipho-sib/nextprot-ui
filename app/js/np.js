@@ -40,7 +40,7 @@
     //Environment that should be set from outside //TODO should replace this using GRUNT
 
     // default environment when environment is not set by some external deployment script
-    var nxEnvironment = "NX_ENV"; //env can be replaced, by dev, alpha or pro by nxs script on deploy  
+    var nxEnvironment = "NX_ENV"; //env can be replaced, by dev, alpha or pro by nxs script on deploy
     // WARNING !!! DO NOT USE NX_ENV ANYWHERE ELSE IN THE PROJECT. A script replace its value by the current environment value just before deployment !
     var apiBase = "https://dev-api.nextprot.org"; //default for UI developers on MACs
     var np1Base = 'https://uat-web1'; //default for UI developers on MACs
@@ -62,19 +62,32 @@
             np1Base = 'https://uat-web1';
         }
         else if (nxEnvironment.toLowerCase() === "alpha" || nxEnvironment.toLowerCase() === "build") {
-            apiBase = 'http://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
+            apiBase = 'https://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
             np1Base = 'http://uat-web1';
-        } else { // By default use the dev env, No need to change for local testing
+        } else if (nxEnvironment.toLowerCase() === "cn") {
+            apiBase = 'https://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
+        }
+
+        else { // By default use the dev env, No need to change for local testing
             apiBase = 'https://dev-api.nextprot.org'; // Don't forget https!
             np1Base = 'https://uat-web1';
         }   
+    }
+
+    // Download URL
+    var downloadURL;
+    if(nxEnvironment != 'pro') {
+        downloadURL = "https://"+nxEnvironment+"-download.nextprot.org";
+    } else {
+        downloadURL = "https://download.nextprot.org";
     }
 
     // main application settings
     App.constant('npSettings', {
         environment: nxEnvironment,
         base: apiBase, //API URL
-        np1: np1Base, //NP1 URL
+        np1: np1Base, //NP1 URL,
+        download: downloadURL,
         callback: window.location.origin,
         auth0_cliendId: '7vS32LzPoIR1Y0JKahOvUCgGbn94AcFW'
     })
@@ -157,7 +170,12 @@
                     primaryColor: '#C50063'
                 },
                 languageDictionary: {
-                    title: "Log in"
+                    title: "Log in",
+                    error : {
+                        login: {
+                            "lock.fallback": "Login unsuccessful. We are working on fixing this issue. Sorry for the inconvenience."
+                        }
+                    }
                 }
             }
         })
@@ -176,22 +194,16 @@
 
         $httpProvider.interceptors.push('errorInterceptor');
 
-
         $httpProvider.defaults.headers.common.Accept = 'application/json'
-        // Catch all
-        //.otherwise({redirectTo : '/404'});
 
         // Without serve side support html5 must be disabled.
         $locationProvider.html5Mode(true);
-        //$locationProvider.hashPrefix = '!';
-
         $resourceProvider.defaults.stripTrailingSlashes = false;
     };
 
 
     // define default behavior for all http request
     errorInterceptor.$inject = ['$q', '$rootScope', '$log', '$location', 'flash', '$injector']
-
     function errorInterceptor($q, $rootScope, $log, $location, flash, $injector) {
         return {
             request: function (config) {
@@ -258,9 +270,10 @@
             }
         };
     };
-    npCtrl.$inject = ['$scope', '$location', '$routeParams', 'metaService', '$window', '$modal', 'flash'];
 
-    function npCtrl($scope, $location, $routeParams, metaService, $window, $modal, flash) {
+    npCtrl.$inject = ['$scope', '$location', '$routeParams', 'metaService', '$window', '$modal', 'flash', '$http'];
+
+    function npCtrl($scope, $location, $routeParams, metaService, $window, $modal, flash, $http) {
         var that = this;
 
         /**
@@ -351,7 +364,13 @@
                     if(data.h1 && location.includes("COFACTOR")) {
                         that.h1 = data.h1.split('-')[0] + "I-TASSER/COFACTOR" 
                     } else if(data.h1 && location.includes("Protein-3D-structure")){
-                        that.h1 = data.h1.split('-')[0] + "3D structure"                        
+                        that.h1 = data.h1.split('-')[0] + "3D structure"
+                    } else if(data.h1 && location.includes("SAAVpedia")) {
+                        that.h1 = data.h1.split('-')[0] + "SAAVpedia"
+                    } else if(data.h1 && location.includes("VEP")){
+                        that.h1 = data.h1.split('-')[0] + "VEP"
+                    } else if(data.h1 && location.includes("protein-digestion")){
+                        that.h1 = "Protein digestion"
                     } else {
                         that.h1 = data.h1
                     }

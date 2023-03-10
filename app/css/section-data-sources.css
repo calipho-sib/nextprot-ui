@@ -11,9 +11,10 @@
 }
 
 #source-np {
-    top: 43px;
-    left: 74px;
+    top: 40px;
+    left: 76px;
     width: 63px;
+    height: 77px
 }
 
 #data-sources-section img.source-img,
@@ -21,141 +22,160 @@
     width: auto;
 }
 
-#source-hpa {
-    top: 7px;
-    left: 20px;
-    height: 15px;
+#source-cellosaurus {
+    top: 5px;
+    left: 30px;
+    height: 14px;
     transition: 0.2s all ease;
 }
-#source-hpa:hover {
-    top: 7px;
-    left: 10px;
+#source-cellosaurus:hover {
+    top: 3px;
+    left: 15px;
     height: 17px;
 }
 
-#source-srm-atlas {
+#source-gnomad {
+    top: 7px;
+    left: 135px;
+    height: 16px;
+    transition: 0.2s all ease;
+}
+#source-gnomad:hover {
+    top: 3px;
+    left: 135px;
+    height: 19px;
+}
+
+#source-enyo {
     top: 30px;
-    left: 4px;
-    height: 20px;
+    left: 157px;
+    height: 22px;
     transition: 0.2s all ease;
 }
-#source-srm-atlas:hover {
-    top: 27px;
-    left: 0px;
-    height: 23px;
-}
-
-#source-bgee {
-    top: 60px;
-    left: 0px;
-    height: 27px;
-    transition: 0.2s all ease;
-}
-#source-bgee:hover {
-    top: 55px;
-    left: -5px;
-    height: 32px;
-}
-
-#source-cosmic {
-    /* top: 112px;
-    left: -5px;
-    height: 15px; */
-    top: 102px;
-    left: -10px;
-    height: 15px;
-    transition: 0.2s all ease;
-}
-#source-cosmic:hover {
-    /* top: 112px;
-    left: -10px;
-    height: 18px; */
-    top: 102px;
-    left: -20px;
-    height: 18px;
-}
-
-#source-uniprot {
-    /* bottom: 4px;
-    left: 0px;
-    height: 35px; */
-    bottom: 20px;
-    left: -5px;
-    height: 30px;
-    transition: 0.2s all ease;
-}
-#source-uniprot:hover {
-    /* bottom: 4px;
-    left: -5px;
-    height: 38px; */
-    bottom: 15px;
-    left: -10px;
-    height: 35px;
-}
-
-#source-uniprot-goa {
-    top: 108px;
-    left: 136px;
-    font-size: 0.9em;
-    transition: 0.2s all ease;
-}
-#source-uniprot-goa:hover {
-    top: 106px;
-    left: 133px;
-    font-size: 1em;
-}
-
-#source-peptide-atlas {
-    top: 64px;
-    left: 136px;
-    height: 32px;
-    transition: 0.2s all ease;
-}
-#source-peptide-atlas:hover {
-    top: 64px;
-    left: 136px;
-    height: 35px;
+#source-enyo:hover{
+    top: 28px;
+    left: 157px;
+    height: 28px;
 }
 
 #source-intact {
-    top: 29px;
-    left: 142px;
-    height: 27px;
+    top: 57px;
+    left: 156px;
+    height: 23px;
     transition: 0.2s all ease;
 }
 #source-intact:hover {
-    top: 29px;
-    left: 142px;
-    height: 32px;
+    top: 54px;
+    left: 146px;
+    height: 28px;
+}
+
+#source-srm-atlas {
+    top: 84px;
+    left: 143px;
+    height: 18px;
+    transition: 0.2s all ease;
+}
+#source-srm-atlas:hover {
+    top: 82px;
+    left: 134px;
+    height: 22px;
 }
 
 #source-glyconnect {
-    /* bottom: 5px;
-    left: 132px;
-    height: 35px; */
-    bottom: 15px;
-    left: 140px;
+    top: 108px;
+    left: 146px;
     height: 30px;
     transition: 0.2s all ease;
 }
 #source-glyconnect:hover {
-    /* bottom: 5px;
-    left: 132px;
-    height: 38px; */
-    bottom: 12px;
-    left: 137px;
+    top: 105px;
+    left: 146px;
     height: 35px;
 }
-#source-gnomad {
-    bottom: 15px;
-    left: 70px;
-    height: 20px;
+
+#source-uniprot-goa {
+    top: 139px;
+    left: 120px;
+    font-size: 0.9em;
     transition: 0.2s all ease;
 }
-#source-gnomad:hover {
-    bottom: 10px;
-    left: 65px;
+#source-uniprot-goa:hover {
+    top: 139px;
+    left: 120px;
+    font-size: 1em;
+}
+
+#source-hpa {
+    top: 160px;
+    left: 60px;
+    height: 8px;
+    transition: 0.2s all ease;
+}
+#source-hpa:hover {
+    top: 160px;
+    left: 46px;
+    height: 10px;
+}
+
+#source-uniprot {
+    top: 129px;
+    left: 24px;
     height: 25px;
+    transition: 0.2s all ease;
+}
+#source-uniprot:hover {
+    top: 129px;
+    left: 13px;
+    height: 30px;
+}
+
+#source-bgee {
+    top: 107px;
+    left: 5px;
+    height: 21px;
+    transition: 0.2s all ease;
+}
+#source-bgee:hover {
+    top: 104px;
+    left: -5px;
+    height: 26px;
+}
+
+#source-cosmic {
+    top: 85px;
+    left: -5px;
+    height: 13px;
+    transition: 0.2s all ease;
+}
+#source-cosmic:hover {
+    top: 83px;
+    left: -7px;
+    height: 16px;
+}
+
+#source-massive {
+    top: 55px;
+    left: -5px;
+    height: 21px;
+    transition: 0.2s all ease;
+}
+#source-massive:hover {
+    top: 55px;
+    left: -8px;
+    height: 26px;
+}
+
+#source-peptide-atlas {
+    top: 26px;
+    left: 10px;
+    height: 24px;
+    transition: 0.2s all ease;
+}
+#source-peptide-atlas:hover {
+    top: 23px;
+    left: 0px;
+    height: 29px;
 }
 
 /* The animation code */

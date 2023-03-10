@@ -27,7 +27,8 @@
         $scope.releaseInfo = releaseInfoService.getReleaseInfo();
 
         $scope.toggleDatabaseRelease = function (data) {
-            $scope.releaseInfo = releaseInfoService.getReleaseInfo(data.databaseRelease);
+            releaseInfoService.getReleaseStats(data.databaseRelease);
+            $scope.releaseInfo = releaseInfoService.getReleaseInfo();
         };
     }
 
@@ -45,6 +46,7 @@
             {get : {method: "GET"}});
 
         var releaseInfo = {
+            currentRelease: "",
             databaseRelease : "",
             apiRelease: "",
             dataSources: [],
@@ -65,20 +67,22 @@
                 });
             });
 
-            getReleaseStats();
+            this.getReleaseStats();
         };
 
-        ReleaseInfoService.prototype.getReleaseInfo = function (databaseRelease) {
-            getReleaseStats(databaseRelease);
+        ReleaseInfoService.prototype.getReleaseInfo = function () {
             return releaseInfo;
         };
 
         // fetching release stats
-        function getReleaseStats(databaseRelease) {
-            let isCurrentRelease = !databaseRelease || databaseRelease.indexOf("current") > 0;
+        ReleaseInfoService.prototype.getReleaseStats = function getReleaseStats(databaseRelease) {
+            if(releaseInfo.databaseRelease === databaseRelease) {
+                return
+            }
+
             var releaseStatsURL = '/release-stats.json';
-            if (!isCurrentRelease) {
-                releaseStatsURL = '/release-stats/' + databaseRelease + '.json'
+            if (databaseRelease) {
+                releaseStatsURL = '/release-stats/'+ databaseRelease.replace(/ \(current\)/, "") + '.json'
             }
             var releaseStatsResource = $resource(
                 config.api.API_URL + releaseStatsURL,
@@ -89,6 +93,7 @@
                 releaseInfo.databaseRelease = data.releaseStats.databaseRelease;
 
                 releaseInfo.databaseReleaseList = data.releaseStats.databaseReleaseList.sort().reverse();
+                releaseInfo.currentRelease = releaseInfo.databaseReleaseList[0];
                 releaseInfo.databaseReleaseList[0] += " (current)";
 
                 releaseInfo.tagStatistics = [];

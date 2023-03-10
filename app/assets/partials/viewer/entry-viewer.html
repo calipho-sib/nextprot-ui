@@ -71,12 +71,13 @@
             <div ng-include="'partials/viewer/viewer-entry-side-bar.html'"></div>
         </div>
         <div class="col-lg-12 col-xs-12 responsive-md-screen right-content" style="height:100%;">
-            <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%" style="border: 0; min-height: 800px; background-color: white; "></iframe>
+            <div class="alert alert-warning noData" style="margin-bottom: 0px" ng-if="communityMode === true" ng-bind-html="bannerText"></div>
+            <iframe id="iframeViewer" ng-src="{{widgetURL}}" width="100%"  scrolling="yes" style="border: 0; min-height: 800px; background-color: white; "></iframe>
             <script>
-                iFrameResize({
+                /*iFrameResize({
                     log: false,
                     checkOrigin: false
-                })
+                })*/
             </script>
         </div>
     </div>
