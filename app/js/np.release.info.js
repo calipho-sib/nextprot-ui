@@ -100,7 +100,7 @@
                 releaseInfo.tagStatistics = [];
                 _.each(data.releaseStats.tagStatistics, function (ts) {
                     let query;
-                    if (isCurrentRelease) {
+                    if (isCurrentRelease && data.releaseStats.tagQueries) {
                         _.each(data.releaseStats.tagQueries, function (qt) {
                             if (qt.tag === ts.tag) {
                                 query = qt.queryId;
