@@ -76,13 +76,14 @@
 
         // fetching release stats
         ReleaseInfoService.prototype.getReleaseStats = function getReleaseStats(databaseRelease) {
+            let isCurrentRelease = !databaseRelease || databaseRelease.indexOf("current") > 0;
             if(releaseInfo.databaseRelease === databaseRelease) {
                 return
             }
 
             var releaseStatsURL = '/release-stats.json';
-            if (databaseRelease) {
-                releaseStatsURL = '/release-stats/'+ databaseRelease.replace(/ \(current\)/, "") + '.json'
+            if (!isCurrentRelease) {
+                releaseStatsURL = '/release-stats/'+ databaseRelease + '.json'
             }
             var releaseStatsResource = $resource(
                 config.api.API_URL + releaseStatsURL,
@@ -106,18 +107,12 @@
                             }
                         });
                     }
-                    var stat;
+                    var stat = {
+                        description: ts.description,
+                        count: ts.count
+                    };
                     if (query) {
-                        stat = {
-                            description: ts.description,
-                            count: ts.count,
-                            query: query
-                        };
-                    } else {
-                        stat = {
-                            description: ts.description,
-                            count: ts.count
-                        };
+                        stat.query = query;
                     }
                     var dbSpecies = _.find(releaseInfo.tagStatistics, function (obj) {
                         return obj.category == ts.categroy
