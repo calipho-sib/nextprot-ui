@@ -392,11 +392,8 @@
 
                 })
 
-                return categories.map(function(category) {
-                    category = category.toLowerCase();
-                    if( category in annotationsByCategories) {
-                        return annotationsByCategories[category];
-                    }
+                return Object.keys(annotationsByCategories).map(function(annotationKey){
+                    return annotationsByCategories[annotationKey]
                 }).filter(Boolean);
             });
         };
