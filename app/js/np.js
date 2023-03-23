@@ -65,7 +65,7 @@
             apiBase = 'https://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
             np1Base = 'http://uat-web1';
         } else if (nxEnvironment.toLowerCase() === "cn") {
-            apiBase = 'https://' + nxEnvironment.toLowerCase() + '-api.nextprot.org';
+            apiBase = 'http://api.nextprot.cn';
         }
 
         else { // By default use the dev env, No need to change for local testing
