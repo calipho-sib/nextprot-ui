@@ -12,8 +12,11 @@ Prerequisites
 -------------
 
 node.js  - 6
+
 npm      - 6.14.15
+
 bower    - 1.8.4
+
 Web server, apache 2.4
 
 Backend API
