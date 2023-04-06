@@ -20,7 +20,7 @@ Backends
 Installation
 ------------
 
-> npm install # node v6.10+ worked with polymer 1.0
+> npm install # node v6.10+ worked with polymer 1.0  
 > ./node_modules/.bin/bower install   
 > ./node_modules/.bin/brunch build   
 > ./node_modules/.bin/gulp # Gulp was included to run the polymer vulcanize. It is temporary solution, the polymer build procedure should be moved to nextprot-elements.  
