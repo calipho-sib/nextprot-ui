@@ -1,7 +1,7 @@
 (function (angular, undefined) {
     'use strict';
 
-    angular.module('np.release.info', [])
+    angular.module('np.release.info', ['np.user.query'])
         .controller('ReleaseInfoCtrl', ReleaseInfoCtrl)
         .factory('releaseInfoService', releaseInfoService)
     ;
@@ -32,8 +32,8 @@
         };
     }
 
-    releaseInfoService.$inject = [ '$resource', 'config'];
-    function releaseInfoService( $resource, config) {
+    releaseInfoService.$inject = [ '$resource', 'config', 'queryRepository'];
+    function releaseInfoService( $resource, config, queryRepository) {
 
         var releaseInfoResource = $resource(
             config.api.API_URL + '/release-info.json',
@@ -99,20 +99,20 @@
 
                 releaseInfo.tagStatistics = [];
                 _.each(data.releaseStats.tagStatistics, function (ts) {
-                    let query;
-                    if (isCurrentRelease && data.releaseStats.tagQueries) {
-                        _.each(data.releaseStats.tagQueries, function (qt) {
-                            if (qt.tag === ts.tag) {
-                                query = qt.queryId;
-                            }
-                        });
-                    }
                     var stat = {
                         description: ts.description,
                         count: ts.count
                     };
-                    if (query) {
-                        stat.query = query;
+                    let querySparql;
+                    if (isCurrentRelease && data.releaseStats.tagQueries) {
+                        _.each(data.releaseStats.tagQueries, function (qt) {
+                            if (qt.tag === ts.tag) {
+                                stat.queryId = qt.queryId;
+                                querySparql = queryRepository.getQueryByPublicId(qt.queryId).then(function (query) {
+                                    stat.querySparql = encodeURIComponent(query.sparql);
+                                });
+                            }
+                        });
                     }
                     var dbSpecies = _.find(releaseInfo.tagStatistics, function (obj) {
                         return obj.category == ts.categroy
