@@ -392,12 +392,41 @@
 
                 })
 
-                return categories.map(function(category) {
+                var annotationHierarchyMap = {};
+                Object.keys(annotationsByCategories).forEach(function(category) {
+                    if(annotationsByCategories[category].annot.length > 0 ){
+                        if(annotationsByCategories[category].annot[0].parentPredicates) {
+                            annotationsByCategories[category].annot[0].parentPredicates.forEach(function(pp) {
+                                pp = pp.toLowerCase();
+                                if(pp in annotationHierarchyMap) {
+                                    annotationHierarchyMap[pp].push(category);
+                                } else {
+                                    annotationHierarchyMap[pp] = [];
+                                    annotationHierarchyMap[pp].push(category);
+                                }
+                            });
+                        }
+                    }
+                });
+
+                var annotations = [];
+                categories.forEach(function(category) {
                     category = category.toLowerCase();
                     if( category in annotationsByCategories) {
-                        return annotationsByCategories[category];
+                        annotations.push(annotationsByCategories[category]);
+                    } else {
+                        var categoryName = category.replace('-','');
+                        categoryName = categoryName.toLowerCase();
+                        if(categoryName in annotationHierarchyMap) {
+                            annotationHierarchyMap[categoryName].forEach(function(childCategory){
+                                if(childCategory in annotationsByCategories) {
+                                    annotations.push(annotationsByCategories[childCategory]);
+                                }
+                            });
+                        }
                     }
-                }).filter(Boolean);
+                });
+                return annotations.filter(Boolean);
             });
         };
 
