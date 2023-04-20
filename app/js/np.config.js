@@ -65,7 +65,7 @@ angular.module('np.config', []).factory('config', [
                 "computed": "Not cited for annotation",
 
                 /* Entries filters */
-                "filterexpressionprofile": "Expression profile",
+                "filterexpressionprofile": "Expression",
                 "filterproteomics": "Proteomics",
                 "filterstructure": "3D structure",
                 "filtermutagenesis": "Mutagenesis",

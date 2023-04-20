@@ -31,7 +31,7 @@
                         <div class="row release-row" ng-class="{'last':$last}"
                              ng-repeat="s in ts.data">
                             <div class="col-sm-9 col-xs-12">
-                                {{s.description}}
+                                {{s.description}}<span ng-if="s.queryId"> <a href="{{getNextprotUrl('snorql')}}/?query={{s.querySparql}}" style="font-size: 8px" target="_blank">(sparql query)</a></span>
                             </div>
                             <div class="col-sm-3 col-xs-12 bold text-right">
                                 {{s.count}}

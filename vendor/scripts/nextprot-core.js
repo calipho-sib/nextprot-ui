@@ -105,7 +105,7 @@
             if (environment !== 'pro') {
                 apiBaseUrl = "https://" + environment + "-api.nextprot.org";
                 nextprotUrl = "https://" + environment + "-search.nextprot.org";
-                
+
                 if (environment === 'localhost') {
                     apiBaseUrl = protocol + "localhost:8080/nextprot-api-web";
                     nextprotUrl = protocol + 'localhost:3000';
@@ -332,9 +332,9 @@
 
         NextprotClient.prototype.getAnnotationsbyCategories = function (entry, categories) {
 
-            let apiCategories = [];
+            var apiCategories = [];
             categories.forEach(function(category) {
-                let categoryToAdd;
+                var categoryToAdd;
                 if(Array.isArray(category)) {
                     categoryToAdd = category[0];
                 } else {
@@ -347,7 +347,7 @@
             categories = apiCategories;
             var url = apiBaseUrl + "/entry/" + entry + "/annotations.json?categories="+apiCategories.join(',');
             return _getJSON(url).then(function(data) {
-                let annotationsByCategories = {};
+                var annotationsByCategories = {};
                 Object.keys(data.entry.annotationsByCategory).forEach(function(category) {
                     annotationsByCategories[category] = {};
                     annotationsByCategories[category].annot = data.entry.annotationsByCategory[category];
@@ -374,14 +374,14 @@
                             }
 
                             if(evidence.resourceType === 'publication') {
-                                let publication = data.entry.publications.find(function(publication) {return publication.publicationId === evidence.resourceId});
+                                const publication = data.entry.publications.find(function(publication) {return publication.publicationId === evidence.resourceId});
                                 if(publication) {
                                     annotationsByCategories[category].publi[publication.publicationId] = publication;
                                 }
                             } else if(evidence.resourceType === 'database') {
 
-                                let xref = data.entry.xrefs.find(function(xref) {return xref.dbXrefId === evidence.resourceId});
-                                if(xref && xref.length > 0) {
+                                const xref = data.entry.xrefs.find(function(xref) {return xref.dbXrefId === evidence.resourceId});
+                                if(xref) {
                                     annotationsByCategories[category].xrefs[xref.dbXrefId] = xref;
                                 }
                             }
@@ -392,12 +392,41 @@
 
                 })
 
-                return categories.map(function(category) {
+                var annotationHierarchyMap = {};
+                Object.keys(annotationsByCategories).forEach(function(category) {
+                    if(annotationsByCategories[category].annot.length > 0 ){
+                        if(annotationsByCategories[category].annot[0].parentPredicates) {
+                            annotationsByCategories[category].annot[0].parentPredicates.forEach(function(pp) {
+                                pp = pp.toLowerCase();
+                                if(pp in annotationHierarchyMap) {
+                                    annotationHierarchyMap[pp].push(category);
+                                } else {
+                                    annotationHierarchyMap[pp] = [];
+                                    annotationHierarchyMap[pp].push(category);
+                                }
+                            });
+                        }
+                    }
+                });
+
+                var annotations = [];
+                categories.forEach(function(category) {
                     category = category.toLowerCase();
                     if( category in annotationsByCategories) {
-                        return annotationsByCategories[category];
+                        annotations.push(annotationsByCategories[category]);
+                    } else {
+                        var categoryName = category.replace('-','');
+                        categoryName = categoryName.toLowerCase();
+                        if(categoryName in annotationHierarchyMap) {
+                            annotationHierarchyMap[categoryName].forEach(function(childCategory){
+                                if(childCategory in annotationsByCategories) {
+                                    annotations.push(annotationsByCategories[childCategory]);
+                                }
+                            });
+                        }
                     }
-                }).filter(Boolean);
+                });
+                return annotations.filter(Boolean);
             });
         };
 
@@ -506,7 +535,7 @@
             path = (!path.startsWith("/")) ? "/" + path : path;
 
             if((noappend === undefined) || !noappend)
-		path = (!path.endsWith(".json")) ? path+".json" : path;
+                path = (!path.endsWith(".json")) ? path+".json" : path;
 
             return _getJSON(apiBaseUrl+path)
                 .then(function (data) {
