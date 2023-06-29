@@ -36,15 +36,7 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
 
     $scope.export = exportService;
 
-   /* console.log("prof" + JSON.stringify($scope.userProfile))
-    $scope.$watch("userProfile", function(n, o) {
-        console.log("User profile email changed")
-        console.log(JSON.stringify(n))
-        console.log(JSON.stringify(o))
-    }, true)*/
-
     $scope.$on('profileInited', function(event, data) {
-        console.log("GOT DATAAAAA")
         console.log(data);
         $scope.$apply()
     })
@@ -334,6 +326,16 @@ function SearchCtrl(Tracker, $scope, $rootScope, $location, $routeParams, $docum
 
         return $location.path() === '/';
     };
+
+    $scope.isMainSite=function(){
+        return !this.isMirrorSite();
+    };
+
+    $scope.isMirrorSite=function(){
+        return config.api.environment === 'cn';
+    }
+
+
 
     $scope.go = function () {
         var url = $location.url();

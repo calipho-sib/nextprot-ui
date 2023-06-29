@@ -480,6 +480,23 @@
             ]
         }
     </script>
+    <style>
+        .paper-banner {
+    background-color: #f8f8f8; /* Set the background color */
+    border: 1px solid #ccc; /* Add a border */
+    border-radius: 4px; /* Round the corners */
+    padding: 10px; /* Add some padding */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    float: right; /* Float the banner to the right */
+    font-family: Arial, sans-serif; /* Set the font family */
+    font-size: 14px; /* Set the font size */
+    z-index:10010;opacity:0.9
+}
+
+.paper-banner span {
+    color: #333; /* Set the text color */
+}
+    </style>
 </head>
 
 <body ng-clock="" class="preview fill" data-spy="scroll" data-target=".subnav" data-offset="90" ng-controller="SearchCtrl"
@@ -724,7 +741,16 @@
         </nav>
 
     </header>
-
+    <div ng-if="isHomePage()">
+        <ul style="position: fixed;top: 60px;right: 10px;z-index:10010;opacity:0.9">       
+                <div ng-if="isMainSite()">
+                     <a href="https://nextprot.cn/" target="_blank">Access to mirror site in China</a>
+                </div>
+                <div ng-if="isMirrorSite()">
+                    <a href="https://www.nextprot.org/" target="_blank">Access to main site</a>
+               </div>
+        </ul>
+    </div>
     <div ng-init="browserCompatibility()"></div>
 
     <div ng-show="message" class=" error ng-cloak" ng-cloak>
