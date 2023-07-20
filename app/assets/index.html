@@ -724,7 +724,16 @@
         </nav>
 
     </header>
-
+    <div ng-if="isHomePage()">
+        <ul style="position: fixed;top: 60px;right: 10px;z-index:10010;opacity:0.9">       
+                <div ng-if="isMainSite()">
+                     <a href="https://nextprot.cn/" target="_blank">Access to mirror site in China</a>
+                </div>
+                <div ng-if="isMirrorSite()">
+                    <a href="https://www.nextprot.org/" target="_blank">Access to main site</a>
+               </div>
+        </ul>
+    </div>
     <div ng-init="browserCompatibility()"></div>
 
     <div ng-show="message" class=" error ng-cloak" ng-cloak>
