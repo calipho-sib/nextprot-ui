@@ -76,7 +76,9 @@
 
     // Download URL
     var downloadURL;
-    if(nxEnvironment != 'pro') {
+    if(nxEnvironment.toLowerCase() === "cn") {
+        downloadURL = "https://download.nextprot.cn";
+    } else if(nxEnvironment != 'pro') {
         downloadURL = "https://"+nxEnvironment+"-download.nextprot.org";
     } else {
         downloadURL = "https://download.nextprot.org";
